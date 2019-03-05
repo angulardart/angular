@@ -40,7 +40,7 @@ class ViewComp10 extends AppView<import1.Comp1> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -78,7 +78,7 @@ class _ViewComp1Host0 extends AppView<import1.Comp1> {
     rootEl = _compView_0.rootEl;
     _Comp1_0_5 = import1.Comp1();
     _compView_0.create(_Comp1_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp1_0_5);
   }
 
@@ -115,7 +115,7 @@ class ViewComp1String0 extends AppView<import1.Comp1String> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -153,7 +153,7 @@ class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
     rootEl = _compView_0.rootEl;
     _Comp1String_0_5 = import1.Comp1String();
     _compView_0.create(_Comp1String_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp1String_0_5);
   }
 
@@ -190,7 +190,7 @@ class ViewComp20 extends AppView<import1.Comp2> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -228,7 +228,7 @@ class _ViewComp2Host0 extends AppView<import1.Comp2> {
     rootEl = _compView_0.rootEl;
     _Comp2_0_5 = import1.Comp2();
     _compView_0.create(_Comp2_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp2_0_5);
   }
 
@@ -265,7 +265,7 @@ class ViewComp30 extends AppView<import1.Comp3> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -303,7 +303,7 @@ class _ViewComp3Host0 extends AppView<import1.Comp3> {
     rootEl = _compView_0.rootEl;
     _Comp3_0_5 = import1.Comp3();
     _compView_0.create(_Comp3_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp3_0_5);
   }
 
@@ -344,7 +344,7 @@ class ViewComp40 extends AppView<import1.Comp4> {
     _arr_0 = import9.pureProxy2((p0, p1) {
       return [p0, p1];
     });
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -382,7 +382,7 @@ class _ViewComp4Host0 extends AppView<import1.Comp4> {
     rootEl = _compView_0.rootEl;
     _Comp4_0_5 = import1.Comp4();
     _compView_0.create(_Comp4_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp4_0_5);
   }
 
@@ -424,7 +424,7 @@ class ViewComp50 extends AppView<import1.Comp5> {
     _map_0 = import9.pureProxy1((p0) {
       return {'1': p0};
     });
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -462,7 +462,7 @@ class _ViewComp5Host0 extends AppView<import1.Comp5> {
     rootEl = _compView_0.rootEl;
     _Comp5_0_5 = import1.Comp5();
     _compView_0.create(_Comp5_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp5_0_5);
   }
 
@@ -504,7 +504,7 @@ class ViewComp60 extends AppView<import1.Comp6> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp61);
     _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -548,7 +548,7 @@ class _ViewComp61 extends AppView<import1.Comp6> {
   }
   @override
   ComponentRef<import1.Comp6> build() {
-    init0(_textBinding_0.element);
+    init1(_textBinding_0.element);
   }
 
   @override
@@ -576,7 +576,7 @@ class _ViewComp6Host0 extends AppView<import1.Comp6> {
     rootEl = _compView_0.rootEl;
     _Comp6_0_5 = import1.Comp6();
     _compView_0.create(_Comp6_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp6_0_5);
   }
 
@@ -618,7 +618,7 @@ class ViewComp70 extends AppView<import1.Comp7> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp71);
     _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -668,7 +668,7 @@ class _ViewComp71 extends AppView<import1.Comp7> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp72);
     _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
-    init0(_appEl_0);
+    init1(_appEl_0);
   }
 
   @override
@@ -702,7 +702,7 @@ class _ViewComp72 extends AppView<import1.Comp7> {
   }
   @override
   ComponentRef<import1.Comp7> build() {
-    init0(_textBinding_0.element);
+    init1(_textBinding_0.element);
   }
 
   @override
@@ -730,7 +730,7 @@ class _ViewComp7Host0 extends AppView<import1.Comp7> {
     rootEl = _compView_0.rootEl;
     _Comp7_0_5 = import1.Comp7();
     _compView_0.create(_Comp7_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp7_0_5);
   }
 

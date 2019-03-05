@@ -121,27 +121,27 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     _UsesDefaultChangeDetectionAndInputs_3_5 = import1.UsesDefaultChangeDetectionAndInputs();
-    _compView_3.create(_UsesDefaultChangeDetectionAndInputs_3_5, []);
+    _compView_3.create0(_UsesDefaultChangeDetectionAndInputs_3_5);
     _compView_4 = ViewUsesOnPushChangeDetectionAndInputs0(this, 4);
     final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _UsesOnPushChangeDetectionAndInputs_4_5 = import1.UsesOnPushChangeDetectionAndInputs();
-    _compView_4.create(_UsesOnPushChangeDetectionAndInputs_4_5, []);
+    _compView_4.create0(_UsesOnPushChangeDetectionAndInputs_4_5);
     _compView_5 = ViewInlinedNgIf0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     _InlinedNgIf_5_5 = import1.InlinedNgIf();
-    _compView_5.create(_InlinedNgIf_5_5, []);
+    _compView_5.create0(_InlinedNgIf_5_5);
     _compView_6 = ViewEmbeddedNgIf0(this, 6);
     final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     _EmbeddedNgIf_6_5 = import1.EmbeddedNgIf();
-    _compView_6.create(_EmbeddedNgIf_6_5, []);
+    _compView_6.create0(_EmbeddedNgIf_6_5);
     _compView_7 = ViewEmbeddedNgFor0(this, 7);
     final _el_7 = _compView_7.rootEl;
     parentRenderNode.append(_el_7);
     _EmbeddedNgFor_7_5 = import1.EmbeddedNgFor();
-    _compView_7.create(_EmbeddedNgFor_7_5, []);
+    _compView_7.create0(_EmbeddedNgFor_7_5);
     _compView_8 = ViewInjectsFromArbitraryParent0(this, 8);
     final _el_8 = _compView_8.rootEl;
     parentRenderNode.append(_el_8);
@@ -150,28 +150,28 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
             return import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex));
           })
         : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), parentView.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), parentView.injectorGet(import1.InjectableService, viewData.parentIndex)));
-    _compView_8.create(_InjectsFromArbitraryParent_8_5, []);
+    _compView_8.create0(_InjectsFromArbitraryParent_8_5);
     _compView_9 = ViewComponentConditionalFeatures0(this, 9);
     final _el_9 = _compView_9.rootEl;
     parentRenderNode.append(_el_9);
     _ComponentConditionalFeatures_9_5 = import1.ComponentConditionalFeatures();
-    _compView_9.create(_ComponentConditionalFeatures_9_5, []);
+    _compView_9.create0(_ComponentConditionalFeatures_9_5);
     _compView_10 = ViewUsesDomBindings0(this, 10);
     final _el_10 = _compView_10.rootEl;
     parentRenderNode.append(_el_10);
     _UsesDomBindings_10_5 = import1.UsesDomBindings();
-    _compView_10.create(_UsesDomBindings_10_5, []);
+    _compView_10.create0(_UsesDomBindings_10_5);
     _compView_11 = ViewUsesNgDirectives0(this, 11);
     final _el_11 = _compView_11.rootEl;
     parentRenderNode.append(_el_11);
     _UsesNgDirectives_11_5 = import1.UsesNgDirectives();
-    _compView_11.create(_UsesNgDirectives_11_5, []);
+    _compView_11.create0(_UsesNgDirectives_11_5);
     _compView_12 = ViewHasNestedProviderLookups0(this, 12);
     final _el_12 = _compView_12.rootEl;
     parentRenderNode.append(_el_12);
     _HasNestedProviderLookups_12_5 = import1.HasNestedProviderLookups();
-    _compView_12.create(_HasNestedProviderLookups_12_5, []);
-    init(const [], null);
+    _compView_12.create0(_HasNestedProviderLookups_12_5);
+    init0();
   }
 
   @override
@@ -257,7 +257,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
     rootEl = _compView_0.rootEl;
     _RootComponent_0_5 = import1.RootComponent();
     _compView_0.create(_RootComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _RootComponent_0_5);
   }
 
@@ -299,8 +299,8 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
-    _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, []);
-    init(const [], null);
+    _compView_0.create0(_DefaultChangeDetectionAndInputs_0_5);
+    init0();
   }
 
   @override
@@ -354,7 +354,7 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
     rootEl = _compView_0.rootEl;
     _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
     _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInputs_0_5);
   }
 
@@ -395,7 +395,7 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
     parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import8.appendText(parentRenderNode, ' ');
     parentRenderNode.append(_textBinding_3.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -434,7 +434,7 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
     rootEl = _compView_0.rootEl;
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
     _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInputs_0_5);
   }
 
@@ -476,8 +476,8 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _OnPushChangeDetectionAndInputs_0_5 = import1.OnPushChangeDetectionAndInputs();
-    _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, []);
-    init(const [], null);
+    _compView_0.create0(_OnPushChangeDetectionAndInputs_0_5);
+    init0();
   }
 
   @override
@@ -538,7 +538,7 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
     rootEl = _compView_0.rootEl;
     _UsesOnPushChangeDetectionAndInputs_0_5 = import1.UsesOnPushChangeDetectionAndInputs();
     _compView_0.create(_UsesOnPushChangeDetectionAndInputs_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _UsesOnPushChangeDetectionAndInputs_0_5);
   }
 
@@ -579,7 +579,7 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
     parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import8.appendText(parentRenderNode, ' ');
     parentRenderNode.append(_textBinding_3.element);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -618,7 +618,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
     rootEl = _compView_0.rootEl;
     _OnPushChangeDetectionAndInputs_0_5 = import1.OnPushChangeDetectionAndInputs();
     _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _OnPushChangeDetectionAndInputs_0_5);
   }
 
@@ -661,7 +661,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = import8.appendAnchor(parentRenderNode);
-    init([], null);
+    init0Mutable();
   }
 
   @override
@@ -710,7 +710,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
     rootEl = _compView_0.rootEl;
     _InlinedNgIf_0_5 = import1.InlinedNgIf();
     _compView_0.create(_InlinedNgIf_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
   }
 
@@ -751,7 +751,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -792,8 +792,8 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
     _compView_0 = ViewNullComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
-    _compView_0.create(_NullComponent_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_NullComponent_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -825,7 +825,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
     rootEl = _compView_0.rootEl;
     _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
     _compView_0.create(_EmbeddedNgIf_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
   }
 
@@ -868,7 +868,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
     _NgFor_1_9 = import17.NgFor(_appEl_1, _TemplateRef_1_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -916,7 +916,7 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
     final doc = import5.document;
     final _el_0 = doc.createElement('li');
     _el_0.append(_textBinding_1.element);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -944,7 +944,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
     rootEl = _compView_0.rootEl;
     _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
     _compView_0.create(_EmbeddedNgFor_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedNgFor_0_5);
   }
 
@@ -979,7 +979,7 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
   ComponentRef<import1.NullComponent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1011,7 +1011,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
     rootEl = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _NullComponent_0_5);
   }
 
@@ -1046,7 +1046,7 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1082,7 +1082,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
           })
         : import1.InjectsFromArbitraryParent(this.injectorGet(const import10.MultiToken<String>('usPresidents'), viewData.parentIndex), this.injectorGet(const import10.MultiToken<String>('whiteHouse'), viewData.parentIndex), this.injectorGet(import1.InjectableService, viewData.parentIndex)));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
   }
 
@@ -1129,7 +1129,7 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_ComponentConditionalFeatures2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1173,8 +1173,8 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
     _compView_0 = ViewFeatureA0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
-    _compView_0.create(_FeatureA_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_FeatureA_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -1203,8 +1203,8 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
     _compView_0 = ViewFeatureB0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
-    _compView_0.create(_FeatureB_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_FeatureB_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -1236,7 +1236,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
     rootEl = _compView_0.rootEl;
     _ComponentConditionalFeatures_0_5 = import1.ComponentConditionalFeatures();
     _compView_0.create(_ComponentConditionalFeatures_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _ComponentConditionalFeatures_0_5);
   }
 
@@ -1272,7 +1272,7 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = import8.appendText(parentRenderNode, 'I am Feature A');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1304,7 +1304,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
     rootEl = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
     _compView_0.create(_FeatureA_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _FeatureA_0_5);
   }
 
@@ -1340,7 +1340,7 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = import8.appendText(parentRenderNode, 'I am Feature B');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1372,7 +1372,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
     rootEl = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
     _compView_0.create(_FeatureB_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _FeatureB_0_5);
   }
 
@@ -1414,7 +1414,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     _el_0 = import8.appendElement(doc, parentRenderNode, 'button');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1474,7 +1474,7 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
     rootEl = _compView_0.rootEl;
     _UsesDomBindings_0_5 = import1.UsesDomBindings();
     _compView_0.create(_UsesDomBindings_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _UsesDomBindings_0_5);
   }
 
@@ -1532,7 +1532,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
     final _el_6 = import8.appendDiv(doc, parentRenderNode);
     _NgStyle_6_5 = import19.NgStyle(_el_6);
     final _text_7 = import8.appendText(_el_6, 'Styles');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1608,7 +1608,7 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
     rootEl = _compView_0.rootEl;
     _UsesNgDirectives_0_5 = import1.UsesNgDirectives();
     _compView_0.create(_UsesNgDirectives_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _UsesNgDirectives_0_5);
   }
 
@@ -1649,7 +1649,7 @@ class ViewHasNestedProviderLookups0 extends AppView<import1.HasNestedProviderLoo
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_HasNestedProviderLookups1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1693,7 +1693,7 @@ class _ViewHasNestedProviderLookups1 extends AppView<import1.HasNestedProviderLo
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_HasNestedProviderLookups2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -1731,8 +1731,8 @@ class _ViewHasNestedProviderLookups2 extends AppView<import1.HasNestedProviderLo
             return import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null));
           })
         : import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null)));
-    _compView_1.create(_InjectsManyThingsDynamically_1_5, []);
-    init0(_el_0);
+    _compView_1.create0(_InjectsManyThingsDynamically_1_5);
+    init1(_el_0);
   }
 
   @override
@@ -1764,7 +1764,7 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
     rootEl = _compView_0.rootEl;
     _HasNestedProviderLookups_0_5 = import1.HasNestedProviderLookups();
     _compView_0.create(_HasNestedProviderLookups_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasNestedProviderLookups_0_5);
   }
 
@@ -1799,7 +1799,7 @@ class ViewInjectsManyThingsDynamically0 extends AppView<import1.InjectsManyThing
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -1835,7 +1835,7 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
           })
         : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGet(import1.DepD, viewData.parentIndex, null), this.injectorGet(import1.DepE, viewData.parentIndex, null), this.injectorGet(import1.DepF, viewData.parentIndex, null)));
     _compView_0.create(_InjectsManyThingsDynamically_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsManyThingsDynamically_0_5);
   }
 

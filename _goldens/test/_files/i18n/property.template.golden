@@ -39,7 +39,7 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _MessageDirective_0_5 = import1.MessageDirective();
     final _text_1 = import9.appendText(parentRenderNode, ',');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -79,7 +79,7 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
     rootEl = _compView_0.rootEl;
     _I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();
     _compView_0.create(_I18nPropertyComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _I18nPropertyComponent_0_5);
   }
 

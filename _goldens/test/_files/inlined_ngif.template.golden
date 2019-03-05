@@ -16,6 +16,9 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/core/linker/template_ref.dart';
 
 final List<dynamic> styles$InlinedNgIfComponent = const [];
 
@@ -37,7 +40,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = import8.appendAnchor(parentRenderNode);
-    init([], null);
+    init0Mutable();
   }
 
   @override
@@ -86,7 +89,7 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
     rootEl = _compView_0.rootEl;
     _InlinedNgIfComponent_0_5 = import1.InlinedNgIfComponent();
     _compView_0.create(_InlinedNgIfComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InlinedNgIfComponent_0_5);
   }
 
@@ -103,6 +106,110 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
 
 AppView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) {
   return _ViewInlinedNgIfComponentHost0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$IgnoredNgIfComponent = const [];
+
+class ViewIgnoredNgIfComponent0 extends AppView<import1.IgnoredNgIfComponent> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_9;
+  static import3.ComponentStyles _componentStyles;
+  ViewIgnoredNgIfComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    rootEl = import2.document.createElement('inlined-ngif');
+    initComponentStyles();
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.IgnoredNgIfComponent> build() {
+    final _rootEl = rootEl;
+    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = import8.appendAnchor(parentRenderNode);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_IgnoredNgIfComponent1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    _NgIf_0_9.ngIf = _ctx.foo;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0.destroyNestedViews();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.IgnoredNgIfComponent> _IgnoredNgIfComponentNgFactory = const ComponentFactory('inlined-ngif', viewFactory_IgnoredNgIfComponentHost0);
+ComponentFactory<import1.IgnoredNgIfComponent> get IgnoredNgIfComponentNgFactory {
+  return _IgnoredNgIfComponentNgFactory;
+}
+
+class _ViewIgnoredNgIfComponent1 extends AppView<import1.IgnoredNgIfComponent> {
+  _ViewIgnoredNgIfComponent1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.IgnoredNgIfComponent> build() {
+    final doc = import2.document;
+    final _el_0 = doc.createElement('div');
+    final _text_1 = import8.appendText(_el_0, 'Hello ');
+    final _text_2 = import8.appendText(_el_0, (ctx.name ?? ''));
+    final _text_3 = import8.appendText(_el_0, '!');
+    init1(_el_0);
+  }
+}
+
+AppView<void> viewFactory_IgnoredNgIfComponent1(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewIgnoredNgIfComponent1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$IgnoredNgIfComponentHost = const [];
+
+class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponent> {
+  ViewIgnoredNgIfComponent0 _compView_0;
+  import1.IgnoredNgIfComponent _IgnoredNgIfComponent_0_5;
+  _ViewIgnoredNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.IgnoredNgIfComponent> build() {
+    _compView_0 = ViewIgnoredNgIfComponent0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _IgnoredNgIfComponent_0_5 = import1.IgnoredNgIfComponent();
+    _compView_0.create(_IgnoredNgIfComponent_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _IgnoredNgIfComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.IgnoredNgIfComponent> viewFactory_IgnoredNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewIgnoredNgIfComponentHost0(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
@@ -123,7 +230,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _anchor_0 = import8.appendAnchor(parentRenderNode);
-    init([], null);
+    init0Mutable();
   }
 
   @override
@@ -171,7 +278,7 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
     rootEl = _compView_0.rootEl;
     _InlinedNgIfWithImmutableConditionComponent_0_5 = import1.InlinedNgIfWithImmutableConditionComponent();
     _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
   }
 
@@ -198,6 +305,7 @@ void initReflector() {
   _visited = true;
 
   _ngRef.registerComponent(InlinedNgIfComponent, InlinedNgIfComponentNgFactory);
+  _ngRef.registerComponent(IgnoredNgIfComponent, IgnoredNgIfComponentNgFactory);
   _ngRef.registerComponent(InlinedNgIfWithImmutableConditionComponent, InlinedNgIfWithImmutableConditionComponentNgFactory);
   _ref0.initReflector();
 }

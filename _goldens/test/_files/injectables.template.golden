@@ -40,7 +40,7 @@ class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Inject!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -102,7 +102,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
           })
         : import1.InjectableComponent(null, this.injectorGet(import1.InjectableService, viewData.parentIndex, null), _test_0_5, this.injectorGet(String, viewData.parentIndex, null)));
     _compView_0.create(_InjectableComponent_0_6, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectableComponent_0_6);
   }
 

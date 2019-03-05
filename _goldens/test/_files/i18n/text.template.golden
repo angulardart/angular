@@ -37,7 +37,7 @@ class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'p');
     final _text_1 = import9.appendText(_el_0, _message_0);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -69,7 +69,7 @@ class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
     rootEl = _compView_0.rootEl;
     _I18nTextComponent_0_5 = import1.I18nTextComponent();
     _compView_0.create(_I18nTextComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _I18nTextComponent_0_5);
   }
 

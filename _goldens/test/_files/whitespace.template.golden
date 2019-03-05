@@ -40,7 +40,7 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
     final _text_4 = import8.appendText(_el_3, 'Jurassic...');
     final _text_5 = import8.appendText(_el_1, '\n      Park!\n    ');
     final _text_6 = import8.appendText(parentRenderNode, '\n  ');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -72,7 +72,7 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
     rootEl = _compView_0.rootEl;
     _PreserveWhitespace_0_5 = import1.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _PreserveWhitespace_0_5);
   }
 
@@ -113,7 +113,7 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
     final _el_2 = import8.appendElement(doc, _el_0, 'strong');
     final _text_3 = import8.appendText(_el_2, 'Jurassic...');
     final _text_4 = import8.appendText(_el_0, ' Park!');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -145,7 +145,7 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
     rootEl = _compView_0.rootEl;
     _MinifyWhitespace_0_5 = import1.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _MinifyWhitespace_0_5);
   }
 
