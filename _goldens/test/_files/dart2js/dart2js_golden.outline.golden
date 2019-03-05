@@ -121,6 +121,20 @@ external _ng.AppView<UsesNgDirectives> viewFactory_UsesNgDirectives0(_ng.AppView
 class ViewUsesNgDirectives0 extends _ng.AppView<UsesNgDirectives> {
   external ViewUsesNgDirectives0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class HasNestedProviderLookups.
+external List<dynamic> get styles$HasNestedProviderLookups;
+external _ng.ComponentFactory<HasNestedProviderLookups> get HasNestedProviderLookupsNgFactory;
+external _ng.AppView<HasNestedProviderLookups> viewFactory_HasNestedProviderLookups0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHasNestedProviderLookups0 extends _ng.AppView<HasNestedProviderLookups> {
+  external ViewHasNestedProviderLookups0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class InjectsManyThingsDynamically.
+external List<dynamic> get styles$InjectsManyThingsDynamically;
+external _ng.ComponentFactory<InjectsManyThingsDynamically> get InjectsManyThingsDynamicallyNgFactory;
+external _ng.AppView<InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynamically0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewInjectsManyThingsDynamically0 extends _ng.AppView<InjectsManyThingsDynamically> {
+  external ViewInjectsManyThingsDynamically0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Directive class HasProvider.
 class HasProviderNgCd extends _ng.DirectiveChangeDetector {
   external HasProvider get instance;
