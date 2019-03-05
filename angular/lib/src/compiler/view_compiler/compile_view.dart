@@ -899,11 +899,17 @@ class CompileView {
     return compAppViewExpr;
   }
 
-  void createAppView(AppViewReference appViewRef,
-      o.Expression componentInstance, o.Expression contentNodesArray) {
-    _createMethod.addStmt(appViewRef
-        .toReadExpr()
-        .callMethod('create', [componentInstance, contentNodesArray]).toStmt());
+  void createAppView(
+    AppViewReference appViewRef,
+    o.Expression context,
+    o.Expression projectedNodes,
+  ) {
+    final appViewExpr = appViewRef.toReadExpr();
+    final createExpr =
+        projectedNodes is o.LiteralArrayExpr && projectedNodes.entries.isEmpty
+            ? appViewExpr.callMethod('create0', [context])
+            : appViewExpr.callMethod('create', [context, projectedNodes]);
+    _createMethod.addStmt(createExpr.toStmt());
   }
 
   bool isRootNodeOfHost(int nodeIndex) =>

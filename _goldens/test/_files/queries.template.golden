@@ -59,7 +59,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     ctx.readDIFromElementRef = ElementRef(_el_1);
     ctx.readDIFromElement = _el_1;
     ctx.readDIFromHtmlElement = _el_1;
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -118,7 +118,7 @@ class _ViewQueriesComponent1 extends AppView<import1.QueriesComponent> {
     final doc = import7.document;
     _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -147,7 +147,7 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
     _QueriesComponent_0_5 = import1.QueriesComponent();
     _QueriesComponent_0_5.contentChildrenFromField = [];
     _compView_0.create(_QueriesComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _QueriesComponent_0_5);
   }
 
@@ -195,7 +195,7 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
     final _anchor_2 = import10.appendAnchor(parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_EmbeddedQueries2);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -241,7 +241,7 @@ class _ViewEmbeddedQueries1 extends AppView<import1.EmbeddedQueries> {
     final doc = import7.document;
     final _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -264,7 +264,7 @@ class _ViewEmbeddedQueries2 extends AppView<import1.EmbeddedQueries> {
     final doc = import7.document;
     final _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -291,7 +291,7 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
     rootEl = _compView_0.rootEl;
     _EmbeddedQueries_0_5 = import1.EmbeddedQueries();
     _compView_0.create(_EmbeddedQueries_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedQueries_0_5);
   }
 
@@ -339,7 +339,7 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
     final _anchor_2 = import10.appendAnchor(parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_EmbeddedQueriesList2);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -385,7 +385,7 @@ class _ViewEmbeddedQueriesList1 extends AppView<import1.EmbeddedQueriesList> {
     final doc = import7.document;
     final _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -408,7 +408,7 @@ class _ViewEmbeddedQueriesList2 extends AppView<import1.EmbeddedQueriesList> {
     final doc = import7.document;
     final _el_0 = doc.createElement('another');
     _AnotherDirective_0_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -435,7 +435,7 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
     rootEl = _compView_0.rootEl;
     _EmbeddedQueriesList_0_5 = import1.EmbeddedQueriesList();
     _compView_0.create(_EmbeddedQueriesList_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmbeddedQueriesList_0_5);
   }
 
@@ -477,7 +477,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_NestedNgForQueriesList1);
     _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -533,7 +533,7 @@ class _ViewNestedNgForQueriesList1 extends AppView<import1.NestedNgForQueriesLis
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList2);
     _NgIf_1_9 = NgIf(_appEl_1, _TemplateRef_1_8);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -567,7 +567,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_NestedNgForQueriesList3);
     _NgFor_1_9 = import14.NgFor(_appEl_1, _TemplateRef_1_8);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -607,7 +607,7 @@ class _ViewNestedNgForQueriesList3 extends AppView<import1.NestedNgForQueriesLis
     _el_0 = doc.createElement('div');
     final _el_1 = import10.appendElement(doc, _el_0, 'another');
     _AnotherDirective_1_5 = import1.AnotherDirective();
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -634,7 +634,7 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
     rootEl = _compView_0.rootEl;
     _NestedNgForQueriesList_0_5 = import1.NestedNgForQueriesList();
     _compView_0.create(_NestedNgForQueriesList_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _NestedNgForQueriesList_0_5);
   }
 

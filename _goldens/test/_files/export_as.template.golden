@@ -35,7 +35,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     final _text_1 = import8.appendText(_el_0, 'Foo');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -67,7 +67,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
     rootEl = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _TestFooComponent_0_5);
   }
 

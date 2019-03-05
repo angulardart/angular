@@ -694,8 +694,11 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   view.writeBuildStatements(statements);
 
-  final rootElements = createFlatArray(view.rootNodesOrViewContainers,
-      constForEmpty: !view.hasInlinedView);
+  final constEmptyList = !view.hasInlinedView;
+  final rootElements = createFlatArray(
+    view.rootNodesOrViewContainers,
+    constForEmpty: constEmptyList,
+  );
   final initParams = [rootElements];
   final subscriptions = view.subscriptions.isEmpty
       ? o.NULL_EXPR
@@ -717,15 +720,24 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     initParams.add(subscriptions);
   }
 
-  // In RELEASE mode we call:
-  //
-  // init(rootNodes, subscriptions);
-  // or init0 if we have a single root node with no subscriptions.
   if (rootElements is o.LiteralArrayExpr &&
-      rootElements.entries.length == 1 &&
+      rootElements.entries.length <= 1 &&
       subscriptions == o.NULL_EXPR) {
-    statements.add(
-        o.InvokeMemberMethodExpr('init0', [rootElements.entries[0]]).toStmt());
+    if (rootElements.entries.isEmpty) {
+      if (constEmptyList) {
+        statements.add(
+          o.InvokeMemberMethodExpr('init0', const []).toStmt(),
+        );
+      } else {
+        statements.add(
+          o.InvokeMemberMethodExpr('init0Mutable', const []).toStmt(),
+        );
+      }
+    } else {
+      statements.add(
+        o.InvokeMemberMethodExpr('init1', [rootElements.entries[0]]).toStmt(),
+      );
+    }
   } else {
     statements.add(o.InvokeMemberMethodExpr('init', initParams).toStmt());
   }

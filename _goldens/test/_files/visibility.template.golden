@@ -33,7 +33,7 @@ class ViewDependent0 extends AppView<import1.Dependent> {
   ComponentRef<import1.Dependent> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -69,7 +69,7 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
           })
         : import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex)));
     _compView_0.create(_Dependent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Dependent_0_5);
   }
 
@@ -114,8 +114,8 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
             return import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
           })
         : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
-    _compView_0.create(_Dependent_0_5, []);
-    init(const [], null);
+    _compView_0.create0(_Dependent_0_5);
+    init0();
   }
 
   @override
@@ -157,7 +157,7 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
     rootEl = _compView_0.rootEl;
     _DependencyWithDependentInView_0_5 = import1.DependencyWithDependentInView();
     _compView_0.create(_DependencyWithDependentInView_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DependencyWithDependentInView_0_5);
   }
 
@@ -201,7 +201,7 @@ class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> 
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -233,7 +233,7 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
     rootEl = _compView_0.rootEl;
     _DependencyWithContent_0_5 = import1.DependencyWithContent();
     _compView_0.create(_DependencyWithContent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DependencyWithContent_0_5);
   }
 
@@ -288,8 +288,8 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
             return import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
           })
         : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
-    _compView_1.create(_Dependent_1_5, []);
-    init(const [], null);
+    _compView_1.create0(_Dependent_1_5);
+    init0();
   }
 
   @override
@@ -331,7 +331,7 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
     rootEl = _compView_0.rootEl;
     _DependencyAndDependentInView_0_5 = import1.DependencyAndDependentInView();
     _compView_0.create(_DependencyAndDependentInView_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _DependencyAndDependentInView_0_5);
   }
 
@@ -366,7 +366,7 @@ class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
   ComponentRef<import1.HasVisibilityAll> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -398,7 +398,7 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
     rootEl = _compView_0.rootEl;
     _HasVisibilityAll_0_5 = import1.HasVisibilityAll();
     _compView_0.create(_HasVisibilityAll_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasVisibilityAll_0_5);
   }
 
@@ -441,7 +441,7 @@ class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
   ComponentRef<import1.HasVisibilityLocal> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -473,7 +473,7 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
     rootEl = _compView_0.rootEl;
     _HasVisibilityLocal_0_5 = import1.HasVisibilityLocal();
     _compView_0.create(_HasVisibilityLocal_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _HasVisibilityLocal_0_5);
   }
 

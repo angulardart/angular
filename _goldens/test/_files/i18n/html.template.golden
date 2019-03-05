@@ -38,7 +38,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
     final _el_0 = import8.appendElement(doc, parentRenderNode, 'p');
     final _html_1 = import9.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
-    init(const [], null);
+    init0();
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
@@ -74,7 +74,7 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
     rootEl = _compView_0.rootEl;
     _I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _I18nHtmlComponent_0_5);
   }
 

@@ -37,7 +37,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final _text_0 = import8.appendText(parentRenderNode, 'Hello');
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -153,7 +153,7 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
     rootEl = _compView_0.rootEl;
     _ProvidersComponent_0_5 = import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _ProvidersComponent_0_5);
   }
 

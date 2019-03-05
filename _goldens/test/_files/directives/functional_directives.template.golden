@@ -37,7 +37,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     import8.setAttribute(_el_0, 'generateText', '');
     final _el_1 = import8.appendDiv(doc, _el_0);
     import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -77,7 +77,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
     rootEl = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _AppComponent_0_5);
   }
 

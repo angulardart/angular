@@ -44,7 +44,7 @@ class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
     final _anchor_2 = import10.appendAnchor(parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_EmulatedComponent1);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -72,7 +72,7 @@ class _ViewEmulatedComponent1 extends AppView<import2.EmulatedComponent> {
     final _el_0 = doc.createElement('div');
     addShimC(_el_0);
     final _text_1 = import10.appendText(_el_0, 'Emulated in Template');
-    init0(_el_0);
+    init1(_el_0);
   }
 }
 
@@ -94,7 +94,7 @@ class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
     rootEl = _compView_0.rootEl;
     _EmulatedComponent_0_5 = import2.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _EmulatedComponent_0_5);
   }
 
@@ -136,7 +136,7 @@ class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
     final _anchor_2 = import10.appendAnchor(parentRenderNode);
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_7 = TemplateRef(_appEl_2, viewFactory_NoneComponent1);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -163,7 +163,7 @@ class _ViewNoneComponent1 extends AppView<import2.NoneComponent> {
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import10.appendText(_el_0, 'Emulated in Template');
-    init0(_el_0);
+    init1(_el_0);
   }
 }
 
@@ -185,7 +185,7 @@ class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
     rootEl = _compView_0.rootEl;
     _NoneComponent_0_5 = import2.NoneComponent();
     _compView_0.create(_NoneComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _NoneComponent_0_5);
   }
 

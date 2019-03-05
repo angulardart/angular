@@ -60,7 +60,7 @@ class ViewComp0 extends AppView<import1.Comp> {
     _pipe_lifecycle_2_0 = import11.pureProxy1(_pipe_lifecycle_2.transform);
     _pipe_types_3 = import1.TypesPipe();
     _pipe_types_3_0 = import11.pureProxy5(_pipe_types_3.transform);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -106,7 +106,7 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
     rootEl = _compView_0.rootEl;
     _Comp_0_5 = import1.Comp();
     _compView_0.create(_Comp_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _Comp_0_5);
   }
 

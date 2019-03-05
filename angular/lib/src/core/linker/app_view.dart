@@ -201,6 +201,10 @@ abstract class AppView<T> {
     return build();
   }
 
+  /// Specialized [create] when there are no `projectedNodes`.
+  @dart2js.noInline
+  ComponentRef<T> create0(T context) => create(context, const []);
+
   /// Builds host level view.
   ComponentRef<T> createHostView(
     Injector hostInjector,
@@ -220,13 +224,27 @@ abstract class AppView<T> {
   @protected
   ComponentRef<T> build() => null;
 
-  /// Specialized init when component has a single root node.
+  /// Specialized [init] when a view does not need to track root nodes.
   @dart2js.noInline
-  void init0(Object rootElement) {
-    viewData.rootNodesOrViewContainers = [rootElement];
+  void init0() {
+    init(const [], null);
   }
 
-  /// Called by build once all dom nodes are available.
+  /// Specialized [init] when a view does not need to track root nodes.
+  ///
+  /// Unlike [init0], [addInlinedNodes] later will mutate this list.
+  @dart2js.noInline
+  void init0Mutable() {
+    init([], null);
+  }
+
+  /// Specialized [init] when component has a single root node (usually a host).
+  @dart2js.noInline
+  void init1(Object rootElement) {
+    init([rootElement], null);
+  }
+
+  /// Called by [build] once all root DOM nodes/containers are available.
   @dart2js.noInline
   void init(
     List<Object> rootNodesOrViewContainers,

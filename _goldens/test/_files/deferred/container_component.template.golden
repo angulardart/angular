@@ -80,12 +80,12 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     _NotDeferredChildComponent_5_5 = deflib0.NotDeferredChildComponent();
-    _compView_5.create(_NotDeferredChildComponent_5_5, []);
+    _compView_5.create0(_NotDeferredChildComponent_5_5);
     final _anchor_6 = import12.appendAnchor(parentRenderNode);
     _appEl_6 = ViewContainer(6, null, this, _anchor_6);
     TemplateRef _TemplateRef_6_8 = TemplateRef(_appEl_6, viewFactory_TestContainerComponent8);
     _cancelDeferredLoad6 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_6, _TemplateRef_6_8);
-    init(const [], null);
+    init0();
   }
 
   @override
@@ -153,8 +153,8 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.ViewDeferredChild1Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild1Component_0_5 = deflib0.DeferredChild1Component();
-    _compView_0.create(_DeferredChild1Component_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_DeferredChild1Component_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -184,7 +184,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
     _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
-    init0(_appEl_0);
+    init1(_appEl_0);
   }
 
   @override
@@ -214,8 +214,8 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.ViewDeferredChild2Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild2Component_0_5 = deflib0.DeferredChild2Component();
-    _compView_0.create(_DeferredChild2Component_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_DeferredChild2Component_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -247,7 +247,7 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
     _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -277,8 +277,8 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.ViewDeferredChild3Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild3Component_0_5 = deflib0.DeferredChild3Component();
-    _compView_0.create(_DeferredChild3Component_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_DeferredChild3Component_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -312,8 +312,8 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
     _compView_0 = deflib1.ViewDeferredChildComponentWithoutNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithoutNgContent_0_5 = deflib0.DeferredChildComponentWithoutNgContent();
-    _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, []);
-    init0(_el_0);
+    _compView_0.create0(_DeferredChildComponentWithoutNgContent_0_5);
+    init1(_el_0);
   }
 
   @override
@@ -346,7 +346,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, [
       [_text_1]
     ]);
-    init0(_el_0);
+    init1(_el_0);
   }
 
   @override
@@ -385,8 +385,8 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
     final _el_0 = _compView_0.rootEl;
     _ExternalServiceImmediatelyCreated_0_5 = import15.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = deflib0.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
-    _compView_0.create(_DeferredChildComponentWithServices_0_6, []);
-    init0(_el_0);
+    _compView_0.create0(_DeferredChildComponentWithServices_0_6);
+    init1(_el_0);
   }
 
   @override
@@ -429,7 +429,7 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
     rootEl = _compView_0.rootEl;
     _TestContainerComponent_0_5 = import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectedNodes);
-    init0(rootEl);
+    init1(rootEl);
     return ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
   }
 
