@@ -309,8 +309,13 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   bool get publishesTemplateRef => _publishesTemplateRef;
 
   /// Creates the unique provider instances provided by this element.
-  List<ProviderInstance> _createProviderInstances() {
-    final providers = <ProviderInstance>[];
+  ///
+  /// Normal providers are added to [providers], while view providers are added
+  /// to [viewProviders] (there are known bugs with this process b/127379145).
+  void _createProviderInstances(
+    List<ProviderInstance> providers,
+    List<ProviderInstance> viewProviders,
+  ) {
     for (final provider in _resolvedProvidersArray) {
       final token = provider.token;
 
@@ -339,10 +344,13 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       if (tokens.isEmpty) continue;
 
       final expression = _providers.get(token).build();
-      final isPrivate = provider.providerType == ProviderAstType.PrivateService;
-      providers.add(ProviderInstance(tokens, expression, isPrivate));
+      final instance = ProviderInstance(tokens, expression);
+      if (provider.providerType == ProviderAstType.PrivateService) {
+        viewProviders.add(instance);
+      } else {
+        providers.add(instance);
+      }
     }
-    return providers;
   }
 
   /// Creates a [ProviderNode] for this element.
@@ -351,13 +359,32 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   /// counts nodes that can't produce providers such as HTML text and comments.
   ProviderNode createProviderNode(
       int childNodeCount, List<ProviderNode> children) {
-    // TODO(leonsenft): convert view providers to children.
-    final providers = _createProviderInstances();
+    final providers = <ProviderInstance>[];
+    if (childNodeCount == 0) {
+      // If there aren't any child nodes, both regular and view providers are
+      // injectable within the same range ([nodeIndex, nodeIndex]), so they can
+      // both be added to the same `ProviderNode`.
+      _createProviderInstances(providers, providers);
+    } else {
+      // Otherwise view providers must be added to their own `ProviderNode`.
+      // This node is added as a child because its restricted range ([nodeIndex,
+      // nodeIndex]) lies within the range for normal providers ([nodeIndex,
+      // nodeIndex + childNodeCount]).
+      final viewProviders = <ProviderInstance>[];
+      _createProviderInstances(providers, viewProviders);
+      if (viewProviders.isNotEmpty) {
+        children.add(ProviderNode(
+          nodeIndex,
+          nodeIndex,
+          providers: viewProviders,
+        ));
+      }
+    }
     return ProviderNode(
       nodeIndex,
       nodeIndex + childNodeCount,
-      providers,
-      children,
+      providers: providers,
+      children: children,
     );
   }
 

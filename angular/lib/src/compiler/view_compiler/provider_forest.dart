@@ -44,8 +44,7 @@ class ProviderForest {
         final tokenCondition = provider.tokens
             .map(_createTokenCondition)
             .reduce((expression, condition) => expression.or(condition));
-        final end = provider.isViewProvider ? node.start : node.end;
-        final indexCondition = _createIndexCondition(node.start, end);
+        final indexCondition = _createIndexCondition(node.start, node.end);
         final condition = tokenCondition.and(indexCondition);
         target.add(o.IfStmt(condition, [
           o.ReturnStatement(provider.expression),
@@ -83,29 +82,23 @@ class ProviderForest {
 ///
 /// This may be injectable via multiple distinct tokens.
 class ProviderInstance {
-  ProviderInstance(this.tokens, this.expression, this.isViewProvider);
+  ProviderInstance(this.tokens, this.expression);
 
   /// The tokens this provider can satisfy.
   final List<CompileTokenMetadata> tokens;
 
   /// The expression of the provided value.
   final o.Expression expression;
-
-  /// Whether this provider is only visible to view children.
-  ///
-  /// Note this not related to provider `visibility`, but rather whether the
-  /// provider was configured under `viewProviders`.
-  final bool isViewProvider;
 }
 
 /// Represents a node in the dependency injection hierarchy of a view.
 class ProviderNode {
   ProviderNode(
     this.start,
-    this.end,
-    this.providers,
-    this.children,
-  );
+    this.end, {
+    this.providers = const [],
+    this.children = const [],
+  });
 
   /// The lowest index of the range within which this provider is injectable.
   ///
