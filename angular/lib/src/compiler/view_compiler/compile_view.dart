@@ -14,7 +14,6 @@ import '../compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
-        CompileTokenMetadata,
         CompilePipeMetadata,
         CompileQueryMetadata,
         CompileTokenMap,
@@ -48,9 +47,9 @@ import 'constants.dart'
 import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
 import 'perf_profiler.dart';
+import 'provider_forest.dart' show ProviderForest;
 import 'view_compiler_utils.dart'
     show
-        createDiTokenExpression,
         createSetAttributeStatement,
         debugInjectorEnter,
         debugInjectorLeave,
@@ -341,6 +340,12 @@ class CompileView {
   /// Whether this inlines any of its child views.
   bool hasInlinedView = false;
 
+  /// A representation of this view's dependency injection hierarchy.
+  ///
+  /// When assigned, this field is used to generate the `injectorGetInternal()`
+  /// method.
+  ProviderForest providers;
+
   int viewIndex;
   CompileElement declarationElement;
   List<VariableAst> templateVariables;
@@ -364,7 +369,6 @@ class CompileView {
   List<o.Statement> classStatements = [];
 
   final _createMethod = CompileMethod();
-  final _injectorGetMethod = CompileMethod();
   final _updateContentQueriesMethod = CompileMethod();
   final _updateViewQueriesMethod = CompileMethod();
   final dirtyParentQueriesMethod = CompileMethod();
@@ -1348,43 +1352,16 @@ class CompileView {
     return List.from(varStmts)..addAll(statements);
   }
 
-  void addInjectable(
-    int nodeIndex,
-    int childNodeCount,
-    ProviderAst provider,
-    o.Expression providerExpr,
-    List<CompileTokenMetadata> aliases,
-  ) {
-    final tokenConditions = <o.Expression>[];
-    if (provider.visibleForInjection) {
-      tokenConditions.add(_createTokenCondition(provider.token));
-    }
-    if (aliases != null) {
-      for (final alias in aliases) {
-        tokenConditions.add(_createTokenCondition(alias));
-      }
-    }
-    if (tokenConditions.isEmpty) return; // No visible tokens for this provider.
-    final tokenCondition = tokenConditions
-        .reduce((expression, condition) => expression.or(condition));
-    final indexCondition = _createIndexCondition(nodeIndex, childNodeCount);
-    final condition = tokenCondition.and(indexCondition);
-    _injectorGetMethod
-        .addStmt(o.IfStmt(condition, [o.ReturnStatement(providerExpr)]));
-  }
-
   o.ClassMethod writeInjectorGetMethod() {
+    final statements = providers?.build() ?? [];
     return o.ClassMethod(
-      "injectorGetInternal",
+      'injectorGetInternal',
       [
         o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
         o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
         o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
       ],
-      _addReturnValueIfNotEmpty(
-        _injectorGetMethod.finish(),
-        InjectMethodVars.notFoundResult,
-      ),
+      _addReturnValueIfNotEmpty(statements, InjectMethodVars.notFoundResult),
       o.DYNAMIC_TYPE,
       null,
       [o.importExpr(Identifiers.dartCoreOverride)],
@@ -1500,32 +1477,6 @@ List<o.Statement> _addReturnValueIfNotEmpty(
     return List.from(statements)..addAll([o.ReturnStatement(value)]);
   }
 }
-
-/// Creates an expression to check that 'nodeIndex' is in the given range.
-///
-/// The given range is inclusive: [start, start + length].
-o.Expression _createIndexCondition(int start, int length) {
-  final index = InjectMethodVars.nodeIndex;
-  final lowerBound = o.literal(start);
-  if (length > 0) {
-    final upperBound = o.literal(start + length);
-    final withinUpperBound = index.lowerEquals(upperBound);
-    if (start == 0) {
-      // It's unnecessary to check that the index is greater than zero, since
-      // we would never generate a negative index. Furthermore, dart2js can tell
-      // that this is always true, which confuses its logic for recreating the
-      // expression in JavaScript (b/30508405).
-      return withinUpperBound;
-    }
-    return lowerBound.lowerEquals(index).and(withinUpperBound);
-  } else {
-    return lowerBound.equals(index);
-  }
-}
-
-/// Creates an expression to check that 'token' is identical to a [token].
-o.Expression _createTokenCondition(CompileTokenMetadata token) =>
-    InjectMethodVars.token.identical(createDiTokenExpression(token));
 
 /// CompileView implementation of ViewStorage which stores instances as
 /// class member fields on the AppView class.

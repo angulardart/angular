@@ -17,6 +17,7 @@ import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
 import 'ir/provider_resolver.dart';
 import 'ir/provider_source.dart';
+import 'provider_forest.dart' show ProviderInstance, ProviderNode;
 import 'view_compiler_utils.dart' show toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
@@ -307,38 +308,69 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
 
   bool get publishesTemplateRef => _publishesTemplateRef;
 
+  /// Creates the unique provider instances provided by this element.
+  List<ProviderInstance> _createProviderInstances() {
+    final providers = <ProviderInstance>[];
+    for (final provider in _resolvedProvidersArray) {
+      final token = provider.token;
+
+      // Skip any providers that are
+      //  a) backed by a functional directive (these are never injectable),
+      //  b) not injectable across views, or
+      //  c) an alias for an existing provider.
+      if (provider.providerType == ProviderAstType.FunctionalDirective ||
+          !provider.dynamicallyReachable ||
+          _providers.isAliasedProvider(token)) {
+        continue;
+      }
+
+      // Aggregate all tokens that this provider statisfies.
+      final tokens = <CompileTokenMetadata>[];
+      if (provider.visibleForInjection) {
+        tokens.add(token);
+      }
+      final aliases = _providers.getAliases(token);
+      if (aliases != null) {
+        tokens.addAll(aliases);
+      }
+
+      // Skip this provider if it satisfies no dependencies (i.e. a directive
+      // that's not visible for injection and has no aliases).
+      if (tokens.isEmpty) continue;
+
+      final expression = _providers.get(token).build();
+      final isPrivate = provider.providerType == ProviderAstType.PrivateService;
+      providers.add(ProviderInstance(tokens, expression, isPrivate));
+    }
+    return providers;
+  }
+
+  /// Creates a [ProviderNode] for this element.
+  ///
+  /// Note that [childNodeCount] can be greater than [children.length], as it
+  /// counts nodes that can't produce providers such as HTML text and comments.
+  ProviderNode createProviderNode(
+      int childNodeCount, List<ProviderNode> children) {
+    // TODO(leonsenft): convert view providers to children.
+    final providers = _createProviderInstances();
+    return ProviderNode(
+      nodeIndex,
+      nodeIndex + childNodeCount,
+      providers,
+      children,
+    );
+  }
+
   void afterChildren(int childNodeCount) {
+    // Add functional directive invocations.
     for (ProviderAst resolvedProvider in _resolvedProvidersArray) {
       if (resolvedProvider.providerType ==
           ProviderAstType.FunctionalDirective) {
         o.Expression invokeExpression = _providers
             .createFunctionalDirectiveSource(resolvedProvider)
             .build();
-        // Add functional directive invocation.
         view.callFunctionalDirective(invokeExpression);
-        continue;
       }
-
-      if (!resolvedProvider.dynamicallyReachable ||
-          _providers.isAliasedProvider(resolvedProvider.token)) continue;
-
-      // Note: afterChildren is called after recursing into children.
-      // This is good so that an injector match in an element that is closer to
-      // a requesting element matches first.
-      var providerExpr = _providers.get(resolvedProvider.token).build();
-      var aliases = _providers.getAliases(resolvedProvider.token);
-
-      // Note: view providers are only visible on the injector of that element.
-      // This is not fully correct as the rules during codegen don't allow a
-      // directive to get hold of a view provider on the same element. We still
-      // do this semantic as it simplifies our model to having only one runtime
-      // injector per element.
-      var providerChildNodeCount =
-          resolvedProvider.providerType == ProviderAstType.PrivateService
-              ? 0
-              : childNodeCount;
-      view.addInjectable(nodeIndex, providerChildNodeCount, resolvedProvider,
-          providerExpr, aliases);
     }
     for (List<CompileQuery> queries in _queries.values) {
       for (CompileQuery query in queries) {
