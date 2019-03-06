@@ -111,8 +111,8 @@ operator:
 const listOne = [ValidDirective, 'not a directive']
 const listTwo = [AnotherDirective];
 ...
-  directives: [...listOne, ...listTwo], // constant value is
-  // [ValidDirective, 'not a directive', AnotherDirective]
+  // Constant value is `[ValidDirective, 'not a directive', AnotherDirective]`.
+  directives: [...listOne, ...listTwo],
 ```
 
 The only way we can know whether `'not a directive'` comes from `...listOne` or

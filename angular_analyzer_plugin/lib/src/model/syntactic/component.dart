@@ -10,8 +10,10 @@ import 'package:angular_analyzer_plugin/src/model/syntactic/reference.dart';
 import 'package:angular_analyzer_plugin/src/selector.dart';
 import 'package:meta/meta.dart';
 
-/// Syntactic model of an Angular component, which is a directive with a
-/// template (and additional information to render that template).
+/// Syntactic model of an Angular component.
+///
+/// A component is a directive with a template, which also has additional
+/// information used to render and interact with that template.
 ///
 /// ```dart
 /// @Component(
