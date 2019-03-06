@@ -303,6 +303,9 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (1 == nodeIndex))) {
+      return _luckyNumber_1_15;
+    }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
       return _MaterialInputComponent_1_5;
     }
@@ -320,9 +323,6 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     }
     if ((identical(token, const import10.MultiToken<import11.Validator>()) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
       return _MultiToken_1_11;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (1 == nodeIndex))) {
-      return _luckyNumber_1_15;
     }
     if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (4 == nodeIndex))) {
       return _MaterialInputComponent_4_5;
