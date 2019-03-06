@@ -49,11 +49,15 @@ class EventHandlerVars {
   static final event = o.variable('\$event');
 }
 
+/// Variables used to implement `injectorGetInternal` in generated views.
 class InjectMethodVars {
+  /// The token being injected.
   static final token = o.variable('token');
 
-  /// Name of node index parameter used in AppView injectorGetInternal method.
+  /// The index of the node from which the query for [token] originated.
   static final nodeIndex = o.variable('nodeIndex');
+
+  /// The value to be returned if [token] isn't matched.
   static final notFoundResult = o.variable('notFoundResult');
 }
 

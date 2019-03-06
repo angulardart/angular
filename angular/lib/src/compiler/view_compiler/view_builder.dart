@@ -30,6 +30,7 @@ import 'event_binder.dart' show convertStmtIntoExpression;
 import 'expression_converter.dart';
 import 'parse_utils.dart';
 import 'perf_profiler.dart';
+import 'provider_forest.dart' show ProviderForest, ProviderNode;
 import 'view_compiler_utils.dart'
     show
         createFlatArray,
@@ -42,6 +43,21 @@ import 'view_style_linker.dart';
 class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   final CompileView _view;
 
+  /// A stack used to collect providers from each visited element.
+  ///
+  ///   * Before visiting an element's children, a new entry will be pushed to
+  ///   the stack.
+  ///
+  ///   * Upon visiting each child, a provider node is appended to the top entry
+  ///   in the stack.
+  ///
+  ///   * After visiting an element's children, the top entry of the stack is
+  ///   popped and used to populate the current provider node's children.
+  ///
+  /// Collecting providers in this manner allows us to process them in their
+  /// entirety, separately from this visitor.
+  final _providerStack = <List<ProviderNode>>[[]];
+
   /// This is `true` if this is visiting nodes that will be projected into
   /// another view.
   bool _visitingProjectedContent = false;
@@ -49,6 +65,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   int _nestedViewCount = 0;
 
   ViewBuilderVisitor(this._view);
+
+  /// The dependency injection hierarchy constructed from visiting a view.
+  ProviderForest get providers => ProviderForest.from(_providerStack.first);
 
   void _addRootNodeAndProject(
       CompileNode node, int ngContentIndex, CompileElement parent) {
@@ -195,6 +214,22 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       directives.firstWhere((directive) => directive.isComponent,
           orElse: () => null);
 
+  /// Should be called before visiting the children of [element].
+  void _beforeChildren(CompileElement element) {
+    element.beforeChildren();
+    _providerStack.add([]);
+  }
+
+  /// Should be called after visiting the children of [element].
+  void _afterChildren(CompileElement element) {
+    final childNodeCount = _view.nodes.length - element.nodeIndex - 1;
+    element.afterChildren(childNodeCount);
+    final childProviderNodes = _providerStack.removeLast();
+    final providerNode =
+        element.createProviderNode(childNodeCount, childProviderNodes);
+    _providerStack.last.add(providerNode);
+  }
+
   bool get _viewHasDeferredComponent =>
       (_view.declarationElement.sourceAst is EmbeddedTemplateAst) &&
       (_view.declarationElement.sourceAst as EmbeddedTemplateAst)
@@ -243,14 +278,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _view.nodes.add(compileElement);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
-    // beforeChildren() -> _prepareProviderInstances will create the actual
-    // directive and component instances.
-    compileElement.beforeChildren();
+    _beforeChildren(compileElement);
     bool oldVisitingProjectedContent = _visitingProjectedContent;
     _visitingProjectedContent = true;
     templateVisitAll(this, ast.children, compileElement);
     _visitingProjectedContent = oldVisitingProjectedContent;
-    compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
+    _afterChildren(compileElement);
 
     o.Expression projectables;
     if (_view.component.type.isHost) {
@@ -310,11 +343,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
     _view.nodes.add(compileElement);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
-    // beforeChildren() -> _prepareProviderInstances will create the actual
-    // directive and component instances.
-    compileElement.beforeChildren();
+    _beforeChildren(compileElement);
     templateVisitAll(this, ast.children, compileElement);
-    compileElement.afterChildren(_view.nodes.length - nodeIndex - 1);
+    _afterChildren(compileElement);
   }
 
   @override
@@ -365,7 +396,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         isInlined: isPureHtml);
 
     if (!isPureHtml) {
-      compileElement.beforeChildren();
+      _beforeChildren(compileElement);
     }
 
     // Create a visitor for embedded view and visit all nodes.
@@ -378,7 +409,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _nestedViewCount += embeddedViewVisitor._nestedViewCount;
 
     if (!isPureHtml) {
-      compileElement.afterChildren(0);
+      _afterChildren(compileElement);
+      embeddedView.providers = embeddedViewVisitor.providers;
     }
 
     if (ast.hasDeferredComponent) {
