@@ -143,15 +143,11 @@ class GatheringErrorListener implements AnalysisErrorListener {
       Map<ErrorCode, List<AnalysisError>> errorsByCode,
       StringBuffer errorMessageBuffer) {
     expectedCounts.forEach((code, expectedCount) {
-      int actualCount;
       final list = errorsByCode.remove(code);
-      if (list == null) {
-        actualCount = 0;
-      } else {
-        actualCount = list.length;
-      }
+      final actualCount = list?.length ?? 0;
+
       if (actualCount != expectedCount) {
-        if (errorMessageBuffer.length == 0) {
+        if (errorMessageBuffer.isEmpty) {
           errorMessageBuffer.write("Expected ");
         } else {
           errorMessageBuffer.write("; ");
@@ -171,7 +167,6 @@ class GatheringErrorListener implements AnalysisErrorListener {
       Map<ErrorCode, List<AnalysisError>> errorsByCode,
       StringBuffer errorMessageBuffer) {
     errorsByCode.forEach((code, actualErrors) {
-      final actualCount = actualErrors.length;
       if (errorMessageBuffer.isEmpty) {
         errorMessageBuffer.write("Expected ");
       } else {
@@ -181,16 +176,10 @@ class GatheringErrorListener implements AnalysisErrorListener {
         ..write("0 errors of type ")
         ..write(code.uniqueName)
         ..write(", found ")
-        ..write(actualCount)
-        ..write(" (");
-      for (var i = 0; i < actualErrors.length; i++) {
-        final error = actualErrors[i];
-        if (i > 0) {
-          errorMessageBuffer.write(", ");
-        }
-        errorMessageBuffer.write(error.offset);
-      }
-      errorMessageBuffer.write(")");
+        ..write(actualErrors.length)
+        ..write(" (")
+        ..write(actualErrors.map((error) => error.offset).join(', '))
+        ..write(")");
     });
   }
 
@@ -198,13 +187,8 @@ class GatheringErrorListener implements AnalysisErrorListener {
       List<ErrorCode> expectedErrorCodes) {
     final expectedCounts = <ErrorCode, int>{};
     for (final code in expectedErrorCodes) {
-      var count = expectedCounts[code];
-      if (count == null) {
-        count = 1;
-      } else {
-        count = count + 1;
-      }
-      expectedCounts[code] = count;
+      expectedCounts.putIfAbsent(code, () => 0);
+      expectedCounts[code]++;
     }
 
     return expectedCounts;
@@ -220,13 +204,7 @@ class GatheringErrorListener implements AnalysisErrorListener {
   Map<ErrorCode, List<AnalysisError>> _groupErrorsByCode() {
     final errorsByCode = <ErrorCode, List<AnalysisError>>{};
     for (final error in errors) {
-      final code = error.errorCode;
-      var list = errorsByCode[code];
-      if (list == null) {
-        list = <AnalysisError>[];
-        errorsByCode[code] = list;
-      }
-      list.add(error);
+      errorsByCode.putIfAbsent(error.errorCode, () => []).add(error);
     }
 
     return errorsByCode;
