@@ -69,7 +69,6 @@ class AnalyzerTestBase {
 
     sdk = new MockSdk(resourceProvider: resourceProvider);
     final packageMap = <String, List<Folder>>{
-      'angular2': [resourceProvider.getFolder('/angular2')],
       'angular': [resourceProvider.getFolder('/angular')],
       'test_package': [resourceProvider.getFolder('/')],
     };
@@ -107,97 +106,23 @@ class GatheringErrorListener implements AnalysisErrorListener {
     }
   }
 
-  /// Assert that the number of errors that have been gathered matches the number
-  /// of errors that are given and that they have the expected error codes.
+  /// Assert that the number of errors that have been gathered matches the
+  /// number of errors that are given and that they have the expected error
+  /// codes.
   ///
   /// The order in which the errors were gathered is ignored.
   void assertErrorsWithCodes(
       [List<ErrorCode> expectedErrorCodes = const <ErrorCode>[]]) {
     final buffer = new StringBuffer();
-    //
-    // Verify that the expected error codes have a non-empty message.
-    //
-    for (final errorCode in expectedErrorCodes) {
-      expect(errorCode.message.isEmpty, isFalse,
-          reason: "Empty error code message");
-    }
-    //
-    // Compute the expected number of each type of error.
-    //
-    final expectedCounts = <ErrorCode, int>{};
-    for (final code in expectedErrorCodes) {
-      var count = expectedCounts[code];
-      if (count == null) {
-        count = 1;
-      } else {
-        count = count + 1;
-      }
-      expectedCounts[code] = count;
-    }
-    //
-    // Compute the actual number of each type of error.
-    //
-    final errorsByCode = <ErrorCode, List<AnalysisError>>{};
-    for (final error in errors) {
-      final code = error.errorCode;
-      var list = errorsByCode[code];
-      if (list == null) {
-        list = <AnalysisError>[];
-        errorsByCode[code] = list;
-      }
-      list.add(error);
-    }
-    //
-    // Compare the expected and actual number of each type of error.
-    //
-    expectedCounts.forEach((code, expectedCount) {
-      int actualCount;
-      final list = errorsByCode.remove(code);
-      if (list == null) {
-        actualCount = 0;
-      } else {
-        actualCount = list.length;
-      }
-      if (actualCount != expectedCount) {
-        if (buffer.length == 0) {
-          buffer.write("Expected ");
-        } else {
-          buffer.write("; ");
-        }
-        buffer
-          ..write(expectedCount)
-          ..write(" errors of type ")
-          ..write(code.uniqueName)
-          ..write(", found ")
-          ..write(actualCount);
-      }
-    });
-    //
-    // Check that there are no more errors in the actual-errors map,
-    // otherwise record message.
-    //
-    errorsByCode.forEach((code, actualErrors) {
-      final actualCount = actualErrors.length;
-      if (buffer.isEmpty) {
-        buffer.write("Expected ");
-      } else {
-        buffer.write("; ");
-      }
-      buffer
-        ..write("0 errors of type ")
-        ..write(code.uniqueName)
-        ..write(", found ")
-        ..write(actualCount)
-        ..write(" (");
-      for (var i = 0; i < actualErrors.length; i++) {
-        final error = actualErrors[i];
-        if (i > 0) {
-          buffer.write(", ");
-        }
-        buffer.write(error.offset);
-      }
-      buffer.write(")");
-    });
+
+    _expectNonEmptyMessages(expectedErrorCodes);
+
+    final expectedCounts = _countExpectedErrorCodes(expectedErrorCodes);
+    final errorsByCode = _groupErrorsByCode();
+
+    _checkExpectedErrorsArePresent(expectedCounts, errorsByCode, buffer);
+    _checkNoExtraErrorsArePresent(expectedCounts, errorsByCode, buffer);
+
     if (buffer.length > 0) {
       fail(buffer.toString());
     }
@@ -211,6 +136,100 @@ class GatheringErrorListener implements AnalysisErrorListener {
   @override
   void onError(AnalysisError error) {
     errors.add(error);
+  }
+
+  void _checkExpectedErrorsArePresent(
+      Map<ErrorCode, int> expectedCounts,
+      Map<ErrorCode, List<AnalysisError>> errorsByCode,
+      StringBuffer errorMessageBuffer) {
+    expectedCounts.forEach((code, expectedCount) {
+      int actualCount;
+      final list = errorsByCode.remove(code);
+      if (list == null) {
+        actualCount = 0;
+      } else {
+        actualCount = list.length;
+      }
+      if (actualCount != expectedCount) {
+        if (errorMessageBuffer.length == 0) {
+          errorMessageBuffer.write("Expected ");
+        } else {
+          errorMessageBuffer.write("; ");
+        }
+        errorMessageBuffer
+          ..write(expectedCount)
+          ..write(" errors of type ")
+          ..write(code.uniqueName)
+          ..write(", found ")
+          ..write(actualCount);
+      }
+    });
+  }
+
+  void _checkNoExtraErrorsArePresent(
+      Map<ErrorCode, int> expectedCounts,
+      Map<ErrorCode, List<AnalysisError>> errorsByCode,
+      StringBuffer errorMessageBuffer) {
+    errorsByCode.forEach((code, actualErrors) {
+      final actualCount = actualErrors.length;
+      if (errorMessageBuffer.isEmpty) {
+        errorMessageBuffer.write("Expected ");
+      } else {
+        errorMessageBuffer.write("; ");
+      }
+      errorMessageBuffer
+        ..write("0 errors of type ")
+        ..write(code.uniqueName)
+        ..write(", found ")
+        ..write(actualCount)
+        ..write(" (");
+      for (var i = 0; i < actualErrors.length; i++) {
+        final error = actualErrors[i];
+        if (i > 0) {
+          errorMessageBuffer.write(", ");
+        }
+        errorMessageBuffer.write(error.offset);
+      }
+      errorMessageBuffer.write(")");
+    });
+  }
+
+  Map<ErrorCode, int> _countExpectedErrorCodes(
+      List<ErrorCode> expectedErrorCodes) {
+    final expectedCounts = <ErrorCode, int>{};
+    for (final code in expectedErrorCodes) {
+      var count = expectedCounts[code];
+      if (count == null) {
+        count = 1;
+      } else {
+        count = count + 1;
+      }
+      expectedCounts[code] = count;
+    }
+
+    return expectedCounts;
+  }
+
+  void _expectNonEmptyMessages(List<ErrorCode> expectedErrorCodes) {
+    for (final errorCode in expectedErrorCodes) {
+      expect(errorCode.message.isEmpty, isFalse,
+          reason: "Empty error code message");
+    }
+  }
+
+  Map<ErrorCode, List<AnalysisError>> _groupErrorsByCode() {
+    final errorsByCode = <ErrorCode, List<AnalysisError>>{};
+    for (final error in errors) {
+      final code = error.errorCode;
+      var list = errorsByCode[code];
+      if (list == null) {
+        list = <AnalysisError>[];
+        errorsByCode[code] = list;
+      }
+      list.add(error);
+    }
+
+    return errorsByCode;
   }
 }
 

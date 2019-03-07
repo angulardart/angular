@@ -153,7 +153,7 @@ Example syntax:
 ```
 
 ### Add new options for ContentChild(ren) in prep for deprecating ElementRef;
-    
+
 Accept (for the moment) ElementRef, Element, and HtmlElement (the
 latter two being from dart:html).
 

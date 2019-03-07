@@ -341,9 +341,9 @@ abstract class ElementStream<T extends Event> implements Stream<T> {}
 abstract class Element {
   /// Stream of `cut` events handled by this [Element].
   ElementStream<Event> get onCut => null;
-  
+
   String get id => null;
-  
+
   set id(String value) => null;
 }
 
@@ -353,10 +353,10 @@ class HtmlElement extends Element {
   ElementStream<MouseEvent> get onClick => null;
   ElementStream<KeyEvent> get onKeyUp => null;
   ElementStream<KeyEvent> get onKeyDown => null;
-  
+
   bool get hidden => null;
   set hidden(bool value) => null;
-  
+
   void set className(String s){}
   void set readOnly(bool b){}
   void set tabIndex(int i){}
@@ -368,7 +368,7 @@ class HtmlElement extends Element {
   set innerHtml(String value) {
     // stuff
   }
-  
+
 }
 
 dynamic JS(a, b, c, d) {}
@@ -420,12 +420,12 @@ class IFrameElement extends HtmlElement {
   String src;
 }
 
-class OptionElement extends HtmlElement {                                        
+class OptionElement extends HtmlElement {
   factory OptionElement({String data: '', String value : '', bool selected: false}) {
-  }                                                                              
-                                                                                 
+  }
+
   factory OptionElement._([String data, String value, bool defaultSelected, bool selected]) {
-  }    
+  }
 }
 
 class TableSectionElement extends HtmlElement {
@@ -657,8 +657,10 @@ class MockSdk implements DartSdk {
     return null;
   }
 
-  /// This method is used to apply patches to [MockSdk].  It may be called only
-  /// before analysis, i.e. before the analysis context was created.
+  /// This method is used to apply patches to [MockSdk].
+  ///
+  /// It may be called only before analysis, i.e. before the analysis context
+  /// was created.
   void updateUriFile(String uri, String updateContent(String content)) {
     assert(_analysisContext == null);
     var path = FULL_URI_MAP[uri];
