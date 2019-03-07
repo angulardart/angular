@@ -152,9 +152,6 @@ class Identifiers {
   static final TextBinding = CompileIdentifierMetadata(
       name: "TextBinding", moduleUrl: _textBindingModuleUrl);
 
-  static final createTextBinding = CompileIdentifierMetadata(
-      name: "createTextBinding", moduleUrl: _textBindingModuleUrl);
-
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
   static final interpolateString = <CompileIdentifierMetadata>[
