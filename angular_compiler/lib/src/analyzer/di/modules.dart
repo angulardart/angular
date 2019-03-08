@@ -51,7 +51,7 @@ class ModuleReader {
     if (isList(value)) {
       return _extractProvidersFromList(value);
     }
-    if (isModule((value))) {
+    if (isModule(value)) {
       return _extractProvidersFromModule(value);
     }
     return [value];

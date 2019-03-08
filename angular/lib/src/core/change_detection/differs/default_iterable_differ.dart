@@ -774,7 +774,7 @@ class _DuplicateMap {
     _DuplicateItemRecordList recordList = this._map[key];
     // Remove the list of duplicates when it gets empty
     if (recordList.remove(record)) {
-      (this._map.containsKey(key) && (this._map.remove(key) != null || true));
+      this._map.containsKey(key) && (this._map.remove(key) != null || true);
     }
     return record;
   }

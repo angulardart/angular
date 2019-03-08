@@ -275,7 +275,7 @@ class ReadVarExpr extends Expression {
       this.builtin = null;
     } else {
       this.name = null;
-      this.builtin = (name as BuiltinVar);
+      this.builtin = name as BuiltinVar;
     }
   }
   @override
@@ -428,7 +428,7 @@ class InvokeMethodExpr extends Expression {
       this.builtin = null;
     } else {
       this.name = null;
-      this.builtin = (method as BuiltinMethod);
+      this.builtin = method as BuiltinMethod;
     }
   }
   @override
@@ -1185,10 +1185,8 @@ class ExpressionTransformer<C>
   @override
   Expression visitLiteralMapExpr(LiteralMapExpr ast, C context) {
     return LiteralMapExpr(ast.entries
-        .map((entry) => [
-              entry[0],
-              ((entry[1] as Expression)).visitExpression(this, context)
-            ])
+        .map((entry) =>
+            [entry[0], (entry[1] as Expression).visitExpression(this, context)])
         .toList());
   }
 
@@ -1417,7 +1415,7 @@ class RecursiveExpressionVisitor<C>
   @override
   Expression visitLiteralMapExpr(LiteralMapExpr ast, C context) {
     for (var entry in ast.entries) {
-      ((entry[1] as Expression)).visitExpression(this, context);
+      (entry[1] as Expression).visitExpression(this, context);
     }
     return ast;
   }

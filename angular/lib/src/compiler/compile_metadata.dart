@@ -209,7 +209,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 
   bool equalsTo(CompileTokenMetadata token2) {
     var ak = assetCacheKey;
-    return (ak != null && ak == token2.assetCacheKey);
+    return ak != null && ak == token2.assetCacheKey;
   }
 
   String get name {

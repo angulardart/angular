@@ -134,7 +134,7 @@ class ViewNameResolver implements NameResolver {
       var paramName = 'p$i';
       proxyParams.add(o.FnParam(paramName));
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
-      values.add((entries[i][1] as o.Expression));
+      values.add(entries[i][1] as o.Expression);
     }
     final mapType = _createMapTypeFrom(type);
     final pureProxyType =

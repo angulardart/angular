@@ -5,7 +5,7 @@ import 'compile_metadata.dart';
 const moduleSuffix = ".dart";
 
 List<String> splitAtColon(String input, List<String> defaultValues) {
-  var parts = jsSplit(input.trim(), (RegExp(r'\s*:\s*')));
+  var parts = jsSplit(input.trim(), RegExp(r'\s*:\s*'));
   if (parts.length > 1) {
     return parts;
   } else {

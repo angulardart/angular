@@ -265,9 +265,9 @@ class ProviderElementContext implements ElementProviderUsage {
     }
     if (dep.token != null) {
       // access built-ins
-      if ((requestingProviderType == ProviderAstType.Directive ||
+      if (requestingProviderType == ProviderAstType.Directive ||
           requestingProviderType == ProviderAstType.Component ||
-          requestingProviderType == ProviderAstType.FunctionalDirective)) {
+          requestingProviderType == ProviderAstType.FunctionalDirective) {
         if (dep.token.equalsTo(Identifiers.ElementRefToken) ||
             dep.token.equalsTo(Identifiers.HtmlElementToken) ||
             dep.token.equalsTo(Identifiers.ElementToken) ||
