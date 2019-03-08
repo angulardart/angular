@@ -230,6 +230,7 @@ List<Annotation> _metadataFromAncestry(AstNode node) {
 // 519_missing_query_selector_test.dart for an example of this condition.
   if (node is ClassMember ||
       node is ClassDeclaration ||
+      node is EnumDeclaration ||
       node is FunctionDeclaration) {
     return (node as AnnotatedNode).metadata;
   } else if (node is FormalParameter) {
