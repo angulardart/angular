@@ -28,13 +28,13 @@ import 'deferred_component.template.dart' deferred as deflib1;
 final List<dynamic> styles$TestContainerComponent = const [];
 
 class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent> {
+  bool _query_queryMe_1_0_isDirty = true;
   ViewContainer _appEl_0;
   void Function() _cancelDeferredLoad0;
   ViewContainer _appEl_1;
   NgIf _NgIf_1_9;
   ViewContainer _appEl_2;
   NgIf _NgIf_2_9;
-  bool _query_queryMe_1_0_isDirty = true;
   ViewContainer _appEl_3;
   void Function() _cancelDeferredLoad3;
   ViewContainer _appEl_4;

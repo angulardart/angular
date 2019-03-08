@@ -139,11 +139,20 @@ class AppViewData<T> {
 }
 
 /// Base class for a generated template for a given [Component] type [T].
+///
+/// NOTE: Since this class is extended by many generated View classes, the
+/// ordering of the fields matters.
+///
+/// dart2js will preserve the field ordering, but can initialize 'null' fields
+/// more compactly by combining them into a single statement. e.g.
+/// `viewData = _rootEl = null`
+///
+/// In the generated View classes, the compiler will list initialized fields
+/// followed by non-initialized fields.  In this base class, the
+/// non-initialized fields are listed first, so the non-initialized fields
+/// from the two classes can be combined into a single statement.
 abstract class AppView<T> {
   AppViewData<T> viewData;
-
-  /// Parent generated view.
-  final AppView parentView;
 
   /// The root element.
   ///
@@ -155,6 +164,20 @@ abstract class AppView<T> {
   ///
   /// This is always a component instance.
   T ctx;
+
+  /// Local values scoped to this view.
+  ///
+  /// Directives may create views and set additional variables accessible to
+  /// the template (for example, `NgFor` sets the current element iterated).
+  ///
+  /// TODO: When we can rely on locals always being typed, encode as <, Object>.
+  Map<String, dynamic> locals;
+
+  @protected
+  ComponentStyles componentStyles;
+
+  /// Parent generated view.
+  final AppView parentView;
 
   AppView(
     ViewType type,
@@ -391,14 +414,6 @@ abstract class AppView<T> {
     return ViewFragment.findLastDomNode(viewData.rootNodesOrViewContainers);
   }
 
-  /// Local values scoped to this view.
-  ///
-  /// Directives may create views and set additional variables accessible to
-  /// the template (for example, `NgFor` sets the current element iterated).
-  ///
-  /// TODO: When we can rely on locals always being typed, encode as <, Object>.
-  Map<String, dynamic> locals;
-
   bool hasLocal(String contextName) => locals.containsKey(contextName);
 
   /// Overwritten by implementations
@@ -506,9 +521,6 @@ abstract class AppView<T> {
   void initComponentStyles() {
     componentStyles = parentView?.componentStyles;
   }
-
-  @protected
-  ComponentStyles componentStyles;
 
   /// Initializes styling to enable css shim for host element.
   @dart2js.noInline

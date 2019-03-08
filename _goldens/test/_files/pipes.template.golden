@@ -8,8 +8,8 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'pipes.dart' as import1;
+import 'package:angular/src/runtime/text_binding.dart' as import2;
 import 'dart:core';
-import 'package:angular/src/runtime/text_binding.dart' as import3;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
 import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
@@ -22,6 +22,10 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
 final List<dynamic> styles$Comp = const [];
 
 class ViewComp0 extends AppView<import1.Comp> {
+  final import2.TextBinding _textBinding_0 = import2.TextBinding();
+  final import2.TextBinding _textBinding_2 = import2.TextBinding();
+  final import2.TextBinding _textBinding_4 = import2.TextBinding();
+  final import2.TextBinding _textBinding_6 = import2.TextBinding();
   import1.PurePipe _pipe_pure_0;
   dynamic Function(dynamic) _pipe_pure_0_0;
   import1.DirtyPipe _pipe_dirty_1;
@@ -29,10 +33,6 @@ class ViewComp0 extends AppView<import1.Comp> {
   dynamic Function(dynamic) _pipe_lifecycle_2_0;
   import1.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
-  final import3.TextBinding _textBinding_0 = import3.TextBinding();
-  final import3.TextBinding _textBinding_2 = import3.TextBinding();
-  final import3.TextBinding _textBinding_4 = import3.TextBinding();
-  final import3.TextBinding _textBinding_6 = import3.TextBinding();
   static import4.ComponentStyles _componentStyles;
   ViewComp0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();

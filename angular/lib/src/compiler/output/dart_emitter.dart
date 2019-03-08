@@ -159,7 +159,12 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     context.println(' {');
     context.incIndent();
-    for (var field in stmt.fields) {
+    // Group fields without initializers to allow dart2js to combine
+    // their initialization. e.g. `a = b = c = null`
+    for (var field in stmt.fields.where((f) => f.initializer != null)) {
+      _visitClassField(field, context);
+    }
+    for (var field in stmt.fields.where((f) => f.initializer == null)) {
       _visitClassField(field, context);
     }
     if (stmt.constructorMethod != null) {
