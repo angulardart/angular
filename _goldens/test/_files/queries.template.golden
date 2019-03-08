@@ -25,12 +25,12 @@ import 'package:angular/src/common/directives/ng_for.dart' as import14;
 final List<dynamic> styles$QueriesComponent = const [];
 
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
+  bool _query_AnotherDirective_1_5_isDirty = true;
+  bool _query_q3_1_6_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   import1.AnotherDirective _AnotherDirective_1_5;
   ViewContainer _appEl_2;
   NgIf _NgIf_2_9;
-  bool _query_AnotherDirective_1_5_isDirty = true;
-  bool _query_q3_1_6_isDirty = true;
   static import4.ComponentStyles _componentStyles;
   ViewQueriesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -169,9 +169,9 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0(AppView<dyna
 final List<dynamic> styles$EmbeddedQueries = const [];
 
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
+  bool _query_AnotherDirective_1_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
-  bool _query_AnotherDirective_1_0_isDirty = true;
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewEmbeddedQueries0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -313,9 +313,9 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0(AppView<dynami
 final List<dynamic> styles$EmbeddedQueriesList = const [];
 
 class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
+  bool _query_AnotherDirective_1_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
-  bool _query_AnotherDirective_1_0_isDirty = true;
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
   ViewEmbeddedQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -457,9 +457,9 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0(AppVie
 final List<dynamic> styles$NestedNgForQueriesList = const [];
 
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
+  bool _query_taggedItem_1_0_isDirty = true;
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
-  bool _query_taggedItem_1_0_isDirty = true;
   static import4.ComponentStyles _componentStyles;
   ViewNestedNgForQueriesList0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();

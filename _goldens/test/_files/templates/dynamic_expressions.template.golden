@@ -325,8 +325,8 @@ AppView<import1.Comp3> viewFactory_Comp3Host0(AppView<dynamic> parentView, int p
 final List<dynamic> styles$Comp4 = const [];
 
 class ViewComp40 extends AppView<import1.Comp4> {
-  List<dynamic> Function(dynamic, dynamic) _arr_0;
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
+  List<dynamic> Function(dynamic, dynamic) _arr_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp40(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -404,8 +404,8 @@ AppView<import1.Comp4> viewFactory_Comp4Host0(AppView<dynamic> parentView, int p
 final List<dynamic> styles$Comp5 = const [];
 
 class ViewComp50 extends AppView<import1.Comp5> {
-  Map<String, dynamic> Function(dynamic) _map_0;
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
+  Map<String, dynamic> Function(dynamic) _map_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp50(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();

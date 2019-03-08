@@ -20,8 +20,8 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 final List<dynamic> styles$I18nPropertyComponent = const [];
 
 class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> {
-  import1.MessageDirective _MessageDirective_0_5;
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
+  import1.MessageDirective _MessageDirective_0_5;
   static import3.ComponentStyles _componentStyles;
   ViewI18nPropertyComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
