@@ -104,7 +104,7 @@ class ParsedBananaAst extends TemplateAst
     this.equalSignToken,
   ) : super.parsed(
             prefixToken,
-            (valueToken != null ? valueToken.rightQuote : suffixToken),
+            valueToken != null ? valueToken.rightQuote : suffixToken,
             sourceFile);
 
   /// Inner name `property` in `[(property)]`.

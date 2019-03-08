@@ -79,7 +79,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
 
   @override
   void visitElement(ElementAst ast, _) {
-    var compileElement = (view.nodes[_nodeIndex++] as CompileElement);
+    var compileElement = view.nodes[_nodeIndex++] as CompileElement;
     var listeners = collectEventListeners(ast.outputs, ast.directives,
         compileElement, view.component.analyzedClass);
 

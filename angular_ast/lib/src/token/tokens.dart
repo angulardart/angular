@@ -252,8 +252,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
       : contentOffset = offset + 1,
         contentLexeme = lexeme.isEmpty
             ? lexeme
-            : lexeme.substring(
-                1, (isClosed ? lexeme.length - 1 : lexeme.length)),
+            : lexeme.substring(1, isClosed ? lexeme.length - 1 : lexeme.length),
         quoteEndOffset = isClosed ? offset + lexeme.length - 1 : null,
         super(
           offset,

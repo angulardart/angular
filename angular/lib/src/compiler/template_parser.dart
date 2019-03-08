@@ -156,7 +156,7 @@ BoundElementPropertyAst createElementPropertyAst(
 }
 
 List<String> _splitClasses(String classAttrValue) {
-  return jsSplit(classAttrValue.trim(), (RegExp(r'\s+')));
+  return jsSplit(classAttrValue.trim(), RegExp(r'\s+'));
 }
 
 CssSelector createElementCssSelector(
