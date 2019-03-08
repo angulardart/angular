@@ -429,8 +429,9 @@ abstract class AbstractEmitterVisitor
 
   @override
   void visitNotExpr(o.NotExpr ast, EmitterVisitorContext context) {
-    context.print('!');
+    context.print('(!');
     ast.condition.visitExpression(this, context);
+    context.print(')');
   }
 
   @override

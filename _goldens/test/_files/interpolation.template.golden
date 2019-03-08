@@ -455,7 +455,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import13.AppViewUtils.throwOnChanges) {
+    if ((!import13.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -505,7 +505,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import13.AppViewUtils.throwOnChanges) {
+    if ((!import13.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();

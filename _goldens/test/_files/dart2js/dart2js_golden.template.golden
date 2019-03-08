@@ -880,7 +880,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
         (_NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    if (!import12.AppViewUtils.throwOnChanges) {
+    if ((!import12.AppViewUtils.throwOnChanges)) {
       _NgFor_1_9.ngDoCheck();
     }
     _appEl_1.detectChangesInNestedViews();
@@ -1543,7 +1543,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
       _NgClass_0_5.rawClass = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import12.AppViewUtils.throwOnChanges) {
+    if ((!import12.AppViewUtils.throwOnChanges)) {
       _NgClass_0_5.ngDoCheck();
     }
     final currVal_1 = _ctx.ngClassesList;
@@ -1551,7 +1551,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
       _NgClass_2_5.rawClass = currVal_1;
       _expr_1 = currVal_1;
     }
-    if (!import12.AppViewUtils.throwOnChanges) {
+    if ((!import12.AppViewUtils.throwOnChanges)) {
       _NgClass_2_5.ngDoCheck();
     }
     final currVal_2 = _ctx.ngClassesString;
@@ -1559,7 +1559,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
       _NgClass_4_5.rawClass = currVal_2;
       _expr_2 = currVal_2;
     }
-    if (!import12.AppViewUtils.throwOnChanges) {
+    if ((!import12.AppViewUtils.throwOnChanges)) {
       _NgClass_4_5.ngDoCheck();
     }
     final currVal_3 = _ctx.ngStyles;
@@ -1567,7 +1567,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
       _NgStyle_6_5.rawStyle = currVal_3;
       _expr_3 = currVal_3;
     }
-    if (!import12.AppViewUtils.throwOnChanges) {
+    if ((!import12.AppViewUtils.throwOnChanges)) {
       _NgStyle_6_5.ngDoCheck();
     }
   }
