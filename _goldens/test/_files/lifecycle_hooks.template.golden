@@ -90,17 +90,17 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    if ((!import8.AppViewUtils.throwOnChanges && firstCheck)) {
+    if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
       _MostLifecycleHooksComponent_0_5.ngOnInit();
     }
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if ((!import8.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
       _MostLifecycleHooksComponent_0_5.ngAfterContentChecked();
     }
     _compView_0.detectChanges();
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if ((!import8.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }
@@ -389,7 +389,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
       _MostLifecycleHooksComponent_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import8.AppViewUtils.throwOnChanges && firstCheck)) {
+    if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
       _MostLifecycleHooksComponent_0_5.ngOnInit();
     }
     final currVal_1 = _ctx.input;
@@ -397,7 +397,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
       _DoCheckDirective_2_5.input = currVal_1;
       _expr_1 = currVal_1;
     }
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if ((!import8.AppViewUtils.throwOnChanges)) {
       _DoCheckDirective_2_5.ngDoCheck();
     }
     changes = null;
@@ -421,7 +421,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     if (changed) {
       _AfterChangesComponent_4_5.ngAfterChanges();
     }
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if ((!import8.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
@@ -431,7 +431,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     _compView_1.detectChanges();
     _compView_3.detectChanges();
     _compView_4.detectChanges();
-    if (!import8.AppViewUtils.throwOnChanges) {
+    if ((!import8.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }

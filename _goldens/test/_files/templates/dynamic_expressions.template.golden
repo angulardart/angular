@@ -515,7 +515,7 @@ class ViewComp60 extends AppView<import1.Comp6> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import9.AppViewUtils.throwOnChanges) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -629,7 +629,7 @@ class ViewComp70 extends AppView<import1.Comp7> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import9.AppViewUtils.throwOnChanges) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -679,7 +679,7 @@ class _ViewComp71 extends AppView<import1.Comp7> {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (!import9.AppViewUtils.throwOnChanges) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();

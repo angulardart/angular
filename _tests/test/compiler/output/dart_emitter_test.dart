@@ -98,6 +98,15 @@ void main() {
           emitStmt(
               o.variable('SomeClass').instantiate([o.literal(1)]).toStmt()),
           'SomeClass(1);');
+      expect(
+          emitStmt(o
+              .variable('a')
+              .plus(o.variable('b'))
+              .callMethod('toString', []).toStmt()),
+          '(a + b).toString();');
+      expect(
+          emitStmt(o.not(o.variable('a')).callMethod('toString', []).toStmt()),
+          '(!a).toString();');
     });
     test('should omit optional const', () {
       expect(
@@ -165,7 +174,7 @@ void main() {
       var lhs = o.variable('lhs');
       var rhs = o.variable('rhs');
       expect(emitStmt(someVar.cast(o.INT_TYPE).toStmt()), '(someVar as int);');
-      expect(emitStmt(o.not(someVar).toStmt()), '!someVar;');
+      expect(emitStmt(o.not(someVar).toStmt()), '(!someVar);');
       expect(
           emitStmt(someVar
               .conditional(o.variable('trueCase'), o.variable('falseCase'))
