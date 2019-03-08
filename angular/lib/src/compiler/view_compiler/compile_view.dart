@@ -809,7 +809,7 @@ class CompileView {
 
     // Create the field which stores the component view:
     //
-    //   SomeComponent _compView_0;
+    //   ViewSomeComponent0 _compView_0;
     //
     appViewRef.allocate(storage, outputType: componentViewType);
 
@@ -819,7 +819,7 @@ class CompileView {
 
     // Instantiate the component view:
     //
-    //   _compView_0 = SomeComponent(this, 0);
+    //   _compView_0 = ViewSomeComponent0(this, 0);
     //
     final createComponentInstanceExpr = o
         .importExpr(componentViewIdentifier)
@@ -833,7 +833,6 @@ class CompileView {
 
   /// Creates a node 'anchor' to mark the insertion point for dynamically
   /// created elements.
-
   NodeReference createViewContainerAnchor(
     CompileElement parent,
     int nodeIndex,
