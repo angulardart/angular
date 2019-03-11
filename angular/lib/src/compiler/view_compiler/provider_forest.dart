@@ -33,7 +33,7 @@ class ProviderForest {
     // Eliminate empty nodes so that we don't optimize around their ranges.
     final roots = expandEmptyNodes(_roots);
     final statements = <o.Statement>[];
-    _build(roots, statements);
+    _build(roots, statements, 0, -1);
     return statements;
   }
 
@@ -41,9 +41,15 @@ class ProviderForest {
   ///
   /// The post-order traversal is important so that a child provider for the
   /// same token comes before its parent.
-  static void _build(Iterable<ProviderNode> nodes, List<o.Statement> target) {
+  static void _build(
+    Iterable<ProviderNode> nodes,
+    List<o.Statement> target,
+    int lowerBound,
+    int upperBound,
+  ) {
     for (final node in nodes) {
-      final indexCondition = _createIndexCondition(node.start, node.end);
+      final indexCondition =
+          _createIndexCondition(node.start, node.end, lowerBound, upperBound);
       if (node.children.isEmpty && node.providers.length == 1) {
         // If this node has exactly one provider, we can combine the `nodeIndex`
         // check and `token` checks into a single if-statement.
@@ -69,7 +75,7 @@ class ProviderForest {
         //      }
         //    }
         final conditionalStatements = <o.Statement>[];
-        _build(node.children, conditionalStatements);
+        _build(node.children, conditionalStatements, node.start, node.end);
         for (final provider in node.providers) {
           final tokenCondition = _createTokenCondition(provider.tokens);
           conditionalStatements.add(o.IfStmt(tokenCondition, [
@@ -81,23 +87,32 @@ class ProviderForest {
     }
   }
 
-  /// Creates an expression to check that 'nodeIndex' is within [start, end].
-  static o.Expression _createIndexCondition(int start, int end) {
+  /// Creates an expression to check if 'nodeIndex' is within [start, end].
+  ///
+  /// The [lowerBound] and [upperBound] indicate the bounds within which
+  /// 'nodeIndex' is guaranteed to lie. This are used to elimated redundant
+  /// range checks when either [start] or [end] don't restrict the range any
+  /// further. If a bound is unknown, pass a negative number.
+  static o.Expression _createIndexCondition(
+    int start,
+    int end,
+    int lowerBound,
+    int upperBound,
+  ) {
     final index = InjectMethodVars.nodeIndex;
-    final lowerBound = o.literal(start);
-    if (start != end) {
-      final upperBound = o.literal(end);
-      final withinUpperBound = index.lowerEquals(upperBound);
-      if (start == 0) {
-        // It's unnecessary to check that the index is greater than zero, since
-        // we would never generate a negative index. Furthermore, dart2js can
-        // tell that this is always true, which confuses its logic for
-        // recreating the expression in JavaScript (b/30508405).
-        return withinUpperBound;
-      }
-      return lowerBound.lowerEquals(index).and(withinUpperBound);
+    final startValue = o.literal(start);
+    final endValue = o.literal(end);
+    // Note there's no need to check if `start == lowerBound` and `end ==
+    // upperBound` are simultaneously true, as this would imply a provider node
+    // has the same number of children as its parent which is impossible.
+    if (start == end) {
+      return startValue.equals(index);
+    } else if (start == lowerBound) {
+      return index.lowerEquals(endValue);
+    } else if (end == upperBound) {
+      return startValue.lowerEquals(index);
     } else {
-      return lowerBound.equals(index);
+      return startValue.lowerEquals(index).and(index.lowerEquals(endValue));
     }
   }
 
