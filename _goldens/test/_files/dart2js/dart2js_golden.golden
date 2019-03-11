@@ -3830,6 +3830,12 @@
       t1.initComponentStyles$0();
       return t1;
     },
+    viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
+      var t1 = new N._ViewInlinedNgIf1(parentView);
+      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      t1.initComponentStyles$0();
+      return t1;
+    },
     viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
       var t1 = new N._ViewEmbeddedNgIf1(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
@@ -3902,8 +3908,12 @@
     },
     ViewInlinedNgIf0: function ViewInlinedNgIf0(t0) {
       var _ = this;
-      _._expr_0 = false;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._el_0_0 = _._anchor_0 = null;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
+      _.parentView = t0;
+    },
+    _ViewInlinedNgIf1: function _ViewInlinedNgIf1(t0) {
+      var _ = this;
+      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
       _.parentView = t0;
     },
     ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0) {
@@ -4055,36 +4065,15 @@
       i = nodesOrViewContainers.length - 1;
       if (i >= 0) {
         node = nodesOrViewContainers[i];
-        return node instanceof V.ViewContainer ? D.ViewFragment__findLastDomNode(node) : node;
+        return node;
       }
       return;
     },
-    ViewFragment__findLastDomNode: function(container) {
-      var nestedViews, i;
-      nestedViews = container.nestedViews;
-      if (nestedViews != null) {
-        i = nestedViews.length - 1;
-        if (i >= 0)
-          return D.ViewFragment_findLastDomNode(nestedViews[i].viewData.rootNodesOrViewContainers);
-      }
-      return container.nativeElement;
-    },
     ViewFragment__flattenDomNodes: function(target, nodes) {
-      var $length, i, node, nestedViews, length0, n;
+      var $length, i;
       $length = nodes.length;
-      for (i = 0; i < $length; ++i) {
-        node = nodes[i];
-        if (node instanceof V.ViewContainer) {
-          target.push(node.nativeElement);
-          nestedViews = node.nestedViews;
-          if (nestedViews != null) {
-            length0 = nestedViews.length;
-            for (n = 0; n < length0; ++n)
-              D.ViewFragment__flattenDomNodes(target, nestedViews[n].viewData.rootNodesOrViewContainers);
-          }
-        } else
-          target.push(node);
-      }
+      for (i = 0; i < $length; ++i)
+        target.push(nodes[i]);
       return target;
     }
   },
@@ -4425,13 +4414,6 @@
         if (J.$eq$(receiver[i], element))
           return i;
       return -1;
-    },
-    contains$1: function(receiver, other) {
-      var i;
-      for (i = 0; i < receiver.length; ++i)
-        if (J.$eq$(receiver[i], other))
-          return true;
-      return false;
     },
     toString$0: function(receiver) {
       return P.IterableBase_iterableToFullString(receiver, "[", "]");
@@ -10279,9 +10261,6 @@
     init0$0: function() {
       this.init$2(C.List_empty, null);
     },
-    init0Mutable$0: function() {
-      this.init$2(H.setRuntimeTypeInfo([], [P.Object]), null);
-    },
     init1$1: function(rootElement) {
       this.init$2(H.setRuntimeTypeInfo([rootElement], [P.Object]), null);
     },
@@ -10289,17 +10268,6 @@
       var t1 = this.viewData;
       t1.rootNodesOrViewContainers = rootNodesOrViewContainers;
       t1.subscriptions = subscriptions;
-    },
-    removeInlinedNodes$2: function(inlinedNodes, isRoot) {
-      var nodeList, i, node;
-      T.removeNodes(inlinedNodes);
-      nodeList = this.viewData.rootNodesOrViewContainers;
-      for (i = nodeList.length - 1; i >= 0; --i) {
-        node = nodeList[i];
-        if (C.JSArray_methods.contains$1(inlinedNodes, node))
-          C.JSArray_methods.remove$1(nodeList, node);
-      }
-      $.domRootRendererIsDirty = true;
     },
     injectorGet$3: function(token, nodeIndex, notFoundValue) {
       var result, view, injector;
@@ -10483,9 +10451,7 @@
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
       view.detachViewNodes$1(view.get$flatRootNodes());
-      t1 = view.viewData.inlinedNodes;
-      if (t1 != null)
-        view.detachViewNodes$1(t1);
+      view.viewData.inlinedNodes;
       return view;
     }
   };
@@ -11477,27 +11443,28 @@
   };
   N.ViewInlinedNgIf0.prototype = {
     build$0: function() {
-      this._anchor_0 = T.appendAnchor(this.initViewRoot$1(this.rootEl));
-      this.init0Mutable$0();
+      var t1 = new V.ViewContainer(0, this, T.appendAnchor(this.initViewRoot$1(this.rootEl)));
+      this._appEl_0 = t1;
+      this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_InlinedNgIf1$closure()), t1);
+      this.init0$0();
     },
     detectChangesInternal$0: function() {
-      var currVal_0, t1, t2;
-      currVal_0 = this.ctx.showDiv === true;
-      t1 = this._expr_0;
-      if (t1 !== currVal_0) {
-        if (currVal_0) {
-          t1 = document.createElement("div");
-          this._el_0_0 = t1;
-          T.appendText(t1, "Hello World");
-          t1 = this._anchor_0;
-          t2 = H.setRuntimeTypeInfo([this._el_0_0], [W.Node]);
-          T.insertNodesAsSibling(t2, t1);
-          t1 = this.viewData.rootNodesOrViewContainers;
-          (t1 && C.JSArray_methods).addAll$1(t1, t2);
-        } else
-          this.removeInlinedNodes$2(H.setRuntimeTypeInfo([this._el_0_0], [W.Node]), true);
-        this._expr_0 = currVal_0;
-      }
+      var _ctx = this.ctx;
+      this._NgIf_0_9.set$ngIf(_ctx.showDiv);
+      this._appEl_0.detectChangesInNestedViews$0();
+    },
+    destroyInternal$0: function() {
+      this._appEl_0.destroyNestedViews$0();
+    },
+    $asAppView: function() {
+      return [O.InlinedNgIf];
+    }
+  };
+  N._ViewInlinedNgIf1.prototype = {
+    build$0: function() {
+      var _el_0 = document.createElement("div");
+      T.appendText(_el_0, "Hello World");
+      this.init1$1(_el_0);
     },
     $asAppView: function() {
       return [O.InlinedNgIf];
@@ -11994,6 +11961,7 @@
     _instance(_, "get$_onErrorWithoutLongStackTrace", 0, 5, null, ["call$5"], ["_onErrorWithoutLongStackTrace$5"], 13, 0);
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 14, 0);
     _static_2(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 31);
+    _static_2(N, "dart2js_golden_template__viewFactory_InlinedNgIf1$closure", "viewFactory_InlinedNgIf1", 1);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 1);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 1);
     _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure", "viewFactory_ComponentConditionalFeatures1", 1);
@@ -12116,7 +12084,7 @@
     _inherit(O._UnscopedComponentStyles, O.ComponentStyles);
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(N.EventManagerPlugin, [L.DomEventsPlugin, N.KeyEventsPlugin]);
-    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N.ViewInjectsManyThingsDynamically0]);
+    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N._ViewInlinedNgIf1, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N.ViewInjectsManyThingsDynamically0]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);

@@ -8,7 +8,6 @@ import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart';
-import 'package:angular/src/compiler/template_parser/is_pure_html.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
@@ -351,7 +350,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, CompileElement parent) {
     var nodeIndex = _view.nodes.length;
-    var isPureHtml = !_visitingProjectedContent && _isPureHtml(ast);
+    // TODO: Remove this once the optimization is deleted.
+    var isPureHtml = false; // !_visitingProjectedContent && _isPureHtml(ast);
     if (isPureHtml) {
       _view.hasInlinedView = true;
     }
@@ -918,16 +918,6 @@ int _getChangeDetectionMode(CompileView view) {
     mode = ChangeDetectionStrategy.CheckAlways;
   }
   return mode;
-}
-
-final _pureHtmlVisitor = IsPureHtmlVisitor();
-
-bool _isPureHtml(EmbeddedTemplateAst ast) {
-  if (ast.directives.length != 1) return false;
-  var isNgIf = ast.directives.single.directive.identifier.name == 'NgIf';
-  if (!isNgIf) return false;
-
-  return ast.children.every((t) => t.visit(_pureHtmlVisitor, null));
 }
 
 /// Constructs name of global function that can be used to update an input
