@@ -113,14 +113,15 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
 
   @override
   ComponentRef<import1.CompWithFinal> build() {
+    final _ctx = ctx;
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, (ctx.okMessage ?? ''));
+    final _text_1 = import9.appendText(_el_0, (_ctx.okMessage ?? ''));
     final _text_2 = import9.appendText(parentRenderNode, ' ');
     final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, (ctx.cancelMessage ?? ''));
+    final _text_4 = import9.appendText(_el_3, (_ctx.cancelMessage ?? ''));
     init0();
   }
 

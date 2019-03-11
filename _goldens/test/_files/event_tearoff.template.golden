@@ -30,12 +30,13 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
 
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
+    final _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import8.appendElement(doc, parentRenderNode, 'button');
-    _el_0.addEventListener('click', eventHandler1(ctx.onClick));
-    _el_0.addEventListener('blur', eventHandler0(ctx.onBlur));
+    _el_0.addEventListener('click', eventHandler1(_ctx.onClick));
+    _el_0.addEventListener('blur', eventHandler0(_ctx.onBlur));
     init0();
   }
 

@@ -42,6 +42,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
 
   @override
   ComponentRef<import1.QueriesComponent> build() {
+    final _ctx = ctx;
     final _rootEl = rootEl;
     final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
@@ -54,11 +55,11 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, viewFactory_QueriesComponent1);
     _NgIf_2_9 = NgIf(_appEl_2, _TemplateRef_2_8);
-    ctx.viewChildrenFromField = [ElementRef(_el_1)];
-    ctx.viewChildFromField = ElementRef(_el_1);
-    ctx.readDIFromElementRef = ElementRef(_el_1);
-    ctx.readDIFromElement = _el_1;
-    ctx.readDIFromHtmlElement = _el_1;
+    _ctx.viewChildrenFromField = [ElementRef(_el_1)];
+    _ctx.viewChildFromField = ElementRef(_el_1);
+    _ctx.readDIFromElementRef = ElementRef(_el_1);
+    _ctx.readDIFromElement = _el_1;
+    _ctx.readDIFromHtmlElement = _el_1;
     init0();
   }
 
@@ -69,7 +70,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     _appEl_2.detectChangesInNestedViews();
     if ((!import13.AppViewUtils.throwOnChanges)) {
       if (_query_AnotherDirective_1_5_isDirty) {
-        ctx.usingTypeFromField = import13.flattenNodes([
+        _ctx.usingTypeFromField = import13.flattenNodes([
           [_AnotherDirective_0_5],
           [_AnotherDirective_1_5],
           _appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
@@ -79,7 +80,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         _query_AnotherDirective_1_5_isDirty = false;
       }
       if (_query_q3_1_6_isDirty) {
-        ctx.nestedViewChild = import13.firstOrNull(_appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
+        _ctx.nestedViewChild = import13.firstOrNull(_appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
           return [ElementRef(nestedView._el_0)];
         }));
         _query_q3_1_6_isDirty = false;
@@ -200,9 +201,10 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
 
   @override
   void detectChangesInternal() {
+    final _ctx = ctx;
     if ((!import13.AppViewUtils.throwOnChanges)) {
       if (_query_AnotherDirective_1_0_isDirty) {
-        ctx.viewChildren = import13.flattenNodes([
+        _ctx.viewChildren = import13.flattenNodes([
           [_AnotherDirective_0_5],
           _appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
             return [nestedView._AnotherDirective_0_5];
@@ -344,9 +346,10 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
 
   @override
   void detectChangesInternal() {
+    final _ctx = ctx;
     if ((!import13.AppViewUtils.throwOnChanges)) {
       if (_query_AnotherDirective_1_0_isDirty) {
-        ctx.viewChildren = import13.flattenNodes([
+        _ctx.viewChildren = import13.flattenNodes([
           [_AnotherDirective_0_5],
           _appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
             return [nestedView._AnotherDirective_0_5];
@@ -487,7 +490,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     _appEl_0.detectChangesInNestedViews();
     if ((!import13.AppViewUtils.throwOnChanges)) {
       if (_query_taggedItem_1_0_isDirty) {
-        ctx.taggedItems = _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
+        _ctx.taggedItems = _appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
             return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList3 nestedView) {
               return [ElementRef(nestedView._el_0)];
