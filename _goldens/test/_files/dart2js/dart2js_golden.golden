@@ -11198,15 +11198,15 @@
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       var t1;
       if (nodeIndex <= 1) {
-        if (1 === nodeIndex)
-          if (token === C.Type_C_CJJ) {
-            t1 = this.__C_1_6;
-            if (t1 == null) {
-              t1 = new O.C2();
-              this.__C_1_6 = t1;
-            }
-            return t1;
+        t1 = token === C.Type_C_CJJ;
+        if (t1 && 1 === nodeIndex) {
+          t1 = this.__C_1_6;
+          if (t1 == null) {
+            t1 = new O.C2();
+            this.__C_1_6 = t1;
           }
+          return t1;
+        }
         if (token === C.Type_A_CJJ) {
           t1 = this.__A_0_6;
           if (t1 == null) {
@@ -11223,7 +11223,7 @@
           }
           return t1;
         }
-        if (token === C.Type_C_CJJ) {
+        if (t1) {
           t1 = this.__C_0_8;
           if (t1 == null) {
             t1 = new O.C();
@@ -11232,15 +11232,14 @@
           return t1;
         }
       }
-      if (2 === nodeIndex)
-        if (token === C.Type_C_CJJ) {
-          t1 = this.__C_2_6;
-          if (t1 == null) {
-            t1 = new O.C2();
-            this.__C_2_6 = t1;
-          }
-          return t1;
+      if (token === C.Type_C_CJJ && 2 === nodeIndex) {
+        t1 = this.__C_2_6;
+        if (t1 == null) {
+          t1 = new O.C2();
+          this.__C_2_6 = t1;
         }
+        return t1;
+      }
       return notFoundResult;
     },
     detectChangesInternal$0: function() {

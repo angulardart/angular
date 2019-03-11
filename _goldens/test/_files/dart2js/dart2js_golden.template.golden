@@ -177,10 +177,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((nodeIndex <= 1)) {
-      if ((1 == nodeIndex)) {
-        if (identical(token, import1.C)) {
-          return _C_1_6;
-        }
+      if ((identical(token, import1.C) && (1 == nodeIndex))) {
+        return _C_1_6;
       }
       if (identical(token, import1.A)) {
         return _A_0_6;
@@ -192,10 +190,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
         return _C_0_8;
       }
     }
-    if ((2 == nodeIndex)) {
-      if (identical(token, import1.C)) {
-        return _C_2_6;
-      }
+    if ((identical(token, import1.C) && (2 == nodeIndex))) {
+      return _C_2_6;
     }
     return notFoundResult;
   }
