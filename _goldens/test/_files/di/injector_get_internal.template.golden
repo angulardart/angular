@@ -327,7 +327,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
           return _MultiToken_1_11;
         }
       }
-      if (((3 <= nodeIndex) && (nodeIndex <= 8))) {
+      if ((3 <= nodeIndex)) {
         if ((4 == nodeIndex)) {
           if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
             return _MaterialInputComponent_4_5;
