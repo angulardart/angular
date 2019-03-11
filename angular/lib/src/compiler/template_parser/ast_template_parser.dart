@@ -281,8 +281,10 @@ class _BindDirectivesVisitor
     }
   }
 
-  int _findNgContentIndexForElement(
-      ast.ElementAst astNode, _ParseContext context) {
+  static int _findNgContentIndexForElement(
+    ast.ElementAst astNode,
+    _ParseContext context,
+  ) {
     return context.findNgContentIndex(_elementSelector(astNode));
   }
 
@@ -315,11 +317,11 @@ class _BindDirectivesVisitor
         hasDeferredComponent: astNode.hasDeferredComponent);
   }
 
-  int _findNgContentIndexForTemplate(
-      ast.EmbeddedTemplateAst astNode, _ParseContext context) {
-    if (_isInlineTemplate(astNode)) {
-      // An inline template originates from a *-binding, and thus only has a
-      // single child.
+  static int _findNgContentIndexForTemplate(
+    ast.EmbeddedTemplateAst astNode,
+    _ParseContext context,
+  ) {
+    if (_singleChildTemplate(astNode)) {
       final childNode = astNode.childNodes.single;
       if (childNode is ast.ElementAst) {
         return _findNgContentIndexForElement(childNode, context);
@@ -328,13 +330,19 @@ class _BindDirectivesVisitor
     return context.findNgContentIndex(_templateSelector(astNode));
   }
 
-  bool _isInlineTemplate(ast.EmbeddedTemplateAst astNode) {
-    if (astNode is! ast.SyntheticTemplateAst) return false;
-    final syntheticNode = astNode as ast.SyntheticTemplateAst;
-    if (syntheticNode.origin is ast.EmbeddedTemplateAst) {
-      return _isInlineTemplate(syntheticNode.origin as ast.EmbeddedTemplateAst);
+  /// Returns whether [astNode] is a synthetic single-child `<template>` node.
+  ///
+  /// Some examples include the use of a `*directive` or `@deferred`.
+  static bool _singleChildTemplate(ast.EmbeddedTemplateAst astNode) {
+    final Object upcast = astNode;
+    if (upcast is ast.SyntheticTemplateAst) {
+      final origin = upcast.origin;
+      if (origin is ast.StarAst) {
+        return true;
+      }
+      return origin is ast.EmbeddedTemplateAst && _singleChildTemplate(origin);
     }
-    return syntheticNode.origin is ast.StarAst;
+    return false;
   }
 
   @override
