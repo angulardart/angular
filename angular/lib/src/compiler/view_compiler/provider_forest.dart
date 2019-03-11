@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart' show ListEquality;
+import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileTokenMetadata;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
@@ -28,8 +30,10 @@ class ProviderForest {
   /// These statements assume that the local variables [InjectMethodVars.token]
   /// and [InjectMethodVars.nodeIndex] are in scope.
   List<o.Statement> build() {
+    // Eliminate empty nodes so that we don't optimize around their ranges.
+    final roots = expandEmptyNodes(_roots);
     final statements = <o.Statement>[];
-    _build(_roots, statements);
+    _build(roots, statements);
     return statements;
   }
 
@@ -76,6 +80,57 @@ class ProviderForest {
   /// Creates an expression to check that 'token' is identical to a [token].
   static o.Expression _createTokenCondition(CompileTokenMetadata token) =>
       InjectMethodVars.token.identical(createDiTokenExpression(token));
+
+  /// Recursively replaces any empty [nodes] with their children.
+  ///
+  /// For example, this will expand the following list of nodes
+  ///
+  /// ```
+  /// [
+  ///   ProviderNode {
+  ///     providers: []
+  ///     children: [
+  ///       ProviderNode { providers: [a, b] },
+  ///       ProviderNode { providers: [c] },
+  ///     ],
+  ///   },
+  ///   ProviderNode { providers: [x, y, z] },
+  /// ]
+  /// ```
+  ///
+  /// into
+  ///
+  /// ```
+  /// [
+  ///   ProviderNode { providers: [a, b] },
+  ///   ProviderNode { providers: [c] },
+  ///   ProviderNode { providers: [x, y, z] },
+  /// ]
+  /// ```
+  ///
+  /// This transformation simplifies optimization and code generation, without
+  /// affecting resolution of providers at run-time.
+  @visibleForTesting
+  static Iterable<ProviderNode> expandEmptyNodes(List<ProviderNode> nodes) {
+    return nodes.expand((node) {
+      // Recursively expand empty children.
+      final childrenWithProviders = expandEmptyNodes(node.children);
+      if (node.providers.isEmpty) {
+        // If this node has no providers, replace it with its children.
+        return childrenWithProviders;
+      } else {
+        // Otherwise, copy the node with its expanded children.
+        return [
+          ProviderNode(
+            node.start,
+            node.end,
+            providers: node.providers,
+            children: childrenWithProviders.toList(),
+          )
+        ];
+      }
+    });
+  }
 }
 
 /// Represents a provider's runtime value.
@@ -111,9 +166,19 @@ class ProviderNode {
   /// node represents.
   final int end;
 
+  /// The children of this node.
+  final List<ProviderNode> children;
+
   /// The providers which are available for injection from this node.
   final List<ProviderInstance> providers;
 
-  /// The children of this node.
-  final List<ProviderNode> children;
+  @override
+  // This is only used for testing.
+  // ignore: hash_and_equals
+  bool operator ==(Object other) =>
+      other is ProviderNode &&
+      other.start == start &&
+      other.end == end &&
+      const ListEquality<ProviderNode>().equals(other.children, children) &&
+      const ListEquality<ProviderInstance>().equals(other.providers, providers);
 }
