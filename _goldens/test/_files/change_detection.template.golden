@@ -42,8 +42,7 @@ class ViewCheckOnceComponent0 extends AppView<import1.CheckOnceComponent> {
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
-    final currVal_0 = _ctx.id;
+    final currVal_0 = ctx.id;
     if (import9.checkBinding(_expr_0, currVal_0)) {
       import8.setProperty(rootEl, 'id', currVal_0);
       _expr_0 = currVal_0;
@@ -604,7 +603,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
 
   @override
   ComponentRef<import1.StatefulComponent> build() {
-    final _ctx = ctx;
+    final import1.StatefulComponent _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;

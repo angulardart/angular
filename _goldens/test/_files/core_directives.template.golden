@@ -125,8 +125,7 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
 
   void _handle_click_1_0($event) {
     final local_bar = import8.unsafeCast<String>(locals['\$implicit']);
-    final _ctx = ctx;
-    _ctx.onClick(local_bar);
+    ctx.onClick(local_bar);
   }
 }
 
