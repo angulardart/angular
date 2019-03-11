@@ -52,8 +52,10 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
-      return _ProvidesServicesComponent_0_5;
+    if ((nodeIndex <= 1)) {
+      if ((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB))) {
+        return _ProvidesServicesComponent_0_5;
+      }
     }
     return notFoundResult;
   }
@@ -173,8 +175,10 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (0 == nodeIndex))) {
-      return _ProvidesServicesComponent_0_5;
+    if ((0 == nodeIndex)) {
+      if ((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB))) {
+        return _ProvidesServicesComponent_0_5;
+      }
     }
     return notFoundResult;
   }

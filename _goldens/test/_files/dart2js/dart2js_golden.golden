@@ -11196,47 +11196,51 @@
       this.init0$0();
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
-      var t1 = token === C.Type_C_CJJ;
-      if (t1 && 1 === nodeIndex) {
-        t1 = this.__C_1_6;
-        if (t1 == null) {
-          t1 = new O.C2();
-          this.__C_1_6 = t1;
+      var t1;
+      if (nodeIndex <= 1) {
+        if (1 === nodeIndex)
+          if (token === C.Type_C_CJJ) {
+            t1 = this.__C_1_6;
+            if (t1 == null) {
+              t1 = new O.C2();
+              this.__C_1_6 = t1;
+            }
+            return t1;
+          }
+        if (token === C.Type_A_CJJ) {
+          t1 = this.__A_0_6;
+          if (t1 == null) {
+            t1 = new O.A();
+            this.__A_0_6 = t1;
+          }
+          return t1;
         }
-        return t1;
-      }
-      if (token === C.Type_A_CJJ && nodeIndex <= 1) {
-        t1 = this.__A_0_6;
-        if (t1 == null) {
-          t1 = new O.A();
-          this.__A_0_6 = t1;
+        if (token === C.Type_B_CJJ) {
+          t1 = this.__B_0_7;
+          if (t1 == null) {
+            t1 = new O.B();
+            this.__B_0_7 = t1;
+          }
+          return t1;
         }
-        return t1;
-      }
-      if (token === C.Type_B_CJJ && nodeIndex <= 1) {
-        t1 = this.__B_0_7;
-        if (t1 == null) {
-          t1 = new O.B();
-          this.__B_0_7 = t1;
+        if (token === C.Type_C_CJJ) {
+          t1 = this.__C_0_8;
+          if (t1 == null) {
+            t1 = new O.C();
+            this.__C_0_8 = t1;
+          }
+          return t1;
         }
-        return t1;
       }
-      if (t1 && nodeIndex <= 1) {
-        t1 = this.__C_0_8;
-        if (t1 == null) {
-          t1 = new O.C();
-          this.__C_0_8 = t1;
+      if (2 === nodeIndex)
+        if (token === C.Type_C_CJJ) {
+          t1 = this.__C_2_6;
+          if (t1 == null) {
+            t1 = new O.C2();
+            this.__C_2_6 = t1;
+          }
+          return t1;
         }
-        return t1;
-      }
-      if (t1 && 2 === nodeIndex) {
-        t1 = this.__C_2_6;
-        if (t1 == null) {
-          t1 = new O.C2();
-          this.__C_2_6 = t1;
-        }
-        return t1;
-      }
       return notFoundResult;
     },
     detectChangesInternal$0: function() {

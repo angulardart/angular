@@ -83,8 +83,10 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
-      return _TextService_0_6;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.TextService)) {
+        return _TextService_0_6;
+      }
     }
     return notFoundResult;
   }

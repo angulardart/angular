@@ -159,35 +159,37 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.MyTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyTypeAnnotation_0_6;
-    }
-    if ((identical(token, import1.MyInjectableTypeAnnotation) && (0 == nodeIndex))) {
-      return _MyInjectableTypeAnnotation_0_7;
-    }
-    if ((identical(token, import1.MyUseFactory) && (0 == nodeIndex))) {
-      return _MyUseFactory_0_8;
-    }
-    if ((((identical(token, import1.MyUseClass) || identical(token, import1.MyUseExisting)) || identical(token, import1.MyUseExistingNested)) && (0 == nodeIndex))) {
-      return _MyUseClass_0_9;
-    }
-    if ((identical(token, import1.MyUseValue) && (0 == nodeIndex))) {
-      return _MyUseValue_0_12;
-    }
-    if ((identical(token, const import11.OpaqueToken<dynamic>('useValueString')) && (0 == nodeIndex))) {
-      return _useValueString_0_13;
-    }
-    if ((identical(token, const import11.OpaqueToken<dynamic>('useValueList')) && (0 == nodeIndex))) {
-      return _useValueList_0_14;
-    }
-    if ((identical(token, const import11.OpaqueToken<dynamic>('useValueMap')) && (0 == nodeIndex))) {
-      return _useValueMap_0_15;
-    }
-    if ((identical(token, const import11.OpaqueToken<dynamic>('useEnums')) && (0 == nodeIndex))) {
-      return _useEnums_0_16;
-    }
-    if ((identical(token, const import12.XsrfToken()) && (0 == nodeIndex))) {
-      return _XsrfToken_0_17;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.MyTypeAnnotation)) {
+        return _MyTypeAnnotation_0_6;
+      }
+      if (identical(token, import1.MyInjectableTypeAnnotation)) {
+        return _MyInjectableTypeAnnotation_0_7;
+      }
+      if (identical(token, import1.MyUseFactory)) {
+        return _MyUseFactory_0_8;
+      }
+      if (((identical(token, import1.MyUseClass) || identical(token, import1.MyUseExisting)) || identical(token, import1.MyUseExistingNested))) {
+        return _MyUseClass_0_9;
+      }
+      if (identical(token, import1.MyUseValue)) {
+        return _MyUseValue_0_12;
+      }
+      if (identical(token, const import11.OpaqueToken<dynamic>('useValueString'))) {
+        return _useValueString_0_13;
+      }
+      if (identical(token, const import11.OpaqueToken<dynamic>('useValueList'))) {
+        return _useValueList_0_14;
+      }
+      if (identical(token, const import11.OpaqueToken<dynamic>('useValueMap'))) {
+        return _useValueMap_0_15;
+      }
+      if (identical(token, const import11.OpaqueToken<dynamic>('useEnums'))) {
+        return _useEnums_0_16;
+      }
+      if (identical(token, const import12.XsrfToken())) {
+        return _XsrfToken_0_17;
+      }
     }
     return notFoundResult;
   }

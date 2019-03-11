@@ -43,17 +43,19 @@ class ProviderForest {
   /// same token comes before its parent.
   static void _build(Iterable<ProviderNode> nodes, List<o.Statement> target) {
     for (final node in nodes) {
-      _build(node.children, target);
+      // TODO(leonsenft): don't group by range if there's only 1 token check.
+      final conditionalStatements = <o.Statement>[];
+      _build(node.children, conditionalStatements);
       for (final provider in node.providers) {
         final tokenCondition = provider.tokens
             .map(_createTokenCondition)
             .reduce((expression, condition) => expression.or(condition));
-        final indexCondition = _createIndexCondition(node.start, node.end);
-        final condition = tokenCondition.and(indexCondition);
-        target.add(o.IfStmt(condition, [
+        conditionalStatements.add(o.IfStmt(tokenCondition, [
           o.ReturnStatement(provider.expression),
         ]));
       }
+      final indexCondition = _createIndexCondition(node.start, node.end);
+      target.add(o.IfStmt(indexCondition, conditionalStatements));
     }
   }
 
