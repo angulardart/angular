@@ -36,9 +36,10 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
 
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
+    final _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _text_0 = import8.appendText(parentRenderNode, (ctx.baseUrl ?? ''));
+    final _text_0 = import8.appendText(parentRenderNode, (_ctx.baseUrl ?? ''));
     init0();
   }
 

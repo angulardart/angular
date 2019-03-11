@@ -1433,12 +1433,13 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   }
 
   void detectHostChanges(bool firstCheck) {
-    final currVal_2 = ctx.title;
+    final _ctx = ctx;
+    final currVal_2 = _ctx.title;
     if (import12.checkBinding(_expr_2, currVal_2)) {
       import8.updateAttribute(rootEl, 'title', currVal_2);
       _expr_2 = currVal_2;
     }
-    final currVal_3 = ctx.isFancy;
+    final currVal_3 = _ctx.isFancy;
     if (import12.checkBinding(_expr_3, currVal_3)) {
       import8.updateClassBindingNonHtml(rootEl, 'fancy', currVal_3);
       _expr_3 = currVal_3;
