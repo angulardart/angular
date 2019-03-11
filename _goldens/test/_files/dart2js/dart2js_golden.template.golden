@@ -646,9 +646,8 @@ AppView<import1.OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectio
 final List<dynamic> styles$InlinedNgIf = const [];
 
 class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
-  bool _expr_0 = false;
-  import5.Comment _anchor_0;
-  import5.DivElement _el_0_0;
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_9;
   static import2.ComponentStyles _componentStyles;
   ViewInlinedNgIf0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -662,25 +661,23 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   ComponentRef<import1.InlinedNgIf> build() {
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = import8.appendAnchor(parentRenderNode);
-    init0Mutable();
+    final _anchor_0 = import8.appendAnchor(parentRenderNode);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InlinedNgIf1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
+    init0();
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = (_ctx.showDiv == true);
-    if (import12.checkBinding(_expr_0, currVal_0)) {
-      if (currVal_0) {
-        final doc = import5.document;
-        _el_0_0 = doc.createElement('div');
-        final _text_0_1 = import8.appendText(_el_0_0, 'Hello World');
-        addInlinedNodes(_anchor_0, [_el_0_0], true);
-      } else {
-        removeInlinedNodes([_el_0_0], true);
-      }
-      _expr_0 = currVal_0;
-    }
+    _NgIf_0_9.ngIf = _ctx.showDiv;
+    _appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    _appEl_0.destroyNestedViews();
   }
 
   @override
@@ -696,6 +693,23 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
 const ComponentFactory<import1.InlinedNgIf> _InlinedNgIfNgFactory = const ComponentFactory('inlined-ng-if', viewFactory_InlinedNgIfHost0);
 ComponentFactory<import1.InlinedNgIf> get InlinedNgIfNgFactory {
   return _InlinedNgIfNgFactory;
+}
+
+class _ViewInlinedNgIf1 extends AppView<import1.InlinedNgIf> {
+  _ViewInlinedNgIf1(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.InlinedNgIf> build() {
+    final doc = import5.document;
+    final _el_0 = doc.createElement('div');
+    final _text_1 = import8.appendText(_el_0, 'Hello World');
+    init1(_el_0);
+  }
+}
+
+AppView<void> viewFactory_InlinedNgIf1(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewInlinedNgIf1(parentView, parentIndex);
 }
 
 final List<dynamic> styles$InlinedNgIfHost = const [];

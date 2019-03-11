@@ -23,6 +23,12 @@
 
 *   The compiler now optimizes change detection for HTML Text nodes.
 
+*   Disabled an optimization around pure-HTML DOM nodes wrapped in a `*ngIf`. In
+    practice this optimization only kicked in for a few views per application
+    and had a high runtime cost as well as a high overhead for the framework
+    team. We have added and expect to add additional optimizations around the
+    size of generated views.
+
 ### Bug fixes
 
 *   The template compiler now outputs the full path to a template file when it

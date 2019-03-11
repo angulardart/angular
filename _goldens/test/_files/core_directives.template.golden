@@ -9,71 +9,71 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'core_directives.dart' as import1;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import3;
-import 'dart:html' as import4;
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import4;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import5;
 import 'package:angular/src/core/linker/view_type.dart' as import6;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/runtime.dart' as import8;
+import 'dart:html' as import8;
+import 'package:angular/src/runtime.dart' as import9;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
-import 'package:angular/src/runtime/text_binding.dart' as import13;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import13;
+import 'package:angular/src/runtime/text_binding.dart' as import14;
 import 'dart:core';
 
 final List<dynamic> styles$TestFooComponent = const [];
 
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
+  ViewContainer _appEl_0;
+  NgIf _NgIf_0_9;
   ViewContainer _appEl_1;
-  import3.NgFor _NgFor_1_9;
-  import4.Comment _anchor_0;
+  import4.NgFor _NgFor_1_9;
   static import5.ComponentStyles _componentStyles;
   ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import4.document.createElement('test-foo');
+    rootEl = import8.document.createElement('test-foo');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/core_directives.dart' : null);
+    return (import9.isDevMode ? 'asset:_goldens/test/_files/core_directives.dart' : null);
   }
 
   @override
   ComponentRef<import1.TestFooComponent> build() {
     final _rootEl = rootEl;
-    final import4.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    _anchor_0 = import10.appendAnchor(parentRenderNode);
-    final _anchor_1 = import10.appendAnchor(parentRenderNode);
+    final import8.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _anchor_0 = import11.appendAnchor(parentRenderNode);
+    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestFooComponent1);
+    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
+    final _anchor_1 = import11.appendAnchor(parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestFooComponent2);
-    _NgFor_1_9 = import3.NgFor(_appEl_1, _TemplateRef_1_8);
-    init0Mutable();
+    _NgFor_1_9 = import4.NgFor(_appEl_1, _TemplateRef_1_8);
+    init0();
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
+    _NgIf_0_9.ngIf = _ctx.foo;
     if (firstCheck) {
-      if (!identical(_ctx.foo, null)) {
-        if (_ctx.foo) {
-          final doc = import4.document;
-          final _el_0_0 = doc.createElement('div');
-          final _text_0_1 = import10.appendText(_el_0_0, 'Foo');
-          addInlinedNodes(_anchor_0, [_el_0_0], true);
-        }
-      }
       if (!identical(_ctx.bars, null)) {
         (_NgFor_1_9.ngForOf = _ctx.bars);
       }
     }
-    if ((!import12.AppViewUtils.throwOnChanges)) {
+    if ((!import13.AppViewUtils.throwOnChanges)) {
       _NgFor_1_9.ngDoCheck();
     }
+    _appEl_0.detectChangesInNestedViews();
     _appEl_1.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
+    _appEl_0.destroyNestedViews();
     _appEl_1.destroyNestedViews();
   }
 
@@ -92,22 +92,39 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
   return _TestFooComponentNgFactory;
 }
 
+class _ViewTestFooComponent1 extends AppView<import1.TestFooComponent> {
+  _ViewTestFooComponent1(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.TestFooComponent> build() {
+    final doc = import8.document;
+    final _el_0 = doc.createElement('div');
+    final _text_1 = import11.appendText(_el_0, 'Foo');
+    init1(_el_0);
+  }
+}
+
+AppView<void> viewFactory_TestFooComponent1(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewTestFooComponent1(parentView, parentIndex);
+}
+
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
-  final import13.TextBinding _textBinding_2 = import13.TextBinding();
-  final import13.TextBinding _textBinding_4 = import13.TextBinding();
-  final import13.TextBinding _textBinding_6 = import13.TextBinding();
+  final import14.TextBinding _textBinding_2 = import14.TextBinding();
+  final import14.TextBinding _textBinding_4 = import14.TextBinding();
+  final import14.TextBinding _textBinding_6 = import14.TextBinding();
   _ViewTestFooComponent2(AppView<dynamic> parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    final doc = import4.document;
+    final doc = import8.document;
     final _el_0 = doc.createElement('div');
-    final _el_1 = import10.appendSpan(doc, _el_0);
+    final _el_1 = import11.appendSpan(doc, _el_0);
     _el_1.append(_textBinding_2.element);
-    final _text_3 = import10.appendText(_el_1, '. #');
+    final _text_3 = import11.appendText(_el_1, '. #');
     _el_1.append(_textBinding_4.element);
-    final _text_5 = import10.appendText(_el_1, ' odd?');
+    final _text_5 = import11.appendText(_el_1, ' odd?');
     _el_1.append(_textBinding_6.element);
     _el_1.addEventListener('click', eventHandler1(_handle_click_1_0));
     init1(_el_0);
@@ -115,16 +132,16 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
 
   @override
   void detectChangesInternal() {
-    final local_bar = import8.unsafeCast<String>(locals['\$implicit']);
-    final local_index = import8.unsafeCast<int>(locals['index']);
-    final local_odd = import8.unsafeCast<bool>(locals['odd']);
-    _textBinding_2.updateText(import12.interpolateString0(local_bar));
-    _textBinding_4.updateText(import12.interpolate0(local_index));
-    _textBinding_6.updateText(import12.interpolate0(local_odd));
+    final local_bar = import9.unsafeCast<String>(locals['\$implicit']);
+    final local_index = import9.unsafeCast<int>(locals['index']);
+    final local_odd = import9.unsafeCast<bool>(locals['odd']);
+    _textBinding_2.updateText(import13.interpolateString0(local_bar));
+    _textBinding_4.updateText(import13.interpolate0(local_index));
+    _textBinding_6.updateText(import13.interpolate0(local_odd));
   }
 
   void _handle_click_1_0($event) {
-    final local_bar = import8.unsafeCast<String>(locals['\$implicit']);
+    final local_bar = import9.unsafeCast<String>(locals['\$implicit']);
     ctx.onClick(local_bar);
   }
 }
