@@ -492,11 +492,13 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import9.ExternalServiceImmediatelyCreated) && (0 == nodeIndex))) {
-      return _ExternalServiceImmediatelyCreated_0_5;
-    }
-    if ((identical(token, import9.ExternalServiceLazilyCreatedMaybe) && (0 == nodeIndex))) {
-      return _ExternalServiceLazilyCreatedMaybe_0_7;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import9.ExternalServiceImmediatelyCreated)) {
+        return _ExternalServiceImmediatelyCreated_0_5;
+      }
+      if (identical(token, import9.ExternalServiceLazilyCreatedMaybe)) {
+        return _ExternalServiceLazilyCreatedMaybe_0_7;
+      }
     }
     return notFoundResult;
   }

@@ -303,125 +303,143 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (1 == nodeIndex))) {
-      return _luckyNumber_1_15;
-    }
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _MaterialInputComponent_1_5;
-    }
-    if ((identical(token, import1.MaterialInputValueAccessor) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _MaterialInputValueAccessor_1_6;
-    }
-    if ((identical(token, import1.NgControl) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _NgControlName_1_7;
-    }
-    if ((identical(token, import1.Service) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _Service_1_9;
-    }
-    if ((identical(token, import1.DeferredValidator) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _DeferredValidator_1_10;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && ((1 <= nodeIndex) && (nodeIndex <= 2)))) {
-      return _MultiToken_1_11;
-    }
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (4 == nodeIndex))) {
-      return _MaterialInputComponent_4_5;
-    }
-    if ((identical(token, import1.MaterialInputValueAccessor) && (4 == nodeIndex))) {
-      return _MaterialInputValueAccessor_4_6;
-    }
-    if ((identical(token, import1.NgControl) && (4 == nodeIndex))) {
-      return _NgControlName_4_7;
-    }
-    if ((identical(token, import1.Service) && (4 == nodeIndex))) {
-      return _Service_4_9;
-    }
-    if ((identical(token, import1.DeferredValidator) && (4 == nodeIndex))) {
-      return _DeferredValidator_4_10;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (4 == nodeIndex))) {
-      return _MultiToken_4_11;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (4 == nodeIndex))) {
-      return _luckyNumber_4_15;
-    }
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (5 == nodeIndex))) {
-      return _MaterialInputComponent_5_5;
-    }
-    if ((identical(token, import1.MaterialInputValueAccessor) && (5 == nodeIndex))) {
-      return _MaterialInputValueAccessor_5_6;
-    }
-    if ((identical(token, import1.NgControl) && (5 == nodeIndex))) {
-      return _NgControlName_5_7;
-    }
-    if ((identical(token, import1.Service) && (5 == nodeIndex))) {
-      return _Service_5_8;
-    }
-    if ((identical(token, import1.DeferredValidator) && (5 == nodeIndex))) {
-      return _DeferredValidator_5_9;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (5 == nodeIndex))) {
-      return _MultiToken_5_10;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (5 == nodeIndex))) {
-      return _luckyNumber_5_14;
-    }
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (6 == nodeIndex))) {
-      return _MaterialInputComponent_6_5;
-    }
-    if ((identical(token, import1.MaterialInputValueAccessor) && (6 == nodeIndex))) {
-      return _MaterialInputValueAccessor_6_6;
-    }
-    if ((identical(token, import1.NgControl) && (6 == nodeIndex))) {
-      return _NgControlName_6_7;
-    }
-    if ((identical(token, import1.Service) && (6 == nodeIndex))) {
-      return _Service_6_9;
-    }
-    if ((identical(token, import1.DeferredValidator) && (6 == nodeIndex))) {
-      return _DeferredValidator_6_10;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (6 == nodeIndex))) {
-      return _MultiToken_6_11;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (6 == nodeIndex))) {
-      return _luckyNumber_6_15;
-    }
-    if ((((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable)) && (7 == nodeIndex))) {
-      return _MaterialAutoSuggestInputComponent_7_5;
-    }
-    if ((identical(token, import1.NgControl) && (7 == nodeIndex))) {
-      return _NgControlName_7_6;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (7 == nodeIndex))) {
-      return _MultiToken_7_13;
-    }
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (8 == nodeIndex))) {
-      return _MaterialInputComponent_8_5;
-    }
-    if ((identical(token, import1.MaterialInputValueAccessor) && (8 == nodeIndex))) {
-      return _MaterialInputValueAccessor_8_6;
-    }
-    if ((identical(token, import1.NgControl) && (8 == nodeIndex))) {
-      return _NgControlName_8_7;
-    }
-    if ((identical(token, import1.Service) && (8 == nodeIndex))) {
-      return _Service_8_8;
-    }
-    if ((identical(token, import1.DeferredValidator) && (8 == nodeIndex))) {
-      return _DeferredValidator_8_9;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (8 == nodeIndex))) {
-      return _MultiToken_8_10;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (8 == nodeIndex))) {
-      return _luckyNumber_8_14;
-    }
-    if ((identical(token, import1.ControlContainer) && ((3 <= nodeIndex) && (nodeIndex <= 8)))) {
-      return _NgControlGroup_3_5;
-    }
-    if (((identical(token, import1.NgForm) || identical(token, import1.ControlContainer)) && (nodeIndex <= 8))) {
-      return _NgForm_0_5;
+    if ((nodeIndex <= 8)) {
+      if (((1 <= nodeIndex) && (nodeIndex <= 2))) {
+        if ((1 == nodeIndex)) {
+          if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+            return _luckyNumber_1_15;
+          }
+        }
+        if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+          return _MaterialInputComponent_1_5;
+        }
+        if (identical(token, import1.MaterialInputValueAccessor)) {
+          return _MaterialInputValueAccessor_1_6;
+        }
+        if (identical(token, import1.NgControl)) {
+          return _NgControlName_1_7;
+        }
+        if (identical(token, import1.Service)) {
+          return _Service_1_9;
+        }
+        if (identical(token, import1.DeferredValidator)) {
+          return _DeferredValidator_1_10;
+        }
+        if (identical(token, const import10.MultiToken<import11.Validator>())) {
+          return _MultiToken_1_11;
+        }
+      }
+      if (((3 <= nodeIndex) && (nodeIndex <= 8))) {
+        if ((4 == nodeIndex)) {
+          if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+            return _MaterialInputComponent_4_5;
+          }
+          if (identical(token, import1.MaterialInputValueAccessor)) {
+            return _MaterialInputValueAccessor_4_6;
+          }
+          if (identical(token, import1.NgControl)) {
+            return _NgControlName_4_7;
+          }
+          if (identical(token, import1.Service)) {
+            return _Service_4_9;
+          }
+          if (identical(token, import1.DeferredValidator)) {
+            return _DeferredValidator_4_10;
+          }
+          if (identical(token, const import10.MultiToken<import11.Validator>())) {
+            return _MultiToken_4_11;
+          }
+          if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+            return _luckyNumber_4_15;
+          }
+        }
+        if ((5 == nodeIndex)) {
+          if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+            return _MaterialInputComponent_5_5;
+          }
+          if (identical(token, import1.MaterialInputValueAccessor)) {
+            return _MaterialInputValueAccessor_5_6;
+          }
+          if (identical(token, import1.NgControl)) {
+            return _NgControlName_5_7;
+          }
+          if (identical(token, import1.Service)) {
+            return _Service_5_8;
+          }
+          if (identical(token, import1.DeferredValidator)) {
+            return _DeferredValidator_5_9;
+          }
+          if (identical(token, const import10.MultiToken<import11.Validator>())) {
+            return _MultiToken_5_10;
+          }
+          if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+            return _luckyNumber_5_14;
+          }
+        }
+        if ((6 == nodeIndex)) {
+          if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+            return _MaterialInputComponent_6_5;
+          }
+          if (identical(token, import1.MaterialInputValueAccessor)) {
+            return _MaterialInputValueAccessor_6_6;
+          }
+          if (identical(token, import1.NgControl)) {
+            return _NgControlName_6_7;
+          }
+          if (identical(token, import1.Service)) {
+            return _Service_6_9;
+          }
+          if (identical(token, import1.DeferredValidator)) {
+            return _DeferredValidator_6_10;
+          }
+          if (identical(token, const import10.MultiToken<import11.Validator>())) {
+            return _MultiToken_6_11;
+          }
+          if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+            return _luckyNumber_6_15;
+          }
+        }
+        if ((7 == nodeIndex)) {
+          if (((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable))) {
+            return _MaterialAutoSuggestInputComponent_7_5;
+          }
+          if (identical(token, import1.NgControl)) {
+            return _NgControlName_7_6;
+          }
+          if (identical(token, const import10.MultiToken<import11.Validator>())) {
+            return _MultiToken_7_13;
+          }
+        }
+        if ((8 == nodeIndex)) {
+          if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+            return _MaterialInputComponent_8_5;
+          }
+          if (identical(token, import1.MaterialInputValueAccessor)) {
+            return _MaterialInputValueAccessor_8_6;
+          }
+          if (identical(token, import1.NgControl)) {
+            return _NgControlName_8_7;
+          }
+          if (identical(token, import1.Service)) {
+            return _Service_8_8;
+          }
+          if (identical(token, import1.DeferredValidator)) {
+            return _DeferredValidator_8_9;
+          }
+          if (identical(token, const import10.MultiToken<import11.Validator>())) {
+            return _MultiToken_8_10;
+          }
+          if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+            return _luckyNumber_8_14;
+          }
+        }
+        if (identical(token, import1.ControlContainer)) {
+          return _NgControlGroup_3_5;
+        }
+      }
+      if ((identical(token, import1.NgForm) || identical(token, import1.ControlContainer))) {
+        return _NgForm_0_5;
+      }
     }
     return notFoundResult;
   }
@@ -548,8 +566,10 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable)) && (0 == nodeIndex))) {
-      return _MaterialAutoSuggestInputComponent_0_5;
+    if ((0 == nodeIndex)) {
+      if (((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable))) {
+        return _MaterialAutoSuggestInputComponent_0_5;
+      }
     }
     return notFoundResult;
   }
@@ -656,20 +676,22 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if (((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective)) && (0 == nodeIndex))) {
-      return _MaterialInputComponent_0_5;
-    }
-    if ((identical(token, import1.Service) && (0 == nodeIndex))) {
-      return _Service_0_6;
-    }
-    if ((identical(token, import1.DeferredValidator) && (0 == nodeIndex))) {
-      return _DeferredValidator_0_7;
-    }
-    if ((identical(token, const import10.MultiToken<import11.Validator>()) && (0 == nodeIndex))) {
-      return _MultiToken_0_8;
-    }
-    if ((identical(token, const import10.OpaqueToken<int>('luckyNumber')) && (0 == nodeIndex))) {
-      return _luckyNumber_0_12;
+    if ((0 == nodeIndex)) {
+      if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
+        return _MaterialInputComponent_0_5;
+      }
+      if (identical(token, import1.Service)) {
+        return _Service_0_6;
+      }
+      if (identical(token, import1.DeferredValidator)) {
+        return _DeferredValidator_0_7;
+      }
+      if (identical(token, const import10.MultiToken<import11.Validator>())) {
+        return _MultiToken_0_8;
+      }
+      if (identical(token, const import10.OpaqueToken<int>('luckyNumber'))) {
+        return _luckyNumber_0_12;
+      }
     }
     return notFoundResult;
   }

@@ -103,17 +103,19 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.FooService) && (0 == nodeIndex))) {
-      return _FooService_0_6;
-    }
-    if ((identical(token, const import9.OpaqueToken<dynamic>('fooToken')) && (0 == nodeIndex))) {
-      return _fooToken_0_7;
-    }
-    if ((identical(token, const import9.OpaqueToken<dynamic>('barToken')) && (0 == nodeIndex))) {
-      return _barToken_0_8;
-    }
-    if ((identical(token, const import9.OpaqueToken<dynamic>('bazToken')) && (0 == nodeIndex))) {
-      return _bazToken_0_9;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.FooService)) {
+        return _FooService_0_6;
+      }
+      if (identical(token, const import9.OpaqueToken<dynamic>('fooToken'))) {
+        return _fooToken_0_7;
+      }
+      if (identical(token, const import9.OpaqueToken<dynamic>('barToken'))) {
+        return _barToken_0_8;
+      }
+      if (identical(token, const import9.OpaqueToken<dynamic>('bazToken'))) {
+        return _bazToken_0_9;
+      }
     }
     return notFoundResult;
   }

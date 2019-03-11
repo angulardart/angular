@@ -163,8 +163,10 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithDependentInView_0_5;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.Dependency)) {
+        return _DependencyWithDependentInView_0_5;
+      }
     }
     return notFoundResult;
   }
@@ -239,8 +241,10 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.Dependency) && (0 == nodeIndex))) {
-      return _DependencyWithContent_0_5;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.Dependency)) {
+        return _DependencyWithContent_0_5;
+      }
     }
     return notFoundResult;
   }
@@ -404,8 +408,10 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((identical(token, import1.HasVisibilityAll) && (0 == nodeIndex))) {
-      return _HasVisibilityAll_0_5;
+    if ((0 == nodeIndex)) {
+      if (identical(token, import1.HasVisibilityAll)) {
+        return _HasVisibilityAll_0_5;
+      }
     }
     return notFoundResult;
   }
