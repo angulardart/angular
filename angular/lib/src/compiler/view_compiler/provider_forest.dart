@@ -43,19 +43,41 @@ class ProviderForest {
   /// same token comes before its parent.
   static void _build(Iterable<ProviderNode> nodes, List<o.Statement> target) {
     for (final node in nodes) {
-      // TODO(leonsenft): don't group by range if there's only 1 token check.
-      final conditionalStatements = <o.Statement>[];
-      _build(node.children, conditionalStatements);
-      for (final provider in node.providers) {
-        final tokenCondition = provider.tokens
-            .map(_createTokenCondition)
-            .reduce((expression, condition) => expression.or(condition));
-        conditionalStatements.add(o.IfStmt(tokenCondition, [
+      final indexCondition = _createIndexCondition(node.start, node.end);
+      if (node.children.isEmpty && node.providers.length == 1) {
+        // If this node has exactly one provider, we can combine the `nodeIndex`
+        // check and `token` checks into a single if-statement.
+        //
+        //    if (identical(token, Foo) && nodeIndex == 12) {
+        //      return _foo;
+        //    }
+        final provider = node.providers[0];
+        final tokenCondition = _createTokenCondition(provider.tokens);
+        target.add(o.IfStmt(tokenCondition.and(indexCondition), [
           o.ReturnStatement(provider.expression),
         ]));
+      } else {
+        // Otherwise, we wrap all of the `token` checks in a shared `nodeIndex`
+        // if-statement.
+        //
+        //    if (nodeIndex == 12) {
+        //      if (identical(token, Foo)) {
+        //        return _foo;
+        //      }
+        //      if (identical(token, Bar)) {
+        //        return _bar;
+        //      }
+        //    }
+        final conditionalStatements = <o.Statement>[];
+        _build(node.children, conditionalStatements);
+        for (final provider in node.providers) {
+          final tokenCondition = _createTokenCondition(provider.tokens);
+          conditionalStatements.add(o.IfStmt(tokenCondition, [
+            o.ReturnStatement(provider.expression),
+          ]));
+        }
+        target.add(o.IfStmt(indexCondition, conditionalStatements));
       }
-      final indexCondition = _createIndexCondition(node.start, node.end);
-      target.add(o.IfStmt(indexCondition, conditionalStatements));
     }
   }
 
@@ -79,9 +101,13 @@ class ProviderForest {
     }
   }
 
-  /// Creates an expression to check that 'token' is identical to a [token].
-  static o.Expression _createTokenCondition(CompileTokenMetadata token) =>
-      InjectMethodVars.token.identical(createDiTokenExpression(token));
+  /// Creates an expression to check if 'token' is identical to any [tokens].
+  static o.Expression _createTokenCondition(List<CompileTokenMetadata> tokens) {
+    return tokens
+        .map((token) =>
+            InjectMethodVars.token.identical(createDiTokenExpression(token)))
+        .reduce((expression, condition) => expression.or(condition));
+  }
 
   /// Recursively replaces any empty [nodes] with their children.
   ///

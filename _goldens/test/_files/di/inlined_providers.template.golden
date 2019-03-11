@@ -216,15 +216,11 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
         return _C_1_8;
       }
     }
-    if (((2 <= nodeIndex) && (nodeIndex <= 3))) {
-      if (identical(token, import1.D)) {
-        return _D_2_6;
-      }
+    if ((identical(token, import1.D) && ((2 <= nodeIndex) && (nodeIndex <= 3)))) {
+      return _D_2_6;
     }
-    if ((4 == nodeIndex)) {
-      if (identical(token, import1.ChildComponentWithVisibilityAll)) {
-        return _ChildComponentWithVisibilityAll_4_5;
-      }
+    if ((identical(token, import1.ChildComponentWithVisibilityAll) && (4 == nodeIndex))) {
+      return _ChildComponentWithVisibilityAll_4_5;
     }
     if ((5 == nodeIndex)) {
       if (identical(token, import1.A)) {
@@ -493,10 +489,8 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((0 == nodeIndex)) {
-      if (identical(token, import1.D)) {
-        return _D_0_6;
-      }
+    if ((identical(token, import1.D) && (0 == nodeIndex))) {
+      return _D_0_6;
     }
     return notFoundResult;
   }
@@ -641,10 +635,8 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
-    if ((0 == nodeIndex)) {
-      if (identical(token, import1.ChildComponentWithVisibilityAll)) {
-        return _ChildComponentWithVisibilityAll_0_5;
-      }
+    if ((identical(token, import1.ChildComponentWithVisibilityAll) && (0 == nodeIndex))) {
+      return _ChildComponentWithVisibilityAll_0_5;
     }
     return notFoundResult;
   }
