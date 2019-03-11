@@ -744,29 +744,3 @@ bool detectHtmlElementFromTagName(String tagName) {
   }
   return _tagNameSet.contains(tagName);
 }
-
-/// Returns statements to locally cache `AppView.ctx` as `_ctx`, if needed.
-///
-/// Because `AppView.ctx` isn't final, dart2js can't assume that it isn't null,
-/// nor that it won't change between subsequent references. Assigning it to a
-/// local, final variable eliminates the need to repeatedly load and null check
-/// the field in the compiled JS code.
-///
-/// If `_ctx` was never used, this will return an empty list.
-///
-/// Pass either [statements] or [readVars]. If [readVars] is null, it will
-/// be computed from [statements]
-List<o.Statement> maybeCachedCtxDeclarationStatement(
-    {Set<String> readVars, List<o.Statement> statements}) {
-  readVars ??= o.findReadVarNames(statements);
-  if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
-    // Cache [ctx] class field member as typed [_ctx] local for change
-    // detection code to consume.
-    return [
-      DetectChangesVars.cachedCtx
-          .set(o.ReadClassMemberExpr('ctx'))
-          .toDeclStmt(null, [o.StmtModifier.Final])
-    ];
-  }
-  return [];
-}

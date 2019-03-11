@@ -38,8 +38,7 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
-    final currVal_0 = _ctx.title;
+    final currVal_0 = ctx.title;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       import9.updateAttribute(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
@@ -276,8 +275,7 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
-    final currVal_0 = _ctx.fancy;
+    final currVal_0 = ctx.fancy;
     if (import8.checkBinding(_expr_0, currVal_0)) {
       import9.updateClassBindingNonHtml(rootEl, 'fancy', currVal_0);
       _expr_0 = currVal_0;

@@ -36,7 +36,6 @@ import 'view_compiler_utils.dart'
         createFlatArray,
         detectHtmlElementFromTagName,
         identifierFromTagName,
-        maybeCachedCtxDeclarationStatement,
         mergeHtmlAndDirectiveAttributes,
         namespaceUris;
 import 'view_style_linker.dart';
@@ -503,14 +502,10 @@ o.ClassStmt createViewClass(
     )
   ]..addAll(view.methods);
   if (view.detectHostChangesMethod != null) {
-    final methodStatements = view.detectHostChangesMethod.finish();
     viewMethods.add(o.ClassMethod(
         'detectHostChanges',
         [o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
-        []
-          ..addAll(
-              maybeCachedCtxDeclarationStatement(statements: methodStatements))
-          ..addAll(methodStatements)));
+        view.detectHostChangesMethod.finish()));
   }
   for (final method in viewMethods) {
     if (method.body != null) {
@@ -709,13 +704,24 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   }
 
   var statements = <o.Statement>[];
-  var profileStartStatements = <o.Statement>[];
-  var declStatements = <o.Statement>[];
   if (view.genConfig.profileFor == Profile.build) {
-    genProfileBuildStart(view, profileStartStatements);
+    genProfileBuildStart(view, statements);
   }
 
   bool isComponentRoot = isComponent && view.viewIndex == 0;
+
+  if (isComponentRoot &&
+      (view.component.changeDetection == ChangeDetectionStrategy.Stateful ||
+          view.component.hostListeners.isNotEmpty)) {
+    // Cache [ctx] class field member as typed [_ctx] local for change detection
+    // code to consume.
+    var contextType = view.viewType != ViewType.host
+        ? o.importType(view.component.type)
+        : null;
+    statements.add(DetectChangesVars.cachedCtx
+        .set(o.ReadClassMemberExpr('ctx'))
+        .toDeclStmt(contextType, [o.StmtModifier.Final]));
+  }
 
   statements.addAll(parentRenderNodeStmts);
   view.writeBuildStatements(statements);
@@ -807,13 +813,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     // Rely on the implicit `return null` for non host views. This reduces the
     // size of output from dart2js.
   }
-
-  declStatements
-      .addAll(maybeCachedCtxDeclarationStatement(statements: statements));
-  return []
-    ..addAll(profileStartStatements)
-    ..addAll(declStatements)
-    ..addAll(statements);
+  return statements;
 }
 
 /// Writes shared event handler wiring for events that are directly defined
@@ -832,7 +832,7 @@ void _writeComponentHostEventListeners(
     o.Expression handlerExpr;
     int numArgs;
     if (handlerType == HandlerType.notSimple) {
-      var context = DetectChangesVars.cachedCtx;
+      var context = o.ReadClassMemberExpr('ctx');
       var actionStmts = convertCdStatementToIr(
         view.nameResolver,
         context,

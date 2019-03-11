@@ -55,8 +55,7 @@ import 'view_compiler_utils.dart'
         debugInjectorLeave,
         getViewFactory,
         getViewFactoryName,
-        injectFromViewParentInjector,
-        maybeCachedCtxDeclarationStatement;
+        injectFromViewParentInjector;
 import 'view_name_resolver.dart';
 
 /// Visibility of NodeReference within AppView implementation.
@@ -442,7 +441,7 @@ class CompileView {
     viewQueries = CompileTokenMap<List<CompileQuery>>();
     if (viewType == ViewType.component) {
       var directiveInstance = BuiltInSource(
-          identifierToken(this.component.type), DetectChangesVars.cachedCtx);
+          identifierToken(this.component.type), o.ReadClassMemberExpr('ctx'));
       var queryIndex = -1;
       for (CompileQueryMetadata metadata in component.viewQueries) {
         queryIndex++;
@@ -686,7 +685,7 @@ class CompileView {
   }
 
   o.Expression _textValue(ir.BindingSource source) =>
-      _toExpression(source, DetectChangesVars.cachedCtx);
+      _toExpression(source, o.ReadClassMemberExpr('ctx'));
 
   o.Expression _toExpression(
       ir.BindingSource source, o.Expression implicitReceiver) {
@@ -1319,8 +1318,14 @@ class CompileView {
     var varStmts = [];
     var readVars = o.findReadVarNames(statements);
     var writeVars = o.findWriteVarNames(statements);
-    varStmts.addAll(maybeCachedCtxDeclarationStatement(readVars: readVars));
-
+    if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
+      // Cache [ctx] class field member as typed [_ctx] local for change
+      // detection code to consume.
+      varStmts.add(o
+          .variable(DetectChangesVars.cachedCtx.name)
+          .set(o.ReadClassMemberExpr('ctx'))
+          .toDeclStmt(null, [o.StmtModifier.Final]));
+    }
     if (readVars.contains(DetectChangesVars.changed.name) ||
         writeVars.contains(DetectChangesVars.changed.name)) {
       varStmts.add(DetectChangesVars.changed

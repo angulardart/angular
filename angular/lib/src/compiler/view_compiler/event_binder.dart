@@ -1,4 +1,3 @@
-import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../analyzed_class.dart';
@@ -9,7 +8,7 @@ import '../output/output_ast.dart' as o;
 import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
-import 'constants.dart' show DetectChangesVars, EventHandlerVars;
+import 'constants.dart' show EventHandlerVars;
 import 'expression_converter.dart' show convertCdStatementToIr, NameResolver;
 import 'ir/provider_source.dart';
 import 'parse_utils.dart';
@@ -82,16 +81,15 @@ class CompileEventListener {
     if (directive != null && directive.isComponent) {
       _hasComponentHostListener = true;
     }
-
-    var context = directiveInstance?.build() ?? DetectChangesVars.cachedCtx;
+    var context = directiveInstance?.build() ?? o.ReadClassMemberExpr('ctx');
     var actionStmts = convertCdStatementToIr(_nameResolver, context,
         hostEvent.handler, hostEvent.sourceSpan, compileElement.view.component);
     _method.addStmts(actionStmts);
   }
 
   void _finish() {
+    final stmts = _method.finish();
     if (_isSimple) {
-      final stmts = _method.finish();
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
       final returnExpr = convertStmtIntoExpression(stmts.last);
       if (returnExpr is! o.InvokeMethodExpr) {
@@ -105,13 +103,8 @@ class CompileEventListener {
       // retrieve last statement to ensure it's the handler invocation.
       _simpleHandler = _extractFunction(returnExpr);
     } else {
-      final stmts = <o.Statement>[];
       // Declare variables for locals used in this event listener.
       stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      final methodStmts = _method.finish();
-      stmts.addAll(maybeCachedCtxDeclarationStatement(statements: methodStmts));
-
-      stmts.addAll(methodStmts);
       compileElement.view.methods.add(o.ClassMethod(
           _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
     }

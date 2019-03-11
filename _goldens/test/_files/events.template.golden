@@ -30,12 +30,12 @@ class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
 
   @override
   ComponentRef<import1.UsesNativeEvents> build() {
-    final _ctx = ctx;
+    final import1.UsesNativeEvents _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import8.appendElement(doc, parentRenderNode, 'button');
-    _el_0.addEventListener('click', eventHandler0(_ctx.onClick));
+    _el_0.addEventListener('click', eventHandler0(ctx.onClick));
     init0();
     _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
   }
@@ -104,7 +104,6 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
 
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
-    final _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewHasAngularEvents0(this, 0);
@@ -112,7 +111,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
     parentRenderNode.append(_el_0);
     _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create0(_HasAngularEvents_0_5);
-    final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(_ctx.onFoo));
+    final subscription_0 = _HasAngularEvents_0_5.foo.listen(eventHandler0(ctx.onFoo));
     init(const [], [subscription_0]);
   }
 
@@ -255,7 +254,7 @@ class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEven
 
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
-    final _ctx = ctx;
+    final import1.HasManyNativeHostEvents _ctx = ctx;
     final _rootEl = rootEl;
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
