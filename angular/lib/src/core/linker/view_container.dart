@@ -228,11 +228,9 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   AppView detachView(int viewIndex) {
     final view = nestedViews.removeAt(viewIndex);
     _assertCanMove(view);
-    view.detachViewNodes(view.flatRootNodes);
-    if (view.inlinedNodes != null) {
-      view.detachViewNodes(view.inlinedNodes);
-    }
-    view.removeFromContentChildren(this);
+    view
+      ..detachViewNodes(view.flatRootNodes)
+      ..removeFromContentChildren(this);
     return view;
   }
 

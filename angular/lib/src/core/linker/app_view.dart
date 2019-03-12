@@ -62,12 +62,6 @@ class AppViewData<T> {
   /// **INTERNAL ONLY**: Not part of the supported public API.
   List<Object> rootNodesOrViewContainers;
 
-  /// Tracks nodes created as a result of an inlined NgIf being set to 'true'.
-  ///
-  /// We must track them so we can remove them from the DOM if the view is
-  /// destroyed.
-  List<Node> inlinedNodes;
-
   /// Index of this view within the [parentView].
   final int parentIndex;
 
@@ -103,14 +97,6 @@ class AppViewData<T> {
     if (_cdState != value) {
       _cdState = value;
       updateSkipChangeDetectionFlag();
-    }
-  }
-
-  void addInlinedNodes(List<Node> nodes) {
-    if (inlinedNodes == null) {
-      inlinedNodes = nodes;
-    } else {
-      inlinedNodes.addAll(nodes);
     }
   }
 
@@ -253,14 +239,6 @@ abstract class AppView<T> {
     init(const [], null);
   }
 
-  /// Specialized [init] when a view does not need to track root nodes.
-  ///
-  /// Unlike [init0], [addInlinedNodes] later will mutate this list.
-  @dart2js.noInline
-  void init0Mutable() {
-    init([], null);
-  }
-
   /// Specialized [init] when component has a single root node (usually a host).
   @dart2js.noInline
   void init1(Object rootElement) {
@@ -276,32 +254,6 @@ abstract class AppView<T> {
     viewData
       ..rootNodesOrViewContainers = rootNodesOrViewContainers
       ..subscriptions = subscriptions;
-  }
-
-  void addInlinedNodes(
-    Node anchor,
-    List<Node> inlinedNodes, [
-    bool isRoot = false,
-  ]) {
-    insertNodesAsSibling(inlinedNodes, anchor);
-    if (isRoot) {
-      viewData.rootNodesOrViewContainers.addAll(inlinedNodes);
-    } else {
-      viewData.addInlinedNodes(inlinedNodes);
-    }
-  }
-
-  void removeInlinedNodes(List<Node> inlinedNodes, [bool isRoot = false]) {
-    removeNodes(inlinedNodes);
-    var nodeList =
-        isRoot ? viewData.rootNodesOrViewContainers : viewData.inlinedNodes;
-    for (int i = nodeList.length - 1; i >= 0; i--) {
-      var node = nodeList[i];
-      if (inlinedNodes.contains(node)) {
-        nodeList.remove(node);
-      }
-    }
-    domRootRendererIsDirty = true;
   }
 
   void attachViewAfter(Node node, List<Node> viewRootNodes) {
@@ -401,8 +353,6 @@ abstract class AppView<T> {
   void destroyInternal() {}
 
   ChangeDetectorRef get changeDetectorRef => viewData.ref;
-
-  List<Node> get inlinedNodes => viewData.inlinedNodes;
 
   @dart2js.noInline
   List<Node> get flatRootNodes {
