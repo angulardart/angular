@@ -94,17 +94,6 @@ class NodeReference {
         _name = '_html_$nodeIndex',
         _initialValue = null;
 
-  /// Create a [NodeReference] for a field moved from an inlined `NgIf`.
-  ///
-  /// Like [NodeReference], in practice this is used for `ElementRef` only.
-  NodeReference.inlinedNode(
-    this._storage,
-    this._type,
-    int nodeIndex,
-    int inlinedNodeIndex,
-  )   : _name = '_el_${nodeIndex}_$inlinedNodeIndex',
-        _initialValue = null;
-
   /// Create a [NodeReference] for a `Text` node.
   NodeReference.textNode(
     this._storage,
@@ -112,16 +101,6 @@ class NodeReference {
     o.Expression initialValue,
   })  : _type = o.importType(Identifiers.HTML_TEXT_NODE),
         _name = '_text_$nodeIndex',
-        _initialValue = initialValue;
-
-  /// Create a [NodeReference] for a `Text` node moved from an inlined `NgIf`.
-  NodeReference.inlinedTextNode(
-    this._storage,
-    int nodeIndex,
-    int inlinedNodeIndex, {
-    o.Expression initialValue,
-  })  : _type = o.importType(Identifiers.HTML_TEXT_NODE),
-        _name = '_text_${nodeIndex}_$inlinedNodeIndex',
         _initialValue = initialValue;
 
   /// Create a [NodeReference] for a `TextBinding` node.
@@ -330,17 +309,6 @@ class CompileView {
   /// duplicate messages will use the same generated message.
   final _i18nMessages = <I18nMessage, o.Expression>{};
 
-  /// Whether this is rendered by another view, rather than by its own class.
-  ///
-  /// Normally a unique class is generated to handle construction and change
-  /// detection of each component and embedded view. To avoid this overhead for
-  /// simple embedded views created by `NgIf`, this work is instead inlined into
-  /// the parent view.
-  final bool isInlined;
-
-  /// Whether this inlines any of its child views.
-  bool hasInlinedView = false;
-
   /// A representation of this view's dependency injection hierarchy.
   ///
   /// When assigned, this field is used to generate the `injectorGetInternal()`
@@ -413,16 +381,10 @@ class CompileView {
     this.viewIndex,
     this.declarationElement,
     this.templateVariables,
-    this.deferredModules, {
-    this.isInlined = false,
-  }) {
-    if (isInlined) {
-      nameResolver = declarationElement.view.nameResolver;
-      storage = declarationElement.view.storage;
-    } else {
-      nameResolver = ViewNameResolver(this);
-      storage = CompileViewStorage();
-    }
+    this.deferredModules,
+  ) {
+    nameResolver = ViewNameResolver(this);
+    storage = CompileViewStorage();
     viewType = _getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
         'View${component.type.name}$viewIndex';
@@ -652,16 +614,7 @@ class CompileView {
 
   NodeReference _textNode(ir.BindingSource source, int nodeIndex) {
     if (source.isImmutable) {
-      return isInlined
-          ? NodeReference.inlinedTextNode(
-              storage,
-              declarationElement.nodeIndex,
-              nodeIndex,
-            )
-          : NodeReference.textNode(
-              storage,
-              nodeIndex,
-            );
+      return NodeReference.textNode(storage, nodeIndex);
     } else {
       return TextBindingNodeReference(storage, nodeIndex);
     }

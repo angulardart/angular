@@ -1,23 +1,16 @@
-import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/identifiers.dart'
     show DomHelpers, Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart'
-    show
-        BoundDirectivePropertyAst,
-        BoundElementPropertyAst,
-        BoundExpression,
-        DirectiveAst,
-        PropertyBindingType;
+    show BoundElementPropertyAst, DirectiveAst, PropertyBindingType;
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 import 'package:angular/src/core/security.dart';
-import 'package:angular_compiler/cli.dart';
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -28,7 +21,6 @@ import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
 import 'view_compiler_utils.dart'
     show
-        createFlatArray,
         createSetAttributeParams,
         namespaceUris,
         unwrapDirective,
@@ -593,97 +585,6 @@ void _bindToUpdateMethod(
           ..addAll(
               [o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()])));
   }
-}
-
-void bindInlinedNgIf(DirectiveAst directiveAst, CompileElement compileElement) {
-  assert(directiveAst.directive.identifier.name == 'NgIf',
-      'Inlining a template that is not an NgIf');
-  var view = compileElement.view;
-
-  var bindingIndex = view.nameResolver.createUniqueBindIndex();
-  var fieldExpr = _createBindFieldExpr(bindingIndex);
-  var currValExpr = _createCurrValueExpr(bindingIndex);
-
-  var embeddedView = compileElement.embeddedView;
-
-  var buildStmts = <o.Statement>[];
-  embeddedView.writeBuildStatements(buildStmts);
-  var rootNodes = createFlatArray(embeddedView.rootNodesOrViewContainers);
-  var anchor = compileElement.renderNode.toReadExpr();
-  var buildArgs = [anchor, rootNodes];
-  var destroyArgs = [rootNodes];
-  if (compileElement.isRootElement) {
-    buildArgs.add(o.literal(true));
-    destroyArgs.add(o.literal(true));
-  }
-  buildStmts
-      .add(o.InvokeMemberMethodExpr('addInlinedNodes', buildArgs).toStmt());
-
-  var boundExpression = _boundExpression(directiveAst.inputs.single, view);
-
-  List<o.Statement> statements = _statements(
-      currValExpr, buildStmts, destroyArgs,
-      isImmutable: boundExpression.isImmutable);
-
-  var dynamicInputsMethod = CompileMethod();
-  var constantInputsMethod = CompileMethod();
-
-  _bind(
-    view.storage,
-    currValExpr,
-    fieldExpr,
-    _checkExpressionForBoundExpression(view, boundExpression,
-        fieldType: o.BOOL_TYPE),
-    boundExpression.isImmutable,
-    boundExpression.isNullable,
-    statements,
-    dynamicInputsMethod,
-    constantInputsMethod,
-    fieldType: o.BOOL_TYPE,
-    isHostComponent: false,
-    fieldExprInitializer: o.literal(false),
-  );
-
-  if (constantInputsMethod.isNotEmpty) {
-    view.detectChangesInInputsMethod.addStmtsIfFirstCheck(
-      constantInputsMethod.finish(),
-    );
-  }
-  if (dynamicInputsMethod.isNotEmpty) {
-    view.detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
-  }
-}
-
-List<o.Statement> _statements(
-  o.ReadVarExpr currValExpr,
-  List<o.Statement> buildStmts,
-  List<o.Expression> destroyArgs, {
-  @required bool isImmutable,
-}) {
-  if (isImmutable) {
-    // If the input is immutable, we don't need to handle the case where the
-    // condition is false since in that case we simply do nothing.
-    return <o.Statement>[o.IfStmt(currValExpr, buildStmts)];
-  } else {
-    var destroyStmts = <o.Statement>[
-      o.InvokeMemberMethodExpr('removeInlinedNodes', destroyArgs).toStmt(),
-    ];
-    return <o.Statement>[o.IfStmt(currValExpr, buildStmts, destroyStmts)];
-  }
-}
-
-ir.BoundExpression _boundExpression(
-    BoundDirectivePropertyAst input, CompileView view) {
-  if (input.value is! BoundExpression) {
-    // This state is reached if an @i18n message is bound to an *ngIf, which we
-    // know isn't a boolean expression.
-    throwFailure(input.sourceSpan.message('Expected a boolean expression'));
-  }
-
-  return ir.BoundExpression.falseIfNull(
-      (input.value as BoundExpression).expression,
-      input.sourceSpan,
-      view.component.analyzedClass);
 }
 
 bool _isPrimitiveFieldType(o.OutputType type) {

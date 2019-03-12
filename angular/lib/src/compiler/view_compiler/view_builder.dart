@@ -201,9 +201,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     final type = o.importType(identifierFromTagName(ast.name));
     if (_view.isRootNodeOfHost(nodeIndex)) {
       return NodeReference.appViewRoot();
-    } else if (_view.isInlined) {
-      return NodeReference.inlinedNode(
-          _view.storage, type, _view.declarationElement.nodeIndex, nodeIndex);
     } else {
       return NodeReference(_view.storage, type, nodeIndex);
     }
@@ -351,28 +348,23 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, CompileElement parent) {
     var nodeIndex = _view.nodes.length;
-    // TODO: Remove this once the optimization is deleted.
-    var isPureHtml = false; // !_visitingProjectedContent && _isPureHtml(ast);
-    if (isPureHtml) {
-      _view.hasInlinedView = true;
-    }
     NodeReference nodeReference =
         _view.createViewContainerAnchor(parent, nodeIndex, ast);
     var directives = _toCompileMetadata(ast.directives);
     var compileElement = CompileElement(
-        parent,
-        _view,
-        nodeIndex,
-        nodeReference,
-        ast,
-        null,
-        directives,
-        ast.providers,
-        ast.hasViewContainer,
-        true,
-        ast.references,
-        hasTemplateRefQuery: parent.hasTemplateRefQuery,
-        isInlined: isPureHtml);
+      parent,
+      _view,
+      nodeIndex,
+      nodeReference,
+      ast,
+      null,
+      directives,
+      ast.providers,
+      ast.hasViewContainer,
+      true,
+      ast.references,
+      hasTemplateRefQuery: parent.hasTemplateRefQuery,
+    );
     _view.nodes.add(compileElement);
     _nestedViewCount++;
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
@@ -385,20 +377,18 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
                 value: (v) => (v as VariableAst).dartType)));
 
     var embeddedView = CompileView(
-        metadata,
-        _view.genConfig,
-        _view.directiveTypes,
-        _view.pipeMetas,
-        o.NULL_EXPR,
-        _view.viewIndex + _nestedViewCount,
-        compileElement,
-        ast.variables,
-        _view.deferredModules,
-        isInlined: isPureHtml);
+      metadata,
+      _view.genConfig,
+      _view.directiveTypes,
+      _view.pipeMetas,
+      o.NULL_EXPR,
+      _view.viewIndex + _nestedViewCount,
+      compileElement,
+      ast.variables,
+      _view.deferredModules,
+    );
 
-    if (!isPureHtml) {
-      _beforeChildren(compileElement);
-    }
+    _beforeChildren(compileElement);
 
     // Create a visitor for embedded view and visit all nodes.
     var embeddedViewVisitor = ViewBuilderVisitor(embeddedView);
@@ -409,10 +399,8 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
             embeddedView.declarationElement);
     _nestedViewCount += embeddedViewVisitor._nestedViewCount;
 
-    if (!isPureHtml) {
-      _afterChildren(compileElement);
-      embeddedView.providers = embeddedViewVisitor.providers;
-    }
+    _afterChildren(compileElement);
+    embeddedView.providers = embeddedViewVisitor.providers;
 
     if (ast.hasDeferredComponent) {
       _view.deferLoadEmbeddedTemplate(embeddedView, compileElement);
@@ -720,10 +708,9 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   statements.addAll(parentRenderNodeStmts);
   view.writeBuildStatements(statements);
 
-  final constEmptyList = !view.hasInlinedView;
   final rootElements = createFlatArray(
     view.rootNodesOrViewContainers,
-    constForEmpty: constEmptyList,
+    constForEmpty: true,
   );
   final initParams = [rootElements];
   final subscriptions = view.subscriptions.isEmpty
@@ -750,15 +737,9 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
       rootElements.entries.length <= 1 &&
       subscriptions == o.NULL_EXPR) {
     if (rootElements.entries.isEmpty) {
-      if (constEmptyList) {
-        statements.add(
-          o.InvokeMemberMethodExpr('init0', const []).toStmt(),
-        );
-      } else {
-        statements.add(
-          o.InvokeMemberMethodExpr('init0Mutable', const []).toStmt(),
-        );
-      }
+      statements.add(
+        o.InvokeMemberMethodExpr('init0', const []).toStmt(),
+      );
     } else {
       statements.add(
         o.InvokeMemberMethodExpr('init1', [rootElements.entries[0]]).toStmt(),
