@@ -45,7 +45,6 @@ final _appViewFields = Set<String>.from([
   'ref',
   'projectedNodes',
   'changeDetectorRef',
-  'inlinedNodes',
   'flatRootNodes',
   'lastRootNode',
 ]);

@@ -32,7 +32,6 @@ import 'property_binder.dart'
         bindAndWriteToRenderer,
         bindDirectiveHostProps,
         bindDirectiveInputs,
-        bindInlinedNgIf,
         bindRenderInputs,
         bindRenderText;
 
@@ -142,10 +141,6 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var compileElement = view.nodes[_nodeIndex++] as CompileElement;
-    if (compileElement.embeddedView.isInlined) {
-      _visitInlinedTemplate(ast, compileElement);
-      return;
-    }
     // The template parser ensures these listeners are for directive outputs,
     // so they all must be registered as stream subscriptions.
     var eventListeners = collectEventListeners(ast.outputs, ast.directives,
@@ -170,15 +165,6 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
           directiveAst.directive, directiveInstance, compileElement);
     }
     bindView(compileElement.embeddedView, ast.children);
-  }
-
-  void _visitInlinedTemplate(
-      EmbeddedTemplateAst ast, CompileElement compileElement) {
-    var directiveAst = ast.directives.single;
-    if (ast.children.isEmpty) {
-      return;
-    }
-    bindInlinedNgIf(directiveAst, compileElement);
   }
 
   @override

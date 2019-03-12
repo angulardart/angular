@@ -88,11 +88,12 @@ class ViewCompiler {
     var nodes = view.nodes;
     for (int i = 0; i < nodeCount; i++) {
       var node = nodes[i];
-      if (node is CompileElement &&
-          node.embeddedView != null &&
-          !node.embeddedView.isInlined) {
-        _finishView(node.embeddedView, targetStatements,
-            registerComponentFactory: false);
+      if (node is CompileElement && node.embeddedView != null) {
+        _finishView(
+          node.embeddedView,
+          targetStatements,
+          registerComponentFactory: false,
+        );
       }
     }
   }

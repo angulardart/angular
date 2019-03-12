@@ -54,7 +54,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   final bool hasViewContainer;
   final bool hasEmbeddedView;
   final bool hasTemplateRefQuery;
-  final bool isInlined;
   final bool isDeferredComponent;
 
   /// Source location in template.
@@ -94,7 +93,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     this.componentView,
     this.hasTemplateRefQuery = false,
     this.isHtmlElement = false,
-    this.isInlined = false,
     this.isDeferredComponent = false,
   }) : super(parent, view, nodeIndex, renderNode) {
     _providers = ProviderResolver(this, parent?._providers);
@@ -118,7 +116,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
         o.InvokeMemberMethodExpr('injector', [o.literal(this.nodeIndex)]);
     _providers.add(Identifiers.InjectorToken, readInjectorExpr);
 
-    if ((hasViewContainer || hasEmbeddedView) && !isInlined) {
+    if (hasViewContainer || hasEmbeddedView) {
       appViewContainer = view.createViewContainer(
         renderNode,
         nodeIndex,
@@ -158,17 +156,16 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
             false, false, []);
 
   void setEmbeddedView(CompileView view) {
-    if (!isInlined) {
-      if (appViewContainer == null) {
-        throw StateError('Expecting appView container to host view');
-      }
-      if (view.viewFactory == null) {
-        throw StateError('Expecting viewFactory initialization before '
-            'embedding view');
-      }
+    // TODO(b/128427013): Remove these exceptions, they are likely never hit.
+    if (appViewContainer == null) {
+      throw StateError('Expecting appView container to host view');
+    }
+    if (view.viewFactory == null) {
+      throw StateError('Expecting viewFactory initialization before '
+          'embedding view');
     }
     embeddedView = view;
-    if (view != null && !view.isInlined) {
+    if (view != null) {
       var createTemplateRefExpr = o
           .importExpr(Identifiers.TemplateRef)
           .instantiate([this.appViewContainer, view.viewFactory],
