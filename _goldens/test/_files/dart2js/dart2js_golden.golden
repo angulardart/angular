@@ -3782,7 +3782,7 @@
       _.type = t0;
       _.ref = t1;
       _.destroyed = false;
-      _.inlinedNodes = _.rootNodesOrViewContainers = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
+      _.rootNodesOrViewContainers = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
       _.parentIndex = t2;
       _._cdMode = t3;
       _._skipChangeDetection = false;
@@ -10451,7 +10451,6 @@
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
       view.detachViewNodes$1(view.get$flatRootNodes());
-      view.viewData.inlinedNodes;
       return view;
     }
   };
