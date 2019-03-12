@@ -101,7 +101,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _appEl_6.detectChangesInNestedViews();
     if ((!import14.AppViewUtils.throwOnChanges)) {
       if (_query_queryMe_1_0_isDirty) {
-        ctx.queryDeferredChild = import14.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
+        _ctx.queryDeferredChild = import14.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewTestContainerComponent5 nestedView) {
             return [nestedView._DeferredChild3Component_0_5];
           });

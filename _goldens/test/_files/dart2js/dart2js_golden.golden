@@ -11223,7 +11223,6 @@
         T.updateAttribute(t1.rootEl, "title", t2);
         t1._expr_2 = t2;
       }
-      t1.ctx.toString;
       t2 = self.defeatDart2JsOptimizations("fancy");
       t3 = t1._expr_3;
       if (t3 != t2) {

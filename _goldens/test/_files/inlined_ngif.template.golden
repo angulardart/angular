@@ -179,10 +179,11 @@ class _ViewIgnoredNgIfComponent1 extends AppView<import1.IgnoredNgIfComponent> {
   }
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
+    final _ctx = ctx;
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import10.appendText(_el_0, 'Hello ');
-    final _text_2 = import10.appendText(_el_0, (ctx.name ?? ''));
+    final _text_2 = import10.appendText(_el_0, (_ctx.name ?? ''));
     final _text_3 = import10.appendText(_el_0, '!');
     init1(_el_0);
   }

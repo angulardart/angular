@@ -51,6 +51,12 @@ class HostComponent {
   @HostListener('click', [r'$event'])
   void onClick(event) {}
 
+  // Since this listener has more than one argument, it
+  // is not simple and uses a different code path to
+  // generate methods.
+  @HostListener('tripleclick', [r'$event', 'title'])
+  void onClickNotSimple(event, arg2) {}
+
   @HostListener('keydown')
   void onKeyDown() {}
 
