@@ -13,7 +13,10 @@ final _implicitReceiverVal = o.variable("#implicit");
 
 abstract class NameResolver {
   o.Expression callPipe(
-      String name, o.Expression input, List<o.Expression> args);
+    String name,
+    o.Expression input,
+    List<o.Expression> args,
+  );
 
   /// Returns a variable that references the [name] local.
   o.Expression getLocal(String name);
@@ -54,7 +57,11 @@ o.Expression convertCdExpressionToIr(
 ) {
   assert(nameResolver != null);
   final visitor = _AstToExpressionVisitor(
-      nameResolver, implicitReceiver, metadata, boundType);
+    nameResolver,
+    implicitReceiver,
+    metadata,
+    boundType,
+  );
   return _visit(expression, visitor, expressionSourceSpan);
 }
 
@@ -68,7 +75,11 @@ List<o.Statement> convertCdStatementToIr(
 ) {
   assert(nameResolver != null);
   final expressionVisitor = _AstToExpressionVisitor(
-      nameResolver, implicitReceiver, metadata, null /* boundType */);
+    nameResolver,
+    implicitReceiver,
+    metadata,
+    null /* boundType */,
+  );
   final visitor = _AstToStatementVisitor(expressionVisitor);
   return _visit(stmt, visitor, stmtSourceSpan);
 }

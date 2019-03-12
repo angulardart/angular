@@ -14,13 +14,13 @@ class _ViewNameResolverState {
   final CompileView view;
 
   /// Used to generate unique field names for literal list bindings.
-  int literalListCount = 0;
+  var literalListCount = 0;
 
   /// Used to generate unique field names for literal map bindings.
-  int literalMapCount = 0;
+  var literalMapCount = 0;
 
   /// Used to generate unique field names for property bindings.
-  int bindingCount = 0;
+  var bindingCount = 0;
 
   _ViewNameResolverState(this.view);
 }
@@ -66,8 +66,12 @@ class ViewNameResolver implements NameResolver {
       // Cache in shared view state for reuse if requested in other scopes.
       // Since locals are view wide, the variable name is guaranteed to be
       // unique in any generated method.
-      _state.localDeclarations[name] =
-          o.DeclareVarStmt('local_$name', expression, null, modifiers);
+      _state.localDeclarations[name] = o.DeclareVarStmt(
+        'local_$name',
+        expression,
+        null,
+        modifiers,
+      );
     }
     _localsInScope.add(name); // Cache local in this method scope.
     return o.ReadVarExpr(_state.localDeclarations[name].name);
@@ -76,7 +80,7 @@ class ViewNameResolver implements NameResolver {
   @override
   List<o.Statement> getLocalDeclarations() {
     final declarations = <o.Statement>[];
-    for (var name in _localsInScope) {
+    for (final name in _localsInScope) {
       declarations.add(_state.localDeclarations[name]);
     }
     return declarations;
@@ -84,7 +88,10 @@ class ViewNameResolver implements NameResolver {
 
   @override
   o.Expression callPipe(
-      String name, o.Expression input, List<o.Expression> args) {
+    String name,
+    o.Expression input,
+    List<o.Expression> args,
+  ) {
     return CompilePipe.createCallPipeExpression(_state.view, name, input, args);
   }
 
@@ -96,24 +103,31 @@ class ViewNameResolver implements NameResolver {
     if (values.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_ARRAY);
     }
-    var proxyExpr = o.ReadClassMemberExpr('_arr_${_state.literalListCount++}');
-    List<o.FnParam> proxyParams = [];
-    List<o.Expression> proxyReturnEntries = [];
-    final numValues = values.length;
-    for (var i = 0; i < numValues; i++) {
-      var paramName = 'p$i';
+    final proxyFieldName = '_arr_${_state.literalListCount++}';
+    final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
+    final proxyParams = <o.FnParam>[];
+    final proxyReturnEntries = <o.Expression>[];
+    final valueCount = values.length;
+    for (var i = 0; i < valueCount; i++) {
+      final paramName = 'p$i';
       proxyParams.add(o.FnParam(paramName));
       proxyReturnEntries.add(o.variable(paramName));
     }
     final listType = _createListTypeFrom(type);
-    final pureProxyType =
-        o.FunctionType(listType, List.filled(numValues, listType.of));
+    final pureProxyType = o.FunctionType(
+      listType,
+      List.filled(valueCount, listType.of),
+    );
     _state.view.createPureProxy(
-        o.fn(proxyParams, [o.ReturnStatement(o.literalArr(proxyReturnEntries))],
-            o.ArrayType(o.DYNAMIC_TYPE)),
-        numValues,
-        proxyExpr,
-        pureProxyType: pureProxyType);
+      o.fn(
+        proxyParams,
+        [o.ReturnStatement(o.literalArr(proxyReturnEntries))],
+        o.ArrayType(o.DYNAMIC_TYPE),
+      ),
+      valueCount,
+      proxyExpr,
+      pureProxyType: pureProxyType,
+    );
     return proxyExpr.callFn(values);
   }
 
@@ -125,26 +139,33 @@ class ViewNameResolver implements NameResolver {
     if (entries.isEmpty) {
       return o.importExpr(Identifiers.EMPTY_MAP);
     }
-    var proxyExpr = o.ReadClassMemberExpr('_map_${_state.literalMapCount++}');
-    List<o.FnParam> proxyParams = [];
-    List<List<dynamic /* String | o.Expression */ >> proxyReturnEntries = [];
-    List<o.Expression> values = [];
-    final numEntries = entries.length;
-    for (var i = 0; i < numEntries; i++) {
-      var paramName = 'p$i';
+    final proxyFieldName = '_map_${_state.literalListCount++}';
+    final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
+    final proxyParams = <o.FnParam>[];
+    final proxyReturnEntries = <List<Object>>[];
+    final values = <o.Expression>[];
+    final entriesCount = entries.length;
+    for (var i = 0; i < entriesCount; i++) {
+      final paramName = 'p$i';
       proxyParams.add(o.FnParam(paramName));
       proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
       values.add(entries[i][1] as o.Expression);
     }
     final mapType = _createMapTypeFrom(type);
-    final pureProxyType =
-        o.FunctionType(mapType, List.filled(numEntries, mapType.valueType));
+    final pureProxyType = o.FunctionType(
+      mapType,
+      List.filled(entriesCount, mapType.valueType),
+    );
     _state.view.createPureProxy(
-        o.fn(proxyParams, [o.ReturnStatement(o.literalMap(proxyReturnEntries))],
-            o.MapType(o.DYNAMIC_TYPE)),
-        numEntries,
-        proxyExpr,
-        pureProxyType: pureProxyType);
+      o.fn(
+        proxyParams,
+        [o.ReturnStatement(o.literalMap(proxyReturnEntries))],
+        o.MapType(o.DYNAMIC_TYPE),
+      ),
+      entriesCount,
+      proxyExpr,
+      pureProxyType: pureProxyType,
+    );
     return proxyExpr.callFn(values);
   }
 

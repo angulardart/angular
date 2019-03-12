@@ -15,12 +15,16 @@ class CompilePipe {
   final CompileView view;
   final CompilePipeMetadata meta;
   final _purePipeProxies = <_PurePipeProxy>[];
-  o.ReadClassMemberExpr instance;
+  final o.ReadClassMemberExpr instance;
 
-  static o.Expression createCallPipeExpression(CompileView view, String name,
-      o.Expression input, List<o.Expression> args) {
-    var compView = view.componentView;
-    var meta = _findPipeMeta(compView, name);
+  static o.Expression createCallPipeExpression(
+    CompileView view,
+    String name,
+    o.Expression input,
+    List<o.Expression> args,
+  ) {
+    final compView = view.componentView;
+    final meta = _findPipeMeta(compView, name);
     CompilePipe pipe;
     if (meta.pure) {
       // pure pipes live on the component view
@@ -38,15 +42,18 @@ class CompilePipe {
     return pipe._call(view, [input]..addAll(args));
   }
 
-  CompilePipe(this.view, this.meta) {
-    instance = o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
-  }
+  CompilePipe(this.view, this.meta)
+      : instance =
+            o.ReadClassMemberExpr('_pipe_${meta.name}_${view.pipeCount++}');
 
   void create() {
     view.createPipeInstance(instance.name, meta);
-    for (var purePipeProxy in _purePipeProxies) {
-      final pipeInstanceSeenFromPureProxy =
-          getPropertyInView(instance, purePipeProxy.view, view);
+    for (final purePipeProxy in _purePipeProxies) {
+      final pipeInstanceSeenFromPureProxy = getPropertyInView(
+        instance,
+        purePipeProxy.view,
+        view,
+      );
       // A pipe transform method has one required argument, and a variable
       // number of optional arguments. However, each call site will always
       // invoke the transform method with a fixed number of arguments, so we
@@ -56,7 +63,7 @@ class CompilePipe {
         meta.transformType.paramTypes.sublist(0, purePipeProxy.argCount),
       );
       purePipeProxy.view.createPureProxy(
-        pipeInstanceSeenFromPureProxy.prop("transform"),
+        pipeInstanceSeenFromPureProxy.prop('transform'),
         purePipeProxy.argCount,
         purePipeProxy.instance,
         pureProxyType: pureProxyType,
@@ -68,14 +75,18 @@ class CompilePipe {
     if (meta.pure) {
       // PurePipeProxies live on the view that called them.
       final purePipeProxy = _PurePipeProxy(
-          callingView,
-          o.ReadClassMemberExpr('${instance.name}_${_purePipeProxies.length}'),
-          args.length);
+        callingView,
+        o.ReadClassMemberExpr('${instance.name}_${_purePipeProxies.length}'),
+        args.length,
+      );
       _purePipeProxies.add(purePipeProxy);
       return purePipeProxy.instance.callFn(args);
     } else {
-      return getPropertyInView(instance, callingView, view)
-          .callMethod("transform", args);
+      return getPropertyInView(
+        instance,
+        callingView,
+        view,
+      ).callMethod('transform', args);
     }
   }
 }
@@ -83,7 +94,7 @@ class CompilePipe {
 CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
   CompilePipeMetadata pipeMeta;
   for (var i = view.pipeMetas.length - 1; i >= 0; i--) {
-    var localPipeMeta = view.pipeMetas[i];
+    final localPipeMeta = view.pipeMetas[i];
     if (localPipeMeta.name == name) {
       pipeMeta = localPipeMeta;
       break;

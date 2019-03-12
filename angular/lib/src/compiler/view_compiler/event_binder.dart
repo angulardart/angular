@@ -27,17 +27,21 @@ class CompileEventListener {
   /// Each event listener needs a scoped copy of its view's [NameResolver] to
   /// ensure locals are cached only in the methods they're used.
   final NameResolver _nameResolver;
+  final CompileElement _compileElement;
+  final String eventName;
+  final _method = CompileMethod();
+  final String _methodName;
 
-  CompileElement compileElement;
-  String eventName;
-  CompileMethod _method;
-  bool _hasComponentHostListener = false;
-  bool _isSimple = true;
-  HandlerType _handlerType = HandlerType.notSimple;
+  var _hasComponentHostListener = false;
+  var _isSimple = true;
+  var _handlerType = HandlerType.notSimple;
   o.Expression _simpleHandler;
   BoundEventAst _simpleHostEvent;
-  String _methodName;
-  o.FnParam _eventParam;
+
+  static final _eventParam = o.FnParam(
+    EventHandlerVars.event.name,
+    o.importType(null),
+  );
 
   /// Helper function to search for an event in [targetEventListeners] list and
   /// add a new one if it doesn't exist yet.
@@ -54,16 +58,11 @@ class CompileEventListener {
     return listener;
   }
 
-  CompileEventListener(this.compileElement, this.eventName, int listenerIndex)
-      : _nameResolver = compileElement.view.nameResolver.scope() {
-    _method = CompileMethod();
-    _methodName =
-        '_handle_${sanitizeEventName(eventName)}_${compileElement.nodeIndex}_'
-        '$listenerIndex';
-    // TODO: type event param as Identifiers.HTML_EVENT if non-custom event or
-    // stream.
-    _eventParam = o.FnParam(EventHandlerVars.event.name, o.importType(null));
-  }
+  CompileEventListener(this._compileElement, this.eventName, int listenerIndex)
+      : _nameResolver = _compileElement.view.nameResolver.scope(),
+        _methodName = '_handle_${sanitizeEventName(eventName)}_'
+            '${_compileElement.nodeIndex}_'
+            '$listenerIndex';
 
   void _addAction(
     BoundEventAst hostEvent,
@@ -83,9 +82,14 @@ class CompileEventListener {
       _hasComponentHostListener = true;
     }
 
-    var context = directiveInstance?.build() ?? DetectChangesVars.cachedCtx;
-    var actionStmts = convertCdStatementToIr(_nameResolver, context,
-        hostEvent.handler, hostEvent.sourceSpan, compileElement.view.component);
+    final context = directiveInstance?.build() ?? DetectChangesVars.cachedCtx;
+    final actionStmts = convertCdStatementToIr(
+      _nameResolver,
+      context,
+      hostEvent.handler,
+      hostEvent.sourceSpan,
+      _compileElement.view.component,
+    );
     _method.addStmts(actionStmts);
   }
 
@@ -112,19 +116,30 @@ class CompileEventListener {
       stmts.addAll(maybeCachedCtxDeclarationStatement(statements: methodStmts));
 
       stmts.addAll(methodStmts);
-      compileElement.view.methods.add(o.ClassMethod(
-          _methodName, [_eventParam], stmts, null, [o.StmtModifier.Private]));
+      _compileElement.view.methods.add(o.ClassMethod(
+        _methodName,
+        [_eventParam],
+        stmts,
+        null,
+        [o.StmtModifier.Private],
+      ));
     }
   }
 
   void _listenToRenderer() {
     final handlerExpr = _createEventHandlerExpr();
     if (isNativeHtmlEvent(eventName)) {
-      compileElement.view.addDomEventListener(
-          compileElement.renderNode, eventName, handlerExpr);
+      _compileElement.view.addDomEventListener(
+        _compileElement.renderNode,
+        eventName,
+        handlerExpr,
+      );
     } else {
-      compileElement.view.addCustomEventListener(
-          compileElement.renderNode, eventName, handlerExpr);
+      _compileElement.view.addCustomEventListener(
+        _compileElement.renderNode,
+        eventName,
+        handlerExpr,
+      );
     }
   }
 
@@ -134,9 +149,11 @@ class CompileEventListener {
     String observablePropName,
   ) {
     final handlerExpr = _createEventHandlerExpr();
-    compileElement.view.createSubscription(
-        directiveInstance.prop(observablePropName), handlerExpr,
-        isMockLike: directiveAst.directive.analyzedClass.isMockLike);
+    _compileElement.view.createSubscription(
+      directiveInstance.prop(observablePropName),
+      handlerExpr,
+      isMockLike: directiveAst.directive.analyzedClass.isMockLike,
+    );
   }
 
   o.Expression _createEventHandlerExpr() {
@@ -153,7 +170,7 @@ class CompileEventListener {
 
     final wrapperName = 'eventHandler$numArgs';
     if (_hasComponentHostListener) {
-      return compileElement.componentView.callMethod(
+      return _compileElement.componentView.callMethod(
         wrapperName,
         [handlerExpr],
       );
@@ -169,56 +186,73 @@ class CompileEventListener {
           hostEvent.sourceSpan);
 
   AST _handler(BoundEventAst hostEvent) {
-    var eventHandler = hostEvent.handler;
-    if (eventHandler is ASTWithSource) {
-      return eventHandler.ast;
-    }
-    return eventHandler;
+    final handler = hostEvent.handler;
+    return handler is ASTWithSource ? handler.ast : handler;
   }
 }
 
 List<CompileEventListener> collectEventListeners(
-    List<BoundEventAst> hostEvents,
-    List<DirectiveAst> dirs,
-    CompileElement compileElement,
-    AnalyzedClass analyzedClass) {
-  List<CompileEventListener> eventListeners = [];
-  for (var hostEvent in hostEvents) {
-    var listener = CompileEventListener.getOrCreate(
-        compileElement, hostEvent.name, eventListeners);
+  List<BoundEventAst> hostEvents,
+  List<DirectiveAst> dirs,
+  CompileElement compileElement,
+  AnalyzedClass analyzedClass,
+) {
+  final eventListeners = <CompileEventListener>[];
+  for (final hostEvent in hostEvents) {
+    final listener = CompileEventListener.getOrCreate(
+      compileElement,
+      hostEvent.name,
+      eventListeners,
+    );
     listener._addAction(hostEvent, null, null, analyzedClass);
   }
   for (var i = 0, len = dirs.length; i < len; i++) {
     final directiveAst = dirs[i];
     // Don't collect component host event listeners because they're registered
     // by the component implementation.
-    if (directiveAst.directive.isComponent) continue;
-    for (var hostEvent in directiveAst.hostEvents) {
-      var listener = CompileEventListener.getOrCreate(
-          compileElement, hostEvent.name, eventListeners);
-      listener._addAction(hostEvent, directiveAst.directive,
-          compileElement.directiveInstances[i], analyzedClass);
+    if (directiveAst.directive.isComponent) {
+      continue;
+    }
+    for (final hostEvent in directiveAst.hostEvents) {
+      final listener = CompileEventListener.getOrCreate(
+        compileElement,
+        hostEvent.name,
+        eventListeners,
+      );
+      listener._addAction(
+        hostEvent,
+        directiveAst.directive,
+        compileElement.directiveInstances[i],
+        analyzedClass,
+      );
     }
   }
-  for (int i = 0, len = eventListeners.length; i < len; i++) {
-    eventListeners[i]._finish();
+  for (final eventListener in eventListeners) {
+    eventListener._finish();
   }
   return eventListeners;
 }
 
-void bindDirectiveOutputs(DirectiveAst directiveAst,
-    o.Expression directiveInstance, List<CompileEventListener> eventListeners) {
+void bindDirectiveOutputs(
+  DirectiveAst directiveAst,
+  o.Expression directiveInstance,
+  List<CompileEventListener> eventListeners,
+) {
   directiveAst.directive.outputs.forEach((observablePropName, eventName) {
-    for (var listener in eventListeners) {
-      if (listener.eventName != eventName) continue;
-      listener._listenToDirective(
-          directiveAst, directiveInstance, observablePropName);
+    for (final listener in eventListeners) {
+      if (listener.eventName == eventName) {
+        listener._listenToDirective(
+          directiveAst,
+          directiveInstance,
+          observablePropName,
+        );
+      }
     }
   });
 }
 
 void bindRenderOutputs(List<CompileEventListener> eventListeners) {
-  for (var listener in eventListeners) {
+  for (final listener in eventListeners) {
     listener._listenToRenderer();
   }
 }
@@ -233,7 +267,6 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
 }
 
 o.Expression _extractFunction(o.Expression returnExpr) {
-  assert(returnExpr is o.InvokeMethodExpr);
-  var callExpr = returnExpr as o.InvokeMethodExpr;
+  final callExpr = returnExpr as o.InvokeMethodExpr;
   return o.ReadPropExpr(callExpr.receiver, callExpr.name);
 }
