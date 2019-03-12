@@ -4190,12 +4190,6 @@
       this._map$_providers = t0;
       this.parent = t1;
     },
-    debugInjectorEnter: function(token) {
-      return;
-    },
-    debugInjectorLeave: function(token) {
-      return;
-    },
     noProviderError: function(token) {
       return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
     }
@@ -10271,7 +10265,6 @@
     },
     injectorGet$3: function(token, nodeIndex, notFoundValue) {
       var result, view, injector;
-      A.debugInjectorEnter(token);
       for (result = C.C_Object, view = this; result === C.C_Object;) {
         if (nodeIndex != null)
           result = view.injectorGetInternal$3(token, nodeIndex, C.C_Object);
@@ -10283,7 +10276,6 @@
         nodeIndex = view.viewData.parentIndex;
         view = view.parentView;
       }
-      A.debugInjectorLeave(token);
       return result;
     },
     injectorGet$2: function(token, nodeIndex) {
@@ -10749,12 +10741,9 @@
   };
   E.HierarchicalInjector.prototype = {
     provideUntyped$2: function(token, orElse) {
-      var result;
-      A.debugInjectorEnter(token);
-      result = this.injectFromSelfOptional$2(token, orElse);
+      var result = this.injectFromSelfOptional$2(token, orElse);
       if (result == null ? orElse == null : result === orElse)
         result = this.injectFromAncestryOptional$2(token, orElse);
-      A.debugInjectorLeave(token);
       return result;
     },
     injectFromAncestryOptional$2: function(token, orElse) {
@@ -10766,12 +10755,9 @@
   };
   M.Injector.prototype = {
     $get$2: function(_, token, notFoundValue) {
-      var result;
-      A.debugInjectorEnter(token);
-      result = this.provideUntyped$2(token, notFoundValue);
+      var result = this.provideUntyped$2(token, notFoundValue);
       if (result === C.C_Object)
         return M.throwsNotFound(this, token);
-      A.debugInjectorLeave(token);
       return result;
     },
     $get$1: function($receiver, token) {
