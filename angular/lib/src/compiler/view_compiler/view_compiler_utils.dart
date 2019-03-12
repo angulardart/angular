@@ -141,17 +141,16 @@ o.Expression injectFromViewParentInjector(
   CompileTokenMetadata token,
   bool optional,
 ) {
-  o.Expression viewExpr = (view.viewType == ViewType.host)
+  final viewExpr = (view.viewType == ViewType.host)
       ? o.THIS_EXPR
       : o.ReadClassMemberExpr('parentView');
-  var args = [
-    createDiTokenExpression(token),
-    o.ReadClassMemberExpr('viewData').prop('parentIndex')
-  ];
-  if (optional) {
-    args.add(o.NULL_EXPR);
-  }
-  return viewExpr.callMethod('injectorGet', args);
+  return viewExpr.callMethod(
+    optional ? 'injectorGetOptional' : 'injectorGet',
+    [
+      createDiTokenExpression(token),
+      o.ReadClassMemberExpr('viewData').prop('parentIndex')
+    ],
+  );
 }
 
 o.Statement debugInjectorEnter(o.Expression identifier) =>
