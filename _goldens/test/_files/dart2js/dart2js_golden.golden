@@ -10281,6 +10281,9 @@
     injectorGet$2: function(token, nodeIndex) {
       return this.injectorGet$3(token, nodeIndex, C.C_Object);
     },
+    injectorGetOptional$2: function(token, nodeIndex) {
+      return this.injectorGet$3(token, nodeIndex, null);
+    },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       return notFoundResult;
     },
@@ -11841,7 +11844,7 @@
       _el_0.appendChild(t2);
       t1 = this.parentView;
       t2 = t1.parentView;
-      t1 = O.InjectsManyThingsDynamically$(t2.injectorGet$2(C.Type_DepA_qtW, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepB_sty, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepC_ifL, t1.viewData.parentIndex), t2.injectorGet$3(C.Type_DepD_3bx, t1.viewData.parentIndex, null), t2.injectorGet$3(C.Type_DepE_ckK, t1.viewData.parentIndex, null), t2.injectorGet$3(C.Type_DepF_7O8, t1.viewData.parentIndex, null));
+      t1 = O.InjectsManyThingsDynamically$(t2.injectorGet$2(C.Type_DepA_qtW, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepB_sty, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepC_ifL, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepD_3bx, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepE_ckK, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepF_7O8, t1.viewData.parentIndex));
       this._InjectsManyThingsDynamically_1_5 = t1;
       this._compView_1.create0$1(t1);
       this.init1$1(_el_0);

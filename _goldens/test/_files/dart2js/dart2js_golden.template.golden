@@ -1745,9 +1745,9 @@ class _ViewHasNestedProviderLookups2 extends AppView<import1.HasNestedProviderLo
     _el_0.append(_el_1);
     _InjectsManyThingsDynamically_1_5 = (import6.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsManyThingsDynamically, () {
-            return import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null));
+            return import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepD, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepE, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepF, parentView.viewData.parentIndex));
           })
-        : import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepD, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepE, parentView.viewData.parentIndex, null), parentView.parentView.injectorGet(import1.DepF, parentView.viewData.parentIndex, null)));
+        : import1.InjectsManyThingsDynamically(parentView.parentView.injectorGet(import1.DepA, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepB, parentView.viewData.parentIndex), parentView.parentView.injectorGet(import1.DepC, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepD, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepE, parentView.viewData.parentIndex), parentView.parentView.injectorGetOptional(import1.DepF, parentView.viewData.parentIndex)));
     _compView_1.create0(_InjectsManyThingsDynamically_1_5);
     init1(_el_0);
   }
@@ -1848,9 +1848,9 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
     rootEl = _compView_0.rootEl;
     _InjectsManyThingsDynamically_0_5 = (import6.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsManyThingsDynamically, () {
-            return import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGet(import1.DepD, viewData.parentIndex, null), this.injectorGet(import1.DepE, viewData.parentIndex, null), this.injectorGet(import1.DepF, viewData.parentIndex, null));
+            return import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGetOptional(import1.DepD, viewData.parentIndex), this.injectorGetOptional(import1.DepE, viewData.parentIndex), this.injectorGetOptional(import1.DepF, viewData.parentIndex));
           })
-        : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGet(import1.DepD, viewData.parentIndex, null), this.injectorGet(import1.DepE, viewData.parentIndex, null), this.injectorGet(import1.DepF, viewData.parentIndex, null)));
+        : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, viewData.parentIndex), this.injectorGet(import1.DepB, viewData.parentIndex), this.injectorGet(import1.DepC, viewData.parentIndex), this.injectorGetOptional(import1.DepD, viewData.parentIndex), this.injectorGetOptional(import1.DepE, viewData.parentIndex), this.injectorGetOptional(import1.DepF, viewData.parentIndex)));
     _compView_0.create(_InjectsManyThingsDynamically_0_5, projectedNodes);
     init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsManyThingsDynamically_0_5);

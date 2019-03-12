@@ -287,6 +287,14 @@ abstract class AppView<T> {
     return result;
   }
 
+  /// Alternative to [injectorGet] that may return `null` if missing.
+  ///
+  /// Used to reduce code-size for dynamic lookups sourced from `@Optional()`.
+  @dart2js.noInline
+  Object injectorGetOptional(Object token, int nodeIndex) {
+    return injectorGet(token, nodeIndex, null);
+  }
+
   /// Adapts and returns services available at [nodeIndex] as an [Injector].
   ///
   /// As an optimization, views use [injectorGet] (and [injectorGetInternal])
