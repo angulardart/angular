@@ -1,0 +1,6 @@
+# Include common configuration.
+include: ../dev/tool/test/dart_test_repo.yaml
+
+# This repository only has VM tests.
+platforms:
+  - vm
