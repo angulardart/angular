@@ -582,6 +582,187 @@ AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0(AppVie
   return _ViewInterpolationLocalsHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$Attribute = const [];
+
+class ViewAttribute0 extends AppView<import1.Attribute> {
+  var _expr_0;
+  var _expr_1;
+  import6.Element _el_0;
+  import6.Element _el_2;
+  static import3.ComponentStyles _componentStyles;
+  ViewAttribute0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('attribute');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.Attribute> build() {
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    _el_0 = import9.appendElement(doc, parentRenderNode, 'img');
+    final _text_1 = import9.appendText(parentRenderNode, ' ');
+    _el_2 = import9.appendElement(doc, parentRenderNode, 'img');
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = import13.interpolateString0(_ctx.altText);
+    if (import13.checkBinding(_expr_0, currVal_0)) {
+      import9.setProperty(_el_0, 'alt', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = import13.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
+    if (import13.checkBinding(_expr_1, currVal_1)) {
+      import9.setProperty(_el_2, 'alt', currVal_1);
+      _expr_1 = currVal_1;
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.Attribute> _AttributeNgFactory = const ComponentFactory('attribute', viewFactory_AttributeHost0);
+ComponentFactory<import1.Attribute> get AttributeNgFactory {
+  return _AttributeNgFactory;
+}
+
+final List<dynamic> styles$AttributeHost = const [];
+
+class _ViewAttributeHost0 extends AppView<import1.Attribute> {
+  ViewAttribute0 _compView_0;
+  import1.Attribute _Attribute_0_5;
+  _ViewAttributeHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.Attribute> build() {
+    _compView_0 = ViewAttribute0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _Attribute_0_5 = import1.Attribute();
+    _compView_0.create(_Attribute_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _Attribute_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.Attribute> viewFactory_AttributeHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewAttributeHost0(parentView, parentIndex);
+}
+
+final List<dynamic> styles$AttributePW = const [];
+
+class ViewAttributePW0 extends AppView<import1.AttributePW> {
+  var _expr_0;
+  var _expr_1;
+  import6.Element _el_1;
+  import6.Element _el_3;
+  static import3.ComponentStyles _componentStyles;
+  ViewAttributePW0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('attribute');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.AttributePW> build() {
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final _text_0 = import9.appendText(parentRenderNode, '    ');
+    final doc = import6.document;
+    _el_1 = import9.appendElement(doc, parentRenderNode, 'img');
+    final _text_2 = import9.appendText(parentRenderNode, '\n    ');
+    _el_3 = import9.appendElement(doc, parentRenderNode, 'img');
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = import13.interpolateString1('\n', _ctx.altText, '\n');
+    if (import13.checkBinding(_expr_0, currVal_0)) {
+      import9.setProperty(_el_1, 'alt', currVal_0);
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = import13.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
+    if (import13.checkBinding(_expr_1, currVal_1)) {
+      import9.setProperty(_el_3, 'alt', currVal_1);
+      _expr_1 = currVal_1;
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.AttributePW> _AttributePWNgFactory = const ComponentFactory('attribute', viewFactory_AttributePWHost0);
+ComponentFactory<import1.AttributePW> get AttributePWNgFactory {
+  return _AttributePWNgFactory;
+}
+
+final List<dynamic> styles$AttributePWHost = const [];
+
+class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
+  ViewAttributePW0 _compView_0;
+  import1.AttributePW _AttributePW_0_5;
+  _ViewAttributePWHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.AttributePW> build() {
+    _compView_0 = ViewAttributePW0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _AttributePW_0_5 = import1.AttributePW();
+    _compView_0.create(_AttributePW_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _AttributePW_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.AttributePW> viewFactory_AttributePWHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewAttributePWHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -595,5 +776,7 @@ void initReflector() {
   _ngRef.registerComponent(InterpolationLongerSentence, InterpolationLongerSentenceNgFactory);
   _ngRef.registerComponent(InterpolationLiterals, InterpolationLiteralsNgFactory);
   _ngRef.registerComponent(InterpolationLocals, InterpolationLocalsNgFactory);
+  _ngRef.registerComponent(Attribute, AttributeNgFactory);
+  _ngRef.registerComponent(AttributePW, AttributePWNgFactory);
   _ref0.initReflector();
 }
