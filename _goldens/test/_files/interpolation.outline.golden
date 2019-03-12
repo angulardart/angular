@@ -56,5 +56,19 @@ external _ng.AppView<InterpolationLocals> viewFactory_InterpolationLocals0(_ng.A
 class ViewInterpolationLocals0 extends _ng.AppView<InterpolationLocals> {
   external ViewInterpolationLocals0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class Attribute.
+external List<dynamic> get styles$Attribute;
+external _ng.ComponentFactory<Attribute> get AttributeNgFactory;
+external _ng.AppView<Attribute> viewFactory_Attribute0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewAttribute0 extends _ng.AppView<Attribute> {
+  external ViewAttribute0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
+// For @Component class AttributePW.
+external List<dynamic> get styles$AttributePW;
+external _ng.ComponentFactory<AttributePW> get AttributePWNgFactory;
+external _ng.AppView<AttributePW> viewFactory_AttributePW0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewAttributePW0 extends _ng.AppView<AttributePW> {
+  external ViewAttributePW0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();
