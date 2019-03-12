@@ -3,18 +3,23 @@ import "../identifiers.dart";
 import "../output/output_ast.dart" as o;
 
 const String appViewRootElementName = 'rootEl';
-const classAttrName = "class";
-const styleAttrName = "style";
-var parentRenderNodeVar = o.variable("parentRenderNode");
+const classAttrName = 'class';
+const styleAttrName = 'style';
+final parentRenderNodeVar = o.variable('parentRenderNode');
 
 o.Expression createEnumExpression(
-    CompileIdentifierMetadata classIdentifier, dynamic value) {
-  if (value == null) return o.NULL_EXPR;
-  String enumStr = value.toString();
-  var name = enumStr.substring(enumStr.lastIndexOf('.') + 1);
+  CompileIdentifierMetadata classIdentifier,
+  Object value,
+) {
+  if (value == null) {
+    return o.NULL_EXPR;
+  }
+  final enumStr = value.toString();
+  final name = enumStr.substring(enumStr.lastIndexOf('.') + 1);
   return o.importExpr(CompileIdentifierMetadata(
-      name: '${classIdentifier.name}.$name',
-      moduleUrl: classIdentifier.moduleUrl));
+    name: '${classIdentifier.name}.$name',
+    moduleUrl: classIdentifier.moduleUrl,
+  ));
 }
 
 const List<String> _changeDetectionStrategies = [
@@ -27,13 +32,15 @@ const List<String> _changeDetectionStrategies = [
   'Stateful'
 ];
 
-// Converts integer change detection strategy to const expression
-// to make generated code more readable.
+/// Converts value of a `ChangeDetectionStrategy` to refer to the static field.
+///
+/// Otherwise the generated code refers to arbitrary integer values.
 o.Expression changeDetectionStrategyToConst(int value) {
-  String name = _changeDetectionStrategies[value];
+  final name = _changeDetectionStrategies[value];
   return o.importExpr(CompileIdentifierMetadata(
-      name: 'ChangeDetectionStrategy.$name',
-      moduleUrl: Identifiers.ChangeDetectionStrategy.moduleUrl));
+    name: 'ChangeDetectionStrategy.$name',
+    moduleUrl: Identifiers.ChangeDetectionStrategy.moduleUrl,
+  ));
 }
 
 class ViewConstructorVars {
