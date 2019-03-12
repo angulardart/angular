@@ -248,7 +248,7 @@ class Component extends Directive {
   const Component({
     String selector,
     String exportAs,
-    List providers,
+    List<Object> providers,
     Visibility visibility = Visibility.local,
     this.viewProviders,
     this.exports,
