@@ -1,3 +1,4 @@
+import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/runtime.dart';
 
 /// Current stack of tokens being requested for an injection.
@@ -14,26 +15,26 @@ List<Object> _tokenStack;
 ///   return result;
 /// }
 /// ```
+@dart2js.tryInline
 void debugInjectorEnter(Object token) {
   // Tree-shake out in Dart2JS.
-  if (!isDevMode) {
-    return;
-  }
-  if (_tokenStack == null) {
-    _tokenStack = [token];
-  } else {
-    _tokenStack.add(token);
+  if (isDevMode) {
+    if (_tokenStack == null) {
+      _tokenStack = [token];
+    } else {
+      _tokenStack.add(token);
+    }
   }
 }
 
 /// In debug mode, trace leaving an injection lookup (successfully).
+@dart2js.tryInline
 void debugInjectorLeave(Object token) {
   // Tree-shake out in Dart2JS.
-  if (!isDevMode) {
-    return;
+  if (isDevMode) {
+    final removed = _tokenStack.removeLast();
+    assert(identical(removed, token));
   }
-  final removed = _tokenStack.removeLast();
-  assert(identical(removed, token));
 }
 
 /// Wraps invoking [wrap] with [debugInjectorEnter] and [debugInjectorLeave].
