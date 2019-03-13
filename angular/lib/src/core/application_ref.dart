@@ -84,11 +84,8 @@ class ApplicationRef extends ChangeDetectionHost {
         assert(component.location != null);
         document.body.append(component.location);
       }
-      // TODO(https://github.com/dart-lang/angular/issues/1683):
-      // We need .get(...) because .provideType(...) does not support optional.
-      final testability = unsafeCast<Testability>(
-        component.injector.get(Testability, null),
-      );
+      final injector = component.injector;
+      final Testability testability = injector.provideTypeOptional(Testability);
       if (testability != null) {
         final registry = _injector.provideType<TestabilityRegistry>(
           TestabilityRegistry,
