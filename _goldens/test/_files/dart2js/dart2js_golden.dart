@@ -111,7 +111,7 @@ class UsesDefaultChangeDetectionAndInputs {
 
 @Component(
   selector: 'default-change-detection-and-inputs',
-  template: 'Hello {{title}} {{name}}',
+  template: 'Hello {{title}} {{name}} {{3}} {{null}}',
 )
 class DefaultChangeDetectionAndInputs {
   @Input()

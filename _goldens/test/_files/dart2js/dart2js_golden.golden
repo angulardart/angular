@@ -11328,6 +11328,10 @@
       parentRenderNode.appendChild(this._textBinding_1.element);
       T.appendText(parentRenderNode, " ");
       parentRenderNode.appendChild(this._textBinding_3.element);
+      T.appendText(parentRenderNode, " ");
+      T.appendText(parentRenderNode, "3");
+      T.appendText(parentRenderNode, " ");
+      T.appendText(parentRenderNode, "");
       this.init0$0();
     },
     detectChangesInternal$0: function() {
