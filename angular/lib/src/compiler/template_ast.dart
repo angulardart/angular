@@ -375,7 +375,7 @@ class ProviderAst implements TemplateAst {
     this.eager,
     this.dynamicallyReachable = true,
     this.typeArgument,
-    this.visibleForInjection = true,
+    this.visibleForInjection = false,
   });
 
   R visit<R, C>(TemplateAstVisitor<R, C> visitor, C context) =>

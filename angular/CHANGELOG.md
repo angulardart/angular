@@ -62,6 +62,10 @@
     includes both raw attributes (e.g. `class="foo"`) and host bindings (e.g.
     `@HostBinding('class')`).
 
+*   The presence of a query (e.g. `@ContentChild(TemplateRef)`) no longer causes
+    any matching `<template>` references to become available for dynamic
+    injection (i.e. `injector.provideType(TemplateRef)`).
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
