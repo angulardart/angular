@@ -415,6 +415,93 @@ AppView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0(AppView<dyna
   return _ViewHasTemplateClassHost0(parentView, parentIndex);
 }
 
+final List<dynamic> styles$HasStyleProperty = const [];
+
+class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
+  var _expr_0;
+  var _expr_1;
+  import5.DivElement _el_0;
+  static import2.ComponentStyles _componentStyles;
+  ViewHasStyleProperty0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import5.document.createElement('has-style-property');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.HasStyleProperty> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import5.document;
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = _ctx.width;
+    if (import8.checkBinding(_expr_0, currVal_0)) {
+      _el_0.style.setProperty('width', currVal_0?.toString());
+      _expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.height;
+    if (import8.checkBinding(_expr_1, currVal_1)) {
+      _el_0.style.setProperty('height', ((currVal_1?.toString() == null) ? null : (currVal_1?.toString() + 'px')));
+      _expr_1 = currVal_1;
+    }
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStyleProperty, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.HasStyleProperty> _HasStylePropertyNgFactory = const ComponentFactory('has-style-property', viewFactory_HasStylePropertyHost0);
+ComponentFactory<import1.HasStyleProperty> get HasStylePropertyNgFactory {
+  return _HasStylePropertyNgFactory;
+}
+
+final List<dynamic> styles$HasStylePropertyHost = const [];
+
+class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
+  ViewHasStyleProperty0 _compView_0;
+  import1.HasStyleProperty _HasStyleProperty_0_5;
+  _ViewHasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+  }
+  @override
+  ComponentRef<import1.HasStyleProperty> build() {
+    _compView_0 = ViewHasStyleProperty0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _HasStyleProperty_0_5 = import1.HasStyleProperty();
+    _compView_0.create(_HasStyleProperty_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _HasStyleProperty_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroy();
+  }
+}
+
+AppView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) {
+  return _ViewHasStylePropertyHost0(parentView, parentIndex);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -427,5 +514,6 @@ void initReflector() {
   _ngRef.registerComponent(HasStaticAttribute, HasStaticAttributeNgFactory);
   _ngRef.registerComponent(HasHostClass, HasHostClassNgFactory);
   _ngRef.registerComponent(HasTemplateClass, HasTemplateClassNgFactory);
+  _ngRef.registerComponent(HasStyleProperty, HasStylePropertyNgFactory);
   _ref0.initReflector();
 }

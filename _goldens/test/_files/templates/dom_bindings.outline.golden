@@ -49,5 +49,12 @@ external _ng.AppView<HasTemplateClass> viewFactory_HasTemplateClass0(_ng.AppView
 class ViewHasTemplateClass0 extends _ng.AppView<HasTemplateClass> {
   external ViewHasTemplateClass0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class HasStyleProperty.
+external List<dynamic> get styles$HasStyleProperty;
+external _ng.ComponentFactory<HasStyleProperty> get HasStylePropertyNgFactory;
+external _ng.AppView<HasStyleProperty> viewFactory_HasStyleProperty0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewHasStyleProperty0 extends _ng.AppView<HasStyleProperty> {
+  external ViewHasStyleProperty0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 
 external void initReflector();

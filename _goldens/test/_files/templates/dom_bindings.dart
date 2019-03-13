@@ -45,3 +45,17 @@ class HasHostClass {
 class HasTemplateClass {
   var fancy = true;
 }
+
+@Component(
+  selector: 'has-style-property',
+  template: r'''
+    <div
+        [style.width]="width"
+        [style.height.px]="height">
+    </div>
+  ''',
+)
+class HasStyleProperty {
+  var width = 0;
+  var height = 12;
+}
