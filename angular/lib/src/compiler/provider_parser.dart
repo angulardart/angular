@@ -372,7 +372,7 @@ ProviderAst _transformProviderAst(ProviderAst provider,
     provider.providerType,
     provider.sourceSpan,
     eager: provider.eager || forceEager,
-    dynamicallyReachable: provider.dynamicallyReachable,
+    isReferencedOutsideBuild: provider.isReferencedOutsideBuild,
     visibleForInjection: provider.visibleForInjection,
     typeArgument: provider.typeArgument,
   );

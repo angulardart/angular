@@ -1038,9 +1038,7 @@ class CompileView {
     if (isEager) {
       // Check if we need to reach this directive or component beyond the
       // contents of the build() function. Otherwise allocate locally.
-      if (compileElement.publishesTemplateRef ||
-          compileElement.hasTemplateRefQuery ||
-          provider.dynamicallyReachable) {
+      if (provider.isReferencedOutsideBuild) {
         if (providerHasChangeDetector) {
           ViewStorageItem item = storage.allocate(propName,
               outputType: changeDetectorType,
