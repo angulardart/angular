@@ -72,6 +72,10 @@
     not used. We also deprecated `castCallback1ForDirective` now that the
     `directiveTypes: [ ... ]` feature is live.
 
+*   Removed deprecated `AppViewUtils.resetChangeDetection()`. This method was
+    never intended to be used in the public API, and is no longer used by our
+    own infra.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 

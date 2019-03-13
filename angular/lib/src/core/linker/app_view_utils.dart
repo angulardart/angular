@@ -51,13 +51,6 @@ class AppViewUtils {
     _throwOnChangesCounter--;
     _throwOnChanges = _throwOnChangesCounter != 0;
   }
-
-  /// Used in tests that cause exceptions on purpose.
-  @Deprecated('To be removed in 6.0.0')
-  static void resetChangeDetection() {
-    _throwOnChangesCounter = 0;
-    _throwOnChanges = false;
-  }
 }
 
 /// Creates a document fragment from [trustedHtml].
