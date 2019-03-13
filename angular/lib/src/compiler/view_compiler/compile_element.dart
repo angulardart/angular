@@ -321,7 +321,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       //  b) not injectable across views, or
       //  c) an alias for an existing provider.
       if (provider.providerType == ProviderAstType.FunctionalDirective ||
-          !provider.dynamicallyReachable ||
           _providers.isAliasedProvider(token)) {
         continue;
       }
@@ -516,7 +515,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       }
       currentEl = currentEl.parent;
     }
-    queries = this.view.componentView.viewQueries.get(token);
+    queries = view.componentView.viewQueries.get(token);
     if (queries != null) result.addAll(queries);
     return result;
   }
