@@ -347,13 +347,14 @@ class ProviderAst implements TemplateAst {
   /// access the provider and return it.
   final bool eager;
 
-  /// False if provider doesn't support injection into dynamically loaded
-  /// children.
+  /// Whether this provider is referenced outside of `AppView.build()`.
   ///
-  /// Typically TemplateRef, NgIf don't need to be injected into dynamic
-  /// children and this flag allows injectorGetInternal to create more
-  /// optimal code by skipping these.
-  final bool dynamicallyReachable;
+  /// This is true for anything that is change detected, has lifecycle hooks,
+  /// matches a dynamically updated query, or is referenced in the template.
+  ///
+  /// While the intent of this field is to generalize the concept, in reality
+  /// it's only ever false for `TemplateRef` when not queried or referenced.
+  final bool isReferencedOutsideBuild;
 
   /// Whether the provider is visible for injection.
   ///
@@ -373,7 +374,7 @@ class ProviderAst implements TemplateAst {
     this.providerType,
     this.sourceSpan, {
     this.eager,
-    this.dynamicallyReachable = true,
+    this.isReferencedOutsideBuild = true,
     this.typeArgument,
     this.visibleForInjection = false,
   });

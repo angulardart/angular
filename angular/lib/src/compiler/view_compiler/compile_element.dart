@@ -76,7 +76,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   Map<String, CompileTokenMetadata> referenceTokens;
   // If compile element is a template and has #ref resolving to TemplateRef
   // this is set so we create a class field member for the template reference.
-  bool _publishesTemplateRef = false;
+  var _publishesTemplateRef = false;
 
   CompileElement(
     CompileElement parent,
@@ -98,12 +98,14 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     _providers = ProviderResolver(this, parent?._providers);
     if (references.isNotEmpty) {
       referenceTokens = <String, CompileTokenMetadata>{};
-      int referenceCount = references.length;
-      for (int r = 0; r < referenceCount; r++) {
-        var ref = references[r];
-        referenceTokens[ref.name] = ref.value;
+      for (final reference in references) {
+        final token = reference.value;
+        referenceTokens[reference.name] = token;
+        _publishesTemplateRef = _publishesTemplateRef ||
+            token != null && token.equalsTo(Identifiers.TemplateRefToken);
       }
     }
+
     // Create new ElementRef(_el_#) expression and provide as instance.
     elementRef = o
         .importExpr(Identifiers.ElementRef)
@@ -174,24 +176,22 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
           token: identifierToken(Identifiers.TemplateRef),
           useValue: createTemplateRefExpr);
 
-      bool isReachable = false;
-      if (_getQueriesFor(Identifiers.TemplateRefToken).isNotEmpty) {
-        isReachable = true;
-      }
+      final isReferencedOutsideBuild = _publishesTemplateRef ||
+          _getQueriesFor(Identifiers.TemplateRefToken).isNotEmpty;
       // Add TemplateRef as first provider as it does not have deps on other
       // providers
-      _resolvedProvidersArray
-        ..insert(
-            0,
-            ProviderAst(
-              provider.token,
-              false,
-              [provider],
-              ProviderAstType.Builtin,
-              this.sourceAst.sourceSpan,
-              eager: true,
-              dynamicallyReachable: isReachable,
-            ));
+      _resolvedProvidersArray.insert(
+        0,
+        ProviderAst(
+          provider.token,
+          false,
+          [provider],
+          ProviderAstType.Builtin,
+          this.sourceAst.sourceSpan,
+          eager: true,
+          isReferencedOutsideBuild: isReferencedOutsideBuild,
+        ),
+      );
     }
   }
 
@@ -199,14 +199,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     if (hasViewContainer &&
         !_providers.containsLocalProvider(Identifiers.ViewContainerRefToken)) {
       _providers.add(Identifiers.ViewContainerRefToken, appViewContainer);
-    }
-
-    if (referenceTokens != null) {
-      referenceTokens.forEach((String varName, token) {
-        if (token != null && token.equalsTo(Identifiers.TemplateRefToken)) {
-          _publishesTemplateRef = true;
-        }
-      });
     }
 
     // Access builtins with special visibility.
