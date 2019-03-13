@@ -397,6 +397,10 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
     parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import8.appendText(parentRenderNode, ' ');
     parentRenderNode.append(_textBinding_3.element);
+    final _text_4 = import8.appendText(parentRenderNode, ' ');
+    final _text_5 = import8.appendText(parentRenderNode, '3');
+    final _text_6 = import8.appendText(parentRenderNode, ' ');
+    final _text_7 = import8.appendText(parentRenderNode, '');
     init0();
   }
 
