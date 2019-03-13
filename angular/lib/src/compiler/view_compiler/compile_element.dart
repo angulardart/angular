@@ -316,10 +316,9 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     for (final provider in _resolvedProvidersArray) {
       final token = provider.token;
 
-      // Skip any providers that are
-      //  a) backed by a functional directive (these are never injectable),
-      //  b) not injectable across views, or
-      //  c) an alias for an existing provider.
+      // Skip any providers that are backed by a functional directive (these are
+      // never injectable) or are an alias for an existing provider (aliases are
+      // handled by the existing provider).
       if (provider.providerType == ProviderAstType.FunctionalDirective ||
           _providers.isAliasedProvider(token)) {
         continue;
