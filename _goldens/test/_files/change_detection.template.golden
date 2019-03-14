@@ -535,7 +535,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_2.updateText((_ctx.name ?? ''));
+    _textBinding_2.updateText(import9.interpolateString0(_ctx.name));
   }
 
   @override

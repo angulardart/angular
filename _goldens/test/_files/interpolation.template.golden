@@ -16,10 +16,10 @@ import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import11;
+import 'package:angular/src/common/directives/ng_for.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import13;
 
 final List<dynamic> styles$InterpolationComponent = const [];
 
@@ -51,7 +51,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_3.updateText((_ctx.foo ?? ''));
+    _textBinding_3.updateText(import10.interpolateString0(_ctx.foo));
   }
 
   @override
@@ -128,7 +128,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText((_ctx.foo ?? ''));
+    _textBinding_1.updateText(import10.interpolateString0(_ctx.foo));
   }
 
   @override
@@ -209,8 +209,8 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText((_ctx.greeting ?? ''));
-    _textBinding_3.updateText((_ctx.noun ?? ''));
+    _textBinding_1.updateText(import10.interpolateString0(_ctx.greeting));
+    _textBinding_3.updateText(import10.interpolateString0(_ctx.noun));
   }
 
   @override
@@ -295,9 +295,9 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_2.updateText((_ctx.name ?? ''));
-    _textBinding_4.updateText((_ctx.business ?? ''));
-    _textBinding_6.updateText((_ctx.location ?? ''));
+    _textBinding_2.updateText(import10.interpolateString0(_ctx.name));
+    _textBinding_4.updateText(import10.interpolateString0(_ctx.business));
+    _textBinding_6.updateText(import10.interpolateString0(_ctx.location));
   }
 
   @override
@@ -425,7 +425,7 @@ final List<dynamic> styles$InterpolationLocals = const [];
 
 class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import11.NgFor _NgFor_0_9;
+  import12.NgFor _NgFor_0_9;
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLocals0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -443,7 +443,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
     init0();
   }
 
@@ -451,11 +451,11 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.bars;
-    if (import13.checkBinding(_expr_0, currVal_0)) {
+    if (import10.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import10.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -483,7 +483,7 @@ ComponentFactory<import1.InterpolationLocals> get InterpolationLocalsNgFactory {
 
 class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import11.NgFor _NgFor_0_9;
+  import12.NgFor _NgFor_0_9;
   var _expr_0;
   _ViewInterpolationLocals1(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -493,7 +493,7 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
     final _anchor_0 = import9.createAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = import11.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
     init1(_appEl_0);
   }
 
@@ -501,11 +501,11 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   void detectChangesInternal() {
     final local_bar = locals['\$implicit'];
     final currVal_0 = local_bar;
-    if (import13.checkBinding(_expr_0, currVal_0)) {
+    if (import10.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import10.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -540,8 +540,8 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
     final _ctx = ctx;
     final local_bar = parentView.locals['\$implicit'];
     final local_foo = locals['\$implicit'];
-    _textBinding_1.updateText(import13.interpolateString0(_ctx.callMethod(local_bar)));
-    _textBinding_3.updateText(import13.interpolate0(local_foo));
+    _textBinding_1.updateText(import10.interpolateString0(_ctx.callMethod(local_bar)));
+    _textBinding_3.updateText(import10.interpolate0(local_foo));
   }
 }
 
@@ -612,13 +612,13 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import13.interpolateString0(_ctx.altText);
-    if (import13.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import10.interpolateString0(_ctx.altText);
+    if (import10.checkBinding(_expr_0, currVal_0)) {
       import9.setProperty(_el_0, 'alt', currVal_0);
       _expr_0 = currVal_0;
     }
-    final currVal_1 = import13.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
-    if (import13.checkBinding(_expr_1, currVal_1)) {
+    final currVal_1 = import10.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
+    if (import10.checkBinding(_expr_1, currVal_1)) {
       import9.setProperty(_el_2, 'alt', currVal_1);
       _expr_1 = currVal_1;
     }
@@ -703,13 +703,13 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    final currVal_0 = import13.interpolateString1('\n', _ctx.altText, '\n');
-    if (import13.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = import10.interpolateString1('\n', _ctx.altText, '\n');
+    if (import10.checkBinding(_expr_0, currVal_0)) {
       import9.setProperty(_el_1, 'alt', currVal_0);
       _expr_0 = currVal_0;
     }
-    final currVal_1 = import13.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
-    if (import13.checkBinding(_expr_1, currVal_1)) {
+    final currVal_1 = import10.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
+    if (import10.checkBinding(_expr_1, currVal_1)) {
       import9.setProperty(_el_3, 'alt', currVal_1);
       _expr_1 = currVal_1;
     }

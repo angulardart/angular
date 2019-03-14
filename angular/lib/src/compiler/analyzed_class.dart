@@ -1,11 +1,8 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/generated/resolver.dart';
-import 'package:source_gen/src/type_checker.dart';
 
 import 'expression_parser/ast.dart' as ast;
-
-final _stringTypeChecker = TypeChecker.fromRuntime(String);
 
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
@@ -129,47 +126,6 @@ bool isStaticGetterOrMethod(String name, AnalyzedClass analyzedClass) {
 bool isStaticSetter(String name, AnalyzedClass analyzedClass) {
   final setter = analyzedClass._classElement.getSetter(name);
   return setter != null && setter.isStatic;
-}
-
-// TODO(het): preserve any source info in the new expression
-/// If this interpolation can be optimized, returns the optimized expression.
-/// Otherwise, returns the original expression.
-///
-/// An example of an interpolation that can be optimized is `{{foo}}` where
-/// `foo` is a getter on the class that is known to return a [String]. This can
-/// be rewritten as just `foo`.
-ast.AST rewriteInterpolate(ast.AST original, AnalyzedClass analyzedClass) {
-  ast.AST unwrappedExpression = original;
-  if (original is ast.ASTWithSource) {
-    unwrappedExpression = original.ast;
-  }
-  if (unwrappedExpression is! ast.Interpolation) return original;
-  var interpolation = unwrappedExpression as ast.Interpolation;
-  if (interpolation.expressions.length == 1 &&
-      interpolation.strings[0].isEmpty &&
-      interpolation.strings[1].isEmpty) {
-    ast.AST expression = interpolation.expressions.single;
-    if (expression is ast.LiteralPrimitive) {
-      return ast.LiteralPrimitive(
-          expression.value == null ? '' : '${expression.value}');
-    }
-    if (expression is ast.PropertyRead) {
-      if (analyzedClass == null) return original;
-      var receiver = expression.receiver;
-      if (receiver is ast.ImplicitReceiver ||
-          receiver is ast.StaticRead && receiver.analyzedClass != null) {
-        var clazz =
-            receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
-        var field = clazz._classElement.getField(expression.name);
-        if (field != null) {
-          if (_stringTypeChecker.isExactlyType(field.type)) {
-            return ast.IfNull(expression, ast.LiteralPrimitive(''));
-          }
-        }
-      }
-    }
-  }
-  return original;
 }
 
 /// Rewrites an event tear-off as a method call.
