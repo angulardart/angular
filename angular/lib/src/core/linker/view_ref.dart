@@ -78,19 +78,20 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
 
   ViewRefImpl(this.appView);
 
-  @Deprecated('Use appView instead')
-  AppView<dynamic> get internalView => appView;
-
+  @override
   List<Node> get rootNodes => appView.flatRootNodes;
 
   ChangeDetectorRef get changeDetectorRef => this;
 
+  @override
   void setLocal(String variableName, dynamic value) {
     appView.locals[variableName] = value;
   }
 
+  @override
   bool hasLocal(String variableName) => appView.hasLocal(variableName);
 
+  @override
   bool get destroyed => appView.viewData.destroyed;
 
   @override
@@ -98,20 +99,24 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
     appView.markPathToRootAsCheckOnce();
   }
 
+  @override
   void detach() {
     appView.cdMode = ChangeDetectionStrategy.Detached;
   }
 
+  @override
   void detectChanges() {
     appView.detectChanges();
   }
 
+  @override
   void checkNoChanges() {
     AppViewUtils.enterThrowOnChanges();
     appView.detectChanges();
     AppViewUtils.exitThrowOnChanges();
   }
 
+  @override
   void reattach() {
     appView.cdMode = ChangeDetectionStrategy.CheckAlways;
     markForCheck();
@@ -122,6 +127,7 @@ class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
     appView.addOnDestroyCallback(callback);
   }
 
+  @override
   void destroy() {
     appView.detachAndDestroy();
   }
