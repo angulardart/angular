@@ -407,8 +407,8 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText((_ctx.title ?? ''));
-    _textBinding_3.updateText((_ctx.name ?? ''));
+    _textBinding_1.updateText(import12.interpolateString0(_ctx.title));
+    _textBinding_3.updateText(import12.interpolateString0(_ctx.name));
   }
 
   @override
@@ -591,8 +591,8 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText((_ctx.title ?? ''));
-    _textBinding_3.updateText((_ctx.name ?? ''));
+    _textBinding_1.updateText(import12.interpolateString0(_ctx.title));
+    _textBinding_3.updateText(import12.interpolateString0(_ctx.name));
   }
 
   @override

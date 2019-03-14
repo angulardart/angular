@@ -260,15 +260,23 @@ class _AstToExpressionVisitor
     if (ast.expressions.length == 1) {
       String firstArg = _compressWhitespacePreceding(ast.strings[0]);
       String secondArg = _compressWhitespaceFollowing(ast.strings[1]);
+      final firstExpression = ast.expressions[0];
       if (firstArg.isEmpty && secondArg.isEmpty) {
+        if (firstExpression is compiler_ast.LiteralPrimitive) {
+          if (firstExpression.value == null) {
+            return o.literal('');
+          } else {
+            return o.literal('${firstExpression.value}');
+          }
+        }
         var args = <o.Expression>[
-          ast.expressions[0].visit(this, false /* visitingRoot */)
+          firstExpression.visit(this, false /* visitingRoot */)
         ];
         return o.importExpr(interpolateIdentifiers[0]).callFn(args);
       } else {
         var args = <o.Expression>[
           o.literal(firstArg),
-          ast.expressions[0].visit(this, false /* visitingRoot */),
+          firstExpression.visit(this, false /* visitingRoot */),
           o.literal(secondArg),
         ];
         return o.importExpr(interpolateIdentifiers[1]).callFn(args);

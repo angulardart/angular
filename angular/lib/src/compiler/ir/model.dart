@@ -246,10 +246,7 @@ class BoundExpression implements BindingSource {
   final SourceSpan sourceSpan;
   final analyzed.AnalyzedClass _analyzedClass;
 
-  BoundExpression(
-      ast.AST parsedExpression, this.sourceSpan, this._analyzedClass)
-      : this.expression =
-            analyzed.rewriteInterpolate(parsedExpression, _analyzedClass);
+  BoundExpression(this.expression, this.sourceSpan, this._analyzedClass);
 
   /// Wraps the expression in an `== true` check, in order to support null
   /// values.

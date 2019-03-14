@@ -16,6 +16,7 @@ import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 
 final List<dynamic> styles$CompWithoutFinal = const [];
 
@@ -47,8 +48,8 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText((_ctx.okMessage ?? ''));
-    _textBinding_4.updateText((_ctx.cancelMessage ?? ''));
+    _textBinding_1.updateText(import10.interpolateString0(_ctx.okMessage));
+    _textBinding_4.updateText(import10.interpolateString0(_ctx.cancelMessage));
   }
 
   @override
@@ -118,10 +119,10 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, (_ctx.okMessage ?? ''));
+    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(_ctx.okMessage));
     final _text_2 = import9.appendText(parentRenderNode, ' ');
     final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, (_ctx.cancelMessage ?? ''));
+    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(_ctx.cancelMessage));
     init0();
   }
 
@@ -191,10 +192,10 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, (import1.CompWithFinalStatic.okMessage ?? ''));
+    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(import1.CompWithFinalStatic.okMessage));
     final _text_2 = import9.appendText(parentRenderNode, ' ');
     final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, (import1.CompWithFinalStatic.cancelMessage ?? ''));
+    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(import1.CompWithFinalStatic.cancelMessage));
     init0();
   }
 
@@ -264,10 +265,10 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, (import1.Messages.okMessage ?? ''));
+    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(import1.Messages.okMessage));
     final _text_2 = import9.appendText(parentRenderNode, ' ');
     final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, (import1.Messages.cancelMessage ?? ''));
+    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(import1.Messages.cancelMessage));
     init0();
   }
 

@@ -62,12 +62,10 @@ abstract class BoundValueConverter {
     o.OutputType type,
   ) {
     if (value is BoundExpression) {
-      final expression =
-          analyzer.rewriteInterpolate(value.expression, analyzedClass);
       return convertCdExpressionToIr(
         _nameResolver,
         _implicitReceiver,
-        expression,
+        value.expression,
         sourceSpan,
         _metadata,
         type,

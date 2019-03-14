@@ -18,6 +18,7 @@ import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 
 final List<dynamic> styles$InlinedNgIfComponent = const [];
 
@@ -183,7 +184,7 @@ class _ViewIgnoredNgIfComponent1 extends AppView<import1.IgnoredNgIfComponent> {
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import10.appendText(_el_0, 'Hello ');
-    final _text_2 = import10.appendText(_el_0, (_ctx.name ?? ''));
+    final _text_2 = import10.appendText(_el_0, import12.interpolateString0(_ctx.name));
     final _text_3 = import10.appendText(_el_0, '!');
     init1(_el_0);
   }
