@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
+import '../core/app_host.dart';
 import '../core/application_ref.dart';
 import '../core/application_tokens.dart';
 import '../core/di.dart' show ReflectiveInjector;
@@ -14,26 +15,11 @@ import '../core/zone.dart';
 import '../di/injector/empty.dart';
 import '../di/injector/hierarchical.dart';
 import '../di/injector/injector.dart';
-import '../platform/browser_common.dart';
 import '../platform/dom/events/event_manager.dart';
 import '../runtime.dart';
 import '../security/dom_sanitization_service.dart';
 
 import 'modules.dart';
-
-Injector _platformInjectorCache;
-
-/// **INTERNAL ONLY**: Creates a new injector for platform-level services.
-Injector _platformInjector() {
-  if (_platformInjectorCache == null) {
-    final testabilityRegistry = TestabilityRegistry();
-    initTestability(testabilityRegistry);
-    _platformInjectorCache = Injector.map({
-      TestabilityRegistry: testabilityRegistry,
-    });
-  }
-  return _platformInjectorCache;
-}
 
 /// **INTERNAL ONLY**: Creates a new application-level Injector.
 ///
@@ -50,7 +36,7 @@ Injector appInjector(
   NgZone Function() createNgZone = createNgZone,
 }) {
   // These are the required root services, always provided by AngularDart.
-  final Injector minimalInjector = minimalApp(_platformInjector());
+  final Injector minimalInjector = minimalApp(appGlobals.rootInjector);
 
   // Lazily initialized later on once we have the user injector.
   ApplicationRef applicationRef;
