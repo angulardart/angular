@@ -108,6 +108,8 @@ class InjectorReader {
     try {
       final module = moduleReader.parseModule(providersOrModules.objectValue);
       return moduleReader.deduplicateProviders(module.flatten());
+    } on UnsupportedProviderException catch (e) {
+      _throwParseError(e.constant, e.message);
     } on NullTokenException catch (e) {
       _throwParseError(e.constant);
     } on NullFactoryException catch (e) {
