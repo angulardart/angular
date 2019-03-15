@@ -107,19 +107,29 @@ class _UpdateStatementsVisitor
     ]).toStmt();
   }
 
+  // TODO(b/110433960): Should probably use renderValue instead of currValExpr.
   @override
   o.Statement visitStyleBinding(ir.StyleBinding styleBinding, [_]) {
-    // Convert to string if necessary.
-    o.Expression styleValueExpr = bindingSource.isString
-        // TODO(b/110433960): This should probably use renderValue instead of
-        //  currValExpr.
-        ? currValExpr
-        : currValExpr.callMethod('toString', [],
-            checked: bindingSource.isNullable);
-    // Add units for style value if defined in template.
+    o.Expression styleValueExpr;
     if (styleBinding.unit != null) {
-      styleValueExpr = styleValueExpr.isBlank().conditional(
-          o.NULL_EXPR, styleValueExpr.plus(o.literal(styleBinding.unit)));
+      // Append the unit to the bound expression if not null. For example:
+      //
+      //    ctx.width == null ? null : ctx.width.toString() + 'px'
+      //
+      final styleString = bindingSource.isString
+          ? currValExpr
+          : currValExpr.callMethod('toString', []);
+      final styleWithUnit = styleString.plus(o.literal(styleBinding.unit));
+      styleValueExpr =
+          currValExpr.isBlank().conditional(o.NULL_EXPR, styleWithUnit);
+    } else {
+      styleValueExpr = bindingSource.isString
+          ? currValExpr
+          : currValExpr.callMethod(
+              'toString', [],
+              // Use null check to bind null instead of string "null".
+              checked: bindingSource.isNullable,
+            );
     }
     // Call Element.style.setProperty(propName, value);
     o.Expression updateStyleExpr = renderNode.prop('style').callMethod(

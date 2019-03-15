@@ -449,7 +449,7 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
     }
     final currVal_1 = _ctx.height;
     if (import8.checkBinding(_expr_1, currVal_1)) {
-      _el_0.style.setProperty('height', ((currVal_1?.toString() == null) ? null : (currVal_1?.toString() + 'px')));
+      _el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       _expr_1 = currVal_1;
     }
   }
