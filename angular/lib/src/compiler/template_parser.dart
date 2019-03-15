@@ -174,7 +174,7 @@ CssSelector createElementCssSelector(
     // attributes of an element here, we use exact match ('=') to specify that
     // the element has this attribute value.
     cssSelector.addAttribute(attrNameNoNs, '=', attrValue);
-    if (attrName.toLowerCase() == _classAttribute) {
+    if (attrName.toLowerCase() == _classAttribute && attrValue != null) {
       var classes = _splitClasses(attrValue);
       for (var className in classes) {
         cssSelector.addClassName(className);
