@@ -88,7 +88,7 @@ class ProviderReader {
       }
       return _parseUseClass(token, o, reader.read('token').typeValue.element);
     }
-    throw UnsupportedError('Could not parse provider: $o.');
+    throw UnsupportedProviderException(o, 'Could not parse provider');
   }
 
   TypeLink _actualProviderType(
@@ -353,4 +353,11 @@ class NullFactoryException implements Exception {
   final DartObject constant;
 
   const NullFactoryException(this.constant);
+}
+
+class UnsupportedProviderException implements Exception {
+  final DartObject constant;
+  final String message;
+
+  const UnsupportedProviderException(this.constant, this.message);
 }
