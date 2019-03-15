@@ -4,6 +4,7 @@ import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/core/security.dart';
 
 import '../expression_parser/ast.dart' as ast;
 import '../output/output_ast.dart' as o;
@@ -175,34 +176,101 @@ class Binding implements IRNode {
 }
 
 abstract class BindingTarget extends IRNode {
+  TemplateSecurityContext get securityContext;
+
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]);
 }
 
 class TextBinding implements BindingTarget {
   @override
+  final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+
+  @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
       visitor.visitTextBinding(this, context);
 }
 
 class HtmlBinding implements BindingTarget {
+  // TODO(b/128354029): Determine if this is the currect value in all cases,
+  // and then document it.
+  @override
+  final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
       visitor.visitHtmlBinding(this, context);
 }
 
-class AttributeBinding implements BindingTarget {
+class ClassBinding implements BindingTarget {
+  /// Name of the class binding, i.e. [class.name]='foo'.
+  ///
+  /// If name is null, then we treat this as a [className]='"foo"' or
+  /// [attr.class]='foo'.
   final String name;
 
-  AttributeBinding(this.name);
+  @override
+  final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+
+  ClassBinding([this.name]);
+
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitClassBinding(this, context);
+}
+
+class StyleBinding implements BindingTarget {
+  final String name;
+  final String unit;
+
+  @override
+  final TemplateSecurityContext securityContext = TemplateSecurityContext.style;
+
+  StyleBinding(this.name, this.unit);
+
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitStyleBinding(this, context);
+}
+
+class AttributeBinding implements BindingTarget {
+  final String namespace;
+  final String name;
+
+  final bool isConditional;
+  @override
+  final TemplateSecurityContext securityContext;
+
+  AttributeBinding(
+    this.name, {
+    this.namespace,
+    this.isConditional = false,
+    this.securityContext,
+  });
+
+  bool get hasNamespace => namespace != null;
+
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
       visitor.visitAttributeBinding(this, context);
 }
 
+class PropertyBinding implements BindingTarget {
+  final String name;
+  @override
+  final TemplateSecurityContext securityContext;
+
+  PropertyBinding(this.name, this.securityContext);
+
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitPropertyBinding(this, context);
+}
+
 abstract class BindingSource {
   bool get isImmutable;
   bool get isNullable;
+  bool get isString;
 
   R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]);
 }
@@ -214,6 +282,8 @@ class BoundI18nMessage implements BindingSource {
   final bool isImmutable = true;
   @override
   final bool isNullable = false;
+  @override
+  final bool isString = true;
 
   BoundI18nMessage(this.value);
 
@@ -234,6 +304,9 @@ class StringLiteral extends BoundLiteral {
   final String value;
 
   StringLiteral(this.value);
+
+  @override
+  final bool isString = true;
 
   @override
   R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
@@ -269,6 +342,9 @@ class BoundExpression implements BindingSource {
   bool get isNullable => analyzed.canBeNull(expression);
 
   @override
+  bool get isString => analyzed.isString(expression, _analyzedClass);
+
+  @override
   R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
       visitor.visitBoundExpression(this, context);
 }
@@ -276,7 +352,10 @@ class BoundExpression implements BindingSource {
 abstract class BindingTargetVisitor<R, C> {
   R visitTextBinding(TextBinding textBinding, [C context]);
   R visitHtmlBinding(HtmlBinding htmlBinding, [C context]);
+  R visitClassBinding(ClassBinding classBinding, [C context]);
+  R visitStyleBinding(StyleBinding styleBinding, [C context]);
   R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
+  R visitPropertyBinding(PropertyBinding propertyBinding, [C context]);
 }
 
 abstract class BindingSourceVisitor<R, C> {

@@ -1,16 +1,21 @@
+import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
-import 'package:angular/src/compiler/identifiers.dart'
-    show DomHelpers, Identifiers;
+import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart'
-    show BoundElementPropertyAst, DirectiveAst, PropertyBindingType;
+    show
+        BoundElementPropertyAst,
+        BoundExpression,
+        BoundI18nMessage,
+        BoundValue,
+        DirectiveAst,
+        PropertyBindingType;
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
-import 'package:angular/src/core/security.dart';
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -19,12 +24,8 @@ import 'compile_view.dart' show CompileView, TextBindingNodeReference;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
-import 'view_compiler_utils.dart'
-    show
-        createSetAttributeParams,
-        namespaceUris,
-        unwrapDirective,
-        unwrapDirectiveInstance;
+import 'update_statement_visitor.dart' show bindingToUpdateStatement;
+import 'view_compiler_utils.dart' show unwrapDirective, unwrapDirectiveInstance;
 import 'view_name_resolver.dart';
 
 o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
@@ -162,6 +163,7 @@ void bindAndWriteToRenderer(
   final dynamicPropertiesMethod = CompileMethod();
   final constantPropertiesMethod = CompileMethod();
   for (var boundProp in boundProps) {
+    var binding = _convertToIr(boundProp, converter.analyzedClass);
     // Add to view bindings collection.
     int bindingIndex = nameResolver.createUniqueBindIndex();
 
@@ -172,20 +174,25 @@ void bindAndWriteToRenderer(
     var currValExpr = _createCurrValueExpr(bindingIndex);
 
     var updateStmts = <o.Statement>[
-      _toUpdateStatement(boundProp, converter, appViewInstance, renderNode,
-          isHtmlElement, currValExpr)
+      bindingToUpdateStatement(
+        binding,
+        appViewInstance,
+        renderNode,
+        isHtmlElement,
+        currValExpr,
+      )
     ];
 
-    final fieldType = _fieldType(boundProp);
-    final checkExpression = converter.convertToExpression(
-        boundProp.value, boundProp.sourceSpan, fieldType);
+    final fieldType = _fieldType(binding.target);
+    final checkExpression =
+        converter.convertSourceToExpression(binding.source, fieldType);
     _bind(
       storage,
       currValExpr,
       fieldExpr,
       checkExpression,
-      converter.isImmutable(boundProp.value),
-      converter.isNullable(boundProp.value),
+      binding.source.isImmutable,
+      binding.source.isNullable,
       updateStmts,
       dynamicPropertiesMethod,
       constantPropertiesMethod,
@@ -201,144 +208,53 @@ void bindAndWriteToRenderer(
   }
 }
 
-o.Statement _toUpdateStatement(
-    BoundElementPropertyAst boundProp,
-    BoundValueConverter converter,
-    o.Expression appViewInstance,
-    o.Expression renderNode,
-    bool isHtmlElement,
-    o.ReadVarExpr currValExpr) {
-  // Wraps current value with sanitization call if necessary.
-  o.Expression renderValue =
-      _sanitizedValue(boundProp.securityContext, currValExpr);
+ir.Binding _convertToIr(
+        BoundElementPropertyAst boundProp, AnalyzedClass analyzedClass) =>
+    ir.Binding(
+        source: _boundValueToIr(boundProp, analyzedClass),
+        target: _propertyToIr(boundProp));
 
+ir.BindingTarget _propertyToIr(BoundElementPropertyAst boundProp) {
   switch (boundProp.type) {
     case PropertyBindingType.property:
-      // If user asked for logging bindings, generate code to log them.
       if (boundProp.name == 'className') {
-        // Handle className special case for class="binding".
-        var updateClassExpr = appViewInstance
-            .callMethod('updateChildClass', [renderNode, renderValue]);
-        return updateClassExpr.toStmt();
-      } else {
-        return o.importExpr(DomHelpers.setProperty).callFn([
-          renderNode,
-          o.literal(boundProp.name),
-          renderValue,
-        ]).toStmt();
+        return ir.ClassBinding();
       }
-      break;
+      return ir.PropertyBinding(boundProp.name, boundProp.securityContext);
     case PropertyBindingType.attribute:
       if (boundProp.name == 'class') {
-        // Handle [attr.class].
-        var updateClassExpr = appViewInstance
-            .callMethod('updateChildClass', [renderNode, renderValue]);
-        return updateClassExpr.toStmt();
-      } else {
-        if (boundProp.unit == 'if') {
-          // Conditional attribute (i.e. [attr.disabled.if]).
-          //
-          // For now we treat this as a pure transform to make the
-          // implementation simpler (and consistent with how it worked before)
-          // - it would be a non-breaking change to optimize further.
-          renderValue = renderValue.conditional(o.literal(''), o.NULL_EXPR);
-        } else {
-          // For attributes other than class convert to string if necessary.
-          // The sanitizer returns a string, so we only check if values that
-          // don't require sanitization need to be converted to a string.
-          if (boundProp.securityContext == TemplateSecurityContext.none &&
-              !converter.isString(boundProp.value)) {
-            renderValue = renderValue.callMethod(
-              'toString',
-              const [],
-              checked: converter.isNullable(boundProp.value),
-            );
-          }
-        }
-
-        String attrNs = namespaceUris[boundProp.namespace];
-        var params = createSetAttributeParams(
-          renderNode,
-          attrNs,
-          boundProp.name,
-          renderValue,
-        );
-
-        final updateAttribute = o.importExpr(attrNs == null
-            ? (converter.isNullable(boundProp.value)
-                ? DomHelpers.updateAttribute
-                : DomHelpers.setAttribute)
-            : DomHelpers.updateAttributeNS);
-
-        return updateAttribute.callFn(params).toStmt();
+        return ir.ClassBinding();
       }
-      break;
+      return ir.AttributeBinding(boundProp.name,
+          namespace: boundProp.namespace,
+          isConditional: _isConditionalAttribute(boundProp),
+          securityContext: boundProp.securityContext);
     case PropertyBindingType.cssClass:
-      final renderMethod = isHtmlElement
-          ? DomHelpers.updateClassBinding
-          : DomHelpers.updateClassBindingNonHtml;
-      return o.importExpr(renderMethod).callFn([
-        renderNode,
-        o.literal(boundProp.name),
-        renderValue,
-      ]).toStmt();
+      return ir.ClassBinding(boundProp.name);
     case PropertyBindingType.style:
-      // Convert to string if necessary.
-      o.Expression styleValueExpr = converter.isString(boundProp.value)
-          ? currValExpr
-          : currValExpr.callMethod('toString', [],
-              checked: converter.isNullable(boundProp.value));
-      // Add units for style value if defined in template.
-      if (boundProp.unit != null) {
-        styleValueExpr = styleValueExpr.isBlank().conditional(
-            o.NULL_EXPR, styleValueExpr.plus(o.literal(boundProp.unit)));
-      }
-      // Call Element.style.setProperty(propName, value);
-      o.Expression updateStyleExpr = renderNode.prop('style').callMethod(
-          'setProperty', [o.literal(boundProp.name), styleValueExpr]);
-      return updateStyleExpr.toStmt();
+      return ir.StyleBinding(boundProp.name, boundProp.unit);
   }
-  throw ArgumentError.value(boundProp.type, 'PropertyBindingType',
-      'Could not generate statement for property type.');
+  return null;
 }
 
-o.Expression _sanitizedValue(
-    TemplateSecurityContext securityContext, o.Expression renderValue) {
-  String methodName;
-  switch (securityContext) {
-    case TemplateSecurityContext.none:
-      return renderValue; // No sanitization needed.
-    case TemplateSecurityContext.html:
-      methodName = 'sanitizeHtml';
-      break;
-    case TemplateSecurityContext.style:
-      methodName = 'sanitizeStyle';
-      break;
-    case TemplateSecurityContext.url:
-      methodName = 'sanitizeUrl';
-      break;
-    case TemplateSecurityContext.resourceUrl:
-      methodName = 'sanitizeResourceUrl';
-      break;
-    default:
-      throw ArgumentError('internal error, unexpected '
-          'TemplateSecurityContext $securityContext.');
+ir.BindingSource _boundValueToIr(
+    BoundElementPropertyAst boundProp, AnalyzedClass analyzedClass) {
+  final value = boundProp.value;
+  if (value is BoundExpression) {
+    return ir.BoundExpression(
+        value.expression, boundProp.sourceSpan, analyzedClass);
+  } else if (value is BoundI18nMessage) {
+    return ir.BoundI18nMessage(value.message);
   }
-  var ctx = o.importExpr(Identifiers.appViewUtils).prop('sanitizer');
-  return ctx.callMethod(methodName, [renderValue]);
+  throw ArgumentError.value(value, 'value', 'Unknown $BoundValue type.');
 }
 
-o.OutputType _fieldType(BoundElementPropertyAst boundProp) {
-  switch (boundProp.type) {
-    case PropertyBindingType.property:
-      if (boundProp.name == 'className') {
-        return o.STRING_TYPE;
-      }
-      break;
-    case PropertyBindingType.cssClass:
-      return o.BOOL_TYPE;
-    default:
-      break;
+bool _isConditionalAttribute(BoundElementPropertyAst boundProp) =>
+    boundProp.unit == 'if';
+
+o.OutputType _fieldType(ir.BindingTarget target) {
+  if (target is ir.ClassBinding) {
+    return target.name == null ? o.STRING_TYPE : o.BOOL_TYPE;
   }
   return null;
 }

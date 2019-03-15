@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 
 import '../analyzed_class.dart' as analyzer;
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
@@ -15,7 +16,8 @@ void _throwUnrecognized(BoundValue value) {
 }
 
 /// An abstract utility for converting bound values to output expressions.
-abstract class BoundValueConverter {
+abstract class BoundValueConverter
+    implements ir.BindingSourceVisitor<o.Expression, o.OutputType> {
   final CompileDirectiveMetadata _metadata;
   final o.Expression _implicitReceiver;
   final NameResolver _nameResolver;
@@ -76,6 +78,10 @@ abstract class BoundValueConverter {
     _throwUnrecognized(value);
   }
 
+  o.Expression convertSourceToExpression(
+          ir.BindingSource source, o.OutputType type) =>
+      source.accept(this, type);
+
   o.Expression _createI18nMessage(I18nMessage message);
 
   analyzer.AnalyzedClass get analyzedClass => _metadata.analyzedClass;
@@ -100,15 +106,26 @@ abstract class BoundValueConverter {
     _throwUnrecognized(value);
   }
 
-  /// Returns whether [value] is a string.
-  bool isString(BoundValue value) {
-    if (value is BoundExpression) {
-      return analyzer.isString(value.expression, analyzedClass);
-    } else if (value is BoundI18nMessage) {
-      return true;
-    }
-    _throwUnrecognized(value);
-  }
+  @override
+  o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
+          [o.OutputType type]) =>
+      convertCdExpressionToIr(
+        _nameResolver,
+        _implicitReceiver,
+        boundExpression.expression,
+        boundExpression.sourceSpan,
+        _metadata,
+        type,
+      );
+
+  @override
+  o.Expression visitBoundI18nMessage(ir.BoundI18nMessage boundI18nMessage,
+          [_]) =>
+      _createI18nMessage(boundI18nMessage.value);
+
+  @override
+  o.Expression visitStringLiteral(ir.StringLiteral stringLiteral, [_]) =>
+      o.literal(stringLiteral.value);
 }
 
 /// Converts values bound by a directive change detector.
