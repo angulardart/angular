@@ -1,6 +1,5 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
-import 'package:angular/src/compiler/expression_parser/parser.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
@@ -200,7 +199,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   void visitProvider(ProviderAst ast, _) {}
 }
 
-void bindViewHostProperties(CompileView view, Parser parser,
+void bindViewHostProperties(CompileView view,
     ElementSchemaRegistry schemaRegistry, ErrorCallback errorCallback) {
   if (view.viewIndex != 0 || view.viewType != ViewType.component) return;
   var hostProps = view.component.hostProperties;

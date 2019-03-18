@@ -66,7 +66,7 @@ class ViewCompiler {
         logWarning(message);
       }
     };
-    bindViewHostProperties(view, parser, _schemaRegistry, errorHandler);
+    bindViewHostProperties(view, _schemaRegistry, errorHandler);
   }
 
   /// Builds the view and returns number of nested views generated.
