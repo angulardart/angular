@@ -55,7 +55,7 @@ void main() {
       expectColor(elm, '#C0B0A0');
     });
 
-    test("should apply style using element selector in nested components",
+    test('should apply style using element selector in nested components',
         () async {
       var testBed = NgTestBed<ContentSelectorTestComponent>();
       NgTestFixture<ContentSelectorTestComponent> testFixture =
@@ -83,7 +83,7 @@ void main() {
       NgTestFixture<ClassOnHostTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement;
-      expect(elm.className.startsWith('customhostclass _nghost-'), true);
+      expect(elm.className, startsWith('customhostclass _nghost-'));
     });
 
     test('should support [attr.class] bindings', () async {
@@ -91,7 +91,7 @@ void main() {
       NgTestFixture<ClassAttribBindingComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(elm.className.startsWith('xyz _ngcontent-'), true);
+      expect(elm.className, startsWith('xyz _ngcontent-'));
     });
 
     test('should support class interpolation', () async {
@@ -99,7 +99,7 @@ void main() {
       NgTestFixture<ClassInterpolateComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('#item1');
-      expect(elm.className.startsWith('prefix xyz postfix _ngcontent-'), true);
+      expect(elm.className, startsWith('prefix xyz postfix _ngcontent-'));
     });
 
     test(
@@ -109,8 +109,8 @@ void main() {
       NgTestFixture<ComponentContainerTestComponent> testFixture =
           await testBed.create();
       Element elm = testFixture.rootElement.querySelector('child-component1');
-      expect(elm.className.contains('_ngcontent'), true);
-      expect(elm.className.contains('_nghost'), true);
+      expect(elm.className, contains('_ngcontent'));
+      expect(elm.className, contains('_nghost'));
     });
 
     test('Should apply shim class on top of host attr.class property',
@@ -118,7 +118,7 @@ void main() {
       var testBed = NgTestBed<NgHostAttribShimTest>();
       var testFixture = await testBed.create();
       Element elm = testFixture.rootElement.querySelector('feature-promo');
-      expect(elm.className.startsWith('position-class _nghost-'), true);
+      expect(elm.className, startsWith('position-class _nghost-'));
     });
 
     test('Should shim svg elements with no compile type errors', () async {
@@ -131,9 +131,9 @@ void main() {
       var testFixture = await testBed.create();
       Element elm = testFixture.rootElement;
       expect(elm.tagName.toLowerCase(), 'feature-promo2');
-      expect(elm.className.contains('_nghost'), true);
-      expect(elm.className.contains('_ngcontent'), false);
-      expect(elm.className.contains('promo-test-class'), true);
+      expect(elm.className, contains('_nghost'));
+      expect(elm.className, isNot(contains('_ngcontent')));
+      expect(elm.className, contains('promo-test-class'));
     });
   });
 }
@@ -339,7 +339,7 @@ class FeaturePromoComponent {
 class NgHostAttribShimTest {
   String myposition;
   NgHostAttribShimTest() {
-    myposition = "position-class";
+    myposition = 'position-class';
   }
 }
 
