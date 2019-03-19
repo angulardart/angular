@@ -43,7 +43,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final doc = import2.document;
     _el_0 = import8.appendDiv(doc, parentRenderNode);
     import8.setAttribute(_el_0, 'directive-with-output', '');
-    import8.setAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
+    import8.updateAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
     import8.setAttribute(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
     _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));

@@ -4,6 +4,8 @@ import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
+    show namespaceUris;
 import 'package:angular/src/core/security.dart';
 
 import '../expression_parser/ast.dart' as ast;
@@ -209,14 +211,25 @@ class ClassBinding implements BindingTarget {
   /// [attr.class]='foo'.
   final String name;
 
+  final bool isHostBinding;
+
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
 
-  ClassBinding([this.name]);
+  ClassBinding({this.name, this.isHostBinding = false});
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
       visitor.visitClassBinding(this, context);
+}
+
+class TabIndexBinding implements BindingTarget {
+  @override
+  final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitTabIndexBinding(this, context);
 }
 
 class StyleBinding implements BindingTarget {
@@ -243,10 +256,10 @@ class AttributeBinding implements BindingTarget {
 
   AttributeBinding(
     this.name, {
-    this.namespace,
+    String namespace,
     this.isConditional = false,
-    this.securityContext,
-  });
+    @required this.securityContext,
+  }) : this.namespace = namespaceUris[namespace];
 
   bool get hasNamespace => namespace != null;
 
@@ -353,6 +366,7 @@ abstract class BindingTargetVisitor<R, C> {
   R visitTextBinding(TextBinding textBinding, [C context]);
   R visitHtmlBinding(HtmlBinding htmlBinding, [C context]);
   R visitClassBinding(ClassBinding classBinding, [C context]);
+  R visitTabIndexBinding(TabIndexBinding tabIndexBinding, [C context]);
   R visitStyleBinding(StyleBinding styleBinding, [C context]);
   R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
   R visitPropertyBinding(PropertyBinding propertyBinding, [C context]);

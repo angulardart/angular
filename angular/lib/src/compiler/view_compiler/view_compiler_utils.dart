@@ -20,6 +20,8 @@ import 'package:angular/src/compiler/template_ast.dart'
         I18nAttributeValue,
         LiteralAttributeValue;
 import 'package:angular/src/core/linker/view_type.dart';
+import 'package:angular/src/core/security.dart';
+import 'package:angular_compiler/cli.dart';
 
 import 'compile_view.dart' show CompileView, ReadNodeReferenceExpr;
 import 'constants.dart';
@@ -342,99 +344,55 @@ String toTemplateExtension(String moduleUrl) {
   return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }
 
-// For class bindings only, we treat HostBindings set in the constructor body
-// differently than those defined in detectChangesInternal. This is to support a
-// hacky implementation of tooltips in angular components. See b/118698430 for
-// more background.
-o.Statement createSetAttributeStatement(
-    String astNodeName,
-    o.Expression renderNode,
-    String attrName,
-    o.Expression attrValue,
-    bool isHostBinding) {
-  String attrNs;
-  // Copy of the logic in property_binder.dart.
-  //
-  // Unfortunately host attributes are treated differently (for historic
-  // reasons), and they do run through property_binder. We should eventually
-  // refactor and not have duplicate code here.
-  if (attrName.endsWith('.if')) {
-    attrName = attrName.substring(0, attrName.length - 3);
-    attrValue = attrValue.conditional(o.literal(''), o.NULL_EXPR);
-  }
-  if (attrName.startsWith('@') && attrName.contains(':')) {
-    var nameParts = attrName.substring(1).split(':');
-    attrNs = namespaceUris[nameParts[0]];
-    attrName = nameParts[1];
-  }
-
-  /// Optimization for common attributes. Call dart:html directly without
-  /// going through setAttr wrapper.
-  if (attrNs == null) {
-    switch (attrName) {
-      case 'class':
-        // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
-        bool hasNamespace =
-            astNodeName.startsWith('@') || astNodeName.contains(':');
-        return isHostBinding
-            ? renderNode.prop('className').set(attrValue).toStmt()
-            : o.THIS_EXPR.callMethod(
-                hasNamespace ? 'updateChildClassNonHtml' : 'updateChildClass',
-                [renderNode, attrValue]).toStmt();
-        break;
-      case 'tabindex':
-      case 'tabIndex':
-        try {
-          if (attrValue is o.LiteralExpr) {
-            final value = attrValue.value;
-            if (value is String) {
-              final tabValue = int.parse(value);
-              return renderNode
-                  .prop('tabIndex')
-                  .set(o.literal(tabValue))
-                  .toStmt();
-            }
-          } else {
-            // Assume it's an int field
-            return renderNode.prop('tabIndex').set(attrValue).toStmt();
-          }
-        } catch (_) {
-          // fallthrough to default handler since index is not int.
-        }
-        break;
-      default:
-        break;
-    }
-  }
-  final params = createSetAttributeParams(
-    renderNode,
-    attrNs,
-    attrName,
-    attrValue,
-  );
-  final function = o.importExpr(
-    attrNs == null ? DomHelpers.setAttribute : DomHelpers.updateAttributeNS,
-  );
-  return function.callFn(params).toStmt();
-}
-
-List<ir.Binding> mergeHtmlAndDirectiveAttributes(ElementAst elementAst,
-    List<CompileDirectiveMetadata> directives, AnalyzedClass analyzedClass) {
+List<ir.Binding> mergeHtmlAndDirectiveAttributes(
+    ElementAst elementAst, List<CompileDirectiveMetadata> directives) {
   var attrs = elementAst.attrs;
   var htmlAttrs = _attributeToIr(attrs, elementAst.name);
   // Create statements to initialize literal attribute values.
   // For example, a directive may have hostAttributes setting class name.
-  return _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives, analyzedClass);
+  return _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);
 }
 
 List<ir.Binding> _attributeToIr(List<AttrAst> attrs, String elementName) {
   var htmlAttrs = <ir.Binding>[];
   for (AttrAst attr in attrs) {
     htmlAttrs.add(ir.Binding(
-        source: _attributeValue(attr.value),
-        target: ir.AttributeBinding(attr.name)));
+        source: _attributeValue(attr.value), target: attributeName(attr.name)));
   }
   return htmlAttrs;
+}
+
+ir.BindingTarget attributeName(String name, {bool isHostBinding = false}) {
+  String attrNs;
+  if (name.startsWith('@') && name.contains(':')) {
+    var nameParts = name.substring(1).split(':');
+    attrNs = nameParts[0];
+    name = nameParts[1];
+  }
+  bool isConditional = false;
+  if (name.endsWith('.if')) {
+    isConditional = true;
+    name = name.substring(0, name.length - 3);
+  }
+  if (name == 'class') {
+    _throwIfConditional(isConditional, name);
+    return ir.ClassBinding(isHostBinding: isHostBinding);
+  }
+  if (name == 'tabindex' || name == 'tabIndex') {
+    _throwIfConditional(isConditional, name);
+    return ir.TabIndexBinding();
+  }
+  return ir.AttributeBinding(name,
+      namespace: attrNs,
+      isConditional: isConditional,
+      securityContext: TemplateSecurityContext.none);
+}
+
+void _throwIfConditional(bool isConditional, String name) {
+  if (isConditional) {
+    // TODO(b/128689252): Move to validation phase.
+    throw BuildError('$name.if is not supported');
+  }
 }
 
 ir.BindingSource _attributeValue(AttributeValue attr) {
@@ -458,13 +416,12 @@ ir.BindingSource _attributeValue(AttributeValue attr) {
 List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
   List<ir.Binding> declaredHtmlAttrs,
   List<CompileDirectiveMetadata> directives,
-  AnalyzedClass analyzedClass,
 ) {
-  var result = <String, ir.BindingSource>{};
+  var result = <String, ir.Binding>{};
   var mergeCount = <String, int>{};
   for (var binding in declaredHtmlAttrs) {
-    var name = (binding.target as ir.AttributeBinding).name;
-    result[name] = binding.source;
+    var name = _nameOf(binding.target);
+    result[name] = binding;
     _increment(mergeCount, name);
   }
   for (CompileDirectiveMetadata directiveMeta in directives) {
@@ -491,14 +448,35 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
       // binding that came earlier takes priority.
       if (isComponent && !shouldMerge) continue;
 
-      var value = _toIr(directiveMeta.hostAttributes[name], analyzedClass);
+      var value = _hostAttributeToIr(name, directiveMeta.hostAttributes[name],
+          directiveMeta.analyzedClass);
       var prevValue = result[name];
       result[name] = prevValue != null
-          ? _mergeAttributeValue(name, prevValue, value, analyzedClass)
+          ? _mergeAttributeValue(
+              name, prevValue, value, directiveMeta.analyzedClass)
           : value;
     }
   }
   return _toSortedBindings(result);
+}
+
+String _nameOf(ir.BindingTarget target) {
+  if (target is ir.ClassBinding) {
+    return target.name != null ? 'class.${target.name}' : 'class';
+  }
+  if (target is ir.StyleBinding) {
+    return 'style';
+  }
+  if (target is ir.TabIndexBinding) {
+    return 'tabIndex';
+  }
+  if (target is ir.AttributeBinding) {
+    return target.namespace != null
+        ? '@${target.namespace}:${target.name}'
+        : target.name;
+  }
+  throw ArgumentError.value(
+      target, 'target', 'Binding target type does not have a name.');
 }
 
 void _increment(Map<String, int> mergeCount, String name) {
@@ -506,19 +484,24 @@ void _increment(Map<String, int> mergeCount, String name) {
   mergeCount[name]++;
 }
 
-ir.BoundExpression _toIr(ast.AST ast, AnalyzedClass analyzedClass) {
-  return ir.BoundExpression(ast, null, analyzedClass);
+ir.Binding _hostAttributeToIr(
+    String name, ast.AST ast, AnalyzedClass analyzedClass) {
+  return ir.Binding(
+      target: attributeName(name, isHostBinding: true),
+      source: ir.BoundExpression(ast, null, analyzedClass));
 }
 
-ir.BindingSource _mergeAttributeValue(
+ir.Binding _mergeAttributeValue(
   String attrName,
-  ir.BindingSource attrValue1,
-  ir.BindingSource attrValue2,
+  ir.Binding attr1,
+  ir.Binding attr2,
   AnalyzedClass analyzedClass,
 ) {
   if (attrName != classAttrName && attrName != styleAttrName) {
-    return attrValue2;
+    return attr2;
   }
+  var attrValue1 = attr1.source;
+  var attrValue2 = attr2.source;
   // attrValue1 can be a literal string (from an HTML attribute), an
   // expression (from a host attribute), or an interpolation (from a previous
   // merge). attrValue2 can only be an expression (from a host attribute), it
@@ -531,13 +514,15 @@ ir.BindingSource _mergeAttributeValue(
     attrValue1.expression as ast.Interpolation
       ..expressions.add(_asAst(attrValue2))
       ..strings.add(' ');
-    return attrValue1;
+    return attr1;
   } else {
-    return ir.BoundExpression(
-        ast.Interpolation(
-            ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)]),
-        null,
-        analyzedClass);
+    return ir.Binding(
+        target: attr1.target,
+        source: ir.BoundExpression(
+            ast.Interpolation(
+                ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)]),
+            null,
+            analyzedClass));
   }
 }
 
@@ -554,13 +539,8 @@ ast.AST _asAst(ir.BindingSource bindingSource) {
       'to an AST.');
 }
 
-List<ir.Binding> _toSortedBindings(Map<String, ir.BindingSource> attributes) {
-  var sortedMap = _toSortedMap(attributes);
-  return sortedMap.keys
-      .map((name) => ir.Binding(
-          source: sortedMap[name], target: ir.AttributeBinding(name)))
-      .toList();
-}
+List<ir.Binding> _toSortedBindings(Map<String, ir.Binding> attributes) =>
+    _toSortedMap(attributes).values.toList();
 
 Map<K, V> _toSortedMap<K, V>(Map<K, V> data) => SplayTreeMap.from(data);
 

@@ -187,7 +187,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   ViewHostComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
     rootEl = import5.document.createElement('host');
-    import8.setAttribute(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
+    import8.updateAttribute(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);
