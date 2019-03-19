@@ -69,6 +69,10 @@
 *   The template compiler now properly updates class bindings on SVG elements.
     Previously, we did not shim these classes correctly.
 
+*   When using `runAppAsync`, `beforeComponentCreated` now runs within `NgZone`
+    which previously surfaced bugs when services created and initialized in this
+    callback did not trigger change detection.
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
