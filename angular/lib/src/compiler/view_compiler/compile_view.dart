@@ -127,6 +127,14 @@ class NodeReference {
         _visibility = NodeReferenceVisibility.classPublic,
         _initialValue = null;
 
+  /// Create a [NodeReference] for a node passed as a parameter.
+  factory NodeReference.parameter(
+          CompileViewStorage _storage, o.OutputType type, String name) =
+      _ParameterNodeReference;
+
+  NodeReference._parameter(this._storage, this._type, this._name)
+      : _initialValue = null;
+
   /// Returns an expression that reads from this variable or field.
   o.Expression toReadExpr() => ReadNodeReferenceExpr(this);
 
@@ -150,6 +158,22 @@ class NodeReference {
       );
     }
   }
+}
+
+/// A [NodeReference] for a node that is passed into detectChanges() as a
+/// parameter.
+///
+/// This is used in DirectiveChangeDetector.
+class _ParameterNodeReference extends NodeReference {
+  _ParameterNodeReference(
+      CompileViewStorage storage, o.OutputType type, String name)
+      : super._parameter(storage, type, name);
+
+  @override
+  o.Expression toReadExpr() => o.ReadVarExpr(_name);
+  @override
+  o.Statement toWriteStmt(o.Expression value) =>
+      o.WriteClassMemberExpr(_name, value).toStmt();
 }
 
 // Wraps references to HTML Text nodes in a [TextBinding] helper class.
