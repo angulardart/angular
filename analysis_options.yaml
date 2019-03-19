@@ -42,7 +42,6 @@ linter:
     - prefer_final_fields
     - prefer_is_not_empty
     - slash_for_doc_comments
-    - super_goes_last
     - test_types_in_equals
     - throw_in_finally
     - type_init_formals
