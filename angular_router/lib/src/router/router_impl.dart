@@ -50,7 +50,7 @@ class RouterImpl extends Router {
       final navigationParams = NavigationParams(
           queryParameters: url.queryParameters,
           fragment: fragment,
-          updateUrl: false);
+          replace: true);
       _enqueueNavigation(url.path, navigationParams).then((navigationResult) {
         // If the back navigation was blocked (DeactivateGuard), push the
         // activeState back into the history.
