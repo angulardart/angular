@@ -51,16 +51,6 @@ final _appViewFields = Set<String>.from([
   'lastRootNode',
 ]);
 
-// Creates method parameters list for AppView set attribute calls.
-List<o.Expression> createSetAttributeParams(o.Expression renderNode,
-    String attrNs, String attrName, o.Expression valueExpr) {
-  if (attrNs != null) {
-    return [renderNode, o.literal(attrNs), o.literal(attrName), valueExpr];
-  } else {
-    return [renderNode, o.literal(attrName), valueExpr];
-  }
-}
-
 final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
 
 /// Returns `unsafeCast<{Cast}>(expression)`.

@@ -4,8 +4,6 @@ import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/security.dart';
 
-import 'view_compiler_utils.dart' show createSetAttributeParams;
-
 /// Converts [binding] to an update statement.
 ///
 /// This is update statement is called when the [currValExpr] has changed.
@@ -62,20 +60,26 @@ class _UpdateStatementsVisitor
         );
       }
     }
-    var params = createSetAttributeParams(
-      renderNode,
-      attributeBinding.namespace,
-      attributeBinding.name,
-      renderValue,
-    );
+    if (attributeBinding.hasNamespace) {
+      return o.importExpr(DomHelpers.updateAttributeNS).callFn([
+        renderNode,
+        o.literal(attributeBinding.namespace),
+        o.literal(attributeBinding.name),
+        renderValue,
+      ]).toStmt();
+    }
 
-    final updateAttribute = o.importExpr(attributeBinding.hasNamespace
-        ? DomHelpers.updateAttributeNS
-        : (bindingSource.isNullable
+    return o
+        .importExpr(bindingSource.isNullable
             ? DomHelpers.updateAttribute
-            : DomHelpers.setAttribute));
-
-    return updateAttribute.callFn(params).toStmt();
+            : DomHelpers.setAttribute)
+        .callFn(
+      [
+        renderNode,
+        o.literal(attributeBinding.name),
+        renderValue,
+      ],
+    ).toStmt();
   }
 
   @override
