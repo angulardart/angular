@@ -13,7 +13,7 @@ import '../template_ast.dart' show BoundExpression;
 import '../template_parser.dart';
 import 'bound_value_converter.dart';
 import 'compile_method.dart';
-import 'compile_view.dart' show CompileViewStorage;
+import 'compile_view.dart' show CompileViewStorage, NodeReference;
 import 'constants.dart' show DetectChangesVars, EventHandlerVars;
 import 'property_binder.dart' show bindAndWriteToRenderer;
 import 'view_name_resolver.dart';
@@ -50,14 +50,18 @@ class DirectiveCompiler {
     ViewNameResolver nameResolver,
     CompileViewStorage storage,
   ) {
+    final el = NodeReference.parameter(
+        storage, o.importType(Identifiers.HTML_ELEMENT), 'el');
     final constructor = _createChangeDetectorConstructor(
       directive,
       storage,
+      el,
     );
     final viewMethods = _buildDetectHostChanges(
       directive,
       nameResolver,
       storage,
+      el,
     );
     return o.ClassStmt(
       _changeDetectorClassName(directive),
@@ -76,6 +80,7 @@ class DirectiveCompiler {
   o.Constructor _createChangeDetectorConstructor(
     ir.Directive directive,
     CompileViewStorage storage,
+    NodeReference el,
   ) {
     final instanceType = o.importType(
       directive.metadata.type.identifier,
@@ -104,7 +109,7 @@ class DirectiveCompiler {
         ..add(o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
       statements.addAll([
         o.WriteClassMemberExpr('view', o.ReadVarExpr('v')).toStmt(),
-        o.WriteClassMemberExpr('el', o.ReadVarExpr('e')).toStmt(),
+        el.toWriteStmt(o.ReadVarExpr('e')),
         o.InvokeMemberMethodExpr('initCd', const []).toStmt()
       ]);
     }
@@ -121,6 +126,7 @@ class DirectiveCompiler {
     ir.Directive directive,
     ViewNameResolver nameResolver,
     CompileViewStorage storage,
+    NodeReference el,
   ) {
     final hostProps = directive.hostProperties;
     if (hostProps.isEmpty) {
@@ -153,7 +159,7 @@ class DirectiveCompiler {
       hostProperties,
       _boundValueConverter,
       o.variable('view'),
-      o.variable('el'),
+      el,
       false,
       nameResolver,
       storage,

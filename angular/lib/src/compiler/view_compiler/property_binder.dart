@@ -20,7 +20,8 @@ import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
-import 'compile_view.dart' show CompileView, TextBindingNodeReference;
+import 'compile_view.dart'
+    show CompileView, NodeReference, TextBindingNodeReference;
 import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
@@ -153,7 +154,7 @@ void bindAndWriteToRenderer(
   List<BoundElementPropertyAst> boundProps,
   BoundValueConverter converter,
   o.Expression appViewInstance,
-  o.Expression renderNode,
+  NodeReference renderNode,
   bool isHtmlElement,
   ViewNameResolver nameResolver,
   ViewStorage storage,
@@ -177,7 +178,7 @@ void bindAndWriteToRenderer(
       bindingToUpdateStatement(
         binding,
         appViewInstance,
-        renderNode,
+        renderNode.toReadExpr(),
         isHtmlElement,
         currValExpr,
       )
@@ -272,7 +273,7 @@ void bindRenderInputs(
     boundProps,
     converter,
     appViewInstance,
-    renderNode.toReadExpr(),
+    renderNode,
     compileElement.isHtmlElement,
     view.nameResolver,
     view.storage,
