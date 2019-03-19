@@ -66,6 +66,9 @@
     any matching `<template>` references to become available for dynamic
     injection (i.e. `injector.provideType(TemplateRef)`).
 
+*   The template compiler now properly updates class bindings on SVG elements.
+    Previously, we did not shim these classes correctly.
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
@@ -157,8 +160,8 @@
 
 *   The code in generated `AppView` no longer performs null safety `?.` checks
     when calling child views `.destroy()` or `.destroyNestedViews()`. This means
-    that misbehaving code could have slightly more confusing stack traces
-    (new null errors), at the benefit of reduced code-size across the board.
+    that misbehaving code could have slightly more confusing stack traces (new
+    null errors), at the benefit of reduced code-size across the board.
 
 *   It's now a build error for `@Component()` to include an entry in
     `directiveTypes` that types a directive not present in `directives`.

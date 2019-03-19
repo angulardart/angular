@@ -510,21 +510,38 @@ abstract class AppView<T> {
 
   /// Called by change detector to apply correct host and content shimming
   /// after node's className is changed.
-
+  ///
   /// Used by [detectChanges] when changing [element.className] directly.
   ///
   /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
   @dart2js.noInline
-  void updateChildClass(Element element, String newClass) {
+  void updateChildClass(HtmlElement element, String newClass) {
     final styles = componentStyles;
     final shim = styles.usesStyleEncapsulation;
     if (element == rootEl) {
       element.className = shim ? '$newClass ${styles.hostPrefix}' : newClass;
       if (parentView?.componentStyles != null) {
-        parentView.addShimE(element);
+        parentView.addShimC(element);
       }
     } else {
       element.className = shim ? '$newClass ${styles.contentPrefix}' : newClass;
+    }
+  }
+
+  /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
+  @dart2js.noInline
+  void updateChildClassNonHtml(Element element, String newClass) {
+    final styles = componentStyles;
+    final shim = styles.usesStyleEncapsulation;
+    if (element == rootEl) {
+      updateAttribute(
+          element, 'class', shim ? '$newClass ${styles.hostPrefix}' : newClass);
+      if (parentView?.componentStyles != null) {
+        parentView.addShimE(element);
+      }
+    } else {
+      updateAttribute(element, 'class',
+          shim ? '$newClass ${styles.contentPrefix}' : newClass);
     }
   }
 

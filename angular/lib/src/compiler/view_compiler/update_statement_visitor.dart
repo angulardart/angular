@@ -83,8 +83,10 @@ class _UpdateStatementsVisitor
       [o.Expression renderValue]) {
     if (classBinding.name == null) {
       // Handle [attr.class]="expression" or [className]="expression".
+      final renderMethod =
+          isHtmlElement ? 'updateChildClass' : 'updateChildClassNonHtml';
       return appViewInstance
-          .callMethod('updateChildClass', [renderNode, renderValue]).toStmt();
+          .callMethod(renderMethod, [renderNode, renderValue]).toStmt();
     } else {
       final renderMethod = isHtmlElement
           ? DomHelpers.updateClassBinding

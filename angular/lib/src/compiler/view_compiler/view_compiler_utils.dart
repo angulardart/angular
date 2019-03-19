@@ -376,12 +376,11 @@ o.Statement createSetAttributeStatement(
         // Remove check below after SVGSVGElement DDC bug is fixed b2/32931607
         bool hasNamespace =
             astNodeName.startsWith('@') || astNodeName.contains(':');
-        if (!hasNamespace) {
-          return isHostBinding
-              ? renderNode.prop('className').set(attrValue).toStmt()
-              : o.THIS_EXPR.callMethod(
-                  'updateChildClass', [renderNode, attrValue]).toStmt();
-        }
+        return isHostBinding
+            ? renderNode.prop('className').set(attrValue).toStmt()
+            : o.THIS_EXPR.callMethod(
+                hasNamespace ? 'updateChildClassNonHtml' : 'updateChildClass',
+                [renderNode, attrValue]).toStmt();
         break;
       case 'tabindex':
       case 'tabIndex':
