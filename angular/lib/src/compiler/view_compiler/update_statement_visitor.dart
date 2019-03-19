@@ -4,7 +4,7 @@ import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/core/security.dart';
 
-import 'view_compiler_utils.dart' show createSetAttributeParams, namespaceUris;
+import 'view_compiler_utils.dart' show createSetAttributeParams;
 
 /// Converts [binding] to an update statement.
 ///
@@ -64,7 +64,7 @@ class _UpdateStatementsVisitor
     }
     var params = createSetAttributeParams(
       renderNode,
-      namespaceUris[attributeBinding.namespace],
+      attributeBinding.namespace,
       attributeBinding.name,
       renderValue,
     );
@@ -85,8 +85,13 @@ class _UpdateStatementsVisitor
       // Handle [attr.class]="expression" or [className]="expression".
       final renderMethod =
           isHtmlElement ? 'updateChildClass' : 'updateChildClassNonHtml';
-      return appViewInstance
-          .callMethod(renderMethod, [renderNode, renderValue]).toStmt();
+      return classBinding.isHostBinding
+          ?
+          // TODO(b/128865052): Remove this hack once material_popup no longer
+          // relies on reading the host class directly.
+          renderNode.prop('className').set(renderValue).toStmt()
+          : appViewInstance
+              .callMethod(renderMethod, [renderNode, renderValue]).toStmt();
     } else {
       final renderMethod = isHtmlElement
           ? DomHelpers.updateClassBinding
@@ -137,6 +142,26 @@ class _UpdateStatementsVisitor
     o.Expression updateStyleExpr = renderNode.prop('style').callMethod(
         'setProperty', [o.literal(styleBinding.name), styleValueExpr]);
     return updateStyleExpr.toStmt();
+  }
+
+  @override
+  o.Statement visitTabIndexBinding(ir.TabIndexBinding tabIndexBinding,
+      [o.Expression renderValue]) {
+    if (renderValue is o.LiteralExpr) {
+      final value = renderValue.value;
+      try {
+        final tabValue = int.parse(value as String);
+        return renderNode.prop('tabIndex').set(o.literal(tabValue)).toStmt();
+      } catch (_) {
+        // TODO(b/128689252): Better error handling.
+        throw ArgumentError.value(renderValue.value, 'renderValue',
+            'tabIndex only supports an int value.');
+      }
+    } else {
+      // Assume it's an int field
+      // TODO(b/128689252): Validate this during parse / convert to IR.
+      return renderNode.prop('tabIndex').set(renderValue).toStmt();
+    }
   }
 
   @override

@@ -40,6 +40,9 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   R visitStyleBinding(StyleBinding styleBinding, [C context]) => null;
 
   @override
+  R visitTabIndexBinding(TabIndexBinding tabIndexBinding, [C context]) => null;
+
+  @override
   R visitTextBinding(TextBinding textBinding, [C context]) => null;
 
   @override

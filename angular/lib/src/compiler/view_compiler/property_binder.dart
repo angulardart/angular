@@ -230,7 +230,7 @@ ir.BindingTarget _propertyToIr(BoundElementPropertyAst boundProp) {
           isConditional: _isConditionalAttribute(boundProp),
           securityContext: boundProp.securityContext);
     case PropertyBindingType.cssClass:
-      return ir.ClassBinding(boundProp.name);
+      return ir.ClassBinding(name: boundProp.name);
     case PropertyBindingType.style:
       return ir.StyleBinding(boundProp.name, boundProp.unit);
   }

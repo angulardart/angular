@@ -32,6 +32,7 @@ import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest, ProviderNode;
 import 'view_compiler_utils.dart'
     show
+        attributeName,
         createFlatArray,
         detectHtmlElementFromTagName,
         identifierFromTagName,
@@ -244,10 +245,19 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
+    var isHtmlElement = detectHtmlElementFromTagName(ast.name);
+
     if (_view.viewType != ViewType.host) {
       var mergedBindings = mergeHtmlAndDirectiveAttributes(
-          ast, directives, _view.component.analyzedClass);
-      _view.writeLiteralAttributeValues(ast.name, elementRef, mergedBindings);
+        ast,
+        directives,
+      );
+      _view.writeLiteralAttributeValues(
+        ast.name,
+        elementRef,
+        mergedBindings,
+        isHtmlElement: isHtmlElement,
+      );
     }
 
     _view.shimCssForNode(elementRef, nodeIndex, Identifiers.HTML_HTML_ELEMENT);
@@ -267,7 +277,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       ast.references,
       componentView: compAppViewExpr,
       hasTemplateRefQuery: parent.hasTemplateRefQuery,
-      isHtmlElement: detectHtmlElementFromTagName(ast.name),
+      isHtmlElement: isHtmlElement,
       isDeferredComponent: isDeferred,
     );
 
@@ -312,10 +322,17 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     } else {
       _view.createElement(parent, elementRef, nodeIndex, tagName, ast);
     }
-
+    var isHtmlElement = detectHtmlElementFromTagName(tagName);
     var mergedBindings = mergeHtmlAndDirectiveAttributes(
-        ast, directives, _view.component.analyzedClass);
-    _view.writeLiteralAttributeValues(ast.name, elementRef, mergedBindings);
+      ast,
+      directives,
+    );
+    _view.writeLiteralAttributeValues(
+      ast.name,
+      elementRef,
+      mergedBindings,
+      isHtmlElement: isHtmlElement,
+    );
 
     // Set ng_content class for CSS shim.
     var elementType = _view.isRootNodeOfHost(nodeIndex)
@@ -335,7 +352,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         ast.hasViewContainer,
         false,
         ast.references,
-        isHtmlElement: detectHtmlElementFromTagName(tagName),
+        isHtmlElement: isHtmlElement,
         hasTemplateRefQuery: parent.hasTemplateRefQuery);
 
     _view.nodes.add(compileElement);
@@ -562,13 +579,12 @@ o.Constructor _createViewClassConstructor(CompileView view) {
     componentMeta.hostAttributes.forEach((name, value) {
       var binding = ir.Binding(
           source: ir.BoundExpression(value, null, view.component.analyzedClass),
-          target: ir.AttributeBinding(name));
+          target: attributeName(name, isHostBinding: true));
       var statement = view.createAttributeStatement(
-        binding.source,
-        binding.target as ir.AttributeBinding,
+        binding,
         tagName,
         o.variable(appViewRootElementName),
-        true,
+        isHtmlElement: detectHtmlElementFromTagName(tagName),
       );
       ctor.body.add(statement);
     });

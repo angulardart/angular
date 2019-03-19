@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
-import 'package:angular/src/compiler/view_compiler/expression_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorState;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
@@ -44,13 +44,14 @@ import 'constants.dart'
         DetectChangesVars,
         ViewProperties,
         InjectMethodVars;
+import 'expression_converter.dart';
 import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
 import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest;
+import 'update_statement_visitor.dart' show bindingToUpdateStatement;
 import 'view_compiler_utils.dart'
     show
-        createSetAttributeStatement,
         debugInjectorEnter,
         debugInjectorLeave,
         getViewFactory,
@@ -1160,34 +1161,36 @@ class CompileView {
         .toStmt());
   }
 
-  void writeLiteralAttributeValues(String elementName,
-      NodeReference nodeReference, List<ir.Binding> bindings) {
-    assert(bindings.every((binding) => binding.target is ir.AttributeBinding));
+  void writeLiteralAttributeValues(
+    String elementName,
+    NodeReference nodeReference,
+    List<ir.Binding> bindings, {
+    @required bool isHtmlElement,
+  }) {
     for (var binding in bindings) {
-      _writeLiteralAttributeValue(elementName, nodeReference,
-          binding.target as ir.AttributeBinding, binding.source);
+      _createMethod.addStmt(createAttributeStatement(
+        binding,
+        elementName,
+        nodeReference.toReadExpr(),
+        isHtmlElement: isHtmlElement,
+      ));
     }
   }
 
-  void _writeLiteralAttributeValue(
-    String elementName,
-    NodeReference nodeReference,
-    ir.AttributeBinding target,
-    ir.BindingSource source,
-  ) {
-    _createMethod.addStmt(createAttributeStatement(
-        source, target, elementName, nodeReference.toReadExpr(), false));
-  }
-
   o.Statement createAttributeStatement(
-      ir.BindingSource source,
-      ir.AttributeBinding target,
-      String elementName,
-      o.Expression renderNode,
-      bool isHostBinding) {
-    var expression = _toExpression(source, o.THIS_EXPR);
-    o.Statement stmt = createSetAttributeStatement(
-        elementName, renderNode, target.name, expression, isHostBinding);
+    ir.Binding binding,
+    String elementName,
+    o.Expression renderNode, {
+    @required bool isHtmlElement,
+  }) {
+    var expression = _toExpression(binding.source, o.THIS_EXPR);
+    o.Statement stmt = bindingToUpdateStatement(
+      binding,
+      o.THIS_EXPR,
+      renderNode,
+      isHtmlElement,
+      expression,
+    );
     return stmt;
   }
 
