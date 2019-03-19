@@ -40,7 +40,7 @@ void main() {
       rootDomContainer.children.first,
     );
     expect(getAllAngularTestabilities(), isNot(hasLength(0)));
-    expect(jsTestability.isStable(), isTrue);
+    expect(jsTestability.isStable(), isTrue, reason: 'Expected stability');
     jsTestability.whenStable(allowInterop(expectAsync1((didWork) {
       expect(didWork, isTrue);
 
@@ -71,20 +71,24 @@ void main() {
     verifyTestability();
   });
 
-  test('runApp should not allow different SanitizerService instances',
-      () async {
+  test('runApp should disallow different SanitizerService instances', () async {
     component = runApp(ng.HelloWorldComponentNgFactory);
 
     expect(
-        () =>
-            runApp(ng.HelloWorldComponentNgFactory, createInjector: ([parent]) {
-              return Injector.map({
-                SanitizationService: StubSanitizationService(),
-              }, parent);
-            }),
-        throwsA(predicate(
-          (e) => e is AssertionError,
-        )));
+      () {
+        return runApp(
+          ng.HelloWorldComponentNgFactory,
+          createInjector: ([parent]) {
+            return Injector.map({
+              SanitizationService: StubSanitizationService(),
+            }, parent);
+          },
+        );
+      },
+      throwsA(predicate(
+        (e) => e is AssertionError,
+      )),
+    );
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
@@ -111,7 +115,6 @@ void main() {
       },
     );
     verifyDomAndStyles(innerText: 'Hello Async World!');
-    verifyTestability();
   });
 
   // i.e. "bootstrapStatic".
@@ -127,6 +130,21 @@ void main() {
       createInjectorFromProviders: [ServiceThatInjectsApplicationRef],
     );
     expect(component.injector.get(ServiceThatInjectsApplicationRef), isNotNull);
+  });
+
+  test('runApp should execute beforeComponentCreated in NgZone', () async {
+    component = await runAppAsync<HelloWorldComponent>(
+      ng.HelloWorldComponentNgFactory,
+      beforeComponentCreated: (_) async {
+        // Previously this would not trigger change detection, as this task
+        // would not be scheduled inside of NgZone (the callback was not inside
+        // of the zone).
+        expect(NgZone.isInAngularZone(), isTrue);
+        HelloWorldComponent.doAsyncTaskAndThenRename('Galaxy');
+      },
+    );
+    await Future(() {});
+    verifyDomAndStyles(innerText: 'Hello Galaxy!');
   });
 }
 

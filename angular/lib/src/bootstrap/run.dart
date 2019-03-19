@@ -211,8 +211,8 @@ ComponentRef<T> runApp<T>(
 ///
 /// The provided callback ([beforeComponentCreated]) is invoked _before_
 /// creating the root component, with a handle to the root injector. The user
-/// may choose to return a `Future` - it will be awaited before creating the
-/// root component.
+/// must return a `Future` - it will be `await`-ed before creating the root
+/// component.
 ///
 /// See [runApp] for additional details.
 Future<ComponentRef<T>> runAppAsync<T>(
@@ -229,9 +229,12 @@ Future<ComponentRef<T>> runAppAsync<T>(
     }
   }
   final injector = appInjector(createInjector);
-  return beforeComponentCreated(injector).then((_) {
-    final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
-    return appRef.bootstrap(componentFactory);
+  final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
+  final ngZone = injector.provideType<NgZone>(NgZone);
+  return ngZone.run(() {
+    final Future<void> future = beforeComponentCreated(injector);
+    assert(future != null, 'beforeComponentCreated must return a Future');
+    return future.then((_) => appRef.bootstrap(componentFactory));
   });
 }
 
