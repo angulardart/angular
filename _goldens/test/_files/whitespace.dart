@@ -9,6 +9,9 @@ import 'package:angular/angular.dart';
       <strong>Jurassic...</strong>
       Park!
     </div>
+    <div @i18n="i18n description">
+      Default i18n text
+    </div>
   ''',
   preserveWhitespace: true,
 )
@@ -22,6 +25,9 @@ class PreserveWhitespace {}
       To...
       <strong>Jurassic...</strong>
       Park!
+    </div>
+    <div @i18n="i18n description">
+      Default i18n text
     </div>
   ''',
 )
