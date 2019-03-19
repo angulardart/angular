@@ -1,4 +1,3 @@
-@Skip('b/128861087')
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';

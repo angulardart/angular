@@ -13,6 +13,10 @@
 *   Deferred route loaders and prefetchers are no longer called a second time
     when matched during route resolution.
 
+*   Navigation requests triggered by `popstate` events will now update the
+    browser location if the resulting navigation matches a redirecting route or
+    is transformed by a `RouterHook` implementation.
+
 ## 2.0.0-alpha+21
 
 *   Maintenance release to support Angular 5.2.
