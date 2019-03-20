@@ -256,8 +256,9 @@ abstract class AppView<T> {
       ..subscriptions = subscriptions;
   }
 
-  void attachViewAfter(Node node, List<Node> viewRootNodes) {
-    insertNodesAsSibling(viewRootNodes, node);
+  /// Attaches this view's root nodes as siblings after [node].
+  void attachAfter(Node node) {
+    insertNodesAsSibling(flatRootNodes, node);
     domRootRendererIsDirty = true;
   }
 
@@ -333,10 +334,10 @@ abstract class AppView<T> {
     destroy();
   }
 
-  @dart2js.noInline
-  void detachViewNodes(List<Node> viewRootNodes) {
-    removeNodes(viewRootNodes);
-    domRootRendererIsDirty = domRootRendererIsDirty || viewRootNodes.isNotEmpty;
+  void detach() {
+    final nodes = flatRootNodes;
+    removeNodes(nodes);
+    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
   }
 
   /// Destroys the internal state of the view.

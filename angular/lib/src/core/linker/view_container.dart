@@ -204,7 +204,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final refRenderNode = _findRenderNode(views, currentIndex);
 
     if (refRenderNode != null) {
-      view.attachViewAfter(refRenderNode, view.flatRootNodes);
+      view.attachAfter(refRenderNode);
     }
 
     view.markContentChildAsMoved(this);
@@ -219,7 +219,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     nestedViews = views;
 
     if (refRenderNode != null) {
-      view.attachViewAfter(refRenderNode, view.flatRootNodes);
+      view.attachAfter(refRenderNode);
     }
 
     view.addToContentChildren(this);
@@ -229,7 +229,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final view = nestedViews.removeAt(viewIndex);
     _assertCanMove(view);
     view
-      ..detachViewNodes(view.flatRootNodes)
+      ..detach()
       ..removeFromContentChildren(this);
     return view;
   }
