@@ -570,9 +570,9 @@ o.Constructor _createViewClassConstructor(CompileView view) {
         .importExpr(Identifiers.HTML_DOCUMENT)
         .callMethod('createElement', [o.literal(tagName)]);
 
-    ctor.body.add(
-        o.WriteClassMemberExpr(appViewRootElementName, createRootElementExpr)
-            .toStmt());
+    var appView = NodeReference.appViewRoot();
+
+    ctor.body.add(appView.toWriteStmt(createRootElementExpr));
 
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
@@ -583,7 +583,7 @@ o.Constructor _createViewClassConstructor(CompileView view) {
       var statement = view.createAttributeStatement(
         binding,
         tagName,
-        o.variable(appViewRootElementName),
+        appView,
         isHtmlElement: detectHtmlElementFromTagName(tagName),
       );
       ctor.body.add(statement);

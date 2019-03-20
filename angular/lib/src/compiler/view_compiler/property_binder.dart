@@ -20,10 +20,8 @@ import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_method.dart' show CompileMethod;
-import 'compile_view.dart'
-    show CompileView, NodeReference, TextBindingNodeReference;
+import 'compile_view.dart' show CompileView, NodeReference;
 import 'constants.dart' show DetectChangesVars;
-import 'expression_converter.dart' show convertCdExpressionToIr;
 import 'ir/view_storage.dart';
 import 'update_statement_visitor.dart' show bindingToUpdateStatement;
 import 'view_compiler_utils.dart' show unwrapDirective, unwrapDirectiveInstance;
@@ -34,17 +32,6 @@ o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
 
 o.ReadVarExpr _createCurrValueExpr(num exprIndex) =>
     o.variable('currVal_$exprIndex');
-
-o.Expression _checkExpressionForBoundExpression(
-        CompileView view, ir.BoundExpression bindingSource,
-        {o.OutputType fieldType}) =>
-    convertCdExpressionToIr(
-        view.nameResolver,
-        DetectChangesVars.cachedCtx,
-        bindingSource.expression,
-        bindingSource.sourceSpan,
-        view.component,
-        fieldType);
 
 /// Generates code to bind template expression.
 ///
@@ -129,17 +116,18 @@ void _bindLiteral(
 }
 
 void bindRenderText(
-    ir.BoundExpression boundText, CompileNode compileNode, CompileView view) {
-  if (boundText.isImmutable) {
+    ir.Binding binding, CompileNode compileNode, CompileView view) {
+  if (binding.source.isImmutable) {
     // We already set the value to the text node at creation
     return;
   }
 
-  final renderNode = compileNode.renderNode as TextBindingNodeReference;
-
-  var checkExpression = _checkExpressionForBoundExpression(view, boundText);
-  view.detectChangesRenderPropertiesMethod
-      .addStmt(renderNode.updateExpr(checkExpression).toStmt());
+  var checkExpression =
+      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx)
+          .convertSourceToExpression(binding.source, null);
+  var updateStmt = bindingToUpdateStatement(
+      binding, o.THIS_EXPR, compileNode.renderNode, false, checkExpression);
+  view.detectChangesRenderPropertiesMethod.addStmt(updateStmt);
 }
 
 /// For each bound property, creates code to update the binding.
@@ -178,7 +166,7 @@ void bindAndWriteToRenderer(
       bindingToUpdateStatement(
         binding,
         appViewInstance,
-        renderNode.toReadExpr(),
+        renderNode,
         isHtmlElement,
         currValExpr,
       )

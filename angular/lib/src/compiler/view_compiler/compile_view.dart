@@ -1195,7 +1195,7 @@ class CompileView {
       _createMethod.addStmt(createAttributeStatement(
         binding,
         elementName,
-        nodeReference.toReadExpr(),
+        nodeReference,
         isHtmlElement: isHtmlElement,
       ));
     }
@@ -1204,7 +1204,7 @@ class CompileView {
   o.Statement createAttributeStatement(
     ir.Binding binding,
     String elementName,
-    o.Expression renderNode, {
+    NodeReference renderNode, {
     @required bool isHtmlElement,
   }) {
     var expression = _toExpression(binding.source, o.THIS_EXPR);

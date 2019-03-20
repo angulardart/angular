@@ -60,8 +60,10 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       return;
     }
     bindRenderText(
-        ir.BoundExpression(
-            ast.value, ast.sourceSpan, view.component.analyzedClass),
+        ir.Binding(
+            source: ir.BoundExpression(
+                ast.value, ast.sourceSpan, view.component.analyzedClass),
+            target: ir.TextBinding()),
         node,
         view);
   }
