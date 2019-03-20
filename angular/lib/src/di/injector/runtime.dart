@@ -253,7 +253,19 @@ class _RuntimeInjector extends HierarchicalInjector
 
   @override
   Object useFactory(Function factory, {List<Object> deps}) {
-    return Function.apply(factory, _resolveArgs(factory, deps));
+    final resolvedArgs = _resolveArgs(factory, deps);
+    // This call will fail at runtime (a non-zero arg function w/ 1+ args).
+    assert(
+        _functionHasNoRequiredArguments(factory) || resolvedArgs.isNotEmpty,
+        'Could not resolve depenedncies for factory function $factory. This '
+        'is is usually a sign of an omitted @Injectable. Consider migrating '
+        'to @GeneratedInjector (and "runApp") or add the missing annotation '
+        'for the time being.');
+    return Function.apply(factory, resolvedArgs);
+  }
+
+  static bool _functionHasNoRequiredArguments(Function function) {
+    return function is void Function();
   }
 
   @override
