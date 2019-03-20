@@ -73,6 +73,10 @@
     which previously surfaced bugs when services created and initialized in this
     callback did not trigger change detection.
 
+*   The style sheet compiler will no longer emit invalid Dart code when a style
+    sheet is placed within a directory whose name is not a valid Dart
+    identifier.
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
