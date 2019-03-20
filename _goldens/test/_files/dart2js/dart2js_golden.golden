@@ -10282,10 +10282,6 @@
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       return notFoundResult;
     },
-    detachViewNodes$1: function(viewRootNodes) {
-      T.removeNodes(viewRootNodes);
-      $.domRootRendererIsDirty = $.domRootRendererIsDirty || viewRootNodes.length !== 0;
-    },
     destroy$0: function() {
       var t1 = this.viewData;
       if (t1.destroyed)
@@ -10437,10 +10433,12 @@
       }
     },
     detachView$1: function(viewIndex) {
-      var t1, view;
+      var t1, view, nodes;
       t1 = this.nestedViews;
       view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex);
-      view.detachViewNodes$1(view.get$flatRootNodes());
+      nodes = view.get$flatRootNodes();
+      T.removeNodes(nodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
       return view;
     }
   };
