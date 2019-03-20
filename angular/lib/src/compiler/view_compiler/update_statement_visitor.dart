@@ -2,6 +2,8 @@ import 'package:angular/src/compiler/identifiers.dart'
     show DomHelpers, Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/view_compiler/compile_view.dart'
+    show NodeReference, TextBindingNodeReference;
 import 'package:angular/src/core/security.dart';
 
 /// Converts [binding] to an update statement.
@@ -10,7 +12,7 @@ import 'package:angular/src/core/security.dart';
 o.Statement bindingToUpdateStatement(
     ir.Binding binding,
     o.Expression appViewInstance,
-    o.Expression renderNode,
+    NodeReference renderNode,
     bool isHtmlElement,
     o.Expression currValExpr) {
   // Wraps current value with sanitization call if necessary.
@@ -24,7 +26,7 @@ o.Statement bindingToUpdateStatement(
 class _UpdateStatementsVisitor
     implements ir.BindingTargetVisitor<o.Statement, o.Expression> {
   final o.Expression appViewInstance;
-  final o.Expression renderNode;
+  final NodeReference renderNode;
   final ir.BindingSource bindingSource;
   final bool isHtmlElement;
   final o.Expression currValExpr;
@@ -62,7 +64,7 @@ class _UpdateStatementsVisitor
     }
     if (attributeBinding.hasNamespace) {
       return o.importExpr(DomHelpers.updateAttributeNS).callFn([
-        renderNode,
+        renderNode.toReadExpr(),
         o.literal(attributeBinding.namespace),
         o.literal(attributeBinding.name),
         renderValue,
@@ -75,7 +77,7 @@ class _UpdateStatementsVisitor
             : DomHelpers.setAttribute)
         .callFn(
       [
-        renderNode,
+        renderNode.toReadExpr(),
         o.literal(attributeBinding.name),
         renderValue,
       ],
@@ -93,15 +95,15 @@ class _UpdateStatementsVisitor
           ?
           // TODO(b/128865052): Remove this hack once material_popup no longer
           // relies on reading the host class directly.
-          renderNode.prop('className').set(renderValue).toStmt()
-          : appViewInstance
-              .callMethod(renderMethod, [renderNode, renderValue]).toStmt();
+          renderNode.toReadExpr().prop('className').set(renderValue).toStmt()
+          : appViewInstance.callMethod(
+              renderMethod, [renderNode.toReadExpr(), renderValue]).toStmt();
     } else {
       final renderMethod = isHtmlElement
           ? DomHelpers.updateClassBinding
           : DomHelpers.updateClassBindingNonHtml;
       return o.importExpr(renderMethod).callFn([
-        renderNode,
+        renderNode.toReadExpr(),
         o.literal(classBinding.name),
         renderValue,
       ]).toStmt();
@@ -112,7 +114,7 @@ class _UpdateStatementsVisitor
   o.Statement visitPropertyBinding(ir.PropertyBinding propertyBinding,
       [o.Expression renderValue]) {
     return o.importExpr(DomHelpers.setProperty).callFn([
-      renderNode,
+      renderNode.toReadExpr(),
       o.literal(propertyBinding.name),
       renderValue,
     ]).toStmt();
@@ -143,8 +145,11 @@ class _UpdateStatementsVisitor
             );
     }
     // Call Element.style.setProperty(propName, value);
-    o.Expression updateStyleExpr = renderNode.prop('style').callMethod(
-        'setProperty', [o.literal(styleBinding.name), styleValueExpr]);
+    o.Expression updateStyleExpr = renderNode
+        .toReadExpr()
+        .prop('style')
+        .callMethod(
+            'setProperty', [o.literal(styleBinding.name), styleValueExpr]);
     return updateStyleExpr.toStmt();
   }
 
@@ -155,7 +160,11 @@ class _UpdateStatementsVisitor
       final value = renderValue.value;
       try {
         final tabValue = int.parse(value as String);
-        return renderNode.prop('tabIndex').set(o.literal(tabValue)).toStmt();
+        return renderNode
+            .toReadExpr()
+            .prop('tabIndex')
+            .set(o.literal(tabValue))
+            .toStmt();
       } catch (_) {
         // TODO(b/128689252): Better error handling.
         throw ArgumentError.value(renderValue.value, 'renderValue',
@@ -164,14 +173,16 @@ class _UpdateStatementsVisitor
     } else {
       // Assume it's an int field
       // TODO(b/128689252): Validate this during parse / convert to IR.
-      return renderNode.prop('tabIndex').set(renderValue).toStmt();
+      return renderNode.toReadExpr().prop('tabIndex').set(renderValue).toStmt();
     }
   }
 
   @override
-  o.Statement visitTextBinding(ir.TextBinding textBinding, [_]) {
-    throw UnsupportedError(
-        '${ir.TextBinding}s are not supported as bound properties.');
+  o.Statement visitTextBinding(ir.TextBinding textBinding,
+      [o.Expression renderValue]) {
+    // TODO(alorenzen): Generalize updateExpr() to all NodeReferences.
+    var node = renderNode as TextBindingNodeReference;
+    return node.updateExpr(renderValue).toStmt();
   }
 
   @override
