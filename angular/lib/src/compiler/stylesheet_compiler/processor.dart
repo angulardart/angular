@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:analyzer/dart/ast/token.dart' show Keyword;
 import 'package:build/build.dart';
 import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/source_gen/common/ng_compiler.dart';
@@ -17,31 +16,14 @@ Future<Map<AssetId, String>> processStylesheet(
   final cssText = await buildStep.readAsString(stylesheetId);
   final sourceModules =
       templateCompiler.compileStylesheet(stylesheetUrl, cssText);
-
-  return Map.fromIterable(sourceModules,
-      key: (module) => AssetId.resolve((module as SourceModule).moduleUrl),
-      value: (module) => _writeSourceModule(module as SourceModule));
+  return _mapSourceByAssetId(sourceModules);
 }
 
-/// Writes the full Dart code for the provided [SourceModule].
-String _writeSourceModule(SourceModule sourceModule, {String libraryName}) {
-  if (sourceModule == null) return null;
-  var buf = StringBuffer();
-  libraryName = _sanitizeLibName(
-      libraryName != null ? libraryName : sourceModule.moduleUrl);
-  buf..writeln('library $libraryName;')..writeln();
-
-  buf..writeln()..writeln(sourceModule.source);
-
-  return buf.toString();
-}
-
-final _unsafeCharsPattern = RegExp(r'[^a-zA-Z0-9_\.]');
-String _sanitizeLibName(String moduleUrl) {
-  var sanitized =
-      moduleUrl.replaceAll(_unsafeCharsPattern, '_').replaceAll('/', '.');
-  for (var keyword in Keyword.values) {
-    sanitized.replaceAll(keyword.lexeme, '${keyword.lexeme}_');
+Map<AssetId, String> _mapSourceByAssetId(List<SourceModule> modules) {
+  final sourceByAssetId = <AssetId, String>{};
+  for (final module in modules) {
+    final assetId = AssetId.resolve(module.moduleUrl);
+    sourceByAssetId[assetId] = module.source;
   }
-  return sanitized;
+  return sourceByAssetId;
 }
