@@ -1,18 +1,12 @@
 /// Contains the internal dependency injection "modules" required for bootstrap.
 library angular.src.bootstrap.modules;
 
-// ignore_for_file: deprecated_member_use
-
-import 'dart:html';
 import 'dart:math';
 
-import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/application_tokens.dart';
 import 'package:angular/src/core/di.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
@@ -24,21 +18,7 @@ import 'package:angular/src/runtime.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 
-import 'package:meta/meta.dart';
-
 import 'modules.template.dart' as ng;
-
-/// Adds support for runtime event plugins.
-///
-/// This may eventually be excluded from the [minimalModule].
-const eventPluginModule = <Object>[
-  Provider(EventManager),
-  Provider(
-    EVENT_MANAGER_PLUGINS,
-    useFactory: createEventPlugins,
-    deps: [],
-  ),
-];
 
 /// Creates a list of [EventManagerPlugins] to be used by [EventManager].
 List<EventManagerPlugin> createEventPlugins() {
@@ -79,24 +59,21 @@ class ThrowingSlowComponentLoader implements SlowComponentLoader {
 /// Does not support any service that requires the `initReflector()`-based APIs.
 const bootstrapMinimalModule = <Object>[
   // HTML/DOM sanitization.
-  Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
-  Provider(SanitizationService, useExisting: DomSanitizationService),
-  Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
+  ClassProvider(ExceptionHandler, useClass: BrowserExceptionHandler),
+  ExistingProvider(SanitizationService, DomSanitizationService),
+  ClassProvider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
 
   // Core components of the runtime.
-  Provider(APP_ID, useFactory: createRandomAppId, deps: []),
-  Provider(ComponentLoader),
-  Provider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
+  FactoryProvider.forToken(APP_ID, createRandomAppId),
+  ClassProvider(ComponentLoader),
+  ClassProvider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
 ];
 
-/// An experimental application [Injector] that is statically generated.
-// TODO(https://github.com/dart-lang/sdk/issues/34098): Remove ignore.
+/// An application [Injector] that is statically generated.
+///
+/// TODO(b/129076213): Remove this.
 @GenerateInjector([bootstrapMinimalModule])
-final InjectorFactory minimalApp =
-    ng.minimalApp$Injector; //ignore: invalid_assignment
-
-/// Returns the current [Document] of the browser.
-HtmlDocument getDocument() => document;
+final InjectorFactory minimalApp = ng.minimalApp$Injector;
 
 /// Creates an AngularDart zone, enabling async stack traces in developer mode.
 NgZone createNgZone() => NgZone(enableLongStackTrace: isDevMode);
@@ -107,23 +84,3 @@ String createRandomAppId() {
   String char() => String.fromCharCode(97 + random.nextInt(26));
   return '${char()}${char()}${char()}';
 }
-
-/// Compatibility module (extension of [minimalModule]).
-///
-/// Adds support for soft-deprecated runtime reflective-like APIs.
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
-const bootstrapLegacyModule = <Object>[
-  bootstrapMinimalModule,
-  eventPluginModule,
-  Provider(NgZone, useFactory: createNgZone, deps: []),
-  Provider(
-    ApplicationRef,
-    useFactory: internalCreateApplicationRef,
-    deps: [NgZone, Injector],
-  ),
-  Provider(AppViewUtils),
-  Provider(SlowComponentLoader),
-  Provider(Testability, useClass: Testability),
-];
