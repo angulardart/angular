@@ -180,7 +180,7 @@ Object buildAtRuntime(Provider provider, RuntimeInjectorBuilder builder) {
 /// The returned [List] instance should be correctly reified as `List<T>`, where
 /// `T` is either the type of `Provider<T>` when [Provider.multi] is `true` or
 /// the `T` of `MultiToken<T>`, if this approach is used (preferred).
-List listOfMulti(Provider provider) {
+List<Object> listOfMulti(Provider provider) {
   final token = provider.token;
   if (token is MultiToken) {
     return listOfMultiToken(token);

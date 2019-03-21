@@ -385,7 +385,7 @@ void _throwIfConditional(bool isConditional, String name) {
   }
 }
 
-ir.BindingSource _attributeValue(AttributeValue attr) {
+ir.BindingSource _attributeValue(AttributeValue<Object> attr) {
   if (attr is LiteralAttributeValue) {
     return ir.StringLiteral(attr.value);
   } else if (attr is I18nAttributeValue) {

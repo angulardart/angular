@@ -12,7 +12,7 @@ import 'reader.dart';
 
 /// A recursive descent AST parser from a series of tokens.
 class RecursiveAstParser {
-  final NgTokenReversibleReader _reader;
+  final NgTokenReversibleReader<Object> _reader;
   final SourceFile _source;
   final List<String> _voidElements;
   final List<String> _svgElements;

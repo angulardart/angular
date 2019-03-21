@@ -6,16 +6,16 @@ import 'package:angular/core.dart'
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 class _ObservableStrategy {
-  StreamSubscription createSubscription(
-      Stream stream, void updateLatestValue(value)) {
+  StreamSubscription<Object> createSubscription(
+      Stream<Object> stream, void updateLatestValue(value)) {
     return stream.listen(updateLatestValue, onError: (e) => throw e);
   }
 
-  void dispose(StreamSubscription subscription) {
+  void dispose(StreamSubscription<Object> subscription) {
     subscription.cancel();
   }
 
-  void onDestroy(StreamSubscription subscription) {
+  void onDestroy(StreamSubscription<Object> subscription) {
     dispose(subscription);
   }
 }
@@ -115,9 +115,9 @@ class AsyncPipe implements OnDestroy, PipeTransform {
   }
 
   dynamic _selectStrategy(dynamic /* Stream | Future | EventEmitter */ obj) {
-    if (obj is Future) {
+    if (obj is Future<Object>) {
       return _promiseStrategy;
-    } else if (obj is Stream) {
+    } else if (obj is Stream<Object>) {
       return _observableStrategy;
     } else {
       throw InvalidPipeArgumentException(AsyncPipe, obj);
@@ -143,7 +143,7 @@ class AsyncPipe implements OnDestroy, PipeTransform {
   // https://github.com/dart-lang/angular2/issues/260
   static bool _maybeStreamIdentical(a, b) {
     if (!identical(a, b)) {
-      return a is Stream && b is Stream && a == b;
+      return a is Stream<Object> && b is Stream<Object> && a == b;
     }
     return true;
   }

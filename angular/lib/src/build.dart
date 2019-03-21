@@ -101,5 +101,5 @@ PostProcessBuilder placeholderCleanup(_) =>
 /// HTML or CSS files that are required at runtime can be exlcuded by glob.
 PostProcessBuilder componentSourceCleanup(BuilderOptions options) =>
     FileDeletingBuilder.withExcludes(const ['.html', '.css'],
-        (options.config['exclude'] as List)?.cast<String>() ?? const [],
+        (options.config['exclude'] as List<Object>)?.cast<String>() ?? const [],
         isEnabled: (options.config['enabled'] as bool) ?? false);

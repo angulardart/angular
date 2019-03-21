@@ -726,7 +726,7 @@ class _ParseAST {
   }
 }
 
-class SimpleExpressionChecker implements AstVisitor {
+class SimpleExpressionChecker implements AstVisitor<Object, Object> {
   static bool check(AST ast) {
     var s = SimpleExpressionChecker();
     ast.visit(s);
@@ -830,7 +830,7 @@ class SimpleExpressionChecker implements AstVisitor {
   }
 
   List<dynamic> _visitAll(List<dynamic> asts) {
-    var res = List(asts.length);
+    var res = List<Object>(asts.length);
     for (var i = 0; i < asts.length; ++i) {
       res[i] = asts[i].visit(this);
     }

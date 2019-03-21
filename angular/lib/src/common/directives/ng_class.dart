@@ -80,7 +80,7 @@ class NgClass implements DoCheck, OnDestroy {
     this._iterableDiffer = null;
     this._keyValueDiffer = null;
     if (v != null) {
-      if (v is Iterable) {
+      if (v is Iterable<Object>) {
         _iterableDiffer = DefaultIterableDiffer();
       } else {
         _keyValueDiffer = DefaultKeyValueDiffer();
@@ -150,16 +150,16 @@ class NgClass implements DoCheck, OnDestroy {
   /// Likewise, if [rawClassVal] is a Map, its keys should all be strings.
   void _applyClasses(dynamic /* Iterable | Map */ rawClassVal, bool isCleanup) {
     if (rawClassVal != null) {
-      if (rawClassVal is List) {
+      if (rawClassVal is List<Object>) {
         for (int i = 0, len = rawClassVal.length; i < len; i++) {
           _toggleClass(unsafeCast(rawClassVal[i]), !isCleanup);
         }
-      } else if (rawClassVal is Iterable) {
+      } else if (rawClassVal is Iterable<Object>) {
         for (var className in rawClassVal) {
           _toggleClass(unsafeCast(className), !isCleanup);
         }
       } else {
-        (rawClassVal as Map).forEach((className, expVal) {
+        (rawClassVal as Map<Object, Object>).forEach((className, expVal) {
           if (expVal != null) {
             _toggleClass(unsafeCast(className), !isCleanup);
           }

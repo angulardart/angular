@@ -21,7 +21,7 @@ abstract class EventAst implements TemplateAst {
   factory EventAst(
     String name,
     String value, [
-    ExpressionAst expression,
+    ExpressionAst<Object> expression,
     List<String> reductions,
   ]) = _SyntheticEventAst;
 
@@ -30,7 +30,7 @@ abstract class EventAst implements TemplateAst {
     TemplateAst origin,
     String name,
     String value, [
-    ExpressionAst expression,
+    ExpressionAst<Object> expression,
     List<String> reductions,
   ]) = _SyntheticEventAst.from;
 
@@ -60,8 +60,8 @@ abstract class EventAst implements TemplateAst {
   }
 
   /// Bound expression.
-  ExpressionAst get expression;
-  set expression(ExpressionAst expression);
+  ExpressionAst<Object> get expression;
+  set expression(ExpressionAst<Object> expression);
 
   /// Name of the event being listened to.
   String get name;
@@ -128,7 +128,7 @@ class ParsedEventAst extends TemplateAst
 
   /// ExpressionAst of `"expression"`; may be `null` to have no value.
   @override
-  ExpressionAst expression;
+  ExpressionAst<Object> expression;
 
   /// Name `eventName` in `(eventName.reductions)`.
   @override
@@ -178,7 +178,7 @@ class _SyntheticEventAst extends SyntheticTemplateAst with EventAst {
   final String value;
 
   @override
-  ExpressionAst expression;
+  ExpressionAst<Object> expression;
 
   @override
   final List<String> reductions;

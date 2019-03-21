@@ -161,14 +161,14 @@ class DependencyInvocation<E extends Element> {
   bool operator ==(Object o) =>
       o is DependencyInvocation<E> &&
       urlOf(bound) == urlOf(o.bound) &&
-      const ListEquality().equals(positional, o.positional) &&
-      const MapEquality().equals(named, o.named);
+      const ListEquality<Object>().equals(positional, o.positional) &&
+      const MapEquality<Object, Object>().equals(named, o.named);
 
   @override
   int get hashCode =>
       urlOf(bound).hashCode ^
-      const ListEquality().hash(positional) ^
-      const MapEquality().hash(named);
+      const ListEquality<Object>().hash(positional) ^
+      const MapEquality<Object, Object>().hash(named);
 
   @override
   String toString() =>

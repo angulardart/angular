@@ -44,9 +44,9 @@ class DefaultKeyValueDiffer {
     }
   }
 
-  DefaultKeyValueDiffer diff(Map map) {
+  DefaultKeyValueDiffer diff(Map<Object, Object> map) {
     map ??= {};
-    if (map is! Map) {
+    if (map is! Map<Object, Object>) {
       throw StateError("Error trying to diff '$map'");
     }
     if (this.check(map)) {
@@ -59,7 +59,7 @@ class DefaultKeyValueDiffer {
   /// Check for differences in [map] since the previous invocation.
   ///
   /// Optimized for no key changes.
-  bool check(Map map) {
+  bool check(Map<Object, Object> map) {
     _reset();
 
     if (_mapHead == null) {
@@ -241,11 +241,11 @@ class DefaultKeyValueDiffer {
   }
 
   String toString() {
-    var items = [];
-    var previous = [];
-    var changes = [];
-    var additions = [];
-    var removals = [];
+    var items = <Object>[];
+    var previous = <Object>[];
+    var changes = <Object>[];
+    var additions = <Object>[];
+    var removals = <Object>[];
     for (var record = this._mapHead;
         !identical(record, null);
         record = record._next) {

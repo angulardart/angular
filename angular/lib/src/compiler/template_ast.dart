@@ -85,7 +85,7 @@ class LiteralAttributeValue implements AttributeValue<String> {
 /// A plain attribute on an element.
 class AttrAst implements TemplateAst {
   final String name;
-  final AttributeValue value;
+  final AttributeValue<Object> value;
   final SourceSpan sourceSpan;
 
   AttrAst(this.name, this.value, this.sourceSpan);

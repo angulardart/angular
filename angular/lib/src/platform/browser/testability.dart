@@ -18,10 +18,11 @@ class BrowserGetTestability implements GetTestability {
   void addToWindow(TestabilityRegistry registry) {
     var jsRegistry = js_util.getProperty(_self, 'ngTestabilityRegistries');
     if (jsRegistry == null) {
-      js_util.setProperty(_self, 'ngTestabilityRegistries', jsRegistry = []);
+      js_util.setProperty(
+          _self, 'ngTestabilityRegistries', jsRegistry = <Object>[]);
       js_util.setProperty(_self, 'getAngularTestability',
           allowInterop((Element elem, [bool findInAncestors = true]) {
-        List registry =
+        List<Object> registry =
             unsafeCast(js_util.getProperty(_self, 'ngTestabilityRegistries'));
         for (int i = 0; i < registry.length; i++) {
           var result =
@@ -31,9 +32,9 @@ class BrowserGetTestability implements GetTestability {
         throw StateError('Could not find testability for element.');
       }));
       var getAllAngularTestabilities = () {
-        List registry =
+        List<Object> registry =
             unsafeCast(js_util.getProperty(_self, 'ngTestabilityRegistries'));
-        var result = [];
+        var result = <Object>[];
         for (int i = 0; i < registry.length; i++) {
           var testabilities =
               js_util.callMethod(registry[i], 'getAllAngularTestabilities', []);
@@ -71,7 +72,7 @@ class BrowserGetTestability implements GetTestability {
       });
       // ignore: non_bool_negation_expression
       if (!js_util.hasProperty(_self, 'frameworkStabilizers')) {
-        js_util.setProperty(_self, 'frameworkStabilizers', []);
+        js_util.setProperty(_self, 'frameworkStabilizers', <Object>[]);
       }
       js_util.getProperty(_self, 'frameworkStabilizers').add(whenAllStable);
     }

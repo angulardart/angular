@@ -25,7 +25,7 @@ import 'package:logging/logging.dart';
 /// }
 /// ```
 class ExceptionHandler {
-  static String _longStackTrace(stackTrace) => stackTrace is Iterable
+  static String _longStackTrace(stackTrace) => stackTrace is Iterable<Object>
       ? stackTrace.join('\n\n-----async gap-----\n')
       : stackTrace.toString();
 

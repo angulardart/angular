@@ -460,8 +460,8 @@ class CompileTypeMetadataVisitor
     }
   }
 
-  List<List> _toMapEntities(Map<DartObject, DartObject> tokens) {
-    final entities = <List>[];
+  List<List<Object>> _toMapEntities(Map<DartObject, DartObject> tokens) {
+    final entities = <List<Object>>[];
     for (DartObject key in tokens.keys) {
       entities
           .add([_useValueExpression(key), _useValueExpression(tokens[key])]);

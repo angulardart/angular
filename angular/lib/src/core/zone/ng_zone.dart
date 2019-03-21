@@ -454,7 +454,7 @@ class NgZoneError {
   ///
   /// For legacy reasons, this is not typed `List<StackTrace>` or `StackTrace`
   /// at this time. It may be possible to change the typing at a later point.
-  final List stackTrace;
+  final List<Object> stackTrace;
 
   NgZoneError(this.error, this.stackTrace);
 }

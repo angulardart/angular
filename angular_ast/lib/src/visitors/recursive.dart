@@ -112,7 +112,7 @@ class RecursiveTemplateAstVisitor<C>
       );
 
   @override
-  TemplateAst visitExpression(ExpressionAst astNode, [_]) => astNode;
+  TemplateAst visitExpression(ExpressionAst<Object> astNode, [_]) => astNode;
 
   @override
   @mustCallSuper

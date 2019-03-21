@@ -11,7 +11,7 @@ part 'angular_analyzer_protocol.dart';
 
 abstract class RecoveryProtocol {
   RecoverySolution recover(NgScannerState state, NgSimpleToken current,
-      NgTokenReversibleReader reader) {
+      NgTokenReversibleReader<Object> reader) {
     switch (state) {
       case NgScannerState.hasError:
         return hasError(current, reader);
@@ -76,123 +76,123 @@ abstract class RecoveryProtocol {
   }
 
   RecoverySolution hasError(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution isEndOfFile(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterComment(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterElementDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterElementDecoratorValue(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterElementIdentifierClose(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterElementIdentifierOpen(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanAfterInterpolation(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanBeforeElementDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanBeforeInterpolation(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanComment(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanInterpolation(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementDecoratorValue(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementEndClose(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementEndOpen(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementIdentifierClose(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementIdentifierOpen(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanOpenElementEnd(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanElementStart(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSimpleElementDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSpecialAnnotationDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSpecialBananaDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSpecialEventDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSpecialPropertyDecorator(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanStart(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSuffixBanana(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSuffixEvent(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanSuffixProperty(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 
   RecoverySolution scanText(
-          NgSimpleToken current, NgTokenReversibleReader reader) =>
+          NgSimpleToken current, NgTokenReversibleReader<Object> reader) =>
       RecoverySolution.skip();
 }
 

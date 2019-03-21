@@ -45,7 +45,7 @@ class IdentityTemplateAstVisitor<C>
   TemplateAst visitEvent(EventAst astNode, [_]) => astNode;
 
   @override
-  TemplateAst visitExpression(ExpressionAst astNode, [_]) => astNode;
+  TemplateAst visitExpression(ExpressionAst<Object> astNode, [_]) => astNode;
 
   @override
   TemplateAst visitInterpolation(InterpolationAst astNode, [_]) => astNode;

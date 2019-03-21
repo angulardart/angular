@@ -50,7 +50,7 @@ String _getRelativePath(String modulePath, String importedPath) {
   var moduleParts = modulePath.split(_PATH_SEP_RE);
   var importedParts = importedPath.split(_PATH_SEP_RE);
   var longestPrefix = _getLongestPathSegmentPrefix(moduleParts, importedParts);
-  var resultParts = [];
+  var resultParts = <Object>[];
   var goParentCount = moduleParts.length - 1 - longestPrefix;
   for (var i = 0; i < goParentCount; i++) {
     resultParts.add("..");

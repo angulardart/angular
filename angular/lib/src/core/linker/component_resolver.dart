@@ -10,8 +10,8 @@ import 'component_factory.dart' show ComponentFactory;
 ///
 /// This API is slated for removal once the transition to factories is done.
 @experimental
-ComponentFactory typeToFactory(Object typeOrFactory) =>
-    typeOrFactory is ComponentFactory
+ComponentFactory<Object> typeToFactory(Object typeOrFactory) =>
+    typeOrFactory is ComponentFactory<Object>
         ? typeOrFactory
-        : unsafeCast<ComponentFactory>(
+        : unsafeCast<ComponentFactory<Object>>(
             reflector.getComponent(unsafeCast<Type>(typeOrFactory)));

@@ -387,7 +387,7 @@ class _BindDirectivesVisitor
     return ng.AttrAst(astNode.name, value, astNode.sourceSpan);
   }
 
-  ng.AttributeValue _createAttributeValue(
+  ng.AttributeValue<Object> _createAttributeValue(
       ast.AttributeAst astNode, _ParseContext context) {
     if (context.isInternationalized(astNode.name)) {
       final metadata = context.i18nMetadata.forAttributes[astNode.name];
@@ -489,7 +489,7 @@ class _BindDirectivesVisitor
       null;
 
   @override
-  ng.TemplateAst visitExpression(ast.ExpressionAst astNode,
+  ng.TemplateAst visitExpression(ast.ExpressionAst<Object> astNode,
           [_ParseContext _]) =>
       throw UnimplementedError('Don\'t know how to handle expressions.');
 
@@ -745,7 +745,7 @@ class _ParseContext {
   static List<CompileDirectiveMetadata> _parseDirectives(
       List<CompileDirectiveMetadata> directives,
       CssSelector elementCssSelector) {
-    var matchedDirectives = Set();
+    var matchedDirectives = Set<Object>();
     _selectorMatcher(directives).match(elementCssSelector,
         (selector, directive) {
       matchedDirectives.add(directive);
@@ -1282,7 +1282,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
   }
 }
 
-class _PipeCollector extends RecursiveAstVisitor {
+class _PipeCollector extends RecursiveAstVisitor<Object> {
   /// Records the number of arguments of each pipe invocation by name.
   ///
   /// Note this is the number of arguments specified to the right-hand side of

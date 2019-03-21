@@ -1294,7 +1294,7 @@ class CompileView {
     if (afterViewStmts.isNotEmpty) {
       statements.add(o.IfStmt(notThrowOnChanges, afterViewStmts));
     }
-    var varStmts = [];
+    var varStmts = <Object>[];
     var readVars = o.findReadVarNames(statements);
     var writeVars = o.findWriteVarNames(statements);
     varStmts.addAll(maybeCachedCtxDeclarationStatement(readVars: readVars));

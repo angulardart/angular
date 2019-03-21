@@ -177,7 +177,8 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
   }
 
-  List<T> mapNestedViews<T, U extends AppView>(List<T> Function(U) callback) {
+  List<T> mapNestedViews<T, U extends AppView<Object>>(
+      List<T> Function(U) callback) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
       return const [];
@@ -189,11 +190,11 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return result;
   }
 
-  Node _findRenderNode(List<AppView> views, int index) {
+  Node _findRenderNode(List<AppView<Object>> views, int index) {
     return index > 0 ? views[index - 1].lastRootNode : nativeElement;
   }
 
-  void moveView(AppView view, int currentIndex) {
+  void moveView(AppView<Object> view, int currentIndex) {
     _assertCanMove(view);
     final views = nestedViews;
     final previousIndex = views.indexOf(view);
@@ -210,9 +211,9 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     view.markContentChildAsMoved(this);
   }
 
-  void attachView(AppView view, int viewIndex) {
+  void attachView(AppView<Object> view, int viewIndex) {
     _assertCanMove(view);
-    final views = nestedViews ?? <AppView>[];
+    final views = nestedViews ?? <AppView<Object>>[];
     views.insert(viewIndex, view);
 
     final refRenderNode = _findRenderNode(views, viewIndex);
@@ -225,7 +226,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     view.addToContentChildren(this);
   }
 
-  AppView detachView(int viewIndex) {
+  AppView<Object> detachView(int viewIndex) {
     final view = nestedViews.removeAt(viewIndex);
     _assertCanMove(view);
     view
@@ -242,7 +243,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       loadNextToLocation(component, this, injector: injector);
 }
 
-void _assertCanMove(AppView view) {
+void _assertCanMove(AppView<Object> view) {
   assert(() {
     if (view.viewData.type == ViewType.component) {
       throw ArgumentError("Component views can't be moved!");

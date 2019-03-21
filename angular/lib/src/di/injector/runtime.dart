@@ -169,11 +169,11 @@ class _RuntimeInjector extends HierarchicalInjector
   /// If [deps] are provided, they are used, otherwise the reflector is checked.
   List<Object> _resolveArgs(Object token, [List<Object> deps]) {
     deps ??= reflector.getDependencies(token);
-    final resolved = List(deps.length);
+    final resolved = List<Object>(deps.length);
     for (var i = 0, l = resolved.length; i < l; i++) {
       final dep = deps[i];
       Object result;
-      if (dep is List) {
+      if (dep is List<Object>) {
         result = _resolveMeta(dep);
       } else {
         errors.debugInjectorEnter(dep);
@@ -349,7 +349,7 @@ _FlatProviders _flattenProviders(
   multiProviders ??= <Provider<Object>>[];
   for (var i = 0, len = providersOrLists.length; i < len; i++) {
     final item = providersOrLists[i];
-    if (item is List) {
+    if (item is List<Object>) {
       _flattenProviders(item, allProviders, multiProviders);
     } else if (item is Provider) {
       if (_isMultiProvider(item)) {

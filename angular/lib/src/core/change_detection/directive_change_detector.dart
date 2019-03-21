@@ -12,7 +12,7 @@ import 'package:angular/src/runtime.dart';
 /// lifecycle methods.
 class DirectiveChangeDetector {
   dynamic directive;
-  AppView view;
+  AppView<Object> view;
   Element el;
   bool _hasHostChanges = false;
 
@@ -32,7 +32,7 @@ class DirectiveChangeDetector {
   }
 
   /// Overridable to handle host bindings.
-  void detectHostChanges(AppView view, Element el) {}
+  void detectHostChanges(AppView<Object> view, Element el) {}
 
   // Updates classes for non html nodes such as svg.
   void updateElemClass(Element element, String className, bool isAdd) {
