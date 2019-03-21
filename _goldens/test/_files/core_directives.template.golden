@@ -22,6 +22,7 @@ import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import13;
 import 'package:angular/src/runtime/text_binding.dart' as import14;
 import 'dart:core';
+import 'package:angular/src/runtime/interpolate.dart' as import16;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -135,9 +136,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final local_bar = import9.unsafeCast<String>(locals['\$implicit']);
     final local_index = import9.unsafeCast<int>(locals['index']);
     final local_odd = import9.unsafeCast<bool>(locals['odd']);
-    _textBinding_2.updateText(import13.interpolateString0(local_bar));
-    _textBinding_4.updateText(import13.interpolate0(local_index));
-    _textBinding_6.updateText(import13.interpolate0(local_odd));
+    _textBinding_2.updateText(import16.interpolateString0(local_bar));
+    _textBinding_4.updateText(import16.interpolate0(local_index));
+    _textBinding_6.updateText(import16.interpolate0(local_odd));
   }
 
   void _handle_click_1_0($event) {

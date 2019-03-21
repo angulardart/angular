@@ -3509,13 +3509,13 @@
       this.random = t0;
     },
     appInjector: function(userProvidedInjector) {
-      var t1, minimalInjector, ngZone, t2, userInjector;
+      var t1, t2, ngZone, t3, userInjector;
       t1 = {};
-      minimalInjector = Y.minimalApp$Injector($.$get$appGlobals().rootInjector);
+      t2 = Y.minimalApp$Injector($.$get$appGlobals()._app_host$_hostInjector);
       t1.applicationRef = null;
       ngZone = G.createNgZone();
-      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], P.Object, {func: 1, ret: P.Object});
-      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, minimalInjector == null ? C.EmptyInjector_null : minimalInjector));
+      t3 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], P.Object, {func: 1, ret: P.Object});
+      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t3, t2 == null ? C.EmptyInjector_null : t2));
       return ngZone._innerZone.run$1$1(new G.appInjector_closure3(t1, ngZone, userInjector), M.Injector);
     },
     _identityInjector: function($parent) {
@@ -3739,7 +3739,7 @@
       this._viewContainer = t1;
       this._prevCondition = false;
     }, TransitionalAppHost: function TransitionalAppHost(t0) {
-      this.rootInjector = t0;
+      this._app_host$_hostInjector = t0;
     }, BrowserGetTestability: function BrowserGetTestability() {
     }, BrowserGetTestability_addToWindow_closure: function BrowserGetTestability_addToWindow_closure() {
     }, BrowserGetTestability_addToWindow_closure0: function BrowserGetTestability_addToWindow_closure0() {

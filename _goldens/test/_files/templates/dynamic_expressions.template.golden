@@ -15,11 +15,13 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import9;
+import 'package:angular/src/runtime/proxies.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import12;
+import 'package:angular/src/common/directives/ng_for.dart' as import13;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import15;
 import 'dart:core';
 
 final List<dynamic> styles$Comp1 = const [];
@@ -341,7 +343,7 @@ class ViewComp40 extends AppView<import1.Comp4> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    _arr_0 = import9.pureProxy2((p0, p1) {
+    _arr_0 = import10.pureProxy2((p0, p1) {
       return [p0, p1];
     });
     init0();
@@ -420,8 +422,8 @@ class ViewComp50 extends AppView<import1.Comp5> {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     parentRenderNode.append(_textBinding_0.element);
-    final _text_1 = import10.appendText(parentRenderNode, '}');
-    _map_0 = import9.pureProxy1((p0) {
+    final _text_1 = import11.appendText(parentRenderNode, '}');
+    _map_0 = import10.pureProxy1((p0) {
       return {'1': p0};
     });
     init0();
@@ -485,7 +487,7 @@ final List<dynamic> styles$Comp6 = const [];
 
 class ViewComp60 extends AppView<import1.Comp6> {
   ViewContainer _appEl_0;
-  import12.NgFor _NgFor_0_9;
+  import13.NgFor _NgFor_0_9;
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp60(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -500,10 +502,10 @@ class ViewComp60 extends AppView<import1.Comp6> {
   ComponentRef<import1.Comp6> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import10.appendAnchor(parentRenderNode);
+    final _anchor_0 = import11.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp61);
-    _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import13.NgFor(_appEl_0, _TemplateRef_0_8);
     init0();
   }
 
@@ -511,11 +513,11 @@ class ViewComp60 extends AppView<import1.Comp6> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.durations;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
+    if (import15.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import15.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -599,7 +601,7 @@ final List<dynamic> styles$Comp7 = const [];
 
 class ViewComp70 extends AppView<import1.Comp7> {
   ViewContainer _appEl_0;
-  import12.NgFor _NgFor_0_9;
+  import13.NgFor _NgFor_0_9;
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewComp70(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -614,10 +616,10 @@ class ViewComp70 extends AppView<import1.Comp7> {
   ComponentRef<import1.Comp7> build() {
     final _rootEl = rootEl;
     final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final _anchor_0 = import10.appendAnchor(parentRenderNode);
+    final _anchor_0 = import11.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp71);
-    _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import13.NgFor(_appEl_0, _TemplateRef_0_8);
     init0();
   }
 
@@ -625,11 +627,11 @@ class ViewComp70 extends AppView<import1.Comp7> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.items;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
+    if (import15.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import15.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -657,17 +659,17 @@ ComponentFactory<import1.Comp7> get Comp7NgFactory {
 
 class _ViewComp71 extends AppView<import1.Comp7> {
   ViewContainer _appEl_0;
-  import12.NgFor _NgFor_0_9;
+  import13.NgFor _NgFor_0_9;
   var _expr_0;
   _ViewComp71(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
   @override
   ComponentRef<import1.Comp7> build() {
-    final _anchor_0 = import10.createAnchor();
+    final _anchor_0 = import11.createAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp72);
-    _NgFor_0_9 = import12.NgFor(_appEl_0, _TemplateRef_0_8);
+    _NgFor_0_9 = import13.NgFor(_appEl_0, _TemplateRef_0_8);
     init1(_appEl_0);
   }
 
@@ -675,11 +677,11 @@ class _ViewComp71 extends AppView<import1.Comp7> {
   void detectChangesInternal() {
     final local_durations = import7.unsafeCast<List<Duration>>(locals['\$implicit']);
     final currVal_0 = local_durations;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
+    if (import15.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import15.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();

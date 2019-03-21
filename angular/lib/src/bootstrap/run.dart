@@ -36,7 +36,7 @@ Injector appInjector(
   NgZone Function() createNgZone = createNgZone,
 }) {
   // These are the required root services, always provided by AngularDart.
-  final Injector minimalInjector = minimalApp(appGlobals.rootInjector);
+  final Injector minimalInjector = appGlobals.createAppInjector(minimalApp);
 
   // Lazily initialized later on once we have the user injector.
   ApplicationRef applicationRef;

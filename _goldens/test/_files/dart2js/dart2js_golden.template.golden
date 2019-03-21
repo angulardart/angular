@@ -21,12 +21,13 @@ import 'package:angular/src/core/di/opaque_token.dart' as import10;
 import 'dart:core';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'package:angular/src/runtime/text_binding.dart' as import13;
+import 'package:angular/src/runtime/interpolate.dart' as import14;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import17;
-import 'package:angular/src/common/directives/ng_class.dart' as import18;
-import 'package:angular/src/common/directives/ng_style.dart' as import19;
+import 'package:angular/src/common/directives/ng_for.dart' as import18;
+import 'package:angular/src/common/directives/ng_class.dart' as import19;
+import 'package:angular/src/common/directives/ng_style.dart' as import20;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -407,8 +408,8 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText(import12.interpolateString0(_ctx.title));
-    _textBinding_3.updateText(import12.interpolateString0(_ctx.name));
+    _textBinding_1.updateText(import14.interpolateString0(_ctx.title));
+    _textBinding_3.updateText(import14.interpolateString0(_ctx.name));
   }
 
   @override
@@ -591,8 +592,8 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText(import12.interpolateString0(_ctx.title));
-    _textBinding_3.updateText(import12.interpolateString0(_ctx.name));
+    _textBinding_1.updateText(import14.interpolateString0(_ctx.title));
+    _textBinding_3.updateText(import14.interpolateString0(_ctx.name));
   }
 
   @override
@@ -868,7 +869,7 @@ final List<dynamic> styles$EmbeddedNgFor = const [];
 
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
-  import17.NgFor _NgFor_1_9;
+  import18.NgFor _NgFor_1_9;
   static import2.ComponentStyles _componentStyles;
   ViewEmbeddedNgFor0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -887,7 +888,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
     final _anchor_1 = import8.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_EmbeddedNgFor1);
-    _NgFor_1_9 = import17.NgFor(_appEl_1, _TemplateRef_1_8);
+    _NgFor_1_9 = import18.NgFor(_appEl_1, _TemplateRef_1_8);
     init0();
   }
 
@@ -942,7 +943,7 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   @override
   void detectChangesInternal() {
     final local_item = import6.unsafeCast<String>(locals['\$implicit']);
-    _textBinding_1.updateText(import12.interpolateString0(local_item));
+    _textBinding_1.updateText(import14.interpolateString0(local_item));
   }
 }
 
@@ -1519,10 +1520,10 @@ AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0(AppView<dynami
 final List<dynamic> styles$UsesNgDirectives = const [];
 
 class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
-  import18.NgClass _NgClass_0_5;
-  import18.NgClass _NgClass_2_5;
-  import18.NgClass _NgClass_4_5;
-  import19.NgStyle _NgStyle_6_5;
+  import19.NgClass _NgClass_0_5;
+  import19.NgClass _NgClass_2_5;
+  import19.NgClass _NgClass_4_5;
+  import20.NgStyle _NgStyle_6_5;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -1542,16 +1543,16 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
     final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import5.document;
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
-    _NgClass_0_5 = import18.NgClass(_el_0);
+    _NgClass_0_5 = import19.NgClass(_el_0);
     final _text_1 = import8.appendText(_el_0, 'Classes From Map');
     final _el_2 = import8.appendDiv(doc, parentRenderNode);
-    _NgClass_2_5 = import18.NgClass(_el_2);
+    _NgClass_2_5 = import19.NgClass(_el_2);
     final _text_3 = import8.appendText(_el_2, 'Classes from List');
     final _el_4 = import8.appendDiv(doc, parentRenderNode);
-    _NgClass_4_5 = import18.NgClass(_el_4);
+    _NgClass_4_5 = import19.NgClass(_el_4);
     final _text_5 = import8.appendText(_el_4, 'Classes from String');
     final _el_6 = import8.appendDiv(doc, parentRenderNode);
-    _NgStyle_6_5 = import19.NgStyle(_el_6);
+    _NgStyle_6_5 = import20.NgStyle(_el_6);
     final _text_7 = import8.appendText(_el_6, 'Styles');
     init0();
   }

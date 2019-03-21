@@ -101,7 +101,7 @@ class ViewNameResolver implements NameResolver {
     o.OutputType type,
   }) {
     if (values.isEmpty) {
-      return o.importExpr(Identifiers.EMPTY_ARRAY);
+      return o.importExpr(Identifiers.emptyListLiteral);
     }
     final proxyFieldName = '_arr_${_state.literalListCount++}';
     final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
@@ -137,7 +137,7 @@ class ViewNameResolver implements NameResolver {
     o.OutputType type,
   }) {
     if (entries.isEmpty) {
-      return o.importExpr(Identifiers.EMPTY_MAP);
+      return o.importExpr(Identifiers.emptyMapLiteral);
     }
     final proxyFieldName = '_map_${_state.literalListCount++}';
     final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
