@@ -21,6 +21,7 @@ import 'view_container.dart';
 import 'view_fragment.dart';
 import 'view_ref.dart' show ViewRefImpl;
 import 'view_type.dart' show ViewType;
+import 'views/view.dart';
 
 export 'package:angular/src/core/change_detection/component_state.dart';
 
@@ -137,7 +138,7 @@ class AppViewData<T> {
 /// followed by non-initialized fields.  In this base class, the
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
-abstract class AppView<T> {
+abstract class AppView<T> extends View {
   AppViewData<T> viewData;
 
   /// The root element.
@@ -224,13 +225,10 @@ abstract class AppView<T> {
     return build();
   }
 
-  /// Implements the semantic elements of the current view.
-  ///
-  /// For component and embedded views, this means, for the most part, creating
-  /// the necessary initial DOM nodes, eagerly provided services or references
-  /// (such as `ViewContainerRef`), and making them available as class members
-  /// for later access (such as in [detectChanges] or [destroy]).
-  @protected
+  // For legacy reasons and as an transitional API, this overrides the signature
+  // of `View.build()` to return a `ComponentRef<T>`. The concrete
+  // implementation is currently needed for b/129005490.
+  @override
   ComponentRef<T> build() => null;
 
   /// Specialized [init] when a view does not need to track root nodes.
@@ -262,6 +260,7 @@ abstract class AppView<T> {
     domRootRendererIsDirty = true;
   }
 
+  @override
   Object injectorGet(
     Object token,
     int nodeIndex, [
@@ -288,45 +287,8 @@ abstract class AppView<T> {
     return result;
   }
 
-  /// Alternative to [injectorGet] that may return `null` if missing.
-  ///
-  /// Used to reduce code-size for dynamic lookups sourced from `@Optional()`.
-  @dart2js.noInline
-  Object injectorGetOptional(Object token, int nodeIndex) {
-    return injectorGet(token, nodeIndex, null);
-  }
-
-  /// Adapts and returns services available at [nodeIndex] as an [Injector].
-  ///
-  /// As an optimization, views use [injectorGet] (and [injectorGetInternal])
-  /// for intra-view dependency injection. However, when a user "injects" the
-  /// [Injector], they are expecting the API to match other types of injectors:
-  ///
-  /// ```
-  /// class C {
-  ///   C(Injector i) {
-  ///     // This view (located at 'nodeIndex') adapted to the Injector API.
-  ///     final context = i.provideType<UserContext>(UserContext);
-  ///   }
-  /// }
-  /// ```
+  @override
   Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
-
-  /// Backing implementation of `injectorGet` for the current view.
-  ///
-  /// By default (i.e. for views with no provided services or references), this
-  /// is expected to be an identity function for returning [notFoundResult].
-  ///
-  /// In a generated view, the component view retains some of the information
-  /// for it's children's providers, with each child node representing a
-  /// different [nodeIndex].
-  @protected
-  Object injectorGetInternal(
-    Object token,
-    int nodeIndex,
-    Object notFoundResult,
-  ) =>
-      notFoundResult;
 
   void detachAndDestroy() {
     var containerElement = viewData._viewContainerElement;
@@ -340,10 +302,7 @@ abstract class AppView<T> {
     domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
   }
 
-  /// Destroys the internal state of the view.
-  ///
-  /// If appropriate, any nodes that were added to the DOM by [build] are also
-  /// detached from the DOM and destroyed.
+  @override
   void destroy() {
     if (viewData.destroyed) {
       return;
@@ -357,9 +316,6 @@ abstract class AppView<T> {
   void addOnDestroyCallback(void Function() callback) {
     viewData.addDestroyCallback(callback);
   }
-
-  /// Overwritten by implementations to destroy view.
-  void destroyInternal() {}
 
   ChangeDetectorRef get changeDetectorRef => viewData.ref;
 
@@ -378,12 +334,7 @@ abstract class AppView<T> {
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}
 
-  /// Invokes change detection on this view and any child views.
-  ///
-  /// A view that has an uncaught exception, is destroyed, or is otherwise
-  /// not meant to be checked (such as being detached or having a change
-  /// detection mode that skips checks conditionally) should immediately return.
-  @mustCallSuper
+  @override
   void detectChanges() {
     // Whether the CD state means change detection should be skipped.
     // Cases: ERRORED (Crash), CHECKED (Already-run), DETACHED (inactive).
@@ -413,12 +364,6 @@ abstract class AppView<T> {
     // Set the state to already checked at least once.
     cdState = ChangeDetectorState.CheckedBefore;
   }
-
-  /// Backing implementation of `detectChanges` for the current view.
-  ///
-  /// Defaults to an empty method for the rare components with no bindings.
-  @protected
-  void detectChangesInternal() {}
 
   /// Runs change detection with a `try { ... } catch { ...}`.
   ///
