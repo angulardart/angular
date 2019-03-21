@@ -20,7 +20,6 @@ abstract class View {
   ///
   /// If appropriate, any nodes that were added to the DOM by [build] are also
   /// detached from the DOM and destroyed.
-  @protected
   void destroy();
 
   /// Backing implementation of [destroy] for this view.
@@ -36,7 +35,6 @@ abstract class View {
   /// A view that has an uncaught exception, is destroyed, or is otherwise
   /// not meant to be checked (such as being detached or having a change
   /// detection mode that skips checks conditionally) should immediately return.
-  @protected
   void detectChanges();
 
   /// Backing implementation of [detectChanges] for this view.
