@@ -21,6 +21,7 @@ import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import12;
 import 'dart:core';
 import 'package:angular/src/runtime/text_binding.dart' as import14;
+import 'package:angular/src/runtime/interpolate.dart' as import15;
 
 final List<dynamic> styles$NestedNgForComponent = const [];
 
@@ -140,7 +141,7 @@ class _ViewNestedNgForComponent2 extends AppView<import1.NestedNgForComponent> {
   @override
   void detectChangesInternal() {
     final local_value = import8.unsafeCast<int>(locals['\$implicit']);
-    _textBinding_1.updateText(import12.interpolate0(local_value));
+    _textBinding_1.updateText(import15.interpolate0(local_value));
   }
 }
 

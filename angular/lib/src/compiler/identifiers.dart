@@ -6,6 +6,9 @@ const _angularLib = 'asset:angular/lib';
 const _appViewModuleUrl = "$_angularLib/src/core/linker/app_view.dart";
 const _appViewUtilsModuleUrl =
     "$_angularLib/src/core/linker/app_view_utils.dart";
+const _interpolateModuleUrl = '$_angularLib/src/runtime/interpolate.dart';
+const _proxiesModuleUrl = '$_angularLib/src/runtime/proxies.dart';
+const _queriesModuleUrl = '$_angularLib/src/runtime/queries.dart';
 const _cdModuleUrl =
     "$_angularLib/src/core/change_detection/change_detection.dart";
 const _angularRootUrl = "package:angular/angular.dart";
@@ -156,86 +159,79 @@ class Identifiers {
   /// (most common case).
   static final interpolateString = [
     CompileIdentifierMetadata(
-        name: "interpolateString0", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString0", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString1", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString1", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString2", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString2", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString3", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString3", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString4", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString4", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString5", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString5", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString6", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString6", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString7", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString7", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString8", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString8", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolateString9", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolateString9", moduleUrl: _interpolateModuleUrl),
   ];
 
   static final interpolate = [
     CompileIdentifierMetadata(
-        name: "interpolate0", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate0", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate1", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate1", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate2", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate2", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate3", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate3", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate4", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate4", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate5", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate5", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate6", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate6", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate7", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate7", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate8", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate8", moduleUrl: _interpolateModuleUrl),
     CompileIdentifierMetadata(
-        name: "interpolate9", moduleUrl: _appViewUtilsModuleUrl),
+        name: "interpolate9", moduleUrl: _interpolateModuleUrl),
   ];
+
   static final createTrustedHtml = CompileIdentifierMetadata(
       name: 'createTrustedHtml', moduleUrl: _appViewUtilsModuleUrl);
   static final flattenNodes = CompileIdentifierMetadata(
-      name: "flattenNodes", moduleUrl: _appViewUtilsModuleUrl);
+      name: "flattenNodes", moduleUrl: _queriesModuleUrl);
   static final firstOrNull = CompileIdentifierMetadata(
-      name: "firstOrNull", moduleUrl: _appViewUtilsModuleUrl);
-  static final EMPTY_ARRAY = CompileIdentifierMetadata(
-      name: "EMPTY_ARRAY", moduleUrl: _appViewUtilsModuleUrl);
-  static final EMPTY_MAP = CompileIdentifierMetadata(
-      name: "EMPTY_MAP", moduleUrl: _appViewUtilsModuleUrl);
+      name: "firstOrNull", moduleUrl: _queriesModuleUrl);
+  static final emptyListLiteral = CompileIdentifierMetadata(
+      name: "emptyListLiteral", moduleUrl: _proxiesModuleUrl);
+  static final emptyMapLiteral = CompileIdentifierMetadata(
+      name: "emptyMapLiteral", moduleUrl: _proxiesModuleUrl);
+  static final pureProxies = [
+    null,
+    CompileIdentifierMetadata(name: "pureProxy1", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy2", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy3", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy4", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy5", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy6", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy7", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy8", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy9", moduleUrl: _proxiesModuleUrl),
+    CompileIdentifierMetadata(name: "pureProxy10", moduleUrl: _proxiesModuleUrl)
+  ];
+
   static final NG_IF_DIRECTIVE =
       CompileIdentifierMetadata(name: "NgIf", moduleUrl: _ngIfUrl);
   static final NG_FOR_DIRECTIVE =
       CompileIdentifierMetadata(name: "NgFor", moduleUrl: _ngForUrl);
-  static final pureProxies = [
-    null,
-    CompileIdentifierMetadata(
-        name: "pureProxy1", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy2", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy3", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy4", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy5", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy6", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy7", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy8", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy9", moduleUrl: _appViewUtilsModuleUrl),
-    CompileIdentifierMetadata(
-        name: "pureProxy10", moduleUrl: _appViewUtilsModuleUrl)
-  ];
+
   // Runtime is initialized by output interpreter. Compiler executes in VM and
   // can't import dart:html to initialize here.
   static var HTML_COMMENT_NODE =

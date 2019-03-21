@@ -17,7 +17,8 @@ import 'dart:html' as import7;
 import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import10;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
+import 'package:angular/src/runtime/proxies.dart' as import11;
+import 'package:angular/src/runtime/interpolate.dart' as import12;
 
 final List<dynamic> styles$Comp = const [];
 
@@ -66,10 +67,10 @@ class ViewComp0 extends AppView<import1.Comp> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_0.updateText(import11.interpolate0(_pipe_pure_0_0('foo')));
-    _textBinding_2.updateText(import11.interpolate0(_pipe_dirty_1.transform('bar')));
-    _textBinding_4.updateText(import11.interpolate0(_pipe_lifecycle_2_0('lifecycle')));
-    _textBinding_6.updateText(import11.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
+    _textBinding_0.updateText(import12.interpolate0(_pipe_pure_0_0('foo')));
+    _textBinding_2.updateText(import12.interpolate0(_pipe_dirty_1.transform('bar')));
+    _textBinding_4.updateText(import12.interpolate0(_pipe_lifecycle_2_0('lifecycle')));
+    _textBinding_6.updateText(import12.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
   }
 
   @override

@@ -16,10 +16,11 @@ import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import10;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart' as import14;
 
 final List<dynamic> styles$InterpolationComponent = const [];
 
@@ -451,11 +452,11 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.bars;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
+    if (import14.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import10.AppViewUtils.throwOnChanges)) {
+    if ((!import14.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -501,11 +502,11 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   void detectChangesInternal() {
     final local_bar = locals['\$implicit'];
     final currVal_0 = local_bar;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
+    if (import14.checkBinding(_expr_0, currVal_0)) {
       _NgFor_0_9.ngForOf = currVal_0;
       _expr_0 = currVal_0;
     }
-    if ((!import10.AppViewUtils.throwOnChanges)) {
+    if ((!import14.AppViewUtils.throwOnChanges)) {
       _NgFor_0_9.ngDoCheck();
     }
     _appEl_0.detectChangesInNestedViews();
@@ -613,12 +614,12 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = import10.interpolateString0(_ctx.altText);
-    if (import10.checkBinding(_expr_0, currVal_0)) {
+    if (import14.checkBinding(_expr_0, currVal_0)) {
       import9.setProperty(_el_0, 'alt', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = import10.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
-    if (import10.checkBinding(_expr_1, currVal_1)) {
+    if (import14.checkBinding(_expr_1, currVal_1)) {
       import9.setProperty(_el_2, 'alt', currVal_1);
       _expr_1 = currVal_1;
     }
@@ -704,12 +705,12 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = import10.interpolateString1('\n', _ctx.altText, '\n');
-    if (import10.checkBinding(_expr_0, currVal_0)) {
+    if (import14.checkBinding(_expr_0, currVal_0)) {
       import9.setProperty(_el_1, 'alt', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = import10.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
-    if (import10.checkBinding(_expr_1, currVal_1)) {
+    if (import14.checkBinding(_expr_1, currVal_1)) {
       import9.setProperty(_el_3, 'alt', currVal_1);
       _expr_1 = currVal_1;
     }

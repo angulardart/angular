@@ -21,7 +21,8 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart' as import14;
-import 'external_service.dart' as import15;
+import 'package:angular/src/runtime/queries.dart' as import15;
+import 'external_service.dart' as import16;
 import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
 
@@ -101,7 +102,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _appEl_6.detectChangesInNestedViews();
     if ((!import14.AppViewUtils.throwOnChanges)) {
       if (_query_queryMe_1_0_isDirty) {
-        _ctx.queryDeferredChild = import14.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
+        _ctx.queryDeferredChild = import15.firstOrNull(_appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewTestContainerComponent5 nestedView) {
             return [nestedView._DeferredChild3Component_0_5];
           });
@@ -366,15 +367,15 @@ AppView<void> viewFactory_TestContainerComponent7(AppView<dynamic> parentView, i
 
 class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponent> {
   AppView _compView_0;
-  import15.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import16.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   dynamic _DeferredChildComponentWithServices_0_6;
-  import15.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  import16.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
   _ViewTestContainerComponent8(AppView<dynamic> parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
   }
-  import15.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+  import16.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
-      (__ExternalServiceLazilyCreatedMaybe_0_7 = import15.ExternalServiceLazilyCreatedMaybe());
+      (__ExternalServiceLazilyCreatedMaybe_0_7 = import16.ExternalServiceLazilyCreatedMaybe());
     }
     return __ExternalServiceLazilyCreatedMaybe_0_7;
   }
@@ -383,7 +384,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = deflib1.ViewDeferredChildComponentWithServices0(this, 0);
     final _el_0 = _compView_0.rootEl;
-    _ExternalServiceImmediatelyCreated_0_5 = import15.ExternalServiceImmediatelyCreated();
+    _ExternalServiceImmediatelyCreated_0_5 = import16.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = deflib0.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
     _compView_0.create0(_DeferredChildComponentWithServices_0_6);
     init1(_el_0);
@@ -392,10 +393,10 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
-      if (identical(token, import15.ExternalServiceImmediatelyCreated)) {
+      if (identical(token, import16.ExternalServiceImmediatelyCreated)) {
         return _ExternalServiceImmediatelyCreated_0_5;
       }
-      if (identical(token, import15.ExternalServiceLazilyCreatedMaybe)) {
+      if (identical(token, import16.ExternalServiceLazilyCreatedMaybe)) {
         return _ExternalServiceLazilyCreatedMaybe_0_7;
       }
     }
