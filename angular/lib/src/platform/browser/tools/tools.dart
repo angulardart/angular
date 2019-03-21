@@ -14,7 +14,7 @@ import 'common_tools.dart' show AngularTools;
 /// 2. Type `ng.` (usually the console will show auto-complete suggestion)
 /// 3. Try the change detection profiler `ng.profiler.timeChangeDetection()`
 ///    then hit Enter.
-void enableDebugTools(ComponentRef ref) {
+void enableDebugTools(ComponentRef<Object> ref) {
   final tools = AngularTools(ref);
   context['ng'] = JsObject.jsify({
     'profiler': {

@@ -119,7 +119,7 @@ List<String> _flattenStyles(
   }
   for (var i = 0, l = styles.length; i < l; i++) {
     final styleOrList = styles[i];
-    if (styleOrList is List) {
+    if (styleOrList is List<Object>) {
       _flattenStyles(
         styleOrList,
         target,

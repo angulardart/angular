@@ -68,6 +68,6 @@ class Placeholder implements Builder {
   };
 
   @override
-  Future build(BuildStep buildStep) => buildStep.writeAsString(
+  Future<Object> build(BuildStep buildStep) => buildStep.writeAsString(
       buildStep.inputId.changeExtension('.ng_placeholder'), '');
 }

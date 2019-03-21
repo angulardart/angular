@@ -30,7 +30,7 @@ class ExpressionAst<T> implements TemplateAst {
 
   @override
   bool operator ==(Object o) {
-    if (o is ExpressionAst) {
+    if (o is ExpressionAst<Object>) {
       return true;
     }
     return false;

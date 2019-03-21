@@ -138,7 +138,7 @@ class CompilerFlags {
     }
 
     // Check for invalid (unknown) arguments when possible.
-    if (options is Map) {
+    if (options is Map<Object, Object>) {
       final knownArgs = const [
         _argI18nEnabled,
         _argProfileFor,

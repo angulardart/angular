@@ -7,7 +7,7 @@ import 'injector.dart';
 /// **INTERNAL ONLY**: Adapts the [AppView] interfaces as an injector.
 @Immutable()
 class ElementInjector extends HierarchicalInjector {
-  final AppView _view;
+  final AppView<Object> _view;
   final int _nodeIndex;
 
   HierarchicalInjector _parent;
@@ -15,7 +15,7 @@ class ElementInjector extends HierarchicalInjector {
   ElementInjector(this._view, this._nodeIndex);
 
   dynamic _injectFrom(
-    AppView view,
+    AppView<Object> view,
     int nodeIndex,
     Object token,
     Object orElse,

@@ -163,7 +163,7 @@ abstract class AppView<T> {
   ComponentStyles componentStyles;
 
   /// Parent generated view.
-  final AppView parentView;
+  final AppView<Object> parentView;
 
   AppView(
     ViewType type,
@@ -269,7 +269,7 @@ abstract class AppView<T> {
   ]) {
     di_errors.debugInjectorEnter(token);
     var result = _UndefinedInjectorResult;
-    AppView view = this;
+    AppView<Object> view = this;
     while (identical(result, _UndefinedInjectorResult)) {
       if (nodeIndex != null) {
         result = view.injectorGetInternal(
@@ -463,7 +463,7 @@ abstract class AppView<T> {
   }
 
   void markPathToRootAsCheckOnce() {
-    AppView view = this;
+    AppView<Object> view = this;
     while (view != null) {
       int cdMode = view.cdMode;
       if (cdMode == ChangeDetectionStrategy.Detached) break;
@@ -591,7 +591,7 @@ abstract class AppView<T> {
             );
           }
         }
-      } else if (node is List) {
+      } else if (node is List<Object>) {
         ViewFragment.appendDomNodes(target, node);
       } else {
         target.append(unsafeCast(node));

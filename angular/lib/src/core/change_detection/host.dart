@@ -245,7 +245,7 @@ abstract class ChangeDetectionHost {
     runInZone(() {
       try {
         result = callback();
-        if (result is Future) {
+        if (result is Future<Object>) {
           final Future<R> resultCast = unsafeCast(result);
           resultCast.then((result) {
             completer.complete(result);
@@ -260,7 +260,7 @@ abstract class ChangeDetectionHost {
         rethrow;
       }
     });
-    return result is Future ? completer.future : result;
+    return result is Future<Object> ? completer.future : result;
   }
 
   /// Executes the [callback] function within the current `NgZone`.

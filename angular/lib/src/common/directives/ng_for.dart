@@ -90,14 +90,14 @@ class NgFor implements DoCheck {
   final ViewContainerRef _viewContainer;
 
   DefaultIterableDiffer _differ;
-  Iterable _ngForOf;
+  Iterable<Object> _ngForOf;
   TrackByFn _ngForTrackBy;
   TemplateRef _templateRef;
 
   NgFor(this._viewContainer, this._templateRef);
 
   @Input()
-  set ngForOf(Iterable value) {
+  set ngForOf(Iterable<Object> value) {
     _ngForOf = value;
     if (_differ == null && value != null) {
       _differ = DefaultIterableDiffer(_ngForTrackBy);

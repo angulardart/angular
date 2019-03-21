@@ -14,7 +14,7 @@ class ChangeDetectionPerfRecord {
 /// global variable accessible in the dev console.
 class AngularTools {
   final AngularProfiler profiler;
-  AngularTools(ComponentRef ref) : profiler = AngularProfiler(ref);
+  AngularTools(ComponentRef<Object> ref) : profiler = AngularProfiler(ref);
 }
 
 /// Entry point for all Angular profiling-related debug tools. This object
@@ -23,7 +23,7 @@ class AngularProfiler {
   final ApplicationRef appRef;
 
   // ignore: field_initializer_not_assignable
-  AngularProfiler(ComponentRef ref)
+  AngularProfiler(ComponentRef<Object> ref)
       : appRef = ref.injector.provideType(ApplicationRef);
 
   /// Exercises change detection in a loop and then prints the average amount of

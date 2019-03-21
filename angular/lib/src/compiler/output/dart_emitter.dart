@@ -17,8 +17,8 @@ String debugOutputAstAsDart(
     dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
   var converter = _DartEmitterVisitor(_debugModuleUrl);
   var ctx = EmitterVisitorContext.createRoot({});
-  List<dynamic> asts;
-  if (ast is! List) {
+  List<Object> asts;
+  if (ast is! List<Object>) {
     asts = [ast];
   }
   for (var ast in asts) {

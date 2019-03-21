@@ -14,7 +14,7 @@ import 'token/tokens.dart';
 
 /// A wrapper around [StringScanner] that scans tokens from an HTML string.
 class NgScanner {
-  final NgTokenReversibleReader _reader;
+  final NgTokenReversibleReader<Object> _reader;
   NgScannerState _state = NgScannerState.scanStart;
   final ExceptionHandler exceptionHandler;
 

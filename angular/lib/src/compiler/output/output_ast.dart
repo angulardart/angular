@@ -1185,8 +1185,10 @@ class ExpressionTransformer<C>
   @override
   Expression visitLiteralMapExpr(LiteralMapExpr ast, C context) {
     return LiteralMapExpr(ast.entries
-        .map((entry) =>
-            [entry[0], (entry[1] as Expression).visitExpression(this, context)])
+        .map((entry) => <Object>[
+              entry[0],
+              (entry[1] as Expression).visitExpression(this, context)
+            ])
         .toList());
   }
 

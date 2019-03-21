@@ -7,19 +7,19 @@ part of angular_ast.src.recovery_protocol.recovery_protocol;
 class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
   @override
   RecoverySolution hasError(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution isEndOfFile(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanAfterComment(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
 
@@ -35,7 +35,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanAfterElementDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -77,7 +77,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanAfterElementDecoratorValue(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -116,7 +116,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanAfterElementIdentifierClose(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -140,7 +140,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanAfterElementIdentifierOpen(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -177,7 +177,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanAfterInterpolation(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     var type = current.type;
     if (type == NgSimpleTokenType.EOF ||
         type == NgSimpleTokenType.mustacheBegin ||
@@ -193,13 +193,13 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanBeforeElementDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanBeforeInterpolation(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     if (current.type == NgSimpleTokenType.text ||
@@ -214,7 +214,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanComment(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     if (current.type == NgSimpleTokenType.EOF) {
       return RecoverySolution(
           NgScannerState.scanStart,
@@ -226,7 +226,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanInterpolation(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -246,7 +246,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanElementDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -285,7 +285,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanElementDecoratorValue(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -335,7 +335,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanElementEndClose(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -359,13 +359,13 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanElementEndOpen(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanElementIdentifierClose(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -388,7 +388,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanElementIdentifierOpen(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -422,19 +422,19 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanOpenElementEnd(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanElementStart(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanSimpleElementDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -457,7 +457,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanSpecialBananaDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -479,7 +479,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanSpecialEventDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -501,7 +501,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanSpecialPropertyDecorator(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -523,13 +523,13 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanStart(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 
   @override
   RecoverySolution scanSuffixBanana(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -551,7 +551,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanSuffixEvent(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -573,7 +573,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanSuffixProperty(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     NgScannerState returnState;
     NgToken returnToken;
     var type = current.type;
@@ -596,7 +596,7 @@ class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {
 
   @override
   RecoverySolution scanText(
-      NgSimpleToken current, NgTokenReversibleReader reader) {
+      NgSimpleToken current, NgTokenReversibleReader<Object> reader) {
     return RecoverySolution.skip();
   }
 }

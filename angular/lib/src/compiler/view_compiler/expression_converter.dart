@@ -322,7 +322,7 @@ class _AstToExpressionVisitor
 
   @override
   o.Expression visitLiteralMap(compiler_ast.LiteralMap ast, bool visitingRoot) {
-    var parts = <List>[];
+    var parts = <List<Object>>[];
     for (var i = 0; i < ast.keys.length; i++) {
       parts.add(
           [ast.keys[i], ast.values[i].visit(this, false /* visitingRoot */)]);

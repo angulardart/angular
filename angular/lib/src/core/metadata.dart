@@ -240,7 +240,7 @@ class Component extends Directive {
   ///
   /// See [Typed] for details.
   @experimental
-  final List<Typed> directiveTypes;
+  final List<Typed<Object>> directiveTypes;
 
   final List<Object> pipes;
   final ViewEncapsulation encapsulation;

@@ -12,7 +12,7 @@ import 'view_ref.dart' show ViewRef;
 /// objects related to this Component Instance and allows you to destroy the
 /// Component Instance via the [ComponentRef.destroy] method.
 class ComponentRef<C> {
-  final AppView _parentView;
+  final AppView<Object> _parentView;
   final int _nodeIndex;
   final Element _nativeElement;
   final C _component;
@@ -97,7 +97,7 @@ class ComponentFactory<T> {
   /// Creates a new component.
   ComponentRef<T> create(
     Injector injector, [
-    List<List> projectableNodes,
+    List<List<Object>> projectableNodes,
   ]) {
     // Note: Host views don't need a declarationViewContainer!
     final hostView = _viewFactory(null, null);

@@ -18,7 +18,7 @@ abstract class PropertyAst implements TemplateAst {
   factory PropertyAst(
     String name, [
     String value,
-    ExpressionAst expression,
+    ExpressionAst<Object> expression,
     String postfix,
     String unit,
   ]) = _SyntheticPropertyAst;
@@ -28,7 +28,7 @@ abstract class PropertyAst implements TemplateAst {
     TemplateAst origin,
     String name, [
     String value,
-    ExpressionAst expression,
+    ExpressionAst<Object> expression,
     String postfix,
     String unit,
   ]) = _SyntheticPropertyAst.from;
@@ -63,8 +63,8 @@ abstract class PropertyAst implements TemplateAst {
   }
 
   /// Bound expression; optional for backwards compatibility.
-  ExpressionAst get expression;
-  set expression(ExpressionAst expression);
+  ExpressionAst<Object> get expression;
+  set expression(ExpressionAst<Object> expression);
 
   /// Name of the property being set.
   String get name;
@@ -149,7 +149,7 @@ class ParsedPropertyAst extends TemplateAst
 
   /// ExpressionAst of `"value"`; may be `null` to have no value.
   @override
-  ExpressionAst expression;
+  ExpressionAst<Object> expression;
 
   String get _nameWithoutBrackets => nameToken.lexeme;
 
@@ -219,7 +219,7 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
   ]) : super.from(origin);
 
   @override
-  ExpressionAst expression;
+  ExpressionAst<Object> expression;
 
   @override
   final String name;

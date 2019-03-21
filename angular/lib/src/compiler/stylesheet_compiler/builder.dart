@@ -24,7 +24,7 @@ class StylesheetCompiler implements Builder {
   };
 
   @override
-  Future build(BuildStep buildStep) async {
+  Future<void> build(BuildStep buildStep) async {
     final outputs = await processStylesheet(
       buildStep,
       buildStep.inputId,

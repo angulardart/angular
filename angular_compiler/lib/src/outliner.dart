@@ -134,7 +134,7 @@ class TemplateOutliner implements Builder {
                 if (c is HideElementCombinator) {
                   return c.hiddenNames;
                 }
-                return const [];
+                return const <Object>[];
               })
               .expand((i) => i)
               .join(', ');

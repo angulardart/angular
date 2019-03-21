@@ -66,7 +66,7 @@ class ProviderElementContext implements ElementProviderUsage {
   final _transformedProviders = CompileTokenMap<ProviderAst>();
   final _seenProviders = CompileTokenMap<bool>();
   CompileTokenMap<ProviderAst> _allProviders;
-  final _attrs = <String, AttributeValue>{};
+  final _attrs = <String, AttributeValue<Object>>{};
   bool _requiresViewContainer = false;
 
   ProviderElementContext(
@@ -389,7 +389,7 @@ List<CompileProviderMetadata> _normalizeProviders(
   targetProviders ??= <CompileProviderMetadata>[];
   if (providers != null) {
     for (var provider in providers) {
-      if (provider is List) {
+      if (provider is List<Object>) {
         _normalizeProviders(
             provider, sourceSpan, targetErrors, targetProviders);
       } else {

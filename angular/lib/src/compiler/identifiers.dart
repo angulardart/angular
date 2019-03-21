@@ -154,7 +154,7 @@ class Identifiers {
 
   /// String interpolation where prefix,suffix are empty
   /// (most common case).
-  static final interpolateString = <CompileIdentifierMetadata>[
+  static final interpolateString = [
     CompileIdentifierMetadata(
         name: "interpolateString0", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata(
@@ -177,7 +177,7 @@ class Identifiers {
         name: "interpolateString9", moduleUrl: _appViewUtilsModuleUrl),
   ];
 
-  static final interpolate = <CompileIdentifierMetadata>[
+  static final interpolate = [
     CompileIdentifierMetadata(
         name: "interpolate0", moduleUrl: _appViewUtilsModuleUrl),
     CompileIdentifierMetadata(

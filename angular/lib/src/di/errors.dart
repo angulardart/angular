@@ -76,7 +76,7 @@ class NoProviderError extends InjectionError {
     if (input == null) {
       return const [];
     }
-    final output = [];
+    final output = <Object>[];
     var lastElement = Object();
     for (final element in input) {
       if (!identical(lastElement, element)) {

@@ -6,11 +6,11 @@ class _DevModeEquality extends DefaultEquality<Object> {
 
   @override
   bool equals(Object a, Object b) {
-    if (a is Iterable && b is Iterable) {
+    if (a is Iterable<Object> && b is Iterable<Object>) {
       return const IterableEquality(_DevModeEquality()).equals(a, b);
-    } else if (a is! Iterable &&
+    } else if (a is! Iterable<Object> &&
         !isPrimitive(a) &&
-        b is! Iterable &&
+        b is! Iterable<Object> &&
         !isPrimitive(b)) {
       // Code inlined from TS facade.
       return true;
