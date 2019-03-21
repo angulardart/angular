@@ -29,7 +29,7 @@ const _UndefinedInjectorResult = Object();
 
 /// Shared app view members used to reduce polymorphic calls and
 /// dart2js code size of constructors.
-class AppViewData<T> {
+class AppViewData {
   /// The type of view (host element, complete template, embedded template).
   final ViewType type;
 
@@ -78,12 +78,13 @@ class AppViewData<T> {
   // change detection will fail.
   int _cdState = ChangeDetectorState.NeverChecked;
 
-  AppViewData._(AppView<T> appView, this._cdMode, this.type, this.parentIndex)
+  AppViewData._(
+      AppView<void> appView, this._cdMode, this.type, this.parentIndex)
       : ref = ViewRefImpl(appView);
 
   @dart2js.noInline
   factory AppViewData(
-      AppView<T> appView, int cdMode, ViewType viewType, int parentIndex) {
+      AppView<void> appView, int cdMode, ViewType viewType, int parentIndex) {
     return AppViewData._(appView, cdMode, viewType, parentIndex);
   }
 
@@ -139,7 +140,7 @@ class AppViewData<T> {
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
 abstract class AppView<T> extends View {
-  AppViewData<T> viewData;
+  AppViewData viewData;
 
   /// The root element.
   ///

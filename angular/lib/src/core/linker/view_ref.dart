@@ -74,7 +74,7 @@ abstract class EmbeddedViewRef extends ViewRef {
 }
 
 class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
-  final AppView<Object> appView;
+  final AppView<void> appView;
 
   ViewRefImpl(this.appView);
 
