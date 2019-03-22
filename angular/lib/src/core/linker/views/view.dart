@@ -59,7 +59,6 @@ abstract class View {
   ///   }
   /// }
   /// ```
-  @protected
   Injector injector(int nodeIndex);
 
   /// Finds an object provided for [token] at [nodeIndex] in this view.
