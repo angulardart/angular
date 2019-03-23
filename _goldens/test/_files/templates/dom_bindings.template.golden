@@ -66,9 +66,7 @@ final List<dynamic> styles$HasHostAttributesHost = const [];
 class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   ViewHasHostAttributes0 _compView_0;
   import1.HasHostAttributes _HasHostAttributes_0_5;
-  _ViewHasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasHostAttributes> build() {
     _compView_0 = ViewHasHostAttributes0(this, 0);
@@ -149,9 +147,7 @@ final List<dynamic> styles$HasTemplateAttributesHost = const [];
 class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttributes> {
   ViewHasTemplateAttributes0 _compView_0;
   import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
-  _ViewHasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     _compView_0 = ViewHasTemplateAttributes0(this, 0);
@@ -227,9 +223,7 @@ final List<dynamic> styles$HasStaticAttributeHost = const [];
 class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   ViewHasStaticAttribute0 _compView_0;
   import1.HasStaticAttribute _HasStaticAttribute_0_5;
-  _ViewHasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
     _compView_0 = ViewHasStaticAttribute0(this, 0);
@@ -304,9 +298,7 @@ final List<dynamic> styles$HasHostClassHost = const [];
 class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   ViewHasHostClass0 _compView_0;
   import1.HasHostClass _HasHostClass_0_5;
-  _ViewHasHostClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasHostClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasHostClass> build() {
     _compView_0 = ViewHasHostClass0(this, 0);
@@ -387,9 +379,7 @@ final List<dynamic> styles$HasTemplateClassHost = const [];
 class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   ViewHasTemplateClass0 _compView_0;
   import1.HasTemplateClass _HasTemplateClass_0_5;
-  _ViewHasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     _compView_0 = ViewHasTemplateClass0(this, 0);
@@ -474,9 +464,7 @@ final List<dynamic> styles$HasStylePropertyHost = const [];
 class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   ViewHasStyleProperty0 _compView_0;
   import1.HasStyleProperty _HasStyleProperty_0_5;
-  _ViewHasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     _compView_0 = ViewHasStyleProperty0(this, 0);

@@ -61,9 +61,7 @@ final List<dynamic> styles$UntypedCompHost = const [];
 class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
-  _ViewUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UntypedComp> build() {
     _compView_0 = ViewUntypedComp0(this, 0);
@@ -152,9 +150,7 @@ final List<dynamic> styles$UsesUntypedCompHost = const [];
 class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
   ViewUsesUntypedComp0 _compView_0;
   import1.UsesUntypedComp _UsesUntypedComp_0_5;
-  _ViewUsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
     _compView_0 = ViewUsesUntypedComp0(this, 0);
@@ -219,9 +215,7 @@ final List<dynamic> styles$GenericCompHost = const [];
 class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
   ViewGenericComp0<T> _compView_0;
   import1.GenericComp<T> _GenericComp_0_5;
-  _ViewGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.GenericComp<T>> build() {
     _compView_0 = ViewGenericComp0(this, 0);
@@ -310,9 +304,7 @@ final List<dynamic> styles$UsesGenericCompHost = const [];
 class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
   ViewUsesGenericComp0 _compView_0;
   import1.UsesGenericComp _UsesGenericComp_0_5;
-  _ViewUsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesGenericComp> build() {
     _compView_0 = ViewUsesGenericComp0(this, 0);
@@ -377,9 +369,7 @@ final List<dynamic> styles$MappingComp1Host = const [];
 class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
   ViewMappingComp10<K, V> _compView_0;
   import1.MappingComp1<K, V> _MappingComp1_0_5;
-  _ViewMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MappingComp1<K, V>> build() {
     _compView_0 = ViewMappingComp10(this, 0);
@@ -474,9 +464,7 @@ final List<dynamic> styles$UsesMappingComp1Host = const [];
 class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
   ViewUsesMappingComp10 _compView_0;
   import1.UsesMappingComp1 _UsesMappingComp1_0_5;
-  _ViewUsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
     _compView_0 = ViewUsesMappingComp10(this, 0);
@@ -541,9 +529,7 @@ final List<dynamic> styles$MappingComp2Host = const [];
 class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
   ViewMappingComp20<K, V> _compView_0;
   import1.MappingComp2<K, V> _MappingComp2_0_5;
-  _ViewMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MappingComp2<K, V>> build() {
     _compView_0 = ViewMappingComp20(this, 0);
@@ -632,9 +618,7 @@ final List<dynamic> styles$UsesMappingComp2Host = const [];
 class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
   ViewUsesMappingComp20 _compView_0;
   import1.UsesMappingComp2 _UsesMappingComp2_0_5;
-  _ViewUsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
     _compView_0 = ViewUsesMappingComp20(this, 0);
@@ -699,9 +683,7 @@ final List<dynamic> styles$BoundCompHost = const [];
 class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
   ViewBoundComp0<T> _compView_0;
   import1.BoundComp<T> _BoundComp_0_5;
-  _ViewBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.BoundComp<T>> build() {
     _compView_0 = ViewBoundComp0(this, 0);
@@ -790,9 +772,7 @@ final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
 class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWithBounds> {
   ViewUsesBoundCompWithBounds0 _compView_0;
   import1.UsesBoundCompWithBounds _UsesBoundCompWithBounds_0_5;
-  _ViewUsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
     _compView_0 = ViewUsesBoundCompWithBounds0(this, 0);
@@ -881,9 +861,7 @@ final List<dynamic> styles$UsesBoundCompHost = const [];
 class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
   ViewUsesBoundComp0 _compView_0;
   import1.UsesBoundComp _UsesBoundComp_0_5;
-  _ViewUsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesBoundComp> build() {
     _compView_0 = ViewUsesBoundComp0(this, 0);
@@ -948,9 +926,7 @@ final List<dynamic> styles$SelfBoundCompHost = const [];
 class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   ViewSelfBoundComp0<A, B> _compView_0;
   import1.SelfBoundComp<A, B> _SelfBoundComp_0_5;
-  _ViewSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.SelfBoundComp<A, B>> build() {
     _compView_0 = ViewSelfBoundComp0(this, 0);
@@ -1045,9 +1021,7 @@ final List<dynamic> styles$UsesSelfBoundCompHost = const [];
 class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
   ViewUsesSelfBoundComp0 _compView_0;
   import1.UsesSelfBoundComp _UsesSelfBoundComp_0_5;
-  _ViewUsesSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
     _compView_0 = ViewUsesSelfBoundComp0(this, 0);
@@ -1112,9 +1086,7 @@ final List<dynamic> styles$RecursiveCompHost = const [];
 class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   ViewRecursiveComp0<T> _compView_0;
   import1.RecursiveComp<T> _RecursiveComp_0_5;
-  _ViewRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.RecursiveComp<T>> build() {
     _compView_0 = ViewRecursiveComp0(this, 0);
@@ -1203,9 +1175,7 @@ final List<dynamic> styles$UsesRecursiveCompHost = const [];
 class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
   ViewUsesRecursiveComp0 _compView_0;
   import1.UsesRecursiveComp _UsesRecursiveComp_0_5;
-  _ViewUsesRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
     _compView_0 = ViewUsesRecursiveComp0(this, 0);
@@ -1270,9 +1240,7 @@ final List<dynamic> styles$FunctionTypeCompHost = const [];
 class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>> {
   ViewFunctionTypeComp0<F> _compView_0;
   import1.FunctionTypeComp<F> _FunctionTypeComp_0_5;
-  _ViewFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FunctionTypeComp<F>> build() {
     _compView_0 = ViewFunctionTypeComp0(this, 0);
@@ -1361,9 +1329,7 @@ final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
 class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeComp> {
   ViewUsesFunctionTypeComp0 _compView_0;
   import1.UsesFunctionTypeComp _UsesFunctionTypeComp_0_5;
-  _ViewUsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
     _compView_0 = ViewUsesFunctionTypeComp0(this, 0);
@@ -1523,9 +1489,7 @@ final List<dynamic> styles$NestedParentCompHost = const [];
 class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>> {
   ViewNestedParentComp0<T> _compView_0;
   import1.NestedParentComp<T> _NestedParentComp_0_5;
-  _ViewNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
     _compView_0 = ViewNestedParentComp0(this, 0);
@@ -1590,9 +1554,7 @@ final List<dynamic> styles$NestedChildCompHost = const [];
 class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
-  _ViewNestedChildCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNestedChildCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NestedChildComp<T>> build() {
     _compView_0 = ViewNestedChildComp0(this, 0);
@@ -1693,9 +1655,7 @@ final List<dynamic> styles$UsesNestedParentCompHost = const [];
 class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentComp> {
   ViewUsesNestedParentComp0 _compView_0;
   import1.UsesNestedParentComp _UsesNestedParentComp_0_5;
-  _ViewUsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
     _compView_0 = ViewUsesNestedParentComp0(this, 0);
@@ -1799,9 +1759,7 @@ final List<dynamic> styles$UsesMultipleTypesCompHost = const [];
 class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesComp> {
   ViewUsesMultipleTypesComp0 _compView_0;
   import1.UsesMultipleTypesComp _UsesMultipleTypesComp_0_5;
-  _ViewUsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
     _compView_0 = ViewUsesMultipleTypesComp0(this, 0);
@@ -1884,9 +1842,7 @@ final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
 class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericChangeDetector> {
   ViewUsesGenericChangeDetector0 _compView_0;
   import1.UsesGenericChangeDetector _UsesGenericChangeDetector_0_5;
-  _ViewUsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesGenericChangeDetector> build() {
     _compView_0 = ViewUsesGenericChangeDetector0(this, 0);

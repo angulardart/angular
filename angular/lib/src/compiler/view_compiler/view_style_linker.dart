@@ -6,7 +6,10 @@ import 'package:angular/src/core/metadata.dart';
 import 'compile_view.dart';
 
 void initStyleEncapsulation(CompileView view, o.ClassStmt viewClass) {
-  _ViewStyleLinker(view, viewClass).initStyleEncapsulation();
+  // Host views never have styles to initializes.
+  if (view.viewType != ViewType.host) {
+    _ViewStyleLinker(view, viewClass).initStyleEncapsulation();
+  }
 }
 
 class _ViewStyleLinker {

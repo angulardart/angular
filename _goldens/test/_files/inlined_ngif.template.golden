@@ -94,9 +94,7 @@ final List<dynamic> styles$InlinedNgIfComponentHost = const [];
 class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponent> {
   ViewInlinedNgIfComponent0 _compView_0;
   import1.InlinedNgIfComponent _InlinedNgIfComponent_0_5;
-  _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInlinedNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
     _compView_0 = ViewInlinedNgIfComponent0(this, 0);
@@ -199,9 +197,7 @@ final List<dynamic> styles$IgnoredNgIfComponentHost = const [];
 class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponent> {
   ViewIgnoredNgIfComponent0 _compView_0;
   import1.IgnoredNgIfComponent _IgnoredNgIfComponent_0_5;
-  _ViewIgnoredNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewIgnoredNgIfComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
     _compView_0 = ViewIgnoredNgIfComponent0(this, 0);
@@ -301,9 +297,7 @@ final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = cons
 class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
   ViewInlinedNgIfWithImmutableConditionComponent0 _compView_0;
   import1.InlinedNgIfWithImmutableConditionComponent _InlinedNgIfWithImmutableConditionComponent_0_5;
-  _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInlinedNgIfWithImmutableConditionComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     _compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);

@@ -424,7 +424,7 @@ abstract class AppView<T> extends View {
 
   @protected
   void initComponentStyles() {
-    componentStyles = parentView?.componentStyles;
+    componentStyles = parentView.componentStyles;
   }
 
   /// Initializes styling to enable css shim for host element.

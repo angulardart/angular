@@ -72,9 +72,7 @@ final List<dynamic> styles$StylesComponentHost = const [];
 class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
   ViewStylesComponent0 _compView_0;
   import1.StylesComponent _StylesComponent_0_5;
-  _ViewStylesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewStylesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.StylesComponent> build() {
     _compView_0 = ViewStylesComponent0(this, 0);

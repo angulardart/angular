@@ -85,9 +85,7 @@ final List<dynamic> styles$EmulatedComponentHost = const [];
 class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_5;
-  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import2.EmulatedComponent> build() {
     _compView_0 = ViewEmulatedComponent0(this, 0);
@@ -176,9 +174,7 @@ final List<dynamic> styles$NoneComponentHost = const [];
 class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_5;
-  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNoneComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import2.NoneComponent> build() {
     _compView_0 = ViewNoneComponent0(this, 0);

@@ -74,9 +74,7 @@ final List<dynamic> styles$MostLifecycleHooksComponentHost = const [];
 class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycleHooksComponent> {
   ViewMostLifecycleHooksComponent0 _compView_0;
   import1.MostLifecycleHooksComponent _MostLifecycleHooksComponent_0_5;
-  _ViewMostLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMostLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
@@ -158,9 +156,7 @@ final List<dynamic> styles$EmptyComponentHost = const [];
 class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
   ViewEmptyComponent0 _compView_0;
   import1.EmptyComponent _EmptyComponent_0_5;
-  _ViewEmptyComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmptyComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmptyComponent> build() {
     _compView_0 = ViewEmptyComponent0(this, 0);
@@ -225,9 +221,7 @@ final List<dynamic> styles$OnChangesComponentHost = const [];
 class _ViewOnChangesComponentHost0 extends AppView<import1.OnChangesComponent> {
   ViewOnChangesComponent0 _compView_0;
   import1.OnChangesComponent _OnChangesComponent_0_5;
-  _ViewOnChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewOnChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.OnChangesComponent> build() {
     _compView_0 = ViewOnChangesComponent0(this, 0);
@@ -294,9 +288,7 @@ final List<dynamic> styles$AfterChangesComponentHost = const [];
 class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesComponent> {
   ViewAfterChangesComponent0 _compView_0;
   import1.AfterChangesComponent _AfterChangesComponent_0_5;
-  _ViewAfterChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewAfterChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
     _compView_0 = ViewAfterChangesComponent0(this, 0);
@@ -468,9 +460,7 @@ final List<dynamic> styles$UsesLifecycleHooksComponentHost = const [];
 class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycleHooksComponent> {
   ViewUsesLifecycleHooksComponent0 _compView_0;
   import1.UsesLifecycleHooksComponent _UsesLifecycleHooksComponent_0_5;
-  _ViewUsesLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
     _compView_0 = ViewUsesLifecycleHooksComponent0(this, 0);

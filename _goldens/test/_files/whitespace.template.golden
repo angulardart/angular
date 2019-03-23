@@ -68,9 +68,7 @@ final List<dynamic> styles$PreserveWhitespaceHost = const [];
 class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
   ViewPreserveWhitespace0 _compView_0;
   import1.PreserveWhitespace _PreserveWhitespace_0_5;
-  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewPreserveWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.PreserveWhitespace> build() {
     _compView_0 = ViewPreserveWhitespace0(this, 0);
@@ -144,9 +142,7 @@ final List<dynamic> styles$MinifyWhitespaceHost = const [];
 class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
   ViewMinifyWhitespace0 _compView_0;
   import1.MinifyWhitespace _MinifyWhitespace_0_5;
-  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMinifyWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MinifyWhitespace> build() {
     _compView_0 = ViewMinifyWhitespace0(this, 0);

@@ -60,9 +60,7 @@ final List<dynamic> styles$UsesEventTearoffHost = const [];
 class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   ViewUsesEventTearoff0 _compView_0;
   import1.UsesEventTearoff _UsesEventTearoff_0_5;
-  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
     _compView_0 = ViewUsesEventTearoff0(this, 0);

@@ -71,9 +71,7 @@ final List<dynamic> styles$ParentComponentHost = const [];
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
-  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewParentComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
@@ -146,9 +144,7 @@ final List<dynamic> styles$ChildComponentHost = const [];
 class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   ViewChildComponent0 _compView_0;
   import1.ChildComponent _ChildComponent_0_5;
-  _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ChildComponent> build() {
     _compView_0 = ViewChildComponent0(this, 0);

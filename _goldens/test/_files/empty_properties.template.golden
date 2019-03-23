@@ -107,9 +107,7 @@ final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyPropertiesComponent> {
   ViewEmptyPropertiesComponent0 _compView_0;
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
-  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
     _compView_0 = ViewEmptyPropertiesComponent0(this, 0);
@@ -174,9 +172,7 @@ final List<dynamic> styles$FancyButtonComponentHost = const [];
 class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponent> {
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
-  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewFancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
     _compView_0 = ViewFancyButtonComponent0(this, 0);
