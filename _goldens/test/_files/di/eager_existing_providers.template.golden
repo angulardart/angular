@@ -90,9 +90,7 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
@@ -158,9 +156,7 @@ final List<dynamic> styles$ProvidesServicesComponentHost = const [];
 class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServicesComponent> {
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
-  _ViewProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
@@ -233,9 +229,7 @@ final List<dynamic> styles$InjectsServicesComponentHost = const [];
 class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServicesComponent> {
   ViewInjectsServicesComponent0 _compView_0;
   import1.InjectsServicesComponent _InjectsServicesComponent_0_5;
-  _ViewInjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     _compView_0 = ViewInjectsServicesComponent0(this, 0);

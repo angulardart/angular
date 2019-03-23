@@ -251,9 +251,7 @@ final List<dynamic> styles$RootComponentHost = const [];
 class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   ViewRootComponent0 _compView_0;
   import1.RootComponent _RootComponent_0_5;
-  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewRootComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.RootComponent> build() {
     _compView_0 = ViewRootComponent0(this, 0);
@@ -348,9 +346,7 @@ final List<dynamic> styles$UsesDefaultChangeDetectionAndInputsHost = const [];
 class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInputs> {
   ViewUsesDefaultChangeDetectionAndInputs0 _compView_0;
   import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
-  _ViewUsesDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
@@ -432,9 +428,7 @@ final List<dynamic> styles$DefaultChangeDetectionAndInputsHost = const [];
 class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
   ViewDefaultChangeDetectionAndInputs0 _compView_0;
   import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
-  _ViewDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
@@ -536,9 +530,7 @@ final List<dynamic> styles$UsesOnPushChangeDetectionAndInputsHost = const [];
 class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesOnPushChangeDetectionAndInputs> {
   ViewUsesOnPushChangeDetectionAndInputs0 _compView_0;
   import1.UsesOnPushChangeDetectionAndInputs _UsesOnPushChangeDetectionAndInputs_0_5;
-  _ViewUsesOnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesOnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesOnPushChangeDetectionAndInputs0(this, 0);
@@ -616,9 +608,7 @@ final List<dynamic> styles$OnPushChangeDetectionAndInputsHost = const [];
 class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
   ViewOnPushChangeDetectionAndInputs0 _compView_0;
   import1.OnPushChangeDetectionAndInputs _OnPushChangeDetectionAndInputs_0_5;
-  _ViewOnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewOnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
@@ -722,9 +712,7 @@ final List<dynamic> styles$InlinedNgIfHost = const [];
 class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   ViewInlinedNgIf0 _compView_0;
   import1.InlinedNgIf _InlinedNgIf_0_5;
-  _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InlinedNgIf> build() {
     _compView_0 = ViewInlinedNgIf0(this, 0);
@@ -837,9 +825,7 @@ final List<dynamic> styles$EmbeddedNgIfHost = const [];
 class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   ViewEmbeddedNgIf0 _compView_0;
   import1.EmbeddedNgIf _EmbeddedNgIf_0_5;
-  _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
@@ -956,9 +942,7 @@ final List<dynamic> styles$EmbeddedNgForHost = const [];
 class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   ViewEmbeddedNgFor0 _compView_0;
   import1.EmbeddedNgFor _EmbeddedNgFor_0_5;
-  _ViewEmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
@@ -1023,9 +1007,7 @@ final List<dynamic> styles$NullComponentHost = const [];
 class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   ViewNullComponent0 _compView_0;
   import1.NullComponent _NullComponent_0_5;
-  _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNullComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NullComponent> build() {
     _compView_0 = ViewNullComponent0(this, 0);
@@ -1090,9 +1072,7 @@ final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
 class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromArbitraryParent> {
   ViewInjectsFromArbitraryParent0 _compView_0;
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_0_5;
-  _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
@@ -1248,9 +1228,7 @@ final List<dynamic> styles$ComponentConditionalFeaturesHost = const [];
 class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentConditionalFeatures> {
   ViewComponentConditionalFeatures0 _compView_0;
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_0_5;
-  _ViewComponentConditionalFeaturesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewComponentConditionalFeaturesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
@@ -1316,9 +1294,7 @@ final List<dynamic> styles$FeatureAHost = const [];
 class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   ViewFeatureA0 _compView_0;
   import1.FeatureA _FeatureA_0_5;
-  _ViewFeatureAHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewFeatureAHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FeatureA> build() {
     _compView_0 = ViewFeatureA0(this, 0);
@@ -1384,9 +1360,7 @@ final List<dynamic> styles$FeatureBHost = const [];
 class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   ViewFeatureB0 _compView_0;
   import1.FeatureB _FeatureB_0_5;
-  _ViewFeatureBHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewFeatureBHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.FeatureB> build() {
     _compView_0 = ViewFeatureB0(this, 0);
@@ -1487,9 +1461,7 @@ final List<dynamic> styles$UsesDomBindingsHost = const [];
 class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
   ViewUsesDomBindings0 _compView_0;
   import1.UsesDomBindings _UsesDomBindings_0_5;
-  _ViewUsesDomBindingsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesDomBindingsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesDomBindings> build() {
     _compView_0 = ViewUsesDomBindings0(this, 0);
@@ -1621,9 +1593,7 @@ final List<dynamic> styles$UsesNgDirectivesHost = const [];
 class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
   ViewUsesNgDirectives0 _compView_0;
   import1.UsesNgDirectives _UsesNgDirectives_0_5;
-  _ViewUsesNgDirectivesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesNgDirectivesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesNgDirectives> build() {
     _compView_0 = ViewUsesNgDirectives0(this, 0);
@@ -1777,9 +1747,7 @@ final List<dynamic> styles$HasNestedProviderLookupsHost = const [];
 class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProviderLookups> {
   ViewHasNestedProviderLookups0 _compView_0;
   import1.HasNestedProviderLookups _HasNestedProviderLookups_0_5;
-  _ViewHasNestedProviderLookupsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasNestedProviderLookupsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasNestedProviderLookups> build() {
     _compView_0 = ViewHasNestedProviderLookups0(this, 0);
@@ -1844,9 +1812,7 @@ final List<dynamic> styles$InjectsManyThingsDynamicallyHost = const [];
 class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsManyThingsDynamically> {
   ViewInjectsManyThingsDynamically0 _compView_0;
   import1.InjectsManyThingsDynamically _InjectsManyThingsDynamically_0_5;
-  _ViewInjectsManyThingsDynamicallyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewInjectsManyThingsDynamicallyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
     _compView_0 = ViewInjectsManyThingsDynamically0(this, 0);

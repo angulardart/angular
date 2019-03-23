@@ -3819,49 +3819,48 @@
     viewFactory_RootComponentHost0: function(parentView, parentIndex) {
       var t1 = new N._ViewRootComponentHost0(parentView);
       t1.AppView$4(C.ViewType_0, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
       return t1;
     },
     viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
       var t1 = new N._ViewInlinedNgIf1(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
       var t1 = new N._ViewEmbeddedNgIf1(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
       var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_ComponentConditionalFeatures1: function(parentView, parentIndex) {
       var t1 = new N._ViewComponentConditionalFeatures1(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_ComponentConditionalFeatures2: function(parentView, parentIndex) {
       var t1 = new N._ViewComponentConditionalFeatures2(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_HasNestedProviderLookups1: function(parentView, parentIndex) {
       var t1 = new N._ViewHasNestedProviderLookups1(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_HasNestedProviderLookups2: function(parentView, parentIndex) {
       var t1 = new N._ViewHasNestedProviderLookups2(parentView);
       t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
-      t1.initComponentStyles$0();
+      t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     ViewRootComponent0: function ViewRootComponent0(t0) {
@@ -10333,10 +10332,6 @@
         current._lastCaughtException = e;
         current._lastCaughtTrace = s;
       }
-    },
-    initComponentStyles$0: function() {
-      var t1 = this.parentView;
-      this.componentStyles = t1 == null ? null : t1.componentStyles;
     },
     initViewRoot$1: function(hostElement) {
       this.componentStyles.toString;

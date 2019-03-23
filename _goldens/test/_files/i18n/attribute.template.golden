@@ -60,9 +60,7 @@ final List<dynamic> styles$I18nAttributeComponentHost = const [];
 class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComponent> {
   ViewI18nAttributeComponent0 _compView_0;
   import1.I18nAttributeComponent _I18nAttributeComponent_0_5;
-  _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewI18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.I18nAttributeComponent> build() {
     _compView_0 = ViewI18nAttributeComponent0(this, 0);

@@ -154,9 +154,7 @@ final List<dynamic> styles$NestedNgForComponentHost = const [];
 class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponent> {
   ViewNestedNgForComponent0 _compView_0;
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
-  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
     _compView_0 = ViewNestedNgForComponent0(this, 0);

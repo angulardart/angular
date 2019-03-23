@@ -72,9 +72,7 @@ final List<dynamic> styles$CompWithoutFinalHost = const [];
 class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   ViewCompWithoutFinal0 _compView_0;
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
-  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = ViewCompWithoutFinal0(this, 0);
@@ -146,9 +144,7 @@ final List<dynamic> styles$CompWithFinalHost = const [];
 class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   ViewCompWithFinal0 _compView_0;
   import1.CompWithFinal _CompWithFinal_0_5;
-  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = ViewCompWithFinal0(this, 0);
@@ -219,9 +215,7 @@ final List<dynamic> styles$CompWithFinalStaticHost = const [];
 class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic> {
   ViewCompWithFinalStatic0 _compView_0;
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
-  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
@@ -292,9 +286,7 @@ final List<dynamic> styles$CompWithExternalFinalHost = const [];
 class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFinal> {
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
-  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = ViewCompWithExternalFinal0(this, 0);

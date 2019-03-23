@@ -60,9 +60,7 @@ final List<dynamic> styles$UsesNativeEventsHost = const [];
 class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   ViewUsesNativeEvents0 _compView_0;
   import1.UsesNativeEvents _UsesNativeEvents_0_5;
-  _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesNativeEvents> build() {
     _compView_0 = ViewUsesNativeEvents0(this, 0);
@@ -146,9 +144,7 @@ final List<dynamic> styles$UsesAngularEventsHost = const [];
 class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   ViewUsesAngularEvents0 _compView_0;
   import1.UsesAngularEvents _UsesAngularEvents_0_5;
-  _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewUsesAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
     _compView_0 = ViewUsesAngularEvents0(this, 0);
@@ -213,9 +209,7 @@ final List<dynamic> styles$HasAngularEventsHost = const [];
 class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_5;
-  _ViewHasAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasAngularEvents> build() {
     _compView_0 = ViewHasAngularEvents0(this, 0);
@@ -287,9 +281,7 @@ final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
 class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHostEvents> {
   ViewHasManyNativeHostEvents0 _compView_0;
   import1.HasManyNativeHostEvents _HasManyNativeHostEvents_0_5;
-  _ViewHasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewHasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
     _compView_0 = ViewHasManyNativeHostEvents0(this, 0);

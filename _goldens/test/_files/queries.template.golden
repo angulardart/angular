@@ -139,9 +139,7 @@ final List<dynamic> styles$QueriesComponentHost = const [];
 class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_5;
-  _ViewQueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewQueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.QueriesComponent> build() {
     _compView_0 = ViewQueriesComponent0(this, 0);
@@ -285,9 +283,7 @@ final List<dynamic> styles$EmbeddedQueriesHost = const [];
 class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
   ViewEmbeddedQueries0 _compView_0;
   import1.EmbeddedQueries _EmbeddedQueries_0_5;
-  _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
     _compView_0 = ViewEmbeddedQueries0(this, 0);
@@ -430,9 +426,7 @@ final List<dynamic> styles$EmbeddedQueriesListHost = const [];
 class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList> {
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_5;
-  _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewEmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
     _compView_0 = ViewEmbeddedQueriesList0(this, 0);
@@ -629,9 +623,7 @@ final List<dynamic> styles$NestedNgForQueriesListHost = const [];
 class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQueriesList> {
   ViewNestedNgForQueriesList0 _compView_0;
   import1.NestedNgForQueriesList _NestedNgForQueriesList_0_5;
-  _ViewNestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
     _compView_0 = ViewNestedNgForQueriesList0(this, 0);

@@ -482,9 +482,7 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
@@ -549,9 +547,7 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponentHost = const [];
 class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   ViewMaterialAutoSuggestInputComponent0 _compView_0;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_0_5;
-  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
@@ -629,9 +625,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   import1.DeferredValidator __DeferredValidator_0_7;
   List<import1.Validator> __MultiToken_0_8;
   int __luckyNumber_0_12;
-  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewMaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.ServiceB get _Service_0_6 {
     if ((__Service_0_6 == null)) {
       (__Service_0_6 = import1.ServiceB());

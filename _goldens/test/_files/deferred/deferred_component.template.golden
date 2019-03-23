@@ -57,9 +57,7 @@ final List<dynamic> styles$DeferredChild1ComponentHost = const [];
 class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Component> {
   ViewDeferredChild1Component0 _compView_0;
   import1.DeferredChild1Component _DeferredChild1Component_0_5;
-  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChild1Component> build() {
     _compView_0 = ViewDeferredChild1Component0(this, 0);
@@ -125,9 +123,7 @@ final List<dynamic> styles$DeferredChild2ComponentHost = const [];
 class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Component> {
   ViewDeferredChild2Component0 _compView_0;
   import1.DeferredChild2Component _DeferredChild2Component_0_5;
-  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
     _compView_0 = ViewDeferredChild2Component0(this, 0);
@@ -193,9 +189,7 @@ final List<dynamic> styles$DeferredChild3ComponentHost = const [];
 class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Component> {
   ViewDeferredChild3Component0 _compView_0;
   import1.DeferredChild3Component _DeferredChild3Component_0_5;
-  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChild3Component> build() {
     _compView_0 = ViewDeferredChild3Component0(this, 0);
@@ -260,9 +254,7 @@ final List<dynamic> styles$NotDeferredChildComponentHost = const [];
 class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChildComponent> {
   ViewNotDeferredChildComponent0 _compView_0;
   import1.NotDeferredChildComponent _NotDeferredChildComponent_0_5;
-  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewNotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
     _compView_0 = ViewNotDeferredChildComponent0(this, 0);
@@ -330,9 +322,7 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContentHost = const []
 class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.DeferredChildComponentWithoutNgContent> {
   ViewDeferredChildComponentWithoutNgContent0 _compView_0;
   import1.DeferredChildComponentWithoutNgContent _DeferredChildComponentWithoutNgContent_0_5;
-  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithoutNgContent0(this, 0);
@@ -400,9 +390,7 @@ final List<dynamic> styles$DeferredChildComponentWithNgContentHost = const [];
 class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.DeferredChildComponentWithNgContent> {
   ViewDeferredChildComponentWithNgContent0 _compView_0;
   import1.DeferredChildComponentWithNgContent _DeferredChildComponentWithNgContent_0_5;
-  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithNgContent0(this, 0);
@@ -469,9 +457,7 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   import9.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
   import9.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewDeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import9.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
       (__ExternalServiceLazilyCreatedMaybe_0_7 = import9.ExternalServiceLazilyCreatedMaybe());

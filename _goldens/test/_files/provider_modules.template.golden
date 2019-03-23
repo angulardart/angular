@@ -60,9 +60,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-  }
+  _ViewProviderModulesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   import1.FooService get _FooService_0_6 {
     if ((__FooService_0_6 == null)) {
       (__FooService_0_6 = import1.FooService());
