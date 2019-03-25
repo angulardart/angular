@@ -15,8 +15,8 @@ import '../core/zone.dart';
 import '../di/injector/empty.dart';
 import '../di/injector/hierarchical.dart';
 import '../di/injector/injector.dart';
-import '../platform/dom/events/event_manager.dart';
 import '../runtime.dart';
+import '../runtime/dom_events.dart';
 import '../security/dom_sanitization_service.dart';
 
 import 'modules.dart';
@@ -72,7 +72,7 @@ Injector appInjector(
     appViewUtils = AppViewUtils(
       userInjector.provideToken(APP_ID),
       userInjector.provideType(SanitizationService),
-      EventManager(createEventPlugins(), ngZone),
+      EventManager(ngZone),
     );
     return userInjector;
   });

@@ -28,4 +28,3 @@ export 'src/core/linker.dart';
 export 'src/core/testability/testability.dart';
 export 'src/platform/browser/tools/tools.dart'
     show enableDebugTools, disableDebugTools;
-export 'src/platform/dom/events/event_manager.dart' show EventManagerPlugin;
