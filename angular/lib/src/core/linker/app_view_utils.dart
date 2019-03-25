@@ -5,9 +5,8 @@ import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show devModeEqual;
 import 'package:angular/src/core/security.dart';
-import 'package:angular/src/platform/dom/events/event_manager.dart'
-    show EventManager;
 import 'package:angular/src/runtime.dart';
+import 'package:angular/src/runtime/dom_events.dart' show EventManager;
 import 'package:meta/dart2js.dart' as dart2js;
 
 import 'exceptions.dart' show ExpressionChangedAfterItHasBeenCheckedException;

@@ -3797,18 +3797,6 @@
       _.key = t0;
       _._nextChanged = _._nextAdded = _._prev = _._default_keyvalue_differ$_next = _._nextPrevious = _.currentValue = _.previousValue = null;
     },
-    EventManager$: function(_plugins, zone) {
-      var t1 = new N.EventManager(_plugins);
-      t1.EventManager$2(_plugins, zone);
-      return t1;
-    },
-    EventManager: function EventManager(t0) {
-      this._plugins = t0;
-    },
-    EventManagerPlugin: function EventManagerPlugin() {
-    },
-    KeyEventsPlugin: function KeyEventsPlugin() {
-    },
     TextBinding$: function() {
       return new N.TextBinding(document.createTextNode(""));
     },
@@ -4071,7 +4059,6 @@
   L = {SlowComponentLoader: function SlowComponentLoader() {
     }, ViewRefImpl: function ViewRefImpl(t0) {
       this.appView = t0;
-    }, DomEventsPlugin: function DomEventsPlugin() {
     }},
   O = {
     _flattenStyles: function(styles, target, componentIdOrNull) {
@@ -9079,15 +9066,11 @@
   };
   G.appInjector_closure3.prototype = {
     call$0: function() {
-      var t1, t2, t3;
-      t1 = this.ngZone;
-      t2 = this.userInjector;
-      this._box_0.applicationRef = Y.ApplicationRef$_(t1, t2.$get$1(0, C.Type_ExceptionHandler_qBE), t2);
-      t2.$get$1(0, C.OpaqueToken_APP_ID);
-      t3 = t2.$get$1(0, C.Type_SanitizationService_bRS);
-      N.EventManager$(H.setRuntimeTypeInfo([new L.DomEventsPlugin(), new N.KeyEventsPlugin()], [N.EventManagerPlugin]), t1);
-      $.appViewUtils = new Q.AppViewUtils(t3);
-      return t2;
+      var t1 = this.userInjector;
+      this._box_0.applicationRef = Y.ApplicationRef$_(this.ngZone, t1.$get$1(0, C.Type_ExceptionHandler_qBE), t1);
+      t1.$get$1(0, C.OpaqueToken_APP_ID);
+      $.appViewUtils = new Q.AppViewUtils(t1.$get$1(0, C.Type_SanitizationService_bRS));
+      return t1;
     },
     "call*": "call$0",
     $requiredArgCount: 0
@@ -10926,16 +10909,6 @@
       return {isStable: P.allowInterop(t.get$isStable(t)), whenStable: P.allowInterop(t.get$whenStable(t))};
     }
   };
-  L.DomEventsPlugin.prototype = {};
-  N.EventManager.prototype = {
-    EventManager$2: function(_plugins, zone) {
-      var i;
-      for (i = 0; i < 2; ++i)
-        ;
-    }
-  };
-  N.EventManagerPlugin.prototype = {};
-  N.KeyEventsPlugin.prototype = {};
   N.TextBinding.prototype = {
     updateText$1: function(newValue) {
       var t1 = this._currentValue;
@@ -11972,7 +11945,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, A.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, L.ViewRefImpl, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.EventManagerPlugin, N.EventManager, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, A.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, L.ViewRefImpl, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -12082,7 +12055,6 @@
     _inherit(S.AppView, A.View);
     _inherit(O._UnscopedComponentStyles, O.ComponentStyles);
     _inherit(V.ViewContainer, M.ComponentLoader);
-    _inheritMany(N.EventManagerPlugin, [L.DomEventsPlugin, N.KeyEventsPlugin]);
     _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N._ViewInlinedNgIf1, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N.ViewInjectsManyThingsDynamically0]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);

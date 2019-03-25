@@ -17,38 +17,14 @@ import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
-import 'package:angular/src/platform/dom/events/dom_events.dart';
-import 'package:angular/src/platform/dom/events/event_manager.dart';
-import 'package:angular/src/platform/dom/events/key_events.dart';
 import 'package:angular/src/runtime.dart';
+import 'package:angular/src/runtime/dom_events.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 
 import 'package:meta/meta.dart';
 
 import 'modules.template.dart' as ng;
-
-/// Adds support for runtime event plugins.
-///
-/// This may eventually be excluded from the [minimalModule].
-const eventPluginModule = <Object>[
-  Provider(EventManager),
-  Provider(
-    EVENT_MANAGER_PLUGINS,
-    useFactory: createEventPlugins,
-    deps: [],
-  ),
-];
-
-/// Creates a list of [EventManagerPlugins] to be used by [EventManager].
-List<EventManagerPlugin> createEventPlugins() {
-  // Order here is very important, it is reversed before being registered, and
-  // DomEventsPlugin is a catch-all so it *must* happen last.
-  return [
-    DomEventsPlugin(),
-    KeyEventsPlugin(),
-  ];
-}
 
 /// Implementation of [SlowComponentLoader] that throws [UnsupportedError].
 ///
@@ -90,10 +66,8 @@ const bootstrapMinimalModule = <Object>[
 ];
 
 /// An experimental application [Injector] that is statically generated.
-// TODO(https://github.com/dart-lang/sdk/issues/34098): Remove ignore.
 @GenerateInjector([bootstrapMinimalModule])
-final InjectorFactory minimalApp =
-    ng.minimalApp$Injector; //ignore: invalid_assignment
+final InjectorFactory minimalApp = ng.minimalApp$Injector;
 
 /// Returns the current [Document] of the browser.
 HtmlDocument getDocument() => document;
@@ -116,7 +90,7 @@ String createRandomAppId() {
 @experimental
 const bootstrapLegacyModule = <Object>[
   bootstrapMinimalModule,
-  eventPluginModule,
+  Provider(EventManager),
   Provider(NgZone, useFactory: createNgZone, deps: []),
   Provider(
     ApplicationRef,
