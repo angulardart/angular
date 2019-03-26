@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectorRef, ChangeDetectionStrategy, ChangeDetectorState;
+import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/di/errors.dart' as di_errors;
@@ -60,8 +59,11 @@ class AppViewData {
 
   /// Tracks the root DOM elements or view containers (for `<template>`).
   ///
-  /// **INTERNAL ONLY**: Not part of the supported public API.
-  List<Object> rootNodesOrViewContainers;
+  /// TODO(b/129013000): It would be preferable to make this `final` and have it
+  /// created eagerly in the constructor of the view based on whether the view
+  /// has a single root node (init1), no root nodes (init0), or many (init), and
+  /// could be optimized further.
+  ViewFragment rootFragment;
 
   /// Index of this view within the [parentView].
   final int parentIndex;
@@ -79,12 +81,19 @@ class AppViewData {
   int _cdState = ChangeDetectorState.NeverChecked;
 
   AppViewData._(
-      AppView<void> appView, this._cdMode, this.type, this.parentIndex)
-      : ref = ViewRefImpl(appView);
+    AppView<void> appView,
+    this._cdMode,
+    this.type,
+    this.parentIndex,
+  ) : ref = ViewRefImpl(appView);
 
   @dart2js.noInline
   factory AppViewData(
-      AppView<void> appView, int cdMode, ViewType viewType, int parentIndex) {
+    AppView<void> appView,
+    int cdMode,
+    ViewType viewType,
+    int parentIndex,
+  ) {
     return AppViewData._(appView, cdMode, viewType, parentIndex);
   }
 
@@ -251,7 +260,7 @@ abstract class AppView<T> extends View {
     List<StreamSubscription<void>> subscriptions,
   ) {
     viewData
-      ..rootNodesOrViewContainers = rootNodesOrViewContainers
+      ..rootFragment = ViewFragment(rootNodesOrViewContainers)
       ..subscriptions = subscriptions;
   }
 
@@ -322,12 +331,12 @@ abstract class AppView<T> extends View {
 
   @dart2js.noInline
   List<Node> get flatRootNodes {
-    return ViewFragment.flattenDomNodes(viewData.rootNodesOrViewContainers);
+    return viewData.rootFragment.flattenDomNodes();
   }
 
   @dart2js.noInline
   Node get lastRootNode {
-    return ViewFragment.findLastDomNode(viewData.rootNodesOrViewContainers);
+    return viewData.rootFragment.findLastDomNode();
   }
 
   bool hasLocal(String contextName) => locals.containsKey(contextName);
@@ -531,10 +540,7 @@ abstract class AppView<T> extends View {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            ViewFragment.appendDomNodes(
-              target,
-              nestedViews[n].viewData.rootNodesOrViewContainers,
-            );
+            nestedViews[n].viewData.rootFragment.appendDomNodesInto(target);
           }
         }
       } else if (node is List<Object>) {
