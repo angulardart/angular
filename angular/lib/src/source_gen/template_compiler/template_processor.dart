@@ -28,6 +28,17 @@ Future<TemplateCompilerOutputs> processTemplates(
 
 Future<ReflectableOutput> _resolveReflectables(
     CompilerFlags flags, BuildStep buildStep, LibraryElement element) {
+  /// Resolves the URI in the context of [buildStep]. Returns null if the
+  /// URI is unsupported.
+  AssetId tryResolvedAsset(String uri) {
+    try {
+      return AssetId.resolve(uri, from: buildStep.inputId);
+    } on UnsupportedError catch (_) {
+      return null;
+    }
+  }
+
+  ;
   final reader = ReflectableReader(
     recordInjectableFactories: flags.emitInjectableFactories,
     recordComponentFactories: flags.emitComponentFactories,
@@ -41,23 +52,33 @@ Future<ReflectableOutput> _resolveReflectables(
     // a generated b.template.dart that we need to import/initReflector().
     hasInput: (uri) async {
       if (flags.ignoreNgPlaceholderForGoldens) {
-        return buildStep.canRead(
-          AssetId.resolve(uri, from: buildStep.inputId),
-        );
+        final AssetId assetId = tryResolvedAsset(uri);
+        if (_assetNotResolved(assetId)) {
+          return false;
+        }
+        return buildStep.canRead(assetId);
       }
-      final placeholder = ''
+      final placeholder = tryResolvedAsset(''
           '${uri.substring(0, uri.length - '.dart'.length)}'
-          '.ng_placeholder';
-      return buildStep.canRead(
-        AssetId.resolve(placeholder, from: buildStep.inputId),
-      );
+          '.ng_placeholder');
+      if (_assetNotResolved(placeholder)) {
+        return false;
+      }
+      return buildStep.canRead(placeholder);
     },
     // For a given import or export directive, return whether a generated
     // .template.dart file already exists. If it does we will need to link
     // to it and call initReflector().
-    isLibrary: (uri) => buildStep.resolver
-        .isLibrary(AssetId.resolve(uri, from: buildStep.inputId)),
+    isLibrary: (uri) {
+      final AssetId assetId = tryResolvedAsset(uri);
+      if (_assetNotResolved(assetId)) {
+        return Future.value(false);
+      }
+      return buildStep.resolver.isLibrary(assetId);
+    },
   );
 
   return reader.resolve(element);
 }
+
+bool _assetNotResolved(AssetId id) => id == null;
