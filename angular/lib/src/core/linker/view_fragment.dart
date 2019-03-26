@@ -3,16 +3,34 @@ import 'dart:html';
 import 'package:angular/src/runtime.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
-import 'app_view.dart';
 import 'view_container.dart';
 
-/// Transitional API encompassing [AppViewData.rootNodesOrViewContainers].
-///
-/// The end goal is a class that encompasses this functionality with instance
-/// methods, but until then we represent the functionality as static methods
-/// that take a `List<?>` to match `rootNodesOrViewContainers`.
+/// Provides a collection of [Node] and/or [ViewContainer]s and access to them.
 class ViewFragment {
-  const ViewFragment._();
+  final List<Object> _nodesOrViewContainers;
+
+  // We use noInline so the constructor is not inlined into the caller, which
+  // does not always work properly on non-factory constructors (i.e. essentially
+  // methods).
+  //
+  // This will also let us make specialized constructors, such as
+  // * ViewFragment.empty
+  // * ViewFragment.single
+  //
+  // ... if that ends up being beneficial.
+  @dart2js.noInline
+  factory ViewFragment(List<Object> nodesOrViewContainers) {
+    // Ideally we would be able to assert that this is a JSArray.
+    return ViewFragment._(nodesOrViewContainers);
+  }
+
+  const ViewFragment._(this._nodesOrViewContainers);
+
+  /// Appends all DOM [Node]s from this fragment into [target].
+  @dart2js.noInline
+  void appendDomNodesInto(Element target) {
+    appendDomNodes(target, _nodesOrViewContainers);
+  }
 
   /// Appends all DOM [Node]s (as defined by a DFS - depth first search).
   ///
@@ -25,9 +43,10 @@ class ViewFragment {
     Element target,
     List<Object> nodesOrViewContainers,
   ) {
-    final length = nodesOrViewContainers.length;
+    final nodes = nodesOrViewContainers;
+    final length = nodes.length;
     for (var i = 0; i < length; i++) {
-      final node = nodesOrViewContainers[i];
+      final node = nodes[i];
       if (node is ViewContainer) {
         target.append(node.nativeElement);
         final nestedViews = node.nestedViews;
@@ -36,7 +55,7 @@ class ViewFragment {
           for (var n = 0; n < length; n++) {
             appendDomNodes(
               target,
-              nestedViews[n].viewData.rootNodesOrViewContainers,
+              nestedViews[n].viewData.rootFragment._nodesOrViewContainers,
             );
           }
         }
@@ -52,10 +71,11 @@ class ViewFragment {
   /// method returns `null`. This is a rarer case (i.e. in the case of an empty
   /// template).
   @dart2js.noInline
-  static Node findLastDomNode(List<Object> nodesOrViewContainers) {
+  Node findLastDomNode() {
     // Finds the last Node or uses the anchor node of a ViewContainer.
-    for (var i = nodesOrViewContainers.length - 1; i >= 0; i--) {
-      final node = nodesOrViewContainers[i];
+    final nodes = _nodesOrViewContainers;
+    for (var i = nodes.length - 1; i >= 0; i--) {
+      final node = nodes[i];
       return node is ViewContainer ? _findLastDomNode(node) : unsafeCast(node);
     }
 
@@ -69,8 +89,8 @@ class ViewFragment {
     // As an optimization (?) `nestedViews` may be `null` instead of empty.
     if (nestedViews != null) {
       for (var i = nestedViews.length - 1; i >= 0; i--) {
-        final nodes = nestedViews[i].viewData.rootNodesOrViewContainers;
-        return findLastDomNode(nodes);
+        final nodes = nestedViews[i].viewData.rootFragment;
+        return nodes.findLastDomNode();
       }
     }
 
@@ -80,8 +100,9 @@ class ViewFragment {
   /// Returns all DOM [Node]s (as defined by a DFS - depth first search).
   ///
   /// In the case where [nodesOrViewContainers] is `null`, this returns `[]`.
-  static List<Node> flattenDomNodes(List<Object> nodesOrViewContainers) {
-    return _flattenDomNodes([], nodesOrViewContainers);
+  @dart2js.noInline
+  List<Node> flattenDomNodes() {
+    return _flattenDomNodes([], _nodesOrViewContainers);
   }
 
   static List<Node> _flattenDomNodes(List<Node> target, List<Object> nodes) {
@@ -96,7 +117,7 @@ class ViewFragment {
           for (var n = 0; n < length; n++) {
             _flattenDomNodes(
               target,
-              nestedViews[n].viewData.rootNodesOrViewContainers,
+              nestedViews[n].viewData.rootFragment._nodesOrViewContainers,
             );
           }
         }
