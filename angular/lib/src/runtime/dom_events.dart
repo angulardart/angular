@@ -151,7 +151,7 @@ class _ParsedEvent {
         }
       }
     }
-    final fullMatch = key + modifiers.toLowerCase();
+    final fullMatch = key + modifiers;
     return fullMatch == keyAndModifiers;
   }
 }
