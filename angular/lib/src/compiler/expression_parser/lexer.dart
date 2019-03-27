@@ -268,7 +268,7 @@ class _Scanner {
     advance();
     while (isIdentifierPart(peek)) advance();
     String str = input.substring(startIndex, index);
-    if (KEYWORDS.contains(str)) {
+    if (keywords.contains(str)) {
       return newKeywordToken(startIndex, str);
     } else {
       return newIdentifierToken(startIndex, str);
@@ -436,7 +436,7 @@ int unescape(int code) {
   }
 }
 
-final KEYWORDS = Set<String>.from(const [
+const keywords = {
   'var',
   'let',
   'null',
@@ -445,4 +445,4 @@ final KEYWORDS = Set<String>.from(const [
   'false',
   'if',
   'else',
-]);
+};

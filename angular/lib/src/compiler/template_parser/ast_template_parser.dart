@@ -745,7 +745,7 @@ class _ParseContext {
   static List<CompileDirectiveMetadata> _parseDirectives(
       List<CompileDirectiveMetadata> directives,
       CssSelector elementCssSelector) {
-    var matchedDirectives = Set<Object>();
+    var matchedDirectives = <Object>{};
     _selectorMatcher(directives).match(elementCssSelector,
         (selector, directive) {
       matchedDirectives.add(directive);
@@ -1155,7 +1155,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   void _findDuplicateAttributes(List<ast.AttributeAst> attributes) {
-    final seenAttributes = Set<String>();
+    final seenAttributes = <String>{};
     for (final attribute in attributes) {
       if (seenAttributes.contains(attribute.name)) {
         _reportError(attribute,
@@ -1167,7 +1167,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   }
 
   void _findDuplicateProperties(List<ast.PropertyAst> properties) {
-    final seenProperties = Set<String>();
+    final seenProperties = <String>{};
     for (final property in properties) {
       final propertyName = _getPropertyName(property);
       if (seenProperties.contains(propertyName)) {

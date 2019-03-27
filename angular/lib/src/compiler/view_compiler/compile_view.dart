@@ -232,7 +232,7 @@ class WriteNodeReferenceStmt extends o.DeclareVarStmt {
 /// AST visitor which promotes inaccessible NodeReferences to class members.
 class NodeReferenceStorageVisitor extends o.RecursiveExpressionVisitor<void> {
   final NodeReferenceStorageVisitor parent;
-  final Set<NodeReference> scope = Set<NodeReference>();
+  final scope = <NodeReference>{};
 
   NodeReferenceStorageVisitor(this.parent);
 

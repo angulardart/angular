@@ -31,7 +31,7 @@ import 'package:build/build.dart';
 Future<Map<String, String>> collectTypeParameters(
     Iterable<ClassElement> directives, BuildStep buildStep) async {
   final typeParameters = <String, String>{};
-  final assetsToParse = Set<AssetId>();
+  final assetsToParse = <AssetId>{};
   final resolver = buildStep.resolver;
   for (final directive in directives) {
     typeParameters[directive.name] = '';

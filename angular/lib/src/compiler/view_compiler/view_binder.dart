@@ -85,7 +85,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
         compileElement, view.component.analyzedClass);
 
     // Collect directive output names.
-    final directiveOutputs = Set<String>();
+    final directiveOutputs = <String>{};
     for (var directiveAst in ast.directives) {
       directiveOutputs.addAll(directiveAst.directive.outputs.values);
     }

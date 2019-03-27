@@ -129,8 +129,8 @@ void main() {
     ReflectableReader reader;
 
     setUp(() {
-      _fakeInputs = Set<String>();
-      _fakeIsLibrary = Set<String>();
+      _fakeInputs = <String>{};
+      _fakeIsLibrary = <String>{};
       reader = ReflectableReader(
         hasInput: _fakeInputs.contains,
         isLibrary: (lib) async => _fakeIsLibrary.contains(lib),

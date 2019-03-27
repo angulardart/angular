@@ -579,7 +579,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
   _LegacyShadowTransformer(String contentClass, String hostClass)
       : super(contentClass, hostClass);
 
-  final Set<SelectorGroup> _unscopedSelectorGroups = Set<SelectorGroup>();
+  final _unscopedSelectorGroups = <SelectorGroup>{};
 
   void shimPolyfillNextSelector(List<TreeNode> list) {
     SelectorGroup nextSelectorGroup;
