@@ -29,7 +29,7 @@ class _ViewNameResolverState {
 ///
 /// Provides unique names for literal arrays and maps for the view.
 class ViewNameResolver implements NameResolver {
-  final Set<String> _localsInScope = Set<String>();
+  final _localsInScope = <String>{};
   final _ViewNameResolverState _state;
 
   /// Creates a name resolver for [view].

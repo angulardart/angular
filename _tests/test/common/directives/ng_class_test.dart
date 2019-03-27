@@ -201,13 +201,13 @@ void main() {
       var testBed = NgTestBed<SetUpdateTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
-      var set = Set<String>();
+      var set = <String>{};
       set.add('bar');
       await testFixture.update((SetUpdateTest component) {
         component.set = set;
       });
       expect(content.classes, equals(['bar']));
-      set = Set<String>();
+      set = <String>{};
       set.add('baz');
       await testFixture.update((SetUpdateTest component) {
         component.set = set;
@@ -381,11 +381,11 @@ void main() {
 }
 
 class Base {
-  bool condition = true;
-  Map<String, bool> map = {'foo': true, 'bar': false};
-  List<String> list = ['foo'];
-  Set<String> set = Set<String>();
-  String string = 'foo';
+  var condition = true;
+  var map = {'foo': true, 'bar': false};
+  var list = ['foo'];
+  var set = <String>{};
+  var string = 'foo';
 }
 
 @Component(
