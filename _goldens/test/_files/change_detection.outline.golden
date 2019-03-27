@@ -14,34 +14,6 @@ import 'change_detection.dart';
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
 
-// For @Component class CheckOnceComponent.
-external List<dynamic> get styles$CheckOnceComponent;
-external _ng.ComponentFactory<CheckOnceComponent> get CheckOnceComponentNgFactory;
-external _ng.AppView<CheckOnceComponent> viewFactory_CheckOnceComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewCheckOnceComponent0 extends _ng.AppView<CheckOnceComponent> {
-  external ViewCheckOnceComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-}
-// For @Component class CheckedComponent.
-external List<dynamic> get styles$CheckedComponent;
-external _ng.ComponentFactory<CheckedComponent> get CheckedComponentNgFactory;
-external _ng.AppView<CheckedComponent> viewFactory_CheckedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewCheckedComponent0 extends _ng.AppView<CheckedComponent> {
-  external ViewCheckedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-}
-// For @Component class CheckAlwaysComponent.
-external List<dynamic> get styles$CheckAlwaysComponent;
-external _ng.ComponentFactory<CheckAlwaysComponent> get CheckAlwaysComponentNgFactory;
-external _ng.AppView<CheckAlwaysComponent> viewFactory_CheckAlwaysComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewCheckAlwaysComponent0 extends _ng.AppView<CheckAlwaysComponent> {
-  external ViewCheckAlwaysComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-}
-// For @Component class DetachedComponent.
-external List<dynamic> get styles$DetachedComponent;
-external _ng.ComponentFactory<DetachedComponent> get DetachedComponentNgFactory;
-external _ng.AppView<DetachedComponent> viewFactory_DetachedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewDetachedComponent0 extends _ng.AppView<DetachedComponent> {
-  external ViewDetachedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
-}
 // For @Component class UsesOnPushComponent.
 external List<dynamic> get styles$UsesOnPushComponent;
 external _ng.ComponentFactory<UsesOnPushComponent> get UsesOnPushComponentNgFactory;
