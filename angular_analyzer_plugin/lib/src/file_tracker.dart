@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 
 import 'package:analyzer/src/summary/api_signature.dart';
@@ -6,7 +7,7 @@ import 'package:angular_analyzer_plugin/src/options.dart';
 /// Hashing required for the [FileTracker] to be able to compute signatures.
 abstract class FileHasher {
   ApiSignature getContentHash(String path);
-  ApiSignature getUnitElementHash(String path);
+  Future<String> getUnitElementSignature(String path);
 }
 
 /// Compute signatures and relationships between dart summaries & html contents.
@@ -32,19 +33,20 @@ class FileTracker {
   final FileHasher _fileHasher;
   final AngularOptions _options;
 
-  final _dartToDart = new _RelationshipTracker();
+  final _dartToDart = _RelationshipTracker();
 
-  final _dartToHtml = new _RelationshipTracker();
-  final _dartFilesWithDartTemplates = new HashSet<String>();
+  final _dartToHtml = _RelationshipTracker();
+  final _dartFilesWithDartTemplates = {};
 
   /// Cache the hashes of files for quicker signature calculation.
   final contentHashes = <String, _FileHash>{};
 
   FileTracker(this._fileHasher, this._options);
 
-  /// Add tag names to the signature. Note: in the future when there are more
-  /// lists of strings in options to add, we must be careful that they are
-  /// properly delimited/differentiated!
+  /// Add tag names to the signature.
+  ///
+  /// Note: in the future when there are more lists of strings in options to
+  /// add, we must be careful that they are properly delimited/differentiated!
   void addCustomEvents(ApiSignature signature) {
     final hashString = _options.customEventsHashString;
     if (hashString != null && hashString.isNotEmpty) {
@@ -52,9 +54,10 @@ class FileTracker {
     }
   }
 
-  /// Add tag names to the signature. Note: in the future when there are more
-  /// lists of strings in options to add, we must be careful that they are
-  /// properly delimited/differentiated!
+  /// Add tag names to the signature.
+  ///
+  /// Note: in the future when there are more lists of strings in options to
+  /// add, we must be careful that they are properly delimited/differentiated!
   void addTags(ApiSignature signature) {
     for (final tagname in _options.customTagNames) {
       signature.addString('t:$tagname');
@@ -91,10 +94,8 @@ class FileTracker {
   ///
   /// This is used to cache analysis results for a Dart file, and must contain
   /// hashes of all the information that contributed to that analysis.
-  ApiSignature getDartSignature(String dartPath) {
-    final signature = new ApiSignature()
-      ..addInt(salt)
-      ..addBytes(_fileHasher.getUnitElementHash(dartPath).toByteList());
+  Future<ApiSignature> getDartSignature(String dartPath) async {
+    final signature = await getUnitElementSignature(dartPath);
     for (final htmlPath in getHtmlPathsAffectingDart(dartPath)) {
       signature.addBytes(_getContentHash(htmlPath));
     }
@@ -160,12 +161,12 @@ class FileTracker {
   ///
   /// This is used to cache analysis results for an HTML file, and must contain
   /// hashes of all the information that contributed to that analysis.
-  ApiSignature getHtmlSignature(String htmlPath) {
-    final signature = new ApiSignature()
+  Future<ApiSignature> getHtmlSignature(String htmlPath) async {
+    final signature = ApiSignature()
       ..addInt(salt)
       ..addBytes(_getContentHash(htmlPath));
     for (final dartPath in getDartPathsReferencingHtml(htmlPath)) {
-      signature.addBytes(_fileHasher.getUnitElementHash(dartPath).toByteList());
+      signature.addString(await _fileHasher.getUnitElementSignature(dartPath));
       for (final subHtmlPath in getHtmlPathsAffectingDartContext(dartPath)) {
         signature.addBytes(_getContentHash(subHtmlPath));
       }
@@ -180,17 +181,18 @@ class FileTracker {
   }
 
   /// Get a salted unit element signature for a dart [path].
-  ApiSignature getUnitElementSignature(String path) => new ApiSignature()
-    ..addInt(salt)
-    ..addBytes(_fileHasher.getUnitElementHash(path).toByteList());
+  Future<ApiSignature> getUnitElementSignature(String path) async =>
+      ApiSignature()
+        ..addInt(salt)
+        ..addString(await _fileHasher.getUnitElementSignature(path));
 
   /// Trigger a rehash of the contents at [path], which is then cached.
   void rehashContents(String path) {
     final signature = _fileHasher.getContentHash(path);
     final bytes = signature.toByteList();
-    contentHashes[path] = new _FileHash(
+    contentHashes[path] = _FileHash(
         bytes,
-        new ApiSignature()
+        ApiSignature()
           ..addInt(salt)
           ..addBytes(bytes));
   }
@@ -239,7 +241,7 @@ class _RelationshipTracker {
       _filesReferencingFile[usesPath] ?? [];
 
   void setFileReferencesFiles(String filePath, List<String> referencesPaths) {
-    final priorRelationships = new HashSet<String>();
+    final priorRelationships = {};
     if (_filesReferencedByFile.containsKey(filePath)) {
       for (final referencesPath in _filesReferencedByFile[filePath]) {
         if (!referencesPaths.contains(referencesPath)) {
