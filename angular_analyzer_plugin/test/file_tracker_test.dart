@@ -40,22 +40,22 @@ class FileTrackerTest {
   }
 
   // ignore: non_constant_identifier_names
-  void test_dartSignature_includesCustomTagNames() {
+  void test_dartSignature_includesCustomTagNames() async {
     _fileTracker.setDartHasTemplate("foo.dart", true);
 
-    final fooDartElementSignature = new ApiSignature()..addInt(1);
-    when(_fileHasher.getUnitElementHash("foo.dart"))
-        .thenReturn(fooDartElementSignature);
+    final fooDartElementSignature = '1';
+    when(_fileHasher.getUnitElementSignature("foo.dart"))
+        .thenAnswer((_) async => fooDartElementSignature);
     when(_options.customTagNames).thenReturn(['foo', 'bar']);
     when(_options.customEventsHashString).thenReturn('');
 
     final expectedSignature = new ApiSignature()
       ..addInt(FileTracker.salt)
-      ..addBytes(fooDartElementSignature.toByteList())
+      ..addString(fooDartElementSignature)
       ..addString('t:foo')
       ..addString('t:bar');
 
-    expect(_fileTracker.getDartSignature("foo.dart").toHex(),
+    expect((await _fileTracker.getDartSignature("foo.dart")).toHex(),
         equals(expectedSignature.toHex()));
   }
 
@@ -71,14 +71,14 @@ class FileTrackerTest {
   }
 
   // ignore: non_constant_identifier_names
-  void test_getUnitElementSignatureIsSalted() {
-    final fooDartElementSignature = new ApiSignature()..addInt(1);
+  void test_getUnitElementSignatureIsSalted() async {
+    final fooDartElementSignature = '1';
     final expectedSignature = new ApiSignature()
       ..addInt(FileTracker.salt)
-      ..addBytes(fooDartElementSignature.toByteList());
-    when(_fileHasher.getUnitElementHash("foo.dart"))
-        .thenReturn(fooDartElementSignature);
-    expect(_fileTracker.getUnitElementSignature("foo.dart").toHex(),
+      ..addString(fooDartElementSignature);
+    when(_fileHasher.getUnitElementSignature("foo.dart"))
+        .thenAnswer((_) async => fooDartElementSignature);
+    expect((await _fileTracker.getUnitElementSignature("foo.dart")).toHex(),
         equals(expectedSignature.toHex()));
   }
 
@@ -141,26 +141,26 @@ class FileTrackerTest {
   }
 
   // ignore: non_constant_identifier_names
-  void test_htmlHasDartGetSignature() {
+  void test_htmlHasDartGetSignature() async {
     _fileTracker
       ..setDartHasTemplate("foo.dart", true)
       ..setDartImports("foo.dart", ["bar.dart"])
       ..setDartHtmlTemplates("bar.dart", ["bar.html"]);
 
-    final fooDartElementSignature = new ApiSignature()..addInt(1);
+    final fooDartElementSignature = '1';
     final barHtmlSignature = new ApiSignature()..addInt(2);
 
     when(_fileHasher.getContentHash("bar.html")).thenReturn(barHtmlSignature);
-    when(_fileHasher.getUnitElementHash("foo.dart"))
-        .thenReturn(fooDartElementSignature);
+    when(_fileHasher.getUnitElementSignature("foo.dart"))
+        .thenAnswer((_) async => fooDartElementSignature);
     when(_options.customEventsHashString).thenReturn('');
 
     final expectedSignature = new ApiSignature()
       ..addInt(FileTracker.salt)
-      ..addBytes(fooDartElementSignature.toByteList())
+      ..addString(fooDartElementSignature)
       ..addBytes(barHtmlSignature.toByteList());
 
-    expect(_fileTracker.getDartSignature("foo.dart").toHex(),
+    expect((await _fileTracker.getDartSignature("foo.dart")).toHex(),
         equals(expectedSignature.toHex()));
   }
 
@@ -240,7 +240,7 @@ class FileTrackerTest {
   }
 
   // ignore: non_constant_identifier_names
-  void test_htmlHasHtmlGetSignature() {
+  void test_htmlHasHtmlGetSignature() async {
     _fileTracker
       ..setDartHtmlTemplates("foo.dart", ["foo.html"])
       ..setDartHtmlTemplates("foo_test.dart", ["foo.html"])
@@ -248,26 +248,26 @@ class FileTrackerTest {
       ..setDartHtmlTemplates("bar.dart", ["bar.html"]);
 
     final fooHtmlSignature = new ApiSignature()..addInt(1);
-    final fooDartElementSignature = new ApiSignature()..addInt(2);
-    final fooTestDartElementSignature = new ApiSignature()..addInt(3);
+    final fooDartElementSignature = '2';
+    final fooTestDartElementSignature = '3';
     final barHtmlSignature = new ApiSignature()..addInt(4);
 
     when(_fileHasher.getContentHash("foo.html")).thenReturn(fooHtmlSignature);
     when(_fileHasher.getContentHash("bar.html")).thenReturn(barHtmlSignature);
-    when(_fileHasher.getUnitElementHash("foo.dart"))
-        .thenReturn(fooDartElementSignature);
-    when(_fileHasher.getUnitElementHash("foo_test.dart"))
-        .thenReturn(fooTestDartElementSignature);
+    when(_fileHasher.getUnitElementSignature("foo.dart"))
+        .thenAnswer((_) async => fooDartElementSignature);
+    when(_fileHasher.getUnitElementSignature("foo_test.dart"))
+        .thenAnswer((_) async => fooTestDartElementSignature);
     when(_options.customEventsHashString).thenReturn('');
 
     final expectedSignature = new ApiSignature()
       ..addInt(FileTracker.salt)
       ..addBytes(fooHtmlSignature.toByteList())
-      ..addBytes(fooDartElementSignature.toByteList())
+      ..addString(fooDartElementSignature)
       ..addBytes(barHtmlSignature.toByteList())
-      ..addBytes(fooTestDartElementSignature.toByteList());
+      ..addString(fooTestDartElementSignature);
 
-    expect(_fileTracker.getHtmlSignature("foo.html").toHex(),
+    expect((await _fileTracker.getHtmlSignature("foo.html")).toHex(),
         equals(expectedSignature.toHex()));
   }
 
@@ -287,25 +287,25 @@ class FileTrackerTest {
   }
 
   // ignore: non_constant_identifier_names
-  void test_htmlSignature_includesCustomEvents() {
+  void test_htmlSignature_includesCustomEvents() async {
     _fileTracker.setDartHtmlTemplates("foo.dart", ["foo.html"]);
 
     final fooHtmlSignature = new ApiSignature()..addInt(1);
-    final fooDartElementSignature = new ApiSignature()..addInt(2);
+    final fooDartElementSignature = '2';
 
     when(_fileHasher.getContentHash("foo.html")).thenReturn(fooHtmlSignature);
-    when(_fileHasher.getUnitElementHash("foo.dart"))
-        .thenReturn(fooDartElementSignature);
+    when(_fileHasher.getUnitElementSignature("foo.dart"))
+        .thenAnswer((_) async => fooDartElementSignature);
 
     final expectedSignature = new ApiSignature()
       ..addInt(FileTracker.salt)
       ..addBytes(fooHtmlSignature.toByteList())
-      ..addBytes(fooDartElementSignature.toByteList())
+      ..addString(fooDartElementSignature)
       ..addString(r'$customEvents');
 
     when(_options.customEventsHashString).thenReturn(r'$customEvents');
 
-    expect(_fileTracker.getHtmlSignature("foo.html").toHex(),
+    expect((await _fileTracker.getHtmlSignature("foo.html")).toHex(),
         equals(expectedSignature.toHex()));
   }
 
