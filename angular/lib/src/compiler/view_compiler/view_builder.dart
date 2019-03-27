@@ -9,7 +9,7 @@ import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy, isDefaultChangeDetectionStrategy;
+    show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular_compiler/cli.dart';
 
@@ -908,15 +908,10 @@ o.OutputType _getContextType(CompileView view) {
 }
 
 int _getChangeDetectionMode(CompileView view) {
-  int mode;
-  if (identical(view.viewType, ViewType.component)) {
-    mode = isDefaultChangeDetectionStrategy(view.component.changeDetection)
-        ? ChangeDetectionStrategy.CheckAlways
-        : ChangeDetectionStrategy.CheckOnce;
-  } else {
-    mode = ChangeDetectionStrategy.CheckAlways;
-  }
-  return mode;
+  return view.viewType == ViewType.component &&
+          view.component.changeDetection != ChangeDetectionStrategy.Default
+      ? ChangeDetectionStrategy.CheckOnce
+      : ChangeDetectionStrategy.CheckAlways;
 }
 
 /// Constructs name of global function that can be used to update an input

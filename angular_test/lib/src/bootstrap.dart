@@ -105,7 +105,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
 }) {
   final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
-  if (!isDefaultChangeDetectionStrategy(cdMode) &&
+  if (cdMode != ChangeDetectionStrategy.Default &&
       cdMode != ChangeDetectionStrategy.CheckAlways) {
     throw UnsupportedError(
         'The root component in an Angular test or application must use the '
