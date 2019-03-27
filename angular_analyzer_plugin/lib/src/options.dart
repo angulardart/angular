@@ -11,6 +11,37 @@ import 'package:yaml/yaml.dart';
 /// It is important that we can accurately hash the options, so that if users
 /// change their analysis options, the plugin will rerun its analysis instead of
 /// using out-of-date cache results.
+///
+/// Currently the plugin may be configured one of two ways:
+///
+/// ```
+/// analyzer:
+///   plugins:
+///     angular:
+///       # options here
+/// ```
+///
+/// or:
+///
+/// ```
+/// analyzer:
+///   plugins:
+///     - angular
+///
+/// angular:
+///   # options here
+/// ```
+///
+/// Currently we support both. However, we ideally would only support option #2
+/// some time in the future, for three reasons:
+///
+/// - Option #1 mixes with the analyzer namespace, confusing whose job it is to
+///   validate the plugin config.
+/// - Users cannot mix list syntax & map syntax in YAML. So enabling a second
+///   plugin where one has a map config means all must have a map config.
+/// - Forks of the plugin (such as using the exact-version loading method where
+///   you load angular_analyzer_plugin as itself) are not loaded the same way,
+///   and require modifying this code to find their specific settings.
 class AngularOptions {
   final List<String> customTagNames;
   final Map<String, CustomEvent> customEvents;
@@ -25,17 +56,17 @@ class AngularOptions {
   factory AngularOptions.from(Source source) =>
       new _OptionsBuilder(null, source).build();
 
-  /// For tests, its easier to pass the Source's contents directly rather than
-  /// creating mocks that returned mocked data that mocked contents.
+  /// Testing-only constructor accepting String contents directly.
   @visibleForTesting
   factory AngularOptions.fromString(String content, Source source) =>
       new _OptionsBuilder(content, source).build();
 
-  /// A unique signature based on the events for hashing the settings into the
-  /// resolution hashes.
+  /// A unique signature based on the events, for creating summary hashes.
   String get customEventsHashString =>
       _customEventsHashString ??= _computeCustomEventsHashString();
 
+  /// Lazy generator for [customEventsHashString].
+  ///
   /// When events are present, generate a string in the form of
   /// 'e:name,type,path,name,type,path'. Take care we sort before emitting. And
   /// in theory we could/should escape colon and comma, but the only one of
@@ -102,7 +133,7 @@ class _OptionsBuilder {
   bool isListOfStrings(values) =>
       values is List && values.every((value) => value is String);
 
-  bool isMapOfObjects(values) =>
+  bool isMapOfMapsOrNull(values) =>
       values is YamlMap &&
       values.values.every((value) => value is YamlMap || value == null);
 
@@ -119,10 +150,12 @@ class _OptionsBuilder {
     }
   }
 
-  /// Look for a plugin enabled by name [key], which for historical purposes is
-  /// allowed via "angular" or "angular_analyzer_plugin." Return true if that
-  /// plugin is specified, and as an edge case, it may have config to load into
-  /// [angularOptions]. This will soon be removed.
+  /// Load the options section where custom events etc are defined.
+  ///
+  /// Look for a plugin enabled by name [key], which for is allowed via
+  /// "angular" or "angular_analyzer_plugin." Return true if that plugin is
+  /// specified, for backwards compatibility, it may have config to load into
+  /// [angularOptions].
   bool loadPluginSection(String key) {
     final pluginsSection = analysisOptions['analyzer']['plugins'];
 
@@ -136,17 +169,19 @@ class _OptionsBuilder {
       return false;
     }
 
-    // Outdated edge case, support a map of options under `plugins: x: ...`.
-    final specified = (pluginsSection as Map).containsKey(key);
-    if (specified) {
+    // Backwards compat: support a map of options under `plugins: x: ...`.
+    if ((pluginsSection as Map).containsKey(key)) {
       angularOptions = pluginsSection[key];
+      return true;
     }
-    return specified;
+
+    return false;
   }
 
-  /// Attempt to load the top level `angular` config section into
-  /// [angularOptions]. If the section exists and is a map, return true. This is
-  /// the going-forward default case.
+  /// Attempt to load the top level `angular` section into [angularOptions].
+  ///
+  /// If the section exists and is a map, return true. This is the going-forward
+  /// default case.
   bool loadTopLevelSection() {
     if (analysisOptions['angular'] is Map) {
       angularOptions = analysisOptions['angular'];
@@ -158,7 +193,7 @@ class _OptionsBuilder {
   void resolve() {
     customTagNames = new List<String>.from(
         getOption<List>('custom_tag_names', isListOfStrings) ?? []);
-    getOption<YamlMap>('custom_events', isMapOfObjects)
+    getOption<YamlMap>('custom_events', isMapOfMapsOrNull)
         ?.nodes
         ?.forEach((nameNodeKey, props) {
       final nameNode = nameNodeKey as YamlScalar;
