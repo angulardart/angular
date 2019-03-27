@@ -36,7 +36,7 @@ class FileTracker {
   final _dartToDart = _RelationshipTracker();
 
   final _dartToHtml = _RelationshipTracker();
-  final Set<String> _dartFilesWithDartTemplates = {};
+  final _dartFilesWithDartTemplates = <String>{};
 
   /// Cache the hashes of files for quicker signature calculation.
   final contentHashes = <String, _FileHash>{};
@@ -241,7 +241,7 @@ class _RelationshipTracker {
       _filesReferencingFile[usesPath] ?? [];
 
   void setFileReferencesFiles(String filePath, List<String> referencesPaths) {
-    final Set<String> priorRelationships = {};
+    final priorRelationships = <String>{};
     if (_filesReferencedByFile.containsKey(filePath)) {
       for (final referencesPath in _filesReferencedByFile[filePath]) {
         if (!referencesPaths.contains(referencesPath)) {
