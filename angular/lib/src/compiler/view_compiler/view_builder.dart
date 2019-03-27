@@ -913,8 +913,3 @@ int _getChangeDetectionMode(CompileView view) {
       ? ChangeDetectionStrategy.CheckOnce
       : ChangeDetectionStrategy.CheckAlways;
 }
-
-/// Constructs name of global function that can be used to update an input
-/// on a component with change detection.
-String buildUpdaterFunctionName(String typeName, String inputName) =>
-    'set' + typeName + r'$' + inputName;
