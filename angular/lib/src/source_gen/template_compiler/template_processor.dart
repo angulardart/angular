@@ -38,7 +38,6 @@ Future<ReflectableOutput> _resolveReflectables(
     }
   }
 
-  ;
   final reader = ReflectableReader(
     recordInjectableFactories: flags.emitInjectableFactories,
     recordComponentFactories: flags.emitComponentFactories,
