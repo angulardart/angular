@@ -436,33 +436,6 @@ int unescape(int code) {
   }
 }
 
-final OPERATORS = Set<String>.from(const [
-  '+',
-  '-',
-  '*',
-  '/',
-  '%',
-  '^',
-  '=',
-  '==',
-  '!=',
-  '===',
-  '!==',
-  '<',
-  '>',
-  '<=',
-  '>=',
-  '&&',
-  '||',
-  '&',
-  '|',
-  '!',
-  '?',
-  '#',
-  '?.',
-  '??',
-]);
-
 final KEYWORDS = Set<String>.from(const [
   'var',
   'let',
