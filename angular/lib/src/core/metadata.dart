@@ -262,7 +262,8 @@ class Component extends Directive {
     this.directiveTypes,
     this.pipes,
     this.encapsulation,
-  }) : super(
+  })  : assert(changeDetection != null),
+        super(
           selector: selector,
           exportAs: exportAs,
           providers: providers,

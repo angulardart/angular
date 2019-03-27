@@ -159,6 +159,5 @@ class OnPushComponent {}
 @Component(
   selector: 'test',
   template: '',
-  changeDetection: ChangeDetectionStrategy.Stateful,
 )
 class XXXComponent extends ComponentState {}
