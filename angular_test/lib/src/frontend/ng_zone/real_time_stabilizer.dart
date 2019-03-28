@@ -73,7 +73,7 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
   Future<void> waitForAsyncEvents() async {
     await super.waitForAsyncEvents();
     if (pendingTimers.isNotEmpty) {
-      await Future.delayed(_minimumDurationForAllPendingTimers());
+      await Future<void>.delayed(_minimumDurationForAllPendingTimers());
     }
   }
 

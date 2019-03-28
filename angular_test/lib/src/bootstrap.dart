@@ -83,7 +83,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       //
       // Can be removed if NgZone.onTurnDone ever supports re-entry, either by
       // no longer using Streams or fixing dart:async.
-      await Future.value();
+      await Future<void>.value();
       await onErrorSub.cancel();
       if (caughtError != null) {
         return Future.error(

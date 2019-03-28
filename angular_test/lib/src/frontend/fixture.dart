@@ -13,7 +13,7 @@ import 'stabilizer.dart';
 /// Inject a service for [tokenOrType] from [fixture].
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
-T injectFromFixture<T>(NgTestFixture fixture, Object tokenOrType) {
+T injectFromFixture<T>(NgTestFixture<void> fixture, Object tokenOrType) {
   return fixture._rootComponentRef.injector.get(tokenOrType);
 }
 
