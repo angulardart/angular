@@ -20,34 +20,66 @@ class ChangeDetectorState {
 ///
 /// ! Changes to this class require updates to view_compiler/constants.dart.
 class ChangeDetectionStrategy {
-  /// After calling detectChanges the mode of the change detector will become
-  /// `Checked`.
-  static const int CheckOnce = 1;
+  /// The default type of change detection, always checking for changes.
+  ///
+  /// When an asynchronous event (such as user interaction or an RPC) occurs
+  /// within the app, the root component of the app is checked for changes,
+  /// and then all children in a depth-first search.
+  static const Default = 0;
 
-  /// The change detector should be skipped until its mode changes to
-  /// `CheckOnce`.
-  static const int Checked = 2;
+  @Deprecated('Not intended to be a public API. Use "OnPush"')
+  static const CheckOnce = ChangeDetectionCheckedState.checkOnce;
 
-  /// After calling detectChanges the mode of the change detector will remain
-  /// `CheckAlways`.
-  static const int CheckAlways = 3;
+  @Deprecated('Not intended to be a public API. Use "OnPush"')
+  static const Checked = ChangeDetectionCheckedState.waitingForMarkForCheck;
 
-  /// The change detector sub tree is not a part of the main tree and should be
-  /// skipped.
-  static const int Detached = 4;
+  @Deprecated('Not intended to be a public API. Use "Default"')
+  static const CheckAlways = ChangeDetectionCheckedState.checkAlways;
 
-  /// The change detector's mode will be set to `CheckOnce` during hydration.
-  static const int OnPush = 5;
+  @Deprecated('Not intended to be a public API. Use "ChangeDetectorRef.detach"')
+  static const Detached = ChangeDetectionCheckedState.waitingToBeAttached;
 
-  /// The component manages state itself and explicitly calls setState to
-  /// notify Angular to update template.
-  static const int Stateful = 6;
+  /// An optimized form of change detection, skipping some checks for changes.
+  ///
+  /// Unlike [Default], [OnPush] waits for the following signals to check:
+  /// * An `@Input()` being changed.
+  /// * An `@Output()` or event listener (i.e. `(click)="..."`) being executed.
+  /// * A call to `<ChangeDetectorRef>.markForCheck()`.
+  ///
+  /// Otherwise, change detection is skipped for this component. An [OnPush]
+  /// configured component as a result can afford to be a bit less defensive
+  /// about caching the result of bindings, for example.
+  ///
+  /// **WARNING**: It is currently _undefined behavior_ to have a [Default]
+  /// configured component as a child (or directive) of a component that is
+  /// using [OnPush]. We hope to introduce more guidance here in the future.
+  static const OnPush = 5;
 
-  /// The change detector's mode will be set to `CheckAlways` during hydration.
-  static const int Default = 0;
+  @Deprecated('Not intended to be a public API. Extend/Mixin "ComponentState".')
+  static const Stateful = 6;
 }
 
-bool isDefaultChangeDetectionStrategy(int changeDetectionStrategy) {
-  return changeDetectionStrategy == null ||
-      changeDetectionStrategy == ChangeDetectionStrategy.Default;
+/// **TRANSITIONAL**: These are runtime internal states to the `AppView`.
+///
+/// TODO(b/128441899): Refactor into a change detection state machine.
+class ChangeDetectionCheckedState {
+  /// `AppView.detectChanges` should be invoked once.
+  ///
+  /// The next state is [waitingForMarkForCheck].
+  static const checkOnce = 1;
+
+  /// `AppView.detectChanges` should bail out.
+  ///
+  /// Upon use of `AppView.markForCheck`, the next state is [checkOnce].
+  static const waitingForMarkForCheck = 2;
+
+  /// `AppView.detectChanges` should always be invoked.
+  static const checkAlways = 3;
+
+  /// `AppView.detectChanges` should bail out.
+  ///
+  /// Attaching a view should transition to either [checkOnce] or [checkAlways]
+  /// depending on whether `OnPush` or `Default` change detection strategies are
+  /// configured for the view.
+  static const waitingToBeAttached = 4;
 }

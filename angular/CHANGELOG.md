@@ -87,6 +87,10 @@
     never intended to be used in the public API, and is no longer used by our
     own infra.
 
+*   Using anything but `ChangeDetectionStrategy.{Default|OnPush}` is considered
+    deprecated, as they were not intended to be publicly accessible states.
+    See the deprecation messages for details.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 
