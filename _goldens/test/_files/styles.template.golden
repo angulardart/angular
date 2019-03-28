@@ -24,7 +24,7 @@ class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
   ViewStylesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
     rootEl = import2.document.createElement('styles');
-    rootEl.className = import1.StylesComponent.baz;
+    this.updateChildClassNonHtml(rootEl, import1.StylesComponent.baz);
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/styles.dart' : null);

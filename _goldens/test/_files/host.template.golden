@@ -24,7 +24,7 @@ class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax
   ViewHostComponentNewSyntax0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
     rootEl = import5.document.createElement('host');
-    rootEl.className = import1.HostComponentNewSyntax.hostClass;
+    this.updateChildClassNonHtml(rootEl, import1.HostComponentNewSyntax.hostClass);
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);

@@ -211,12 +211,10 @@ class ClassBinding implements BindingTarget {
   /// [attr.class]='foo'.
   final String name;
 
-  final bool isHostBinding;
-
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
 
-  ClassBinding({this.name, this.isHostBinding = false});
+  ClassBinding({this.name});
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>

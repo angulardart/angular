@@ -352,7 +352,7 @@ List<ir.Binding> _attributeToIr(List<AttrAst> attrs, String elementName) {
   return htmlAttrs;
 }
 
-ir.BindingTarget attributeName(String name, {bool isHostBinding = false}) {
+ir.BindingTarget attributeName(String name) {
   String attrNs;
   if (name.startsWith('@') && name.contains(':')) {
     var nameParts = name.substring(1).split(':');
@@ -366,7 +366,7 @@ ir.BindingTarget attributeName(String name, {bool isHostBinding = false}) {
   }
   if (name == 'class') {
     _throwIfConditional(isConditional, name);
-    return ir.ClassBinding(isHostBinding: isHostBinding);
+    return ir.ClassBinding();
   }
   if (name == 'tabindex' || name == 'tabIndex') {
     _throwIfConditional(isConditional, name);
@@ -477,7 +477,7 @@ void _increment(Map<String, int> mergeCount, String name) {
 ir.Binding _hostAttributeToIr(
     String name, ast.AST ast, AnalyzedClass analyzedClass) {
   return ir.Binding(
-      target: attributeName(name, isHostBinding: true),
+      target: attributeName(name),
       source: ir.BoundExpression(ast, null, analyzedClass));
 }
 

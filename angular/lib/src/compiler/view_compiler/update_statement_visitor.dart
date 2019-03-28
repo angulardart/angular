@@ -88,16 +88,14 @@ class _UpdateStatementsVisitor
   o.Statement visitClassBinding(ir.ClassBinding classBinding,
       [o.Expression renderValue]) {
     if (classBinding.name == null) {
+      // TODO(b/126226538): Consider optimizing "static" classBindings in the
+      // constructor to skip adding the shim classes.
+
       // Handle [attr.class]="expression" or [className]="expression".
       final renderMethod =
           isHtmlElement ? 'updateChildClass' : 'updateChildClassNonHtml';
-      return classBinding.isHostBinding
-          ?
-          // TODO(b/128865052): Remove this hack once material_popup no longer
-          // relies on reading the host class directly.
-          renderNode.toReadExpr().prop('className').set(renderValue).toStmt()
-          : appViewInstance.callMethod(
-              renderMethod, [renderNode.toReadExpr(), renderValue]).toStmt();
+      return appViewInstance.callMethod(
+          renderMethod, [renderNode.toReadExpr(), renderValue]).toStmt();
     } else {
       final renderMethod = isHtmlElement
           ? DomHelpers.updateClassBinding
