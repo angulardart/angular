@@ -29,7 +29,7 @@ class RouterImpl extends Router {
   final Location _location;
   final RouterHook _routerHook;
   RouterState _activeState;
-  Iterable<ComponentRef> _activeComponentRefs = [];
+  Iterable<ComponentRef<Object>> _activeComponentRefs = [];
   StreamController<String> _onNavigationStart;
   RouterOutlet _rootOutlet;
 
@@ -177,7 +177,8 @@ class RouterImpl extends Router {
         current != null &&
         path == current.path &&
         (navigationParams?.fragment ?? '') == current.fragment &&
-        const MapEquality().equals(queryParameters, current.queryParameters)) {
+        const MapEquality<String, String>()
+            .equals(queryParameters, current.queryParameters)) {
       return NavigationResult.SUCCESS;
     }
 
@@ -310,7 +311,8 @@ class RouterImpl extends Router {
   /// Returns the [ComponentFactory] loaded by the partial [state]'s last route.
   ///
   /// Returns null if the last route is a [RedirectRouteDefinition].
-  FutureOr<ComponentFactory> _componentFactory(MutableRouterState state) {
+  FutureOr<ComponentFactory<Object>> _componentFactory(
+      MutableRouterState state) {
     var route = state.routes.last;
     if (route is ComponentRouteDefinition) {
       return route.component;
@@ -328,9 +330,10 @@ class RouterImpl extends Router {
   }
 
   /// Returns the next [RouterOutlet] created by [componentRef], if any.
-  RouterOutlet _nextOutlet(ComponentRef componentRef) => componentRef.injector
-      .provideType<RouterOutletToken>(RouterOutletToken)
-      .routerOutlet;
+  RouterOutlet _nextOutlet(ComponentRef<Object> componentRef) =>
+      componentRef.injector
+          .provideType<RouterOutletToken>(RouterOutletToken)
+          .routerOutlet;
 
   /// Navigates the remaining router tree and adds the default children.
   ///
@@ -395,8 +398,8 @@ class RouterImpl extends Router {
   /// next state.
   Future<bool> _canDeactivate(MutableRouterState mutableNextState) async {
     RouterState nextState = mutableNextState.build();
-    for (ComponentRef componentRef in _activeComponentRefs) {
-      Object component = componentRef.instance;
+    for (ComponentRef<Object> componentRef in _activeComponentRefs) {
+      final component = componentRef.instance;
       if (component is CanDeactivate &&
           !(await component.canDeactivate(_activeState, nextState))) {
         return false;
@@ -414,8 +417,8 @@ class RouterImpl extends Router {
   /// Returns whether the next state can activate.
   Future<bool> _canActivate(MutableRouterState mutableNextState) async {
     RouterState nextState = mutableNextState.build();
-    for (ComponentRef componentRef in mutableNextState.components) {
-      Object component = componentRef.instance;
+    for (ComponentRef<Object> componentRef in mutableNextState.components) {
+      final component = componentRef.instance;
       if (component is CanActivate &&
           !(await component.canActivate(_activeState, nextState))) {
         return false;
@@ -431,7 +434,7 @@ class RouterImpl extends Router {
   }
 
   /// Activates a [RouterState] in the matched [RouterOutlet]s.
-  Future _activateRouterState(MutableRouterState mutableNextState) async {
+  Future<void> _activateRouterState(MutableRouterState mutableNextState) async {
     final nextState = mutableNextState.build();
 
     for (final componentRef in _activeComponentRefs) {

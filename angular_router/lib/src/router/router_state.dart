@@ -46,8 +46,8 @@ class RouterState extends Url {
 /// maintains a list of outlets and components that will be attached. These
 /// are [QueueList]s so that elements can be added in the front or back.
 class MutableRouterState {
-  final List<ComponentRef> components = [];
-  final Map<ComponentRef, ComponentFactory> factories = {};
+  final List<ComponentRef<Object>> components = [];
+  final Map<ComponentRef<Object>, ComponentFactory<Object>> factories = {};
   final List<Map<String, String>> _parameterStack = [];
   final List<RouteDefinition> routes = [];
 
