@@ -1,4 +1,3 @@
 analyzer:
   plugins:
-    angular:
-      enabled: true
+    - angular
