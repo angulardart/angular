@@ -38,10 +38,10 @@ class RouterOutlet implements OnInit, OnDestroy {
   final RouterHook _routerHook;
 
   // A mapping of {ComponentFactory} -> created {ComponentRef}.
-  final _loadedComponents = <ComponentFactory, ComponentRef>{};
+  final _loadedComponents = <ComponentFactory<Object>, ComponentRef<Object>>{};
 
   // Factory that was used to create the active component.
-  ComponentFactory _activeComponentFactory;
+  ComponentFactory<Object> _activeComponentFactory;
 
   // Route definitions registered with this outlet.
   List<RouteDefinition> _routes = const [];
@@ -55,7 +55,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     token?.routerOutlet = this;
   }
 
-  ComponentRef get _activeComponent {
+  ComponentRef<Object> get _activeComponent {
     return _loadedComponents[_activeComponentFactory];
   }
 
@@ -115,7 +115,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   ///
   /// If the component is currently active, or reusable, a cached instance will
   /// be returned instead of creating a new one.
-  ComponentRef prepare(ComponentFactory componentFactory) {
+  ComponentRef<Object> prepare(ComponentFactory<Object> componentFactory) {
     return _loadedComponents.putIfAbsent(componentFactory, () {
       final componentRef = componentFactory.create(Injector.map({
         RouterOutletToken: RouterOutletToken(),
@@ -130,7 +130,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   /// If the component has already been activated and is reusable, a cached
   /// instance will be reused instead of creating a new one.
   Future<Null> activate(
-    ComponentFactory componentFactory,
+    ComponentFactory<Object> componentFactory,
     RouterState oldState,
     RouterState newState,
   ) async {

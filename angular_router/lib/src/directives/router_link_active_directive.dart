@@ -32,7 +32,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
   final Element _element;
   final Router _router;
 
-  StreamSubscription _routeChanged;
+  StreamSubscription<RouterState> _routeChanged;
   List<String> _classes;
 
   @ContentChildren(RouterLink)
@@ -70,7 +70,7 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
         if (url.path != routerState.path) continue;
         // Only compare query parameters if specified in the [routerLink].
         if (url.queryParameters.isNotEmpty &&
-            !const MapEquality()
+            !const MapEquality<String, String>()
                 .equals(url.queryParameters, routerState.queryParameters)) {
           continue;
         }
