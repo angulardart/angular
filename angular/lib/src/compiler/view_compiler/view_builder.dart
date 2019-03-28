@@ -579,7 +579,7 @@ o.Constructor _createViewClassConstructor(CompileView view) {
     componentMeta.hostAttributes.forEach((name, value) {
       var binding = ir.Binding(
           source: ir.BoundExpression(value, null, view.component.analyzedClass),
-          target: attributeName(name, isHostBinding: true));
+          target: attributeName(name));
       var statement = view.createAttributeStatement(
         binding,
         tagName,
