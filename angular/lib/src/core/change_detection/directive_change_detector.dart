@@ -11,20 +11,24 @@ import 'package:angular/src/runtime.dart';
 /// calls. Goal is to share code for ngOnChanges implementation and other
 /// lifecycle methods.
 class DirectiveChangeDetector {
-  dynamic directive;
+  Object directive;
   AppView<Object> view;
   Element el;
   bool _hasHostChanges = false;
 
+  /// Initializes a [directive] implementing [ComponentState].
+  ///
+  /// This method is only invoked when a directive implements [ComponentState]
+  /// and is used to ensure that its change detection will in turn invalidate
+  /// the host component.
   void initCd() {
-    assert(directive is ComponentState);
-    ComponentState s = unsafeCast(directive);
-    s.stateChangeCallback = () {
+    assert(directive is ComponentState, 'Should never be called');
+    internalSetStateChanged(unsafeCast(directive), () {
       if (!_hasHostChanges) {
         _hasHostChanges = true;
         ChangeDetectionHost.scheduleViewUpdate(detectHostChanges, view, el);
       }
-    };
+    });
   }
 
   void resetCd() {

@@ -18,6 +18,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:angular/src/runtime/text_binding.dart' as import9;
 import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/src/core/change_detection/component_state.dart' as import12;
 
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
@@ -314,7 +315,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Stateful');
     init0();
-    _ctx.stateChangeCallback = markStateChanged;
+    import12.internalSetStateChanged(_ctx, markStateChanged);
   }
 
   @override
