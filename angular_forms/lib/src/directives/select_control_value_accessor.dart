@@ -120,8 +120,8 @@ class NgSelectOption implements OnDestroy {
   @override
   void ngOnDestroy() {
     if (_select != null) {
-      (_select._optionMap.containsKey(id) &&
-          (_select._optionMap.remove(id) != null || true));
+      _select._optionMap.containsKey(id) &&
+          (_select._optionMap.remove(id) != null || true);
       _select.writeValue(_select.value);
     }
   }

@@ -66,7 +66,7 @@ class AngularProfiler {
       //
 
       // https://developer.mozilla.org/en-US/docs/Web/API/Console/profileEnd
-      ((window.console.profileEnd as dynamic))(profileName);
+      (window.console.profileEnd as dynamic)(profileName);
     }
     var msPerTick = (end - start) / numTicks;
     print('ran $numTicks change detection cycles');

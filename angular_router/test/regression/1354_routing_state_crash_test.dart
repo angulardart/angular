@@ -154,10 +154,10 @@ class AppComponent {
   /// Returns a [Future] that completes (a) after changing and (b) after stable.
   Future<void> updateUrl(String newUrl) {
     // Enters the zone manually if needed.
-    return _ngZone.run((() {
+    return _ngZone.run(() {
       _locationStrategy.simulatePopState(newUrl);
       return onStable;
-    }));
+    });
   }
 }
 

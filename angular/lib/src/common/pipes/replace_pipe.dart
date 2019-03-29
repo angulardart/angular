@@ -53,9 +53,9 @@ class ReplacePipe implements PipeTransform {
     }
     if (pattern is RegExp) {
       // use the replaceAll variant
-      return input.replaceAll(pattern, (replacement as String));
+      return input.replaceAll(pattern, replacement as String);
     }
-    return input.replaceFirst((pattern as String), (replacement as String));
+    return input.replaceFirst(pattern as String, replacement as String);
   }
 
   bool _supportedInput(dynamic input) => input is String || input is num;

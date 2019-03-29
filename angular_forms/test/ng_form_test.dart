@@ -57,7 +57,7 @@ void main() {
     });
 
     test('should set up sync validator', () {
-      var formValidator = (c) => ({'custom': true});
+      var formValidator = (c) => {'custom': true};
       var f = NgForm([formValidator]);
       expect(f.form.errors, {'custom': true});
     });

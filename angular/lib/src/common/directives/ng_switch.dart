@@ -154,8 +154,8 @@ class NgSwitch {
     if (identical(value, _WHEN_DEFAULT)) return;
     var views = _valueViews[value];
     if (views.length == 1) {
-      (_valueViews.containsKey(value) &&
-          (_valueViews.remove(value) != null || true));
+      _valueViews.containsKey(value) &&
+          (_valueViews.remove(value) != null || true);
     } else {
       views.remove(view);
     }

@@ -323,7 +323,7 @@ void main() {
             'one': '111',
             'nested': {'two': '222'}
           });
-          (((g.controls['nested'].find('two')) as Control)).updateValue('333');
+          (g.controls['nested'].find('two') as Control).updateValue('333');
           expect(g.value, {
             'one': '111',
             'nested': {'two': '333'}
