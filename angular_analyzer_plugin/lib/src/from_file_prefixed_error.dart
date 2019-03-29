@@ -14,7 +14,6 @@ import 'package:analyzer/src/generated/source.dart';
 class FromFilePrefixedError implements AnalysisError {
   final String fromSourcePath;
   final String classname;
-  final String originalMessage;
   final AnalysisError originalError;
   String _message;
 
@@ -24,13 +23,12 @@ class FromFilePrefixedError implements AnalysisError {
 
   FromFilePrefixedError.fromPath(
       this.fromSourcePath, this.classname, AnalysisError originalError)
-      : originalMessage = originalError.message,
-        originalError = originalError,
+      : originalError = originalError,
         assert(classname != null),
         assert(classname.isNotEmpty),
         assert(fromSourcePath != null),
         assert(fromSourcePath.isNotEmpty) {
-    _message = "In $classname: $originalMessage (from $fromSourcePath)";
+    _message = "In $classname: ${originalError.message} (from $fromSourcePath)";
   }
 
   @override
