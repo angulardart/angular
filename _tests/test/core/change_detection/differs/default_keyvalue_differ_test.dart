@@ -81,7 +81,7 @@ void main() {
                 previous: ["a", "b[B->BB]"],
                 additions: ["d[null->D]"],
                 changes: ["b[B->BB]"]));
-        (m.containsKey("b") && (m.remove("b") != null || true));
+        m.containsKey("b") && (m.remove("b") != null || true);
         differ.check(m);
         expect(
             differ.toString(),

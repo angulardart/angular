@@ -32,7 +32,7 @@ class NumberValueAccessor extends Object
   @HostListener('change', ['\$event.target.value'])
   @HostListener('input', ['\$event.target.value'])
   void handleChange(String value) {
-    onChange((value == '' ? null : double.parse(value)), rawValue: value);
+    onChange(value == '' ? null : double.parse(value), rawValue: value);
   }
 
   @override

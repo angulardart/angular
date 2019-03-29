@@ -95,7 +95,7 @@ void main() {
     setUp(() {
       completer = Completer();
       ref = MockChangeDetectorRef();
-      pipe = AsyncPipe((ref as dynamic));
+      pipe = AsyncPipe(ref as dynamic);
     });
     group('transform', () {
       test('should return null when subscribing to a promise', () {

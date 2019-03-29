@@ -171,7 +171,7 @@ class RouterImpl extends Router {
             navigationParams;
     navigationParams?.assertValid();
 
-    var queryParameters = (navigationParams?.queryParameters ?? {});
+    var queryParameters = navigationParams?.queryParameters ?? {};
     var reload = navigationParams != null ? navigationParams.reload : false;
     if (!reload &&
         current != null &&

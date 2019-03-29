@@ -81,13 +81,13 @@ void main() {
       DefaultValueAccessor(null);
     });
     test('should compose functions', () {
-      var dummy1 = (_) => ({'dummy1': true});
-      var dummy2 = (_) => ({'dummy2': true});
+      var dummy1 = (_) => {'dummy1': true};
+      var dummy2 = (_) => {'dummy2': true};
       var v = composeValidators([dummy1, dummy2]);
       expect(v(Control('')), {'dummy1': true, 'dummy2': true});
     });
     test('should compose validator directives', () {
-      var dummy1 = (_) => ({'dummy1': true});
+      var dummy1 = (_) => {'dummy1': true};
       var v = composeValidators([dummy1, CustomValidatorDirective()]);
       expect(v(Control('')), {'dummy1': true, 'custom': true});
     });

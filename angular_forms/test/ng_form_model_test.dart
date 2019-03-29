@@ -63,14 +63,14 @@ void main() {
         await fixture.update((cmp) {
           // sync validators are set
           expect(cmp.formModel.hasError('required', ['login']), true);
-          ((cmp.formModel.findPath(['login']) as Control))
+          (cmp.formModel.findPath(['login']) as Control)
               .updateValue('invalid value');
         });
       });
 
       test('should write value to the DOM', () async {
         await fixture.update((cmp) {
-          ((cmp.formModel.findPath(['login']) as Control))
+          (cmp.formModel.findPath(['login']) as Control)
               .updateValue('initValue');
           expect(
               (cmp.loginControlDir.valueAccessor as DummyControlValueAccessor)
@@ -91,10 +91,9 @@ void main() {
     group('addControlGroup', () {
       test('should set up validator', () async {
         await fixture.update((cmp) {
-          ((cmp.formModel.findPath(['passwords', 'password']) as Control))
+          (cmp.formModel.findPath(['passwords', 'password']) as Control)
               .updateValue('somePassword');
-          ((cmp.formModel.findPath(['passwords', 'passwordConfirm'])
-                  as Control))
+          (cmp.formModel.findPath(['passwords', 'passwordConfirm']) as Control)
               .updateValue('someOtherPassword');
         });
 
@@ -103,8 +102,7 @@ void main() {
           expect(cmp.formModel.hasError('differentPasswords', ['passwords']),
               true);
 
-          ((cmp.formModel.findPath(['passwords', 'passwordConfirm'])
-                  as Control))
+          (cmp.formModel.findPath(['passwords', 'passwordConfirm']) as Control)
               .updateValue('somePassword');
 
           expect(cmp.formModel.hasError('differentPasswords', ['passwords']),
