@@ -73,4 +73,10 @@ class DetectChangesVars {
   static final changes = o.variable('changes');
   static final changed = o.variable('changed');
   static final firstCheck = o.variable('firstCheck');
+  static final internalSetStateChanged = o.importExpr(
+    CompileIdentifierMetadata(
+        name: 'internalSetStateChanged',
+        moduleUrl: 'asset:angular/lib/src/core/'
+            'change_detection/component_state.dart'),
+  );
 }

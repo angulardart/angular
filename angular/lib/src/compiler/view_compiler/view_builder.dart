@@ -777,10 +777,11 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   if (isComponentRoot &&
       view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
     // Connect ComponentState callback to view.
-    statements.add((DetectChangesVars.cachedCtx
-            .prop('stateChangeCallback')
-            .set(o.ReadClassMemberExpr('markStateChanged')))
-        .toStmt());
+    final setCallback = DetectChangesVars.internalSetStateChanged.callFn([
+      DetectChangesVars.cachedCtx,
+      o.ReadClassMemberExpr('markStateChanged'),
+    ]);
+    statements.add(setCallback.toStmt());
   }
 
   if (view.genConfig.profileFor == Profile.build) {
