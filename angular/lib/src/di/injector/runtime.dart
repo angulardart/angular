@@ -257,7 +257,7 @@ class _RuntimeInjector extends HierarchicalInjector
     // This call will fail at runtime (a non-zero arg function w/ 1+ args).
     assert(
         _functionHasNoRequiredArguments(factory) || resolvedArgs.isNotEmpty,
-        'Could not resolve depenedncies for factory function $factory. This '
+        'Could not resolve dependencies for factory function $factory. This '
         'is is usually a sign of an omitted @Injectable. Consider migrating '
         'to @GeneratedInjector (and "runApp") or add the missing annotation '
         'for the time being.');
