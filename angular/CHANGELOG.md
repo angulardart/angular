@@ -91,6 +91,17 @@
     deprecated, as they were not intended to be publicly accessible states.
     See the deprecation messages for details.
 
+*   `ViewContainerRef.get()` now returns a `ViewRef` instead of an
+    `EmbeddedViewRef`.
+
+    For context, `ViewContainerRef` supports inserting both host views (created
+    via `ComponentFactory`) and embedded views (created via `TemplateRef`).
+    Today, `EmbeddedViewRef` can reference either kind of view, but in the
+    future it will only reference the latter, for which its methods are actually
+    relevant (for example setting locals has no purpose on host views). This
+    change is in preperation for when a host view reference may not implement
+    `EmbeddedViewRef`.
+
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 

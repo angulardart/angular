@@ -36,7 +36,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
   @override
-  EmbeddedViewRef get(int index) {
+  ViewRef get(int index) {
     return nestedViews[index].viewData.ref;
   }
 

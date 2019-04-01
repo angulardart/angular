@@ -1,4 +1,5 @@
 import 'package:angular/core.dart' show DoCheck, Directive, Input;
+import 'package:angular/src/runtime.dart' show unsafeCast;
 
 import '../../core/change_detection/differs/default_iterable_differ.dart'
     show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
@@ -149,7 +150,7 @@ class NgFor implements DoCheck {
       } else if (currentIndex == null) {
         _viewContainer.remove(adjustedPreviousIndex);
       } else {
-        var view = _viewContainer.get(adjustedPreviousIndex);
+        var view = _getEmbeddedViewRef(adjustedPreviousIndex);
         _viewContainer.move(view, currentIndex);
         var tuple = _RecordViewTuple(item, view);
         insertTuples.add(tuple);
@@ -160,17 +161,28 @@ class NgFor implements DoCheck {
       _perViewChange(insertTuples[i].view, insertTuples[i].record);
     }
     for (var i = 0, len = _viewContainer.length; i < len; i++) {
-      var viewRef = _viewContainer.get(i);
+      var viewRef = _getEmbeddedViewRef(i);
       viewRef.setLocal('first', identical(i, 0));
       viewRef.setLocal('last', identical(i, len - 1));
       viewRef.setLocal('index', i);
       viewRef.setLocal('count', len);
     }
     changes.forEachIdentityChange((record) {
-      var viewRef = _viewContainer.get(record.currentIndex);
+      var viewRef = _getEmbeddedViewRef(record.currentIndex);
       viewRef.setLocal('\$implicit', record.item);
     });
   }
+
+  /// Returns the [EmbeddedViewRef] at [index] in its view container.
+  ///
+  /// Because [ViewContainerRef] supports inserting [ViewRef], there's no
+  /// guarantee that [ViewContainerRef.get] returns an [EmbeddedViewRef].
+  ///
+  /// However, in practice this is the only directive controlling its view
+  /// container, and it only inserts [EmbeddedViewRef] instances, so its safe to
+  /// assume that the returned [ViewRef]s are all [EmbeddedViewRef]s.
+  EmbeddedViewRef _getEmbeddedViewRef(int index) =>
+      unsafeCast(_viewContainer.get(index));
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal('\$implicit', record.item);
