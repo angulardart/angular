@@ -157,15 +157,15 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
             break;
           }
           final values = argument.expression as ListLiteral;
-          if (values.elements.isNotEmpty &&
+          if (values.elements2.isNotEmpty &&
               // Avoid an edge case where all of your entries are just empty
               // lists. Not likely to happen, but might as well check anyway at
               // this point.
-              values.elements.every(
+              values.elements2.every(
                   (e) => (e as Expression).staticType?.isDynamic != false)) {
             // We didn't resolve something.
             _exceptionHandler.handle(UnresolvedExpressionError(
-              values.elements.where(
+              values.elements2.where(
                   (e) => (e as Expression).staticType?.isDynamic != false),
               element,
               annotationImpl.compilationUnit,
@@ -730,7 +730,7 @@ class _ComponentVisitor
       return exports;
     }
 
-    var staticNames = (exportsArg.expression as ListLiteral).elements;
+    var staticNames = (exportsArg.expression as ListLiteral).elements2;
     if (!staticNames.every((name) => name is Identifier)) {
       log.severe('Every item in the "exports" field must be an identifier');
       return exports;
