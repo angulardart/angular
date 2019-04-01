@@ -66,8 +66,10 @@ const bootstrapMinimalModule = <Object>[
 ];
 
 /// An experimental application [Injector] that is statically generated.
+// TODO(https://github.com/dart-lang/sdk/issues/34098): Remove ignore.
 @GenerateInjector([bootstrapMinimalModule])
-final InjectorFactory minimalApp = ng.minimalApp$Injector;
+final InjectorFactory minimalApp =
+    ng.minimalApp$Injector; //ignore: invalid_assignment
 
 /// Returns the current [Document] of the browser.
 HtmlDocument getDocument() => document;
