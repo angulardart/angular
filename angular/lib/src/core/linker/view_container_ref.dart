@@ -26,7 +26,7 @@ import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 abstract class ViewContainerRef implements ComponentLoader {
   /// Returns the [ViewRef] for the View located in this container at the
   /// specified index.
-  EmbeddedViewRef get(int index);
+  ViewRef get(int index);
 
   /// Returns the number of Views currently attached to this container.
   int get length;
