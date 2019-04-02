@@ -1,17 +1,3 @@
-import 'package:analyzer/src/generated/source.dart';
-import 'package:angular_analyzer_plugin/src/selector/and_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/attribute_contains_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/attribute_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/attribute_starts_with_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/attribute_value_regex_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/class_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/contains_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/element_name_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/not_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/or_selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/selector.dart';
-import 'package:angular_analyzer_plugin/src/selector/name.dart';
-import 'package:angular_analyzer_plugin/src/selector/tokenizer.dart';
 import 'package:meta/meta.dart';
 
 /// Mixin used by parser and tokenizer to report [SelectorParseError]s.
