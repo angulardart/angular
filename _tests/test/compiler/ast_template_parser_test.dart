@@ -1963,6 +1963,18 @@ void main() {
                 "  '"));
       });
 
+      test('should report error for "@i18n.skip" without description', () {
+        expect(
+            () => parse('<p @i18n.skip></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
+                'A corresponding message description (@i18n) is required\n'
+                '  ,\n'
+                '1 | <p @i18n.skip></p>\n'
+                '  |    ^^^^^^^^^^\n'
+                "  '"));
+      });
+
       test('should report error for empty "@i18n.meaning"', () {
         expect(
             () => parse('<p @i18n="description" @i18n.meaning=" "></p>'),

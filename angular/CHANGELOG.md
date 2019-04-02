@@ -77,6 +77,10 @@
     sheet is placed within a directory whose name is not a valid Dart
     identifier.
 
+*   The template compiler will now report a helpful error message when an
+    `@i18n.skip` annotation has no corresponding `@i18n` description, instead of
+    throwing an unhandled error.
+
 ### Breaking changes
 
 *   Removed `castCallback2ForDirective` from `meta.dart`. In practice this was
