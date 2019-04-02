@@ -163,8 +163,9 @@ class _I18nMetadataBuilder {
   void _reportMissingDescriptionFor(AnnotationAst annotation) {
     if (annotation != null) {
       _context.reportError(
-          'A corresponding message description (@i18n) is required',
-          meaning.sourceSpan);
+        'A corresponding message description (@i18n) is required',
+        annotation.sourceSpan,
+      );
     }
   }
 }
