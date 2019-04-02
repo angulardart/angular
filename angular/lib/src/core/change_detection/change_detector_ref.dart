@@ -59,6 +59,10 @@ abstract class ChangeDetectorRef {
   /// for specific optimizations around components that are not visible to the
   /// user (such as modals or popups) but are loaded.
   ///
+  /// **NOTE**: Lifecycle events (such as `ngOnInit`, `ngAfterChanges`, and so
+  /// on) are still called if the component has been detached. We may consider
+  /// changing this behavior in the future: b/129780288.
+  ///
   /// In most cases simply using `ChangeDetectionStrategy.OnPush` and calling
   /// [markForCheck] is preferred as it provides the same contract around not
   /// checking a component until it is dirtied.
