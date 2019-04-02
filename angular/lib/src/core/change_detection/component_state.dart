@@ -52,12 +52,13 @@ abstract class ComponentState {
     deliverStateChanges();
   }
 
-  /// Users may override to process aggregate state changes.
+  /// Semantically identical to calling `setState((){})`.
   ///
   /// **DEPRECATED**: Due to changes in the testing framework, it is no longer
   /// necessary to override or invoke this method at all in order to reflect
   /// changes to the DOM, and it will be removed at a future point in time.
   @Deprecated('Do not override this method. It will be removed')
+  @protected
   void deliverStateChanges() {
     final onStateChanged = _onStateChanged;
     if (onStateChanged != null) {
