@@ -1,0 +1,191 @@
+// Copyright (c) 2015, the Dart project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+//
+// This file has been automatically generated.  Please do not edit it manually.
+// To regenerate the file, use the SDK script
+// "pkg/analyzer/tool/summary/generate.dart $IDL_FILE_PATH",
+// or "pkg/analyzer/tool/generate_files" for the analyzer package IDL/sources.
+
+
+table LinkedDartSummary {
+  errors:[SummarizedAnalysisError] (id: 0);
+
+  hasDartTemplates:bool (id: 3);
+
+  referencedDartFiles:[string] (id: 2);
+
+  referencedHtmlFiles:[string] (id: 1);
+}
+
+table LinkedHtmlSummary {
+  errors:[SummarizedAnalysisError] (id: 0);
+
+  errorsFromPath:[SummarizedAnalysisErrorFromPath] (id: 1);
+}
+
+table PackageBundle {
+  unlinkedDartSummary:[UnlinkedDartSummary] (id: 0);
+}
+
+table SummarizedAnalysisError {
+  correction:string (id: 2);
+
+  errorCode:string (id: 0);
+
+  length:uint (id: 4);
+
+  message:string (id: 1);
+
+  offset:uint (id: 3);
+}
+
+table SummarizedAnalysisErrorFromPath {
+  classname:string (id: 1);
+
+  originalError:SummarizedAnalysisError (id: 2);
+
+  path:string (id: 0);
+}
+
+table SummarizedBindable {
+  name:string (id: 0);
+
+  nameOffset:uint (id: 1);
+
+  propName:string (id: 2);
+
+  propNameOffset:uint (id: 3);
+}
+
+table SummarizedClassAnnotations {
+  className:string (id: 0);
+
+  contentChildFields:[SummarizedContentChildField] (id: 3);
+
+  contentChildrenFields:[SummarizedContentChildField] (id: 4);
+
+  inputs:[SummarizedBindable] (id: 1);
+
+  outputs:[SummarizedBindable] (id: 2);
+}
+
+table SummarizedContentChildField {
+  fieldName:string (id: 0);
+
+  nameLength:uint (id: 2);
+
+  nameOffset:uint (id: 1);
+
+  typeLength:uint (id: 4);
+
+  typeOffset:uint (id: 3);
+}
+
+table SummarizedDirective {
+  classAnnotations:SummarizedClassAnnotations (id: 0);
+
+  constDirectiveStrategyLength:uint (id: 18);
+
+  constDirectiveStrategyOffset:uint (id: 17);
+
+  exportAs:string (id: 5);
+
+  exportAsOffset:uint (id: 6);
+
+  exports:[SummarizedExportedIdentifier] (id: 15);
+
+  functionName:string (id: 1);
+
+  isComponent:bool (id: 2);
+
+  ngContents:[SummarizedNgContent] (id: 12);
+
+  pipesUse:[SummarizedPipesUse] (id: 16);
+
+  selectorOffset:uint (id: 4);
+
+  selectorStr:string (id: 3);
+
+  subdirectives:[SummarizedDirectiveUse] (id: 14);
+
+  templateOffset:uint (id: 11);
+
+  templateText:string (id: 10);
+
+  templateUrl:string (id: 7);
+
+  templateUrlLength:uint (id: 9);
+
+  templateUrlOffset:uint (id: 8);
+
+  usesArrayOfDirectiveReferencesStrategy:bool (id: 13);
+}
+
+table SummarizedDirectiveUse {
+  length:uint (id: 3);
+
+  name:string (id: 0);
+
+  offset:uint (id: 2);
+
+  prefix:string (id: 1);
+}
+
+table SummarizedExportedIdentifier {
+  length:uint (id: 3);
+
+  name:string (id: 0);
+
+  offset:uint (id: 2);
+
+  prefix:string (id: 1);
+}
+
+table SummarizedNgContent {
+  length:uint (id: 1);
+
+  offset:uint (id: 0);
+
+  selectorOffset:uint (id: 3);
+
+  selectorStr:string (id: 2);
+}
+
+table SummarizedPipe {
+  decoratedClassName:string (id: 3);
+
+  isPure:bool (id: 2);
+
+  pipeName:string (id: 0);
+
+  pipeNameOffset:uint (id: 1);
+}
+
+table SummarizedPipesUse {
+  length:uint (id: 3);
+
+  name:string (id: 0);
+
+  offset:uint (id: 2);
+
+  prefix:string (id: 1);
+}
+
+table UnlinkedDartSummary {
+  annotatedClasses:[SummarizedClassAnnotations] (id: 1);
+
+  directiveSummaries:[SummarizedDirective] (id: 0);
+
+  errors:[SummarizedAnalysisError] (id: 2);
+
+  pipeSummaries:[SummarizedPipe] (id: 3);
+}
+
+table UnlinkedHtmlSummary {
+  ngContents:[SummarizedNgContent] (id: 0);
+}
+
+root_type PackageBundle;
+
+file_identifier "APdl";
