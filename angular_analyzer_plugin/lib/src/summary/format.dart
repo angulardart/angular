@@ -1,4 +1,4 @@
-// Copyright (c) 2015, the Dart project authors.  Please see the AUTHORS file
+// Copyright (c) 2015, the Dart project authors. Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 //
@@ -28,28 +28,28 @@ class LinkedDartSummaryBuilder extends Object
   List<SummarizedAnalysisErrorBuilder> get errors =>
       _errors ??= <SummarizedAnalysisErrorBuilder>[];
 
-  void set errors(List<SummarizedAnalysisErrorBuilder> value) {
+  set errors(List<SummarizedAnalysisErrorBuilder> value) {
     this._errors = value;
   }
 
   @override
   bool get hasDartTemplates => _hasDartTemplates ??= false;
 
-  void set hasDartTemplates(bool value) {
+  set hasDartTemplates(bool value) {
     this._hasDartTemplates = value;
   }
 
   @override
   List<String> get referencedDartFiles => _referencedDartFiles ??= <String>[];
 
-  void set referencedDartFiles(List<String> value) {
+  set referencedDartFiles(List<String> value) {
     this._referencedDartFiles = value;
   }
 
   @override
   List<String> get referencedHtmlFiles => _referencedHtmlFiles ??= <String>[];
 
-  void set referencedHtmlFiles(List<String> value) {
+  set referencedHtmlFiles(List<String> value) {
     this._referencedHtmlFiles = value;
   }
 
@@ -63,16 +63,12 @@ class LinkedDartSummaryBuilder extends Object
         _referencedDartFiles = referencedDartFiles,
         _referencedHtmlFiles = referencedHtmlFiles;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _errors?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     if (this._errors == null) {
       signature.addInt(0);
@@ -234,7 +230,7 @@ class LinkedHtmlSummaryBuilder extends Object
   List<SummarizedAnalysisErrorBuilder> get errors =>
       _errors ??= <SummarizedAnalysisErrorBuilder>[];
 
-  void set errors(List<SummarizedAnalysisErrorBuilder> value) {
+  set errors(List<SummarizedAnalysisErrorBuilder> value) {
     this._errors = value;
   }
 
@@ -242,7 +238,7 @@ class LinkedHtmlSummaryBuilder extends Object
   List<SummarizedAnalysisErrorFromPathBuilder> get errorsFromPath =>
       _errorsFromPath ??= <SummarizedAnalysisErrorFromPathBuilder>[];
 
-  void set errorsFromPath(List<SummarizedAnalysisErrorFromPathBuilder> value) {
+  set errorsFromPath(List<SummarizedAnalysisErrorFromPathBuilder> value) {
     this._errorsFromPath = value;
   }
 
@@ -252,17 +248,13 @@ class LinkedHtmlSummaryBuilder extends Object
       : _errors = errors,
         _errorsFromPath = errorsFromPath;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _errors?.forEach((b) => b.flushInformative());
     _errorsFromPath?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     if (this._errors == null) {
       signature.addInt(0);
@@ -383,23 +375,19 @@ class PackageBundleBuilder extends Object
   List<UnlinkedDartSummaryBuilder> get unlinkedDartSummary =>
       _unlinkedDartSummary ??= <UnlinkedDartSummaryBuilder>[];
 
-  void set unlinkedDartSummary(List<UnlinkedDartSummaryBuilder> value) {
+  set unlinkedDartSummary(List<UnlinkedDartSummaryBuilder> value) {
     this._unlinkedDartSummary = value;
   }
 
   PackageBundleBuilder({List<UnlinkedDartSummaryBuilder> unlinkedDartSummary})
       : _unlinkedDartSummary = unlinkedDartSummary;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _unlinkedDartSummary?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     if (this._unlinkedDartSummary == null) {
       signature.addInt(0);
@@ -493,21 +481,21 @@ class SummarizedAnalysisErrorBuilder extends Object
   @override
   String get correction => _correction ??= '';
 
-  void set correction(String value) {
+  set correction(String value) {
     this._correction = value;
   }
 
   @override
   String get errorCode => _errorCode ??= '';
 
-  void set errorCode(String value) {
+  set errorCode(String value) {
     this._errorCode = value;
   }
 
   @override
   int get length => _length ??= 0;
 
-  void set length(int value) {
+  set length(int value) {
     assert(value == null || value >= 0);
     this._length = value;
   }
@@ -515,14 +503,14 @@ class SummarizedAnalysisErrorBuilder extends Object
   @override
   String get message => _message ??= '';
 
-  void set message(String value) {
+  set message(String value) {
     this._message = value;
   }
 
   @override
   int get offset => _offset ??= 0;
 
-  void set offset(int value) {
+  set offset(int value) {
     assert(value == null || value >= 0);
     this._offset = value;
   }
@@ -539,14 +527,10 @@ class SummarizedAnalysisErrorBuilder extends Object
         _message = message,
         _offset = offset;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._errorCode ?? '');
     signature.addString(this._message ?? '');
@@ -678,21 +662,21 @@ class SummarizedAnalysisErrorFromPathBuilder extends Object
   @override
   String get classname => _classname ??= '';
 
-  void set classname(String value) {
+  set classname(String value) {
     this._classname = value;
   }
 
   @override
   SummarizedAnalysisErrorBuilder get originalError => _originalError;
 
-  void set originalError(SummarizedAnalysisErrorBuilder value) {
+  set originalError(SummarizedAnalysisErrorBuilder value) {
     this._originalError = value;
   }
 
   @override
   String get path => _path ??= '';
 
-  void set path(String value) {
+  set path(String value) {
     this._path = value;
   }
 
@@ -704,16 +688,12 @@ class SummarizedAnalysisErrorFromPathBuilder extends Object
         _originalError = originalError,
         _path = path;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _originalError?.flushInformative();
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._path ?? '');
     signature.addString(this._classname ?? '');
@@ -824,14 +804,14 @@ class SummarizedBindableBuilder extends Object
   @override
   String get name => _name ??= '';
 
-  void set name(String value) {
+  set name(String value) {
     this._name = value;
   }
 
   @override
   int get nameOffset => _nameOffset ??= 0;
 
-  void set nameOffset(int value) {
+  set nameOffset(int value) {
     assert(value == null || value >= 0);
     this._nameOffset = value;
   }
@@ -839,14 +819,14 @@ class SummarizedBindableBuilder extends Object
   @override
   String get propName => _propName ??= '';
 
-  void set propName(String value) {
+  set propName(String value) {
     this._propName = value;
   }
 
   @override
   int get propNameOffset => _propNameOffset ??= 0;
 
-  void set propNameOffset(int value) {
+  set propNameOffset(int value) {
     assert(value == null || value >= 0);
     this._propNameOffset = value;
   }
@@ -858,14 +838,10 @@ class SummarizedBindableBuilder extends Object
         _propName = propName,
         _propNameOffset = propNameOffset;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._name ?? '');
     signature.addInt(this._nameOffset ?? 0);
@@ -981,7 +957,7 @@ class SummarizedClassAnnotationsBuilder extends Object
   @override
   String get className => _className ??= '';
 
-  void set className(String value) {
+  set className(String value) {
     this._className = value;
   }
 
@@ -989,7 +965,7 @@ class SummarizedClassAnnotationsBuilder extends Object
   List<SummarizedContentChildFieldBuilder> get contentChildFields =>
       _contentChildFields ??= <SummarizedContentChildFieldBuilder>[];
 
-  void set contentChildFields(List<SummarizedContentChildFieldBuilder> value) {
+  set contentChildFields(List<SummarizedContentChildFieldBuilder> value) {
     this._contentChildFields = value;
   }
 
@@ -997,8 +973,7 @@ class SummarizedClassAnnotationsBuilder extends Object
   List<SummarizedContentChildFieldBuilder> get contentChildrenFields =>
       _contentChildrenFields ??= <SummarizedContentChildFieldBuilder>[];
 
-  void set contentChildrenFields(
-      List<SummarizedContentChildFieldBuilder> value) {
+  set contentChildrenFields(List<SummarizedContentChildFieldBuilder> value) {
     this._contentChildrenFields = value;
   }
 
@@ -1006,7 +981,7 @@ class SummarizedClassAnnotationsBuilder extends Object
   List<SummarizedBindableBuilder> get inputs =>
       _inputs ??= <SummarizedBindableBuilder>[];
 
-  void set inputs(List<SummarizedBindableBuilder> value) {
+  set inputs(List<SummarizedBindableBuilder> value) {
     this._inputs = value;
   }
 
@@ -1014,7 +989,7 @@ class SummarizedClassAnnotationsBuilder extends Object
   List<SummarizedBindableBuilder> get outputs =>
       _outputs ??= <SummarizedBindableBuilder>[];
 
-  void set outputs(List<SummarizedBindableBuilder> value) {
+  set outputs(List<SummarizedBindableBuilder> value) {
     this._outputs = value;
   }
 
@@ -1030,9 +1005,7 @@ class SummarizedClassAnnotationsBuilder extends Object
         _inputs = inputs,
         _outputs = outputs;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _contentChildFields?.forEach((b) => b.flushInformative());
     _contentChildrenFields?.forEach((b) => b.flushInformative());
@@ -1040,9 +1013,7 @@ class SummarizedClassAnnotationsBuilder extends Object
     _outputs?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._className ?? '');
     if (this._inputs == null) {
@@ -1235,14 +1206,14 @@ class SummarizedContentChildFieldBuilder extends Object
   @override
   String get fieldName => _fieldName ??= '';
 
-  void set fieldName(String value) {
+  set fieldName(String value) {
     this._fieldName = value;
   }
 
   @override
   int get nameLength => _nameLength ??= 0;
 
-  void set nameLength(int value) {
+  set nameLength(int value) {
     assert(value == null || value >= 0);
     this._nameLength = value;
   }
@@ -1250,7 +1221,7 @@ class SummarizedContentChildFieldBuilder extends Object
   @override
   int get nameOffset => _nameOffset ??= 0;
 
-  void set nameOffset(int value) {
+  set nameOffset(int value) {
     assert(value == null || value >= 0);
     this._nameOffset = value;
   }
@@ -1258,7 +1229,7 @@ class SummarizedContentChildFieldBuilder extends Object
   @override
   int get typeLength => _typeLength ??= 0;
 
-  void set typeLength(int value) {
+  set typeLength(int value) {
     assert(value == null || value >= 0);
     this._typeLength = value;
   }
@@ -1266,7 +1237,7 @@ class SummarizedContentChildFieldBuilder extends Object
   @override
   int get typeOffset => _typeOffset ??= 0;
 
-  void set typeOffset(int value) {
+  set typeOffset(int value) {
     assert(value == null || value >= 0);
     this._typeOffset = value;
   }
@@ -1283,14 +1254,10 @@ class SummarizedContentChildFieldBuilder extends Object
         _typeLength = typeLength,
         _typeOffset = typeOffset;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._fieldName ?? '');
     signature.addInt(this._nameOffset ?? 0);
@@ -1431,14 +1398,14 @@ class SummarizedDirectiveBuilder extends Object
   @override
   SummarizedClassAnnotationsBuilder get classAnnotations => _classAnnotations;
 
-  void set classAnnotations(SummarizedClassAnnotationsBuilder value) {
+  set classAnnotations(SummarizedClassAnnotationsBuilder value) {
     this._classAnnotations = value;
   }
 
   @override
   int get constDirectiveStrategyLength => _constDirectiveStrategyLength ??= 0;
 
-  void set constDirectiveStrategyLength(int value) {
+  set constDirectiveStrategyLength(int value) {
     assert(value == null || value >= 0);
     this._constDirectiveStrategyLength = value;
   }
@@ -1446,7 +1413,7 @@ class SummarizedDirectiveBuilder extends Object
   @override
   int get constDirectiveStrategyOffset => _constDirectiveStrategyOffset ??= 0;
 
-  void set constDirectiveStrategyOffset(int value) {
+  set constDirectiveStrategyOffset(int value) {
     assert(value == null || value >= 0);
     this._constDirectiveStrategyOffset = value;
   }
@@ -1454,14 +1421,14 @@ class SummarizedDirectiveBuilder extends Object
   @override
   String get exportAs => _exportAs ??= '';
 
-  void set exportAs(String value) {
+  set exportAs(String value) {
     this._exportAs = value;
   }
 
   @override
   int get exportAsOffset => _exportAsOffset ??= 0;
 
-  void set exportAsOffset(int value) {
+  set exportAsOffset(int value) {
     assert(value == null || value >= 0);
     this._exportAsOffset = value;
   }
@@ -1470,21 +1437,21 @@ class SummarizedDirectiveBuilder extends Object
   List<SummarizedExportedIdentifierBuilder> get exports =>
       _exports ??= <SummarizedExportedIdentifierBuilder>[];
 
-  void set exports(List<SummarizedExportedIdentifierBuilder> value) {
+  set exports(List<SummarizedExportedIdentifierBuilder> value) {
     this._exports = value;
   }
 
   @override
   String get functionName => _functionName ??= '';
 
-  void set functionName(String value) {
+  set functionName(String value) {
     this._functionName = value;
   }
 
   @override
   bool get isComponent => _isComponent ??= false;
 
-  void set isComponent(bool value) {
+  set isComponent(bool value) {
     this._isComponent = value;
   }
 
@@ -1492,7 +1459,7 @@ class SummarizedDirectiveBuilder extends Object
   List<SummarizedNgContentBuilder> get ngContents =>
       _ngContents ??= <SummarizedNgContentBuilder>[];
 
-  void set ngContents(List<SummarizedNgContentBuilder> value) {
+  set ngContents(List<SummarizedNgContentBuilder> value) {
     this._ngContents = value;
   }
 
@@ -1500,14 +1467,14 @@ class SummarizedDirectiveBuilder extends Object
   List<SummarizedPipesUseBuilder> get pipesUse =>
       _pipesUse ??= <SummarizedPipesUseBuilder>[];
 
-  void set pipesUse(List<SummarizedPipesUseBuilder> value) {
+  set pipesUse(List<SummarizedPipesUseBuilder> value) {
     this._pipesUse = value;
   }
 
   @override
   int get selectorOffset => _selectorOffset ??= 0;
 
-  void set selectorOffset(int value) {
+  set selectorOffset(int value) {
     assert(value == null || value >= 0);
     this._selectorOffset = value;
   }
@@ -1515,7 +1482,7 @@ class SummarizedDirectiveBuilder extends Object
   @override
   String get selectorStr => _selectorStr ??= '';
 
-  void set selectorStr(String value) {
+  set selectorStr(String value) {
     this._selectorStr = value;
   }
 
@@ -1523,14 +1490,14 @@ class SummarizedDirectiveBuilder extends Object
   List<SummarizedDirectiveUseBuilder> get subdirectives =>
       _subdirectives ??= <SummarizedDirectiveUseBuilder>[];
 
-  void set subdirectives(List<SummarizedDirectiveUseBuilder> value) {
+  set subdirectives(List<SummarizedDirectiveUseBuilder> value) {
     this._subdirectives = value;
   }
 
   @override
   int get templateOffset => _templateOffset ??= 0;
 
-  void set templateOffset(int value) {
+  set templateOffset(int value) {
     assert(value == null || value >= 0);
     this._templateOffset = value;
   }
@@ -1538,21 +1505,21 @@ class SummarizedDirectiveBuilder extends Object
   @override
   String get templateText => _templateText ??= '';
 
-  void set templateText(String value) {
+  set templateText(String value) {
     this._templateText = value;
   }
 
   @override
   String get templateUrl => _templateUrl ??= '';
 
-  void set templateUrl(String value) {
+  set templateUrl(String value) {
     this._templateUrl = value;
   }
 
   @override
   int get templateUrlLength => _templateUrlLength ??= 0;
 
-  void set templateUrlLength(int value) {
+  set templateUrlLength(int value) {
     assert(value == null || value >= 0);
     this._templateUrlLength = value;
   }
@@ -1560,7 +1527,7 @@ class SummarizedDirectiveBuilder extends Object
   @override
   int get templateUrlOffset => _templateUrlOffset ??= 0;
 
-  void set templateUrlOffset(int value) {
+  set templateUrlOffset(int value) {
     assert(value == null || value >= 0);
     this._templateUrlOffset = value;
   }
@@ -1569,7 +1536,7 @@ class SummarizedDirectiveBuilder extends Object
   bool get usesArrayOfDirectiveReferencesStrategy =>
       _usesArrayOfDirectiveReferencesStrategy ??= false;
 
-  void set usesArrayOfDirectiveReferencesStrategy(bool value) {
+  set usesArrayOfDirectiveReferencesStrategy(bool value) {
     this._usesArrayOfDirectiveReferencesStrategy = value;
   }
 
@@ -1614,9 +1581,7 @@ class SummarizedDirectiveBuilder extends Object
         _usesArrayOfDirectiveReferencesStrategy =
             usesArrayOfDirectiveReferencesStrategy;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _classAnnotations?.flushInformative();
     _exports?.forEach((b) => b.flushInformative());
@@ -1625,9 +1590,7 @@ class SummarizedDirectiveBuilder extends Object
     _subdirectives?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addBool(this._classAnnotations != null);
     this._classAnnotations?.collectApiSignature(signature);
@@ -2034,7 +1997,7 @@ class SummarizedDirectiveUseBuilder extends Object
   @override
   int get length => _length ??= 0;
 
-  void set length(int value) {
+  set length(int value) {
     assert(value == null || value >= 0);
     this._length = value;
   }
@@ -2042,14 +2005,14 @@ class SummarizedDirectiveUseBuilder extends Object
   @override
   String get name => _name ??= '';
 
-  void set name(String value) {
+  set name(String value) {
     this._name = value;
   }
 
   @override
   int get offset => _offset ??= 0;
 
-  void set offset(int value) {
+  set offset(int value) {
     assert(value == null || value >= 0);
     this._offset = value;
   }
@@ -2057,7 +2020,7 @@ class SummarizedDirectiveUseBuilder extends Object
   @override
   String get prefix => _prefix ??= '';
 
-  void set prefix(String value) {
+  set prefix(String value) {
     this._prefix = value;
   }
 
@@ -2068,14 +2031,10 @@ class SummarizedDirectiveUseBuilder extends Object
         _offset = offset,
         _prefix = prefix;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._name ?? '');
     signature.addString(this._prefix ?? '');
@@ -2191,7 +2150,7 @@ class SummarizedExportedIdentifierBuilder extends Object
   @override
   int get length => _length ??= 0;
 
-  void set length(int value) {
+  set length(int value) {
     assert(value == null || value >= 0);
     this._length = value;
   }
@@ -2199,14 +2158,14 @@ class SummarizedExportedIdentifierBuilder extends Object
   @override
   String get name => _name ??= '';
 
-  void set name(String value) {
+  set name(String value) {
     this._name = value;
   }
 
   @override
   int get offset => _offset ??= 0;
 
-  void set offset(int value) {
+  set offset(int value) {
     assert(value == null || value >= 0);
     this._offset = value;
   }
@@ -2214,7 +2173,7 @@ class SummarizedExportedIdentifierBuilder extends Object
   @override
   String get prefix => _prefix ??= '';
 
-  void set prefix(String value) {
+  set prefix(String value) {
     this._prefix = value;
   }
 
@@ -2225,14 +2184,10 @@ class SummarizedExportedIdentifierBuilder extends Object
         _offset = offset,
         _prefix = prefix;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._name ?? '');
     signature.addString(this._prefix ?? '');
@@ -2349,7 +2304,7 @@ class SummarizedNgContentBuilder extends Object
   @override
   int get length => _length ??= 0;
 
-  void set length(int value) {
+  set length(int value) {
     assert(value == null || value >= 0);
     this._length = value;
   }
@@ -2357,7 +2312,7 @@ class SummarizedNgContentBuilder extends Object
   @override
   int get offset => _offset ??= 0;
 
-  void set offset(int value) {
+  set offset(int value) {
     assert(value == null || value >= 0);
     this._offset = value;
   }
@@ -2365,7 +2320,7 @@ class SummarizedNgContentBuilder extends Object
   @override
   int get selectorOffset => _selectorOffset ??= 0;
 
-  void set selectorOffset(int value) {
+  set selectorOffset(int value) {
     assert(value == null || value >= 0);
     this._selectorOffset = value;
   }
@@ -2373,7 +2328,7 @@ class SummarizedNgContentBuilder extends Object
   @override
   String get selectorStr => _selectorStr ??= '';
 
-  void set selectorStr(String value) {
+  set selectorStr(String value) {
     this._selectorStr = value;
   }
 
@@ -2384,14 +2339,10 @@ class SummarizedNgContentBuilder extends Object
         _selectorOffset = selectorOffset,
         _selectorStr = selectorStr;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addInt(this._offset ?? 0);
     signature.addInt(this._length ?? 0);
@@ -2502,28 +2453,28 @@ class SummarizedPipeBuilder extends Object
   @override
   String get decoratedClassName => _decoratedClassName ??= '';
 
-  void set decoratedClassName(String value) {
+  set decoratedClassName(String value) {
     this._decoratedClassName = value;
   }
 
   @override
   bool get isPure => _isPure ??= false;
 
-  void set isPure(bool value) {
+  set isPure(bool value) {
     this._isPure = value;
   }
 
   @override
   String get pipeName => _pipeName ??= '';
 
-  void set pipeName(String value) {
+  set pipeName(String value) {
     this._pipeName = value;
   }
 
   @override
   int get pipeNameOffset => _pipeNameOffset ??= 0;
 
-  void set pipeNameOffset(int value) {
+  set pipeNameOffset(int value) {
     assert(value == null || value >= 0);
     this._pipeNameOffset = value;
   }
@@ -2538,14 +2489,10 @@ class SummarizedPipeBuilder extends Object
         _pipeName = pipeName,
         _pipeNameOffset = pipeNameOffset;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._pipeName ?? '');
     signature.addInt(this._pipeNameOffset ?? 0);
@@ -2661,7 +2608,7 @@ class SummarizedPipesUseBuilder extends Object
   @override
   int get length => _length ??= 0;
 
-  void set length(int value) {
+  set length(int value) {
     assert(value == null || value >= 0);
     this._length = value;
   }
@@ -2669,14 +2616,14 @@ class SummarizedPipesUseBuilder extends Object
   @override
   String get name => _name ??= '';
 
-  void set name(String value) {
+  set name(String value) {
     this._name = value;
   }
 
   @override
   int get offset => _offset ??= 0;
 
-  void set offset(int value) {
+  set offset(int value) {
     assert(value == null || value >= 0);
     this._offset = value;
   }
@@ -2684,7 +2631,7 @@ class SummarizedPipesUseBuilder extends Object
   @override
   String get prefix => _prefix ??= '';
 
-  void set prefix(String value) {
+  set prefix(String value) {
     this._prefix = value;
   }
 
@@ -2695,14 +2642,10 @@ class SummarizedPipesUseBuilder extends Object
         _offset = offset,
         _prefix = prefix;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {}
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     signature.addString(this._name ?? '');
     signature.addString(this._prefix ?? '');
@@ -2818,7 +2761,7 @@ class UnlinkedDartSummaryBuilder extends Object
   List<SummarizedClassAnnotationsBuilder> get annotatedClasses =>
       _annotatedClasses ??= <SummarizedClassAnnotationsBuilder>[];
 
-  void set annotatedClasses(List<SummarizedClassAnnotationsBuilder> value) {
+  set annotatedClasses(List<SummarizedClassAnnotationsBuilder> value) {
     this._annotatedClasses = value;
   }
 
@@ -2826,7 +2769,7 @@ class UnlinkedDartSummaryBuilder extends Object
   List<SummarizedDirectiveBuilder> get directiveSummaries =>
       _directiveSummaries ??= <SummarizedDirectiveBuilder>[];
 
-  void set directiveSummaries(List<SummarizedDirectiveBuilder> value) {
+  set directiveSummaries(List<SummarizedDirectiveBuilder> value) {
     this._directiveSummaries = value;
   }
 
@@ -2834,7 +2777,7 @@ class UnlinkedDartSummaryBuilder extends Object
   List<SummarizedAnalysisErrorBuilder> get errors =>
       _errors ??= <SummarizedAnalysisErrorBuilder>[];
 
-  void set errors(List<SummarizedAnalysisErrorBuilder> value) {
+  set errors(List<SummarizedAnalysisErrorBuilder> value) {
     this._errors = value;
   }
 
@@ -2842,7 +2785,7 @@ class UnlinkedDartSummaryBuilder extends Object
   List<SummarizedPipeBuilder> get pipeSummaries =>
       _pipeSummaries ??= <SummarizedPipeBuilder>[];
 
-  void set pipeSummaries(List<SummarizedPipeBuilder> value) {
+  set pipeSummaries(List<SummarizedPipeBuilder> value) {
     this._pipeSummaries = value;
   }
 
@@ -2856,9 +2799,7 @@ class UnlinkedDartSummaryBuilder extends Object
         _errors = errors,
         _pipeSummaries = pipeSummaries;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _annotatedClasses?.forEach((b) => b.flushInformative());
     _directiveSummaries?.forEach((b) => b.flushInformative());
@@ -2866,9 +2807,7 @@ class UnlinkedDartSummaryBuilder extends Object
     _pipeSummaries?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     if (this._directiveSummaries == null) {
       signature.addInt(0);
@@ -3046,23 +2985,19 @@ class UnlinkedHtmlSummaryBuilder extends Object
   List<SummarizedNgContentBuilder> get ngContents =>
       _ngContents ??= <SummarizedNgContentBuilder>[];
 
-  void set ngContents(List<SummarizedNgContentBuilder> value) {
+  set ngContents(List<SummarizedNgContentBuilder> value) {
     this._ngContents = value;
   }
 
   UnlinkedHtmlSummaryBuilder({List<SummarizedNgContentBuilder> ngContents})
       : _ngContents = ngContents;
 
-  /**
-   * Flush [informative] data recursively.
-   */
+  /// Flush [informative] data recursively.
   void flushInformative() {
     _ngContents?.forEach((b) => b.flushInformative());
   }
 
-  /**
-   * Accumulate non-[informative] data into [signature].
-   */
+  /// Accumulate non-[informative] data into [signature].
   void collectApiSignature(api_sig.ApiSignature signature) {
     if (this._ngContents == null) {
       signature.addInt(0);
