@@ -613,7 +613,7 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
     statements.add(child.callMethod('destroyNestedViews', []).toStmt());
   }
   for (o.Expression child in view.viewChildren) {
-    statements.add(child.callMethod('destroy', []).toStmt());
+    statements.add(child.callMethod('destroyInternalState', []).toStmt());
   }
   statements.addAll(view.destroyMethod.finish());
   return statements;

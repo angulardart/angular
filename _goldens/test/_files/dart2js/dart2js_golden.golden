@@ -10061,7 +10061,7 @@
     injectorGet$2: function(token, nodeIndex) {
       return this.injectorGet$3(token, nodeIndex, C.C_Object);
     },
-    destroy$0: function() {
+    destroyInternalState$0: function() {
       var t1 = this.viewData;
       if (t1.destroyed)
         return;
@@ -10154,7 +10154,7 @@
       if (nested == null)
         return;
       for (len = nested.length, i = 0; i < len; ++i)
-        nested[i].destroy$0();
+        nested[i].destroyInternalState$0();
     },
     move$2: function(viewRef, currentIndex) {
       var t1, views, refRenderNode;
@@ -10172,7 +10172,7 @@
       return viewRef;
     },
     remove$1: function(_, index) {
-      this.detachView$1(index === -1 ? this.get$length(this) - 1 : index).destroy$0();
+      this.detachView$1(index === -1 ? this.get$length(this) - 1 : index).destroyInternalState$0();
     },
     clear$0: function(_) {
       var i, nested, index, _this = this;
@@ -10182,7 +10182,7 @@
           index = (nested == null ? 0 : nested.length) - 1;
         } else
           index = i;
-        _this.detachView$1(index).destroy$0();
+        _this.detachView$1(index).destroyInternalState$0();
       }
     },
     _findRenderNode$2: function(views, index) {
@@ -10987,16 +10987,16 @@
     },
     destroyInternal$0: function() {
       var _this = this;
-      _this._compView_3.destroy$0();
-      _this._compView_4.destroy$0();
-      _this._compView_5.destroy$0();
-      _this._compView_6.destroy$0();
-      _this._compView_7.destroy$0();
-      _this._compView_8.destroy$0();
-      _this._compView_9.destroy$0();
-      _this._compView_10.destroy$0();
-      _this._compView_11.destroy$0();
-      _this._compView_12.destroy$0();
+      _this._compView_3.destroyInternalState$0();
+      _this._compView_4.destroyInternalState$0();
+      _this._compView_5.destroyInternalState$0();
+      _this._compView_6.destroyInternalState$0();
+      _this._compView_7.destroyInternalState$0();
+      _this._compView_8.destroyInternalState$0();
+      _this._compView_9.destroyInternalState$0();
+      _this._compView_10.destroyInternalState$0();
+      _this._compView_11.destroyInternalState$0();
+      _this._compView_12.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -11028,7 +11028,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.RootComponent];
@@ -11071,7 +11071,7 @@
       _this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.UsesDefaultChangeDetectionAndInputs];
@@ -11156,7 +11156,7 @@
       _this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.UsesOnPushChangeDetectionAndInputs];
@@ -11259,7 +11259,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.EmbeddedNgIf];
@@ -11385,7 +11385,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.ComponentConditionalFeatures];
@@ -11415,7 +11415,7 @@
       this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_0.destroy$0();
+      this._compView_0.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.ComponentConditionalFeatures];
@@ -11608,7 +11608,7 @@
       this._compView_1.detectChanges$0();
     },
     destroyInternal$0: function() {
-      this._compView_1.destroy$0();
+      this._compView_1.destroyInternalState$0();
     },
     $asAppView: function() {
       return [O.HasNestedProviderLookups];

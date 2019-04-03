@@ -112,7 +112,7 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -215,7 +215,7 @@ class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -315,7 +315,7 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

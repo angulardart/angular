@@ -261,14 +261,14 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
-    _compView_1.destroy();
-    _compView_2.destroy();
-    _compView_3.destroy();
-    _compView_4.destroy();
-    _compView_5.destroy();
-    _compView_6.destroy();
-    _compView_7.destroy();
+    _compView_0.destroyInternalState();
+    _compView_1.destroyInternalState();
+    _compView_2.destroyInternalState();
+    _compView_3.destroyInternalState();
+    _compView_4.destroyInternalState();
+    _compView_5.destroyInternalState();
+    _compView_6.destroyInternalState();
+    _compView_7.destroyInternalState();
   }
 
   @override
@@ -309,7 +309,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -414,7 +414,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -496,7 +496,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -565,7 +565,7 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -638,7 +638,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

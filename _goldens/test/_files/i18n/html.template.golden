@@ -83,7 +83,7 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

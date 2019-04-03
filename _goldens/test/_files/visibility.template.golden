@@ -78,7 +78,7 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -123,7 +123,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -172,7 +172,7 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -246,7 +246,7 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -293,7 +293,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
 
   @override
   void destroyInternal() {
-    _compView_1.destroy();
+    _compView_1.destroyInternalState();
   }
 
   @override
@@ -334,7 +334,7 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -407,7 +407,7 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -472,7 +472,7 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

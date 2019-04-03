@@ -75,7 +75,7 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -122,7 +122,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -163,7 +163,7 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -282,7 +282,7 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

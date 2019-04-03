@@ -116,7 +116,7 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

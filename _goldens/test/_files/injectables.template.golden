@@ -127,7 +127,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

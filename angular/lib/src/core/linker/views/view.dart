@@ -12,17 +12,17 @@ abstract class View {
   /// This means, for the most part, creating the necessary initial DOM nodes,
   /// eagerly provided services or references (such as `ViewContainerRef`), and
   /// making them available as class members for later access (such as in
-  /// [detectChanges] or [destroy]).
+  /// [detectChanges] or [destroyInternalState]).
   @protected
   void build();
 
   /// Destroys the internal state of this view.
   ///
-  /// If appropriate, any nodes that were added to the DOM by [build] are also
-  /// detached from the DOM and destroyed.
-  void destroy();
+  /// Note that unlike `EmbeddedViewRef.destroy`, this does not detach the view
+  /// from its container.
+  void destroyInternalState();
 
-  /// Backing implementation of [destroy] for this view.
+  /// Backing implementation of [destroyInternalState] for this view.
   ///
   /// Generated views may override this method to destroy any internal state.
   ///

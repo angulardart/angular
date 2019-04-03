@@ -66,8 +66,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
-    _compView_1.destroy();
+    _compView_0.destroyInternalState();
+    _compView_1.destroyInternalState();
   }
 
   @override
@@ -108,7 +108,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -182,7 +182,7 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -251,7 +251,7 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

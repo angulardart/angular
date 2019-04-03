@@ -303,7 +303,7 @@ abstract class AppView<T> extends View {
   void detachAndDestroy() {
     var containerElement = viewData._viewContainerElement;
     containerElement?.detachView(containerElement.nestedViews.indexOf(this));
-    destroy();
+    destroyInternalState();
   }
 
   void detach() {
@@ -313,7 +313,7 @@ abstract class AppView<T> extends View {
   }
 
   @override
-  void destroy() {
+  void destroyInternalState() {
     if (viewData.destroyed) {
       return;
     }

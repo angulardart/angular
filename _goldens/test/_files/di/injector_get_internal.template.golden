@@ -454,12 +454,12 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   void destroyInternal() {
-    _compView_1.destroy();
-    _compView_4.destroy();
-    _compView_5.destroy();
-    _compView_6.destroy();
-    _compView_7.destroy();
-    _compView_8.destroy();
+    _compView_1.destroyInternalState();
+    _compView_4.destroyInternalState();
+    _compView_5.destroyInternalState();
+    _compView_6.destroyInternalState();
+    _compView_7.destroyInternalState();
+    _compView_8.destroyInternalState();
   }
 
   @override
@@ -500,7 +500,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -573,7 +573,7 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -693,7 +693,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
