@@ -320,9 +320,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
   bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
   var isOnPushComp = directive.isComponent &&
       directive.changeDetection == ChangeDetectionStrategy.OnPush;
-  var isStatefulComp = directive.isComponent &&
-      directive.changeDetection == ChangeDetectionStrategy.Stateful;
-  var isStatefulDirective = !directive.isComponent &&
+  var isStateful =
       directive.changeDetection == ChangeDetectionStrategy.Stateful;
 
   if (calcChangesMap) {
@@ -365,7 +363,7 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
           .toStmt());
       continue;
     }
-    if (isStatefulDirective) {
+    if (isStateful) {
       var fieldType = o.importType(directive.inputTypes[input.directiveName]);
       var checkExpression = converter.convertToExpression(
           input.value, input.sourceSpan, fieldType);
@@ -413,31 +411,20 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
         : null;
     var expression =
         converter.convertToExpression(input.value, input.sourceSpan, inputType);
-    if (isStatefulComp) {
-      _bindToUpdateMethod(
-        view,
-        currValExpr,
-        fieldExpr,
-        expression,
-        statements,
-        dynamicInputsMethod,
-        fieldType: inputType,
-      );
-    } else {
-      _bind(
-        view.storage,
-        currValExpr,
-        fieldExpr,
-        expression,
-        converter.isImmutable(input.value),
-        converter.isNullable(input.value),
-        statements,
-        dynamicInputsMethod,
-        constantInputsMethod,
-        fieldType: inputType,
-        isHostComponent: isHostComponent,
-      );
-    }
+
+    _bind(
+      view.storage,
+      currValExpr,
+      fieldExpr,
+      expression,
+      converter.isImmutable(input.value),
+      converter.isNullable(input.value),
+      statements,
+      dynamicInputsMethod,
+      constantInputsMethod,
+      fieldType: inputType,
+      isHostComponent: isHostComponent,
+    );
   }
   if (constantInputsMethod.isNotEmpty) {
     detectChangesInInputsMethod.addStmtsIfFirstCheck(
@@ -451,44 +438,6 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
       compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
     ]));
-  }
-}
-
-void _bindToUpdateMethod(
-  CompileView view,
-  o.ReadVarExpr currValExpr,
-  o.ReadClassMemberExpr fieldExpr,
-  o.Expression checkExpression,
-  List<o.Statement> actions,
-  CompileMethod method, {
-  o.OutputType fieldType,
-}) {
-  if (checkExpression == null) {
-    // e.g. an empty expression was given
-    return;
-  }
-  // Add class field to store previous value.
-  bool isPrimitive = _isPrimitiveFieldType(fieldType);
-  ViewStorageItem previousValueField = view.storage.allocate(fieldExpr.name,
-      outputType: isPrimitive ? fieldType : null,
-      modifiers: const [o.StmtModifier.Private]);
-  // Generate: final currVal_0 = ctx.expression.
-  method.addStmt(currValExpr
-      .set(checkExpression)
-      .toDeclStmt(null, [o.StmtModifier.Final]));
-
-  // If we have only setter action, we can simply call updater and assign
-  // newValue to previous value.
-  if (actions.length == 1) {
-    method.addStmt(actions.first);
-    method.addStmt(
-        view.storage.buildWriteExpr(previousValueField, currValExpr).toStmt());
-  } else {
-    method.addStmt(o.IfStmt(
-        o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
-        List.from(actions)
-          ..addAll(
-              [o.WriteClassMemberExpr(fieldExpr.name, currValExpr).toStmt()])));
   }
 }
 
