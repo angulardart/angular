@@ -92,7 +92,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -215,7 +215,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
 
   @override
   void destroyInternal() {
-    _compView_1.destroy();
+    _compView_1.destroyInternalState();
   }
 }
 
@@ -246,7 +246,7 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -315,7 +315,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

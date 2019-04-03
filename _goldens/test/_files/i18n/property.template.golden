@@ -88,7 +88,7 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

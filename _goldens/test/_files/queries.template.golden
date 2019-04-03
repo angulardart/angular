@@ -158,7 +158,7 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -301,7 +301,7 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -444,7 +444,7 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -641,7 +641,7 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

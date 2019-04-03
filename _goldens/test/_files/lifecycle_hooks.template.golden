@@ -51,7 +51,7 @@ class ViewMostLifecycleHooksComponent0 extends AppView<import1.MostLifecycleHook
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -108,7 +108,7 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
     _MostLifecycleHooksComponent_0_5.ngOnDestroy();
   }
 }
@@ -174,7 +174,7 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -241,7 +241,7 @@ class _ViewOnChangesComponentHost0 extends AppView<import1.OnChangesComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -306,7 +306,7 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -433,10 +433,10 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
-    _compView_1.destroy();
-    _compView_3.destroy();
-    _compView_4.destroy();
+    _compView_0.destroyInternalState();
+    _compView_1.destroyInternalState();
+    _compView_3.destroyInternalState();
+    _compView_4.destroyInternalState();
     _MostLifecycleHooksComponent_0_5.ngOnDestroy();
   }
 
@@ -478,7 +478,7 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

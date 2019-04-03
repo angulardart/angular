@@ -90,7 +90,7 @@ class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

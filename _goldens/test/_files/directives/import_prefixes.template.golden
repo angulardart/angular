@@ -89,7 +89,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -162,7 +162,7 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

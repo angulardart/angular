@@ -219,16 +219,16 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
 
   @override
   void destroyInternal() {
-    _compView_3.destroy();
-    _compView_4.destroy();
-    _compView_5.destroy();
-    _compView_6.destroy();
-    _compView_7.destroy();
-    _compView_8.destroy();
-    _compView_9.destroy();
-    _compView_10.destroy();
-    _compView_11.destroy();
-    _compView_12.destroy();
+    _compView_3.destroyInternalState();
+    _compView_4.destroyInternalState();
+    _compView_5.destroyInternalState();
+    _compView_6.destroyInternalState();
+    _compView_7.destroyInternalState();
+    _compView_8.destroyInternalState();
+    _compView_9.destroyInternalState();
+    _compView_10.destroyInternalState();
+    _compView_11.destroyInternalState();
+    _compView_12.destroyInternalState();
   }
 
   @override
@@ -269,7 +269,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -323,7 +323,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -364,7 +364,7 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -446,7 +446,7 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -507,7 +507,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -548,7 +548,7 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -630,7 +630,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -730,7 +730,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -812,7 +812,7 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -843,7 +843,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -960,7 +960,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1025,7 +1025,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1094,7 +1094,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1185,7 +1185,7 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1215,7 +1215,7 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1246,7 +1246,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1312,7 +1312,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1378,7 +1378,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1481,7 +1481,7 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1611,7 +1611,7 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1734,7 +1734,7 @@ class _ViewHasNestedProviderLookups2 extends AppView<import1.HasNestedProviderLo
 
   @override
   void destroyInternal() {
-    _compView_1.destroy();
+    _compView_1.destroyInternalState();
   }
 }
 
@@ -1765,7 +1765,7 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -1834,7 +1834,7 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

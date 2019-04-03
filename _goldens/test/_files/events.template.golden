@@ -78,7 +78,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -121,7 +121,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 
   @override
@@ -162,7 +162,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -227,7 +227,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -299,7 +299,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

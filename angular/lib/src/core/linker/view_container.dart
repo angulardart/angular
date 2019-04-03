@@ -74,7 +74,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       return;
     }
     for (var i = 0, len = nested.length; i < len; i++) {
-      nested[i].destroy();
+      nested[i].destroyInternalState();
     }
   }
 
@@ -154,7 +154,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (index == -1) {
       index = length - 1;
     }
-    detachView(index).destroy();
+    detachView(index).destroyInternalState();
   }
 
   /// Use along with [#insert] to move a View within the current container.

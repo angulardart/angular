@@ -86,7 +86,7 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -165,7 +165,7 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -241,7 +241,7 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -318,7 +318,7 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -397,7 +397,7 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -482,7 +482,7 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

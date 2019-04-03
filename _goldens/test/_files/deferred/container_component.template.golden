@@ -121,7 +121,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _appEl_3.destroyNestedViews();
     _appEl_4.destroyNestedViews();
     _appEl_6.destroyNestedViews();
-    _compView_5.destroy();
+    _compView_5.destroyInternalState();
     _cancelDeferredLoad0();
     _cancelDeferredLoad3();
     _cancelDeferredLoad4();
@@ -165,7 +165,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -226,7 +226,7 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -294,7 +294,7 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -324,7 +324,7 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -357,7 +357,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -410,7 +410,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -441,7 +441,7 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

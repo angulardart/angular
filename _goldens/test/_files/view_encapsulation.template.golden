@@ -103,7 +103,7 @@ class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 
@@ -192,7 +192,7 @@ class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
 
   @override
   void destroyInternal() {
-    _compView_0.destroy();
+    _compView_0.destroyInternalState();
   }
 }
 

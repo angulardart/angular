@@ -66,7 +66,7 @@ abstract class EmbeddedViewRef extends ViewRef {
 
   List<Node> get rootNodes;
 
-  /// Destroys the view and all of the data structures associated with it.
+  /// Detaches the view and destroys all of its associated state.
   void destroy();
 
   /// Marks the node for change detection.
