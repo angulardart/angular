@@ -12,7 +12,7 @@ dependencies:
   analyzer: ^0.35.0
   plugin: '^0.2.0'
   analyzer_plugin: '0.0.1-alpha.7'
-  angular_ast: '^0.5.8'
+  angular_ast: '^0.5.9'
   meta: ^1.0.2
   yaml: ^2.1.2
   crypto: '>=1.1.1 <3.0.0'

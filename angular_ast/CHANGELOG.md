@@ -1,3 +1,5 @@
+## 0.5.9
+
 *   Errors caused by parsing an invalid micro expression (i.e. `*ngFor`) are now
     reported to the registered `ExceptionHandler` rather than thrown.
 
