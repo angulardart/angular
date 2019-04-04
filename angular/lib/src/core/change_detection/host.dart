@@ -6,7 +6,6 @@ import 'package:meta/dart2js.dart' as dart2js;
 
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/core/linker/app_view.dart';
-import 'package:angular/src/core/linker/view_ref.dart';
 
 import 'change_detection.dart';
 import 'constants.dart';
@@ -183,8 +182,9 @@ abstract class ChangeDetectionHost {
     final length = detectors.length;
     for (var i = 0; i < length; i++) {
       final detector = detectors[i];
-      if (detector is ViewRefImpl) {
-        final view = detector.appView;
+      // TODO(b/129723738): don't use <dynamic> when alternatives optimize well
+      if (detector is AppView<dynamic>) {
+        final view = detector;
         _lastGuardedView = view;
         view.detectChanges();
       }

@@ -18,7 +18,7 @@ import 'component_factory.dart';
 import 'template_ref.dart';
 import 'view_container.dart';
 import 'view_fragment.dart';
-import 'view_ref.dart' show ViewRefImpl;
+import 'view_ref.dart' show EmbeddedViewRef;
 import 'view_type.dart' show ViewType;
 import 'views/view.dart';
 
@@ -31,9 +31,6 @@ const _UndefinedInjectorResult = Object();
 class AppViewData {
   /// The type of view (host element, complete template, embedded template).
   final ViewType type;
-
-  /// View reference interface (user-visible API).
-  final ViewRefImpl ref;
 
   /// Whether the view has been destroyed.
   bool destroyed = false;
@@ -80,22 +77,7 @@ class AppViewData {
   // change detection will fail.
   int _cdState = ChangeDetectorState.NeverChecked;
 
-  AppViewData._(
-    AppView<void> appView,
-    this._cdMode,
-    this.type,
-    this.parentIndex,
-  ) : ref = ViewRefImpl(appView);
-
-  @dart2js.noInline
-  factory AppViewData(
-    AppView<void> appView,
-    int cdMode,
-    ViewType viewType,
-    int parentIndex,
-  ) {
-    return AppViewData._(appView, cdMode, viewType, parentIndex);
-  }
+  AppViewData(this._cdMode, this.type, this.parentIndex);
 
   set cdMode(int value) {
     if (_cdMode != value) {
@@ -148,7 +130,8 @@ class AppViewData {
 /// followed by non-initialized fields.  In this base class, the
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
-abstract class AppView<T> extends View {
+abstract class AppView<T> extends View
+    implements ChangeDetectorRef, EmbeddedViewRef {
   AppViewData viewData;
 
   /// The root element.
@@ -176,6 +159,7 @@ abstract class AppView<T> extends View {
   /// Parent generated view.
   final AppView<Object> parentView;
 
+  @dart2js.noInline // This doesn't actually prevent inlining (b/129876510).
   AppView(
     ViewType type,
     this.parentView,
@@ -183,7 +167,8 @@ abstract class AppView<T> extends View {
     int cdMode,
   ) {
     locals = {};
-    viewData = AppViewData(this, cdMode, type, parentIndex);
+    viewData = AppViewData(cdMode, type, parentIndex);
+    return; // This is necessary to prevent inlining (b/129876510).
   }
 
   /// Sets change detection mode for this view and caches flag to skip
@@ -207,10 +192,46 @@ abstract class AppView<T> extends View {
 
   int get cdState => viewData._cdState;
 
-  /// View reference interface (user-visible API).
-  ViewRefImpl get ref => viewData.ref;
+  @override
+  bool get destroyed => viewData.destroyed;
 
   List<Object> get projectedNodes => viewData.projectedNodes;
+
+  @override
+  List<Node> get rootNodes => flatRootNodes;
+
+  @override
+  void checkNoChanges() {
+    AppViewUtils.enterThrowOnChanges();
+    detectChanges();
+    AppViewUtils.exitThrowOnChanges();
+  }
+
+  @override
+  void detach() {
+    cdMode = ChangeDetectionStrategy.Detached;
+  }
+
+  @override
+  void markForCheck() {
+    markPathToRootAsCheckOnce();
+  }
+
+  @override
+  void onDestroy(void Function() callback) {
+    viewData.addDestroyCallback(callback);
+  }
+
+  @override
+  void reattach() {
+    cdMode = ChangeDetectionStrategy.CheckAlways;
+    markForCheck();
+  }
+
+  @override
+  void setLocal(String name, dynamic value) {
+    locals[name] = value;
+  }
 
   ComponentRef<T> create(
     T context,
@@ -265,7 +286,7 @@ abstract class AppView<T> extends View {
   }
 
   /// Attaches this view's root nodes as siblings after [node].
-  void attachAfter(Node node) {
+  void attachRootNodesAfter(Node node) {
     insertNodesAsSibling(flatRootNodes, node);
     domRootRendererIsDirty = true;
   }
@@ -300,13 +321,14 @@ abstract class AppView<T> extends View {
   @override
   Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
 
-  void detachAndDestroy() {
+  @override
+  void destroy() {
     var containerElement = viewData._viewContainerElement;
     containerElement?.detachView(containerElement.nestedViews.indexOf(this));
     destroyInternalState();
   }
 
-  void detach() {
+  void detachRootNodes() {
     final nodes = flatRootNodes;
     removeNodes(nodes);
     domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
@@ -323,12 +345,6 @@ abstract class AppView<T> extends View {
     dirtyParentQueriesInternal();
   }
 
-  void addOnDestroyCallback(void Function() callback) {
-    viewData.addDestroyCallback(callback);
-  }
-
-  ChangeDetectorRef get changeDetectorRef => viewData.ref;
-
   @dart2js.noInline
   List<Node> get flatRootNodes {
     return viewData.rootFragment.flattenDomNodes();
@@ -339,7 +355,8 @@ abstract class AppView<T> extends View {
     return viewData.rootFragment.findLastDomNode();
   }
 
-  bool hasLocal(String contextName) => locals.containsKey(contextName);
+  @override
+  bool hasLocal(String name) => locals.containsKey(name);
 
   /// Overwritten by implementations
   void dirtyParentQueriesInternal() {}

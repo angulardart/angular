@@ -34,15 +34,15 @@ class ComponentRef<C> {
   C get instance => _component;
 
   /// The [ViewRef] of the Host View of this Component instance.
-  ViewRef get hostView => _parentView.viewData.ref;
+  ViewRef get hostView => _parentView;
 
   /// The [ChangeDetectorRef] of the Component instance.
-  ChangeDetectorRef get changeDetectorRef => _parentView.viewData.ref;
+  ChangeDetectorRef get changeDetectorRef => _parentView;
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.
   void destroy() {
-    _parentView.detachAndDestroy();
+    _parentView.destroy();
   }
 
   /// Register a callback that will be called when the component is destroyed.

@@ -10,7 +10,7 @@ import 'package:angular/src/bootstrap/modules.dart';
 import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/change_detection/constants.dart';
-import 'package:angular/src/core/linker/view_ref.dart';
+import 'package:angular/src/core/linker/app_view.dart';
 
 /// Returns an application injector factory for [providers], if any.
 InjectorFactory testInjectorFactory(List<dynamic> providers) {
@@ -104,14 +104,13 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   final componentRef = componentFactory.create(injector);
-  final cdMode = (componentRef.hostView as ViewRefImpl).appView.cdMode;
+  final cdMode = (componentRef.hostView as AppView<void>).cdMode;
   if (cdMode != ChangeDetectionStrategy.Default &&
       cdMode != ChangeDetectionStrategy.CheckAlways) {
     throw UnsupportedError(
         'The root component in an Angular test or application must use the '
         'default form of change detection (ChangeDetectionStrategy.Default). '
-        'Instead got ${(componentRef.hostView as ViewRefImpl).appView.cdMode} '
-        'on component $E.');
+        'Instead got $cdMode on component $E.');
   }
 
   Future<ComponentRef<E>> loadComponent() {

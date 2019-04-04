@@ -3727,24 +3727,17 @@
     }, MultiToken: function MultiToken(t0, t1) {
       this._uniqueName = t0;
       this.$ti = t1;
-    },
-    AppViewData_AppViewData: function(appView, cdMode, viewType, parentIndex) {
-      return new S.AppViewData(viewType, new L.ViewRefImpl(appView), parentIndex, cdMode);
-    },
-    AppViewData: function AppViewData(t0, t1, t2, t3) {
+    }, AppViewData: function AppViewData(t0, t1, t2) {
       var _ = this;
       _.type = t0;
-      _.ref = t1;
       _.destroyed = false;
       _.rootFragment = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
-      _.parentIndex = t2;
-      _._cdMode = t3;
+      _.parentIndex = t1;
+      _._cdMode = t2;
       _._skipChangeDetection = false;
       _._cdState = 0;
-    },
-    AppView: function AppView() {
-    }
-  },
+    }, AppView: function AppView() {
+    }},
   N = {DefaultKeyValueDiffer: function DefaultKeyValueDiffer(t0) {
       var _ = this;
       _._records = t0;
@@ -4023,8 +4016,6 @@
     }
   },
   L = {SlowComponentLoader: function SlowComponentLoader() {
-    }, ViewRefImpl: function ViewRefImpl(t0) {
-      this.appView = t0;
     }},
   O = {
     _flattenStyles: function(styles, target, componentIdOrNull) {
@@ -9059,49 +9050,48 @@
   };
   R.NgFor.prototype = {
     _applyChanges$1: function(changes) {
-      var i, t1, t2, t3, len,
+      var i, t1, t2, t3, len, viewRef,
         insertTuples = H.setRuntimeTypeInfo([], [R._RecordViewTuple]);
       changes.forEachOperation$1(new R.NgFor__applyChanges_closure(this, insertTuples));
       for (i = 0; i < insertTuples.length; ++i) {
         t1 = insertTuples[i];
-        t2 = t1.record;
-        t3 = t2.item;
-        t1 = t1.view.appView;
-        t1.locals.$indexSet(0, "$implicit", t3);
-        t3 = t2.currentIndex;
+        t2 = t1.view;
+        t1 = t1.record;
+        t3 = t1.item;
+        t2.locals.$indexSet(0, "$implicit", t3);
+        t3 = t1.currentIndex;
         t3.toString;
-        t1.locals.$indexSet(0, "even", (t3 & 1) === 0);
-        t2 = t2.currentIndex;
-        t2.toString;
-        t1.locals.$indexSet(0, "odd", (t2 & 1) === 1);
+        t2.locals.$indexSet(0, "even", (t3 & 1) === 0);
+        t1 = t1.currentIndex;
+        t1.toString;
+        t2.locals.$indexSet(0, "odd", (t1 & 1) === 1);
       }
       for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
-        t3 = t1.nestedViews[i].viewData.ref.appView;
-        t3.locals.$indexSet(0, "first", i === 0);
-        t3.locals.$indexSet(0, "last", i === t2);
-        t3.locals.$indexSet(0, "index", i);
-        t3.locals.$indexSet(0, "count", len);
+        viewRef = t1.nestedViews[i];
+        viewRef.locals.$indexSet(0, "first", i === 0);
+        viewRef.locals.$indexSet(0, "last", i === t2);
+        viewRef.locals.$indexSet(0, "index", i);
+        viewRef.locals.$indexSet(0, "count", len);
       }
       changes.forEachIdentityChange$1(new R.NgFor__applyChanges_closure0(this));
     }
   };
   R.NgFor__applyChanges_closure.prototype = {
     call$3: function(item, adjustedPreviousIndex, currentIndex) {
-      var t1, t2, viewRef, index, view, _this = this;
+      var t1, t2, viewRef, view, _this = this;
       if (item.previousIndex == null) {
         t1 = _this.$this;
         t2 = t1._ng_for$_viewContainer;
         t2.toString;
         viewRef = t1._ng_for$_templateRef.createEmbeddedView$0();
-        index = currentIndex === -1 ? t2.get$length(t2) : currentIndex;
-        t2.attachView$2(viewRef.appView, index);
+        t2.attachView$2(viewRef, currentIndex === -1 ? t2.get$length(t2) : currentIndex);
         _this.insertTuples.push(new R._RecordViewTuple(viewRef, item));
       } else {
         t1 = _this.$this._ng_for$_viewContainer;
         if (currentIndex == null)
           t1.remove$1(0, adjustedPreviousIndex);
         else {
-          view = t1.nestedViews[adjustedPreviousIndex].viewData.ref;
+          view = t1.nestedViews[adjustedPreviousIndex];
           t1.move$2(view, currentIndex);
           _this.insertTuples.push(new R._RecordViewTuple(view, item));
         }
@@ -9111,9 +9101,9 @@
   R.NgFor__applyChanges_closure0.prototype = {
     call$1: function(record) {
       var t1 = record.currentIndex,
-        viewRef = this.$this._ng_for$_viewContainer.nestedViews[t1].viewData.ref;
+        viewRef = this.$this._ng_for$_viewContainer.nestedViews[t1];
       t1 = record.item;
-      viewRef.appView.locals.$indexSet(0, "$implicit", t1);
+      viewRef.locals.$indexSet(0, "$implicit", t1);
     }
   };
   R._RecordViewTuple.prototype = {};
@@ -9127,7 +9117,7 @@
       t1 = _this._viewContainer;
       if (newCondition) {
         t1.toString;
-        t1.attachView$2(_this._templateRef.createEmbeddedView$0().appView, t1.get$length(t1));
+        t1.attachView$2(_this._templateRef.createEmbeddedView$0(), t1.get$length(t1));
       } else
         t1.clear$0(0);
       _this._prevCondition = newCondition;
@@ -9173,17 +9163,17 @@
       var t1, t2, t3, _this = this;
       _this._rootComponents.push(component);
       t1 = component._parentView;
-      t2 = t1.viewData.ref.appView.viewData;
+      t2 = t1.viewData;
       t3 = t2._onDestroyCallbacks;
       t2 = t3 == null ? t2._onDestroyCallbacks = H.setRuntimeTypeInfo([], [{func: 1, ret: -1}]) : t3;
       t2.push(new Y.ApplicationRef__loadedRootComponent_closure(_this, component, node));
-      _this._changeDetectors.push(t1.viewData.ref);
+      _this._changeDetectors.push(t1);
       _this.tick$0();
     },
     _destroyedRootComponent$1: function(component) {
       if (!C.JSArray_methods.remove$1(this._rootComponents, component))
         return;
-      C.JSArray_methods.remove$1(this._changeDetectors, component._parentView.viewData.ref);
+      C.JSArray_methods.remove$1(this._changeDetectors, component._parentView);
     }
   };
   Y.ApplicationRef$__closure.prototype = {
@@ -9905,16 +9895,16 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i)
-        detectors[i].appView.detectChanges$0();
+        detectors[i].detectChanges$0();
     },
     _runTickGuarded$0: function() {
-      var i, view,
+      var i, detector,
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        view = detectors[i].appView;
-        this._lastGuardedView = view;
-        view.detectChanges$0();
+        detector = detectors[i];
+        this._lastGuardedView = detector;
+        detector.detectChanges$0();
       }
       return this._checkForChangeDetectionError$0();
     },
@@ -10019,7 +10009,8 @@
   S.AppView.prototype = {
     AppView$4: function(type, parentView, parentIndex, cdMode) {
       this.locals = P.LinkedHashMap_LinkedHashMap$_empty(P.String, null);
-      this.viewData = S.AppViewData_AppViewData(this, cdMode, type, parentIndex);
+      this.viewData = new S.AppViewData(type, parentIndex, cdMode);
+      return;
     },
     create$2: function(_, context, projectedNodes) {
       this.ctx = context;
@@ -10132,7 +10123,7 @@
         parentView = t1.parentView,
         view = this._template_ref$_viewFactory.call$2(parentView, t1.index);
       view.create$2(0, parentView.ctx, parentView.viewData.projectedNodes);
-      return view.viewData.ref;
+      return view;
     }
   };
   V.ViewContainer.prototype = {
@@ -10157,18 +10148,18 @@
         nested[i].destroyInternalState$0();
     },
     move$2: function(viewRef, currentIndex) {
-      var t1, views, refRenderNode;
+      var views, refRenderNode;
       if (currentIndex === -1)
         return;
-      t1 = viewRef.appView;
       views = this.nestedViews;
-      C.JSArray_methods.removeAt$1(views, (views && C.JSArray_methods).indexOf$1(views, t1));
-      C.JSArray_methods.insert$2(views, currentIndex, t1);
+      C.JSArray_methods.removeAt$1(views, (views && C.JSArray_methods).indexOf$1(views, viewRef));
+      C.JSArray_methods.insert$2(views, currentIndex, viewRef);
       refRenderNode = this._findRenderNode$2(views, currentIndex);
       if (refRenderNode != null) {
-        T.insertNodesAsSibling(t1.get$flatRootNodes(), refRenderNode);
+        T.insertNodesAsSibling(viewRef.get$flatRootNodes(), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
+      viewRef.toString;
       return viewRef;
     },
     remove$1: function(_, index) {
@@ -10200,6 +10191,7 @@
         T.insertNodesAsSibling(view.get$flatRootNodes(), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
+      view.viewData;
     },
     detachView$1: function(viewIndex) {
       var t1 = this.nestedViews,
@@ -10225,7 +10217,6 @@
       return D.ViewFragment__flattenDomNodes(H.setRuntimeTypeInfo([], [W.Node]), this._nodesOrViewContainers);
     }
   };
-  L.ViewRefImpl.prototype = {};
   R.ViewType.prototype = {
     toString$0: function(_) {
       return this._name;
@@ -10514,8 +10505,8 @@
       if (t1 == null) {
         t1 = this._view;
         t2 = t1.parentView;
-        t1 = t1.viewData.parentIndex;
-        t1 = this._parent = new G.ElementInjector(t2, t1, C.EmptyInjector_null);
+        t1 = t1.viewData;
+        t1 = this._parent = new G.ElementInjector(t2, t1.parentIndex, C.EmptyInjector_null);
       }
       return t1;
     }
@@ -11716,7 +11707,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, A.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, L.ViewRefImpl, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, A.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, R.ViewType, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);

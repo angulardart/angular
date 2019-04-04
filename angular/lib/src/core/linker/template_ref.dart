@@ -26,7 +26,7 @@ class TemplateRef {
     final parentView = _viewContainer.parentView;
     final view = _viewFactory(parentView, _viewContainer.index);
     view.create(parentView.ctx, parentView.viewData.projectedNodes);
-    return view.viewData.ref;
+    return view;
   }
 
   /// The location in the View where the Embedded View logically belongs to.

@@ -1,12 +1,5 @@
 import 'dart:html';
 
-import 'package:angular/src/core/change_detection/constants.dart'
-    show ChangeDetectionStrategy;
-
-import '../change_detection/change_detector_ref.dart' show ChangeDetectorRef;
-import 'app_view.dart' show AppView;
-import 'app_view_utils.dart';
-
 abstract class ViewRef {
   bool get destroyed;
 
@@ -71,64 +64,4 @@ abstract class EmbeddedViewRef extends ViewRef {
 
   /// Marks the node for change detection.
   void markForCheck();
-}
-
-class ViewRefImpl implements EmbeddedViewRef, ChangeDetectorRef {
-  final AppView<void> appView;
-
-  ViewRefImpl(this.appView);
-
-  @override
-  List<Node> get rootNodes => appView.flatRootNodes;
-
-  ChangeDetectorRef get changeDetectorRef => this;
-
-  @override
-  void setLocal(String variableName, dynamic value) {
-    appView.locals[variableName] = value;
-  }
-
-  @override
-  bool hasLocal(String variableName) => appView.hasLocal(variableName);
-
-  @override
-  bool get destroyed => appView.viewData.destroyed;
-
-  @override
-  void markForCheck() {
-    appView.markPathToRootAsCheckOnce();
-  }
-
-  @override
-  void detach() {
-    appView.cdMode = ChangeDetectionStrategy.Detached;
-  }
-
-  @override
-  void detectChanges() {
-    appView.detectChanges();
-  }
-
-  @override
-  void checkNoChanges() {
-    AppViewUtils.enterThrowOnChanges();
-    appView.detectChanges();
-    AppViewUtils.exitThrowOnChanges();
-  }
-
-  @override
-  void reattach() {
-    appView.cdMode = ChangeDetectionStrategy.CheckAlways;
-    markForCheck();
-  }
-
-  @override
-  void onDestroy(void Function() callback) {
-    appView.addOnDestroyCallback(callback);
-  }
-
-  @override
-  void destroy() {
-    appView.detachAndDestroy();
-  }
 }

@@ -1137,7 +1137,7 @@ class CompileView {
     final deps = pipeMeta.type.diDeps.map((diDep) {
       if (diDep.token
           .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
-        return o.ReadClassMemberExpr('ref');
+        return o.THIS_EXPR;
       }
       usesInjectorGet = true;
       return injectFromViewParentInjector(this, diDep.token, diDep.isOptional);
