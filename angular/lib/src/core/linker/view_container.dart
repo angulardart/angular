@@ -8,7 +8,7 @@ import 'component_loader.dart';
 import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_container_ref.dart';
-import 'view_ref.dart' show EmbeddedViewRef, ViewRef, ViewRefImpl;
+import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 import 'view_type.dart';
 
 /// A container providing an insertion point for attaching children.
@@ -37,7 +37,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// specified index.
   @override
   ViewRef get(int index) {
-    return nestedViews[index].viewData.ref;
+    return nestedViews[index];
   }
 
   /// The number of Views currently attached to this container.
@@ -97,7 +97,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
     final viewRef = templateRef.createEmbeddedView();
-    attachView(unsafeCast<ViewRefImpl>(viewRef).appView, length);
+    attachView(unsafeCast(viewRef), length);
     return viewRef;
   }
 
@@ -121,8 +121,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (index == -1) {
       index = length;
     }
-    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
-    attachView(viewRef_.appView, index);
+    attachView(unsafeCast(viewRef), index);
     return viewRef;
   }
 
@@ -131,17 +130,15 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (currentIndex == -1) {
       return null;
     }
-    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
-    moveView(viewRef_.appView, currentIndex);
-    return viewRef_;
+    moveView(unsafeCast(viewRef), currentIndex);
+    return viewRef;
   }
 
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.
   @override
   int indexOf(ViewRef viewRef) {
-    final viewRef_ = unsafeCast<ViewRefImpl>(viewRef);
-    return nestedViews.indexOf(viewRef_.appView);
+    return nestedViews.indexOf(unsafeCast(viewRef));
   }
 
   /// Destroys a View attached to this container at the specified `index`.
@@ -166,7 +163,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (index == -1) {
       index = length - 1;
     }
-    return detachView(index).viewData.ref;
+    return detachView(index);
   }
 
   /// Destroys all Views in this container.
@@ -205,7 +202,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final refRenderNode = _findRenderNode(views, currentIndex);
 
     if (refRenderNode != null) {
-      view.attachAfter(refRenderNode);
+      view.attachRootNodesAfter(refRenderNode);
     }
 
     view.markContentChildAsMoved(this);
@@ -220,7 +217,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     nestedViews = views;
 
     if (refRenderNode != null) {
-      view.attachAfter(refRenderNode);
+      view.attachRootNodesAfter(refRenderNode);
     }
 
     view.addToContentChildren(this);
@@ -230,7 +227,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final view = nestedViews.removeAt(viewIndex);
     _assertCanMove(view);
     view
-      ..detach()
+      ..detachRootNodes()
       ..removeFromContentChildren(this);
     return view;
   }

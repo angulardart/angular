@@ -202,13 +202,8 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     }
 
     // Access builtins with special visibility.
-    if (component != null) {
-      _providers.add(
-          Identifiers.ChangeDetectorRefToken, componentView.prop('ref'));
-    } else {
-      _providers.add(
-          Identifiers.ChangeDetectorRefToken, o.ReadClassMemberExpr('ref'));
-    }
+    _providers.add(
+        Identifiers.ChangeDetectorRefToken, componentView ?? o.THIS_EXPR);
 
     // ComponentLoader is currently just an alias for ViewContainerRef with
     // a smaller API that is also usable outside of the context of a
