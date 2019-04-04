@@ -617,7 +617,6 @@ class _PrivateConstructorException extends Error {
 
 class ParameterInfo {
   final ParameterElement _parameter;
-  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   DartObject attribute;
   bool get isAttribute => attribute != null;
@@ -639,7 +638,8 @@ class ParameterInfo {
 
   DartType get type => _parameter.type;
 
-  ParameterInfo(this._parameter, this._exceptionHandler) {
+  ParameterInfo(
+      this._parameter, ComponentVisitorExceptionHandler exceptionHandler) {
     for (var annotationIndex = 0;
         annotationIndex < _parameter.metadata.length;
         annotationIndex++) {
@@ -648,10 +648,10 @@ class ParameterInfo {
       final indexedAnnotation =
           IndexedAnnotation(_parameter, annotation, annotationIndex);
       if (annotation.constantEvaluationErrors.isNotEmpty) {
-        _exceptionHandler.handle(AngularAnalysisError(
+        exceptionHandler.handle(AngularAnalysisError(
             annotation.constantEvaluationErrors, indexedAnnotation));
       } else if (annotationValue == null) {
-        _exceptionHandler.handle(ErrorMessageForAnnotation(
+        exceptionHandler.handle(ErrorMessageForAnnotation(
             indexedAnnotation, "Error evaluating annotation"));
       } else {
         _populateTypeInfo(annotationValue, annotation);
