@@ -1,3 +1,5 @@
+## 2.3.0
+
 ### New Features
 
 *   Added support for periodic timers in `FakeTimeNgZoneStabilizer`.

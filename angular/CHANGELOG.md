@@ -1,3 +1,5 @@
+## 5.3.0
+
 ### New features
 
 *   The template compiler issues a warning if a component that does not project
