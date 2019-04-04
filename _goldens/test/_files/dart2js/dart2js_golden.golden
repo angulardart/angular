@@ -3727,17 +3727,24 @@
     }, MultiToken: function MultiToken(t0, t1) {
       this._uniqueName = t0;
       this.$ti = t1;
-    }, AppViewData: function AppViewData(t0, t1, t2) {
+    },
+    AppViewData_AppViewData: function(cdMode, type, parentIndex) {
+      return new S.AppViewData(type, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentIndex, cdMode);
+    },
+    AppViewData: function AppViewData(t0, t1, t2, t3) {
       var _ = this;
       _.type = t0;
+      _.locals = t1;
       _.destroyed = false;
       _.rootFragment = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
-      _.parentIndex = t1;
-      _._cdMode = t2;
+      _.parentIndex = t2;
+      _._cdMode = t3;
       _._skipChangeDetection = false;
       _._cdState = 0;
-    }, AppView: function AppView() {
-    }},
+    },
+    AppView: function AppView() {
+    }
+  },
   N = {DefaultKeyValueDiffer: function DefaultKeyValueDiffer(t0) {
       var _ = this;
       _._records = t0;
@@ -3760,181 +3767,197 @@
       this.element = t0;
     },
     viewFactory_RootComponentHost0: function(parentView, parentIndex) {
-      var t1 = new N._ViewRootComponentHost0(parentView);
-      t1.AppView$4(C.ViewType_0, parentView, parentIndex, 3);
-      return t1;
+      return new N._ViewRootComponentHost0(parentView, S.AppViewData_AppViewData(3, C.ViewType_0, parentIndex));
     },
     viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
-      var t1 = new N._ViewInlinedNgIf1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewInlinedNgIf1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgIf1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewEmbeddedNgIf1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_ComponentConditionalFeatures1: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewComponentConditionalFeatures1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_ComponentConditionalFeatures2: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures2(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewComponentConditionalFeatures2(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_HasNestedProviderLookups1: function(parentView, parentIndex) {
-      var t1 = new N._ViewHasNestedProviderLookups1(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewHasNestedProviderLookups1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
     viewFactory_HasNestedProviderLookups2: function(parentView, parentIndex) {
-      var t1 = new N._ViewHasNestedProviderLookups2(parentView);
-      t1.AppView$4(C.ViewType_2, parentView, parentIndex, 3);
+      var t1 = new N._ViewHasNestedProviderLookups2(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
       t1.componentStyles = parentView.componentStyles;
       return t1;
     },
-    ViewRootComponent0: function ViewRootComponent0(t0) {
+    ViewRootComponent0: function ViewRootComponent0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0) {
+    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._RootComponent_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._RootComponent_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0) {
+    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2) {
+    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2, t3) {
       var _ = this;
       _._textBinding_1 = t0;
       _._textBinding_3 = t1;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t2;
+      _.viewData = t3;
     },
-    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0) {
+    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2) {
+    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2, t3) {
       var _ = this;
       _._textBinding_1 = t0;
       _._textBinding_3 = t1;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t2;
+      _.viewData = t3;
     },
-    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0) {
+    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewInlinedNgIf1: function _ViewInlinedNgIf1(t0) {
+    _ViewInlinedNgIf1: function _ViewInlinedNgIf1(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0) {
+    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0) {
+    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NullComponent_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NullComponent_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0) {
+    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgFor_1_9 = _._appEl_1 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgFor_1_9 = _._appEl_1 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
+    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1, t2) {
       var _ = this;
       _._textBinding_1 = t0;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t1;
+      _.viewData = t2;
     },
-    ViewNullComponent0: function ViewNullComponent0(t0) {
+    ViewNullComponent0: function ViewNullComponent0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0) {
+    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0) {
+    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0) {
+    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._FeatureA_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._FeatureA_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0) {
+    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._FeatureB_0_5 = _._compView_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._FeatureB_0_5 = _._compView_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewFeatureA0: function ViewFeatureA0(t0) {
+    ViewFeatureA0: function ViewFeatureA0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewFeatureB0: function ViewFeatureB0(t0) {
+    ViewFeatureB0: function ViewFeatureB0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0) {
+    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewUsesNgDirectives0: function ViewUsesNgDirectives0(t0) {
+    ViewUsesNgDirectives0: function ViewUsesNgDirectives0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _._NgStyle_6_5 = _._NgClass_4_5 = _._NgClass_2_5 = _._NgClass_0_5 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _._NgStyle_6_5 = _._NgClass_4_5 = _._NgClass_2_5 = _._NgClass_0_5 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewHasNestedProviderLookups0: function ViewHasNestedProviderLookups0(t0) {
+    ViewHasNestedProviderLookups0: function ViewHasNestedProviderLookups0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_0_9 = _._appEl_0 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewHasNestedProviderLookups1: function _ViewHasNestedProviderLookups1(t0) {
+    _ViewHasNestedProviderLookups1: function _ViewHasNestedProviderLookups1(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._NgIf_1_9 = _._appEl_1 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._NgIf_1_9 = _._appEl_1 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    _ViewHasNestedProviderLookups2: function _ViewHasNestedProviderLookups2(t0) {
+    _ViewHasNestedProviderLookups2: function _ViewHasNestedProviderLookups2(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = _._InjectsManyThingsDynamically_1_5 = _._compView_1 = null;
+      _.componentStyles = _.ctx = _.rootEl = _._InjectsManyThingsDynamically_1_5 = _._compView_1 = null;
       _.parentView = t0;
+      _.viewData = t1;
     },
-    ViewInjectsManyThingsDynamically0: function ViewInjectsManyThingsDynamically0(t0) {
+    ViewInjectsManyThingsDynamically0: function ViewInjectsManyThingsDynamically0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.locals = _.ctx = _.rootEl = _.viewData = null;
+      _.componentStyles = _.ctx = _.rootEl = null;
       _.parentView = t0;
+      _.viewData = t1;
     }
   },
   M = {ChangeDetectionHost: function ChangeDetectionHost() {
@@ -9050,28 +9073,28 @@
   };
   R.NgFor.prototype = {
     _applyChanges$1: function(changes) {
-      var i, t1, t2, t3, len, viewRef,
+      var i, t1, t2, t3, len,
         insertTuples = H.setRuntimeTypeInfo([], [R._RecordViewTuple]);
       changes.forEachOperation$1(new R.NgFor__applyChanges_closure(this, insertTuples));
       for (i = 0; i < insertTuples.length; ++i) {
         t1 = insertTuples[i];
-        t2 = t1.view;
-        t1 = t1.record;
-        t3 = t1.item;
-        t2.locals.$indexSet(0, "$implicit", t3);
-        t3 = t1.currentIndex;
+        t2 = t1.record;
+        t3 = t2.item;
+        t1 = t1.view.viewData.locals;
+        t1.$indexSet(0, "$implicit", t3);
+        t3 = t2.currentIndex;
         t3.toString;
-        t2.locals.$indexSet(0, "even", (t3 & 1) === 0);
-        t1 = t1.currentIndex;
-        t1.toString;
-        t2.locals.$indexSet(0, "odd", (t1 & 1) === 1);
+        t1.$indexSet(0, "even", (t3 & 1) === 0);
+        t2 = t2.currentIndex;
+        t2.toString;
+        t1.$indexSet(0, "odd", (t2 & 1) === 1);
       }
       for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
-        viewRef = t1.nestedViews[i];
-        viewRef.locals.$indexSet(0, "first", i === 0);
-        viewRef.locals.$indexSet(0, "last", i === t2);
-        viewRef.locals.$indexSet(0, "index", i);
-        viewRef.locals.$indexSet(0, "count", len);
+        t3 = t1.nestedViews[i].viewData.locals;
+        t3.$indexSet(0, "first", i === 0);
+        t3.$indexSet(0, "last", i === t2);
+        t3.$indexSet(0, "index", i);
+        t3.$indexSet(0, "count", len);
       }
       changes.forEachIdentityChange$1(new R.NgFor__applyChanges_closure0(this));
     }
@@ -9103,7 +9126,7 @@
       var t1 = record.currentIndex,
         viewRef = this.$this._ng_for$_viewContainer.nestedViews[t1];
       t1 = record.item;
-      viewRef.locals.$indexSet(0, "$implicit", t1);
+      viewRef.viewData.locals.$indexSet(0, "$implicit", t1);
     }
   };
   R._RecordViewTuple.prototype = {};
@@ -10007,11 +10030,6 @@
     }
   };
   S.AppView.prototype = {
-    AppView$4: function(type, parentView, parentIndex, cdMode) {
-      this.locals = P.LinkedHashMap_LinkedHashMap$_empty(P.String, null);
-      this.viewData = new S.AppViewData(type, parentIndex, cdMode);
-      return;
-    },
     create$2: function(_, context, projectedNodes) {
       this.ctx = context;
       this.viewData.projectedNodes = projectedNodes;
@@ -10067,15 +10085,15 @@
       return this.viewData.rootFragment.findLastDomNode$0();
     },
     detectChanges$0: function() {
-      var t1, _this = this;
-      if (_this.viewData._skipChangeDetection)
+      var t2,
+        t1 = this.viewData;
+      if (t1._skipChangeDetection)
         return;
-      t1 = $.ChangeDetectionHost__current;
-      if ((t1 == null ? null : t1._lastGuardedView) != null)
-        _this.detectCrash$0();
+      t2 = $.ChangeDetectionHost__current;
+      if ((t2 == null ? null : t2._lastGuardedView) != null)
+        this.detectCrash$0();
       else
-        _this.detectChangesInternal$0();
-      t1 = _this.viewData;
+        this.detectChangesInternal$0();
       if (t1._cdMode === 1) {
         t1._cdMode = 2;
         t1._skipChangeDetection = true;
@@ -10747,8 +10765,7 @@
       T.setAttribute(_el_0, "hasProviders", "");
       T.setAttribute(T.appendDiv(doc, _el_0), _s11_, "");
       T.setAttribute(T.appendDiv(doc, parentRenderNode), _s11_, "");
-      t1 = new N.ViewUsesDefaultChangeDetectionAndInputs0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 3, 3);
+      t1 = new N.ViewUsesDefaultChangeDetectionAndInputs0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 3));
       styles = $.ViewUsesDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10763,8 +10780,7 @@
       t1 = new O.UsesDefaultChangeDetectionAndInputs(self.defeatDart2JsOptimizations("title"), self.defeatDart2JsOptimizations("name"));
       _this._UsesDefaultChangeDetectionAndInputs_3_5 = t1;
       _this._compView_3.create0$1(t1);
-      t1 = new N.ViewUsesOnPushChangeDetectionAndInputs0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 4, 3);
+      t1 = new N.ViewUsesOnPushChangeDetectionAndInputs0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 4));
       styles = $.ViewUsesOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10779,8 +10795,7 @@
       t1 = new O.UsesOnPushChangeDetectionAndInputs(self.defeatDart2JsOptimizations("title"), self.defeatDart2JsOptimizations("name"));
       _this._UsesOnPushChangeDetectionAndInputs_4_5 = t1;
       _this._compView_4.create0$1(t1);
-      t1 = new N.ViewInlinedNgIf0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 5, 3);
+      t1 = new N.ViewInlinedNgIf0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 5));
       styles = $.ViewInlinedNgIf0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10795,8 +10810,7 @@
       t1 = new O.InlinedNgIf(self.defeatDart2JsOptimizations("showDiv"));
       _this._InlinedNgIf_5_5 = t1;
       _this._compView_5.create0$1(t1);
-      t1 = new N.ViewEmbeddedNgIf0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 6, 3);
+      t1 = new N.ViewEmbeddedNgIf0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 6));
       styles = $.ViewEmbeddedNgIf0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10811,8 +10825,7 @@
       t1 = new O.EmbeddedNgIf(self.defeatDart2JsOptimizations("showNull"));
       _this._EmbeddedNgIf_6_5 = t1;
       _this._compView_6.create0$1(t1);
-      t1 = new N.ViewEmbeddedNgFor0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 7, 3);
+      t1 = new N.ViewEmbeddedNgFor0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 7));
       styles = $.ViewEmbeddedNgFor0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10829,8 +10842,7 @@
       t3 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], t2));
       _this._EmbeddedNgFor_7_5 = t3;
       _this._compView_7.create0$1(t3);
-      t3 = new N.ViewInjectsFromArbitraryParent0(_this);
-      t3.AppView$4(C.ViewType_1, _this, 8, 3);
+      t3 = new N.ViewInjectsFromArbitraryParent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 8));
       styles = $.ViewInjectsFromArbitraryParent0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10843,16 +10855,15 @@
       _this._compView_8 = t3;
       parentRenderNode.appendChild(t4);
       t3 = _this.parentView;
-      t4 = t3.injectorGet$2(C.MultiToken_usPresidents, _this.viewData.parentIndex);
-      t5 = t3.injectorGet$2(C.MultiToken_whiteHouse, _this.viewData.parentIndex);
-      t3 = t3.injectorGet$2(C.Type_InjectableService_AmT, _this.viewData.parentIndex);
-      t6 = new O.InjectsFromArbitraryParent();
-      t3.printWashingtonDc$2(t5, t4);
-      t3 = t6;
+      t4 = _this.viewData.parentIndex;
+      t5 = t3.injectorGet$2(C.MultiToken_usPresidents, t4);
+      t6 = t3.injectorGet$2(C.MultiToken_whiteHouse, t4);
+      t4 = t3.injectorGet$2(C.Type_InjectableService_AmT, t4);
+      t3 = new O.InjectsFromArbitraryParent();
+      t4.printWashingtonDc$2(t6, t5);
       _this._InjectsFromArbitraryParent_8_5 = t3;
       _this._compView_8.create0$1(t3);
-      t3 = new N.ViewComponentConditionalFeatures0(_this);
-      t3.AppView$4(C.ViewType_1, _this, 9, 3);
+      t3 = new N.ViewComponentConditionalFeatures0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 9));
       styles = $.ViewComponentConditionalFeatures0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10867,8 +10878,7 @@
       t3 = new O.ComponentConditionalFeatures();
       _this._ComponentConditionalFeatures_9_5 = t3;
       _this._compView_9.create0$1(t3);
-      t3 = new N.ViewUsesDomBindings0(_this);
-      t3.AppView$4(C.ViewType_1, _this, 10, 3);
+      t3 = new N.ViewUsesDomBindings0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 10));
       styles = $.ViewUsesDomBindings0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10883,8 +10893,7 @@
       t3 = new O.UsesDomBindings();
       _this._UsesDomBindings_10_5 = t3;
       _this._compView_10.create0$1(t3);
-      t3 = new N.ViewUsesNgDirectives0(_this);
-      t3.AppView$4(C.ViewType_1, _this, 11, 3);
+      t3 = new N.ViewUsesNgDirectives0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 11));
       styles = $.ViewUsesNgDirectives0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10899,8 +10908,7 @@
       t1 = new O.UsesNgDirectives(P.LinkedHashMap_LinkedHashMap$_literal(["foo", true, "bar", false], t1, P.bool), H.setRuntimeTypeInfo(["foo", "bar"], t2), P.LinkedHashMap_LinkedHashMap$_literal(["height", "100px", "width", "50px"], t1, t1));
       _this._UsesNgDirectives_11_5 = t1;
       _this._compView_11.create0$1(t1);
-      t1 = new N.ViewHasNestedProviderLookups0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 12, 3);
+      t1 = new N.ViewHasNestedProviderLookups0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 12));
       styles = $.ViewHasNestedProviderLookups0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
@@ -10995,10 +11003,9 @@
   };
   N._ViewRootComponentHost0.prototype = {
     build$0: function() {
-      var styles, t2, _this = this,
-        t1 = new N.ViewRootComponent0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 3);
-      styles = $.ViewRootComponent0__componentStyles;
+      var t2, _this = this,
+        t1 = new N.ViewRootComponent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        styles = $.ViewRootComponent0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11027,11 +11034,10 @@
   };
   N.ViewUsesDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
-      var styles, t2, _this = this,
+      var t2, _this = this,
         parentRenderNode = _this.initViewRoot$1(_this.rootEl),
-        t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 3);
-      styles = $.ViewDefaultChangeDetectionAndInputs0__componentStyles;
+        t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        styles = $.ViewDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11099,11 +11105,10 @@
   };
   N.ViewUsesOnPushChangeDetectionAndInputs0.prototype = {
     build$0: function() {
-      var styles, t2, _this = this,
+      var t2, _this = this,
         parentRenderNode = _this.initViewRoot$1(_this.rootEl),
-        t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 1);
-      styles = $.ViewOnPushChangeDetectionAndInputs0__componentStyles;
+        t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(1, C.ViewType_1, 0)),
+        styles = $.ViewOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11228,10 +11233,9 @@
   };
   N._ViewEmbeddedNgIf1.prototype = {
     build$0: function() {
-      var styles, t2, t3, _this = this,
-        t1 = new N.ViewNullComponent0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 3);
-      styles = $.ViewNullComponent0__componentStyles;
+      var t2, t3, _this = this,
+        t1 = new N.ViewNullComponent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        styles = $.ViewNullComponent0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11298,7 +11302,7 @@
       this.init1$1(_el_0);
     },
     detectChangesInternal$0: function() {
-      var local_item = this.locals.$index(0, "$implicit"),
+      var local_item = this.viewData.locals.$index(0, "$implicit"),
         t1 = local_item == null ? "" : local_item;
       this._textBinding_1.updateText$1(t1);
     },
@@ -11354,10 +11358,9 @@
   };
   N._ViewComponentConditionalFeatures1.prototype = {
     build$0: function() {
-      var styles, t2, t3, _this = this,
-        t1 = new N.ViewFeatureA0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 3);
-      styles = $.ViewFeatureA0__componentStyles;
+      var t2, t3, _this = this,
+        t1 = new N.ViewFeatureA0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        styles = $.ViewFeatureA0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11384,10 +11387,9 @@
   };
   N._ViewComponentConditionalFeatures2.prototype = {
     build$0: function() {
-      var styles, t2, t3, _this = this,
-        t1 = new N.ViewFeatureB0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 0, 3);
-      styles = $.ViewFeatureB0__componentStyles;
+      var t2, t3, _this = this,
+        t1 = new N.ViewFeatureB0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        styles = $.ViewFeatureB0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11572,12 +11574,11 @@
   };
   N._ViewHasNestedProviderLookups2.prototype = {
     build$0: function() {
-      var styles, t2, _this = this,
+      var t2, _this = this,
         doc = document,
         _el_0 = doc.createElement("div"),
-        t1 = new N.ViewInjectsManyThingsDynamically0(_this);
-      t1.AppView$4(C.ViewType_1, _this, 1, 3);
-      styles = $.ViewInjectsManyThingsDynamically0__componentStyles;
+        t1 = new N.ViewInjectsManyThingsDynamically0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 1)),
+        styles = $.ViewInjectsManyThingsDynamically0__componentStyles;
       if (styles == null) {
         styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
         styles._appendStyles$0();
@@ -11590,7 +11591,8 @@
       _el_0.appendChild(t2);
       t1 = _this.parentView;
       t2 = t1.parentView;
-      t1 = O.InjectsManyThingsDynamically$(t2.injectorGet$2(C.Type_DepA_qtW, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepB_sty, t1.viewData.parentIndex), t2.injectorGet$2(C.Type_DepC_ifL, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepD_3bx, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepE_ckK, t1.viewData.parentIndex), t2.injectorGetOptional$2(C.Type_DepF_7O8, t1.viewData.parentIndex));
+      t1 = t1.viewData.parentIndex;
+      t1 = O.InjectsManyThingsDynamically$(t2.injectorGet$2(C.Type_DepA_qtW, t1), t2.injectorGet$2(C.Type_DepB_sty, t1), t2.injectorGet$2(C.Type_DepC_ifL, t1), t2.injectorGetOptional$2(C.Type_DepD_3bx, t1), t2.injectorGetOptional$2(C.Type_DepE_ckK, t1), t2.injectorGetOptional$2(C.Type_DepF_7O8, t1));
       _this._InjectsManyThingsDynamically_1_5 = t1;
       _this._compView_1.create0$1(t1);
       _this.init1$1(_el_0);
