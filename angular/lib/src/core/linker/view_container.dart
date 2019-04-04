@@ -178,7 +178,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       List<T> Function(U) callback) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
-      return const [];
+      return const <Null>[];
     }
     final result = <T>[];
     for (var i = 0, l = nestedViews.length; i < l; i++) {
