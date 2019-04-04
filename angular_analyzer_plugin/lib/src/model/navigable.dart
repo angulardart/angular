@@ -32,7 +32,6 @@ class NavigableString implements Navigable {
   @override
   bool operator ==(Object other) =>
       other is NavigableString &&
-      other.runtimeType == runtimeType &&
       other.string == string &&
       other.navigationRange == navigationRange &&
       other.source == source;
