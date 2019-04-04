@@ -52,7 +52,9 @@ enum LifecycleHooks {
 ///
 /// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#onchanges
 /// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchanges
+@Deprecated('Please use AfterChanges instead.')
 abstract class OnChanges {
+  @Deprecated('Please use ngAfterChanges instead.')
   void ngOnChanges(Map<String, SimpleChange> changes);
 }
 
