@@ -5,7 +5,7 @@ description: Fast and productive web framework
 homepage: https://webdev.dartlang.org/angular
 documentation: https://webdev.dartlang.org/angular/api
 environment:
-  sdk: ">=2.1.0-dev.5.0 <3.0.0"
+  sdk: ">=2.2.1-dev.3.0 <3.0.0"
 
 dependencies:
   # Runtime (or runtime *and* the compiler).
