@@ -32,6 +32,14 @@ class AppViewData {
   /// The type of view (host element, complete template, embedded template).
   final ViewType type;
 
+  /// Local values scoped to the view.
+  ///
+  /// Directives may create views and set additional variables accessible to
+  /// the template (for example, `NgFor` sets the current element iterated).
+  ///
+  /// TODO: When we can rely on locals always being typed, encode as <, Object>.
+  final locals = <String, dynamic>{};
+
   /// Whether the view has been destroyed.
   bool destroyed = false;
 
@@ -77,7 +85,13 @@ class AppViewData {
   // change detection will fail.
   int _cdState = ChangeDetectorState.NeverChecked;
 
-  AppViewData(this._cdMode, this.type, this.parentIndex);
+  // TODO(b/129876510): remove factory indirection.
+  @dart2js.noInline
+  factory AppViewData(int cdMode, ViewType type, int parentIndex) {
+    return AppViewData._(cdMode, type, parentIndex);
+  }
+
+  AppViewData._(this._cdMode, this.type, this.parentIndex);
 
   set cdMode(int value) {
     if (_cdMode != value) {
@@ -132,8 +146,6 @@ class AppViewData {
 /// from the two classes can be combined into a single statement.
 abstract class AppView<T> extends View
     implements ChangeDetectorRef, EmbeddedViewRef {
-  AppViewData viewData;
-
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
@@ -145,31 +157,19 @@ abstract class AppView<T> extends View
   /// This is always a component instance.
   T ctx;
 
-  /// Local values scoped to this view.
-  ///
-  /// Directives may create views and set additional variables accessible to
-  /// the template (for example, `NgFor` sets the current element iterated).
-  ///
-  /// TODO: When we can rely on locals always being typed, encode as <, Object>.
-  Map<String, dynamic> locals;
-
   @protected
   ComponentStyles componentStyles;
 
   /// Parent generated view.
   final AppView<Object> parentView;
+  final AppViewData viewData;
 
-  @dart2js.noInline // This doesn't actually prevent inlining (b/129876510).
   AppView(
     ViewType type,
     this.parentView,
     int parentIndex,
     int cdMode,
-  ) {
-    locals = {};
-    viewData = AppViewData(cdMode, type, parentIndex);
-    return; // This is necessary to prevent inlining (b/129876510).
-  }
+  ) : viewData = AppViewData(cdMode, type, parentIndex);
 
   /// Sets change detection mode for this view and caches flag to skip
   /// change detection if mode and state don't require one.
@@ -194,6 +194,8 @@ abstract class AppView<T> extends View
 
   @override
   bool get destroyed => viewData.destroyed;
+
+  Map<String, dynamic> get locals => viewData.locals;
 
   List<Object> get projectedNodes => viewData.projectedNodes;
 
