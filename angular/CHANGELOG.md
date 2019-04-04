@@ -109,6 +109,18 @@
 [#1694]: https://github.com/dart-lang/angular/issues/1694
 [#1669]: https://github.com/dart-lang/angular/issues/1669
 
+### Deprecations
+
+*   `OnChanges` is now officially deprecated. Please use `AfterChanges` instead.
+
+    * If you don't use the `changes` map at all, just remove the parameter and
+    you're good to go.
+    * If you are only tracking the change of one or two fields, consider using a
+    boolean, i.e. `valueChanged`, which can be set in the `value` setter and
+    then checked in `ngAfterChanges`.
+    * If you are making extensive use of the `changes` map, then consider
+    recreating the map manually.
+
 ## 5.2.0
 
 ### Breaking changes
