@@ -6,7 +6,6 @@ targets:
            - web/main.dart
         release_options:
           dart2js_args:
-            - --fast-startup
             - --minify
             - --trust-type-annotations
             - --trust-primitives

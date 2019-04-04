@@ -5,7 +5,6 @@ targets:
         options:
           dart2js_args:
           - --dump-info
-          - --fast-startup
           - --minify
           - --omit-implicit-checks
           - --trust-primitives
