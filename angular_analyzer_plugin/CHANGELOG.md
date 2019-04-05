@@ -1,3 +1,13 @@
+## 0.0.17+6
+
+- Fixed an issue where an unnecessary navigation range was added to HTML files.
+- Fixed an issue where navigation would be delayed in IntelliJ and other IDEs
+  that use the notification pattern for navigation.
+- Change analyzer API for forwards compatibility with part files. The old API
+  could have caused out-of-date errors to be cached for a file. The new API,
+  however, introduces extra asynchrony. Manual testing seemed to show everything
+  working properly however this _may_ cause race conditions or hurt performance.
+
 ## 0.0.17+5
 
 - Fixed an issue where a corrupt URI would crash the plugin on windows.
@@ -153,7 +163,7 @@ Example syntax:
 ```
 
 ### Add new options for ContentChild(ren) in prep for deprecating ElementRef;
-    
+
 Accept (for the moment) ElementRef, Element, and HtmlElement (the
 latter two being from dart:html).
 
