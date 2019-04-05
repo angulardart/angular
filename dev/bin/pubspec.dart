@@ -8,7 +8,7 @@ import 'package:dev/find.dart';
 /// What Dart SDK version to require for all pub packages.
 ///
 /// This allows us to (more) safely use new language/library features.
-const useSdkRange = '>=2.1.0-dev.5.0 <3.0.0';
+const useSdkRange = '>=2.2.1-dev.3.0 <3.0.0';
 
 void main(List<String> args) {
   final dryRun = isDryRun(args);
