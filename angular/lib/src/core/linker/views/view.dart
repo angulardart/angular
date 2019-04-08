@@ -1,12 +1,14 @@
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
+import 'package:angular/src/core/change_detection/change_detector_ref.dart';
+import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/di/injector/injector.dart';
 
 /// The base implementation of all views.
 ///
 /// Note that generated views should never extend this class directly, but
 /// rather one of its specializations.
-abstract class View {
+abstract class View implements ChangeDetectorRef {
   /// Creates the internal state of this view.
   ///
   /// This means, for the most part, creating the necessary initial DOM nodes,
@@ -15,6 +17,13 @@ abstract class View {
   /// [detectChanges] or [destroyInternalState]).
   @protected
   void build();
+
+  @override
+  void checkNoChanges() {
+    AppViewUtils.enterThrowOnChanges();
+    detectChanges();
+    AppViewUtils.exitThrowOnChanges();
+  }
 
   /// Destroys the internal state of this view.
   ///
