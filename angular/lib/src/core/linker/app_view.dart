@@ -20,7 +20,7 @@ import 'view_container.dart';
 import 'view_fragment.dart';
 import 'view_ref.dart' show EmbeddedViewRef;
 import 'view_type.dart' show ViewType;
-import 'views/view.dart';
+import 'views/dynamic_view.dart';
 
 export 'package:angular/src/core/change_detection/component_state.dart';
 
@@ -144,7 +144,8 @@ class AppViewData {
 /// followed by non-initialized fields.  In this base class, the
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
-abstract class AppView<T> extends View
+// TODO(b/129013000): only embedded and host views should extend `DynamicView`.
+abstract class AppView<T> extends DynamicView
     implements ChangeDetectorRef, EmbeddedViewRef {
   /// The root element.
   ///
@@ -287,12 +288,6 @@ abstract class AppView<T> extends View
       ..subscriptions = subscriptions;
   }
 
-  /// Attaches this view's root nodes as siblings after [node].
-  void attachRootNodesAfter(Node node) {
-    insertNodesAsSibling(flatRootNodes, node);
-    domRootRendererIsDirty = true;
-  }
-
   @override
   Object injectorGet(
     Object token,
@@ -330,12 +325,6 @@ abstract class AppView<T> extends View
     destroyInternalState();
   }
 
-  void detachRootNodes() {
-    final nodes = flatRootNodes;
-    removeNodes(nodes);
-    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
-  }
-
   @override
   void destroyInternalState() {
     if (viewData.destroyed) {
@@ -348,11 +337,13 @@ abstract class AppView<T> extends View
   }
 
   @dart2js.noInline
+  @override
   List<Node> get flatRootNodes {
     return viewData.rootFragment.flattenDomNodes();
   }
 
   @dart2js.noInline
+  @override
   Node get lastRootNode {
     return viewData.rootFragment.findLastDomNode();
   }
@@ -412,24 +403,18 @@ abstract class AppView<T> extends View
   /// to use the explicit AppView type but require base class.
   void detectHostChanges(bool firstCheck) {}
 
-  /// Notifies this view that it was inserted into [viewContainer].
-  ///
-  /// This is invoked by the [viewContainer] into which this view was inserted.
+  @override
   void wasInserted(ViewContainer viewContainer) {
     viewData._viewContainerElement = viewContainer;
     dirtyParentQueriesInternal();
   }
 
-  /// Notifies this view that it was moved within a view container.
-  ///
-  /// This is invoked by the [ViewContainer] within which this view was moved.
+  @override
   void wasMoved() {
     dirtyParentQueriesInternal();
   }
 
-  /// Notifies this view that it was removed from a view container.
-  ///
-  /// This is invoked by the [ViewContainer] from which this view was removed.
+  @override
   void wasRemoved() {
     dirtyParentQueriesInternal();
     viewData._viewContainerElement = null;

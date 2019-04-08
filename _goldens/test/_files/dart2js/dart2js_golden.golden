@@ -4138,6 +4138,8 @@
       _.nativeElement = t2;
       _.nestedViews = null;
     }},
+  B = {DynamicView: function DynamicView() {
+    }},
   A = {View: function View() {
     }, MapInjector: function MapInjector(t0, t1) {
       this._map$_providers = t0;
@@ -4229,7 +4231,7 @@
   },
   Z = {DomSanitizationService: function DomSanitizationService() {
     }};
-  var holders = [C, H, J, P, W, G, Y, R, K, X, S, N, M, Q, D, L, O, V, A, E, U, T, Z];
+  var holders = [C, H, J, P, W, G, Y, R, K, X, S, N, M, Q, D, L, O, V, B, A, E, U, T, Z];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -10240,6 +10242,7 @@
       return this._name;
     }
   };
+  B.DynamicView.prototype = {};
   A.View.prototype = {
     destroyInternal$0: function() {
     },
@@ -11816,7 +11819,8 @@
     _inheritMany(E.HierarchicalInjector, [Y._Injector$minimalApp, G._LazyInjector, G.ElementInjector, R.EmptyInjector, A.MapInjector]);
     _inherit(Y.ApplicationRef, M.ChangeDetectionHost);
     _inherit(S.MultiToken, S.OpaqueToken);
-    _inherit(S.AppView, A.View);
+    _inherit(B.DynamicView, A.View);
+    _inherit(S.AppView, B.DynamicView);
     _inherit(O._UnscopedComponentStyles, O.ComponentStyles);
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N._ViewInlinedNgIf1, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N.ViewInjectsManyThingsDynamically0]);
