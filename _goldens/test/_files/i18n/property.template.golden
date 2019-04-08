@@ -92,8 +92,8 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
   }
 }
 
-AppView<import1.I18nPropertyComponent> viewFactory_I18nPropertyComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewI18nPropertyComponentHost0(parentView, parentIndex);
+AppView<import1.I18nPropertyComponent> viewFactory_I18nPropertyComponentHost0() {
+  return _ViewI18nPropertyComponentHost0(null, null);
 }
 
 var _visited = false;

@@ -162,8 +162,8 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   }
 }
 
-AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewQueriesComponentHost0(parentView, parentIndex);
+AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0() {
+  return _ViewQueriesComponentHost0(null, null);
 }
 
 final List<dynamic> styles$EmbeddedQueries = const [];
@@ -305,8 +305,8 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
   }
 }
 
-AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmbeddedQueriesHost0(parentView, parentIndex);
+AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0() {
+  return _ViewEmbeddedQueriesHost0(null, null);
 }
 
 final List<dynamic> styles$EmbeddedQueriesList = const [];
@@ -448,8 +448,8 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
   }
 }
 
-AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmbeddedQueriesListHost0(parentView, parentIndex);
+AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0() {
+  return _ViewEmbeddedQueriesListHost0(null, null);
 }
 
 final List<dynamic> styles$NestedNgForQueriesList = const [];
@@ -645,8 +645,8 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
   }
 }
 
-AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNestedNgForQueriesListHost0(parentView, parentIndex);
+AppView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0() {
+  return _ViewNestedNgForQueriesListHost0(null, null);
 }
 
 var _visited = false;

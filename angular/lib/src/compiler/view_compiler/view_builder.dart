@@ -622,41 +622,39 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
 /// Creates a factory function that instantiates a view.
 ///
 /// ```
-/// AppView<SomeComponent> viewFactory_SomeComponentHost0(
-///   AppView<dynamic> parentView,
-///   int parentIndex,
-/// ) {
-///   return ViewSomeComponentHost0(parentView, parentIndex);
+/// AppView<SomeComponent> viewFactory_SomeComponentHost0() {
+///   return ViewSomeComponentHost0();
 /// }
 /// ```
 o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
+  switch (view.viewType) {
+    case ViewType.embedded:
+      return _createEmbeddedViewFactory(view, viewClass);
+    case ViewType.host:
+      return _createHostViewFactory(view, viewClass);
+    default:
+      throw StateError(
+          'Can\'t create factory for view type "${view.viewType}"');
+  }
+}
+
+o.Statement _createEmbeddedViewFactory(
+    CompileView view, o.ClassStmt viewClass) {
   final parentViewType = o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE]);
   final parameters = [
     o.FnParam(ViewConstructorVars.parentView.name, parentViewType),
     o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
   ];
-  // For component and host view factories, the returned `AppView` must include
-  // the component type as a type argument:
+  // Unlike host view factories, the return type of an embedded view factory
+  // doesn't need to include its component type. This is because we only need
+  // access to the API of `AppView` itself to insert and remove embedded views
+  // into view containers. Note that for generic embedded views, we can no
+  // longer infer the generic type arguments of the constructor from the return
+  // type, and must specify it within the function body.
   //
-  //     AppView<FooComponent> viewFactory_FooComponent0(...) { ... }
-  //
-  // This includes any generic type parameters the component itself might have.
-  // Note how the generic type arguments of the constructor are inferred from
-  // the return type.
-  //
-  //   AppView<BarComponent<T>> viewFactory_FooComponent0<T>(...) {
-  //     return ViewFooComponent0(...);
-  //   }
-  //
-  // In contrast, the return type of an embedded view factory doesn't need to
-  // include its component type. This is because we only need access to the API
-  // of `AppView` itself to insert and remove embedded views into view
-  // containers. Note that for generic embedded views, we can no longer infer
-  // the generic type arguments of the constructor from the return type.
-  //
-  //   AppView<void> viewFactory_FooComponent1<T>(...) {
-  //     return ViewComponent1<T>(...);
-  //   }
+  //    AppView<void> viewFactory_FooComponent1<T>(...) {
+  //      return ViewComponent1<T>(...);
+  //    }
   //
   // We intentionally make this distinction as an optimization. Any time we take
   // a method tear-off (which we do every time an embedded view is used),
@@ -668,24 +666,50 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
   // return type of all embedded view factories, we allow all of them to share
   // the same type signature, instead of each one being unique, thus reducing
   // code size.
-  List<o.OutputType> constructorTypeArguments;
-  List<o.OutputType> returnTypeTypeArguments;
-  if (view.viewType == ViewType.embedded) {
-    constructorTypeArguments =
-        viewClass.typeParameters.map((t) => t.toType()).toList();
-    returnTypeTypeArguments = [o.VOID_TYPE];
-  } else {
-    returnTypeTypeArguments = [_getContextType(view)];
-  }
+  final returnType = o.importType(Identifiers.AppView, [o.VOID_TYPE]);
+  final constructorTypeArguments =
+      viewClass.typeParameters.map((t) => t.toType()).toList();
   final body = [
     o.ReturnStatement(o.variable(viewClass.name).instantiate(
         parameters.map((p) => o.variable(p.name)).toList(),
         genericTypes: constructorTypeArguments)),
   ];
-  final returnType = o.importType(Identifiers.AppView, returnTypeTypeArguments);
   return o.DeclareFunctionStmt(
     view.viewFactoryName,
     parameters,
+    body,
+    type: returnType,
+    typeParameters: viewClass.typeParameters,
+  );
+}
+
+o.Statement _createHostViewFactory(CompileView view, o.ClassStmt viewClass) {
+  // For host view factories, the returned `AppView` must include the component
+  // type as a type argument:
+  //
+  //    AppView<FooComponent> viewFactory_FooComponentHost0() { ... }
+  //
+  // This includes any generic type parameters the component itself might have.
+  // Note how the generic type arguments of the constructor are inferred from
+  // the return type.
+  //
+  //    AppView<BarComponent<T>> viewFactory_BarComponentHost0<T>() {
+  //      return _ViewBarComponentHost0(null, null);
+  //    }
+  final returnTypeTypeArguments = [_getContextType(view)];
+  final returnType = o.importType(Identifiers.AppView, returnTypeTypeArguments);
+  // Note that for host views, and parent view and parent index are always null.
+  final body = [
+    o.ReturnStatement(
+      o.variable(viewClass.name).instantiate([
+        o.NULL_EXPR,
+        o.NULL_EXPR,
+      ]),
+    ),
+  ];
+  return o.DeclareFunctionStmt(
+    view.viewFactoryName,
+    [], // No parameters.
     body,
     type: returnType,
     typeParameters: viewClass.typeParameters,

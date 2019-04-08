@@ -113,8 +113,8 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
   }
 }
 
-AppView<import1.MostLifecycleHooksComponent> viewFactory_MostLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewMostLifecycleHooksComponentHost0(parentView, parentIndex);
+AppView<import1.MostLifecycleHooksComponent> viewFactory_MostLifecycleHooksComponentHost0() {
+  return _ViewMostLifecycleHooksComponentHost0(null, null);
 }
 
 final List<dynamic> styles$EmptyComponent = const [];
@@ -178,8 +178,8 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
   }
 }
 
-AppView<import1.EmptyComponent> viewFactory_EmptyComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmptyComponentHost0(parentView, parentIndex);
+AppView<import1.EmptyComponent> viewFactory_EmptyComponentHost0() {
+  return _ViewEmptyComponentHost0(null, null);
 }
 
 final List<dynamic> styles$OnChangesComponent = const [];
@@ -245,8 +245,8 @@ class _ViewOnChangesComponentHost0 extends AppView<import1.OnChangesComponent> {
   }
 }
 
-AppView<import1.OnChangesComponent> viewFactory_OnChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewOnChangesComponentHost0(parentView, parentIndex);
+AppView<import1.OnChangesComponent> viewFactory_OnChangesComponentHost0() {
+  return _ViewOnChangesComponentHost0(null, null);
 }
 
 final List<dynamic> styles$AfterChangesComponent = const [];
@@ -310,8 +310,8 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
   }
 }
 
-AppView<import1.AfterChangesComponent> viewFactory_AfterChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewAfterChangesComponentHost0(parentView, parentIndex);
+AppView<import1.AfterChangesComponent> viewFactory_AfterChangesComponentHost0() {
+  return _ViewAfterChangesComponentHost0(null, null);
 }
 
 final List<dynamic> styles$UsesLifecycleHooksComponent = const [];
@@ -482,8 +482,8 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
   }
 }
 
-AppView<import1.UsesLifecycleHooksComponent> viewFactory_UsesLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesLifecycleHooksComponentHost0(parentView, parentIndex);
+AppView<import1.UsesLifecycleHooksComponent> viewFactory_UsesLifecycleHooksComponentHost0() {
+  return _ViewUsesLifecycleHooksComponentHost0(null, null);
 }
 
 var _visited = false;

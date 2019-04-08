@@ -176,8 +176,8 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
   }
 }
 
-AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNestedNgForComponentHost0(parentView, parentIndex);
+AppView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0() {
+  return _ViewNestedNgForComponentHost0(null, null);
 }
 
 var _visited = false;

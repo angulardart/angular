@@ -203,8 +203,8 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   }
 }
 
-AppView<import1.ProvidersComponent> viewFactory_ProvidersComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewProvidersComponentHost0(parentView, parentIndex);
+AppView<import1.ProvidersComponent> viewFactory_ProvidersComponentHost0() {
+  return _ViewProvidersComponentHost0(null, null);
 }
 
 var _visited = false;

@@ -82,8 +82,8 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
   }
 }
 
-AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewI18nAttributeComponentHost0(parentView, parentIndex);
+AppView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0() {
+  return _ViewI18nAttributeComponentHost0(null, null);
 }
 
 var _visited = false;

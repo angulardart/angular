@@ -94,8 +94,8 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   }
 }
 
-AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewCompWithoutFinalHost0(parentView, parentIndex);
+AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0() {
+  return _ViewCompWithoutFinalHost0(null, null);
 }
 
 final List<dynamic> styles$CompWithFinal = const [];
@@ -166,8 +166,8 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   }
 }
 
-AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewCompWithFinalHost0(parentView, parentIndex);
+AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0() {
+  return _ViewCompWithFinalHost0(null, null);
 }
 
 final List<dynamic> styles$CompWithFinalStatic = const [];
@@ -237,8 +237,8 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
   }
 }
 
-AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewCompWithFinalStaticHost0(parentView, parentIndex);
+AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0() {
+  return _ViewCompWithFinalStaticHost0(null, null);
 }
 
 final List<dynamic> styles$CompWithExternalFinal = const [];
@@ -308,8 +308,8 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
   }
 }
 
-AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewCompWithExternalFinalHost0(parentView, parentIndex);
+AppView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0() {
+  return _ViewCompWithExternalFinalHost0(null, null);
 }
 
 var _visited = false;

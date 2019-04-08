@@ -120,8 +120,8 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
   }
 }
 
-AppView<import1.Comp> viewFactory_CompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewCompHost0(parentView, parentIndex);
+AppView<import1.Comp> viewFactory_CompHost0() {
+  return _ViewCompHost0(null, null);
 }
 
 var _visited = false;

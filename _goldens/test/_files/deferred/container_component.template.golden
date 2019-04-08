@@ -445,8 +445,8 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
   }
 }
 
-AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewTestContainerComponentHost0(parentView, parentIndex);
+AppView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0() {
+  return _ViewTestContainerComponentHost0(null, null);
 }
 
 var _visited = false;

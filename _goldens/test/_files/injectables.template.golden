@@ -131,8 +131,8 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
   }
 }
 
-AppView<import1.InjectableComponent> viewFactory_InjectableComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInjectableComponentHost0(parentView, parentIndex);
+AppView<import1.InjectableComponent> viewFactory_InjectableComponentHost0() {
+  return _ViewInjectableComponentHost0(null, null);
 }
 
 var _visited = false;

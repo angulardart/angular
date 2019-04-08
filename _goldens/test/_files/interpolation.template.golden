@@ -97,8 +97,8 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
   }
 }
 
-AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationComponentHost0(parentView, parentIndex);
+AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0() {
+  return _ViewInterpolationComponentHost0(null, null);
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
@@ -172,8 +172,8 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
   }
 }
 
-AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationComponentNoWhitespaceHost0(parentView, parentIndex);
+AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0() {
+  return _ViewInterpolationComponentNoWhitespaceHost0(null, null);
 }
 
 final List<dynamic> styles$InterpolationTwoAdjacent = const [];
@@ -252,8 +252,8 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
   }
 }
 
-AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationTwoAdjacentHost0(parentView, parentIndex);
+AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0() {
+  return _ViewInterpolationTwoAdjacentHost0(null, null);
 }
 
 final List<dynamic> styles$InterpolationLongerSentence = const [];
@@ -337,8 +337,8 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
   }
 }
 
-AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationLongerSentenceHost0(parentView, parentIndex);
+AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0() {
+  return _ViewInterpolationLongerSentenceHost0(null, null);
 }
 
 final List<dynamic> styles$InterpolationLiterals = const [];
@@ -408,8 +408,8 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
   }
 }
 
-AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationLiteralsHost0(parentView, parentIndex);
+AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0() {
+  return _ViewInterpolationLiteralsHost0(null, null);
 }
 
 final List<dynamic> styles$InterpolationLocals = const [];
@@ -567,8 +567,8 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
   }
 }
 
-AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInterpolationLocalsHost0(parentView, parentIndex);
+AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0() {
+  return _ViewInterpolationLocalsHost0(null, null);
 }
 
 final List<dynamic> styles$Attribute = const [];
@@ -655,8 +655,8 @@ class _ViewAttributeHost0 extends AppView<import1.Attribute> {
   }
 }
 
-AppView<import1.Attribute> viewFactory_AttributeHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewAttributeHost0(parentView, parentIndex);
+AppView<import1.Attribute> viewFactory_AttributeHost0() {
+  return _ViewAttributeHost0(null, null);
 }
 
 final List<dynamic> styles$AttributePW = const [];
@@ -744,8 +744,8 @@ class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
   }
 }
 
-AppView<import1.AttributePW> viewFactory_AttributePWHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewAttributePWHost0(parentView, parentIndex);
+AppView<import1.AttributePW> viewFactory_AttributePWHost0() {
+  return _ViewAttributePWHost0(null, null);
 }
 
 var _visited = false;

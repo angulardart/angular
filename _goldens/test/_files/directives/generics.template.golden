@@ -83,8 +83,8 @@ class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
   }
 }
 
-AppView<import1.UntypedComp> viewFactory_UntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUntypedCompHost0(parentView, parentIndex);
+AppView<import1.UntypedComp> viewFactory_UntypedCompHost0() {
+  return _ViewUntypedCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesUntypedComp = const [];
@@ -172,8 +172,8 @@ class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
   }
 }
 
-AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesUntypedCompHost0(parentView, parentIndex);
+AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0() {
+  return _ViewUsesUntypedCompHost0(null, null);
 }
 
 final List<dynamic> styles$GenericComp = const [];
@@ -237,8 +237,8 @@ class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
   }
 }
 
-AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewGenericCompHost0(parentView, parentIndex);
+AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>() {
+  return _ViewGenericCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesGenericComp = const [];
@@ -326,8 +326,8 @@ class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
   }
 }
 
-AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesGenericCompHost0(parentView, parentIndex);
+AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0() {
+  return _ViewUsesGenericCompHost0(null, null);
 }
 
 final List<dynamic> styles$MappingComp1 = const [];
@@ -391,8 +391,8 @@ class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
   }
 }
 
-AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewMappingComp1Host0(parentView, parentIndex);
+AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>() {
+  return _ViewMappingComp1Host0(null, null);
 }
 
 final List<dynamic> styles$UsesMappingComp1 = const [];
@@ -486,8 +486,8 @@ class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
   }
 }
 
-AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesMappingComp1Host0(parentView, parentIndex);
+AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0() {
+  return _ViewUsesMappingComp1Host0(null, null);
 }
 
 final List<dynamic> styles$MappingComp2 = const [];
@@ -551,8 +551,8 @@ class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
   }
 }
 
-AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewMappingComp2Host0(parentView, parentIndex);
+AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>() {
+  return _ViewMappingComp2Host0(null, null);
 }
 
 final List<dynamic> styles$UsesMappingComp2 = const [];
@@ -640,8 +640,8 @@ class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
   }
 }
 
-AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesMappingComp2Host0(parentView, parentIndex);
+AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0() {
+  return _ViewUsesMappingComp2Host0(null, null);
 }
 
 final List<dynamic> styles$BoundComp = const [];
@@ -705,8 +705,8 @@ class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
   }
 }
 
-AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewBoundCompHost0(parentView, parentIndex);
+AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>() {
+  return _ViewBoundCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
@@ -794,8 +794,8 @@ class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWit
   }
 }
 
-AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesBoundCompWithBoundsHost0(parentView, parentIndex);
+AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0() {
+  return _ViewUsesBoundCompWithBoundsHost0(null, null);
 }
 
 final List<dynamic> styles$UsesBoundComp = const [];
@@ -883,8 +883,8 @@ class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
   }
 }
 
-AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesBoundCompHost0(parentView, parentIndex);
+AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0() {
+  return _ViewUsesBoundCompHost0(null, null);
 }
 
 final List<dynamic> styles$SelfBoundComp = const [];
@@ -948,8 +948,8 @@ class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundC
   }
 }
 
-AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewSelfBoundCompHost0(parentView, parentIndex);
+AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>() {
+  return _ViewSelfBoundCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesSelfBoundComp = const [];
@@ -1043,8 +1043,8 @@ class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
   }
 }
 
-AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesSelfBoundCompHost0(parentView, parentIndex);
+AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0() {
+  return _ViewUsesSelfBoundCompHost0(null, null);
 }
 
 final List<dynamic> styles$RecursiveComp = const [];
@@ -1108,8 +1108,8 @@ class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.R
   }
 }
 
-AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewRecursiveCompHost0(parentView, parentIndex);
+AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>() {
+  return _ViewRecursiveCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesRecursiveComp = const [];
@@ -1197,8 +1197,8 @@ class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
   }
 }
 
-AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesRecursiveCompHost0(parentView, parentIndex);
+AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0() {
+  return _ViewUsesRecursiveCompHost0(null, null);
 }
 
 final List<dynamic> styles$FunctionTypeComp = const [];
@@ -1262,8 +1262,8 @@ class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>>
   }
 }
 
-AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewFunctionTypeCompHost0(parentView, parentIndex);
+AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>() {
+  return _ViewFunctionTypeCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
@@ -1351,8 +1351,8 @@ class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeCom
   }
 }
 
-AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesFunctionTypeCompHost0(parentView, parentIndex);
+AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0() {
+  return _ViewUsesFunctionTypeCompHost0(null, null);
 }
 
 final List<dynamic> styles$NestedParentComp = const [];
@@ -1511,8 +1511,8 @@ class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>>
   }
 }
 
-AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNestedParentCompHost0(parentView, parentIndex);
+AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>() {
+  return _ViewNestedParentCompHost0(null, null);
 }
 
 final List<dynamic> styles$NestedChildComp = const [];
@@ -1576,8 +1576,8 @@ class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
   }
 }
 
-AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNestedChildCompHost0(parentView, parentIndex);
+AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>() {
+  return _ViewNestedChildCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesNestedParentComp = const [];
@@ -1677,8 +1677,8 @@ class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentCom
   }
 }
 
-AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesNestedParentCompHost0(parentView, parentIndex);
+AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0() {
+  return _ViewUsesNestedParentCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
@@ -1781,8 +1781,8 @@ class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesC
   }
 }
 
-AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesMultipleTypesCompHost0(parentView, parentIndex);
+AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0() {
+  return _ViewUsesMultipleTypesCompHost0(null, null);
 }
 
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
@@ -1864,8 +1864,8 @@ class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericCha
   }
 }
 
-AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesGenericChangeDetectorHost0(parentView, parentIndex);
+AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0() {
+  return _ViewUsesGenericChangeDetectorHost0(null, null);
 }
 
 class GenericDirectiveNgCd<T> extends import14.DirectiveChangeDetector {

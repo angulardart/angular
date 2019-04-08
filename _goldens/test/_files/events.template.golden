@@ -82,8 +82,8 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   }
 }
 
-AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesNativeEventsHost0(parentView, parentIndex);
+AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0() {
+  return _ViewUsesNativeEventsHost0(null, null);
 }
 
 final List<dynamic> styles$UsesAngularEvents = const [];
@@ -166,8 +166,8 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   }
 }
 
-AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesAngularEventsHost0(parentView, parentIndex);
+AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0() {
+  return _ViewUsesAngularEventsHost0(null, null);
 }
 
 final List<dynamic> styles$HasAngularEvents = const [];
@@ -231,8 +231,8 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   }
 }
 
-AppView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasAngularEventsHost0(parentView, parentIndex);
+AppView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0() {
+  return _ViewHasAngularEventsHost0(null, null);
 }
 
 final List<dynamic> styles$HasManyNativeHostEvents = const [];
@@ -303,8 +303,8 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
   }
 }
 
-AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasManyNativeHostEventsHost0(parentView, parentIndex);
+AppView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0() {
+  return _ViewHasManyNativeHostEventsHost0(null, null);
 }
 
 var _visited = false;

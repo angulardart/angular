@@ -79,8 +79,8 @@ class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Co
   }
 }
 
-AppView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChild1ComponentHost0(parentView, parentIndex);
+AppView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost0() {
+  return _ViewDeferredChild1ComponentHost0(null, null);
 }
 
 final List<dynamic> styles$DeferredChild2Component = const [];
@@ -145,8 +145,8 @@ class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Co
   }
 }
 
-AppView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChild2ComponentHost0(parentView, parentIndex);
+AppView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost0() {
+  return _ViewDeferredChild2ComponentHost0(null, null);
 }
 
 final List<dynamic> styles$DeferredChild3Component = const [];
@@ -211,8 +211,8 @@ class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Co
   }
 }
 
-AppView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChild3ComponentHost0(parentView, parentIndex);
+AppView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost0() {
+  return _ViewDeferredChild3ComponentHost0(null, null);
 }
 
 final List<dynamic> styles$NotDeferredChildComponent = const [];
@@ -276,8 +276,8 @@ class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChi
   }
 }
 
-AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNotDeferredChildComponentHost0(parentView, parentIndex);
+AppView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponentHost0() {
+  return _ViewNotDeferredChildComponentHost0(null, null);
 }
 
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
@@ -344,8 +344,8 @@ class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.D
   }
 }
 
-AppView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChildComponentWithoutNgContentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChildComponentWithoutNgContentHost0(parentView, parentIndex);
+AppView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChildComponentWithoutNgContentHost0() {
+  return _ViewDeferredChildComponentWithoutNgContentHost0(null, null);
 }
 
 final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
@@ -412,8 +412,8 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.Defe
   }
 }
 
-AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChildComponentWithNgContentHost0(parentView, parentIndex);
+AppView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContentHost0() {
+  return _ViewDeferredChildComponentWithNgContentHost0(null, null);
 }
 
 final List<dynamic> styles$DeferredChildComponentWithServices = const [];
@@ -500,8 +500,8 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   }
 }
 
-AppView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServicesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDeferredChildComponentWithServicesHost0(parentView, parentIndex);
+AppView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServicesHost0() {
+  return _ViewDeferredChildComponentWithServicesHost0(null, null);
 }
 
 var _visited = false;
