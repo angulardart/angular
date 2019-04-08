@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/di/errors.dart' as di_errors;
@@ -145,8 +145,7 @@ class AppViewData {
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
 // TODO(b/129013000): only embedded and host views should extend `DynamicView`.
-abstract class AppView<T> extends DynamicView
-    implements ChangeDetectorRef, EmbeddedViewRef {
+abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
@@ -202,13 +201,6 @@ abstract class AppView<T> extends DynamicView
 
   @override
   List<Node> get rootNodes => flatRootNodes;
-
-  @override
-  void checkNoChanges() {
-    AppViewUtils.enterThrowOnChanges();
-    detectChanges();
-    AppViewUtils.exitThrowOnChanges();
-  }
 
   @override
   void detach() {
