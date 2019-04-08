@@ -205,7 +205,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       view.attachRootNodesAfter(refRenderNode);
     }
 
-    view.markContentChildAsMoved(this);
+    view.wasMoved();
   }
 
   void attachView(AppView<Object> view, int viewIndex) {
@@ -220,7 +220,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       view.attachRootNodesAfter(refRenderNode);
     }
 
-    view.addToContentChildren(this);
+    view.wasInserted(this);
   }
 
   AppView<Object> detachView(int viewIndex) {
@@ -228,7 +228,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     _assertCanMove(view);
     view
       ..detachRootNodes()
-      ..removeFromContentChildren(this);
+      ..wasRemoved();
     return view;
   }
 

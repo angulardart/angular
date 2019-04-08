@@ -412,16 +412,25 @@ abstract class AppView<T> extends View
   /// to use the explicit AppView type but require base class.
   void detectHostChanges(bool firstCheck) {}
 
-  void markContentChildAsMoved(ViewContainer renderViewContainer) {
+  /// Notifies this view that it was inserted into [viewContainer].
+  ///
+  /// This is invoked by the [viewContainer] into which this view was inserted.
+  void wasInserted(ViewContainer viewContainer) {
+    viewData._viewContainerElement = viewContainer;
     dirtyParentQueriesInternal();
   }
 
-  void addToContentChildren(ViewContainer renderViewContainer) {
-    viewData._viewContainerElement = renderViewContainer;
+  /// Notifies this view that it was moved within a view container.
+  ///
+  /// This is invoked by the [ViewContainer] within which this view was moved.
+  void wasMoved() {
     dirtyParentQueriesInternal();
   }
 
-  void removeFromContentChildren(ViewContainer renderViewContainer) {
+  /// Notifies this view that it was removed from a view container.
+  ///
+  /// This is invoked by the [ViewContainer] from which this view was removed.
+  void wasRemoved() {
     dirtyParentQueriesInternal();
     viewData._viewContainerElement = null;
   }
