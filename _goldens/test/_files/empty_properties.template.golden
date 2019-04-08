@@ -129,8 +129,8 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
   }
 }
 
-AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmptyPropertiesComponentHost0(parentView, parentIndex);
+AppView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHost0() {
+  return _ViewEmptyPropertiesComponentHost0(null, null);
 }
 
 final List<dynamic> styles$FancyButtonComponent = const [];
@@ -194,8 +194,8 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
   }
 }
 
-AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewFancyButtonComponentHost0(parentView, parentIndex);
+AppView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0() {
+  return _ViewFancyButtonComponentHost0(null, null);
 }
 
 var _visited = false;

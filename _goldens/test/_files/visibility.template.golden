@@ -82,8 +82,8 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
   }
 }
 
-AppView<import1.Dependent> viewFactory_DependentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDependentHost0(parentView, parentIndex);
+AppView<import1.Dependent> viewFactory_DependentHost0() {
+  return _ViewDependentHost0(null, null);
 }
 
 final List<dynamic> styles$DependencyWithDependentInView = const [];
@@ -176,8 +176,8 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
   }
 }
 
-AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDependencyWithDependentInViewHost0(parentView, parentIndex);
+AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInViewHost0() {
+  return _ViewDependencyWithDependentInViewHost0(null, null);
 }
 
 final List<dynamic> styles$DependencyWithContent = const [];
@@ -250,8 +250,8 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
   }
 }
 
-AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDependencyWithContentHost0(parentView, parentIndex);
+AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0() {
+  return _ViewDependencyWithContentHost0(null, null);
 }
 
 final List<dynamic> styles$DependencyAndDependentInView = const [];
@@ -338,8 +338,8 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
   }
 }
 
-AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInViewHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDependencyAndDependentInViewHost0(parentView, parentIndex);
+AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInViewHost0() {
+  return _ViewDependencyAndDependentInViewHost0(null, null);
 }
 
 final List<dynamic> styles$HasVisibilityAll = const [];
@@ -411,8 +411,8 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
   }
 }
 
-AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasVisibilityAllHost0(parentView, parentIndex);
+AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0() {
+  return _ViewHasVisibilityAllHost0(null, null);
 }
 
 final List<dynamic> styles$HasVisibilityLocal = const [];
@@ -476,8 +476,8 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
   }
 }
 
-AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasVisibilityLocalHost0(parentView, parentIndex);
+AppView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0() {
+  return _ViewHasVisibilityLocalHost0(null, null);
 }
 
 var _visited = false;

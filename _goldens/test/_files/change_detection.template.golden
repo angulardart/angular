@@ -111,8 +111,8 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
   }
 }
 
-AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesOnPushComponentHost0(parentView, parentIndex);
+AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0() {
+  return _ViewUsesOnPushComponentHost0(null, null);
 }
 
 final List<dynamic> styles$OnPushComponent = const [];
@@ -210,8 +210,8 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
   }
 }
 
-AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewOnPushComponentHost0(parentView, parentIndex);
+AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0() {
+  return _ViewOnPushComponentHost0(null, null);
 }
 
 final List<dynamic> styles$OnPushChildComponent = const [];
@@ -290,8 +290,8 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
   }
 }
 
-AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewOnPushChildComponentHost0(parentView, parentIndex);
+AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0() {
+  return _ViewOnPushChildComponentHost0(null, null);
 }
 
 final List<dynamic> styles$StatefulComponent = const [];
@@ -360,8 +360,8 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
   }
 }
 
-AppView<import1.StatefulComponent> viewFactory_StatefulComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewStatefulComponentHost0(parentView, parentIndex);
+AppView<import1.StatefulComponent> viewFactory_StatefulComponentHost0() {
+  return _ViewStatefulComponentHost0(null, null);
 }
 
 final List<dynamic> styles$DefaultComponent = const [];
@@ -428,8 +428,8 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
   }
 }
 
-AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDefaultComponentHost0(parentView, parentIndex);
+AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0() {
+  return _ViewDefaultComponentHost0(null, null);
 }
 
 var _visited = false;

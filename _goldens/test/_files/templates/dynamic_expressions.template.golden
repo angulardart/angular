@@ -93,8 +93,8 @@ class _ViewComp1Host0 extends AppView<import1.Comp1> {
   }
 }
 
-AppView<import1.Comp1> viewFactory_Comp1Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp1Host0(parentView, parentIndex);
+AppView<import1.Comp1> viewFactory_Comp1Host0() {
+  return _ViewComp1Host0(null, null);
 }
 
 final List<dynamic> styles$Comp1String = const [];
@@ -166,8 +166,8 @@ class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
   }
 }
 
-AppView<import1.Comp1String> viewFactory_Comp1StringHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp1StringHost0(parentView, parentIndex);
+AppView<import1.Comp1String> viewFactory_Comp1StringHost0() {
+  return _ViewComp1StringHost0(null, null);
 }
 
 final List<dynamic> styles$Comp2 = const [];
@@ -239,8 +239,8 @@ class _ViewComp2Host0 extends AppView<import1.Comp2> {
   }
 }
 
-AppView<import1.Comp2> viewFactory_Comp2Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp2Host0(parentView, parentIndex);
+AppView<import1.Comp2> viewFactory_Comp2Host0() {
+  return _ViewComp2Host0(null, null);
 }
 
 final List<dynamic> styles$Comp3 = const [];
@@ -312,8 +312,8 @@ class _ViewComp3Host0 extends AppView<import1.Comp3> {
   }
 }
 
-AppView<import1.Comp3> viewFactory_Comp3Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp3Host0(parentView, parentIndex);
+AppView<import1.Comp3> viewFactory_Comp3Host0() {
+  return _ViewComp3Host0(null, null);
 }
 
 final List<dynamic> styles$Comp4 = const [];
@@ -389,8 +389,8 @@ class _ViewComp4Host0 extends AppView<import1.Comp4> {
   }
 }
 
-AppView<import1.Comp4> viewFactory_Comp4Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp4Host0(parentView, parentIndex);
+AppView<import1.Comp4> viewFactory_Comp4Host0() {
+  return _ViewComp4Host0(null, null);
 }
 
 final List<dynamic> styles$Comp5 = const [];
@@ -467,8 +467,8 @@ class _ViewComp5Host0 extends AppView<import1.Comp5> {
   }
 }
 
-AppView<import1.Comp5> viewFactory_Comp5Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp5Host0(parentView, parentIndex);
+AppView<import1.Comp5> viewFactory_Comp5Host0() {
+  return _ViewComp5Host0(null, null);
 }
 
 final List<dynamic> styles$Comp6 = const [];
@@ -579,8 +579,8 @@ class _ViewComp6Host0 extends AppView<import1.Comp6> {
   }
 }
 
-AppView<import1.Comp6> viewFactory_Comp6Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp6Host0(parentView, parentIndex);
+AppView<import1.Comp6> viewFactory_Comp6Host0() {
+  return _ViewComp6Host0(null, null);
 }
 
 final List<dynamic> styles$Comp7 = const [];
@@ -731,8 +731,8 @@ class _ViewComp7Host0 extends AppView<import1.Comp7> {
   }
 }
 
-AppView<import1.Comp7> viewFactory_Comp7Host0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComp7Host0(parentView, parentIndex);
+AppView<import1.Comp7> viewFactory_Comp7Host0() {
+  return _ViewComp7Host0(null, null);
 }
 
 var _visited = false;

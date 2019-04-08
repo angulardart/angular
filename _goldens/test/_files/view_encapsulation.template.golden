@@ -107,8 +107,8 @@ class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
   }
 }
 
-AppView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmulatedComponentHost0(parentView, parentIndex);
+AppView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0() {
+  return _ViewEmulatedComponentHost0(null, null);
 }
 
 final List<dynamic> styles$NoneComponent = [import12.styles, ':host { border: 1px solid #000; } ', 'div { color: red; }'];
@@ -196,8 +196,8 @@ class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
   }
 }
 
-AppView<import2.NoneComponent> viewFactory_NoneComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNoneComponentHost0(parentView, parentIndex);
+AppView<import2.NoneComponent> viewFactory_NoneComponentHost0() {
+  return _ViewNoneComponentHost0(null, null);
 }
 
 var _visited = false;

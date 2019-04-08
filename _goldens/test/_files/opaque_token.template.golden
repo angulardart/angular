@@ -96,8 +96,8 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   }
 }
 
-AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasOpaqueTokensHost0(parentView, parentIndex);
+AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0() {
+  return _ViewHasOpaqueTokensHost0(null, null);
 }
 
 final List<dynamic> styles$ContainsChildComponent = const [];
@@ -250,8 +250,8 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
   }
 }
 
-AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewContainsChildComponentHost0(parentView, parentIndex);
+AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0() {
+  return _ViewContainsChildComponentHost0(null, null);
 }
 
 final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
@@ -319,8 +319,8 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
   }
 }
 
-AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInjectsTypedTokenFromSomeParentHost0(parentView, parentIndex);
+AppView<import1.InjectsTypedTokenFromSomeParent> viewFactory_InjectsTypedTokenFromSomeParentHost0() {
+  return _ViewInjectsTypedTokenFromSomeParentHost0(null, null);
 }
 
 var _visited = false;

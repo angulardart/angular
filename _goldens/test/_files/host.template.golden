@@ -79,8 +79,8 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
   }
 }
 
-AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHostComponentNewSyntaxHost0(parentView, parentIndex);
+AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0() {
+  return _ViewHostComponentNewSyntaxHost0(null, null);
 }
 
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
@@ -167,8 +167,8 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
   }
 }
 
-AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesHostComponentWithDirectiveHost0(parentView, parentIndex);
+AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0() {
+  return _ViewUsesHostComponentWithDirectiveHost0(null, null);
 }
 
 final List<dynamic> styles$HostComponent = const [];
@@ -286,8 +286,8 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   }
 }
 
-AppView<import1.HostComponent> viewFactory_HostComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHostComponentHost0(parentView, parentIndex);
+AppView<import1.HostComponent> viewFactory_HostComponentHost0() {
+  return _ViewHostComponentHost0(null, null);
 }
 
 var _visited = false;

@@ -504,8 +504,8 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   }
 }
 
-AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewAppComponentHost0(parentView, parentIndex);
+AppView<import1.AppComponent> viewFactory_AppComponentHost0() {
+  return _ViewAppComponentHost0(null, null);
 }
 
 final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
@@ -577,8 +577,8 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
   }
 }
 
-AppView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewMaterialAutoSuggestInputComponentHost0(parentView, parentIndex);
+AppView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponentHost0() {
+  return _ViewMaterialAutoSuggestInputComponentHost0(null, null);
 }
 
 final List<dynamic> styles$MaterialInputComponent = const [];
@@ -697,8 +697,8 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   }
 }
 
-AppView<import1.MaterialInputComponent> viewFactory_MaterialInputComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewMaterialInputComponentHost0(parentView, parentIndex);
+AppView<import1.MaterialInputComponent> viewFactory_MaterialInputComponentHost0() {
+  return _ViewMaterialInputComponentHost0(null, null);
 }
 
 var _visited = false;

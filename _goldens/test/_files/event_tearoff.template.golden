@@ -82,8 +82,8 @@ class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   }
 }
 
-AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoffHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesEventTearoffHost0(parentView, parentIndex);
+AppView<import1.UsesEventTearoff> viewFactory_UsesEventTearoffHost0() {
+  return _ViewUsesEventTearoffHost0(null, null);
 }
 
 var _visited = false;

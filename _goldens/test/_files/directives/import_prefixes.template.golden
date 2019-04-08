@@ -93,8 +93,8 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   }
 }
 
-AppView<import1.ParentComponent> viewFactory_ParentComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewParentComponentHost0(parentView, parentIndex);
+AppView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
+  return _ViewParentComponentHost0(null, null);
 }
 
 final List<dynamic> styles$ChildComponent = const [];
@@ -166,8 +166,8 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   }
 }
 
-AppView<import1.ChildComponent> viewFactory_ChildComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewChildComponentHost0(parentView, parentIndex);
+AppView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
+  return _ViewChildComponentHost0(null, null);
 }
 
 var _visited = false;

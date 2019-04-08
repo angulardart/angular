@@ -82,8 +82,8 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
   }
 }
 
-AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasTemplateFileComponentHost0(parentView, parentIndex);
+AppView<import2.HasTemplateFileComponent> viewFactory_HasTemplateFileComponentHost0() {
+  return _ViewHasTemplateFileComponentHost0(null, null);
 }
 
 var _visited = false;

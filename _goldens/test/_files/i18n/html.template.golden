@@ -87,8 +87,8 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   }
 }
 
-AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewI18nHtmlComponentHost0(parentView, parentIndex);
+AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0() {
+  return _ViewI18nHtmlComponentHost0(null, null);
 }
 
 var _visited = false;

@@ -273,8 +273,8 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   }
 }
 
-AppView<import1.RootComponent> viewFactory_RootComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewRootComponentHost0(parentView, parentIndex);
+AppView<import1.RootComponent> viewFactory_RootComponentHost0() {
+  return _ViewRootComponentHost0(null, null);
 }
 
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInputs = const [];
@@ -368,8 +368,8 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
   }
 }
 
-AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesDefaultChangeDetectionAndInputsHost0(parentView, parentIndex);
+AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChangeDetectionAndInputsHost0() {
+  return _ViewUsesDefaultChangeDetectionAndInputsHost0(null, null);
 }
 
 final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
@@ -450,8 +450,8 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
   }
 }
 
-AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDefaultChangeDetectionAndInputsHost0(parentView, parentIndex);
+AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetectionAndInputsHost0() {
+  return _ViewDefaultChangeDetectionAndInputsHost0(null, null);
 }
 
 final List<dynamic> styles$UsesOnPushChangeDetectionAndInputs = const [];
@@ -552,8 +552,8 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
   }
 }
 
-AppView<import1.UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesOnPushChangeDetectionAndInputsHost0(parentView, parentIndex);
+AppView<import1.UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChangeDetectionAndInputsHost0() {
+  return _ViewUsesOnPushChangeDetectionAndInputsHost0(null, null);
 }
 
 final List<dynamic> styles$OnPushChangeDetectionAndInputs = const [];
@@ -634,8 +634,8 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
   }
 }
 
-AppView<import1.OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectionAndInputsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewOnPushChangeDetectionAndInputsHost0(parentView, parentIndex);
+AppView<import1.OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectionAndInputsHost0() {
+  return _ViewOnPushChangeDetectionAndInputsHost0(null, null);
 }
 
 final List<dynamic> styles$InlinedNgIf = const [];
@@ -734,8 +734,8 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   }
 }
 
-AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInlinedNgIfHost0(parentView, parentIndex);
+AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0() {
+  return _ViewInlinedNgIfHost0(null, null);
 }
 
 final List<dynamic> styles$EmbeddedNgIf = const [];
@@ -847,8 +847,8 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   }
 }
 
-AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmbeddedNgIfHost0(parentView, parentIndex);
+AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0() {
+  return _ViewEmbeddedNgIfHost0(null, null);
 }
 
 final List<dynamic> styles$EmbeddedNgFor = const [];
@@ -964,8 +964,8 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   }
 }
 
-AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgForHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewEmbeddedNgForHost0(parentView, parentIndex);
+AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgForHost0() {
+  return _ViewEmbeddedNgForHost0(null, null);
 }
 
 final List<dynamic> styles$NullComponent = const [];
@@ -1029,8 +1029,8 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   }
 }
 
-AppView<import1.NullComponent> viewFactory_NullComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewNullComponentHost0(parentView, parentIndex);
+AppView<import1.NullComponent> viewFactory_NullComponentHost0() {
+  return _ViewNullComponentHost0(null, null);
 }
 
 final List<dynamic> styles$InjectsFromArbitraryParent = const [];
@@ -1098,8 +1098,8 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
   }
 }
 
-AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInjectsFromArbitraryParentHost0(parentView, parentIndex);
+AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryParentHost0() {
+  return _ViewInjectsFromArbitraryParentHost0(null, null);
 }
 
 final List<dynamic> styles$ComponentConditionalFeatures = const [];
@@ -1250,8 +1250,8 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
   }
 }
 
-AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeaturesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewComponentConditionalFeaturesHost0(parentView, parentIndex);
+AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFeaturesHost0() {
+  return _ViewComponentConditionalFeaturesHost0(null, null);
 }
 
 final List<dynamic> styles$FeatureA = const [];
@@ -1316,8 +1316,8 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   }
 }
 
-AppView<import1.FeatureA> viewFactory_FeatureAHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewFeatureAHost0(parentView, parentIndex);
+AppView<import1.FeatureA> viewFactory_FeatureAHost0() {
+  return _ViewFeatureAHost0(null, null);
 }
 
 final List<dynamic> styles$FeatureB = const [];
@@ -1382,8 +1382,8 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   }
 }
 
-AppView<import1.FeatureB> viewFactory_FeatureBHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewFeatureBHost0(parentView, parentIndex);
+AppView<import1.FeatureB> viewFactory_FeatureBHost0() {
+  return _ViewFeatureBHost0(null, null);
 }
 
 final List<dynamic> styles$UsesDomBindings = const [];
@@ -1485,8 +1485,8 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
   }
 }
 
-AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesDomBindingsHost0(parentView, parentIndex);
+AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0() {
+  return _ViewUsesDomBindingsHost0(null, null);
 }
 
 final List<dynamic> styles$UsesNgDirectives = const [];
@@ -1615,8 +1615,8 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
   }
 }
 
-AppView<import1.UsesNgDirectives> viewFactory_UsesNgDirectivesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewUsesNgDirectivesHost0(parentView, parentIndex);
+AppView<import1.UsesNgDirectives> viewFactory_UsesNgDirectivesHost0() {
+  return _ViewUsesNgDirectivesHost0(null, null);
 }
 
 final List<dynamic> styles$HasNestedProviderLookups = const [];
@@ -1769,8 +1769,8 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
   }
 }
 
-AppView<import1.HasNestedProviderLookups> viewFactory_HasNestedProviderLookupsHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasNestedProviderLookupsHost0(parentView, parentIndex);
+AppView<import1.HasNestedProviderLookups> viewFactory_HasNestedProviderLookupsHost0() {
+  return _ViewHasNestedProviderLookupsHost0(null, null);
 }
 
 final List<dynamic> styles$InjectsManyThingsDynamically = const [];
@@ -1838,8 +1838,8 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
   }
 }
 
-AppView<import1.InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynamicallyHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInjectsManyThingsDynamicallyHost0(parentView, parentIndex);
+AppView<import1.InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynamicallyHost0() {
+  return _ViewInjectsManyThingsDynamicallyHost0(null, null);
 }
 
 var _visited = false;

@@ -90,8 +90,8 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   }
 }
 
-AppView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasHostAttributesHost0(parentView, parentIndex);
+AppView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0() {
+  return _ViewHasHostAttributesHost0(null, null);
 }
 
 final List<dynamic> styles$HasTemplateAttributes = const [];
@@ -169,8 +169,8 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
   }
 }
 
-AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasTemplateAttributesHost0(parentView, parentIndex);
+AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0() {
+  return _ViewHasTemplateAttributesHost0(null, null);
 }
 
 final List<dynamic> styles$HasStaticAttribute = const [];
@@ -245,8 +245,8 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   }
 }
 
-AppView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasStaticAttributeHost0(parentView, parentIndex);
+AppView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0() {
+  return _ViewHasStaticAttributeHost0(null, null);
 }
 
 final List<dynamic> styles$HasHostClass = const [];
@@ -322,8 +322,8 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   }
 }
 
-AppView<import1.HasHostClass> viewFactory_HasHostClassHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasHostClassHost0(parentView, parentIndex);
+AppView<import1.HasHostClass> viewFactory_HasHostClassHost0() {
+  return _ViewHasHostClassHost0(null, null);
 }
 
 final List<dynamic> styles$HasTemplateClass = const [];
@@ -401,8 +401,8 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   }
 }
 
-AppView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasTemplateClassHost0(parentView, parentIndex);
+AppView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0() {
+  return _ViewHasTemplateClassHost0(null, null);
 }
 
 final List<dynamic> styles$HasStyleProperty = const [];
@@ -486,8 +486,8 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   }
 }
 
-AppView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewHasStylePropertyHost0(parentView, parentIndex);
+AppView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0() {
+  return _ViewHasStylePropertyHost0(null, null);
 }
 
 var _visited = false;

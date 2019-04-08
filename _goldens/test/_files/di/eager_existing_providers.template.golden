@@ -112,8 +112,8 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   }
 }
 
-AppView<import1.AppComponent> viewFactory_AppComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewAppComponentHost0(parentView, parentIndex);
+AppView<import1.AppComponent> viewFactory_AppComponentHost0() {
+  return _ViewAppComponentHost0(null, null);
 }
 
 final List<dynamic> styles$ProvidesServicesComponent = const [];
@@ -186,8 +186,8 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
   }
 }
 
-AppView<import1.ProvidesServicesComponent> viewFactory_ProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewProvidesServicesComponentHost0(parentView, parentIndex);
+AppView<import1.ProvidesServicesComponent> viewFactory_ProvidesServicesComponentHost0() {
+  return _ViewProvidesServicesComponentHost0(null, null);
 }
 
 final List<dynamic> styles$InjectsServicesComponent = const [];
@@ -255,8 +255,8 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
   }
 }
 
-AppView<import1.InjectsServicesComponent> viewFactory_InjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewInjectsServicesComponentHost0(parentView, parentIndex);
+AppView<import1.InjectsServicesComponent> viewFactory_InjectsServicesComponentHost0() {
+  return _ViewInjectsServicesComponentHost0(null, null);
 }
 
 var _visited = false;

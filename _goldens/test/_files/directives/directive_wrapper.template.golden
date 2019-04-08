@@ -109,8 +109,8 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   }
 }
 
-AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewTestFooComponentHost0(parentView, parentIndex);
+AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
+  return _ViewTestFooComponentHost0(null, null);
 }
 
 final List<dynamic> styles$DirectiveContainerTest = const [];
@@ -195,8 +195,8 @@ class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContaine
   }
 }
 
-AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewDirectiveContainerTestHost0(parentView, parentIndex);
+AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0() {
+  return _ViewDirectiveContainerTestHost0(null, null);
 }
 
 class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {

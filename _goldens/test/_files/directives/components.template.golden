@@ -80,8 +80,8 @@ class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
   }
 }
 
-AppView<import1.TestSubComponent> viewFactory_TestSubComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewTestSubComponentHost0(parentView, parentIndex);
+AppView<import1.TestSubComponent> viewFactory_TestSubComponentHost0() {
+  return _ViewTestSubComponentHost0(null, null);
 }
 
 var _visited = false;

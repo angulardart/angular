@@ -3766,8 +3766,8 @@
       this._currentValue = "";
       this.element = t0;
     },
-    viewFactory_RootComponentHost0: function(parentView, parentIndex) {
-      return new N._ViewRootComponentHost0(parentView, S.AppViewData_AppViewData(3, C.ViewType_0, parentIndex));
+    viewFactory_RootComponentHost0: function() {
+      return new N._ViewRootComponentHost0(null, S.AppViewData_AppViewData(3, C.ViewType_0, null));
     },
     viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
       var t1 = new N._ViewInlinedNgIf1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
@@ -4144,7 +4144,7 @@
       this.parent = t1;
     },
     noProviderError: function(token) {
-      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
+      return new P.ArgumentError(false, null, null, "No provider found for " + H.S(token));
     }
   },
   E = {SanitizationService: function SanitizationService() {
@@ -9213,11 +9213,11 @@
   };
   Y.ApplicationRef_bootstrap_closure.prototype = {
     call$0: function() {
-      var component, existing, newElement, replacement, t5, testability, _null = null,
+      var component, existing, newElement, replacement, t5, testability,
         t1 = this.componentFactory,
         t2 = this.$this,
         t3 = t2._injector,
-        hostView = t1._viewFactory.call$2(_null, _null),
+        hostView = t1._viewFactory.call$0(),
         t4 = hostView.viewData;
       t4._hostInjector = t3;
       t4.projectedNodes = C.List_empty;
@@ -9237,11 +9237,11 @@
         t4 = component._nativeElement;
         t1.appendChild(t4);
         t1 = t4;
-        replacement = _null;
+        replacement = null;
       }
       t4 = component._parentView;
       t5 = component._nodeIndex;
-      testability = new G.ElementInjector(t4, t5, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, _null);
+      testability = new G.ElementInjector(t4, t5, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, null);
       if (testability != null)
         t3.$get$1(0, C.Type_TestabilityRegistry_IMm)._applications.$indexSet(0, t1, testability);
       t2._loadedRootComponent$2(component, replacement);
@@ -11695,7 +11695,7 @@
     _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 11, 0);
     _instance(_, "get$_onErrorWithoutLongStackTrace", 0, 5, null, ["call$5"], ["_onErrorWithoutLongStackTrace$5"], 9, 0);
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 8, 0);
-    _static_2(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 32);
+    _static_0(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 32);
     _static_2(N, "dart2js_golden_template__viewFactory_InlinedNgIf1$closure", "viewFactory_InlinedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 0);
@@ -12062,7 +12062,7 @@
     C._ZoneFunction__RootZone__rootScheduleMicrotask = new P._ZoneFunction(C.C__RootZone, P.async___rootScheduleMicrotask$closure());
     C._ZoneSpecification_ALf = new P._ZoneSpecification(null, null, null, null, null, null, null, null, null, null, null, null, null);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent], args: [[S.AppView,,], P.int]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
   (function staticFields() {
     $.Closure_functionCounter = 0;
     $.BoundClosure_selfFieldNameCache = null;

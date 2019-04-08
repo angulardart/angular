@@ -313,8 +313,8 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   }
 }
 
-AppView<import1.ParentComponent> viewFactory_ParentComponentHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewParentComponentHost0(parentView, parentIndex);
+AppView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
+  return _ViewParentComponentHost0(null, null);
 }
 
 final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
@@ -418,8 +418,8 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   }
 }
 
-AppView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewChildComponentProvidingA$B$CHost0(parentView, parentIndex);
+AppView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
+  return _ViewChildComponentProvidingA$B$CHost0(null, null);
 }
 
 final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
@@ -500,8 +500,8 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   }
 }
 
-AppView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewChildComponentWithNgContentProviding$DHost0(parentView, parentIndex);
+AppView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
+  return _ViewChildComponentWithNgContentProviding$DHost0(null, null);
 }
 
 final List<dynamic> styles$ChildComponentInjecting$D = const [];
@@ -569,8 +569,8 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
   }
 }
 
-AppView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewChildComponentInjecting$DHost0(parentView, parentIndex);
+AppView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
+  return _ViewChildComponentInjecting$DHost0(null, null);
 }
 
 final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
@@ -642,8 +642,8 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
   }
 }
 
-AppView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0(AppView<dynamic> parentView, int parentIndex) {
-  return _ViewChildComponentWithVisibilityAllHost0(parentView, parentIndex);
+AppView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
+  return _ViewChildComponentWithVisibilityAllHost0(null, null);
 }
 
 var _visited = false;
