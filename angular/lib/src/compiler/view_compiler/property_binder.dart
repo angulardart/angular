@@ -1,16 +1,8 @@
-import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
-import 'package:angular/src/compiler/template_ast.dart'
-    show
-        BoundElementPropertyAst,
-        BoundExpression,
-        BoundI18nMessage,
-        BoundValue,
-        DirectiveAst,
-        PropertyBindingType;
+import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
@@ -139,7 +131,7 @@ void bindRenderText(
 ///       this._expr_1 = currVal_1;
 ///     }
 void bindAndWriteToRenderer(
-  List<BoundElementPropertyAst> boundProps,
+  List<ir.Binding> bindings,
   BoundValueConverter converter,
   o.Expression appViewInstance,
   NodeReference renderNode,
@@ -151,8 +143,7 @@ void bindAndWriteToRenderer(
 }) {
   final dynamicPropertiesMethod = CompileMethod();
   final constantPropertiesMethod = CompileMethod();
-  for (var boundProp in boundProps) {
-    var binding = _convertToIr(boundProp, converter.analyzedClass);
+  for (var binding in bindings) {
     // Add to view bindings collection.
     int bindingIndex = nameResolver.createUniqueBindIndex();
 
@@ -197,50 +188,6 @@ void bindAndWriteToRenderer(
   }
 }
 
-ir.Binding _convertToIr(
-        BoundElementPropertyAst boundProp, AnalyzedClass analyzedClass) =>
-    ir.Binding(
-        source: _boundValueToIr(boundProp, analyzedClass),
-        target: _propertyToIr(boundProp));
-
-ir.BindingTarget _propertyToIr(BoundElementPropertyAst boundProp) {
-  switch (boundProp.type) {
-    case PropertyBindingType.property:
-      if (boundProp.name == 'className') {
-        return ir.ClassBinding();
-      }
-      return ir.PropertyBinding(boundProp.name, boundProp.securityContext);
-    case PropertyBindingType.attribute:
-      if (boundProp.name == 'class') {
-        return ir.ClassBinding();
-      }
-      return ir.AttributeBinding(boundProp.name,
-          namespace: boundProp.namespace,
-          isConditional: _isConditionalAttribute(boundProp),
-          securityContext: boundProp.securityContext);
-    case PropertyBindingType.cssClass:
-      return ir.ClassBinding(name: boundProp.name);
-    case PropertyBindingType.style:
-      return ir.StyleBinding(boundProp.name, boundProp.unit);
-  }
-  return null;
-}
-
-ir.BindingSource _boundValueToIr(
-    BoundElementPropertyAst boundProp, AnalyzedClass analyzedClass) {
-  final value = boundProp.value;
-  if (value is BoundExpression) {
-    return ir.BoundExpression(
-        value.expression, boundProp.sourceSpan, analyzedClass);
-  } else if (value is BoundI18nMessage) {
-    return ir.BoundI18nMessage(value.message);
-  }
-  throw ArgumentError.value(value, 'value', 'Unknown $BoundValue type.');
-}
-
-bool _isConditionalAttribute(BoundElementPropertyAst boundProp) =>
-    boundProp.unit == 'if';
-
 o.OutputType _fieldType(ir.BindingTarget target) {
   if (target is ir.ClassBinding) {
     return target.name == null ? o.STRING_TYPE : o.BOOL_TYPE;
@@ -249,7 +196,7 @@ o.OutputType _fieldType(ir.BindingTarget target) {
 }
 
 void bindRenderInputs(
-    List<BoundElementPropertyAst> boundProps, CompileElement compileElement) {
+    List<ir.Binding> bindings, CompileElement compileElement) {
   var appViewInstance = compileElement.component == null
       ? o.THIS_EXPR
       : compileElement.componentView;
@@ -258,7 +205,7 @@ void bindRenderInputs(
   var implicitReceiver = DetectChangesVars.cachedCtx;
   var converter = BoundValueConverter.forView(view, implicitReceiver);
   bindAndWriteToRenderer(
-    boundProps,
+    bindings,
     converter,
     appViewInstance,
     renderNode,

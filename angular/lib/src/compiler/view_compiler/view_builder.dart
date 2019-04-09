@@ -7,6 +7,8 @@ import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart'
+    show convertHostAttributeToBinding, convertToBinding;
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
@@ -32,7 +34,6 @@ import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest, ProviderNode;
 import 'view_compiler_utils.dart'
     show
-        attributeName,
         createFlatArray,
         detectHtmlElementFromTagName,
         identifierFromTagName,
@@ -94,12 +95,10 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       return;
     }
     _visitText(
-        ir.Binding(
-            source: ir.BoundExpression(
-                ast.value, ast.sourceSpan, _view.component.analyzedClass),
-            target: ir.TextBinding()),
-        parent,
-        ast.ngContentIndex);
+      convertToBinding(ast, _view.component.analyzedClass),
+      parent,
+      ast.ngContentIndex,
+    );
   }
 
   @override
@@ -110,22 +109,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       }
       return;
     }
-    _visitText(
-        ir.Binding(
-            source: ir.StringLiteral(ast.value), target: ir.TextBinding()),
-        parent,
-        ast.ngContentIndex);
+    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
   }
 
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    _visitText(
-        ir.Binding(
-            source: ir.BoundI18nMessage(ast.value),
-            target:
-                ast.value.containsHtml ? ir.HtmlBinding() : ir.TextBinding()),
-        parent,
-        ast.ngContentIndex);
+    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
   }
 
   bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
@@ -577,9 +566,8 @@ o.Constructor _createViewClassConstructor(CompileView view) {
     // Write literal attribute values on element.
     CompileDirectiveMetadata componentMeta = view.component;
     componentMeta.hostAttributes.forEach((name, value) {
-      var binding = ir.Binding(
-          source: ir.BoundExpression(value, null, view.component.analyzedClass),
-          target: attributeName(name));
+      var binding = convertHostAttributeToBinding(
+          name, value, view.component.analyzedClass);
       var statement = view.createAttributeStatement(
         binding,
         tagName,

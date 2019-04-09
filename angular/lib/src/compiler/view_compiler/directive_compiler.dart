@@ -1,4 +1,5 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorState;
 import 'package:angular_compiler/cli.dart';
@@ -156,7 +157,7 @@ class DirectiveCompiler {
     );
 
     bindAndWriteToRenderer(
-      hostProperties,
+      convertAllToBinding(hostProperties, directive.metadata.analyzedClass),
       _boundValueConverter,
       o.variable('view'),
       el,

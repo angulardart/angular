@@ -84,12 +84,10 @@ abstract class BoundValueConverter
 
   o.Expression _createI18nMessage(I18nMessage message);
 
-  analyzer.AnalyzedClass get analyzedClass => _metadata.analyzedClass;
-
   /// Returns whether [value] can change during its lifetime.
   bool isImmutable(BoundValue value) {
     if (value is BoundExpression) {
-      return analyzer.isImmutable(value.expression, analyzedClass);
+      return analyzer.isImmutable(value.expression, _metadata.analyzedClass);
     } else if (value is BoundI18nMessage) {
       return true;
     }

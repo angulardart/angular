@@ -1,8 +1,8 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
-import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
+import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/compiler/view_compiler/constants.dart';
@@ -60,12 +60,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       return;
     }
     bindRenderText(
-        ir.Binding(
-            source: ir.BoundExpression(
-                ast.value, ast.sourceSpan, view.component.analyzedClass),
-            target: ir.TextBinding()),
-        node,
-        view);
+        convertToBinding(ast, view.component.analyzedClass), node, view);
   }
 
   @override
@@ -102,7 +97,10 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       }
     }
 
-    bindRenderInputs(ast.inputs, compileElement);
+    bindRenderInputs(
+      convertAllToBinding(ast.inputs, view.component.analyzedClass),
+      compileElement,
+    );
     bindRenderOutputs(eventListeners);
     var index = -1;
     for (var directiveAst in ast.directives) {
@@ -222,7 +220,7 @@ void bindViewHostProperties(CompileView view,
   final implicitReceiver = DetectChangesVars.cachedCtx;
   final converter = BoundValueConverter.forView(view, implicitReceiver);
   bindAndWriteToRenderer(
-    hostProperties,
+    convertAllToBinding(hostProperties, view.component.analyzedClass),
     converter,
     o.THIS_EXPR,
     renderNode,
