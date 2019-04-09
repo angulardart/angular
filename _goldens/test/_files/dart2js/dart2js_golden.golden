@@ -10189,24 +10189,19 @@
       }
     },
     markPathToRootAsCheckOnce$0: function() {
-      var view, t1, cdMode, t2;
-      for (view = this; view != null;) {
-        t1 = view.viewData;
-        cdMode = t1._cdMode;
-        if (cdMode === 4)
-          break;
-        if (cdMode === 2)
-          if (cdMode !== 1) {
-            t1._cdMode = 1;
-            t2 = t1._cdState === 2;
-            t1._skipChangeDetection = t2;
-          }
-        if (t1.type === C.ViewType_1)
-          view = view.parentView;
-        else {
-          t1 = t1._viewContainerElement;
-          view = t1 == null ? null : t1.parentView;
-        }
+      var t1 = this.viewData,
+        t2 = t1._cdMode;
+      if (t2 === 4)
+        return;
+      if (t2 === 2)
+        t1.set$cdMode(1);
+      if (t1.type === C.ViewType_1)
+        this.parentView.markPathToRootAsCheckOnce$0();
+      else {
+        t1 = t1._viewContainerElement;
+        t1 = t1 == null ? null : t1.parentView;
+        if (t1 != null)
+          t1.markPathToRootAsCheckOnce$0();
       }
     },
     initViewRoot$1: function(hostElement) {
