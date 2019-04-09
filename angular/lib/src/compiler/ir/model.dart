@@ -179,6 +179,7 @@ class Binding implements IRNode {
 
 abstract class BindingTarget extends IRNode {
   TemplateSecurityContext get securityContext;
+  o.OutputType get type;
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]);
@@ -187,6 +188,8 @@ abstract class BindingTarget extends IRNode {
 class TextBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+  @override
+  final o.OutputType type = null;
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
@@ -198,6 +201,8 @@ class HtmlBinding implements BindingTarget {
   // and then document it.
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+  @override
+  final o.OutputType type = null;
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
@@ -205,7 +210,7 @@ class HtmlBinding implements BindingTarget {
 }
 
 class ClassBinding implements BindingTarget {
-  /// Name of the class binding, i.e. [class.name]='foo'.
+  /// Name of the class binding, i.e. foo in [class.foo]='bar'.
   ///
   /// If name is null, then we treat this as a [className]='"foo"' or
   /// [attr.class]='foo'.
@@ -219,11 +224,21 @@ class ClassBinding implements BindingTarget {
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
       visitor.visitClassBinding(this, context);
+
+  /// When a class name is specified, then the [BindingSource] is a boolean to
+  /// toggle the class on and off.
+  ///
+  /// When a class name is specified, then the [BindingSource] is the actual
+  /// class string to be set.
+  @override
+  o.OutputType get type => name == null ? o.STRING_TYPE : o.BOOL_TYPE;
 }
 
 class TabIndexBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
+  @override
+  final o.OutputType type = null;
 
   @override
   R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
@@ -236,6 +251,8 @@ class StyleBinding implements BindingTarget {
 
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.style;
+  @override
+  final o.OutputType type = null;
 
   StyleBinding(this.name, this.unit);
 
@@ -251,6 +268,8 @@ class AttributeBinding implements BindingTarget {
   final bool isConditional;
   @override
   final TemplateSecurityContext securityContext;
+  @override
+  final o.OutputType type = null;
 
   AttributeBinding(
     this.name, {
@@ -270,6 +289,8 @@ class PropertyBinding implements BindingTarget {
   final String name;
   @override
   final TemplateSecurityContext securityContext;
+  @override
+  final o.OutputType type = null;
 
   PropertyBinding(this.name, this.securityContext);
 

@@ -163,9 +163,8 @@ void bindAndWriteToRenderer(
       )
     ];
 
-    final fieldType = _fieldType(binding.target);
-    final checkExpression =
-        converter.convertSourceToExpression(binding.source, fieldType);
+    final checkExpression = converter.convertSourceToExpression(
+        binding.source, binding.target.type);
     _bind(
       storage,
       currValExpr,
@@ -176,7 +175,7 @@ void bindAndWriteToRenderer(
       updateStmts,
       dynamicPropertiesMethod,
       constantPropertiesMethod,
-      fieldType: fieldType,
+      fieldType: binding.target.type,
       isHostComponent: isHostComponent,
     );
   }
@@ -186,13 +185,6 @@ void bindAndWriteToRenderer(
   if (dynamicPropertiesMethod.isNotEmpty) {
     targetMethod.addStmts(dynamicPropertiesMethod.finish());
   }
-}
-
-o.OutputType _fieldType(ir.BindingTarget target) {
-  if (target is ir.ClassBinding) {
-    return target.name == null ? o.STRING_TYPE : o.BOOL_TYPE;
-  }
-  return null;
 }
 
 void bindRenderInputs(
