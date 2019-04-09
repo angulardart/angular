@@ -3502,11 +3502,9 @@
       this.parent = t1;
     },
     ElementInjector: function ElementInjector(t0, t1, t2) {
-      var _ = this;
-      _._view = t0;
-      _._element$_nodeIndex = t1;
-      _._parent = null;
-      _.parent = t2;
+      this._view = t0;
+      this._element$_nodeIndex = t1;
+      this.parent = t2;
     }
   },
   Y = {
@@ -10514,22 +10512,10 @@
       return this._view.injectorGet$3(token, this._element$_nodeIndex, orElse);
     },
     injectFromAncestryOptional$2: function(token, orElse) {
-      var t1 = this._view;
-      return t1.parentView.injectorGet$3(token, t1.viewData.parentIndex, orElse);
+      return H.throwExpression(P.UnimplementedError$(null));
     },
     injectFromSelfOptional$2: function(token, orElse) {
       return H.throwExpression(P.UnimplementedError$(null));
-    },
-    get$parent: function(_) {
-      var t2,
-        t1 = this._parent;
-      if (t1 == null) {
-        t1 = this._view;
-        t2 = t1.parentView;
-        t1 = t1.viewData;
-        t1 = this._parent = new G.ElementInjector(t2, t1.parentIndex, C.EmptyInjector_null);
-      }
-      return t1;
     }
   };
   R.EmptyInjector.prototype = {
@@ -10551,10 +10537,7 @@
       return result;
     },
     injectFromAncestryOptional$2: function(token, orElse) {
-      return this.get$parent(this).provideUntyped$2(token, orElse);
-    },
-    get$parent: function(receiver) {
-      return this.parent;
+      return this.parent.provideUntyped$2(token, orElse);
     }
   };
   M.Injector.prototype = {
