@@ -1,13 +1,13 @@
 import 'package:meta/meta.dart';
+import 'package:angular/src/core/linker/views/view.dart';
 
-import '../../core/linker/app_view.dart';
 import 'hierarchical.dart';
 import 'injector.dart';
 
-/// **INTERNAL ONLY**: Adapts the [AppView] interfaces as an injector.
+/// **INTERNAL ONLY**: Adapts the [View] interfaces as an injector.
 @Immutable()
 class ElementInjector extends HierarchicalInjector {
-  final AppView<Object> _view;
+  final View _view;
   final int _nodeIndex;
 
   ElementInjector(this._view, this._nodeIndex);
