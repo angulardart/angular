@@ -49,5 +49,19 @@ external _ng.AppView<DefaultComponent> viewFactory_DefaultComponent0(_ng.AppView
 class ViewDefaultComponent0 extends _ng.AppView<DefaultComponent> {
   external ViewDefaultComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesNgModelLike.
+external List<dynamic> get styles$UsesNgModelLike;
+external _ng.ComponentFactory<UsesNgModelLike> get UsesNgModelLikeNgFactory;
+external _ng.AppView<UsesNgModelLike> viewFactory_UsesNgModelLike0(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesNgModelLike0 extends _ng.AppView<UsesNgModelLike> {
+  external ViewUsesNgModelLike0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
+// For @Directive class NgModelLike.
+class NgModelLikeNgCd extends _ng.DirectiveChangeDetector {
+  external NgModelLike get instance;
+  external void deliverChanges();
+  external NgModelLikeNgCd(NgModelLike instance);
+  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
+}
 
 external void initReflector();

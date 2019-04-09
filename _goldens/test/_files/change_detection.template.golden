@@ -432,6 +432,97 @@ AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0() {
   return _ViewDefaultComponentHost0(null, null);
 }
 
+final List<dynamic> styles$UsesNgModelLike = const [];
+
+class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
+  import1.NgModelLike _NgModelLike_0_5;
+  static import2.ComponentStyles _componentStyles;
+  ViewUsesNgModelLike0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import5.document.createElement('uses-ng-model');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.UsesNgModelLike> build() {
+    final _rootEl = rootEl;
+    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import5.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'input');
+    _NgModelLike_0_5 = import1.NgModelLike();
+    final subscription_0 = _NgModelLike_0_5.modelChange.listen(eventHandler1(_handle_ngModelChange_0_0));
+    init(const [], [subscription_0]);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    bool changed = false;
+    bool firstCheck = (this.cdState == 0);
+    changed = false;
+    _NgModelLike_0_5.model = _ctx.value;
+    _NgModelLike_0_5.ngAfterChanges();
+    if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
+      _NgModelLike_0_5.ngOnInit();
+    }
+    if ((!import8.AppViewUtils.throwOnChanges)) {
+      _NgModelLike_0_5.ngDoCheck();
+    }
+  }
+
+  void _handle_ngModelChange_0_0($event) {
+    final _ctx = ctx;
+    _ctx.value = $event;
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNgModelLike, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.UsesNgModelLike> _UsesNgModelLikeNgFactory = const ComponentFactory('uses-ng-model', viewFactory_UsesNgModelLikeHost0);
+ComponentFactory<import1.UsesNgModelLike> get UsesNgModelLikeNgFactory {
+  return _UsesNgModelLikeNgFactory;
+}
+
+final List<dynamic> styles$UsesNgModelLikeHost = const [];
+
+class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
+  ViewUsesNgModelLike0 _compView_0;
+  import1.UsesNgModelLike _UsesNgModelLike_0_5;
+  _ViewUsesNgModelLikeHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesNgModelLike> build() {
+    _compView_0 = ViewUsesNgModelLike0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesNgModelLike_0_5 = import1.UsesNgModelLike();
+    _compView_0.create(_UsesNgModelLike_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesNgModelLike_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0() {
+  return _ViewUsesNgModelLikeHost0(null, null);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -444,5 +535,6 @@ void initReflector() {
   _ngRef.registerComponent(OnPushChildComponent, OnPushChildComponentNgFactory);
   _ngRef.registerComponent(StatefulComponent, StatefulComponentNgFactory);
   _ngRef.registerComponent(DefaultComponent, DefaultComponentNgFactory);
+  _ngRef.registerComponent(UsesNgModelLike, UsesNgModelLikeNgFactory);
   _ref0.initReflector();
 }

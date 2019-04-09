@@ -41,3 +41,36 @@ class StatefulComponent extends ComponentState {}
   template: '<div>Default</div>',
 )
 class DefaultComponent {}
+
+@Component(
+  selector: 'uses-ng-model',
+  directives: [
+    NgModelLike,
+  ],
+  template: '<input [(ngModel)]="value" />',
+)
+class UsesNgModelLike {
+  var value = 'Hello World';
+}
+
+@Directive(
+  selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
+)
+class NgModelLike extends Object
+    with ComponentState
+    implements AfterChanges, DoCheck, OnInit {
+  @Output('ngModelChange')
+  get modelChange => null;
+
+  @Input('ngModel')
+  set model(Object ngModel) {}
+
+  @override
+  void ngAfterChanges() {}
+
+  @override
+  void ngDoCheck() {}
+
+  @override
+  void ngOnInit() {}
+}
