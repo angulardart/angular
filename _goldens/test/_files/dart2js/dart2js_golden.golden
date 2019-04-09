@@ -1876,6 +1876,9 @@
           return receiver[a0] = a1;
       return J.getInterceptor$ax(receiver).$indexSet(receiver, a0, a1);
     },
+    _removeEventListener$3$x: function(receiver, a0, a1, a2) {
+      return J.getInterceptor$x(receiver)._removeEventListener$3(receiver, a0, a1, a2);
+    },
     _replaceChild$2$x: function(receiver, a0, a1) {
       return J.getInterceptor$x(receiver)._replaceChild$2(receiver, a0, a1);
     },
@@ -3734,7 +3737,7 @@
       _.type = t0;
       _.locals = t1;
       _.destroyed = false;
-      _.rootFragment = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = null;
+      _.rootFragment = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = _._viewContainerElement = null;
       _.parentIndex = t2;
       _._cdMode = t3;
       _._skipChangeDetection = false;
@@ -4080,8 +4083,14 @@
       this.title = t0;
       this.name = t1;
     },
-    OnPushChangeDetectionAndInputs: function OnPushChangeDetectionAndInputs() {
-      this.name = this.title = null;
+    OnPushChangeDetectionAndInputs: function OnPushChangeDetectionAndInputs(t0, t1) {
+      var _ = this;
+      _._changeDetector = t0;
+      _._stream = t1;
+      _.name = _.title = _._subscription = null;
+    },
+    OnPushChangeDetectionAndInputs_ngOnInit_closure: function OnPushChangeDetectionAndInputs_ngOnInit_closure(t0) {
+      this.$this = t0;
     },
     InlinedNgIf: function InlinedNgIf(t0) {
       this.showDiv = t0;
@@ -5630,6 +5639,20 @@
         P._runGuarded(_this.onListen);
       return subscription;
     },
+    _recordCancel$1: function(sub) {
+      var t1, _this = this;
+      if (sub._async$_next === sub)
+        return;
+      t1 = sub._eventState;
+      if ((t1 & 2) !== 0)
+        sub._eventState = t1 | 4;
+      else {
+        _this._removeListener$1(sub);
+        if ((_this._state & 2) === 0 && _this._firstSubscription == null)
+          _this._callOnCancel$0();
+      }
+      return;
+    },
     _addEventError$0: function() {
       if ((this._state & 4) !== 0)
         return new P.StateError("Cannot add new events after calling close");
@@ -5772,6 +5795,10 @@
     },
     then$1$1: function(f, $R) {
       return this.then$1$2$onError(f, null, $R);
+    },
+    _setValue$1: function(value) {
+      this._state = 4;
+      this._resultOrListeners = value;
     },
     _addListener$1: function(listener) {
       var t2, _this = this,
@@ -6080,6 +6107,9 @@
     }
   };
   P._ControllerSubscription.prototype = {
+    _onCancel$0: function() {
+      return this._controller._recordCancel$1(this);
+    },
     _onPause$0: function() {
     },
     _onResume$0: function() {
@@ -6099,6 +6129,23 @@
         H.throwExpression(P.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace."));
       t1.registerCallback$1(onDone == null ? P.async___nullDoneHandler$closure() : onDone);
     },
+    cancel$0: function(_) {
+      var t2, _this = this,
+        t1 = _this._state &= 4294967279;
+      if ((t1 & 8) === 0) {
+        t1 = _this._state = t1 | 8;
+        if ((t1 & 64) !== 0) {
+          t2 = _this._pending;
+          if (t2._state === 1)
+            t2._state = 3;
+        }
+        if ((t1 & 32) === 0)
+          _this._pending = null;
+        _this._cancelFuture = _this._onCancel$0();
+      }
+      t1 = $.$get$Future__nullFuture();
+      return t1;
+    },
     _add$1: function(_, data) {
       var t1 = this._state;
       if ((t1 & 8) !== 0)
@@ -6111,6 +6158,9 @@
     _onPause$0: function() {
     },
     _onResume$0: function() {
+    },
+    _onCancel$0: function() {
+      return;
     },
     _addPending$1: function($event) {
       var t1, _this = this,
@@ -6226,6 +6276,9 @@
         return;
       _this._zone.scheduleMicrotask$1(_this.get$_sendDone());
       _this._state |= 2;
+    },
+    cancel$0: function(_) {
+      return $.$get$Future__nullFuture();
     },
     _sendDone$0: function() {
       var _this = this,
@@ -6825,7 +6878,7 @@
     call$2: function(k, v) {
       this.result.$indexSet(0, k, v);
     },
-    $signature: 1
+    $signature: 3
   };
   P.IterableBase.prototype = {};
   P.ListMixin.prototype = {
@@ -6873,7 +6926,7 @@
       t1._contents = t2 + ": ";
       t1._contents += H.S(v);
     },
-    $signature: 1
+    $signature: 3
   };
   P.MapMixin.prototype = {
     forEach$1: function(receiver, action) {
@@ -7497,6 +7550,9 @@
     },
     _addEventListener$3: function(receiver, type, listener, options) {
       return receiver.addEventListener(type, H.convertDartClosureToJS(listener, 1), false);
+    },
+    _removeEventListener$3: function(receiver, type, listener, options) {
+      return receiver.removeEventListener(type, H.convertDartClosureToJS(listener, 1), false);
     }
   };
   W.File.prototype = {$isFile: 1};
@@ -8333,7 +8389,20 @@
       return [W.StyleSheet];
     }
   };
-  W._EventStreamSubscription.prototype = {};
+  W._EventStreamSubscription.prototype = {
+    cancel$0: function(_) {
+      var t2, t3, _this = this,
+        t1 = _this._html$_target;
+      if (t1 == null)
+        return;
+      t2 = _this._html$_onData;
+      t3 = t2 != null;
+      if (t3)
+        if (t3)
+          J._removeEventListener$3$x(t1, _this._eventType, t2, false);
+      return _this._html$_onData = _this._html$_target = null;
+    }
+  };
   W._EventStreamSubscription_closure.prototype = {
     call$1: function(e) {
       return this.onData.call$1(e);
@@ -8477,7 +8546,7 @@
     call$2: function(key, value) {
       this._box_0.copy[key] = this.$this.walk$1(value);
     },
-    $signature: 1
+    $signature: 3
   };
   P._AcceptStructuredClone.prototype = {
     findSlot$1: function(value) {
@@ -9209,7 +9278,7 @@
       var t1 = this.$this;
       t1._ngZone._innerZone.runGuarded$1(t1.get$tick());
     },
-    $signature: 3
+    $signature: 1
   };
   Y.ApplicationRef_bootstrap_closure.prototype = {
     call$0: function() {
@@ -9994,7 +10063,7 @@
     },
     "call*": "call$2",
     $requiredArgCount: 2,
-    $signature: 1
+    $signature: 3
   };
   S.OpaqueToken.prototype = {
     toString$0: function(_) {
@@ -10010,6 +10079,12 @@
     }
   };
   S.AppViewData.prototype = {
+    set$cdMode: function(value) {
+      if (this._cdMode !== value) {
+        this._cdMode = value;
+        this.updateSkipChangeDetectionFlag$0();
+      }
+    },
     set$cdState: function(value) {
       if (this._cdState !== value) {
         this._cdState = value;
@@ -10113,6 +10188,27 @@
         current._lastCaughtTrace = s;
       }
     },
+    markPathToRootAsCheckOnce$0: function() {
+      var view, t1, cdMode, t2;
+      for (view = this; view != null;) {
+        t1 = view.viewData;
+        cdMode = t1._cdMode;
+        if (cdMode === 4)
+          break;
+        if (cdMode === 2)
+          if (cdMode !== 1) {
+            t1._cdMode = 1;
+            t2 = t1._cdState === 2;
+            t1._skipChangeDetection = t2;
+          }
+        if (t1.type === C.ViewType_1)
+          view = view.parentView;
+        else {
+          t1 = t1._viewContainerElement;
+          view = t1 == null ? null : t1.parentView;
+        }
+      }
+    },
     initViewRoot$1: function(hostElement) {
       this.componentStyles.toString;
       return hostElement;
@@ -10198,18 +10294,18 @@
       return index > 0 ? views[index - 1].get$lastRootNode() : this.nativeElement;
     },
     attachView$2: function(view, viewIndex) {
-      var refRenderNode,
-        views = this.nestedViews;
+      var refRenderNode, _this = this,
+        views = _this.nestedViews;
       if (views == null)
         views = H.setRuntimeTypeInfo([], [[S.AppView, P.Object]]);
       C.JSArray_methods.insert$2(views, viewIndex, view);
-      refRenderNode = this._findRenderNode$2(views, viewIndex);
-      this.nestedViews = views;
+      refRenderNode = _this._findRenderNode$2(views, viewIndex);
+      _this.nestedViews = views;
       if (refRenderNode != null) {
         T.insertNodesAsSibling(view.get$flatRootNodes(), refRenderNode);
         $.domRootRendererIsDirty = true;
       }
-      view.viewData;
+      view.viewData._viewContainerElement = _this;
     },
     detachView$1: function(viewIndex) {
       var t1 = this.nestedViews,
@@ -10217,6 +10313,7 @@
         nodes = view.get$flatRootNodes();
       T.removeNodes(nodes);
       $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+      view.viewData._viewContainerElement = null;
       return view;
     }
   };
@@ -10286,7 +10383,7 @@
       t1._didWork = true;
       t1._isZoneStable = false;
     },
-    $signature: 3
+    $signature: 1
   };
   D.Testability__watchAngularEvents_closure0.prototype = {
     call$0: function() {
@@ -10303,7 +10400,7 @@
         H.throwExpression(P.Exception_Exception("Expected to not be in Angular Zone, but it is!"));
       P.scheduleMicrotask(new D.Testability__watchAngularEvents___closure(this.$this));
     },
-    $signature: 3
+    $signature: 1
   };
   D.Testability__watchAngularEvents___closure.prototype = {
     call$0: function() {
@@ -10721,7 +10818,17 @@
   O.UsesDefaultChangeDetectionAndInputs.prototype = {};
   O.DefaultChangeDetectionAndInputs.prototype = {};
   O.UsesOnPushChangeDetectionAndInputs.prototype = {};
-  O.OnPushChangeDetectionAndInputs.prototype = {};
+  O.OnPushChangeDetectionAndInputs.prototype = {
+    ngOnInit$0: function() {
+      this._subscription = this._stream.listen$1(new O.OnPushChangeDetectionAndInputs_ngOnInit_closure(this));
+    }
+  };
+  O.OnPushChangeDetectionAndInputs_ngOnInit_closure.prototype = {
+    call$1: function(_) {
+      this.$this._changeDetector.markPathToRootAsCheckOnce$0();
+    },
+    $signature: 1
+  };
   O.InlinedNgIf.prototype = {};
   O.EmbeddedNgIf.prototype = {};
   O.EmbeddedNgFor.prototype = {};
@@ -11105,15 +11212,18 @@
       t1.rootEl = t2;
       _this._compView_0 = t1;
       parentRenderNode.appendChild(t2);
-      t1 = new O.OnPushChangeDetectionAndInputs();
+      t1 = _this._compView_0;
+      t2 = _this.parentView.injectorGet$2(C.Type_Stream_qXA, _this.viewData.parentIndex);
+      t1 = new O.OnPushChangeDetectionAndInputs(t1, t2);
       _this._OnPushChangeDetectionAndInputs_0_5 = t1;
       _this._compView_0.create0$1(t1);
       _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var t1, changed, currVal_1, _this = this,
-        _ctx = _this.ctx;
-      if (_this.viewData._cdState === 0) {
+        _ctx = _this.ctx,
+        firstCheck = _this.viewData._cdState === 0;
+      if (firstCheck) {
         t1 = _ctx.title;
         if (t1 != null) {
           _this._OnPushChangeDetectionAndInputs_0_5.title = t1;
@@ -11128,17 +11238,15 @@
         _this._expr_1 = _this._OnPushChangeDetectionAndInputs_0_5.name = currVal_1;
         changed = true;
       }
-      if (changed) {
-        t1 = _this._compView_0.viewData;
-        if (t1._cdMode !== 1) {
-          t1._cdMode = 1;
-          t1.updateSkipChangeDetectionFlag$0();
-        }
-      }
+      if (changed)
+        _this._compView_0.viewData.set$cdMode(1);
+      if (firstCheck)
+        _this._OnPushChangeDetectionAndInputs_0_5.ngOnInit$0();
       _this._compView_0.detectChanges$0();
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
+      this._OnPushChangeDetectionAndInputs_0_5._subscription.cancel$0(0);
     },
     $asAppView: function() {
       return [O.UsesOnPushChangeDetectionAndInputs];
@@ -11709,7 +11817,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.NgClass__applyKeyValueChanges_closure, Y.NgClass__applyKeyValueChanges_closure0, Y.NgClass__applyKeyValueChanges_closure1, Y.NgClass__applyIterableChanges_closure, Y.NgClass__applyIterableChanges_closure0, Y.NgClass__applyClasses_closure, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, R.DefaultIterableDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure0, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.NgClass__applyKeyValueChanges_closure, Y.NgClass__applyKeyValueChanges_closure0, Y.NgClass__applyKeyValueChanges_closure1, Y.NgClass__applyIterableChanges_closure, Y.NgClass__applyIterableChanges_closure0, Y.NgClass__applyClasses_closure, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, R.DefaultIterableDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure0, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure, O.OnPushChangeDetectionAndInputs_ngOnInit_closure]);
     _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.CastErrorImplementation, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -12029,6 +12137,7 @@
     C.Type_NgZone_6ty = H.createRuntimeType(Y.NgZone);
     C.Type_SanitizationService_bRS = H.createRuntimeType(E.SanitizationService);
     C.Type_SlowComponentLoader_qxe = H.createRuntimeType(L.SlowComponentLoader);
+    C.Type_Stream_qXA = H.createRuntimeType([P.Stream,,]);
     C.Type_TestabilityRegistry_IMm = H.createRuntimeType(D.TestabilityRegistry);
     C.Type_Testability_h8g = H.createRuntimeType(D.Testability);
     C.ViewType_0 = new R.ViewType("ViewType.host");
@@ -12049,7 +12158,7 @@
     C._ZoneFunction__RootZone__rootScheduleMicrotask = new P._ZoneFunction(C.C__RootZone, P.async___rootScheduleMicrotask$closure());
     C._ZoneSpecification_ALf = new P._ZoneSpecification(null, null, null, null, null, null, null, null, null, null, null, null, null);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [S.AppView, -1], args: [[S.AppView,,], P.int]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
   (function staticFields() {
     $.Closure_functionCounter = 0;
     $.BoundClosure_selfFieldNameCache = null;
@@ -12167,6 +12276,11 @@
     });
     _lazy($, "_AsyncRun__scheduleImmediateClosure", "$get$_AsyncRun__scheduleImmediateClosure", function() {
       return P._AsyncRun__initializeScheduleImmediate();
+    });
+    _lazy($, "Future__nullFuture", "$get$Future__nullFuture", function() {
+      var t1 = new P._Future(0, C.C__RootZone, null, [P.Null]);
+      t1._setValue$1(null);
+      return t1;
     });
     _lazy($, "_RootZone__rootMap", "$get$_RootZone__rootMap", function() {
       return P.HashMap_HashMap(null, null);

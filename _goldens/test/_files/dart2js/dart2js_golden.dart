@@ -1,6 +1,8 @@
 @JS()
 library dart2js_golden;
 
+import 'dart:async';
+
 import 'package:angular/angular.dart';
 import 'package:js/js.dart';
 
@@ -139,12 +141,31 @@ class UsesOnPushChangeDetectionAndInputs {
   template: 'Hello {{title}} {{name}}',
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class OnPushChangeDetectionAndInputs {
+class OnPushChangeDetectionAndInputs implements OnInit, OnDestroy {
+  OnPushChangeDetectionAndInputs(this._changeDetector, this._stream);
+
+  final ChangeDetectorRef _changeDetector;
+  final Stream<void> _stream;
+
+  StreamSubscription<void> _subscription;
+
   @Input()
   String title;
 
   @Input()
   String name;
+
+  @override
+  void ngOnInit() {
+    _subscription = _stream.listen((_) {
+      _changeDetector.markForCheck();
+    });
+  }
+
+  @override
+  void ngOnDestroy() {
+    _subscription.cancel();
+  }
 }
 
 @Component(

@@ -12,6 +12,7 @@ import 'package:angular/src/core/linker/app_view.dart' as _ng;
 import 'dart2js_golden.dart';
 
 // Required for "type inference" (scoping).
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:js/js.dart';
 import 'dart2js_golden.template.dart' as ng;
