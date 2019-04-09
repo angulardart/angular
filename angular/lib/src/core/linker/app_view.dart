@@ -5,7 +5,6 @@ import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/di/errors.dart' as di_errors;
-import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/runtime.dart';
@@ -306,9 +305,6 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
     di_errors.debugInjectorLeave(token);
     return result;
   }
-
-  @override
-  Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
 
   @override
   void destroy() {

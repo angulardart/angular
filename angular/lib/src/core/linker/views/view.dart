@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart';
 
 /// The base implementation of all views.
@@ -68,7 +69,7 @@ abstract class View implements ChangeDetectorRef {
   ///   }
   /// }
   /// ```
-  Injector injector(int nodeIndex);
+  Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
 
   /// Finds an object provided for [token] at [nodeIndex] in this view.
   ///
@@ -78,7 +79,6 @@ abstract class View implements ChangeDetectorRef {
   /// If no result is found and [notFoundResult] was specified, this returns
   /// [notFoundResult]. Otherwise, this will throw an error describing that no
   /// provider for [token] could be found.
-  @protected
   Object injectorGet(
     Object token,
     int nodeIndex, [
