@@ -10,32 +10,18 @@ class ElementInjector extends HierarchicalInjector {
   final AppView<Object> _view;
   final int _nodeIndex;
 
-  HierarchicalInjector _parent;
-
   ElementInjector(this._view, this._nodeIndex);
 
-  dynamic _injectFrom(
-    AppView<Object> view,
-    int nodeIndex,
-    Object token,
-    Object orElse,
-  ) {
-    return view.injectorGet(token, nodeIndex, orElse);
-  }
-
   @override
-  dynamic provideUntyped(
-    Object token, [
-    Object orElse = throwIfNotFound,
-  ]) =>
-      _injectFrom(_view, _nodeIndex, token, orElse);
+  dynamic provideUntyped(Object token, [Object orElse = throwIfNotFound]) =>
+      _view.injectorGet(token, _nodeIndex, orElse);
 
   @override
   injectFromAncestryOptional(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
-      _injectFrom(_view.parentView, _view.viewData.parentIndex, token, orElse);
+      throw UnimplementedError();
 
   @override
   injectFromParentOptional(
@@ -50,15 +36,4 @@ class ElementInjector extends HierarchicalInjector {
     Object orElse = throwIfNotFound,
   ]) =>
       throw UnimplementedError();
-
-  @override
-  HierarchicalInjector get parent {
-    if (_parent == null) {
-      _parent = ElementInjector(
-        _view.parentView,
-        _view.viewData.parentIndex,
-      );
-    }
-    return _parent;
-  }
 }
