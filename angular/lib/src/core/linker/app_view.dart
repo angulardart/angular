@@ -420,10 +420,10 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
 
   void markPathToRootAsCheckOnce() {
     if (cdMode == ChangeDetectionStrategy.Detached) return;
-    if (cdMode == ChangeDetectionStrategy.Checked) {
-      cdMode = ChangeDetectionStrategy.CheckOnce;
-    }
     if (viewData.type == ViewType.component) {
+      if (cdMode == ChangeDetectionStrategy.Checked) {
+        cdMode = ChangeDetectionStrategy.CheckOnce;
+      }
       parentView.markForCheck();
     } else {
       viewData._viewContainerElement?.parentView?.markForCheck();
