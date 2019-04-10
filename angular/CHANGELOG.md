@@ -1,3 +1,8 @@
+## Breaking changes
+
+*   `ExceptionHandler` is no longer exported via `angular/di.dart`. Import this
+    symbol via `angular/angular.dart` instead.
+
 ## 5.3.0
 
 ### New features
