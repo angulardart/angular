@@ -157,7 +157,8 @@ class DirectiveCompiler {
     );
 
     bindAndWriteToRenderer(
-      convertAllToBinding(hostProperties, directive.metadata.analyzedClass),
+      convertAllToBinding(hostProperties,
+          analyzedClass: directive.metadata.analyzedClass),
       _boundValueConverter,
       o.variable('view'),
       el,
