@@ -1,20 +1,33 @@
+import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart'
     as expression_ast;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' as ast;
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
 /// Converts a list of [ast.TemplateAst] nodes into [ir.Binding] instances.
+///
+/// [AnalyzedClass] is eventually expected for all code paths, but we currently
+/// do not have it piped through properly.
+///
+/// [CompileDirectiveMetadata] should be specified with converting directive
+/// inputs that need the underlying directive for context.
 List<ir.Binding> convertAllToBinding(
-        List<ast.TemplateAst> nodes, AnalyzedClass analyzedClass) =>
-    ast.templateVisitAll(_ToBindingVisitor(), nodes, analyzedClass);
+  List<ast.TemplateAst> nodes, {
+  AnalyzedClass analyzedClass,
+  CompileDirectiveMetadata directive,
+}) =>
+    ast.templateVisitAll(_ToBindingVisitor(), nodes,
+        _IrBindingContext(analyzedClass, directive));
 
 /// Converts a single [ast.TemplateAst] node into an [ir.Binding] instance.
 ir.Binding convertToBinding(
         ast.TemplateAst node, AnalyzedClass analyzedClass) =>
-    node.visit(_ToBindingVisitor(), analyzedClass);
+    node.visit(_ToBindingVisitor(), _IrBindingContext(analyzedClass, null));
 
 /// Converts a host attribute to an [ir.Binding] instance.
 ///
@@ -27,24 +40,26 @@ ir.Binding convertHostAttributeToBinding(
         target: _attributeName(name));
 
 class _ToBindingVisitor
-    implements ast.TemplateAstVisitor<ir.Binding, AnalyzedClass> {
+    implements ast.TemplateAstVisitor<ir.Binding, _IrBindingContext> {
   @override
-  ir.Binding visitText(ast.TextAst ast, AnalyzedClass _) =>
+  ir.Binding visitText(ast.TextAst ast, _IrBindingContext _) =>
       ir.Binding(source: ir.StringLiteral(ast.value), target: ir.TextBinding());
 
   @override
-  ir.Binding visitI18nText(ast.I18nTextAst ast, AnalyzedClass _) => ir.Binding(
-      source: ir.BoundI18nMessage(ast.value),
-      target: ast.value.containsHtml ? ir.HtmlBinding() : ir.TextBinding());
+  ir.Binding visitI18nText(ast.I18nTextAst ast, _IrBindingContext _) =>
+      ir.Binding(
+          source: ir.BoundI18nMessage(ast.value),
+          target: ast.value.containsHtml ? ir.HtmlBinding() : ir.TextBinding());
 
   @override
-  ir.Binding visitBoundText(ast.BoundTextAst ast, AnalyzedClass context) =>
+  ir.Binding visitBoundText(ast.BoundTextAst ast, _IrBindingContext context) =>
       ir.Binding(
-          source: ir.BoundExpression(ast.value, ast.sourceSpan, context),
+          source: ir.BoundExpression(
+              ast.value, ast.sourceSpan, context.analyzedClass),
           target: ir.TextBinding());
 
   @override
-  ir.Binding visitAttr(ast.AttrAst attr, AnalyzedClass _) => ir.Binding(
+  ir.Binding visitAttr(ast.AttrAst attr, _IrBindingContext _) => ir.Binding(
       source: _attributeValue(attr.value), target: _attributeName(attr.name));
 
   ir.BindingSource _attributeValue(ast.AttributeValue<Object> attr) {
@@ -59,9 +74,12 @@ class _ToBindingVisitor
 
   @override
   ir.Binding visitElementProperty(
-          ast.BoundElementPropertyAst ast, AnalyzedClass context) =>
+          ast.BoundElementPropertyAst ast, _IrBindingContext context) =>
       ir.Binding(
-          source: _boundValueToIr(ast, context), target: _propertyToIr(ast));
+        source:
+            _boundValueToIr(ast.value, ast.sourceSpan, context.analyzedClass),
+        target: _propertyToIr(ast),
+      );
 
   ir.BindingTarget _propertyToIr(ast.BoundElementPropertyAst boundProp) {
     switch (boundProp.type) {
@@ -87,12 +105,38 @@ class _ToBindingVisitor
         boundProp.type, 'type', 'Unknown ${ast.PropertyBindingType}');
   }
 
+  bool _isConditionalAttribute(ast.BoundElementPropertyAst boundProp) =>
+      boundProp.unit == 'if';
+
+  @override
+  ir.Binding visitDirectiveProperty(
+          ast.BoundDirectivePropertyAst input, _IrBindingContext context) =>
+      ir.Binding(
+        source: _boundValueToIr(
+            input.value, input.sourceSpan, context.analyzedClass),
+        target: ir.InputBinding(
+            input.directiveName, _inputType(context.directive, input)),
+      );
+
+  o.OutputType _inputType(
+      CompileDirectiveMetadata directive, ast.BoundDirectivePropertyAst input) {
+    // TODO(alorenzen): Determine if we actually need this special case.
+    if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
+      return o.BOOL_TYPE;
+    }
+    var inputTypeMeta = directive.inputTypes[input.directiveName];
+    return inputTypeMeta != null
+        ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
+        : null;
+  }
+
   ir.BindingSource _boundValueToIr(
-      ast.BoundElementPropertyAst boundProp, AnalyzedClass analyzedClass) {
-    final value = boundProp.value;
+    ast.BoundValue value,
+    SourceSpan sourceSpan,
+    AnalyzedClass analyzedClass,
+  ) {
     if (value is ast.BoundExpression) {
-      return ir.BoundExpression(
-          value.expression, boundProp.sourceSpan, analyzedClass);
+      return ir.BoundExpression(value.expression, sourceSpan, analyzedClass);
     } else if (value is ast.BoundI18nMessage) {
       return ir.BoundI18nMessage(value.message);
     }
@@ -100,51 +144,51 @@ class _ToBindingVisitor
         value, 'value', 'Unknown ${ast.BoundValue} type.');
   }
 
-  bool _isConditionalAttribute(ast.BoundElementPropertyAst boundProp) =>
-      boundProp.unit == 'if';
-
   @override
-  ir.Binding visitDirective(ast.DirectiveAst ast, AnalyzedClass context) =>
+  ir.Binding visitDirective(ast.DirectiveAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitDirectiveProperty(
-          ast.BoundDirectivePropertyAst ast, AnalyzedClass context) =>
-      throw UnimplementedError();
-
-  @override
-  ir.Binding visitElement(ast.ElementAst ast, AnalyzedClass context) =>
+  ir.Binding visitElement(ast.ElementAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
   ir.Binding visitEmbeddedTemplate(
-          ast.EmbeddedTemplateAst ast, AnalyzedClass context) =>
+          ast.EmbeddedTemplateAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitEvent(ast.BoundEventAst ast, AnalyzedClass context) =>
+  ir.Binding visitEvent(ast.BoundEventAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitNgContainer(ast.NgContainerAst ast, AnalyzedClass context) =>
+  ir.Binding visitNgContainer(
+          ast.NgContainerAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitNgContent(ast.NgContentAst ast, AnalyzedClass context) =>
+  ir.Binding visitNgContent(ast.NgContentAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
   ir.Binding visitProvider(
-          ast.ProviderAst providerAst, AnalyzedClass context) =>
+          ast.ProviderAst providerAst, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitReference(ast.ReferenceAst ast, AnalyzedClass context) =>
+  ir.Binding visitReference(ast.ReferenceAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
   @override
-  ir.Binding visitVariable(ast.VariableAst ast, AnalyzedClass context) =>
+  ir.Binding visitVariable(ast.VariableAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
+}
+
+class _IrBindingContext {
+  final AnalyzedClass analyzedClass;
+  final CompileDirectiveMetadata directive;
+
+  _IrBindingContext(this.analyzedClass, this.directive);
 }
 
 ir.BindingTarget _attributeName(String name) {

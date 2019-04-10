@@ -98,7 +98,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
     }
 
     bindRenderInputs(
-      convertAllToBinding(ast.inputs, view.component.analyzedClass),
+      convertAllToBinding(ast.inputs,
+          analyzedClass: view.component.analyzedClass),
       compileElement,
     );
     bindRenderOutputs(eventListeners);
@@ -110,7 +111,11 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       if (s == null) continue;
       var directiveInstance = s.build();
       if (directiveInstance == null) continue;
-      bindDirectiveInputs(directiveAst, directiveInstance, compileElement,
+      var inputs = convertAllToBinding(directiveAst.inputs,
+          directive: directiveAst.directive,
+          analyzedClass: view.component.analyzedClass);
+      bindDirectiveInputs(
+          inputs, directiveAst.directive, directiveInstance, compileElement,
           isHostComponent: compileElement.view.viewType == ViewType.host);
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);
@@ -152,7 +157,11 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       if (s == null) continue;
       var directiveInstance = s.build();
       if (directiveInstance == null) continue;
-      bindDirectiveInputs(directiveAst, directiveInstance, compileElement);
+      var inputs = convertAllToBinding(directiveAst.inputs,
+          directive: directiveAst.directive,
+          analyzedClass: view.component.analyzedClass);
+      bindDirectiveInputs(
+          inputs, directiveAst.directive, directiveInstance, compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(
           directiveAst, directiveInstance, compileElement);
       bindDirectiveOutputs(directiveAst, directiveInstance, eventListeners);
@@ -220,7 +229,8 @@ void bindViewHostProperties(CompileView view,
   final implicitReceiver = DetectChangesVars.cachedCtx;
   final converter = BoundValueConverter.forView(view, implicitReceiver);
   bindAndWriteToRenderer(
-    convertAllToBinding(hostProperties, view.component.analyzedClass),
+    convertAllToBinding(hostProperties,
+        analyzedClass: view.component.analyzedClass),
     converter,
     o.THIS_EXPR,
     renderNode,

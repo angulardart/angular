@@ -1,19 +1,10 @@
-import 'package:meta/meta.dart';
-import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 
-import '../analyzed_class.dart' as analyzer;
 import '../compile_metadata.dart' show CompileDirectiveMetadata;
 import '../output/output_ast.dart' as o;
-import '../template_ast.dart';
 import '../view_compiler/compile_view.dart';
 import 'expression_converter.dart' show convertCdExpressionToIr, NameResolver;
-
-@alwaysThrows
-void _throwUnrecognized(BoundValue value) {
-  throw StateError('Unrecognized bound value: $value');
-}
 
 /// An abstract utility for converting bound values to output expressions.
 abstract class BoundValueConverter
@@ -52,57 +43,11 @@ abstract class BoundValueConverter
     o.Expression implicitReceiver,
   ) = _ViewBoundValueConverter;
 
-  /// Converts a bound [value] to an expression.
-  ///
-  /// The [sourceSpan] of [value] is used for reporting errors that may occur
-  /// during expression conversion.
-  ///
-  /// The [type] is the type of the property to which [value] is bound.
-  o.Expression convertToExpression(
-    BoundValue value,
-    SourceSpan sourceSpan,
-    o.OutputType type,
-  ) {
-    if (value is BoundExpression) {
-      return convertCdExpressionToIr(
-        _nameResolver,
-        _implicitReceiver,
-        value.expression,
-        sourceSpan,
-        _metadata,
-        type,
-      );
-    } else if (value is BoundI18nMessage) {
-      return _createI18nMessage(value.message);
-    }
-    _throwUnrecognized(value);
-  }
-
   o.Expression convertSourceToExpression(
           ir.BindingSource source, o.OutputType type) =>
       source.accept(this, type);
 
   o.Expression _createI18nMessage(I18nMessage message);
-
-  /// Returns whether [value] can change during its lifetime.
-  bool isImmutable(BoundValue value) {
-    if (value is BoundExpression) {
-      return analyzer.isImmutable(value.expression, _metadata.analyzedClass);
-    } else if (value is BoundI18nMessage) {
-      return true;
-    }
-    _throwUnrecognized(value);
-  }
-
-  /// Returns whether [value] can be null during its lifetime.
-  bool isNullable(BoundValue value) {
-    if (value is BoundExpression) {
-      return analyzer.canBeNull(value.expression);
-    } else if (value is BoundI18nMessage) {
-      return false;
-    }
-    _throwUnrecognized(value);
-  }
 
   @override
   o.Expression visitBoundExpression(ir.BoundExpression boundExpression,

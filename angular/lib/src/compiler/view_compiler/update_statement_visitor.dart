@@ -188,6 +188,12 @@ class _UpdateStatementsVisitor
     throw UnsupportedError(
         '${ir.HtmlBinding}s are not supported as bound properties.');
   }
+
+  @override
+  o.Statement visitInputBinding(ir.InputBinding inputBinding,
+      [o.Expression renderValue]) {
+    return appViewInstance.prop(inputBinding.name).set(renderValue).toStmt();
+  }
 }
 
 o.Expression _sanitizedValue(

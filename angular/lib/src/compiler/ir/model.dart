@@ -299,6 +299,32 @@ class PropertyBinding implements BindingTarget {
       visitor.visitPropertyBinding(this, context);
 }
 
+class InputBinding implements BindingTarget {
+  /// The name of the input declared on the directive class.
+  ///
+  /// For example, "name" in
+  ///
+  /// ```
+  /// class User {
+  ///   @Input('userName')
+  ///   String name;
+  /// }
+  /// ```
+  final String name;
+
+  @override
+  final o.OutputType type;
+
+  @override
+  final securityContext = TemplateSecurityContext.none;
+
+  InputBinding(this.name, this.type);
+
+  @override
+  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+      visitor.visitInputBinding(this, context);
+}
+
 abstract class BindingSource {
   bool get isImmutable;
   bool get isNullable;
@@ -389,6 +415,7 @@ abstract class BindingTargetVisitor<R, C> {
   R visitStyleBinding(StyleBinding styleBinding, [C context]);
   R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
   R visitPropertyBinding(PropertyBinding propertyBinding, [C context]);
+  R visitInputBinding(InputBinding inputBinding, [C context]);
 }
 
 abstract class BindingSourceVisitor<R, C> {

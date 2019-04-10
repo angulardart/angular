@@ -331,7 +331,7 @@ String toTemplateExtension(String moduleUrl) {
 List<ir.Binding> mergeHtmlAndDirectiveAttributes(
     ElementAst elementAst, List<CompileDirectiveMetadata> directives) {
   var attrs = elementAst.attrs;
-  var htmlAttrs = convertAllToBinding(attrs, null);
+  var htmlAttrs = convertAllToBinding(attrs);
   // Create statements to initialize literal attribute values.
   // For example, a directive may have hostAttributes setting class name.
   return _mergeHtmlAndDirectiveAttrs(htmlAttrs, directives);

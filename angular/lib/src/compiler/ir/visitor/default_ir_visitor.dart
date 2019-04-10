@@ -34,6 +34,9 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   R visitHtmlBinding(HtmlBinding htmlBinding, [C context]) => null;
 
   @override
+  R visitInputBinding(InputBinding inputBinding, [C context]) => null;
+
+  @override
   R visitPropertyBinding(PropertyBinding propertyBinding, [C context]) => null;
 
   @override

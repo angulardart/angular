@@ -240,10 +240,12 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
       .addStmt(callDetectHostPropertiesExpr.toStmt());
 }
 
-void bindDirectiveInputs(DirectiveAst directiveAst,
-    o.Expression directiveInstance, CompileElement compileElement,
+void bindDirectiveInputs(
+    List<ir.Binding> inputs,
+    CompileDirectiveMetadata directive,
+    o.Expression directiveInstance,
+    CompileElement compileElement,
     {bool isHostComponent = false}) {
-  var directive = directiveAst.directive;
   if (directive.inputs.isEmpty) {
     return;
   }
@@ -282,86 +284,59 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
-  // directiveAst contains the target directive we are updating.
-  // input is a BoundPropertyAst that contains binding metadata.
-  for (var input in directiveAst.inputs) {
-    var bindingIndex = view.nameResolver.createUniqueBindIndex();
-    var fieldExpr = _createBindFieldExpr(bindingIndex);
-    var currValExpr = _createCurrValueExpr(bindingIndex);
-    var statements = <o.Statement>[];
+
+  for (var binding in inputs) {
+    var checkExpression = converter.convertSourceToExpression(
+        binding.source, binding.target.type);
+
+    var inputName = (binding.target as ir.InputBinding).name;
 
     // Optimization specifically for NgIf. Since the directive already performs
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
-    if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
-      var checkExpression = converter.convertToExpression(
-          input.value, input.sourceSpan, o.BOOL_TYPE);
-      dynamicInputsMethod.addStmt(directiveInstance
-          .prop(input.directiveName)
-          .set(checkExpression)
-          .toStmt());
+    if (directive.identifier.name == 'NgIf' && inputName == 'ngIf') {
+      dynamicInputsMethod.addStmt(bindingToUpdateStatement(
+          binding, directiveInstance, null, false, checkExpression));
       continue;
     }
     if (isStateful) {
-      var fieldType = o.importType(directive.inputTypes[input.directiveName]);
-      var checkExpression = converter.convertToExpression(
-          input.value, input.sourceSpan, fieldType);
-      if (converter.isImmutable(input.value)) {
-        constantInputsMethod.addStmt(directiveInstance
-            .prop(input.directiveName)
-            .set(checkExpression)
-            .toStmt());
+      var updateStatement = bindingToUpdateStatement(
+          binding, directiveInstance, null, false, checkExpression);
+      if (binding.source.isImmutable) {
+        constantInputsMethod.addStmt(updateStatement);
       } else {
-        dynamicInputsMethod.addStmt(directiveInstance
-            .prop(input.directiveName)
-            .set(checkExpression)
-            .toStmt());
+        dynamicInputsMethod.addStmt(updateStatement);
       }
       continue;
-    } else {
-      // Set property on directiveInstance to new value.
-      statements.add(directiveInstance
-          .prop(input.directiveName)
-          .set(currValExpr)
-          .toStmt());
     }
+
+    var bindingIndex = view.nameResolver.createUniqueBindIndex();
+    var fieldExpr = _createBindFieldExpr(bindingIndex);
+    var currValExpr = _createCurrValueExpr(bindingIndex);
+
+    var statements = <o.Statement>[];
+    // Set property on directiveInstance to new value.
+    statements.add(bindingToUpdateStatement(
+        binding, directiveInstance, null, false, currValExpr));
+
     if (calcChangesMap) {
-      statements.add(o.WriteIfNullExpr(
-              DetectChangesVars.changes.name,
-              o.literalMap(
-                  [], o.MapType(o.importType(Identifiers.SimpleChange))))
-          .toStmt());
-      statements.add(DetectChangesVars.changes
-          .key(o.literal(input.directiveName))
-          .set(o
-              .importExpr(Identifiers.SimpleChange)
-              .instantiate([fieldExpr, currValExpr]))
-          .toStmt());
+      statements.addAll(_changesMap(inputName, fieldExpr, currValExpr));
     }
     if (isOnPushComp || calcChangedState) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
-    // Execute actions and assign result to fieldExpr which hold previous value.
-    CompileTypeMetadata inputTypeMeta = directive.inputTypes != null
-        ? directive.inputTypes[input.directiveName]
-        : null;
-    var inputType = inputTypeMeta != null
-        ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
-        : null;
-    var expression =
-        converter.convertToExpression(input.value, input.sourceSpan, inputType);
 
     _bind(
       view.storage,
       currValExpr,
       fieldExpr,
-      expression,
-      converter.isImmutable(input.value),
-      converter.isNullable(input.value),
+      checkExpression,
+      binding.source.isImmutable,
+      binding.source.isNullable,
       statements,
       dynamicInputsMethod,
       constantInputsMethod,
-      fieldType: inputType,
+      fieldType: binding.target.type,
       isHostComponent: isHostComponent,
     );
   }
@@ -379,6 +354,22 @@ void bindDirectiveInputs(DirectiveAst directiveAst,
     ]));
   }
 }
+
+List<o.Statement> _changesMap(String inputName, o.ReadClassMemberExpr fieldExpr,
+        o.ReadVarExpr currValExpr) =>
+    [
+      o.WriteIfNullExpr(
+              DetectChangesVars.changes.name,
+              o.literalMap(
+                  [], o.MapType(o.importType(Identifiers.SimpleChange))))
+          .toStmt(),
+      DetectChangesVars.changes
+          .key(o.literal(inputName))
+          .set(o
+              .importExpr(Identifiers.SimpleChange)
+              .instantiate([fieldExpr, currValExpr]))
+          .toStmt(),
+    ];
 
 bool _isPrimitiveFieldType(o.OutputType type) {
   if (type == o.BOOL_TYPE ||
