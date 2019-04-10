@@ -13,7 +13,7 @@ import '../output/output_ast.dart' as o;
 
 /// Base class for all intermediate representation (IR) data model classes.
 abstract class IRNode {
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]);
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]);
 }
 
 /// Top-level object to encapsulate the IR objects created by the frontend and
@@ -25,7 +25,7 @@ class Library implements IRNode {
   Library(this.components, this.directives);
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitLibrary(this, context);
 }
 
@@ -46,7 +46,7 @@ class Component implements IRNode {
       this.styleUrls = const []});
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitComponent(this, context);
 }
 
@@ -80,7 +80,7 @@ class Directive implements IRNode {
   });
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitDirective(this, context);
 }
 
@@ -131,7 +131,7 @@ class ComponentView implements View {
       this.pipes = const []});
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitComponentView(this, context);
 }
 
@@ -155,7 +155,7 @@ class HostView implements View {
   });
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitHostView(this, context);
 
   @override
@@ -173,7 +173,7 @@ class Binding implements IRNode {
   Binding({this.source, this.target});
 
   @override
-  R accept<R, C>(IRVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
       visitor.visitBinding(this, context);
 }
 
@@ -182,7 +182,8 @@ abstract class BindingTarget extends IRNode {
   o.OutputType get type;
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]);
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+      [CO context]);
 }
 
 class TextBinding implements BindingTarget {
@@ -192,7 +193,8 @@ class TextBinding implements BindingTarget {
   final o.OutputType type = null;
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitTextBinding(this, context);
 }
 
@@ -205,7 +207,8 @@ class HtmlBinding implements BindingTarget {
   final o.OutputType type = null;
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitHtmlBinding(this, context);
 }
 
@@ -222,7 +225,8 @@ class ClassBinding implements BindingTarget {
   ClassBinding({this.name});
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitClassBinding(this, context);
 
   /// When a class name is specified, then the [BindingSource] is a boolean to
@@ -241,7 +245,8 @@ class TabIndexBinding implements BindingTarget {
   final o.OutputType type = null;
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitTabIndexBinding(this, context);
 }
 
@@ -257,7 +262,8 @@ class StyleBinding implements BindingTarget {
   StyleBinding(this.name, this.unit);
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitStyleBinding(this, context);
 }
 
@@ -281,7 +287,8 @@ class AttributeBinding implements BindingTarget {
   bool get hasNamespace => namespace != null;
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitAttributeBinding(this, context);
 }
 
@@ -295,7 +302,8 @@ class PropertyBinding implements BindingTarget {
   PropertyBinding(this.name, this.securityContext);
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitPropertyBinding(this, context);
 }
 
@@ -321,16 +329,19 @@ class InputBinding implements BindingTarget {
   InputBinding(this.name, this.type);
 
   @override
-  R accept<R, C>(BindingTargetVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitInputBinding(this, context);
 }
 
-abstract class BindingSource {
+abstract class BindingSource extends IRNode {
   bool get isImmutable;
   bool get isNullable;
   bool get isString;
 
-  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]);
+  @override
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+      [CO context]);
 }
 
 class BoundI18nMessage implements BindingSource {
@@ -346,7 +357,8 @@ class BoundI18nMessage implements BindingSource {
   BoundI18nMessage(this.value);
 
   @override
-  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitBoundI18nMessage(this, context);
 }
 
@@ -367,7 +379,8 @@ class StringLiteral extends BoundLiteral {
   final bool isString = true;
 
   @override
-  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitStringLiteral(this, context);
 }
 
@@ -403,7 +416,8 @@ class BoundExpression implements BindingSource {
   bool get isString => analyzed.isString(expression, _analyzedClass);
 
   @override
-  R accept<R, C>(BindingSourceVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+          [CO context]) =>
       visitor.visitBoundExpression(this, context);
 }
 
