@@ -29,7 +29,7 @@ final Future<PackageAssetReader> _packageAssets = (() async {
   if (runfiles == null) {
     return PackageAssetReader.currentIsolate();
   }
-  final root = const String.fromEnvironment('PKG_ANGULAR_ROOT');
+  final root = Platform.environment['PKG_ANGULAR_ROOT'];
   final path = '$runfiles/$root';
   if (!FileSystemEntity.isFileSync('$path/lib/angular.dart')) {
     throw StateError('Could not find $path/lib/angular.dart');
