@@ -17,7 +17,7 @@ void main() {
   if (_isBazel) {
     path = p.join(
       p.current,
-      const String.fromEnvironment('BAZEL_ROOT_PATH'),
+      Platform.environment['BAZEL_ROOT_PATH'],
     );
     if (path == null) {
       // Bazel specific: Use an environment variable to define the root path.
