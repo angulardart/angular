@@ -34,6 +34,22 @@ void main() {
     expect(location.path(), '/redirect-to');
   });
 
+  test(
+      'redirect to current location triggered by "popstate" should update '
+      'location', () async {
+    await testFixture.update((_) {
+      locationStrategy.simulatePopState('/redirect-to');
+    });
+
+    expect(location.path(), '/redirect-to');
+
+    await testFixture.update((_) {
+      locationStrategy.simulatePopState('/redirect-from');
+    });
+
+    expect(location.path(), '/redirect-to');
+  }, skip: 'b/130295866');
+
   test('router hook triggered by "popstate" should update location', () async {
     await testFixture.update((_) {
       locationStrategy.simulatePopState('/rewrite-from');
