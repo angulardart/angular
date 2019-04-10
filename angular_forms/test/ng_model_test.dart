@@ -7,15 +7,13 @@ import 'package:angular_test/angular_test.dart';
 import 'ng_model_test.template.dart' as ng;
 
 void main() {
-  ng.initReflector();
+  tearDown(disposeAnyRunningTest);
 
   group('NgModelTest', () {
     NgTestFixture<NgModelTest> fixture;
 
-    tearDown(() => disposeAnyRunningTest());
-
     setUp(() async {
-      var testBed = NgTestBed.forComponent(ng.NgModelTestNgFactory);
+      final testBed = NgTestBed.forComponent(ng.NgModelTestNgFactory);
       fixture = await testBed.create();
     });
 
@@ -31,6 +29,7 @@ void main() {
         expect(cmp.ngModel.untouched, control.untouched);
       });
     });
+
     test('should set up validator', () async {
       await fixture.update((cmp) {
         expect(cmp.ngModel.errors, {'required': true});
@@ -41,6 +40,24 @@ void main() {
       });
     });
   });
+
+  // The significance of this test is that String is a checkBinding violation.
+  //
+  // See b/128999811.
+  test('should not violate the checkBinding contract', () async {
+    final testBed = NgTestBed.forComponent(
+      ng.NgModelWithCheckBindingTestNgFactory,
+    );
+
+    final fixture = await testBed.create();
+    expect(fixture.assertOnlyInstance.value, isNull);
+
+    expect(
+      fixture.update((comp) => comp.value = 'Hello'),
+      completes,
+      reason: 'Should not throw due to checkBinding',
+    );
+  });
 }
 
 @Component(
@@ -49,14 +66,64 @@ void main() {
     formDirectives,
   ],
   template: '''
-<div ngForm>
-  <input [(ngModel)]="loginValue" #login="ngForm" required />
-</div>
-''',
+    <div ngForm>
+      <input [(ngModel)]="loginValue" #login="ngForm" required />
+    </div>
+  ''',
 )
 class NgModelTest {
   @ViewChild('login')
   NgModel ngModel;
 
   String loginValue;
+}
+
+@Component(
+  selector: 'test',
+  directives: [
+    CustomEditorWithNgModelSupport,
+    NgModel,
+  ],
+  template: '''
+    <custom-editor-with-ng-model [(ngModel)]="value">
+    </custom-editor-with-ng-model>
+  ''',
+)
+class NgModelWithCheckBindingTest {
+  String value;
+}
+
+@Component(
+  selector: 'custom-editor-with-ng-model',
+  template: '',
+)
+class CustomEditorWithNgModelSupport implements ControlValueAccessor<String> {
+  final NgControl _ngControl;
+  ChangeFunction<String> _onChange;
+
+  CustomEditorWithNgModelSupport(this._ngControl) {
+    _ngControl.valueAccessor = this;
+  }
+
+  @override
+  void writeValue(String value) {
+    // Example of bad behavior. We are, synchronously, receiving a write coming
+    // from ngModel.model=, and synchronously, responding back to ngModel, which
+    // in turn, synchronously, talks back via StreamController(sync: true).
+    if (value == 'Hello') {
+      value = 'Goodbye';
+      _onChange(value);
+    }
+  }
+
+  @override
+  void onDisabledChanged(_) {}
+
+  @override
+  void registerOnChange(ChangeFunction<String> function) {
+    _onChange = function;
+  }
+
+  @override
+  void registerOnTouched(_) {}
 }
