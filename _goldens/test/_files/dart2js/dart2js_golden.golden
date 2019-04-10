@@ -10272,17 +10272,32 @@
       return viewRef;
     },
     remove$1: function(_, index) {
-      this.detachView$1(index === -1 ? this.get$length(this) - 1 : index).destroyInternalState$0();
+      var t1, nodes;
+      if (index === -1)
+        index = this.get$length(this) - 1;
+      t1 = this.nestedViews;
+      t1 = (t1 && C.JSArray_methods).removeAt$1(t1, index);
+      nodes = t1.get$flatRootNodes();
+      T.removeNodes(nodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+      t1.viewData._viewContainerElement = null;
+      t1.destroyInternalState$0();
     },
     clear$0: function(_) {
-      var i, nested, index, _this = this;
+      var i, nested, index, t1, nodes, _this = this;
       for (i = _this.get$length(_this) - 1; i >= 0; --i) {
         if (i === -1) {
           nested = _this.nestedViews;
           index = (nested == null ? 0 : nested.length) - 1;
         } else
           index = i;
-        _this.detachView$1(index).destroyInternalState$0();
+        t1 = _this.nestedViews;
+        t1 = (t1 && C.JSArray_methods).removeAt$1(t1, index);
+        nodes = t1.get$flatRootNodes();
+        T.removeNodes(nodes);
+        $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+        t1.viewData._viewContainerElement = null;
+        t1.destroyInternalState$0();
       }
     },
     _findRenderNode$2: function(views, index) {
@@ -10292,7 +10307,7 @@
       var refRenderNode, _this = this,
         views = _this.nestedViews;
       if (views == null)
-        views = H.setRuntimeTypeInfo([], [[S.AppView, P.Object]]);
+        views = H.setRuntimeTypeInfo([], [B.DynamicView]);
       C.JSArray_methods.insert$2(views, viewIndex, view);
       refRenderNode = _this._findRenderNode$2(views, viewIndex);
       _this.nestedViews = views;
@@ -10301,15 +10316,6 @@
         $.domRootRendererIsDirty = true;
       }
       view.viewData._viewContainerElement = _this;
-    },
-    detachView$1: function(viewIndex) {
-      var t1 = this.nestedViews,
-        view = (t1 && C.JSArray_methods).removeAt$1(t1, viewIndex),
-        nodes = view.get$flatRootNodes();
-      T.removeNodes(nodes);
-      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
-      view.viewData._viewContainerElement = null;
-      return view;
     }
   };
   D.ViewFragment.prototype = {
