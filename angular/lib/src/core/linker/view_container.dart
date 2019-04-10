@@ -9,7 +9,7 @@ import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_container_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
-import 'view_type.dart';
+import 'views/dynamic_view.dart';
 
 /// A container providing an insertion point for attaching children.
 ///
@@ -21,7 +21,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final AppView<void> parentView;
   final Node nativeElement;
 
-  List<AppView<void>> nestedViews;
+  List<DynamicView> nestedViews;
 
   ViewContainer(
     this.index,
@@ -187,12 +187,11 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return result;
   }
 
-  Node _findRenderNode(List<AppView<Object>> views, int index) {
+  Node _findRenderNode(List<DynamicView> views, int index) {
     return index > 0 ? views[index - 1].lastRootNode : nativeElement;
   }
 
-  void moveView(AppView<Object> view, int currentIndex) {
-    _assertCanMove(view);
+  void moveView(DynamicView view, int currentIndex) {
     final views = nestedViews;
     final previousIndex = views.indexOf(view);
 
@@ -202,34 +201,30 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final refRenderNode = _findRenderNode(views, currentIndex);
 
     if (refRenderNode != null) {
-      view.attachRootNodesAfter(refRenderNode);
+      view.addRootNodesAfter(refRenderNode);
     }
 
     view.wasMoved();
   }
 
-  void attachView(AppView<Object> view, int viewIndex) {
-    _assertCanMove(view);
-    final views = nestedViews ?? <AppView<Object>>[];
+  void attachView(DynamicView view, int viewIndex) {
+    final views = nestedViews ?? <DynamicView>[];
     views.insert(viewIndex, view);
 
     final refRenderNode = _findRenderNode(views, viewIndex);
     nestedViews = views;
 
     if (refRenderNode != null) {
-      view.attachRootNodesAfter(refRenderNode);
+      view.addRootNodesAfter(refRenderNode);
     }
 
     view.wasInserted(this);
   }
 
-  AppView<Object> detachView(int viewIndex) {
-    final view = nestedViews.removeAt(viewIndex);
-    _assertCanMove(view);
-    view
-      ..detachRootNodes()
+  DynamicView detachView(int viewIndex) {
+    return nestedViews.removeAt(viewIndex)
+      ..removeRootNodes()
       ..wasRemoved();
-    return view;
   }
 
   @override
@@ -238,13 +233,4 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     Injector injector,
   }) =>
       loadNextToLocation(component, this, injector: injector);
-}
-
-void _assertCanMove(AppView<Object> view) {
-  assert(() {
-    if (view.viewData.type == ViewType.component) {
-      throw ArgumentError("Component views can't be moved!");
-    }
-    return true;
-  }());
 }

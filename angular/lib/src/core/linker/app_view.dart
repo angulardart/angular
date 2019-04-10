@@ -392,6 +392,16 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
   void detectHostChanges(bool firstCheck) {}
 
   @override
+  void addRootNodesTo(List<Node> target) {
+    viewData.rootFragment.appendDomNodesIntoList(target);
+  }
+
+  @override
+  void addRootNodesToChildrenOf(Element element) {
+    viewData.rootFragment.appendDomNodesInto(element);
+  }
+
+  @override
   void wasInserted(ViewContainer viewContainer) {
     viewData._viewContainerElement = viewContainer;
     dirtyParentQueriesInternal();
@@ -539,7 +549,7 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].viewData.rootFragment.appendDomNodesInto(target);
+            nestedViews[n].addRootNodesToChildrenOf(target);
           }
         }
       } else if (node is List<Object>) {

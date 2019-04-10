@@ -8,30 +8,42 @@ import 'view.dart';
 
 /// A view that can be dynamically created and destroyed.
 abstract class DynamicView extends View implements ViewRef {
-  /// This view's root HTML nodes.
+  /// This view's root DOM nodes.
   ///
   /// Any root view containers are recursively flattened until only HTML nodes
   /// remain.
   List<Node> get flatRootNodes;
 
-  /// This view's last root HTML node.
+  /// This view's last root DOM node.
   ///
   /// If the last root element is a view container, the view container's last
   /// root node is returned.
   Node get lastRootNode;
 
-  /// Attaches this view's root nodes as siblings after [node].
-  void attachRootNodesAfter(Node node) {
+  /// Appends this view's root DOM nodes as siblings after [node].
+  void addRootNodesAfter(Node node) {
     insertNodesAsSibling(flatRootNodes, node);
     domRootRendererIsDirty = true;
   }
 
-  /// Detaches this view's root nodes from their parent.
-  void detachRootNodes() {
+  /// Removes this view's root DOM nodes from their parent [ViewContainer].
+  void removeRootNodes() {
     final nodes = flatRootNodes;
     removeNodes(nodes);
     domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
   }
+
+  /// Appends this view's root DOM nodes to [target].
+  ///
+  /// This method is equivalent to appending [flatRootNodes] to [target], but is
+  /// more efficient since it doesn't store them in an intermediate list.
+  void addRootNodesTo(List<Node> target);
+
+  /// Appends this view's root DOM nodes to [parent]'s children.
+  ///
+  /// This method is equivalent to `addRootNodesTo(parent.children)`, but is
+  /// more efficient since it doesn't require computing `[Element.children]`.
+  void addRootNodesToChildrenOf(Element parent);
 
   /// Notifies this view that it was inserted into [viewContainer].
   ///
