@@ -10127,23 +10127,18 @@
       t1.rootFragment = D.ViewFragment_ViewFragment(rootNodesOrViewContainers);
       t1.subscriptions = subscriptions;
     },
-    injectorGet$3: function(token, nodeIndex, notFoundValue) {
-      var result, view, injector;
-      for (result = C.C_Object, view = this; result === C.C_Object;) {
-        if (nodeIndex != null)
-          result = view.injectorGetInternal$3(token, nodeIndex, C.C_Object);
-        if (result === C.C_Object) {
-          injector = view.viewData._hostInjector;
-          if (injector != null)
-            result = injector.$get$2(0, token, notFoundValue);
-        }
-        nodeIndex = view.viewData.parentIndex;
-        view = view.parentView;
+    injectorGetViewInternal$3: function(token, nodeIndex, notFoundValue) {
+      var result, t1, injector;
+      if (nodeIndex != null) {
+        result = this.injectorGetInternal$3(token, nodeIndex, C.C_Object);
+        if (result !== C.C_Object)
+          return result;
       }
-      return result;
-    },
-    injectorGet$2: function(token, nodeIndex) {
-      return this.injectorGet$3(token, nodeIndex, C.C_Object);
+      t1 = this.viewData;
+      injector = t1._hostInjector;
+      if (injector != null)
+        return injector.$get$2(0, token, notFoundValue);
+      return this.parentView.injectorGetViewInternal$3(token, t1.parentIndex, notFoundValue);
     },
     destroyInternalState$0: function() {
       var t1 = this.viewData;
@@ -10343,6 +10338,13 @@
     destroyInternal$0: function() {
     },
     detectChangesInternal$0: function() {
+    },
+    injectorGet$3: function(token, nodeIndex, notFoundResult) {
+      var result = this.injectorGetViewInternal$3(token, nodeIndex, notFoundResult);
+      return result;
+    },
+    injectorGet$2: function(token, nodeIndex) {
+      return this.injectorGet$3(token, nodeIndex, C.C_Object);
     },
     injectorGetOptional$2: function(token, nodeIndex) {
       return this.injectorGet$3(token, nodeIndex, null);

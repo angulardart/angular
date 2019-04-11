@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/di/errors.dart';
 import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart';
 
@@ -83,7 +84,12 @@ abstract class View implements ChangeDetectorRef {
     Object token,
     int nodeIndex, [
     Object notFoundResult = throwIfNotFound,
-  ]);
+  ]) {
+    debugInjectorEnter(token);
+    final result = injectorGetViewInternal(token, nodeIndex, notFoundResult);
+    debugInjectorLeave(token);
+    return result;
+  }
 
   /// Alternative to [injectorGet] that may return `null` if missing.
   ///
@@ -91,6 +97,17 @@ abstract class View implements ChangeDetectorRef {
   @dart2js.noInline
   Object injectorGetOptional(Object token, int nodeIndex) =>
       injectorGet(token, nodeIndex, null);
+
+  /// The view-specific implementation of [injectorGet].
+  ///
+  /// This indirection allows [injectorGet] to wrap the invocation of this
+  /// method with [debugInjectorEnter] and [debugInjectorLeave].
+  @protected
+  Object injectorGetViewInternal(
+    Object token,
+    int nodeIndex, [
+    Object notFoundResult = throwIfNotFound,
+  ]);
 
   /// Backing implementation of [injectorGet] for this view.
   ///

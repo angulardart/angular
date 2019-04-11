@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
-import 'package:angular/src/di/errors.dart' as di_errors;
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/runtime.dart';
@@ -280,30 +279,26 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
   }
 
   @override
-  Object injectorGet(
+  Object injectorGetViewInternal(
     Object token,
     int nodeIndex, [
     Object notFoundValue = throwIfNotFound,
   ]) {
-    di_errors.debugInjectorEnter(token);
-    var result = _UndefinedInjectorResult;
-    AppView<Object> view = this;
-    while (identical(result, _UndefinedInjectorResult)) {
-      if (nodeIndex != null) {
-        result = view.injectorGetInternal(
-            token, nodeIndex, _UndefinedInjectorResult);
+    if (nodeIndex != null) {
+      final result =
+          injectorGetInternal(token, nodeIndex, _UndefinedInjectorResult);
+      if (!identical(result, _UndefinedInjectorResult)) {
+        // This view has a provider for `token`.
+        return result;
       }
-      if (identical(result, _UndefinedInjectorResult)) {
-        var injector = view.viewData._hostInjector;
-        if (injector != null) {
-          result = injector.get(token, notFoundValue);
-        }
-      }
-      nodeIndex = view.viewData.parentIndex;
-      view = view.parentView;
     }
-    di_errors.debugInjectorLeave(token);
-    return result;
+    final injector = viewData._hostInjector;
+    if (injector != null) {
+      // This must be a host view, which has an injector, but no parent view.
+      return injector.get(token, notFoundValue);
+    }
+    return parentView.injectorGetViewInternal(
+        token, viewData.parentIndex, notFoundValue);
   }
 
   @override
