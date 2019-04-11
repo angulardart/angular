@@ -55,9 +55,7 @@ import 'shared.dart' show setUpControl;
   exportAs: 'ngForm',
   visibility: Visibility.all,
 )
-class NgModel extends NgControl
-    with ComponentState
-    implements AfterChanges, OnInit {
+class NgModel extends NgControl implements AfterChanges, OnInit {
   Control _control;
   StreamController _update;
   dynamic _model;
@@ -93,9 +91,7 @@ class NgModel extends NgControl
 
   @Input('ngDisabled')
   set disabled(bool isDisabled) {
-    setState(() {
-      toggleDisabled(isDisabled);
-    });
+    toggleDisabled(isDisabled);
   }
 
   // This function prevents constructor inlining for smaller code size since
@@ -114,15 +110,13 @@ class NgModel extends NgControl
   void ngAfterChanges() {
     if (_modelChanged) {
       _control.updateValue(_model);
-      setState(() {
-        viewModel = _model;
-      });
+      viewModel = _model;
       _modelChanged = false;
     }
   }
 
   @override
-  ngOnInit() {
+  void ngOnInit() {
     setUpControl(_control, this);
     _control.updateValueAndValidity(emitEvent: false);
   }

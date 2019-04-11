@@ -41,10 +41,7 @@ void main() {
     });
   });
 
-  // The significance of this test is that String is a checkBinding violation.
-  //
-  // See b/128999811.
-  test('should not violate the checkBinding contract', () async {
+  test('throws when violating the checkBinding contract', () async {
     final testBed = NgTestBed.forComponent(
       ng.NgModelWithCheckBindingTestNgFactory,
     );
@@ -54,8 +51,8 @@ void main() {
 
     expect(
       fixture.update((comp) => comp.value = 'Hello'),
-      completes,
-      reason: 'Should not throw due to checkBinding',
+      throwsA(TypeMatcher<ExpressionChangedAfterItHasBeenCheckedException>()),
+      reason: 'Should throw due to checkBinding',
     );
   });
 }
