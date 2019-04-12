@@ -59,8 +59,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final _ctx = ctx;
     bool firstCheck = (this.cdState == 0);
-    _NgIf_0_9.ngIf = _ctx.foo;
     if (firstCheck) {
+      _NgIf_0_9.ngIf = _ctx.foo;
       if (!identical(_ctx.bars, null)) {
         (_NgFor_1_9.ngForOf = _ctx.bars);
       }
