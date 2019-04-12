@@ -6,6 +6,7 @@ import 'package:angular/src/compiler/expression_parser/ast.dart'
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' as ast;
+import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
@@ -116,6 +117,7 @@ class _ToBindingVisitor
             input.value, input.sourceSpan, context.analyzedClass),
         target: ir.InputBinding(
             input.directiveName, _inputType(context.directive, input)),
+        isDirect: _isDirectBinding(context.directive, input.directiveName),
       );
 
   o.OutputType _inputType(
@@ -128,6 +130,21 @@ class _ToBindingVisitor
     return inputTypeMeta != null
         ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
+  }
+
+  bool _isDirectBinding(
+      CompileDirectiveMetadata directive, String directiveName) {
+    // All ComponentState bindings are set directly.
+    if (directive.changeDetection == ChangeDetectionStrategy.Stateful) {
+      return true;
+    }
+    // Optimization specifically for NgIf. Since the directive already performs
+    // change detection we can directly update it's input.
+    // TODO: generalize to SingleInputDirective mixin.
+    if (directive.identifier.name == 'NgIf' && directiveName == 'ngIf') {
+      return true;
+    }
+    return false;
   }
 
   ir.BindingSource _boundValueToIr(

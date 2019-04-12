@@ -280,11 +280,10 @@ void bindDirectiveInputs(
   var constantInputsMethod = CompileMethod();
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
-  bool calcChangedState = lifecycleHooks.contains(LifecycleHooks.afterChanges);
+  bool afterChanges = lifecycleHooks.contains(LifecycleHooks.afterChanges);
   var isOnPushComp = directive.isComponent &&
       directive.changeDetection == ChangeDetectionStrategy.OnPush;
-  var isStateful =
-      directive.changeDetection == ChangeDetectionStrategy.Stateful;
+  var calcChanged = isOnPushComp || afterChanges;
 
   if (calcChangesMap) {
     // We need to reinitialize changes, otherwise a second change
@@ -293,7 +292,7 @@ void bindDirectiveInputs(
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changes.set(o.NULL_EXPR).toStmt());
   }
-  if (calcChangedState) {
+  if (afterChanges) {
     view.requiresAfterChangesCall = true;
   }
 
@@ -302,18 +301,13 @@ void bindDirectiveInputs(
   // therefore we keep track of changes using bool changed variable.
   // At the beginning of change detecting inputs we reset this flag to false,
   // and then set it to true if any of it's inputs change.
-  if ((isOnPushComp || calcChangedState) && view.viewType != ViewType.host) {
+  if (calcChanged && view.viewType != ViewType.host) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
 
   for (var binding in inputs) {
-    var inputName = (binding.target as ir.InputBinding).name;
-
-    // Optimization specifically for NgIf. Since the directive already performs
-    // change detection we can directly update it's input.
-    // TODO: generalize to SingleInputDirective mixin.
-    if (directive.identifier.name == 'NgIf' && inputName == 'ngIf') {
+    if (binding.isDirect) {
       _directBinding(
         binding,
         converter,
@@ -322,18 +316,6 @@ void bindDirectiveInputs(
         null,
         false,
       );
-      continue;
-    }
-    if (isStateful) {
-      _directBinding(
-          binding,
-          converter,
-          binding.source.isImmutable
-              ? constantInputsMethod
-              : dynamicInputsMethod,
-          directiveInstance,
-          null,
-          false);
       continue;
     }
 
@@ -347,9 +329,10 @@ void bindDirectiveInputs(
         binding, directiveInstance, null, false, currValExpr));
 
     if (calcChangesMap) {
+      var inputName = (binding.target as ir.InputBinding).name;
       statements.addAll(_changesMap(inputName, fieldExpr, currValExpr));
     }
-    if (isOnPushComp || calcChangedState) {
+    if (calcChanged) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
 
