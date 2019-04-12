@@ -89,9 +89,9 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
     if ((__MyUseFactory_0_8 == null)) {
       (__MyUseFactory_0_8 = (import6.isDevMode
           ? import9.debugInjectorWrap(import1.MyUseFactory, () {
-              return import1.ProvidersComponent.createService(this.injectorGet(import10.NgZone, viewData.parentIndex));
+              return import1.ProvidersComponent.createService(this.injectorGet(import10.NgZone, parentIndex));
             })
-          : import1.ProvidersComponent.createService(this.injectorGet(import10.NgZone, viewData.parentIndex))));
+          : import1.ProvidersComponent.createService(this.injectorGet(import10.NgZone, parentIndex))));
     }
     return __MyUseFactory_0_8;
   }

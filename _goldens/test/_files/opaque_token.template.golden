@@ -201,9 +201,9 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
     _el_0.append(_el_1);
     _InjectsTypedTokenFromSomeParent_1_5 = (import6.isDevMode
         ? import14.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
-            return import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex));
+            return import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.parentIndex));
           })
-        : import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.viewData.parentIndex)));
+        : import1.InjectsTypedTokenFromSomeParent(parentView.parentView.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentView.parentIndex)));
     _compView_1.create0(_InjectsTypedTokenFromSomeParent_1_5);
     init1(_el_0);
   }
@@ -300,9 +300,9 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
     rootEl = _compView_0.rootEl;
     _InjectsTypedTokenFromSomeParent_0_5 = (import6.isDevMode
         ? import14.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
-            return import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex));
+            return import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentIndex));
           })
-        : import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), viewData.parentIndex)));
+        : import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import10.OpaqueToken<List<Duration>>('listOfDuration'), parentIndex)));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectedNodes);
     init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);

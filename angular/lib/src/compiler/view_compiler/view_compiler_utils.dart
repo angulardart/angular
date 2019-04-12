@@ -27,22 +27,11 @@ const namespaceUris = {
   'xhtml': 'http://www.w3.org/1999/xhtml'
 };
 
-/// All fields and getters defined on [AppView] that don't need a cast in
-/// getPropertyInView.
-final _appViewFields = Set<String>.from([
-  'viewData',
-  'locals',
+/// All properties of `RenderView` that don't need a cast to access.
+final _renderViewProperties = Set<String>.from([
+  'componentStyles',
+  'parentIndex',
   'parentView',
-  'componentType',
-  'rootEl',
-  'ctx',
-  'cdMode',
-  'cdState',
-  'ref',
-  'projectedNodes',
-  'changeDetectorRef',
-  'flatRootNodes',
-  'lastRootNode',
 ]);
 
 final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
@@ -77,10 +66,10 @@ o.Expression getPropertyInView(
           'in a parent view: $property');
     }
 
-    // Note: Don't cast for members of the AppView base class...
+    // Don't cast properties of `RenderView`.
     return replaceReadClassMemberInExpression(
         property,
-        (String name) => _appViewFields.contains(name)
+        (name) => _renderViewProperties.contains(name)
             ? viewProp
             : unsafeCast(viewProp, definedView.classType));
   }
@@ -130,13 +119,10 @@ o.Expression injectFromViewParentInjector(
   final viewExpr = (view.viewType == ViewType.host)
       ? o.THIS_EXPR
       : o.ReadClassMemberExpr('parentView');
-  return viewExpr.callMethod(
-    optional ? 'injectorGetOptional' : 'injectorGet',
-    [
-      createDiTokenExpression(token),
-      o.ReadClassMemberExpr('viewData').prop('parentIndex')
-    ],
-  );
+  return viewExpr.callMethod(optional ? 'injectorGetOptional' : 'injectorGet', [
+    createDiTokenExpression(token),
+    o.ReadClassMemberExpr('parentIndex'),
+  ]);
 }
 
 o.Statement debugInjectorEnter(o.Expression identifier) =>

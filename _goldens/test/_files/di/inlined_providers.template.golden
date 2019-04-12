@@ -550,9 +550,9 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
     rootEl = _compView_0.rootEl;
     _ChildComponentInjecting$D_0_5 = (import6.isDevMode
         ? import9.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
-            return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex));
+            return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex));
           })
-        : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, viewData.parentIndex)));
+        : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex)));
     _compView_0.create(_ChildComponentInjecting$D_0_5, projectedNodes);
     init1(rootEl);
     return ComponentRef(0, this, rootEl, _ChildComponentInjecting$D_0_5);

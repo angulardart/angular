@@ -19,6 +19,7 @@ import 'view_fragment.dart';
 import 'view_ref.dart' show EmbeddedViewRef;
 import 'view_type.dart' show ViewType;
 import 'views/dynamic_view.dart';
+import 'views/render_view.dart';
 
 export 'package:angular/src/core/change_detection/component_state.dart';
 
@@ -143,7 +144,9 @@ class AppViewData {
 /// non-initialized fields are listed first, so the non-initialized fields
 /// from the two classes can be combined into a single statement.
 // TODO(b/129013000): only embedded and host views should extend `DynamicView`.
-abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
+// TODO(b/129013000): only component and embedded views implement `RenderView`.
+abstract class AppView<T> extends DynamicView
+    implements EmbeddedViewRef, RenderView {
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
@@ -155,11 +158,12 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
   /// This is always a component instance.
   T ctx;
 
+  @override
   @protected
   ComponentStyles componentStyles;
 
-  /// Parent generated view.
-  final AppView<Object> parentView;
+  @override
+  final RenderView parentView;
   final AppViewData viewData;
 
   AppView(
@@ -194,6 +198,9 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
   bool get destroyed => viewData.destroyed;
 
   Map<String, dynamic> get locals => viewData.locals;
+
+  @override
+  int get parentIndex => viewData.parentIndex;
 
   List<Object> get projectedNodes => viewData.projectedNodes;
 
@@ -450,8 +457,8 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
     return hostElement;
   }
 
-  /// Adds content shim class to HtmlElement.
   @dart2js.noInline
+  @override
   void addShimC(HtmlElement element) {
     final styles = componentStyles;
     if (styles.usesStyleEncapsulation) {
@@ -459,8 +466,8 @@ abstract class AppView<T> extends DynamicView implements EmbeddedViewRef {
     }
   }
 
-  /// Adds content shim class to Svg or unknown tag type.
   @dart2js.noInline
+  @override
   void addShimE(Element element) {
     final styles = componentStyles;
     if (styles.usesStyleEncapsulation) {

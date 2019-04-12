@@ -36,7 +36,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     final _el_0 = import8.appendDiv(doc, parentRenderNode);
     import8.setAttribute(_el_0, 'generateText', '');
     final _el_1 = import8.appendDiv(doc, _el_0);
-    import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, viewData.parentIndex));
+    import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, parentIndex));
     init0();
   }
 
