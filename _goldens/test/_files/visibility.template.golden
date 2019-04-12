@@ -63,9 +63,9 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
     rootEl = _compView_0.rootEl;
     _Dependent_0_5 = (import6.isDevMode
         ? import8.debugInjectorWrap(import1.Dependent, () {
-            return import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex));
+            return import1.Dependent(this.injectorGet(import1.Dependency, parentIndex));
           })
-        : import1.Dependent(this.injectorGet(import1.Dependency, viewData.parentIndex)));
+        : import1.Dependent(this.injectorGet(import1.Dependency, parentIndex)));
     _compView_0.create(_Dependent_0_5, projectedNodes);
     init1(rootEl);
     return ComponentRef(0, this, rootEl, _Dependent_0_5);
@@ -109,9 +109,9 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
     parentRenderNode.append(_el_0);
     _Dependent_0_5 = (import6.isDevMode
         ? import8.debugInjectorWrap(import1.Dependent, () {
-            return import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+            return import1.Dependent(parentView.injectorGet(import1.Dependency, parentIndex));
           })
-        : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
+        : import1.Dependent(parentView.injectorGet(import1.Dependency, parentIndex)));
     _compView_0.create0(_Dependent_0_5);
     init0();
   }
@@ -279,9 +279,9 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     _el_0.append(_el_1);
     _Dependent_1_5 = (import6.isDevMode
         ? import8.debugInjectorWrap(import1.Dependent, () {
-            return import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex));
+            return import1.Dependent(parentView.injectorGet(import1.Dependency, parentIndex));
           })
-        : import1.Dependent(parentView.injectorGet(import1.Dependency, viewData.parentIndex)));
+        : import1.Dependent(parentView.injectorGet(import1.Dependency, parentIndex)));
     _compView_1.create0(_Dependent_1_5);
     init0();
   }

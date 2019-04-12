@@ -78,9 +78,9 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
     if ((__BaseService_0_8 == null)) {
       (__BaseService_0_8 = (import6.isDevMode
           ? import9.debugInjectorWrap(import1.BaseService, () {
-              return import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, viewData.parentIndex), _SomeDep_0_7);
+              return import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, parentIndex), _SomeDep_0_7);
             })
-          : import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, viewData.parentIndex), _SomeDep_0_7)));
+          : import1.createLinkedHashMap(_SomeDep_0_7, this.injectorGet(import1.SomeDep, parentIndex), _SomeDep_0_7)));
     }
     return __BaseService_0_8;
   }
@@ -91,14 +91,14 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
     rootEl = _compView_0.rootEl;
     _test_0_5 = (import6.isDevMode
         ? import9.debugInjectorWrap(const import10.OpaqueToken<dynamic>('test'), () {
-            return import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex));
+            return import1.injectableFactory(this.injectorGet(import5.Window, parentIndex));
           })
-        : import1.injectableFactory(this.injectorGet(import5.Window, viewData.parentIndex)));
+        : import1.injectableFactory(this.injectorGet(import5.Window, parentIndex)));
     _InjectableComponent_0_6 = (import6.isDevMode
         ? import9.debugInjectorWrap(import1.InjectableComponent, () {
-            return import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, viewData.parentIndex), _test_0_5, this.injectorGetOptional(String, viewData.parentIndex));
+            return import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, parentIndex), _test_0_5, this.injectorGetOptional(String, parentIndex));
           })
-        : import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, viewData.parentIndex), _test_0_5, this.injectorGetOptional(String, viewData.parentIndex)));
+        : import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, parentIndex), _test_0_5, this.injectorGetOptional(String, parentIndex)));
     _compView_0.create(_InjectableComponent_0_6, projectedNodes);
     init1(rootEl);
     return ComponentRef(0, this, rootEl, _InjectableComponent_0_6);
