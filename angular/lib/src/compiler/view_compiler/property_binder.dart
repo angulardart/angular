@@ -5,7 +5,6 @@ import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
-import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 
@@ -144,7 +143,7 @@ void bindRenderText(
   );
 }
 
-/// For each bound property, creates code to update the binding.
+/// For each binding, creates code to update the binding.
 ///
 /// Example:
 ///     final currVal_1 = this.context.someBoolValue;
@@ -162,51 +161,112 @@ void bindAndWriteToRenderer(
   ViewStorage storage,
   CompileMethod targetMethod, {
   bool isHostComponent = false,
+  bool calcChanged = false,
+  bool calcChangesMap = false,
 }) {
-  final dynamicPropertiesMethod = CompileMethod();
-  final constantPropertiesMethod = CompileMethod();
+  final dynamicMethod = CompileMethod();
+  final constantMethod = CompileMethod();
   for (var binding in bindings) {
-    // Add to view bindings collection.
-    int bindingIndex = nameResolver.createUniqueBindIndex();
-
-    // Expression that points to _expr_## stored value.
-    var fieldExpr = _createBindFieldExpr(bindingIndex);
-
-    // Expression for current value of expression when value is re-read.
-    var currValExpr = _createCurrValueExpr(bindingIndex);
-
-    var updateStmts = <o.Statement>[
-      bindingToUpdateStatement(
+    if (binding.isDirect) {
+      _directBinding(
         binding,
+        converter,
+        binding.source.isImmutable ? constantMethod : dynamicMethod,
         appViewInstance,
         renderNode,
         isHtmlElement,
-        currValExpr,
-      )
-    ];
+      );
+      continue;
+    }
+    _checkBinding(
+        binding,
+        converter,
+        nameResolver,
+        appViewInstance,
+        renderNode,
+        isHtmlElement,
+        calcChangesMap,
+        calcChanged,
+        storage,
+        dynamicMethod,
+        constantMethod,
+        isHostComponent);
+  }
+  if (constantMethod.isNotEmpty) {
+    targetMethod.addStmtsIfFirstCheck(constantMethod.finish());
+  }
+  if (dynamicMethod.isNotEmpty) {
+    targetMethod.addStmts(dynamicMethod.finish());
+  }
+}
 
-    final checkExpression = converter.convertSourceToExpression(
-        binding.source, binding.target.type);
-    _bind(
-      storage,
+/// For the given binding, creates code to update the binding.
+///
+/// Example:
+///     final currVal_1 = this.context.someBoolValue;
+///     if (import6.checkBinding(this._expr_1,currVal_1)) {
+///       this.renderer.setElementClass(this._el_4,'disabled',currVal_1);
+///       this._expr_1 = currVal_1;
+///     }
+void _checkBinding(
+    ir.Binding binding,
+    BoundValueConverter converter,
+    ViewNameResolver nameResolver,
+    o.Expression appViewInstance,
+    NodeReference renderNode,
+    bool isHtmlElement,
+    bool calcChangesMap,
+    bool calcChanged,
+    ViewStorage storage,
+    CompileMethod dynamicMethod,
+    CompileMethod constantMethod,
+    bool isHostComponent) {
+  // Add to view bindings collection.
+  int bindingIndex = nameResolver.createUniqueBindIndex();
+
+  // Expression that points to _expr_## stored value.
+  var fieldExpr = _createBindFieldExpr(bindingIndex);
+
+  // Expression for current value of expression when value is re-read.
+  var currValExpr = _createCurrValueExpr(bindingIndex);
+
+  var updateStmts = <o.Statement>[
+    bindingToUpdateStatement(
+      binding,
+      appViewInstance,
+      renderNode,
+      isHtmlElement,
       currValExpr,
-      fieldExpr,
-      checkExpression,
-      binding.source.isImmutable,
-      binding.source.isNullable,
-      updateStmts,
-      dynamicPropertiesMethod,
-      constantPropertiesMethod,
-      fieldType: binding.target.type,
-      isHostComponent: isHostComponent,
-    );
+    )
+  ];
+
+  // TODO(b/130033689): Remove changes map logic when all OnChanges usages
+  // are removed.
+  if (calcChangesMap) {
+    // We only calculate a changes map for "OnChanges" directives, so we can
+    // safely assume that the binding target will be an input.
+    var inputName = (binding.target as ir.InputBinding).name;
+    updateStmts.addAll(_changesMap(inputName, fieldExpr, currValExpr));
   }
-  if (constantPropertiesMethod.isNotEmpty) {
-    targetMethod.addStmtsIfFirstCheck(constantPropertiesMethod.finish());
+  if (calcChanged) {
+    updateStmts.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
   }
-  if (dynamicPropertiesMethod.isNotEmpty) {
-    targetMethod.addStmts(dynamicPropertiesMethod.finish());
-  }
+
+  final checkExpression =
+      converter.convertSourceToExpression(binding.source, binding.target.type);
+  _bind(
+    storage,
+    currValExpr,
+    fieldExpr,
+    checkExpression,
+    binding.source.isImmutable,
+    binding.source.isNullable,
+    updateStmts,
+    dynamicMethod,
+    constantMethod,
+    fieldType: binding.target.type,
+    isHostComponent: isHostComponent,
+  );
 }
 
 void bindRenderInputs(
@@ -273,11 +333,7 @@ void bindDirectiveInputs(
   }
 
   var view = compileElement.view;
-  var converter =
-      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx);
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var dynamicInputsMethod = CompileMethod();
-  var constantInputsMethod = CompileMethod();
   var lifecycleHooks = directive.lifecycleHooks;
   bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool afterChanges = lifecycleHooks.contains(LifecycleHooks.afterChanges);
@@ -301,66 +357,23 @@ void bindDirectiveInputs(
   // therefore we keep track of changes using bool changed variable.
   // At the beginning of change detecting inputs we reset this flag to false,
   // and then set it to true if any of it's inputs change.
-  if (calcChanged && view.viewType != ViewType.host) {
+  if (calcChanged && !isHostComponent) {
     detectChangesInInputsMethod
         .addStmt(DetectChangesVars.changed.set(o.literal(false)).toStmt());
   }
-
-  for (var binding in inputs) {
-    if (binding.isDirect) {
-      _directBinding(
-        binding,
-        converter,
-        binding.source.isImmutable ? constantInputsMethod : dynamicInputsMethod,
-        directiveInstance,
-        null,
-        false,
-      );
-      continue;
-    }
-
-    var bindingIndex = view.nameResolver.createUniqueBindIndex();
-    var fieldExpr = _createBindFieldExpr(bindingIndex);
-    var currValExpr = _createCurrValueExpr(bindingIndex);
-
-    var statements = <o.Statement>[];
-    // Set property on directiveInstance to new value.
-    statements.add(bindingToUpdateStatement(
-        binding, directiveInstance, null, false, currValExpr));
-
-    if (calcChangesMap) {
-      var inputName = (binding.target as ir.InputBinding).name;
-      statements.addAll(_changesMap(inputName, fieldExpr, currValExpr));
-    }
-    if (calcChanged) {
-      statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
-    }
-
-    var checkExpression = converter.convertSourceToExpression(
-        binding.source, binding.target.type);
-
-    _bind(
-      view.storage,
-      currValExpr,
-      fieldExpr,
-      checkExpression,
-      binding.source.isImmutable,
-      binding.source.isNullable,
-      statements,
-      dynamicInputsMethod,
-      constantInputsMethod,
-      fieldType: binding.target.type,
-      isHostComponent: isHostComponent,
-    );
-  }
-  if (constantInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmtsIfFirstCheck(
-      constantInputsMethod.finish(),
-    );
-  }
-  if (dynamicInputsMethod.isNotEmpty) {
-    detectChangesInInputsMethod.addStmts(dynamicInputsMethod.finish());
-  }
+  bindAndWriteToRenderer(
+    inputs,
+    BoundValueConverter.forView(view, DetectChangesVars.cachedCtx),
+    directiveInstance,
+    null,
+    false,
+    view.nameResolver,
+    view.storage,
+    detectChangesInInputsMethod,
+    isHostComponent: isHostComponent,
+    calcChanged: calcChanged,
+    calcChangesMap: calcChangesMap,
+  );
   if (isOnPushComp) {
     detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
       compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
