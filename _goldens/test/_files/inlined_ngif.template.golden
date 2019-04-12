@@ -251,7 +251,10 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _NgIf_0_9.ngIf = _ctx.foo;
+    bool firstCheck = (this.cdState == 0);
+    if (firstCheck) {
+      (_NgIf_0_9.ngIf = _ctx.foo);
+    }
     _appEl_0.detectChangesInNestedViews();
   }
 

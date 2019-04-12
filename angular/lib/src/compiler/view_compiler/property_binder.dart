@@ -295,8 +295,13 @@ void bindDirectiveInputs(
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && inputName == 'ngIf') {
-      dynamicInputsMethod.addStmt(bindingToUpdateStatement(
-          binding, directiveInstance, null, false, checkExpression));
+      var updateStatement = bindingToUpdateStatement(
+          binding, directiveInstance, null, false, checkExpression);
+      if (binding.source.isImmutable) {
+        constantInputsMethod.addStmt(updateStatement);
+      } else {
+        dynamicInputsMethod.addStmt(updateStatement);
+      }
       continue;
     }
     if (isStateful) {
