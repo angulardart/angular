@@ -73,12 +73,33 @@ void _bind(
         ])));
 }
 
+void _directBinding(
+  ir.Binding binding,
+  BoundValueConverter converter,
+  CompileMethod method,
+  o.Expression appViewInstance,
+  NodeReference renderNode,
+  bool isHtmlElement,
+) {
+  var expression =
+      converter.convertSourceToExpression(binding.source, binding.target.type);
+  var updateStatement = bindingToUpdateStatement(
+    binding,
+    appViewInstance,
+    renderNode,
+    isHtmlElement,
+    expression,
+  );
+  method.addStmt(updateStatement);
+}
+
 /// The same as [_bind], but we know that [checkExpression] is a literal.
 ///
 /// This means we don't need to create a change detection field or check if it
 /// has changed. We know for sure that there will only be one transition from
 /// [null] to whatever the value of [checkExpression] is. So we can just output
 /// the [actions] and run them once on the first change detection run.
+// TODO(alorenzen): Replace usages with _directBinding().
 void _bindLiteral(
     o.Expression checkExpression,
     List<o.Statement> actions,
@@ -113,13 +134,14 @@ void bindRenderText(
     // We already set the value to the text node at creation
     return;
   }
-
-  var checkExpression =
-      BoundValueConverter.forView(view, DetectChangesVars.cachedCtx)
-          .convertSourceToExpression(binding.source, null);
-  var updateStmt = bindingToUpdateStatement(
-      binding, o.THIS_EXPR, compileNode.renderNode, false, checkExpression);
-  view.detectChangesRenderPropertiesMethod.addStmt(updateStmt);
+  _directBinding(
+    binding,
+    BoundValueConverter.forView(view, DetectChangesVars.cachedCtx),
+    view.detectChangesRenderPropertiesMethod,
+    o.THIS_EXPR,
+    compileNode.renderNode,
+    false,
+  );
 }
 
 /// For each bound property, creates code to update the binding.
@@ -286,32 +308,32 @@ void bindDirectiveInputs(
   }
 
   for (var binding in inputs) {
-    var checkExpression = converter.convertSourceToExpression(
-        binding.source, binding.target.type);
-
     var inputName = (binding.target as ir.InputBinding).name;
 
     // Optimization specifically for NgIf. Since the directive already performs
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
     if (directive.identifier.name == 'NgIf' && inputName == 'ngIf') {
-      var updateStatement = bindingToUpdateStatement(
-          binding, directiveInstance, null, false, checkExpression);
-      if (binding.source.isImmutable) {
-        constantInputsMethod.addStmt(updateStatement);
-      } else {
-        dynamicInputsMethod.addStmt(updateStatement);
-      }
+      _directBinding(
+        binding,
+        converter,
+        binding.source.isImmutable ? constantInputsMethod : dynamicInputsMethod,
+        directiveInstance,
+        null,
+        false,
+      );
       continue;
     }
     if (isStateful) {
-      var updateStatement = bindingToUpdateStatement(
-          binding, directiveInstance, null, false, checkExpression);
-      if (binding.source.isImmutable) {
-        constantInputsMethod.addStmt(updateStatement);
-      } else {
-        dynamicInputsMethod.addStmt(updateStatement);
-      }
+      _directBinding(
+          binding,
+          converter,
+          binding.source.isImmutable
+              ? constantInputsMethod
+              : dynamicInputsMethod,
+          directiveInstance,
+          null,
+          false);
       continue;
     }
 
@@ -330,6 +352,9 @@ void bindDirectiveInputs(
     if (isOnPushComp || calcChangedState) {
       statements.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
     }
+
+    var checkExpression = converter.convertSourceToExpression(
+        binding.source, binding.target.type);
 
     _bind(
       view.storage,
