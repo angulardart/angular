@@ -170,7 +170,15 @@ class Binding implements IRNode {
   final BindingSource source;
   final BindingTarget target;
 
-  Binding({this.source, this.target});
+  /// For most bindings, Angular will generate a checkBinding() call before
+  /// assigning the source expression to the target.
+  ///
+  /// For a direct binding, we can skip this check. This assumes that either the
+  /// source is immutable, or that the target will handle the dirty checking
+  /// itself.
+  final bool isDirect;
+
+  Binding({this.source, this.target, this.isDirect = false});
 
   @override
   R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
