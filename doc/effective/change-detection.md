@@ -16,7 +16,7 @@ expensive computations in your template bindings is always a bad idea.
 
 **BAD**:
 
-```html
+```html {.bad}
 <child-component [input]="myExpensiveMethod()"></child-component>
 ```
 
@@ -26,7 +26,7 @@ on your app.
 
 **GOOD**:
 
-```html
+```html {.good}
 <child-component [input]="myField"></child-component>
 ```
 
@@ -38,7 +38,7 @@ altogether in this case.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component(
   selector: 'my-component',
   template: '<h1>{{message}}</h1>',
@@ -55,7 +55,7 @@ optimize.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
   template: '<h1>{{message}}</h1>',
@@ -73,7 +73,7 @@ on your component class that referenced the static data.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 const String hello = 'Hello, World!';
 
 @Component(
@@ -92,7 +92,7 @@ compiler since it knows that every `export` is immutable.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 const String hello = 'Hello, World!';
 
 @Component(
@@ -111,7 +111,7 @@ their one argument is the special `$event` argument.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component(
   selector: 'my-component',
   template: '<div (click)="handleClick(false)"'
@@ -128,7 +128,7 @@ generate better code for your component.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
   template: '<div (click)="handleSingleClick()"'
@@ -154,7 +154,7 @@ component can be set in **any order**.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component(
   selector: 'my-component',
 )
@@ -176,7 +176,7 @@ bug.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
 )
@@ -216,7 +216,7 @@ them. Adding asynchronous events (including implicitly, by making the method
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component()
 class MyComponent implements DoCheck {
   @override
@@ -228,7 +228,7 @@ class MyComponent implements DoCheck {
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component()
 class MyComponent implements DoCheck {
   @override
@@ -245,7 +245,7 @@ To be safe, strictly make synchronous side-effect free checks in `ngDoCheck`:
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component()
 class MyComponent implements DoCheck {
   @Input()
@@ -264,7 +264,7 @@ You can always use the `AfterChanges` event to process changes/do async things:
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component()
 class MyComponent implements AfterChanges {
   @Input()
@@ -293,7 +293,7 @@ should use the much cheaper `AfterChanges` class.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 @Component(
   selector: 'my-component',
 )
@@ -310,7 +310,7 @@ use `AfterChanges`.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
 )
@@ -337,7 +337,7 @@ invoked, regardless if the queries have _actually_ changed.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 class MyComponent implements AfterViewChecked {
   @ViewChildren(ChildDirective)
   List<ChildDirective> children;
@@ -353,7 +353,7 @@ class MyComponent implements AfterViewChecked {
 
 **GOOD**:
 
-```dart
+```dart {.good}
 class MyComponent {
   @ViewChildren(ChildDirective)
   set children(List<ChildDirective> children) {
@@ -387,7 +387,7 @@ dynamic.
 
 **BAD**:
 
-```dart
+```dart {.bad}
 bool getBool(dynamic x) {
   if (x == '') return true;
   if (x is bool) return x;
@@ -411,7 +411,7 @@ given in the template.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
 )
@@ -434,7 +434,7 @@ manually (see below for an example).
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
   template: '<div>{{message}}</div>',
@@ -462,7 +462,7 @@ way is to call `markForCheck()`.
 
 **GOOD**:
 
-```dart
+```dart {.good}
 @Component(
   selector: 'my-component',
   template: '<div>{{message}}</div><div (click)="flipGreeting()">Click Me!</div>',
@@ -494,7 +494,7 @@ microtasks and/or timers are not an explicit part of your design, use the method
 
 **BAD**: Using `scheduleMicrotask`.
 
-```dart
+```dart {.bad}
 class MyComponent {
   var someField = false;
   void someFunction() {
@@ -508,7 +508,7 @@ class MyComponent {
 
 **BAD**: Using `Timer.run` (or any other `Timer` or `Future` method).
 
-```dart
+```dart {.bad}
 class MyComponent {
   var someField = false;
   void someFunction() {
@@ -522,7 +522,7 @@ class MyComponent {
 
 **GOOD**: Using `NgZone#runAfterChangesObserved`.
 
-```dart
+```dart {.good}
 class MyComponent {
   final NgZone _ngZone;
   MyComponent(this._ngZone);
