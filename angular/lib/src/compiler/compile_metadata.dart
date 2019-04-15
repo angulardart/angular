@@ -457,7 +457,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   final List<CompileQueryMetadata> viewQueries;
   final CompileTemplateMetadata template;
   final AnalyzedClass analyzedClass;
-  bool _requiresDirectiveChangeDetector;
 
   /// Restricts where the directive is injectable.
   final Visibility visibility;
@@ -519,15 +518,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   /// [DirectiveChangeDetector] classes should only be generated if they
   /// reduce the amount of duplicate code. Therefore we check for the presence
   /// of host bindings to move from each call site to a single method.
-  bool get requiresDirectiveChangeDetector {
-    if (_requiresDirectiveChangeDetector == null) {
-      _requiresDirectiveChangeDetector =
-          metadataType == CompileDirectiveMetadataType.Directive &&
-              identifier.name != 'NgIf' &&
-              hostProperties.isNotEmpty;
-    }
-    return _requiresDirectiveChangeDetector;
-  }
+  bool get requiresDirectiveChangeDetector =>
+      metadataType == CompileDirectiveMetadataType.Directive &&
+      hostProperties.isNotEmpty;
 
   Map<String, ast.AST> _cachedHostAttributes;
   Map<String, ast.AST> _cachedHostProperties;
