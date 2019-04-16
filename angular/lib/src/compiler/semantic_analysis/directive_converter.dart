@@ -28,8 +28,6 @@ class DirectiveConverter {
         hostProperties: _hostProperties(
             directiveMeta.hostProperties, directiveMeta.analyzedClass),
         metadata: directiveMeta,
-        requiresDirectiveChangeDetector:
-            directiveMeta.requiresDirectiveChangeDetector,
         implementsComponentState:
             directiveMeta.changeDetection == ChangeDetectionStrategy.Stateful,
         implementsOnChanges:

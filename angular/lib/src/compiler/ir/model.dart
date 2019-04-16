@@ -57,13 +57,6 @@ class Directive implements IRNode {
 
   final CompileDirectiveMetadata metadata;
 
-  /// Whether the directive requires a change detector class to be generated.
-  ///
-  /// [DirectiveChangeDetector] classes should only be generated if they
-  /// reduce the amount of duplicate code. Therefore we check for the presence
-  /// of host bindings to move from each call site to a single method.
-  final bool requiresDirectiveChangeDetector;
-
   final bool implementsComponentState;
   final bool implementsOnChanges;
 
@@ -74,10 +67,16 @@ class Directive implements IRNode {
     this.typeParameters,
     this.hostProperties,
     this.metadata,
-    this.requiresDirectiveChangeDetector,
     this.implementsComponentState,
     this.implementsOnChanges,
   });
+
+  /// Whether the directive requires a change detector class to be generated.
+  ///
+  /// [DirectiveChangeDetector] classes should only be generated if they
+  /// reduce the amount of duplicate code. Therefore we check for the presence
+  /// of host bindings to move from each call site to a single method.
+  bool get requiresDirectiveChangeDetector => hostProperties.isNotEmpty;
 
   @override
   R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
