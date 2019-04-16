@@ -11,28 +11,29 @@ import 'package:angular/di.template.dart' as _ref2;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'component_loader_pattern.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 
 final List<dynamic> styles$TestComponent = const [];
 
 class ViewTestComponent0 extends AppView<import1.TestComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewTestComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('test');
+    rootEl = import6.document.createElement('test');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
   }
 
   @override
   ComponentRef<import1.TestComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
@@ -56,7 +57,7 @@ final List<dynamic> styles$TestComponentHost = const [];
 class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   ViewTestComponent0 _compView_0;
   import1.TestComponent _TestComponent_0_5;
-  _ViewTestComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestComponent> build() {
     _compView_0 = ViewTestComponent0(this, 0);

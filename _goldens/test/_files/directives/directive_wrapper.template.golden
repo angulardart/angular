@@ -10,14 +10,15 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'directive_wrapper.dart' as import1;
 import 'dart:html' as import2;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/render_view.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import11;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import12;
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px}'];
 
@@ -27,12 +28,12 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   String _expr_0;
   import2.DivElement _el_0;
   static import3.ComponentStyles _componentStyles;
-  ViewTestFooComponent0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestFooComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
     rootEl = import2.document.createElement('test-foo');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/directive_wrapper.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/directive_wrapper.dart' : null);
   }
 
   @override
@@ -41,14 +42,14 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     final _rootEl = rootEl;
     final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     final doc = import2.document;
-    _el_0 = import8.appendDiv(doc, parentRenderNode);
-    import8.setAttribute(_el_0, 'directive-with-output', '');
-    import8.updateAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
-    import8.setAttribute(_el_0, 'some-child-directive', '');
+    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    import9.setAttribute(_el_0, 'directive-with-output', '');
+    import9.updateAttribute(_el_0, 'role', import1.ChildDirective.hostRole);
+    import9.setAttribute(_el_0, 'some-child-directive', '');
     addShimC(_el_0);
     _ChildDirective_0_5 = ChildDirectiveNgCd(import1.ChildDirective(_el_0, ElementRef(_el_0)));
     _DirectiveWithOutput_0_6 = import1.DirectiveWithOutput();
-    final _text_1 = import8.appendText(_el_0, 'Foo');
+    final _text_1 = import9.appendText(_el_0, 'Foo');
     _el_0.addEventListener('click', eventHandler1(_ChildDirective_0_5.instance.handleClick));
     _el_0.addEventListener('keypress', eventHandler1(_ChildDirective_0_5.instance.handleKeyPress));
     final subscription_0 = _ChildDirective_0_5.instance.trigger.listen(eventHandler1(_ctx.onTrigger));
@@ -60,7 +61,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.rowIndex;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
+    if (import11.checkBinding(_expr_0, currVal_0)) {
       _ChildDirective_0_5.instance.gridRow = currVal_0;
       _expr_0 = currVal_0;
     }
@@ -87,7 +88,7 @@ final List<dynamic> styles$TestFooComponentHost = const [];
 class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_5;
-  _ViewTestFooComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewTestFooComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.TestFooComponent> build() {
     _compView_0 = ViewTestFooComponent0(this, 0);
@@ -113,7 +114,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
   return _ViewTestFooComponentHost0(null, null);
 }
 
-class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import12.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -121,18 +122,18 @@ class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   ChildDirectiveNgCd(this.instance);
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
     final currVal_0 = instance.tabIndex;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
-      import8.setProperty(el, 'tabIndex', currVal_0);
+    if (import11.checkBinding(_expr_0, currVal_0)) {
+      import9.setProperty(el, 'tabIndex', currVal_0);
       _expr_0 = currVal_0;
     }
     final currVal_1 = instance.disabledStr;
-    if (import10.checkBinding(_expr_1, currVal_1)) {
-      import8.updateAttribute(el, 'aria-disabled', currVal_1);
+    if (import11.checkBinding(_expr_1, currVal_1)) {
+      import9.updateAttribute(el, 'aria-disabled', currVal_1);
       _expr_1 = currVal_1;
     }
     final currVal_2 = instance.disabled;
-    if (import10.checkBinding(_expr_2, currVal_2)) {
-      import8.updateClassBindingNonHtml(el, 'is-disabled', currVal_2);
+    if (import11.checkBinding(_expr_2, currVal_2)) {
+      import9.updateClassBindingNonHtml(el, 'is-disabled', currVal_2);
       _expr_2 = currVal_2;
     }
   }

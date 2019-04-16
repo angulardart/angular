@@ -2,6 +2,7 @@ import 'app_view.dart';
 import 'element_ref.dart';
 import 'view_container.dart';
 import 'view_ref.dart' show EmbeddedViewRef;
+import 'views/render_view.dart';
 
 /// Represents an Embedded Template that can be used to instantiate Embedded
 /// Views.
@@ -17,7 +18,7 @@ import 'view_ref.dart' show EmbeddedViewRef;
 /// it to the View Container.
 class TemplateRef {
   final ViewContainer _viewContainer;
-  final AppView<void> Function(AppView<Object>, int) _viewFactory;
+  final AppView<void> Function(RenderView, int) _viewFactory;
 
   TemplateRef(this._viewContainer, this._viewFactory);
 

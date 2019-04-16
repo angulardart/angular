@@ -9,13 +9,14 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'lifecycle_hooks.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$MostLifecycleHooksComponent = const [];
 
@@ -23,18 +24,18 @@ class ViewMostLifecycleHooksComponent0 extends AppView<import1.MostLifecycleHook
   ViewEmptyComponent0 _compView_0;
   import1.EmptyComponent _EmptyComponent_0_5;
   static import2.ComponentStyles _componentStyles;
-  ViewMostLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewMostLifecycleHooksComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('lifecycle-hooks');
+    rootEl = import6.document.createElement('lifecycle-hooks');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
   }
 
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewEmptyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -74,7 +75,7 @@ final List<dynamic> styles$MostLifecycleHooksComponentHost = const [];
 class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycleHooksComponent> {
   ViewMostLifecycleHooksComponent0 _compView_0;
   import1.MostLifecycleHooksComponent _MostLifecycleHooksComponent_0_5;
-  _ViewMostLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewMostLifecycleHooksComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
@@ -88,17 +89,17 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import9.AppViewUtils.throwOnChanges) && firstCheck)) {
       _MostLifecycleHooksComponent_0_5.ngOnInit();
     }
-    if ((!import8.AppViewUtils.throwOnChanges)) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
       _MostLifecycleHooksComponent_0_5.ngAfterContentChecked();
     }
     _compView_0.detectChanges();
-    if ((!import8.AppViewUtils.throwOnChanges)) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }
@@ -121,18 +122,18 @@ final List<dynamic> styles$EmptyComponent = const [];
 
 class ViewEmptyComponent0 extends AppView<import1.EmptyComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewEmptyComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewEmptyComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('empty-comp');
+    rootEl = import6.document.createElement('empty-comp');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
   }
 
   @override
   ComponentRef<import1.EmptyComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
@@ -156,7 +157,7 @@ final List<dynamic> styles$EmptyComponentHost = const [];
 class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
   ViewEmptyComponent0 _compView_0;
   import1.EmptyComponent _EmptyComponent_0_5;
-  _ViewEmptyComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewEmptyComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.EmptyComponent> build() {
     _compView_0 = ViewEmptyComponent0(this, 0);
@@ -186,18 +187,18 @@ final List<dynamic> styles$OnChangesComponent = const [];
 
 class ViewOnChangesComponent0 extends AppView<import1.OnChangesComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewOnChangesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewOnChangesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('on-changes');
+    rootEl = import6.document.createElement('on-changes');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
   }
 
   @override
   ComponentRef<import1.OnChangesComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
@@ -221,7 +222,7 @@ final List<dynamic> styles$OnChangesComponentHost = const [];
 class _ViewOnChangesComponentHost0 extends AppView<import1.OnChangesComponent> {
   ViewOnChangesComponent0 _compView_0;
   import1.OnChangesComponent _OnChangesComponent_0_5;
-  _ViewOnChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewOnChangesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.OnChangesComponent> build() {
     _compView_0 = ViewOnChangesComponent0(this, 0);
@@ -253,18 +254,18 @@ final List<dynamic> styles$AfterChangesComponent = const [];
 
 class ViewAfterChangesComponent0 extends AppView<import1.AfterChangesComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewAfterChangesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewAfterChangesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('after-changes');
+    rootEl = import6.document.createElement('after-changes');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
   }
 
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
@@ -288,7 +289,7 @@ final List<dynamic> styles$AfterChangesComponentHost = const [];
 class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesComponent> {
   ViewAfterChangesComponent0 _compView_0;
   import1.AfterChangesComponent _AfterChangesComponent_0_5;
-  _ViewAfterChangesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewAfterChangesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
     _compView_0 = ViewAfterChangesComponent0(this, 0);
@@ -331,18 +332,18 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
   String _expr_2;
   String _expr_3;
   static import2.ComponentStyles _componentStyles;
-  ViewUsesLifecycleHooksComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewUsesLifecycleHooksComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('uses-lifecylce-hooks');
+    rootEl = import6.document.createElement('uses-lifecylce-hooks');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/lifecycle_hooks.dart' : null);
   }
 
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -354,8 +355,8 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     _compView_0.create(_MostLifecycleHooksComponent_0_5, [
       [_el_1]
     ]);
-    final doc = import5.document;
-    final _el_2 = import9.appendElement(doc, parentRenderNode, 'do-check');
+    final doc = import6.document;
+    final _el_2 = import10.appendElement(doc, parentRenderNode, 'do-check');
     _DoCheckDirective_2_5 = import1.DoCheckDirective();
     _compView_3 = ViewOnChangesComponent0(this, 3);
     final _el_3 = _compView_3.rootEl;
@@ -377,24 +378,24 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     Map<String, SimpleChange> changes;
     bool firstCheck = (this.cdState == 0);
     final currVal_0 = _ctx.input;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import9.checkBinding(_expr_0, currVal_0)) {
       _MostLifecycleHooksComponent_0_5.input = currVal_0;
       _expr_0 = currVal_0;
     }
-    if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import9.AppViewUtils.throwOnChanges) && firstCheck)) {
       _MostLifecycleHooksComponent_0_5.ngOnInit();
     }
     final currVal_1 = _ctx.input;
-    if (import8.checkBinding(_expr_1, currVal_1)) {
+    if (import9.checkBinding(_expr_1, currVal_1)) {
       _DoCheckDirective_2_5.input = currVal_1;
       _expr_1 = currVal_1;
     }
-    if ((!import8.AppViewUtils.throwOnChanges)) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       _DoCheckDirective_2_5.ngDoCheck();
     }
     changes = null;
     final currVal_2 = _ctx.input;
-    if (import8.checkBinding(_expr_2, currVal_2)) {
+    if (import9.checkBinding(_expr_2, currVal_2)) {
       _OnChangesComponent_3_5.input = currVal_2;
       changes ??= <String, SimpleChange>{};
       changes['input'] = SimpleChange(_expr_2, currVal_2);
@@ -405,7 +406,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     }
     changed = false;
     final currVal_3 = _ctx.input;
-    if (import8.checkBinding(_expr_3, currVal_3)) {
+    if (import9.checkBinding(_expr_3, currVal_3)) {
       _AfterChangesComponent_4_5.input = currVal_3;
       changed = true;
       _expr_3 = currVal_3;
@@ -413,7 +414,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     if (changed) {
       _AfterChangesComponent_4_5.ngAfterChanges();
     }
-    if ((!import8.AppViewUtils.throwOnChanges)) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
@@ -423,7 +424,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     _compView_1.detectChanges();
     _compView_3.detectChanges();
     _compView_4.detectChanges();
-    if ((!import8.AppViewUtils.throwOnChanges)) {
+    if ((!import9.AppViewUtils.throwOnChanges)) {
       if (firstCheck) {
         _MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }
@@ -460,7 +461,7 @@ final List<dynamic> styles$UsesLifecycleHooksComponentHost = const [];
 class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycleHooksComponent> {
   ViewUsesLifecycleHooksComponent0 _compView_0;
   import1.UsesLifecycleHooksComponent _UsesLifecycleHooksComponent_0_5;
-  _ViewUsesLifecycleHooksComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewUsesLifecycleHooksComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
     _compView_0 = ViewUsesLifecycleHooksComponent0(this, 0);
