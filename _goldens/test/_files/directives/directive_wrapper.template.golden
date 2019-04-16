@@ -113,92 +113,6 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
   return _ViewTestFooComponentHost0(null, null);
 }
 
-final List<dynamic> styles$DirectiveContainerTest = const [];
-
-class ViewDirectiveContainerTest0 extends AppView<import1.DirectiveContainerTest> {
-  FastDirectiveNgCd _FastDirective_0_5;
-  FastDirectiveNgCd _FastDirective_1_5;
-  static import3.ComponentStyles _componentStyles;
-  ViewDirectiveContainerTest0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import2.document.createElement('directive-container');
-  }
-  static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/directive_wrapper.dart' : null);
-  }
-
-  @override
-  ComponentRef<import1.DirectiveContainerTest> build() {
-    final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import2.document;
-    final _el_0 = import8.appendDiv(doc, parentRenderNode);
-    this.updateChildClass(_el_0, 'target1');
-    import8.setAttribute(_el_0, 'fastDirective', '');
-    _FastDirective_0_5 = FastDirectiveNgCd(import1.FastDirective(_el_0), this, _el_0);
-    final _el_1 = import8.appendDiv(doc, parentRenderNode);
-    this.updateChildClass(_el_1, 'target2');
-    import8.setAttribute(_el_1, 'fastDirective', '');
-    _FastDirective_1_5 = FastDirectiveNgCd(import1.FastDirective(_el_1), this, _el_1);
-    init0();
-  }
-
-  @override
-  void detectChangesInternal() {
-    final _ctx = ctx;
-    bool firstCheck = (this.cdState == 0);
-    if (firstCheck) {
-      (_FastDirective_0_5.instance.name = _ctx.finalName);
-    }
-    _FastDirective_1_5.instance.name = _ctx.nonFinal;
-  }
-
-  @override
-  void initComponentStyles() {
-    var styles = _componentStyles;
-    if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$DirectiveContainerTest, _debugComponentUrl))));
-    }
-    componentStyles = styles;
-  }
-}
-
-const ComponentFactory<import1.DirectiveContainerTest> _DirectiveContainerTestNgFactory = const ComponentFactory('directive-container', viewFactory_DirectiveContainerTestHost0);
-ComponentFactory<import1.DirectiveContainerTest> get DirectiveContainerTestNgFactory {
-  return _DirectiveContainerTestNgFactory;
-}
-
-final List<dynamic> styles$DirectiveContainerTestHost = const [];
-
-class _ViewDirectiveContainerTestHost0 extends AppView<import1.DirectiveContainerTest> {
-  ViewDirectiveContainerTest0 _compView_0;
-  import1.DirectiveContainerTest _DirectiveContainerTest_0_5;
-  _ViewDirectiveContainerTestHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
-  @override
-  ComponentRef<import1.DirectiveContainerTest> build() {
-    _compView_0 = ViewDirectiveContainerTest0(this, 0);
-    rootEl = _compView_0.rootEl;
-    _DirectiveContainerTest_0_5 = import1.DirectiveContainerTest();
-    _compView_0.create(_DirectiveContainerTest_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DirectiveContainerTest_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    _compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    _compView_0.destroyInternalState();
-  }
-}
-
-AppView<import1.DirectiveContainerTest> viewFactory_DirectiveContainerTestHost0() {
-  return _ViewDirectiveContainerTestHost0(null, null);
-}
-
 class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
@@ -224,24 +138,6 @@ class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   }
 }
 
-class FastDirectiveNgCd extends import11.DirectiveChangeDetector {
-  final import1.FastDirective instance;
-  var _expr_0;
-  FastDirectiveNgCd(this.instance, AppView v, import2.Element e) {
-    directive = instance;
-    view = v;
-    el = e;
-    initCd();
-  }
-  void detectHostChanges(AppView<dynamic> view, import2.Element el) {
-    final currVal_0 = instance.msg;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
-      import8.updateAttribute(el, 'data-msg', currVal_0);
-      _expr_0 = currVal_0;
-    }
-  }
-}
-
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -251,6 +147,5 @@ void initReflector() {
 
   _ngRef.registerComponent(TestFooComponent, TestFooComponentNgFactory);
   _ngRef.registerFactory(MyInjectableClass, () => MyInjectableClass());
-  _ngRef.registerComponent(DirectiveContainerTest, DirectiveContainerTestNgFactory);
   _ref0.initReflector();
 }

@@ -436,6 +436,7 @@ final List<dynamic> styles$UsesNgModelLike = const [];
 
 class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
   import1.NgModelLike _NgModelLike_0_5;
+  var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesNgModelLike0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -462,13 +463,17 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
     bool changed = false;
     bool firstCheck = (this.cdState == 0);
     changed = false;
-    _NgModelLike_0_5.model = _ctx.value;
-    _NgModelLike_0_5.ngAfterChanges();
+    final currVal_0 = _ctx.value;
+    if (import8.checkBinding(_expr_0, currVal_0)) {
+      _NgModelLike_0_5.model = currVal_0;
+      changed = true;
+      _expr_0 = currVal_0;
+    }
+    if (changed) {
+      _NgModelLike_0_5.ngAfterChanges();
+    }
     if (((!import8.AppViewUtils.throwOnChanges) && firstCheck)) {
       _NgModelLike_0_5.ngOnInit();
-    }
-    if ((!import8.AppViewUtils.throwOnChanges)) {
-      _NgModelLike_0_5.ngDoCheck();
     }
   }
 

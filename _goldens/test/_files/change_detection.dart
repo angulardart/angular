@@ -56,9 +56,7 @@ class UsesNgModelLike {
 @Directive(
   selector: '[ngModel]:not([ngControl]):not([ngFormControl])',
 )
-class NgModelLike extends Object
-    with ComponentState
-    implements AfterChanges, DoCheck, OnInit {
+class NgModelLike implements AfterChanges, OnInit {
   @Output('ngModelChange')
   get modelChange => null;
 
@@ -67,9 +65,6 @@ class NgModelLike extends Object
 
   @override
   void ngAfterChanges() {}
-
-  @override
-  void ngDoCheck() {}
 
   @override
   void ngOnInit() {}
