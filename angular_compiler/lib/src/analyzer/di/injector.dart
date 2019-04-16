@@ -82,8 +82,8 @@ class InjectorReader {
       context == null
           ? 'Unable to parse @GenerateInjector. You may have analysis errors'
           : 'Unable to parse @GenerateInjector. A provider\'s token ($context) '
-          'was read as "null". This is either invalid configuration or you '
-          'have analysis errors$message',
+              'was read as "null". This is either invalid configuration or you '
+              'have analysis errors$message',
     );
   }
 

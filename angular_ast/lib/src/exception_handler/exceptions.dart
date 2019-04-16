@@ -182,11 +182,11 @@ class NgParserWarningCode extends ErrorCode {
           'INVALID_DEFERRED_ON_TEMPLATE',
           "Invalid @deferred annotation on 'template' element",
           "The @deferred annotation cannot be placed on an element with "
-          "a structural directive (such as *ngIf) or on a <template> tag. "
-          "Consider moving the structural directive as the parent, such as:\n\n"
-          "  <ng-container *ngIf=\"someCondition\">\n"
-          "    <expensive-comp @defered></expensive-comp>\n"
-          "  </ng-container>");
+              "a structural directive (such as *ngIf) or on a <template> tag. "
+              "Consider moving the structural directive as the parent, such as:\n\n"
+              "  <ng-container *ngIf=\"someCondition\">\n"
+              "    <expensive-comp @defered></expensive-comp>\n"
+              "  </ng-container>");
 
   static const NgParserWarningCode INVALID_LET_BINDING_IN_NONTEMPLATE =
       NgParserWarningCode('INVALID_LET_BINDING_IN_NONTEMPLATE',

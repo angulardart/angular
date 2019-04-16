@@ -100,14 +100,14 @@ class TokenReader {
       BuildError.throwForElement(
         type.element,
         ''
-            'A sub-type of OpaqueToken must have a single unnamed const '
-            'constructor with no parameters or type parameters. For example, '
-            'consider writing instead:\n'
-            '  class ${clazz.name} extends ${clazz.supertype.name} {\n'
-            '    const ${clazz.name}();\n'
-            '  }\n\n'
-            'We may loosten these restrictions in the future. See: '
-            'https://github.com/dart-lang/angular/issues/899',
+        'A sub-type of OpaqueToken must have a single unnamed const '
+        'constructor with no parameters or type parameters. For example, '
+        'consider writing instead:\n'
+        '  class ${clazz.name} extends ${clazz.supertype.name} {\n'
+        '    const ${clazz.name}();\n'
+        '  }\n\n'
+        'We may loosten these restrictions in the future. See: '
+        'https://github.com/dart-lang/angular/issues/899',
       );
     }
     if (!$OpaqueToken.isExactlyType(clazz.supertype) &&
@@ -115,11 +115,11 @@ class TokenReader {
       BuildError.throwForElement(
         type.element,
         ''
-            'A sub-type of OpaqueToken must directly extend OpaqueToken or '
-            'MultiToken, and cannot extend another class that in turn extends '
-            'OpaqueToken or MultiToken.\n\n'
-            'We may loosten these restrictions in the future. See: '
-            'https://github.com/dart-lang/angular/issues/899',
+        'A sub-type of OpaqueToken must directly extend OpaqueToken or '
+        'MultiToken, and cannot extend another class that in turn extends '
+        'OpaqueToken or MultiToken.\n\n'
+        'We may loosten these restrictions in the future. See: '
+        'https://github.com/dart-lang/angular/issues/899',
       );
     }
     return linkTypeOf(type);

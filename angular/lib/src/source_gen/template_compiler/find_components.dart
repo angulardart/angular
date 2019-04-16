@@ -596,26 +596,7 @@ class _ComponentVisitor
     final analyzedClass =
         AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     final lifecycleHooks = extractLifecycleHooks(element);
-    if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
-      final ngDoCheck = element.getMethod('ngDoCheck') ??
-          element.lookUpInheritedMethod('ngDoCheck', element.library);
-      if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
-        _exceptionHandler.handle(ErrorMessageForElement(
-            ngDoCheck,
-            'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
-            'must be strictly synchronous, and should not invoke any methods '
-            '(or getters/setters) that directly run asynchronous code (such as '
-            'microtasks, timers).'));
-      }
-      if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
-        _exceptionHandler.handle(ErrorMessageForElement(
-            element,
-            'Cannot implement both the DoCheck and OnChanges lifecycle '
-            'events. By implementing "DoCheck", default change detection of '
-            'inputs is disabled, meaning that "ngOnChanges" will never be '
-            'invoked with values. Consider "AfterChanges" instead.'));
-      }
-    }
+    _validateLifecycleHooks(lifecycleHooks, element, isComp);
 
     final selector = coerceString(annotationValue, 'selector');
     if (selector == null || selector.isEmpty) {
@@ -655,6 +636,35 @@ class _ComponentVisitor
         defaultTo: Visibility.local,
       ),
     );
+  }
+
+  void _validateLifecycleHooks(
+      List<LifecycleHooks> lifecycleHooks, ClassElement element, bool isComp) {
+    if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
+      final ngDoCheck = element.getMethod('ngDoCheck') ??
+          element.lookUpInheritedMethod('ngDoCheck', element.library);
+      if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
+        _exceptionHandler.handle(ErrorMessageForElement(
+            ngDoCheck,
+            'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
+            'must be strictly synchronous, and should not invoke any methods '
+            '(or getters/setters) that directly run asynchronous code (such as '
+            'microtasks, timers).'));
+      }
+      if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
+        _exceptionHandler.handle(ErrorMessageForElement(
+            element,
+            'Cannot implement both the DoCheck and OnChanges lifecycle '
+            'events. By implementing "DoCheck", default change detection of '
+            'inputs is disabled, meaning that "ngOnChanges" will never be '
+            'invoked with values. Consider "AfterChanges" instead.'));
+      }
+    } else if (lifecycleHooks.contains(LifecycleHooks.onChanges) && !isComp) {
+      _exceptionHandler.handle(ErrorMessageForElement(
+          element,
+          'The OnChanges lifecycle is not supported for @Directives(). Please '
+          'use AfterChanges instead.'));
+    }
   }
 
   CompileTemplateMetadata _createTemplateMetadata(

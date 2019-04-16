@@ -173,10 +173,10 @@ class ReflectableEmitter {
       ..statements.add(
         const Code(
           ''
-              'if (_visited) {\n'
-              '  return;\n'
-              '}\n'
-              '_visited = true;\n',
+          'if (_visited) {\n'
+          '  return;\n'
+          '}\n'
+          '_visited = true;\n',
         ),
       );
 

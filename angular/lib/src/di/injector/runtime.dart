@@ -301,16 +301,16 @@ void _assertProviders(Iterable<Provider<void>> providers) {
 void _throwUnsupportedProvider(Provider<void> provider) {
   throw UnsupportedError(
     'Could not create a provider for token "${provider.token}"!\n\n'
-        'ReflectiveInjector.resolveStaticAndCreate only supports some providers.\n'
-        '\n'
-        '* FactoryProvider (or Provider(useFactory: ...)) with deps: [ ... ] set\n'
-        '* ValueProvider (or Provider(useValue: ...))\n'
-        '* ExistingProvider (or Provider(useExisting: ...))\n'
-        '\n'
-        'Specifically, any providers that require looking up factory functions or '
-        'argument information for factory functions at runtime are not supported '
-        'since they would defeat the tree-shaking improvements of "runApp".\n\n'
-        'See https://github.com/dart-lang/angular/issues/1426 for details',
+    'ReflectiveInjector.resolveStaticAndCreate only supports some providers.\n'
+    '\n'
+    '* FactoryProvider (or Provider(useFactory: ...)) with deps: [ ... ] set\n'
+    '* ValueProvider (or Provider(useValue: ...))\n'
+    '* ExistingProvider (or Provider(useExisting: ...))\n'
+    '\n'
+    'Specifically, any providers that require looking up factory functions or '
+    'argument information for factory functions at runtime are not supported '
+    'since they would defeat the tree-shaking improvements of "runApp".\n\n'
+    'See https://github.com/dart-lang/angular/issues/1426 for details',
   );
 }
 
