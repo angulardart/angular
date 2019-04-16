@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
-import 'app_view.dart';
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'component_loader.dart';
 import 'element_ref.dart';
@@ -10,6 +9,7 @@ import 'template_ref.dart';
 import 'view_container_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 import 'views/dynamic_view.dart';
+import 'views/view.dart';
 
 /// A container providing an insertion point for attaching children.
 ///
@@ -18,7 +18,7 @@ import 'views/dynamic_view.dart';
 class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
   final int parentIndex;
-  final AppView<void> parentView;
+  final View parentView;
   final Node nativeElement;
 
   List<DynamicView> nestedViews;
@@ -174,8 +174,9 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     }
   }
 
-  List<T> mapNestedViews<T, U extends AppView<Object>>(
-      List<T> Function(U) callback) {
+  List<T> mapNestedViews<T, U extends DynamicView>(
+    List<T> Function(U) callback,
+  ) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
       return const <Null>[];
