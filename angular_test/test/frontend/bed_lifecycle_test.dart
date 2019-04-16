@@ -40,24 +40,24 @@ void main() {
   });
 
   test('should invoke ngOnChanges, then ngOnInit', () async {
-    final fixture = await NgTestBed<NgOnChangesInitOrder>().create(
+    final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
     expect(
       fixture.assertOnlyInstance.child.events,
-      ['OnChanges:name=Hello', 'OnInit'],
+      ['AfterChanges:name=Hello', 'OnInit'],
     );
   });
 
   test(
       'should invoke ngOnChanges with asynchronous beforeChangeDetection,'
       ' then ngOnInit', () async {
-    final fixture = await NgTestBed<NgOnChangesInitOrder>().create(
+    final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
       beforeChangeDetection: (root) async => root.name = 'Hello',
     );
     expect(
       fixture.assertOnlyInstance.child.events,
-      ['OnChanges:name=Hello', 'OnInit'],
+      ['AfterChanges:name=Hello', 'OnInit'],
     );
   });
 }
@@ -75,7 +75,7 @@ class AngularLifecycle {
   directives: [ChildWithLifeCycles],
   template: '<child [name]="name"></child>',
 )
-class NgOnChangesInitOrder {
+class NgAfterChangesInitOrder {
   String name;
 
   @ViewChild(ChildWithLifeCycles)
@@ -87,15 +87,15 @@ class NgOnChangesInitOrder {
   template: '',
   visibility: Visibility.all,
 )
-class ChildWithLifeCycles implements OnChanges, OnInit {
+class ChildWithLifeCycles implements AfterChanges, OnInit {
   final events = <String>[];
 
   @Input()
   String name = '';
 
   @override
-  void ngOnChanges(_) {
-    events.add('OnChanges:name=$name');
+  void ngAfterChanges() {
+    events.add('AfterChanges:name=$name');
   }
 
   @override

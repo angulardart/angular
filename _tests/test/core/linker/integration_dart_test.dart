@@ -21,13 +21,13 @@ void main() {
     });
   });
 
-  group('OnChange', () {
+  group('$AfterChanges', () {
     test('should be notified of changes', () async {
-      var testBed = NgTestBed<OnChangeContainer>();
+      var testBed = NgTestBed<AfterChangeContainer>();
       var testFixture = await testBed.create();
       var cmp = testFixture.assertOnlyInstance.child;
       expect(cmp.prop, 'hello');
-      expect(cmp.changes.containsKey('prop'), true);
+      expect(cmp.changed, true);
     });
   });
 
@@ -75,20 +75,16 @@ class NonError {
   template: '<no-property-access></no-property-access>',
   directives: [NoPropertyAccess],
 )
-class ContainerWithNoPropertyAccess {
-  dynamic value;
-}
+class ContainerWithNoPropertyAccess {}
 
 @Component(
-  selector: 'container-with-onchange',
-  template: '<on-change [prop]="\'hello\'"></on-change>',
-  directives: [OnChangeComponent],
+  selector: 'container-with-afterchange',
+  template: '<after-change [prop]="\'hello\'"></after-change>',
+  directives: [AfterChangeComponent],
 )
-class OnChangeContainer {
-  dynamic value;
-
-  @ViewChild(OnChangeComponent)
-  OnChangeComponent child;
+class AfterChangeContainer {
+  @ViewChild(AfterChangeComponent)
+  AfterChangeComponent child;
 }
 
 class PropModel implements Map {
@@ -120,17 +116,17 @@ class NoPropertyAccess {
 }
 
 @Component(
-  selector: 'on-change',
+  selector: 'after-change',
   template: '',
 )
-class OnChangeComponent implements OnChanges {
-  Map changes;
+class AfterChangeComponent implements AfterChanges {
+  bool changed = false;
   @Input()
   String prop;
 
   @override
-  void ngOnChanges(Map changes) {
-    this.changes = changes;
+  void ngAfterChanges() {
+    changed = true;
   }
 }
 
