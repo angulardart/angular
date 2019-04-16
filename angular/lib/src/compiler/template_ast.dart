@@ -326,12 +326,12 @@ class BoundDirectivePropertyAst implements TemplateAst {
 class DirectiveAst implements TemplateAst {
   final CompileDirectiveMetadata directive;
   final List<BoundDirectivePropertyAst> inputs;
-  final List<BoundElementPropertyAst> hostProperties;
   final List<BoundEventAst> hostEvents;
   final SourceSpan sourceSpan;
 
-  DirectiveAst(this.directive, this.inputs, this.hostProperties,
-      this.hostEvents, this.sourceSpan);
+  DirectiveAst(this.directive, this.inputs, this.hostEvents, this.sourceSpan);
+
+  bool get hasHostProperties => directive.hostProperties.isNotEmpty;
 
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>

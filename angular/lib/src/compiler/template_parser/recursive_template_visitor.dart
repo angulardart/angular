@@ -59,7 +59,6 @@ abstract class RecursiveTemplateVisitor<C>
   TemplateAst visitDirective(DirectiveAst ast, C context) => DirectiveAst(
       ast.directive,
       visitAll(ast.inputs, context),
-      visitAll(ast.hostProperties, context),
       visitAll(ast.hostEvents, context),
       ast.sourceSpan);
 

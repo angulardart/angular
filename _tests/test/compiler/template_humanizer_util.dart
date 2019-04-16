@@ -107,7 +107,6 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     var res = [DirectiveAst, ast.directive];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.inputs);
-    templateVisitAll(this, ast.hostProperties);
     templateVisitAll(this, ast.hostEvents);
   }
 
