@@ -448,7 +448,7 @@ ast.AST _asAst(ir.BindingSource bindingSource) {
       bindingSource,
       'bindingSource',
       'BindingSource implementation $bindingSource doesn\'t support conversion '
-      'to an AST.');
+          'to an AST.');
 }
 
 List<ir.Binding> _toSortedBindings(Map<String, ir.Binding> attributes) =>

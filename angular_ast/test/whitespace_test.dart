@@ -7,9 +7,9 @@ void main() {
       expect(
         _parseAndMinifiy(
           ''
-              '<div>\n'
-              '  <span>Hello World</span>\n'
-              '</div>\n',
+          '<div>\n'
+          '  <span>Hello World</span>\n'
+          '</div>\n',
         ),
         '<div><span>Hello World</span></div>',
       );
@@ -19,9 +19,9 @@ void main() {
       expect(
         _parseAndMinifiy(
           ''
-              '<div>\n'
-              '  <span>Hello {{name}}!</span>\n'
-              '</div>\n',
+          '<div>\n'
+          '  <span>Hello {{name}}!</span>\n'
+          '</div>\n',
         ),
         '<div><span>Hello {{name}}!</span></div>',
       );
@@ -127,10 +127,10 @@ void main() {
       </section>
       '''),
       ''
-          '<section>'
-          '<h2>Align with Text</h2>'
-          '<div>Aligned with<material-input></material-input>text</div>'
-          '</section>',
+      '<section>'
+      '<h2>Align with Text</h2>'
+      '<div>Aligned with<material-input></material-input>text</div>'
+      '</section>',
     );
   });
 
@@ -199,12 +199,12 @@ void main() {
         </div>
       '''),
       ''
-          '<template [ngIf]="someCondition">'
-          '<div><label>Last saved on</label>'
-          '<template [ngIf]="anotherCondition"><div>{{someInterpolation}} '
-          '<template [ngIf]="yetAnotherCondition">'
-          '<span>by {{anotherInterpolation}}</span>'
-          '</template></div></template></div></template>',
+      '<template [ngIf]="someCondition">'
+      '<div><label>Last saved on</label>'
+      '<template [ngIf]="anotherCondition"><div>{{someInterpolation}} '
+      '<template [ngIf]="yetAnotherCondition">'
+      '<span>by {{anotherInterpolation}}</span>'
+      '</template></div></template></div></template>',
     );
   });
 
@@ -217,9 +217,9 @@ void main() {
         </ng-container>
       '''),
       ''
-          '<label>Foo</label><template [ngIf]="someCondition"><ng-container>'
-          '<div>{{someInterpolation}}</div>'
-          '</ng-container></template>',
+      '<label>Foo</label><template [ngIf]="someCondition"><ng-container>'
+      '<div>{{someInterpolation}}</div>'
+      '</ng-container></template>',
     );
   });
 
@@ -236,13 +236,13 @@ void main() {
         </div>
       '''),
       ''
-          // NOTE: There is no space here, because the next element is a <div>
-          '<div>Pre-Block'
-          '<template [ngIf]="someCondition"><div>Block</div>'
-          '<span>Inline</span></template>'
-          // NOTE: There *is* a space here, previous element is a <span>
-          ' Post-Inline'
-          '</div>',
+      // NOTE: There is no space here, because the next element is a <div>
+      '<div>Pre-Block'
+      '<template [ngIf]="someCondition"><div>Block</div>'
+      '<span>Inline</span></template>'
+      // NOTE: There *is* a space here, previous element is a <span>
+      ' Post-Inline'
+      '</div>',
     );
   });
 
@@ -258,9 +258,9 @@ void main() {
         </template>
       '''),
       ''
-          '<template [ngIf]="someCondition">'
-          '<div>Hello, <template></template></div>'
-          '</template>',
+      '<template [ngIf]="someCondition">'
+      '<div>Hello, <template></template></div>'
+      '</template>',
     );
   });
 

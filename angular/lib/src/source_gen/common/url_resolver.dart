@@ -100,7 +100,7 @@ String _toExtension(
       uri,
       'uri',
       'Provided value ends with an unexpected extension. '
-      'Expected extension(s): [${fromExtensions.join(', ')}].');
+          'Expected extension(s): [${fromExtensions.join(', ')}].');
 }
 
 const _templateExtension = '.template.dart';

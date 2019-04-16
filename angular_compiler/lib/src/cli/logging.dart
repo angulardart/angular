@@ -47,7 +47,7 @@ Future<T> runBuildZoned<T>(
       } else {
         build.log.severe(
           'Unhandled exception in the AngularDart compiler!\n\n'
-              'Please report a bug: ${messages.urlFileBugs}',
+          'Please report a bug: ${messages.urlFileBugs}',
           e,
           s,
         );

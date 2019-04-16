@@ -6,6 +6,9 @@
 *   Directives no longer support extending, implementing, or mixing in
     `ComponentState`.
 
+*   Directives no longer support `OnChanges` lifecycle. Use `AfterChanges`
+    instead.
+
 ## 5.3.0
 
 ### New features
