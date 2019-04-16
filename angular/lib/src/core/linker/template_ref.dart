@@ -1,3 +1,5 @@
+import 'package:angular/src/runtime/optimizations.dart';
+
 import 'app_view.dart';
 import 'element_ref.dart';
 import 'view_container.dart';
@@ -18,14 +20,20 @@ import 'views/render_view.dart';
 /// it to the View Container.
 class TemplateRef {
   final ViewContainer _viewContainer;
+  // TODO(b/130643098): change return type to `EmbeddedView`.
   final AppView<void> Function(RenderView, int) _viewFactory;
 
   TemplateRef(this._viewContainer, this._viewFactory);
 
   /// Instantiates an instance of the provided template.
   EmbeddedViewRef createEmbeddedView() {
-    final parentView = _viewContainer.parentView;
+    // The unsafe cast is necessary because a view container's parent may be any
+    // kind of view, but this method is only ever called when the parent view is
+    // a `RenderView`.
+    // TODO(b/130644455): remove if possible, or change to `RenderView`.
+    final parentView = unsafeCast<AppView<dynamic>>(_viewContainer.parentView);
     final view = _viewFactory(parentView, _viewContainer.index);
+    // TODO(b/130643098): remove need to pass these arguments here.
     view.create(parentView.ctx, parentView.viewData.projectedNodes);
     return view;
   }
