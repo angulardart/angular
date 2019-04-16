@@ -1,6 +1,7 @@
 import 'package:build/build.dart' hide AssetReader;
 import 'package:angular/src/compiler/angular_compiler.dart';
 import 'package:angular/src/compiler/ast_directive_normalizer.dart';
+import 'package:angular/src/compiler/semantic_analysis/directive_converter.dart';
 import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
 import 'package:angular/src/compiler/expression_parser/lexer.dart' as ng;
 import 'package:angular/src/compiler/expression_parser/parser.dart' as ng;
@@ -19,13 +20,14 @@ AngularCompiler createAngularCompiler(
   final parser = ng.Parser(ng.Lexer());
   return AngularCompiler(
       OfflineCompiler(
-        DirectiveCompiler(schemaRegistry),
+        DirectiveCompiler(),
         StyleCompiler(flags),
         ViewCompiler(flags, parser, schemaRegistry),
         DartEmitter(),
         {},
       ),
       AstDirectiveNormalizer(NgAssetReader.fromBuildStep(buildStep)),
+      DirectiveConverter(schemaRegistry),
       AstTemplateParser(schemaRegistry, parser, flags));
 }
 
@@ -35,7 +37,7 @@ OfflineCompiler createOfflineCompiler(
 ) {
   final schemaRegistry = DomElementSchemaRegistry();
   return OfflineCompiler(
-    DirectiveCompiler(schemaRegistry),
+    DirectiveCompiler(),
     StyleCompiler(flags),
     ViewCompiler(flags, ng.Parser(ng.Lexer()), schemaRegistry),
     DartEmitter(),

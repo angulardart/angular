@@ -7,11 +7,10 @@ import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/compiler_utils.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/offline_compiler.dart';
+import 'package:angular/src/compiler/semantic_analysis/directive_converter.dart';
 import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
-import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
 import 'package:angular/src/source_gen/template_compiler/component_visitor_exceptions.dart';
 import 'package:angular/src/source_gen/template_compiler/find_components.dart';
@@ -19,11 +18,16 @@ import 'package:angular/src/source_gen/template_compiler/find_components.dart';
 /// The main compiler for the AngularDart framework.
 class AngularCompiler {
   final AstDirectiveNormalizer _directiveNormalizer;
+  final DirectiveConverter _directiveConverter;
   final OfflineCompiler templateCompiler;
   final TemplateParser _templateParser;
 
   AngularCompiler(
-      this.templateCompiler, this._directiveNormalizer, this._templateParser);
+    this.templateCompiler,
+    this._directiveNormalizer,
+    this._directiveConverter,
+    this._templateParser,
+  );
 
   Future<SourceModule> compile(LibraryElement element) async {
     final exceptionHandler = ComponentVisitorExceptionHandler();
@@ -46,7 +50,7 @@ class AngularCompiler {
     // Convert the Directives into an intermediate representation
     final directives = <ir.Directive>[];
     for (final directive in compileComponentsData.directives) {
-      final directiveIR = _convertDirectiveToIR(directive);
+      final directiveIR = _directiveConverter.convertDirectiveToIR(directive);
       directives.add(directiveIR);
     }
 
@@ -127,19 +131,6 @@ class AngularCompiler {
         parsedTemplate: parsedTemplate,
         directiveTypes: createHostDirectiveTypes(component.type));
   }
-
-  ir.Directive _convertDirectiveToIR(CompileDirectiveMetadata directiveMeta) =>
-      ir.Directive(
-          name: directiveMeta.identifier.name,
-          typeParameters: directiveMeta.originType.typeParameters,
-          hostProperties: directiveMeta.hostProperties,
-          metadata: directiveMeta,
-          requiresDirectiveChangeDetector:
-              directiveMeta.requiresDirectiveChangeDetector,
-          implementsComponentState:
-              directiveMeta.changeDetection == ChangeDetectionStrategy.Stateful,
-          implementsOnChanges:
-              directiveMeta.lifecycleHooks.contains(LifecycleHooks.onChanges));
 
   String _moduleUrlFor(AngularArtifacts artifacts) {
     if (artifacts.components.isNotEmpty) {

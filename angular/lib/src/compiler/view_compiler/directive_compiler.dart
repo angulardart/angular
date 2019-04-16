@@ -1,17 +1,10 @@
-import 'package:source_span/source_span.dart';
-import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectorState;
-import 'package:angular_compiler/cli.dart';
 
 import '../identifiers.dart';
 import '../ir/model.dart' as ir;
 import '../output/convert.dart' show typeArgumentsFrom;
 import '../output/output_ast.dart' as o;
-import '../parse_util.dart' show ParseErrorLevel;
-import '../schema/element_schema_registry.dart' show ElementSchemaRegistry;
-import '../template_ast.dart' show BoundExpression;
-import '../template_parser.dart';
 import 'bound_value_converter.dart';
 import 'compile_method.dart';
 import 'compile_view.dart' show CompileViewStorage, NodeReference;
@@ -27,16 +20,7 @@ class DirectiveCompileResult {
 }
 
 class DirectiveCompiler {
-  final ElementSchemaRegistry _schemaRegistry;
-
-  static final _emptySpan = SourceSpan(
-    SourceLocation(0),
-    SourceLocation(0),
-    '',
-  );
   static final _implicitReceiver = o.ReadClassMemberExpr('instance');
-
-  DirectiveCompiler(this._schemaRegistry);
 
   DirectiveCompileResult compile(ir.Directive directive) {
     assert(directive.requiresDirectiveChangeDetector);
@@ -129,24 +113,10 @@ class DirectiveCompiler {
     CompileViewStorage storage,
     NodeReference el,
   ) {
-    final hostProps = directive.hostProperties;
-    if (hostProps.isEmpty) {
+    final hostProperties = directive.hostProperties;
+    if (hostProperties.isEmpty) {
       return [];
     }
-    const securityContextElementName = 'div';
-
-    final hostProperties = hostProps.entries.map((entry) {
-      final property = entry.key;
-      final expression = entry.value;
-      return createElementPropertyAst(
-        securityContextElementName,
-        property,
-        BoundExpression(expression),
-        _emptySpan,
-        _schemaRegistry,
-        _reportError,
-      );
-    }).toList();
 
     final CompileMethod method = CompileMethod();
 
@@ -157,8 +127,7 @@ class DirectiveCompiler {
     );
 
     bindAndWriteToRenderer(
-      convertAllToBinding(hostProperties,
-          analyzedClass: directive.metadata.analyzedClass),
+      hostProperties,
       _boundValueConverter,
       o.variable('view'),
       el,
@@ -206,18 +175,6 @@ class DirectiveCompiler {
       ],
       statements,
     );
-  }
-
-  static void _reportError(
-    String message,
-    SourceSpan sourceSpan, [
-    ParseErrorLevel level,
-  ]) {
-    if (level == ParseErrorLevel.FATAL) {
-      throwFailure(message);
-    } else {
-      logWarning(message);
-    }
   }
 }
 
