@@ -726,8 +726,6 @@ class _ParseContext {
           .map((directive) => ng.DirectiveAst(
               directive,
               [] /* inputs */,
-              _bindProperties(directive, sourceSpan, elementName, location,
-                  templateContext),
               _bindEvents(directive, sourceSpan, elementName, location,
                   templateContext),
               sourceSpan))
@@ -763,31 +761,6 @@ class _ParseContext {
       selectorMatcher.addSelectables(selector, directive);
     }
     return selectorMatcher;
-  }
-
-  static List<ng.BoundElementPropertyAst> _bindProperties(
-      CompileDirectiveMetadata directive,
-      SourceSpan sourceSpan,
-      String elementName,
-      String location,
-      TemplateContext templateContext) {
-    var result = <ng.BoundElementPropertyAst>[];
-    for (var propName in directive.hostProperties.keys) {
-      try {
-        var expression = directive.hostProperties[propName];
-        result.add(createElementPropertyAst(
-            elementName,
-            propName,
-            ng.BoundExpression(expression),
-            sourceSpan,
-            templateContext.schemaRegistry,
-            templateContext.reportError));
-      } on ParseException catch (e) {
-        templateContext.reportError(e.message, sourceSpan);
-        continue;
-      }
-    }
-    return result;
   }
 
   static List<ng.BoundEventAst> _bindEvents(

@@ -354,7 +354,7 @@ void _bindLiteral(
 // generate code at call-site.
 void bindDirectiveHostProps(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
-  if (directiveAst.hostProperties.isEmpty) return;
+  if (!directiveAst.hasHostProperties) return;
   var directive = directiveAst.directive;
   bool isComponent = directive.isComponent;
   var isStatefulDirective = !directive.isComponent &&
