@@ -598,19 +598,14 @@ abstract class AppView<T> extends DynamicView
     Future<void> Function() loadComponent,
     Future<void> Function() loadTemplateLib,
     ViewContainer viewContainer,
-    TemplateRef templateRef, [
-    void Function() initializer,
-  ]) {
+    TemplateRef templateRef,
+  ) {
     var cancelled = false;
     Future.wait([loadComponent(), loadTemplateLib()]).then((_) {
-      if (cancelled) {
-        return;
+      if (!cancelled) {
+        viewContainer.createEmbeddedView(templateRef);
+        viewContainer.detectChangesInNestedViews();
       }
-      if (initializer != null) {
-        initializer();
-      }
-      viewContainer.createEmbeddedView(templateRef);
-      viewContainer.detectChangesInNestedViews();
     });
     return () {
       cancelled = true;
