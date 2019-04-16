@@ -67,7 +67,7 @@ class Directive implements IRNode {
   final bool implementsComponentState;
   final bool implementsOnChanges;
 
-  final Map<String, ast.AST> hostProperties;
+  final List<Binding> hostProperties;
 
   Directive({
     this.name,
