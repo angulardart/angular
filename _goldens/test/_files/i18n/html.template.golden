@@ -9,40 +9,41 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'html.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import8;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
-import 'package:intl/intl.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
+import 'package:intl/intl.dart' as import11;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewI18nHtmlComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nHtmlComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('message');
+    rootEl = import6.document.createElement('message');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);
   }
 
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    final _el_0 = import8.appendElement(doc, parentRenderNode, 'p');
-    final _html_1 = import9.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    final _el_0 = import9.appendElement(doc, parentRenderNode, 'p');
+    final _html_1 = import10.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
     init0();
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
-    return import10.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+    return import11.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
   }
 
   @override
@@ -65,7 +66,7 @@ final List<dynamic> styles$I18nHtmlComponentHost = const [];
 class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   ViewI18nHtmlComponent0 _compView_0;
   import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
-  _ViewI18nHtmlComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewI18nHtmlComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
     _compView_0 = ViewI18nHtmlComponent0(this, 0);

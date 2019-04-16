@@ -9,39 +9,40 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'dom_bindings.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
 class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-host-attributes');
+    rootEl = import6.document.createElement('has-host-attributes');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasHostAttributes> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
   void detectHostChanges(bool firstCheck) {
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      import9.updateAttribute(rootEl, 'title', currVal_0);
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      import10.updateAttribute(rootEl, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -66,7 +67,7 @@ final List<dynamic> styles$HasHostAttributesHost = const [];
 class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   ViewHasHostAttributes0 _compView_0;
   import1.HasHostAttributes _HasHostAttributes_0_5;
-  _ViewHasHostAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasHostAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasHostAttributes> build() {
     _compView_0 = ViewHasHostAttributes0(this, 0);
@@ -98,22 +99,22 @@ final List<dynamic> styles$HasTemplateAttributes = const [];
 
 class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> {
   var _expr_0;
-  import5.DivElement _el_0;
+  import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateAttributes0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-template-attributes');
+    rootEl = import6.document.createElement('has-template-attributes');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
   }
 
@@ -121,8 +122,8 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.title;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      import9.updateAttribute(_el_0, 'title', currVal_0);
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      import10.updateAttribute(_el_0, 'title', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -147,7 +148,7 @@ final List<dynamic> styles$HasTemplateAttributesHost = const [];
 class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttributes> {
   ViewHasTemplateAttributes0 _compView_0;
   import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
-  _ViewHasTemplateAttributesHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasTemplateAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     _compView_0 = ViewHasTemplateAttributes0(this, 0);
@@ -176,22 +177,22 @@ AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0() 
 final List<dynamic> styles$HasStaticAttribute = const [];
 
 class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
-  import5.DivElement _el_0;
+  import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasStaticAttribute0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasStaticAttribute0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-static-attribute');
+    rootEl = import6.document.createElement('has-static-attribute');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
   }
 
@@ -199,7 +200,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      import9.setAttribute(_el_0, 'title', 'title');
+      import10.setAttribute(_el_0, 'title', 'title');
     }
   }
 
@@ -223,7 +224,7 @@ final List<dynamic> styles$HasStaticAttributeHost = const [];
 class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   ViewHasStaticAttribute0 _compView_0;
   import1.HasStaticAttribute _HasStaticAttribute_0_5;
-  _ViewHasStaticAttributeHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasStaticAttributeHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
     _compView_0 = ViewHasStaticAttribute0(this, 0);
@@ -254,26 +255,26 @@ final List<dynamic> styles$HasHostClass = const [];
 class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-host-class');
+    rootEl = import6.document.createElement('has-host-class');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasHostClass> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
   void detectHostChanges(bool firstCheck) {
     final _ctx = ctx;
     final currVal_0 = _ctx.fancy;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      import9.updateClassBindingNonHtml(rootEl, 'fancy', currVal_0);
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      import10.updateClassBindingNonHtml(rootEl, 'fancy', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -298,7 +299,7 @@ final List<dynamic> styles$HasHostClassHost = const [];
 class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   ViewHasHostClass0 _compView_0;
   import1.HasHostClass _HasHostClass_0_5;
-  _ViewHasHostClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasHostClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasHostClass> build() {
     _compView_0 = ViewHasHostClass0(this, 0);
@@ -330,22 +331,22 @@ final List<dynamic> styles$HasTemplateClass = const [];
 
 class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   bool _expr_0;
-  import5.DivElement _el_0;
+  import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateClass0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-template-class');
+    rootEl = import6.document.createElement('has-template-class');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
   }
 
@@ -353,8 +354,8 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.fancy;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
-      import9.updateClassBinding(_el_0, 'fancy', currVal_0);
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      import10.updateClassBinding(_el_0, 'fancy', currVal_0);
       _expr_0 = currVal_0;
     }
   }
@@ -379,7 +380,7 @@ final List<dynamic> styles$HasTemplateClassHost = const [];
 class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   ViewHasTemplateClass0 _compView_0;
   import1.HasTemplateClass _HasTemplateClass_0_5;
-  _ViewHasTemplateClassHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasTemplateClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     _compView_0 = ViewHasTemplateClass0(this, 0);
@@ -410,22 +411,22 @@ final List<dynamic> styles$HasStyleProperty = const [];
 class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   var _expr_0;
   var _expr_1;
-  import5.DivElement _el_0;
+  import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasStyleProperty0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasStyleProperty0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('has-style-property');
+    rootEl = import6.document.createElement('has-style-property');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import5.document;
-    _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import6.document;
+    _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
   }
 
@@ -433,12 +434,12 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   void detectChangesInternal() {
     final _ctx = ctx;
     final currVal_0 = _ctx.width;
-    if (import8.checkBinding(_expr_0, currVal_0)) {
+    if (import9.checkBinding(_expr_0, currVal_0)) {
       _el_0.style.setProperty('width', currVal_0?.toString());
       _expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import8.checkBinding(_expr_1, currVal_1)) {
+    if (import9.checkBinding(_expr_1, currVal_1)) {
       _el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       _expr_1 = currVal_1;
     }
@@ -464,7 +465,7 @@ final List<dynamic> styles$HasStylePropertyHost = const [];
 class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   ViewHasStyleProperty0 _compView_0;
   import1.HasStyleProperty _HasStyleProperty_0_5;
-  _ViewHasStylePropertyHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewHasStylePropertyHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     _compView_0 = ViewHasStyleProperty0(this, 0);

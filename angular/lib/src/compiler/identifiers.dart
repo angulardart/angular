@@ -17,7 +17,7 @@ const _ngForUrl = "$_angularLib/src/common/directives/ng_for.dart";
 const _profileRuntimeModuleUrl = "$_angularLib/src/debug/profile_runtime.dart";
 const _runtimeUtilsModuleUrl = "$_angularLib/src/runtime.dart";
 const _textBindingModuleUrl = "$_angularLib/src/runtime/text_binding.dart";
-final _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
+const _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 
 /// A collection of methods for manipulating the DOM from generated code.
 class DomHelpers {
@@ -67,6 +67,10 @@ class Identifiers {
       name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);
   static final AppView =
       CompileIdentifierMetadata(name: "AppView", moduleUrl: _appViewModuleUrl);
+  static final RenderView = CompileIdentifierMetadata(
+    name: 'RenderView',
+    moduleUrl: '$_angularLib/src/core/linker/views/render_view.dart',
+  );
   static final ViewContainer = CompileIdentifierMetadata(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");

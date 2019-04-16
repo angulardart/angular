@@ -9,12 +9,13 @@ import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/app_view.dart';
 import 'eager_existing_providers.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/view_type.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import3;
+import 'package:angular/src/core/linker/view_type.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import5;
-import 'package:angular/src/runtime.dart' as import6;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/di/errors.dart' as import8;
+import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$AppComponent = const [];
 
@@ -24,18 +25,18 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   ViewInjectsServicesComponent0 _compView_1;
   import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
   static import2.ComponentStyles _componentStyles;
-  ViewAppComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewAppComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('app');
+    rootEl = import6.document.createElement('app');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -90,7 +91,7 @@ final List<dynamic> styles$AppComponentHost = const [];
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
-  _ViewAppComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewAppComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
@@ -120,18 +121,18 @@ final List<dynamic> styles$ProvidesServicesComponent = const [];
 
 class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewProvidesServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewProvidesServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('provides-services');
+    rootEl = import6.document.createElement('provides-services');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
   }
 
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     project(parentRenderNode, 0);
     init0();
   }
@@ -156,7 +157,7 @@ final List<dynamic> styles$ProvidesServicesComponentHost = const [];
 class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServicesComponent> {
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
-  _ViewProvidesServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewProvidesServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
@@ -194,18 +195,18 @@ final List<dynamic> styles$InjectsServicesComponent = const [];
 
 class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewInjectsServicesComponent0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewInjectsServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import5.document.createElement('injects-services');
+    rootEl = import6.document.createElement('injects-services');
   }
   static String get _debugComponentUrl {
-    return (import6.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
   }
 
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     final _rootEl = rootEl;
-    final import5.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
     init0();
   }
 
@@ -229,13 +230,13 @@ final List<dynamic> styles$InjectsServicesComponentHost = const [];
 class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServicesComponent> {
   ViewInjectsServicesComponent0 _compView_0;
   import1.InjectsServicesComponent _InjectsServicesComponent_0_5;
-  _ViewInjectsServicesComponentHost0(AppView<dynamic> parentView, int parentIndex) : super(import3.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewInjectsServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     _compView_0 = ViewInjectsServicesComponent0(this, 0);
     rootEl = _compView_0.rootEl;
-    _InjectsServicesComponent_0_5 = (import6.isDevMode
-        ? import8.debugInjectorWrap(import1.InjectsServicesComponent, () {
+    _InjectsServicesComponent_0_5 = (import7.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsServicesComponent, () {
             return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex));
           })
         : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex)));

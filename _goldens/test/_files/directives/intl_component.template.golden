@@ -10,13 +10,14 @@ import 'package:angular/src/core/linker/app_view.dart';
 import 'intl_component.dart' as import1;
 import 'package:angular/src/runtime/text_binding.dart' as import2;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/render_view.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import7;
+import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
-import 'package:angular/src/runtime/interpolate.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
 
 final List<dynamic> styles$CompWithoutFinal = const [];
 
@@ -24,23 +25,23 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   final import2.TextBinding _textBinding_4 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
-  ViewCompWithoutFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithoutFinal0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import6.document.createElement('comp-without-final');
+    rootEl = import7.document.createElement('comp-without-final');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
   }
 
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
     final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import6.document;
-    final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import7.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
     _el_0.append(_textBinding_1.element);
-    final _text_2 = import9.appendText(parentRenderNode, ' ');
-    final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
+    final _text_2 = import10.appendText(parentRenderNode, ' ');
+    final _el_3 = import10.appendElement(doc, parentRenderNode, 'button');
     _el_3.append(_textBinding_4.element);
     init0();
   }
@@ -48,8 +49,8 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
-    _textBinding_1.updateText(import10.interpolateString0(_ctx.okMessage));
-    _textBinding_4.updateText(import10.interpolateString0(_ctx.cancelMessage));
+    _textBinding_1.updateText(import11.interpolateString0(_ctx.okMessage));
+    _textBinding_4.updateText(import11.interpolateString0(_ctx.cancelMessage));
   }
 
   @override
@@ -72,7 +73,7 @@ final List<dynamic> styles$CompWithoutFinalHost = const [];
 class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   ViewCompWithoutFinal0 _compView_0;
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
-  _ViewCompWithoutFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithoutFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = ViewCompWithoutFinal0(this, 0);
@@ -102,25 +103,25 @@ final List<dynamic> styles$CompWithFinal = const [];
 
 class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   static import3.ComponentStyles _componentStyles;
-  ViewCompWithFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithFinal0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import6.document.createElement('comp-with-final');
+    rootEl = import7.document.createElement('comp-with-final');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
   }
 
   @override
   ComponentRef<import1.CompWithFinal> build() {
     final _ctx = ctx;
     final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import6.document;
-    final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(_ctx.okMessage));
-    final _text_2 = import9.appendText(parentRenderNode, ' ');
-    final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(_ctx.cancelMessage));
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import7.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_1 = import10.appendText(_el_0, import11.interpolateString0(_ctx.okMessage));
+    final _text_2 = import10.appendText(parentRenderNode, ' ');
+    final _el_3 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_4 = import10.appendText(_el_3, import11.interpolateString0(_ctx.cancelMessage));
     init0();
   }
 
@@ -144,7 +145,7 @@ final List<dynamic> styles$CompWithFinalHost = const [];
 class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   ViewCompWithFinal0 _compView_0;
   import1.CompWithFinal _CompWithFinal_0_5;
-  _ViewCompWithFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = ViewCompWithFinal0(this, 0);
@@ -174,24 +175,24 @@ final List<dynamic> styles$CompWithFinalStatic = const [];
 
 class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   static import3.ComponentStyles _componentStyles;
-  ViewCompWithFinalStatic0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithFinalStatic0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import6.document.createElement('comp-with-final-static');
+    rootEl = import7.document.createElement('comp-with-final-static');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
   }
 
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
     final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import6.document;
-    final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(import1.CompWithFinalStatic.okMessage));
-    final _text_2 = import9.appendText(parentRenderNode, ' ');
-    final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(import1.CompWithFinalStatic.cancelMessage));
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import7.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_1 = import10.appendText(_el_0, import11.interpolateString0(import1.CompWithFinalStatic.okMessage));
+    final _text_2 = import10.appendText(parentRenderNode, ' ');
+    final _el_3 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_4 = import10.appendText(_el_3, import11.interpolateString0(import1.CompWithFinalStatic.cancelMessage));
     init0();
   }
 
@@ -215,7 +216,7 @@ final List<dynamic> styles$CompWithFinalStaticHost = const [];
 class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic> {
   ViewCompWithFinalStatic0 _compView_0;
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
-  _ViewCompWithFinalStaticHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithFinalStaticHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
@@ -245,24 +246,24 @@ final List<dynamic> styles$CompWithExternalFinal = const [];
 
 class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> {
   static import3.ComponentStyles _componentStyles;
-  ViewCompWithExternalFinal0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewCompWithExternalFinal0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
-    rootEl = import6.document.createElement('comp-with-external-final');
+    rootEl = import7.document.createElement('comp-with-external-final');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/directives/intl_component.dart' : null);
   }
 
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
     final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
-    final doc = import6.document;
-    final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_1 = import9.appendText(_el_0, import10.interpolateString0(import1.Messages.okMessage));
-    final _text_2 = import9.appendText(parentRenderNode, ' ');
-    final _el_3 = import9.appendElement(doc, parentRenderNode, 'button');
-    final _text_4 = import9.appendText(_el_3, import10.interpolateString0(import1.Messages.cancelMessage));
+    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final doc = import7.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_1 = import10.appendText(_el_0, import11.interpolateString0(import1.Messages.okMessage));
+    final _text_2 = import10.appendText(parentRenderNode, ' ');
+    final _el_3 = import10.appendElement(doc, parentRenderNode, 'button');
+    final _text_4 = import10.appendText(_el_3, import11.interpolateString0(import1.Messages.cancelMessage));
     init0();
   }
 
@@ -286,7 +287,7 @@ final List<dynamic> styles$CompWithExternalFinalHost = const [];
 class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFinal> {
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
-  _ViewCompWithExternalFinalHost0(AppView<dynamic> parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  _ViewCompWithExternalFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = ViewCompWithExternalFinal0(this, 0);

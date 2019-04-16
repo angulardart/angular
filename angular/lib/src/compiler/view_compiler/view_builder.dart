@@ -533,8 +533,10 @@ o.ClassStmt createViewClass(
 
 o.Constructor _createViewClassConstructor(CompileView view) {
   var viewConstructorArgs = [
-    o.FnParam(ViewConstructorVars.parentView.name,
-        o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE])),
+    o.FnParam(
+      ViewConstructorVars.parentView.name,
+      o.importType(Identifiers.RenderView),
+    ),
     o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE)
   ];
   var superConstructorArgs = [
@@ -628,7 +630,7 @@ o.Statement createViewFactory(CompileView view, o.ClassStmt viewClass) {
 
 o.Statement _createEmbeddedViewFactory(
     CompileView view, o.ClassStmt viewClass) {
-  final parentViewType = o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE]);
+  final parentViewType = o.importType(Identifiers.RenderView);
   final parameters = [
     o.FnParam(ViewConstructorVars.parentView.name, parentViewType),
     o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
