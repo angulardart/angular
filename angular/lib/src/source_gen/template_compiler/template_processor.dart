@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:angular/src/source_gen/common/ng_compiler.dart';
+import 'package:angular/src/compiler/module/ng_compiler_module.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
