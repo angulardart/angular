@@ -23,13 +23,6 @@ external _ng.AppView<TestFooComponent> viewFactory_TestFooComponent0(_ng.AppView
 class ViewTestFooComponent0 extends _ng.AppView<TestFooComponent> {
   external ViewTestFooComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
-// For @Component class DirectiveContainerTest.
-external List<dynamic> get styles$DirectiveContainerTest;
-external _ng.ComponentFactory<DirectiveContainerTest> get DirectiveContainerTestNgFactory;
-external _ng.AppView<DirectiveContainerTest> viewFactory_DirectiveContainerTest0(_ng.AppView<dynamic> parentView, int parentIndex);
-class ViewDirectiveContainerTest0 extends _ng.AppView<DirectiveContainerTest> {
-  external ViewDirectiveContainerTest0(_ng.AppView<dynamic> parentView, int parentIndex);
-}
 // For @Directive class ChildDirective.
 class ChildDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external ChildDirective get instance;
@@ -42,13 +35,6 @@ class DirectiveWithOutputNgCd extends _ng.DirectiveChangeDetector {
   external DirectiveWithOutput get instance;
   external void deliverChanges();
   external DirectiveWithOutputNgCd(DirectiveWithOutput instance);
-  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
-}
-// For @Directive class FastDirective.
-class FastDirectiveNgCd extends _ng.DirectiveChangeDetector {
-  external FastDirective get instance;
-  external void deliverChanges();
-  external FastDirectiveNgCd(FastDirective instance);
   external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
 }
 

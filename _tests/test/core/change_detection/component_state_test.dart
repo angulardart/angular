@@ -13,31 +13,20 @@ void main() {
 
   tearDown(() => disposeAnyRunningTest());
 
-  group('ComponentState mixin', () {
-    test('Should update bound properties when setState is called', () async {
-      var testBed = NgTestBed<SingleBindingTest>();
-      var testRoot = await testBed.create();
-      Element targetElement = testRoot.rootElement.querySelector('.target');
-      expect(targetElement.text, '');
-      await testRoot.update((SingleBindingTest test) {
-        test.title = 'Matan';
-      });
-      expect(targetElement.text, 'Matan');
-      await testRoot.update((SingleBindingTest test) {
-        test.updateTitle('Lurey');
-      });
-      // Should not have updated the template, i.e. not change detection.
-      expect(targetElement.text, 'Matan');
+  test('should update bound properties when setState is called', () async {
+    var testBed = NgTestBed<SingleBindingTest>();
+    var testRoot = await testBed.create();
+    Element targetElement = testRoot.rootElement.querySelector('.target');
+    expect(targetElement.text, '');
+    await testRoot.update((SingleBindingTest test) {
+      test.title = 'Matan';
     });
-
-    test('Should update bound attribute with change detection', () async {
-      var testBed = NgTestBed<DirectiveContainerTest>();
-      var testRoot = await testBed.create();
-      Element targetElement = testRoot.rootElement.querySelector('.target1');
-      expect(targetElement.attributes['data-msg'], 'Hello xyz');
-      targetElement = testRoot.rootElement.querySelector('.target2');
-      expect(targetElement.attributes['data-msg'], 'Hello abc');
+    expect(targetElement.text, 'Matan');
+    await testRoot.update((SingleBindingTest test) {
+      test.updateTitle('Lurey');
     });
+    // Should not have updated the template, i.e. not change detection.
+    expect(targetElement.text, 'Matan');
   });
 }
 
@@ -45,7 +34,7 @@ void main() {
   selector: 'child-with-single-binding',
   template: r'<span class="target">{{title}}</span>',
 )
-class SingleBindingTest extends Object with ComponentState {
+class SingleBindingTest with ComponentState {
   String _title;
   Iterable<String> _messages;
 
@@ -66,36 +55,4 @@ class SingleBindingTest extends Object with ComponentState {
     if (_messages == messages) return;
     setState(() => _messages = messages);
   }
-}
-
-@Directive(
-  selector: '[fastDirective]',
-)
-class FastDirective extends ComponentState {
-  Element element;
-
-  @HostBinding('attr.data-msg')
-  String msg;
-
-  String _prevValue;
-
-  FastDirective(this.element);
-
-  @Input()
-  set name(String value) {
-    if (_prevValue == value) return;
-    _prevValue = value;
-    setState(() => msg = 'Hello $value');
-  }
-}
-
-@Component(
-  selector: 'directive-container',
-  template: r'<div class="target1" fastDirective [name]="finalName"></div>'
-      '<div class="target2" fastDirective [name]="nonFinal"></div>',
-  directives: [FastDirective],
-)
-class DirectiveContainerTest {
-  final String finalName = "xyz";
-  String nonFinal = "abc";
 }

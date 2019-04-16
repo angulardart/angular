@@ -3,6 +3,9 @@
 *   `ExceptionHandler` is no longer exported via `angular/di.dart`. Import this
     symbol via `angular/angular.dart` instead.
 
+*   Directives no longer support extending, implementing, or mixing in
+    `ComponentState`.
+
 ## 5.3.0
 
 ### New features

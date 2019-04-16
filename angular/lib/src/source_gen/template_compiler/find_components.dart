@@ -634,8 +634,7 @@ class _ComponentVisitor
       selector: coerceString(annotationValue, 'selector'),
       exportAs: coerceString(annotationValue, 'exportAs'),
       // Even for directives, we want change detection set to the default.
-      changeDetection:
-          _changeDetection(element, annotationValue, 'changeDetection'),
+      changeDetection: _changeDetection(element, annotationValue, isComp),
       inputs: _inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
@@ -690,17 +689,23 @@ class _ComponentVisitor
         defaultTo: ViewEncapsulation.Emulated,
       );
 
-  int _changeDetection(
-    ClassElement clazz,
-    DartObject value,
-    String field,
-  ) {
+  int _changeDetection(ClassElement clazz, DartObject value, bool isComponent) {
     // TODO: Use angular2/src/meta instead of this error-prone check.
     if (clazz.allSupertypes.any((t) => t.name == 'ComponentState')) {
-      // TODO: Warn/fail if changeDetection: ... is set to anything else.
-      return ChangeDetectionStrategy.Stateful;
+      if (isComponent) {
+        // TODO: Warn/fail if changeDetection: ... is set to anything else.
+        return ChangeDetectionStrategy.Stateful;
+      }
+      _exceptionHandler.handle(ErrorMessageForElement(
+        clazz,
+        'Directives should not implement "ComponentState"',
+      ));
     }
-    return coerceInt(value, field, defaultTo: ChangeDetectionStrategy.Default);
+    return coerceInt(
+      value,
+      'changeDetection',
+      defaultTo: ChangeDetectionStrategy.Default,
+    );
   }
 
   List<CompileProviderMetadata> _extractProviders(
