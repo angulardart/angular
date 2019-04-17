@@ -42,6 +42,13 @@ external _ng.AppView<UsesGenericComp> viewFactory_UsesGenericComp0(_ng.AppView<d
 class ViewUsesGenericComp0 extends _ng.AppView<UsesGenericComp> {
   external ViewUsesGenericComp0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
+// For @Component class UsesGenericCompGeneric.
+external List<dynamic> get styles$UsesGenericCompGeneric;
+external _ng.ComponentFactory<UsesGenericCompGeneric> get UsesGenericCompGenericNgFactory;
+external _ng.AppView<UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGeneric0<E>(_ng.AppView<dynamic> parentView, int parentIndex);
+class ViewUsesGenericCompGeneric0<E> extends _ng.AppView<UsesGenericCompGeneric<E>> {
+  external ViewUsesGenericCompGeneric0(_ng.AppView<dynamic> parentView, int parentIndex);
+}
 // For @Component class MappingComp1.
 external List<dynamic> get styles$MappingComp1;
 external _ng.ComponentFactory<MappingComp1> get MappingComp1NgFactory;

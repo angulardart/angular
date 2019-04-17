@@ -47,6 +47,23 @@ class UsesGenericComp {
   var binding = 5;
 }
 
+// A generic component that uses [GenericComp]
+@Component(
+  selector: 'comp',
+  directives: [
+    GenericComp,
+  ],
+  directiveTypes: [
+    Typed<GenericComp>.of([
+      Typed<List>.of([#E])
+    ])
+  ],
+  template: '<comp [input]="binding"></comp>',
+)
+class UsesGenericCompGeneric<E> {
+  var binding = ['Hello'];
+}
+
 /// A component with two type parameters, each with a separate `@Input()`.
 @Component(
   selector: 'comp',
