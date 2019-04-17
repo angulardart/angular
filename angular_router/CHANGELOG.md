@@ -1,3 +1,10 @@
+### Bug fixes
+
+*   Navigation requests triggered by `popstate` events that redirect back to the
+    active route will now correctly update the browser location to match the
+    active route. Prior to this fix, the browser location would be left in the
+    state changed by the `popstate` event.
+
 ## 2.0.0-alpha+22
 
 ### New features

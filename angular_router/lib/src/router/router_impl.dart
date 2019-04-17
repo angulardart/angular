@@ -179,6 +179,20 @@ class RouterImpl extends Router {
         (navigationParams?.fragment ?? '') == current.fragment &&
         const MapEquality<String, String>()
             .equals(queryParameters, current.queryParameters)) {
+      // In the rare case that a popstate event matches a route that redirects
+      // *to* the current route, the current state will already match the
+      // redirected state. Normally when the current state and requested state
+      // match, navigation returns successfuly without navigating since we don't
+      // want to activate the already active route; however, in this case the
+      // browser state will be out of sync with the current state due to the
+      // popstate event. To synchronize this state without activating the
+      // already active route, we simply need to push the redirected state to
+      // the browser. Note that we only need to check if the path is different,
+      // and not the fragment identifier or query parameters, because a redirect
+      // route can only affect the path.
+      if (path != _location.path()) {
+        _location.replaceState(current.toUrl());
+      }
       return NavigationResult.SUCCESS;
     }
 

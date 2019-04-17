@@ -48,7 +48,7 @@ void main() {
     });
 
     expect(location.path(), '/redirect-to');
-  }, skip: 'b/130295866');
+  });
 
   test('router hook triggered by "popstate" should update location', () async {
     await testFixture.update((_) {
