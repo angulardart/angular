@@ -331,6 +331,95 @@ AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0() {
   return _ViewUsesGenericCompHost0(null, null);
 }
 
+final List<dynamic> styles$UsesGenericCompGeneric = const [];
+
+class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGeneric<E>> {
+  ViewGenericComp0<List<E>> _compView_0;
+  import1.GenericComp<List<E>> _GenericComp_0_5;
+  var _expr_0;
+  static import2.ComponentStyles _componentStyles;
+  ViewUsesGenericCompGeneric0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('comp');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    _compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _GenericComp_0_5 = import1.GenericComp();
+    _compView_0.create0(_GenericComp_0_5);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      _GenericComp_0_5.input = currVal_0;
+      _expr_0 = currVal_0;
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.UsesGenericCompGeneric> _UsesGenericCompGenericNgFactory = const ComponentFactory('comp', viewFactory_UsesGenericCompGenericHost0);
+ComponentFactory<import1.UsesGenericCompGeneric> get UsesGenericCompGenericNgFactory {
+  return _UsesGenericCompGenericNgFactory;
+}
+
+final List<dynamic> styles$UsesGenericCompGenericHost = const [];
+
+class _ViewUsesGenericCompGenericHost0<E> extends AppView<import1.UsesGenericCompGeneric<E>> {
+  ViewUsesGenericCompGeneric0<E> _compView_0;
+  import1.UsesGenericCompGeneric<E> _UsesGenericCompGeneric_0_5;
+  _ViewUsesGenericCompGenericHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
+    _compView_0 = ViewUsesGenericCompGeneric0(this, 0);
+    rootEl = _compView_0.rootEl;
+    _UsesGenericCompGeneric_0_5 = import1.UsesGenericCompGeneric();
+    _compView_0.create(_UsesGenericCompGeneric_0_5, projectedNodes);
+    init1(rootEl);
+    return ComponentRef(0, this, rootEl, _UsesGenericCompGeneric_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGenericHost0<E>() {
+  return _ViewUsesGenericCompGenericHost0(null, null);
+}
+
 final List<dynamic> styles$MappingComp1 = const [];
 
 class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
@@ -1893,6 +1982,7 @@ void initReflector() {
   _ngRef.registerComponent(UsesUntypedComp, UsesUntypedCompNgFactory);
   _ngRef.registerComponent(GenericComp, GenericCompNgFactory);
   _ngRef.registerComponent(UsesGenericComp, UsesGenericCompNgFactory);
+  _ngRef.registerComponent(UsesGenericCompGeneric, UsesGenericCompGenericNgFactory);
   _ngRef.registerComponent(MappingComp1, MappingComp1NgFactory);
   _ngRef.registerComponent(UsesMappingComp1, UsesMappingComp1NgFactory);
   _ngRef.registerComponent(MappingComp2, MappingComp2NgFactory);
