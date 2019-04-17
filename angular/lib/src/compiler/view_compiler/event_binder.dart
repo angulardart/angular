@@ -32,7 +32,6 @@ class CompileEventListener {
   final _method = CompileMethod();
   final String _methodName;
 
-  var _hasComponentHostListener = false;
   var _isSimple = true;
   var _handlerType = HandlerType.notSimple;
   o.Expression _simpleHandler;
@@ -77,9 +76,6 @@ class CompileEventListener {
       _handlerType = hostEvent.handlerType;
       _simpleHostEvent = hostEvent;
       _isSimple = _method.isEmpty && _handlerType != HandlerType.notSimple;
-    }
-    if (directive != null && directive.isComponent) {
-      _hasComponentHostListener = true;
     }
 
     final context = directiveInstance?.build() ?? DetectChangesVars.cachedCtx;
@@ -169,12 +165,6 @@ class CompileEventListener {
     }
 
     final wrapperName = 'eventHandler$numArgs';
-    if (_hasComponentHostListener) {
-      return _compileElement.componentView.callMethod(
-        wrapperName,
-        [handlerExpr],
-      );
-    }
     return o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
   }
 
