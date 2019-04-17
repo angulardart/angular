@@ -45,6 +45,9 @@ class ChildDirective {
   @HostBinding('attr.role')
   static const hostRole = 'button';
 
+  @HostBinding('attr.aria-label')
+  final label = 'Directive';
+
   @HostBinding('attr.aria-disabled')
   String get disabledStr => '';
 

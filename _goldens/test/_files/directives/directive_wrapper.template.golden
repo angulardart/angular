@@ -121,6 +121,12 @@ class ChildDirectiveNgCd extends import12.DirectiveChangeDetector {
   bool _expr_2;
   ChildDirectiveNgCd(this.instance);
   void detectHostChanges(AppView<dynamic> view, import2.Element el) {
+    bool firstCheck = (view.cdState == 0);
+    if (firstCheck) {
+      if (!identical(instance.label, null)) {
+        import9.updateAttribute(el, 'aria-label', instance.label);
+      }
+    }
     final currVal_0 = instance.tabIndex;
     if (import11.checkBinding(_expr_0, currVal_0)) {
       import9.setProperty(el, 'tabIndex', currVal_0);
