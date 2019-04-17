@@ -27,4 +27,15 @@ abstract class RenderView implements View {
   /// This should only be used for SVG or custom elements. For a plain
   /// [HtmlElement], use [addShimC] instead.
   void addShimE(Element element);
+
+  /// Called by change detector to apply correct host and content shimming
+  /// after node's className is changed.
+  ///
+  /// Used by [detectChanges] when changing [element.className] directly.
+  ///
+  /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
+  void updateChildClass(HtmlElement element, String newClass);
+
+  /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
+  void updateChildClassNonHtml(Element element, String newClass);
 }

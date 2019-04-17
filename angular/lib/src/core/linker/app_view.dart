@@ -475,13 +475,8 @@ abstract class AppView<T> extends DynamicView
     }
   }
 
-  /// Called by change detector to apply correct host and content shimming
-  /// after node's className is changed.
-  ///
-  /// Used by [detectChanges] when changing [element.className] directly.
-  ///
-  /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
   @dart2js.noInline
+  @override
   void updateChildClass(HtmlElement element, String newClass) {
     final styles = componentStyles;
     final shim = styles.usesStyleEncapsulation;
@@ -495,8 +490,8 @@ abstract class AppView<T> extends DynamicView
     }
   }
 
-  /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
   @dart2js.noInline
+  @override
   void updateChildClassNonHtml(Element element, String newClass) {
     final styles = componentStyles;
     final shim = styles.usesStyleEncapsulation;
