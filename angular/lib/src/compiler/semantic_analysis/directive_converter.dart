@@ -8,7 +8,6 @@ import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart' as ast;
 import 'package:angular/src/compiler/template_parser.dart';
-import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular_compiler/cli.dart';
 
@@ -28,8 +27,6 @@ class DirectiveConverter {
         hostProperties: _hostProperties(
             directiveMeta.hostProperties, directiveMeta.analyzedClass),
         metadata: directiveMeta,
-        implementsComponentState:
-            directiveMeta.changeDetection == ChangeDetectionStrategy.Stateful,
         implementsOnChanges:
             directiveMeta.lifecycleHooks.contains(LifecycleHooks.onChanges),
       );
