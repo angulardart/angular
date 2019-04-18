@@ -356,20 +356,14 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
     o.Expression directiveInstance, CompileElement compileElement) {
   if (!directiveAst.hasHostProperties) return;
   var directive = directiveAst.directive;
-  bool isComponent = directive.isComponent;
-  var isStatefulDirective = !directive.isComponent &&
-      directive.changeDetection == ChangeDetectionStrategy.Stateful;
-
-  var target = isComponent
-      ? compileElement.componentView
-      : unwrapDirective(directiveInstance);
   o.Expression callDetectHostPropertiesExpr;
-  if (isComponent) {
+  if (directive.isComponent) {
+    final target = compileElement.componentView;
     callDetectHostPropertiesExpr =
         target.callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
   } else {
-    if (isStatefulDirective) return;
     if (unwrapDirectiveInstance(directiveInstance) == null) return;
+    final target = unwrapDirective(directiveInstance);
     callDetectHostPropertiesExpr = target.callMethod('detectHostChanges', [
       compileElement.component != null
           ? compileElement.componentView
