@@ -61,35 +61,34 @@ class AnalyzerTestBase {
   }
 
   void setUp() {
-    final logger = new PerformanceLog(new StringBuffer());
-    byteStore = new MemoryByteStore();
+    final logger = PerformanceLog(StringBuffer());
+    byteStore = MemoryByteStore();
 
-    scheduler = new AnalysisDriverScheduler(logger)..start();
-    resourceProvider = new MemoryResourceProvider();
+    scheduler = AnalysisDriverScheduler(logger)..start();
+    resourceProvider = MemoryResourceProvider();
 
-    sdk = new MockSdk(resourceProvider: resourceProvider);
+    sdk = MockSdk(resourceProvider: resourceProvider);
     final packageMap = <String, List<Folder>>{
       'angular': [resourceProvider.getFolder('/angular')],
       'test_package': [resourceProvider.getFolder('/')],
     };
-    final packageResolver =
-        new PackageMapUriResolver(resourceProvider, packageMap);
-    sourceFactory = new SourceFactory([
-      new DartUriResolver(sdk),
+    final packageResolver = PackageMapUriResolver(resourceProvider, packageMap);
+    sourceFactory = SourceFactory([
+      DartUriResolver(sdk),
       packageResolver,
-      new ResourceUriResolver(resourceProvider)
+      ResourceUriResolver(resourceProvider)
     ]);
 
-    dartDriver = new AnalysisDriver(
-        new AnalysisDriverScheduler(logger)..start(),
+    dartDriver = AnalysisDriver(
+        AnalysisDriverScheduler(logger)..start(),
         logger,
         resourceProvider,
         byteStore,
-        new FileContentOverlay(),
+        FileContentOverlay(),
         null,
         sourceFactory,
-        new AnalysisOptionsImpl());
-    errorListener = new GatheringErrorListener();
+        AnalysisOptionsImpl());
+    errorListener = GatheringErrorListener();
   }
 }
 
@@ -113,7 +112,7 @@ class GatheringErrorListener implements AnalysisErrorListener {
   /// The order in which the errors were gathered is ignored.
   void assertErrorsWithCodes(
       [List<ErrorCode> expectedErrorCodes = const <ErrorCode>[]]) {
-    final buffer = new StringBuffer();
+    final buffer = StringBuffer();
 
     _expectNonEmptyMessages(expectedErrorCodes);
 
