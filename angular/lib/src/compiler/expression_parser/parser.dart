@@ -177,8 +177,9 @@ class Parser {
     for (var i = 0; i < input.length - 1; i++) {
       var char = input.codeUnitAt(i);
       var nextChar = input.codeUnitAt(i + 1);
-      if (identical(char, $SLASH) && nextChar == $SLASH && outerQuote == null)
+      if (identical(char, $SLASH) && nextChar == $SLASH && outerQuote == null) {
         return i;
+      }
       if (identical(outerQuote, char)) {
         outerQuote = null;
       } else if (outerQuote == null && isQuote(char)) {

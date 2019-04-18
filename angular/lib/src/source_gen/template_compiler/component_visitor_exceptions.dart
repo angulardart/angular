@@ -205,8 +205,9 @@ class UnusedDirectiveTypeError extends ErrorMessageForAnnotation {
 
   static IndexedAnnotation firstComponentAnnotation(ClassElement element) {
     final index = element.metadata.indexWhere(isComponent);
-    if (index == -1)
+    if (index == -1) {
       throw ArgumentError("[element] must have a @Component annotation");
+    }
     return IndexedAnnotation(element, element.metadata[index], index);
   }
 

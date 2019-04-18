@@ -197,14 +197,18 @@ abstract class _LinkedDartSummaryMixin implements idl.LinkedDartSummary {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (errors.isNotEmpty)
+    if (errors.isNotEmpty) {
       _result["errors"] = errors.map((_value) => _value.toJson()).toList();
-    if (hasDartTemplates != false)
+    }
+    if (hasDartTemplates != false) {
       _result["hasDartTemplates"] = hasDartTemplates;
-    if (referencedDartFiles.isNotEmpty)
+    }
+    if (referencedDartFiles.isNotEmpty) {
       _result["referencedDartFiles"] = referencedDartFiles;
-    if (referencedHtmlFiles.isNotEmpty)
+    }
+    if (referencedHtmlFiles.isNotEmpty) {
       _result["referencedHtmlFiles"] = referencedHtmlFiles;
+    }
     return _result;
   }
 
@@ -348,11 +352,13 @@ abstract class _LinkedHtmlSummaryMixin implements idl.LinkedHtmlSummary {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (errors.isNotEmpty)
+    if (errors.isNotEmpty) {
       _result["errors"] = errors.map((_value) => _value.toJson()).toList();
-    if (errorsFromPath.isNotEmpty)
+    }
+    if (errorsFromPath.isNotEmpty) {
       _result["errorsFromPath"] =
           errorsFromPath.map((_value) => _value.toJson()).toList();
+    }
     return _result;
   }
 
@@ -454,9 +460,10 @@ abstract class _PackageBundleMixin implements idl.PackageBundle {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (unlinkedDartSummary.isNotEmpty)
+    if (unlinkedDartSummary.isNotEmpty) {
       _result["unlinkedDartSummary"] =
           unlinkedDartSummary.map((_value) => _value.toJson()).toList();
+    }
     return _result;
   }
 
@@ -776,8 +783,9 @@ abstract class _SummarizedAnalysisErrorFromPathMixin
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
     if (classname != '') _result["classname"] = classname;
-    if (originalError != null)
+    if (originalError != null) {
       _result["originalError"] = originalError.toJson();
+    }
     if (path != '') _result["path"] = path;
     return _result;
   }
@@ -1168,16 +1176,20 @@ abstract class _SummarizedClassAnnotationsMixin
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
     if (className != '') _result["className"] = className;
-    if (contentChildFields.isNotEmpty)
+    if (contentChildFields.isNotEmpty) {
       _result["contentChildFields"] =
           contentChildFields.map((_value) => _value.toJson()).toList();
-    if (contentChildrenFields.isNotEmpty)
+    }
+    if (contentChildrenFields.isNotEmpty) {
       _result["contentChildrenFields"] =
           contentChildrenFields.map((_value) => _value.toJson()).toList();
-    if (inputs.isNotEmpty)
+    }
+    if (inputs.isNotEmpty) {
       _result["inputs"] = inputs.map((_value) => _value.toJson()).toList();
-    if (outputs.isNotEmpty)
+    }
+    if (outputs.isNotEmpty) {
       _result["outputs"] = outputs.map((_value) => _value.toJson()).toList();
+    }
     return _result;
   }
 
@@ -1923,38 +1935,48 @@ abstract class _SummarizedDirectiveMixin implements idl.SummarizedDirective {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (classAnnotations != null)
+    if (classAnnotations != null) {
       _result["classAnnotations"] = classAnnotations.toJson();
-    if (constDirectiveStrategyLength != 0)
+    }
+    if (constDirectiveStrategyLength != 0) {
       _result["constDirectiveStrategyLength"] = constDirectiveStrategyLength;
-    if (constDirectiveStrategyOffset != 0)
+    }
+    if (constDirectiveStrategyOffset != 0) {
       _result["constDirectiveStrategyOffset"] = constDirectiveStrategyOffset;
+    }
     if (exportAs != '') _result["exportAs"] = exportAs;
     if (exportAsOffset != 0) _result["exportAsOffset"] = exportAsOffset;
-    if (exports.isNotEmpty)
+    if (exports.isNotEmpty) {
       _result["exports"] = exports.map((_value) => _value.toJson()).toList();
+    }
     if (functionName != '') _result["functionName"] = functionName;
     if (isComponent != false) _result["isComponent"] = isComponent;
-    if (ngContents.isNotEmpty)
+    if (ngContents.isNotEmpty) {
       _result["ngContents"] =
           ngContents.map((_value) => _value.toJson()).toList();
-    if (pipesUse.isNotEmpty)
+    }
+    if (pipesUse.isNotEmpty) {
       _result["pipesUse"] = pipesUse.map((_value) => _value.toJson()).toList();
+    }
     if (selectorOffset != 0) _result["selectorOffset"] = selectorOffset;
     if (selectorStr != '') _result["selectorStr"] = selectorStr;
-    if (subdirectives.isNotEmpty)
+    if (subdirectives.isNotEmpty) {
       _result["subdirectives"] =
           subdirectives.map((_value) => _value.toJson()).toList();
+    }
     if (templateOffset != 0) _result["templateOffset"] = templateOffset;
     if (templateText != '') _result["templateText"] = templateText;
     if (templateUrl != '') _result["templateUrl"] = templateUrl;
-    if (templateUrlLength != 0)
+    if (templateUrlLength != 0) {
       _result["templateUrlLength"] = templateUrlLength;
-    if (templateUrlOffset != 0)
+    }
+    if (templateUrlOffset != 0) {
       _result["templateUrlOffset"] = templateUrlOffset;
-    if (usesArrayOfDirectiveReferencesStrategy != false)
+    }
+    if (usesArrayOfDirectiveReferencesStrategy != false) {
       _result["usesArrayOfDirectiveReferencesStrategy"] =
           usesArrayOfDirectiveReferencesStrategy;
+    }
     return _result;
   }
 
@@ -2577,8 +2599,9 @@ abstract class _SummarizedPipeMixin implements idl.SummarizedPipe {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (decoratedClassName != '')
+    if (decoratedClassName != '') {
       _result["decoratedClassName"] = decoratedClassName;
+    }
     if (isPure != false) _result["isPure"] = isPure;
     if (pipeName != '') _result["pipeName"] = pipeName;
     if (pipeNameOffset != 0) _result["pipeNameOffset"] = pipeNameOffset;
@@ -2950,17 +2973,21 @@ abstract class _UnlinkedDartSummaryMixin implements idl.UnlinkedDartSummary {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (annotatedClasses.isNotEmpty)
+    if (annotatedClasses.isNotEmpty) {
       _result["annotatedClasses"] =
           annotatedClasses.map((_value) => _value.toJson()).toList();
-    if (directiveSummaries.isNotEmpty)
+    }
+    if (directiveSummaries.isNotEmpty) {
       _result["directiveSummaries"] =
           directiveSummaries.map((_value) => _value.toJson()).toList();
-    if (errors.isNotEmpty)
+    }
+    if (errors.isNotEmpty) {
       _result["errors"] = errors.map((_value) => _value.toJson()).toList();
-    if (pipeSummaries.isNotEmpty)
+    }
+    if (pipeSummaries.isNotEmpty) {
       _result["pipeSummaries"] =
           pipeSummaries.map((_value) => _value.toJson()).toList();
+    }
     return _result;
   }
 
@@ -3065,9 +3092,10 @@ abstract class _UnlinkedHtmlSummaryMixin implements idl.UnlinkedHtmlSummary {
   @override
   Map<String, Object> toJson() {
     Map<String, Object> _result = <String, Object>{};
-    if (ngContents.isNotEmpty)
+    if (ngContents.isNotEmpty) {
       _result["ngContents"] =
           ngContents.map((_value) => _value.toJson()).toList();
+    }
     return _result;
   }
 
