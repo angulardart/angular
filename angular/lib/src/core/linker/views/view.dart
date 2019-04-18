@@ -56,6 +56,14 @@ abstract class View implements ChangeDetectorRef {
   @protected
   void detectChangesInternal() {}
 
+  /// Permanently disables change detection of this view.
+  ///
+  /// This is invoked after this view throws an unhandled exception during
+  /// change detection. Disabling change detection of this view will prevent it
+  /// from throwing the same exception repeatedly on subsequent change detection
+  /// cycles.
+  void disableChangeDetection();
+
   /// Adapts and returns services available at [nodeIndex] as an [Injector].
   ///
   /// As an optimization, views use [injectorGet] (and [injectorGetInternal])

@@ -404,6 +404,11 @@ abstract class AppView<T> extends DynamicView
   }
 
   @override
+  void disableChangeDetection() {
+    cdState = ChangeDetectorState.Errored;
+  }
+
+  @override
   void wasInserted(ViewContainer viewContainer) {
     viewData._viewContainerElement = viewContainer;
     dirtyParentQueriesInternal();
