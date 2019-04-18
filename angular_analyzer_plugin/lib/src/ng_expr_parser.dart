@@ -41,8 +41,8 @@ class NgExprParser extends Parser {
       beforePipeToken ??= currentToken.previous;
       getAndAdvance();
       final pipeEntities = parsePipeExpressionEntities();
-      final asToken = new KeywordToken(Keyword.AS, 0);
-      final dynamicIdToken = new SyntheticStringToken(TokenType.IDENTIFIER,
+      final asToken = KeywordToken(Keyword.AS, 0);
+      final dynamicIdToken = SyntheticStringToken(TokenType.IDENTIFIER,
           "dynamic", currentToken.offset - "dynamic".length);
 
       beforePipeToken.setNext(asToken);
