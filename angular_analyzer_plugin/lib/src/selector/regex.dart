@@ -18,7 +18,7 @@
 /// such as [subTokenUnquotedValue] and [subTokenOperator].
 import 'package:angular_analyzer_plugin/src/selector/tokenizer.dart';
 
-const Map<int, TokenType> matchIndexToToken = const <int, TokenType>{
+const Map<int, TokenType> matchIndexToToken = <int, TokenType>{
   1: TokenType.NotStart,
   2: TokenType.Tag,
   3: TokenType.Class,
@@ -71,7 +71,7 @@ const _attributeQuotedValue =
 /// The regex that ultimately tokenizes css.
 ///
 /// Note: This must be carefully matched to [matchIndexToToken].
-final RegExp tokenizer = new RegExp(r'(\:not\()|'
+final RegExp tokenizer = RegExp(r'(\:not\()|'
     r'([-\w]+)|' // Tag
     r'(?:\.([-\w]+))|' // Class
     '(?:$_attribute)|' // Attribute, in a non-capturing group.

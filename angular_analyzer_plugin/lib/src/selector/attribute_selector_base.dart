@@ -45,8 +45,7 @@ abstract class AttributeSelectorBase extends Selector {
 
     // OK
     template?.addRange(
-        new SourceRange(attributeSpan.offset, attributeSpan.length),
-        nameElement);
+        SourceRange(attributeSpan.offset, attributeSpan.length), nameElement);
     return SelectorMatch.NonTagMatch;
   }
 

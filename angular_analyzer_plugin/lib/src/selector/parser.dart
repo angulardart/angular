@@ -23,7 +23,7 @@ class SelectorParser with ReportParseErrors {
   final String str;
   final Source source;
   SelectorParser(this.source, this.fileOffset, this.str)
-      : tokenizer = new Tokenizer(str, fileOffset);
+      : tokenizer = Tokenizer(str, fileOffset);
 
   /// Try to parse a [Selector], throwing [SelectorParseError] on error.
   ///
@@ -48,7 +48,7 @@ class SelectorParser with ReportParseErrors {
     if (selectors.length == 1) {
       return selectors.single;
     }
-    return new AndSelector(selectors);
+    return AndSelector(selectors);
   }
 
   Selector _parseAttributeSelector() {
@@ -70,9 +70,8 @@ class SelectorParser with ReportParseErrors {
             name, nameOffset, operator?.lexeme, value) ??
         _tryParseAttributeStartsWithSelector(
             name, nameOffset, operator?.lexeme, value) ??
-        new AttributeSelector(
-            new SelectorName(
-                name, SourceRange(nameOffset, name.length), source),
+        AttributeSelector(
+            SelectorName(name, SourceRange(nameOffset, name.length), source),
             value?.lexeme);
   }
 
@@ -80,22 +79,22 @@ class SelectorParser with ReportParseErrors {
     final nameOffset = tokenizer.current.offset + 1;
     final name = tokenizer.current.lexeme;
     tokenizer.advance();
-    return new ClassSelector(new SelectorName(
-        name, new SourceRange(nameOffset, name.length), source));
+    return ClassSelector(
+        SelectorName(name, SourceRange(nameOffset, name.length), source));
   }
 
   ContainsSelector _parseContainsSelector() {
     final containsString = tokenizer.currentContainsString.lexeme;
     tokenizer.advance();
-    return new ContainsSelector(containsString);
+    return ContainsSelector(containsString);
   }
 
   ElementNameSelector _parseElementNameSelector() {
     final nameOffset = tokenizer.current.offset;
     final name = tokenizer.current.lexeme;
     tokenizer.advance();
-    return new ElementNameSelector(new SelectorName(
-        name, new SourceRange(nameOffset, name.length), source));
+    return ElementNameSelector(
+        SelectorName(name, SourceRange(nameOffset, name.length), source));
   }
 
   Selector _parseNested() {
@@ -137,7 +136,7 @@ class SelectorParser with ReportParseErrors {
           tokenizer.current.lexeme, tokenizer?.current?.offset ?? lastOffset);
     }
     tokenizer.advance();
-    return new NotSelector(condition);
+    return NotSelector(condition);
   }
 
   OrSelector _parseOrSelector(List<Selector> selectors) {
@@ -145,20 +144,19 @@ class SelectorParser with ReportParseErrors {
     final rhs = _parseNested();
     if (rhs is OrSelector) {
       // flatten "a, b, c, d" from (a, (b, (c, d))) into (a, b, c, d)
-      return new OrSelector(
+      return OrSelector(
           <Selector>[_andSelectors(selectors)]..addAll(rhs.selectors));
     }
 
-    return new OrSelector(<Selector>[_andSelectors(selectors), rhs]);
+    return OrSelector(<Selector>[_andSelectors(selectors), rhs]);
   }
 
   AttributeContainsSelector _tryParseAttributeContainsSelector(
       String originalName, int nameOffset, String operator, Token value) {
     if (operator == '*=') {
       final name = originalName.replaceAll('*', '');
-      return new AttributeContainsSelector(
-          new SelectorName(
-              name, new SourceRange(nameOffset, name.length), source),
+      return AttributeContainsSelector(
+          SelectorName(name, SourceRange(nameOffset, name.length), source),
           value.lexeme);
     }
     return null;
@@ -167,9 +165,8 @@ class SelectorParser with ReportParseErrors {
   AttributeStartsWithSelector _tryParseAttributeStartsWithSelector(
       String name, int nameOffset, String operator, Token value) {
     if (operator == '^=') {
-      return new AttributeStartsWithSelector(
-          new SelectorName(
-              name, new SourceRange(nameOffset, name.length), source),
+      return AttributeStartsWithSelector(
+          SelectorName(name, SourceRange(nameOffset, name.length), source),
           value.lexeme);
     }
     return null;
@@ -186,8 +183,8 @@ class SelectorParser with ReportParseErrors {
       }
       final valueOffset = nameOffset + name.length + '='.length;
       final regex = value.lexeme.substring(1, value.lexeme.length - 1);
-      return new AttributeValueRegexSelector(new SelectorName(
-          regex, new SourceRange(valueOffset, regex.length), source));
+      return AttributeValueRegexSelector(
+          SelectorName(regex, SourceRange(valueOffset, regex.length), source));
     }
     return null;
   }

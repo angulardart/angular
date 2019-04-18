@@ -12,7 +12,7 @@ class AttributeValueRegexSelector extends Selector {
   final RegExp regexp;
 
   AttributeValueRegexSelector(this.regexpElement)
-      : regexp = new RegExp(regexpElement.string);
+      : regexp = RegExp(regexpElement.string);
 
   @override
   bool availableTo(ElementView element) =>
