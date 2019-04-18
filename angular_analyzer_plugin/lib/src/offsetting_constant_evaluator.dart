@@ -41,7 +41,7 @@ class OffsettingConstantEvaluator extends ast_utils.ConstantEvaluator {
 
   @override
   Object visitAdjacentStrings(ast.AdjacentStrings node) {
-    final buffer = new StringBuffer();
+    final buffer = StringBuffer();
     int lastEndingOffset;
     for (final string in node.strings) {
       final value = string.accept(this);
