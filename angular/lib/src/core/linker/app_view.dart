@@ -197,6 +197,9 @@ abstract class AppView<T> extends DynamicView
   @override
   bool get destroyed => viewData.destroyed;
 
+  @override
+  bool get firstCheck => cdState == ChangeDetectorState.NeverChecked;
+
   Map<String, dynamic> get locals => viewData.locals;
 
   @override

@@ -9,6 +9,10 @@ abstract class RenderView implements View {
   /// This view's CSS styles.
   ComponentStyles get componentStyles;
 
+  /// Returns whether this is the first change detection pass.
+  // TODO(b/129479956): remove after directive change detectors are removed.
+  bool get firstCheck;
+
   /// The index of this view within its [parentView].
   int get parentIndex;
 

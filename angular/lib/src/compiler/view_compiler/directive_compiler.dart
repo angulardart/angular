@@ -1,6 +1,3 @@
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectorState;
-
 import '../identifiers.dart';
 import '../ir/model.dart' as ir;
 import '../output/convert.dart' show typeArgumentsFrom;
@@ -133,28 +130,19 @@ class DirectiveCompiler {
   /// Determines whether this is the first time the view was checked for change.
   static final _firstCheckVarStmt = o.DeclareVarStmt(
     DetectChangesVars.firstCheck.name,
-    o
-        .variable('view')
-        .prop('cdState')
-        .equals(o.literal(ChangeDetectorState.NeverChecked)),
+    o.variable('view').prop('firstCheck'),
     o.BOOL_TYPE,
   );
 
   static o.ClassMethod _detectHostChanges(List<o.Statement> statements) {
-    // We create a method that can detect a host AppView/rootElement.
+    // We create a method that can detect a host RenderView/rootElement.
     //
-    // void detectHostChanges(AppView<dynamic> view, Element el) { ... }
+    // void detectHostChanges(RenderView view, Element el) { ... }
     return o.ClassMethod(
       'detectHostChanges',
       [
-        o.FnParam(
-          'view',
-          o.importType(Identifiers.AppView, [o.DYNAMIC_TYPE]),
-        ),
-        o.FnParam(
-          'el',
-          o.importType(Identifiers.HTML_ELEMENT),
-        ),
+        o.FnParam('view', o.importType(Identifiers.RenderView)),
+        o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
       ],
       statements,
     );
