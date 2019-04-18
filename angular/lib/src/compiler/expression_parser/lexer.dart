@@ -230,7 +230,9 @@ class _Scanner {
       case $BAR:
         return scanComplexOperator(start, '|', $BAR, '|');
       case $NBSP:
-        while (isWhitespace(this.peek)) advance();
+        while (isWhitespace(this.peek)) {
+          advance();
+        }
         return scanToken();
     }
     error('Unexpected character [${String.fromCharCode(peek)}]', 0);
@@ -266,7 +268,9 @@ class _Scanner {
   Token scanIdentifier() {
     int startIndex = index;
     advance();
-    while (isIdentifierPart(peek)) advance();
+    while (isIdentifierPart(peek)) {
+      advance();
+    }
     String str = input.substring(startIndex, index);
     if (keywords.contains(str)) {
       return newKeywordToken(startIndex, str);

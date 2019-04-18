@@ -75,12 +75,14 @@ ControlValueAccessor selectValueAccessor(
         v is NumberValueAccessor ||
         v is SelectControlValueAccessor ||
         v is RadioControlValueAccessor) {
-      if (builtinAccessor != null)
+      if (builtinAccessor != null) {
         _throwError(null, 'More than one built-in value accessor matches');
+      }
       builtinAccessor = v;
     } else {
-      if (customAccessor != null)
+      if (customAccessor != null) {
         _throwError(null, 'More than one custom value accessor matches');
+      }
       customAccessor = v;
     }
   }
