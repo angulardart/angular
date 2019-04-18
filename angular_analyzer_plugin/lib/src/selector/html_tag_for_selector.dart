@@ -52,7 +52,7 @@ class HtmlTagForSelector {
     _classes.add(classname);
   }
 
-  HtmlTagForSelector clone() => new HtmlTagForSelector()
+  HtmlTagForSelector clone() => HtmlTagForSelector()
     ..name = _name
     .._attributes.addAll(_attributes)
     .._isValid = _isValid

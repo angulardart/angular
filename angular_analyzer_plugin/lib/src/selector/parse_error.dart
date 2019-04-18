@@ -7,14 +7,13 @@ mixin ReportParseErrors {
   /// Report that the [actual] string in a [Selector] didn't match [expected].
   void expected(String expected,
       {@required String actual, @required int offset}) {
-    throw new SelectorParseError(
+    throw SelectorParseError(
         "Expected $expected, got $actual", str, offset, actual.length);
   }
 
   /// Report an unexpected string [string] at [offset].
   void unexpected(String string, int offset) {
-    throw new SelectorParseError(
-        "Unexpected $string", str, offset, string.length);
+    throw SelectorParseError("Unexpected $string", str, offset, string.length);
   }
 }
 

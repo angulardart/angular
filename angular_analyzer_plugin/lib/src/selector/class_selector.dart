@@ -45,7 +45,7 @@ class ClassSelector extends Selector {
     // add resolved range
     final valueOffset = element.attributeValueSpans['class'].offset;
     final offset = valueOffset + index;
-    template?.addRange(new SourceRange(offset, name.length), nameElement);
+    template?.addRange(SourceRange(offset, name.length), nameElement);
     return SelectorMatch.NonTagMatch;
   }
 

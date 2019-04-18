@@ -65,7 +65,7 @@ abstract class Selector {
   List<HtmlTagForSelector> suggestTags() {
     // create a seed tag: ORs will copy this, everything else modifies. Each
     // selector returns the newest set of tags to be transformed.
-    final tags = [new HtmlTagForSelector()];
+    final tags = [HtmlTagForSelector()];
     return refineTagSuggestions(tags).where((t) => t.isValid).toList();
   }
 }
