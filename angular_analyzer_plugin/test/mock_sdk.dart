@@ -25,14 +25,14 @@ const libraries = const <String, LibraryInfo>{
 const sdkRoot = '/sdk';
 
 const _LIB_ASYNC =
-    const _MockSdkLibrary('dart:async', '$sdkRoot/lib/async/async.dart', '''
+    _MockSdkLibrary('dart:async', '$sdkRoot/lib/async/async.dart', '''
 library dart.async;
 
 part 'stream.dart';
 part 'future.dart';
 
 class Duration {}
-''', const <String, String>{
+''', <String, String>{
   '$sdkRoot/lib/async/stream.dart': r'''
 part of dart.async;
 abstract class Stream<T> {
@@ -96,15 +96,15 @@ class _SyncCompleter<T> implements Completer<T> {
 '''
 });
 
-const _LIB_COLLECTION = const _MockSdkLibrary(
+const _LIB_COLLECTION = _MockSdkLibrary(
     'dart:collection', '$sdkRoot/lib/collection/collection.dart', '''
 library dart.collection;
 
 abstract class HashMap<K, V> implements Map<K, V> {}
 ''');
 
-const _LIB_CONVERT = const _MockSdkLibrary(
-    'dart:convert', '$sdkRoot/lib/convert/convert.dart', '''
+const _LIB_CONVERT =
+    _MockSdkLibrary('dart:convert', '$sdkRoot/lib/convert/convert.dart', '''
 library dart.convert;
 
 import 'dart:async';
@@ -114,7 +114,7 @@ class JsonDecoder extends Converter<String, Object> {}
 ''');
 
 const _LIB_CORE =
-    const _MockSdkLibrary('dart:core', '$sdkRoot/lib/core/core.dart', '''
+    _MockSdkLibrary('dart:core', '$sdkRoot/lib/core/core.dart', '''
 library dart.core;
 
 import 'dart:async';
@@ -311,7 +311,7 @@ class _Override { const _Override(); }
 const Object override = const _Override();
 ''');
 
-const _LIB_FOREIGN_HELPER = const _MockSdkLibrary('dart:_foreign_helper',
+const _LIB_FOREIGN_HELPER = _MockSdkLibrary('dart:_foreign_helper',
     '$sdkRoot/lib/_foreign_helper/_foreign_helper.dart', '''
 library dart._foreign_helper;
 
@@ -320,13 +320,149 @@ JS(String typeDescription, String codeTemplate,
 {}
 ''');
 
-const _LIB_HTML_DART2JS = const _MockSdkLibrary(
-    'dart:html', '$sdkRoot/lib/html/dartium/html_dartium.dart', '''
+const _LIB_HTML_DART2JS = _MockSdkLibrary(
+    'dart:html', '$sdkRoot/lib/html/dart2js/html_dart2js.dart', '''
 library dart.html;
-class HtmlElement {}
+import 'dart:async';
+
+class Event {}
+class MouseEvent extends Event {}
+class FocusEvent extends Event {}
+class KeyEvent extends Event {}
+
+abstract class ElementStream<T extends Event> implements Stream<T> {}
+
+abstract class Element {
+  /// Stream of `cut` events handled by this [Element].
+  ElementStream<Event> get onCut => null;
+
+  String get id => null;
+
+  set id(String value) => null;
+}
+
+class HtmlElement extends Element {
+  int tabIndex;
+  ElementStream<Event> get onChange => null;
+  ElementStream<MouseEvent> get onClick => null;
+  ElementStream<KeyEvent> get onKeyUp => null;
+  ElementStream<KeyEvent> get onKeyDown => null;
+
+  bool get hidden => null;
+  set hidden(bool value) => null;
+
+  void set className(String s){}
+  void set readOnly(bool b){}
+  void set tabIndex(int i){}
+
+  String _innerHtml;
+  String get innerHtml {
+    throw 'not the real implementation';
+  }
+  set innerHtml(String value) {
+    // stuff
+  }
+
+}
+
+dynamic JS(a, b, c, d) {}
+
+class AnchorElement extends HtmlElement {
+  factory AnchorElement({String href}) {
+    AnchorElement e = JS('returns:AnchorElement;creates:AnchorElement;new:true',
+        '#.createElement(#)', document, "a");
+    if (href != null) e.href = href;
+    return e;
+  }
+  String href;
+  String _privateField;
+}
+
+class BodyElement extends HtmlElement {
+  factory BodyElement() => document.createElement("body");
+
+  ElementStream<Event> get onUnload => null;
+}
+
+class ButtonElement extends HtmlElement {
+  factory ButtonElement._() { throw new UnsupportedError("Not supported"); }
+  factory ButtonElement() => document.createElement("button");
+  bool autofocus;
+}
+
+class HeadingElement extends HtmlElement {
+  factory HeadingElement._() { throw new UnsupportedError("Not supported"); }
+  factory HeadingElement.h1() => document.createElement("h1");
+  factory HeadingElement.h2() => document.createElement("h2");
+  factory HeadingElement.h3() => document.createElement("h3");
+}
+
+class InputElement extends HtmlElement {
+  factory InputElement._() { throw new UnsupportedError("Not supported"); }
+  factory InputElement() => document.createElement("input");
+  String value;
+  String validationMessage;
+}
+
+class IFrameElement extends HtmlElement {
+  factory IFrameElement._() { throw new UnsupportedError("Not supported"); }
+  factory IFrameElement() => JS(
+      'returns:IFrameElement;creates:IFrameElement;new:true',
+      '#.createElement(#)',
+      document,
+      "iframe");
+  String src;
+}
+
+class OptionElement extends HtmlElement {
+  factory OptionElement({String data: '', String value : '', bool selected: false}) {
+  }
+
+  factory OptionElement._([String data, String value, bool defaultSelected, bool selected]) {
+  }
+}
+
+class TableSectionElement extends HtmlElement {
+
+  List<TableRowElement> get rows => null;
+
+  TableRowElement addRow() {
+  }
+
+  TableRowElement insertRow(int index) => null;
+
+  factory TableSectionElement._() { throw new UnsupportedError("Not supported"); }
+
+  @Deprecated("Internal Use Only")
+  external static Type get instanceRuntimeType;
+
+  @Deprecated("Internal Use Only")
+  TableSectionElement.internal_() : super.internal_();
+}
+
+class TemplateElement extends HtmlElement {
+  factory TemplateElement._() { throw new UnsupportedError("Not supported"); }
+  factory TemplateElement() => document.createElement("template");
+}
+
+class AudioElement extends MediaElement {
+  factory AudioElement._([String src]) {
+    if (src != null) {
+      return AudioElement._create_1(src);
+    }
+    return AudioElement._create_2();
+  }
+  static AudioElement _create_1(src) => JS('AudioElement', 'new Audio(#)', src);
+  static AudioElement _create_2() => JS('AudioElement', 'new Audio()');
+  AudioElement.created() : super.created();
+
+  factory AudioElement([String src]) => new AudioElement._(src);
+}
+
+class MediaElement extends Element {}
 ''');
 
-const _LIB_HTML_DARTIUM = const _MockSdkLibrary(
+const _LIB_HTML_DARTIUM = _MockSdkLibrary(
     'dart:html', '$sdkRoot/lib/html/dartium/html_dartium.dart', '''
 library dart.html;
 import 'dart:async';
@@ -468,13 +604,13 @@ class AudioElement extends MediaElement {
 class MediaElement extends Element {}
 ''');
 
-const _LIB_INTERCEPTORS = const _MockSdkLibrary('dart:_interceptors',
+const _LIB_INTERCEPTORS = _MockSdkLibrary('dart:_interceptors',
     '$sdkRoot/lib/_internal/js_runtime/lib/interceptors.dart', '''
 library dart._interceptors;
 ''');
 
 const _LIB_MATH =
-    const _MockSdkLibrary('dart:math', '$sdkRoot/lib/math/math.dart', '''
+    _MockSdkLibrary('dart:math', '$sdkRoot/lib/math/math.dart', '''
 library dart.math;
 
 const double E = 2.718281828459045;
@@ -494,7 +630,7 @@ class Random {
 }
 ''');
 
-const _LIBRARIES = const <SdkLibrary>[
+const _LIBRARIES = <SdkLibrary>[
   _LIB_CORE,
   _LIB_ASYNC,
   _LIB_COLLECTION,
@@ -507,7 +643,7 @@ const _LIBRARIES = const <SdkLibrary>[
 ];
 
 class MockSdk implements DartSdk {
-  static const Map<String, String> FULL_URI_MAP = const {
+  static const Map<String, String> FULL_URI_MAP = {
     "dart:core": "$sdkRoot/lib/core/core.dart",
     "dart:html": "$sdkRoot/lib/html/dartium/html_dartium.dart",
     "dart:async": "$sdkRoot/lib/async/async.dart",
@@ -521,7 +657,7 @@ class MockSdk implements DartSdk {
     "dart:math": "$sdkRoot/lib/math/math.dart"
   };
 
-  static const Map<String, String> NO_ASYNC_URI_MAP = const {
+  static const Map<String, String> NO_ASYNC_URI_MAP = {
     "dart:core": "$sdkRoot/lib/core/core.dart",
   };
 
@@ -542,7 +678,7 @@ class MockSdk implements DartSdk {
       {bool generateSummaryFiles = false,
       bool dartAsync = true,
       resource.MemoryResourceProvider resourceProvider})
-      : provider = resourceProvider ?? new resource.MemoryResourceProvider(),
+      : provider = resourceProvider ?? resource.MemoryResourceProvider(),
         sdkLibraries = dartAsync ? _LIBRARIES : [_LIB_CORE],
         uriMap = dartAsync ? FULL_URI_MAP : NO_ASYNC_URI_MAP {
     for (var library in sdkLibraries.cast<_MockSdkLibrary>()) {
@@ -568,15 +704,15 @@ class MockSdk implements DartSdk {
   @override
   AnalysisContextImpl get context {
     if (_analysisContext == null) {
-      _analysisContext = new _SdkAnalysisContext(this);
-      final factory = new SourceFactory([new DartUriResolver(this)]);
+      _analysisContext = _SdkAnalysisContext(this);
+      final factory = SourceFactory([DartUriResolver(this)]);
       _analysisContext.sourceFactory = factory;
     }
     return _analysisContext;
   }
 
   @override
-  String get sdkVersion => throw new UnimplementedError();
+  String get sdkVersion => throw UnimplementedError();
 
   @override
   List<String> get uris =>
@@ -628,7 +764,7 @@ class MockSdk implements DartSdk {
       } else {
         bytes = _computeLinkedBundleBytes();
       }
-      _bundle = new PackageBundle.fromBuffer(bytes);
+      _bundle = PackageBundle.fromBuffer(bytes);
     }
     return _bundle;
   }
@@ -649,7 +785,7 @@ class MockSdk implements DartSdk {
     if (path != null) {
       final file =
           provider.getResource(provider.convertPath(path)) as resource.File;
-      final uri = new Uri(scheme: 'dart', path: dartUri.substring(5));
+      final uri = Uri(scheme: 'dart', path: dartUri.substring(5));
       return file.createSource(uri);
     }
     // If we reach here then we tried to use a dartUri that's not in the
@@ -675,7 +811,7 @@ class MockSdk implements DartSdk {
   List<int> _computeLinkedBundleBytes() {
     final librarySources =
         sdkLibraries.map((library) => mapDartUri(library.shortName)).toList();
-    return new SummaryBuilder(librarySources, context).build();
+    return SummaryBuilder(librarySources, context).build();
   }
 }
 
@@ -691,25 +827,25 @@ class _MockSdkLibrary implements SdkLibrary {
       [this.parts = const <String, String>{}]);
 
   @override
-  String get category => throw new UnimplementedError();
+  String get category => throw UnimplementedError();
 
   @override
-  bool get isDart2JsLibrary => throw new UnimplementedError();
+  bool get isDart2JsLibrary => throw UnimplementedError();
 
   @override
-  bool get isDocumented => throw new UnimplementedError();
+  bool get isDocumented => throw UnimplementedError();
 
   @override
-  bool get isImplementation => throw new UnimplementedError();
+  bool get isImplementation => throw UnimplementedError();
 
   @override
   bool get isInternal => shortName.startsWith('dart:_');
 
   @override
-  bool get isShared => throw new UnimplementedError();
+  bool get isShared => throw UnimplementedError();
 
   @override
-  bool get isVmLibrary => throw new UnimplementedError();
+  bool get isVmLibrary => throw UnimplementedError();
 }
 
 /// An [AnalysisContextImpl] that only contains sources for a Dart SDK.
@@ -723,7 +859,7 @@ class _SdkAnalysisContext extends AnalysisContextImpl {
     if (factory == null) {
       return super.createCacheFromSourceFactory(factory);
     }
-    return new AnalysisCache(
+    return AnalysisCache(
         <CachePartition>[AnalysisEngine.instance.partitionManager.forSdk(sdk)]);
   }
 }
