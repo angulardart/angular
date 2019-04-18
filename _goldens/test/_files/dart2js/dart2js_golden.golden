@@ -3545,11 +3545,11 @@
       this.isCleanup = t1;
     },
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
-      var t1 = new Y.ApplicationRef(H.setRuntimeTypeInfo([], [{func: 1, ret: -1}]), H.setRuntimeTypeInfo([], [[D.ComponentRef, -1]]), _exceptionHandler, _injector, _ngZone, H.setRuntimeTypeInfo([], [S.ChangeDetectorRef]), H.setRuntimeTypeInfo([], [{func: 1, ret: -1, args: [[S.AppView, -1], W.Element]}]), H.setRuntimeTypeInfo([], [[S.AppView, -1]]), H.setRuntimeTypeInfo([], [W.Element]));
+      var t1 = new Y.ApplicationRef(H.setRuntimeTypeInfo([], [{func: 1, ret: -1}]), H.setRuntimeTypeInfo([], [[D.ComponentRef, -1]]), _exceptionHandler, _injector, _ngZone, H.setRuntimeTypeInfo([], [S.ChangeDetectorRef]));
       t1.ApplicationRef$_$3(_ngZone, _exceptionHandler, _injector);
       return t1;
     },
-    ApplicationRef: function ApplicationRef(t0, t1, t2, t3, t4, t5, t6, t7, t8) {
+    ApplicationRef: function ApplicationRef(t0, t1, t2, t3, t4, t5) {
       var _ = this;
       _._disposeListeners = t0;
       _._rootComponents = t1;
@@ -3559,9 +3559,6 @@
       _._lastCaughtTrace = _._lastCaughtException = _._lastGuardedView = null;
       _._runningTick = false;
       _._changeDetectors = t5;
-      _._scheduledCallbacks = t6;
-      _._scheduledViews = t7;
-      _._scheduledElements = t8;
     },
     ApplicationRef$__closure: function ApplicationRef$__closure(t0) {
       this.$this = t0;
@@ -11094,9 +11091,6 @@
       _this._compView_10.destroyInternalState$0();
       _this._compView_11.destroyInternalState$0();
       _this._compView_12.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.RootComponent];
     }
   };
   N._ViewRootComponentHost0.prototype = {
@@ -11125,9 +11119,6 @@
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.RootComponent];
     }
   };
   N.ViewUsesDefaultChangeDetectionAndInputs0.prototype = {
@@ -11167,9 +11158,6 @@
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.UsesDefaultChangeDetectionAndInputs];
     }
   };
   N.ViewDefaultChangeDetectionAndInputs0.prototype = {
@@ -11196,9 +11184,6 @@
       if (t1 == null)
         t1 = "";
       this._textBinding_3.updateText$1(t1);
-    },
-    $asAppView: function() {
-      return [O.DefaultChangeDetectionAndInputs];
     }
   };
   N.ViewUsesOnPushChangeDetectionAndInputs0.prototype = {
@@ -11252,9 +11237,6 @@
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
       this._OnPushChangeDetectionAndInputs_0_5._subscription.cancel$0(0);
-    },
-    $asAppView: function() {
-      return [O.UsesOnPushChangeDetectionAndInputs];
     }
   };
   N.ViewOnPushChangeDetectionAndInputs0.prototype = {
@@ -11277,9 +11259,6 @@
       if (t1 == null)
         t1 = "";
       this._textBinding_3.updateText$1(t1);
-    },
-    $asAppView: function() {
-      return [O.OnPushChangeDetectionAndInputs];
     }
   };
   N.ViewInlinedNgIf0.prototype = {
@@ -11296,9 +11275,6 @@
     },
     destroyInternal$0: function() {
       this._appEl_0.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.InlinedNgIf];
     }
   };
   N._ViewInlinedNgIf1.prototype = {
@@ -11306,9 +11282,6 @@
       var _el_0 = document.createElement("div");
       T.appendText(_el_0, "Hello World");
       this.init1$1(_el_0);
-    },
-    $asAppView: function() {
-      return [O.InlinedNgIf];
     }
   };
   N.ViewEmbeddedNgIf0.prototype = {
@@ -11325,9 +11298,6 @@
     },
     destroyInternal$0: function() {
       this._appEl_0.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.EmbeddedNgIf];
     }
   };
   N._ViewEmbeddedNgIf1.prototype = {
@@ -11354,9 +11324,6 @@
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.EmbeddedNgIf];
     }
   };
   N.ViewEmbeddedNgFor0.prototype = {
@@ -11389,9 +11356,6 @@
     },
     destroyInternal$0: function() {
       this._appEl_1.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.EmbeddedNgFor];
     }
   };
   N._ViewEmbeddedNgFor1.prototype = {
@@ -11404,27 +11368,18 @@
       var local_item = this.viewData.locals.$index(0, "$implicit"),
         t1 = local_item == null ? "" : local_item;
       this._textBinding_1.updateText$1(t1);
-    },
-    $asAppView: function() {
-      return [O.EmbeddedNgFor];
     }
   };
   N.ViewNullComponent0.prototype = {
     build$0: function() {
       this.initViewRoot$1(this.rootEl);
       this.init0$0();
-    },
-    $asAppView: function() {
-      return [O.NullComponent];
     }
   };
   N.ViewInjectsFromArbitraryParent0.prototype = {
     build$0: function() {
       this.initViewRoot$1(this.rootEl);
       this.init0$0();
-    },
-    $asAppView: function() {
-      return [O.InjectsFromArbitraryParent];
     }
   };
   N.ViewComponentConditionalFeatures0.prototype = {
@@ -11450,9 +11405,6 @@
     destroyInternal$0: function() {
       this._appEl_0.destroyNestedViews$0();
       this._appEl_1.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.ComponentConditionalFeatures];
     }
   };
   N._ViewComponentConditionalFeatures1.prototype = {
@@ -11479,9 +11431,6 @@
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.ComponentConditionalFeatures];
     }
   };
   N._ViewComponentConditionalFeatures2.prototype = {
@@ -11508,27 +11457,18 @@
     },
     destroyInternal$0: function() {
       this._compView_0.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.ComponentConditionalFeatures];
     }
   };
   N.ViewFeatureA0.prototype = {
     build$0: function() {
       T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature A");
       this.init0$0();
-    },
-    $asAppView: function() {
-      return [O.FeatureA];
     }
   };
   N.ViewFeatureB0.prototype = {
     build$0: function() {
       T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature B");
       this.init0$0();
-    },
-    $asAppView: function() {
-      return [O.FeatureB];
     }
   };
   N.ViewUsesDomBindings0.prototype = {
@@ -11553,9 +11493,6 @@
         T.updateClassBinding(_this._el_0, "fancy", t1);
         _this._expr_1 = t1;
       }
-    },
-    $asAppView: function() {
-      return [O.UsesDomBindings];
     }
   };
   N.ViewUsesNgDirectives0.prototype = {
@@ -11623,9 +11560,6 @@
       t1 = this._NgClass_4_5;
       t1._applyClasses$2(t1._rawClass, true);
       t1._applyInitialClasses$1(false);
-    },
-    $asAppView: function() {
-      return [O.UsesNgDirectives];
     }
   };
   N.ViewHasNestedProviderLookups0.prototype = {
@@ -11644,9 +11578,6 @@
     },
     destroyInternal$0: function() {
       this._appEl_0.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.HasNestedProviderLookups];
     }
   };
   N._ViewHasNestedProviderLookups1.prototype = {
@@ -11666,9 +11597,6 @@
     },
     destroyInternal$0: function() {
       this._appEl_1.destroyNestedViews$0();
-    },
-    $asAppView: function() {
-      return [O.HasNestedProviderLookups];
     }
   };
   N._ViewHasNestedProviderLookups2.prototype = {
@@ -11701,18 +11629,12 @@
     },
     destroyInternal$0: function() {
       this._compView_1.destroyInternalState$0();
-    },
-    $asAppView: function() {
-      return [O.HasNestedProviderLookups];
     }
   };
   N.ViewInjectsManyThingsDynamically0.prototype = {
     build$0: function() {
       this.initViewRoot$1(this.rootEl);
       this.init0$0();
-    },
-    $asAppView: function() {
-      return [O.InjectsManyThingsDynamically];
     }
   };
   (function aliases() {
