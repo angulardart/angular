@@ -57,7 +57,6 @@ class Directive implements IRNode {
 
   final CompileDirectiveMetadata metadata;
 
-  final bool implementsComponentState;
   final bool implementsOnChanges;
 
   final List<Binding> hostProperties;
@@ -67,7 +66,6 @@ class Directive implements IRNode {
     this.typeParameters,
     this.hostProperties,
     this.metadata,
-    this.implementsComponentState,
     this.implementsOnChanges,
   });
 

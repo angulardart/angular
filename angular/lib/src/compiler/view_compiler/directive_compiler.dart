@@ -79,8 +79,7 @@ class DirectiveCompiler {
       ],
     );
     final statements = <o.Statement>[];
-    if (_implementsOnChangesLifecycle(directive) ||
-        _implementsComponentState(directive)) {
+    if (directive.implementsOnChanges) {
       final setDirective = o.WriteClassMemberExpr(
         'directive',
         storage.buildReadExpr(instance),
@@ -88,24 +87,8 @@ class DirectiveCompiler {
       statements.add(setDirective.toStmt());
     }
     final constructorArgs = [o.FnParam('this.instance')];
-    if (_implementsComponentState(directive)) {
-      constructorArgs
-        ..add(o.FnParam('v', o.importType(Identifiers.AppView)))
-        ..add(o.FnParam('e', o.importType(Identifiers.HTML_ELEMENT)));
-      statements.addAll([
-        o.WriteClassMemberExpr('view', o.ReadVarExpr('v')).toStmt(),
-        el.toWriteStmt(o.ReadVarExpr('e')),
-        o.InvokeMemberMethodExpr('initCd', const []).toStmt()
-      ]);
-    }
     return o.Constructor(params: constructorArgs, body: statements);
   }
-
-  static bool _implementsOnChangesLifecycle(ir.Directive directive) =>
-      directive.implementsOnChanges;
-
-  static bool _implementsComponentState(ir.Directive directive) =>
-      directive.implementsComponentState;
 
   List<o.ClassMethod> _buildDetectHostChanges(
     ir.Directive directive,
