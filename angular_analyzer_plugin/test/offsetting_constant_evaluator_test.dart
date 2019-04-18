@@ -26,7 +26,7 @@ class OffsettingConstantValueVisitorTest {
 
     final expression = _parseDartExpression(code);
 
-    final evaluator = new OffsettingConstantEvaluator();
+    final evaluator = OffsettingConstantEvaluator();
     final value = expression.accept(evaluator);
 
     if (value is String) {
@@ -45,7 +45,7 @@ class OffsettingConstantValueVisitorTest {
     expect(pos, greaterThan(-1),
         reason: "```$code```` doesn't contain ```$at```");
 
-    final evaluator = new OffsettingConstantEvaluator();
+    final evaluator = OffsettingConstantEvaluator();
     expression.accept(evaluator);
     expect(evaluator.offsetsAreValid, isFalse);
     expect(evaluator.lastUnoffsettableNode, isNotNull);
@@ -71,7 +71,7 @@ class OffsettingConstantValueVisitorTest {
   void test_computedStringsLookRight() {
     final expression =
         _parseDartExpression("('my template'\n) + 'which continues^'");
-    final value = expression.accept(new OffsettingConstantEvaluator());
+    final value = expression.accept(OffsettingConstantEvaluator());
     expect(value, equals("  my template       which continues^ "));
   }
 
@@ -98,7 +98,7 @@ class OffsettingConstantValueVisitorTest {
   // ignore: non_constant_identifier_names
   void test_error() {
     final expression = _parseDartExpression("1 + 'hello'");
-    final value = expression.accept(new OffsettingConstantEvaluator());
+    final value = expression.accept(OffsettingConstantEvaluator());
     expect(value, equals(utils.ConstantEvaluator.NOT_A_CONSTANT));
   }
 
@@ -131,7 +131,7 @@ class OffsettingConstantValueVisitorTest {
   // ignore: non_constant_identifier_names
   void test_notStringComputation() {
     final expression = _parseDartExpression("1 + 2");
-    final value = expression.accept(new OffsettingConstantEvaluator());
+    final value = expression.accept(OffsettingConstantEvaluator());
     expect(value, equals(3));
   }
 
@@ -155,13 +155,13 @@ class OffsettingConstantValueVisitorTest {
 
   Expression _parseDartExpression(String code) {
     final token = _scanDartCode(code);
-    final parser = new Parser(new _MockSource(), new BooleanErrorListener());
+    final parser = Parser(_MockSource(), BooleanErrorListener());
     return parser.parseExpression(token);
   }
 
   Token _scanDartCode(String code) {
-    final reader = new CharSequenceReader(code);
-    final scanner = new Scanner(null, reader, null);
+    final reader = CharSequenceReader(code);
+    final scanner = Scanner(null, reader, null);
     return scanner.tokenize();
   }
 }
