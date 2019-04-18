@@ -1962,7 +1962,7 @@ class GenericDirectiveNgCd<T> extends import15.DirectiveChangeDetector {
   final import1.GenericDirective<T> instance;
   var _expr_0;
   GenericDirectiveNgCd(this.instance);
-  void detectHostChanges(AppView<dynamic> view, import6.Element el) {
+  void detectHostChanges(import3.RenderView view, import6.Element el) {
     final currVal_0 = instance.input;
     if (import9.checkBinding(_expr_0, currVal_0)) {
       import13.updateAttribute(el, 'a', currVal_0?.toString());

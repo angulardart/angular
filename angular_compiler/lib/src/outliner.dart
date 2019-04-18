@@ -11,12 +11,13 @@ import 'package:path/path.dart' as p;
 import 'analyzer.dart';
 import 'outliner/collect_type_parameters.dart';
 
-const _htmlImport = "import 'dart:html' as _html;";
-const _angularImport = "import 'package:angular/angular.dart' as _ng;";
-const _appViewImport =
-    "import 'package:angular/src/core/linker/app_view.dart' as _ng;";
-const _directiveChangeImport =
-    "import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;";
+const _angularImports = '''
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+''';
 
 const _analyzerIgnores =
     '// ignore_for_file: library_prefixes,unused_import,no_default_super_constructor_explicit';
@@ -38,10 +39,6 @@ String _typeArgumentsFor(ClassElement element) {
 /// off the critical path).
 class TemplateOutliner implements Builder {
   final String _extension;
-
-  String get _angularImports {
-    return '$_htmlImport\n$_angularImport\n$_directiveChangeImport\n$_appViewImport';
-  }
 
   final bool exportUserCodeFromTemplate;
 
@@ -106,8 +103,7 @@ class TemplateOutliner implements Builder {
         injectors.isNotEmpty) {
       output
         ..writeln('// Required for referencing runtime code.')
-        ..writeln(_angularImports)
-        ..writeln();
+        ..writeln(_angularImports);
       final userLandCode = p.basename(buildStep.inputId.path);
       output
         ..writeln('// Required for specifically referencing user code.')
@@ -178,7 +174,7 @@ class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {
   external $directiveType get instance;
   external void deliverChanges();
   external $changeDetectorName($directiveType instance);
-  external void detectHostChanges(_ng.AppView<dynamic> view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element node);
 }
 ''');
       }
