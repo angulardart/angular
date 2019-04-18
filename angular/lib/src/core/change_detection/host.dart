@@ -4,10 +4,9 @@ import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
 import 'package:angular/src/runtime.dart';
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/view.dart';
 
 import 'change_detection.dart';
-import 'constants.dart';
 
 /// A host for tracking the current application and stateful components.
 ///
@@ -22,7 +21,7 @@ abstract class ChangeDetectionHost {
   static bool get checkForCrashes => _current?._lastGuardedView != null;
 
   /// **INTERNAL ONLY**: Register a crash during [view.detectCrash].
-  static void handleCrash(AppView<void> view, Object error, StackTrace trace) {
+  static void handleCrash(View view, Object error, StackTrace trace) {
     final current = _current;
     assert(current != null);
     current
@@ -35,7 +34,7 @@ abstract class ChangeDetectionHost {
   /// is set (non-null). Change detection is re-run (synchronously) in a
   /// slow-mode that individually checks component, and disables change
   /// detection for them if there is failure detected.
-  AppView<void> _lastGuardedView;
+  View _lastGuardedView;
 
   /// An exception caught for [_lastGuardedView], if any.
   Object _lastCaughtException;
@@ -120,8 +119,7 @@ abstract class ChangeDetectionHost {
     final length = detectors.length;
     for (var i = 0; i < length; i++) {
       final detector = detectors[i];
-      // TODO(b/129723738): don't use <dynamic> when alternatives optimize well
-      if (detector is AppView<dynamic>) {
+      if (detector is View) {
         final view = detector;
         _lastGuardedView = view;
         view.detectChanges();
@@ -153,11 +151,11 @@ abstract class ChangeDetectionHost {
   /// Disables the [view] as an error, and forwards to [reportException].
   @dart2js.noInline
   void reportViewException(
-    AppView<void> view,
+    View view,
     Object error, [
     StackTrace trace,
   ]) {
-    view.cdState = ChangeDetectorState.Errored;
+    view.disableChangeDetection();
     handleUncaughtException(error, trace);
   }
 
