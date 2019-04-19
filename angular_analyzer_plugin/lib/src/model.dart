@@ -1,19 +1,14 @@
-import 'package:analyzer/src/generated/source.dart';
-import 'package:angular_analyzer_plugin/src/model/navigable.dart';
-
-/// Placeholder so tests pass.
-abstract class Template {
-  void addRange(SourceRange range, Navigable navigable) {}
-  Set<String> get ignoredErrors;
-}
-
-/// Placeholder so tests pass.
-class ResolvedRange {
-  /// The [SourceRange] where [element] is referenced.
-  final SourceRange range;
-
-  /// The [Navigable] concept referenced at [range].
-  final Navigable element;
-
-  ResolvedRange(this.range, this.element);
-}
+export 'package:angular_analyzer_plugin/src/model/resolved/annotated_class.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/component.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/content_child.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/dart_element.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/directive.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/directive_base.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/export.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/functional_directive.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/input.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/output.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/pipe.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/resolved_range.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/template.dart';
+export 'package:angular_analyzer_plugin/src/model/resolved/top_level.dart';

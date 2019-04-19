@@ -1505,7 +1505,7 @@ class _SelectorTest {
     final range = resolvedRange.range;
     expect(range.offset, offset);
     expect(range.length, length);
-    expect(resolvedRange.element, element);
+    expect(resolvedRange.navigable, element);
   }
 
   SourceRange _newStringSpan(int offset, String value) =>
