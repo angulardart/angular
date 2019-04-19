@@ -19,13 +19,13 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$PreserveWhitespace;
 external _ng.ComponentFactory<PreserveWhitespace> get PreserveWhitespaceNgFactory;
 class ViewPreserveWhitespace0 extends _ng.AppView<PreserveWhitespace> {
-  external ViewPreserveWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewPreserveWhitespace0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class MinifyWhitespace.
 external List<dynamic> get styles$MinifyWhitespace;
 external _ng.ComponentFactory<MinifyWhitespace> get MinifyWhitespaceNgFactory;
 class ViewMinifyWhitespace0 extends _ng.AppView<MinifyWhitespace> {
-  external ViewMinifyWhitespace0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewMinifyWhitespace0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

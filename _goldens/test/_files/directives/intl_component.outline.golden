@@ -19,25 +19,25 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$CompWithoutFinal;
 external _ng.ComponentFactory<CompWithoutFinal> get CompWithoutFinalNgFactory;
 class ViewCompWithoutFinal0 extends _ng.AppView<CompWithoutFinal> {
-  external ViewCompWithoutFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewCompWithoutFinal0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class CompWithFinal.
 external List<dynamic> get styles$CompWithFinal;
 external _ng.ComponentFactory<CompWithFinal> get CompWithFinalNgFactory;
 class ViewCompWithFinal0 extends _ng.AppView<CompWithFinal> {
-  external ViewCompWithFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewCompWithFinal0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class CompWithFinalStatic.
 external List<dynamic> get styles$CompWithFinalStatic;
 external _ng.ComponentFactory<CompWithFinalStatic> get CompWithFinalStaticNgFactory;
 class ViewCompWithFinalStatic0 extends _ng.AppView<CompWithFinalStatic> {
-  external ViewCompWithFinalStatic0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewCompWithFinalStatic0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class CompWithExternalFinal.
 external List<dynamic> get styles$CompWithExternalFinal;
 external _ng.ComponentFactory<CompWithExternalFinal> get CompWithExternalFinalNgFactory;
 class ViewCompWithExternalFinal0 extends _ng.AppView<CompWithExternalFinal> {
-  external ViewCompWithExternalFinal0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewCompWithExternalFinal0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

@@ -21,7 +21,7 @@ import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
 external List<dynamic> get styles$TestComponent;
 external _ng.ComponentFactory<TestComponent> get TestComponentNgFactory;
 class ViewTestComponent0 extends _ng.AppView<TestComponent> {
-  external ViewTestComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewTestComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

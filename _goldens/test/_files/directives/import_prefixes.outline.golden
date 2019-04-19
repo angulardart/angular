@@ -22,13 +22,13 @@ import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
 external List<dynamic> get styles$ParentComponent;
 external _ng.ComponentFactory<ParentComponent> get ParentComponentNgFactory;
 class ViewParentComponent0 extends _ng.AppView<ParentComponent> {
-  external ViewParentComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewParentComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ChildComponent.
 external List<dynamic> get styles$ChildComponent;
 external _ng.ComponentFactory<ChildComponent> get ChildComponentNgFactory;
 class ViewChildComponent0 extends _ng.AppView<ChildComponent> {
-  external ViewChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewChildComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

@@ -20,19 +20,19 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$HostComponentNewSyntax;
 external _ng.ComponentFactory<HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory;
 class ViewHostComponentNewSyntax0 extends _ng.AppView<HostComponentNewSyntax> {
-  external ViewHostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewHostComponentNewSyntax0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class UsesHostComponentWithDirective.
 external List<dynamic> get styles$UsesHostComponentWithDirective;
 external _ng.ComponentFactory<UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory;
 class ViewUsesHostComponentWithDirective0 extends _ng.AppView<UsesHostComponentWithDirective> {
-  external ViewUsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewUsesHostComponentWithDirective0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class HostComponent.
 external List<dynamic> get styles$HostComponent;
 external _ng.ComponentFactory<HostComponent> get HostComponentNgFactory;
 class ViewHostComponent0 extends _ng.AppView<HostComponent> {
-  external ViewHostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewHostComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class ListensToFooEvent.
 class ListensToFooEventNgCd extends _ng.DirectiveChangeDetector {

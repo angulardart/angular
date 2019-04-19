@@ -21,7 +21,7 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$TestFooComponent;
 external _ng.ComponentFactory<TestFooComponent> get TestFooComponentNgFactory;
 class ViewTestFooComponent0 extends _ng.AppView<TestFooComponent> {
-  external ViewTestFooComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewTestFooComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class ChildDirective.
 class ChildDirectiveNgCd extends _ng.DirectiveChangeDetector {

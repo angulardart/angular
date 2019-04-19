@@ -19,13 +19,13 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$TestFooComponent;
 external _ng.ComponentFactory<TestFooComponent> get TestFooComponentNgFactory;
 class ViewTestFooComponent0 extends _ng.AppView<TestFooComponent> {
-  external ViewTestFooComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewTestFooComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class TestSubComponent.
 external List<dynamic> get styles$TestSubComponent;
 external _ng.ComponentFactory<TestSubComponent> get TestSubComponentNgFactory;
 class ViewTestSubComponent0 extends _ng.AppView<TestSubComponent> {
-  external ViewTestSubComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewTestSubComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class TestDirective.
 class TestDirectiveNgCd extends _ng.DirectiveChangeDetector {

@@ -20,43 +20,43 @@ import 'external_service.dart';
 external List<dynamic> get styles$DeferredChild1Component;
 external _ng.ComponentFactory<DeferredChild1Component> get DeferredChild1ComponentNgFactory;
 class ViewDeferredChild1Component0 extends _ng.AppView<DeferredChild1Component> {
-  external ViewDeferredChild1Component0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChild1Component0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class DeferredChild2Component.
 external List<dynamic> get styles$DeferredChild2Component;
 external _ng.ComponentFactory<DeferredChild2Component> get DeferredChild2ComponentNgFactory;
 class ViewDeferredChild2Component0 extends _ng.AppView<DeferredChild2Component> {
-  external ViewDeferredChild2Component0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChild2Component0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class DeferredChild3Component.
 external List<dynamic> get styles$DeferredChild3Component;
 external _ng.ComponentFactory<DeferredChild3Component> get DeferredChild3ComponentNgFactory;
 class ViewDeferredChild3Component0 extends _ng.AppView<DeferredChild3Component> {
-  external ViewDeferredChild3Component0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChild3Component0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class NotDeferredChildComponent.
 external List<dynamic> get styles$NotDeferredChildComponent;
 external _ng.ComponentFactory<NotDeferredChildComponent> get NotDeferredChildComponentNgFactory;
 class ViewNotDeferredChildComponent0 extends _ng.AppView<NotDeferredChildComponent> {
-  external ViewNotDeferredChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewNotDeferredChildComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class DeferredChildComponentWithoutNgContent.
 external List<dynamic> get styles$DeferredChildComponentWithoutNgContent;
 external _ng.ComponentFactory<DeferredChildComponentWithoutNgContent> get DeferredChildComponentWithoutNgContentNgFactory;
 class ViewDeferredChildComponentWithoutNgContent0 extends _ng.AppView<DeferredChildComponentWithoutNgContent> {
-  external ViewDeferredChildComponentWithoutNgContent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChildComponentWithoutNgContent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class DeferredChildComponentWithNgContent.
 external List<dynamic> get styles$DeferredChildComponentWithNgContent;
 external _ng.ComponentFactory<DeferredChildComponentWithNgContent> get DeferredChildComponentWithNgContentNgFactory;
 class ViewDeferredChildComponentWithNgContent0 extends _ng.AppView<DeferredChildComponentWithNgContent> {
-  external ViewDeferredChildComponentWithNgContent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChildComponentWithNgContent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class DeferredChildComponentWithServices.
 external List<dynamic> get styles$DeferredChildComponentWithServices;
 external _ng.ComponentFactory<DeferredChildComponentWithServices> get DeferredChildComponentWithServicesNgFactory;
 class ViewDeferredChildComponentWithServices0 extends _ng.AppView<DeferredChildComponentWithServices> {
-  external ViewDeferredChildComponentWithServices0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewDeferredChildComponentWithServices0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

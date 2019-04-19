@@ -19,31 +19,31 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$MostLifecycleHooksComponent;
 external _ng.ComponentFactory<MostLifecycleHooksComponent> get MostLifecycleHooksComponentNgFactory;
 class ViewMostLifecycleHooksComponent0 extends _ng.AppView<MostLifecycleHooksComponent> {
-  external ViewMostLifecycleHooksComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewMostLifecycleHooksComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class EmptyComponent.
 external List<dynamic> get styles$EmptyComponent;
 external _ng.ComponentFactory<EmptyComponent> get EmptyComponentNgFactory;
 class ViewEmptyComponent0 extends _ng.AppView<EmptyComponent> {
-  external ViewEmptyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewEmptyComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class OnChangesComponent.
 external List<dynamic> get styles$OnChangesComponent;
 external _ng.ComponentFactory<OnChangesComponent> get OnChangesComponentNgFactory;
 class ViewOnChangesComponent0 extends _ng.AppView<OnChangesComponent> {
-  external ViewOnChangesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewOnChangesComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class AfterChangesComponent.
 external List<dynamic> get styles$AfterChangesComponent;
 external _ng.ComponentFactory<AfterChangesComponent> get AfterChangesComponentNgFactory;
 class ViewAfterChangesComponent0 extends _ng.AppView<AfterChangesComponent> {
-  external ViewAfterChangesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewAfterChangesComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class UsesLifecycleHooksComponent.
 external List<dynamic> get styles$UsesLifecycleHooksComponent;
 external _ng.ComponentFactory<UsesLifecycleHooksComponent> get UsesLifecycleHooksComponentNgFactory;
 class ViewUsesLifecycleHooksComponent0 extends _ng.AppView<UsesLifecycleHooksComponent> {
-  external ViewUsesLifecycleHooksComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewUsesLifecycleHooksComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class DoCheckDirective.
 class DoCheckDirectiveNgCd extends _ng.DirectiveChangeDetector {

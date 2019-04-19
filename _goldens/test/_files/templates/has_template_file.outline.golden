@@ -19,7 +19,7 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$HasTemplateFileComponent;
 external _ng.ComponentFactory<HasTemplateFileComponent> get HasTemplateFileComponentNgFactory;
 class ViewHasTemplateFileComponent0 extends _ng.AppView<HasTemplateFileComponent> {
-  external ViewHasTemplateFileComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewHasTemplateFileComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();
