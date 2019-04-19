@@ -18,7 +18,6 @@ import 'package:angular/angular.dart';
 // For @Component class UsesEventTearoff.
 external List<dynamic> get styles$UsesEventTearoff;
 external _ng.ComponentFactory<UsesEventTearoff> get UsesEventTearoffNgFactory;
-external _ng.AppView<UsesEventTearoff> viewFactory_UsesEventTearoff0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesEventTearoff0 extends _ng.AppView<UsesEventTearoff> {
   external ViewUsesEventTearoff0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

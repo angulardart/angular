@@ -19,28 +19,24 @@ import 'package:angular/angular.dart';
 // For @Component class UsesNativeEvents.
 external List<dynamic> get styles$UsesNativeEvents;
 external _ng.ComponentFactory<UsesNativeEvents> get UsesNativeEventsNgFactory;
-external _ng.AppView<UsesNativeEvents> viewFactory_UsesNativeEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesNativeEvents0 extends _ng.AppView<UsesNativeEvents> {
   external ViewUsesNativeEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesAngularEvents.
 external List<dynamic> get styles$UsesAngularEvents;
 external _ng.ComponentFactory<UsesAngularEvents> get UsesAngularEventsNgFactory;
-external _ng.AppView<UsesAngularEvents> viewFactory_UsesAngularEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesAngularEvents0 extends _ng.AppView<UsesAngularEvents> {
   external ViewUsesAngularEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasAngularEvents.
 external List<dynamic> get styles$HasAngularEvents;
 external _ng.ComponentFactory<HasAngularEvents> get HasAngularEventsNgFactory;
-external _ng.AppView<HasAngularEvents> viewFactory_HasAngularEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasAngularEvents0 extends _ng.AppView<HasAngularEvents> {
   external ViewHasAngularEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasManyNativeHostEvents.
 external List<dynamic> get styles$HasManyNativeHostEvents;
 external _ng.ComponentFactory<HasManyNativeHostEvents> get HasManyNativeHostEventsNgFactory;
-external _ng.AppView<HasManyNativeHostEvents> viewFactory_HasManyNativeHostEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasManyNativeHostEvents0 extends _ng.AppView<HasManyNativeHostEvents> {
   external ViewHasManyNativeHostEvents0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

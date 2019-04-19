@@ -18,21 +18,18 @@ import 'package:angular/angular.dart';
 // For @Component class AppComponent.
 external List<dynamic> get styles$AppComponent;
 external _ng.ComponentFactory<AppComponent> get AppComponentNgFactory;
-external _ng.AppView<AppComponent> viewFactory_AppComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewAppComponent0 extends _ng.AppView<AppComponent> {
   external ViewAppComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class MaterialAutoSuggestInputComponent.
 external List<dynamic> get styles$MaterialAutoSuggestInputComponent;
 external _ng.ComponentFactory<MaterialAutoSuggestInputComponent> get MaterialAutoSuggestInputComponentNgFactory;
-external _ng.AppView<MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewMaterialAutoSuggestInputComponent0 extends _ng.AppView<MaterialAutoSuggestInputComponent> {
   external ViewMaterialAutoSuggestInputComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class MaterialInputComponent.
 external List<dynamic> get styles$MaterialInputComponent;
 external _ng.ComponentFactory<MaterialInputComponent> get MaterialInputComponentNgFactory;
-external _ng.AppView<MaterialInputComponent> viewFactory_MaterialInputComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewMaterialInputComponent0 extends _ng.AppView<MaterialInputComponent> {
   external ViewMaterialInputComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

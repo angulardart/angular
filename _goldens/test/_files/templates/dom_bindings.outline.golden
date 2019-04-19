@@ -18,42 +18,36 @@ import 'package:angular/angular.dart';
 // For @Component class HasHostAttributes.
 external List<dynamic> get styles$HasHostAttributes;
 external _ng.ComponentFactory<HasHostAttributes> get HasHostAttributesNgFactory;
-external _ng.AppView<HasHostAttributes> viewFactory_HasHostAttributes0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasHostAttributes0 extends _ng.AppView<HasHostAttributes> {
   external ViewHasHostAttributes0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasTemplateAttributes.
 external List<dynamic> get styles$HasTemplateAttributes;
 external _ng.ComponentFactory<HasTemplateAttributes> get HasTemplateAttributesNgFactory;
-external _ng.AppView<HasTemplateAttributes> viewFactory_HasTemplateAttributes0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasTemplateAttributes0 extends _ng.AppView<HasTemplateAttributes> {
   external ViewHasTemplateAttributes0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasStaticAttribute.
 external List<dynamic> get styles$HasStaticAttribute;
 external _ng.ComponentFactory<HasStaticAttribute> get HasStaticAttributeNgFactory;
-external _ng.AppView<HasStaticAttribute> viewFactory_HasStaticAttribute0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasStaticAttribute0 extends _ng.AppView<HasStaticAttribute> {
   external ViewHasStaticAttribute0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasHostClass.
 external List<dynamic> get styles$HasHostClass;
 external _ng.ComponentFactory<HasHostClass> get HasHostClassNgFactory;
-external _ng.AppView<HasHostClass> viewFactory_HasHostClass0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasHostClass0 extends _ng.AppView<HasHostClass> {
   external ViewHasHostClass0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasTemplateClass.
 external List<dynamic> get styles$HasTemplateClass;
 external _ng.ComponentFactory<HasTemplateClass> get HasTemplateClassNgFactory;
-external _ng.AppView<HasTemplateClass> viewFactory_HasTemplateClass0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasTemplateClass0 extends _ng.AppView<HasTemplateClass> {
   external ViewHasTemplateClass0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HasStyleProperty.
 external List<dynamic> get styles$HasStyleProperty;
 external _ng.ComponentFactory<HasStyleProperty> get HasStylePropertyNgFactory;
-external _ng.AppView<HasStyleProperty> viewFactory_HasStyleProperty0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHasStyleProperty0 extends _ng.AppView<HasStyleProperty> {
   external ViewHasStyleProperty0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

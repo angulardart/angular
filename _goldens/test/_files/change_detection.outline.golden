@@ -18,42 +18,36 @@ import 'package:angular/angular.dart';
 // For @Component class UsesOnPushComponent.
 external List<dynamic> get styles$UsesOnPushComponent;
 external _ng.ComponentFactory<UsesOnPushComponent> get UsesOnPushComponentNgFactory;
-external _ng.AppView<UsesOnPushComponent> viewFactory_UsesOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesOnPushComponent0 extends _ng.AppView<UsesOnPushComponent> {
   external ViewUsesOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class OnPushComponent.
 external List<dynamic> get styles$OnPushComponent;
 external _ng.ComponentFactory<OnPushComponent> get OnPushComponentNgFactory;
-external _ng.AppView<OnPushComponent> viewFactory_OnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewOnPushComponent0 extends _ng.AppView<OnPushComponent> {
   external ViewOnPushComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class OnPushChildComponent.
 external List<dynamic> get styles$OnPushChildComponent;
 external _ng.ComponentFactory<OnPushChildComponent> get OnPushChildComponentNgFactory;
-external _ng.AppView<OnPushChildComponent> viewFactory_OnPushChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewOnPushChildComponent0 extends _ng.AppView<OnPushChildComponent> {
   external ViewOnPushChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class StatefulComponent.
 external List<dynamic> get styles$StatefulComponent;
 external _ng.ComponentFactory<StatefulComponent> get StatefulComponentNgFactory;
-external _ng.AppView<StatefulComponent> viewFactory_StatefulComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewStatefulComponent0 extends _ng.AppView<StatefulComponent> {
   external ViewStatefulComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class DefaultComponent.
 external List<dynamic> get styles$DefaultComponent;
 external _ng.ComponentFactory<DefaultComponent> get DefaultComponentNgFactory;
-external _ng.AppView<DefaultComponent> viewFactory_DefaultComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewDefaultComponent0 extends _ng.AppView<DefaultComponent> {
   external ViewDefaultComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesNgModelLike.
 external List<dynamic> get styles$UsesNgModelLike;
 external _ng.ComponentFactory<UsesNgModelLike> get UsesNgModelLikeNgFactory;
-external _ng.AppView<UsesNgModelLike> viewFactory_UsesNgModelLike0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesNgModelLike0 extends _ng.AppView<UsesNgModelLike> {
   external ViewUsesNgModelLike0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

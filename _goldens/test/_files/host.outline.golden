@@ -19,21 +19,18 @@ import 'package:angular/angular.dart';
 // For @Component class HostComponentNewSyntax.
 external List<dynamic> get styles$HostComponentNewSyntax;
 external _ng.ComponentFactory<HostComponentNewSyntax> get HostComponentNewSyntaxNgFactory;
-external _ng.AppView<HostComponentNewSyntax> viewFactory_HostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHostComponentNewSyntax0 extends _ng.AppView<HostComponentNewSyntax> {
   external ViewHostComponentNewSyntax0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class UsesHostComponentWithDirective.
 external List<dynamic> get styles$UsesHostComponentWithDirective;
 external _ng.ComponentFactory<UsesHostComponentWithDirective> get UsesHostComponentWithDirectiveNgFactory;
-external _ng.AppView<UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewUsesHostComponentWithDirective0 extends _ng.AppView<UsesHostComponentWithDirective> {
   external ViewUsesHostComponentWithDirective0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class HostComponent.
 external List<dynamic> get styles$HostComponent;
 external _ng.ComponentFactory<HostComponent> get HostComponentNgFactory;
-external _ng.AppView<HostComponent> viewFactory_HostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewHostComponent0 extends _ng.AppView<HostComponent> {
   external ViewHostComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
