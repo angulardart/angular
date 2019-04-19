@@ -428,7 +428,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       templateRefExpr,
     ];
 
-    return o.InvokeMemberMethodExpr('loadDeferred', args);
+    return o.importExpr(Identifiers.loadDeferred).callFn(args);
   }
 
   void addContentNode(int ngContentIndex, o.Expression nodeExpr) {

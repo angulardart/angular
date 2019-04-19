@@ -4,6 +4,8 @@ import 'package:angular/di.dart' show Injectable;
 import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show devModeEqual;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/security.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_events.dart' show EventManager;
@@ -88,4 +90,25 @@ bool _checkBindingDebug(oldValue, newValue) {
 @dart2js.tryInline
 bool _checkBindingRelease(oldValue, newValue) {
   return !identical(oldValue, newValue);
+}
+
+/// Loads Dart code used in [templateRef] lazily.
+///
+/// Returns a function, that when executed, cancels the creation of the view.
+void Function() loadDeferred(
+  Future<void> Function() loadComponent,
+  Future<void> Function() loadTemplateLib,
+  ViewContainer viewContainer,
+  TemplateRef templateRef,
+) {
+  var cancelled = false;
+  Future.wait([loadComponent(), loadTemplateLib()]).then((_) {
+    if (!cancelled) {
+      viewContainer.createEmbeddedView(templateRef);
+      viewContainer.detectChangesInNestedViews();
+    }
+  });
+  return () {
+    cancelled = true;
+  };
 }
