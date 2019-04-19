@@ -61,7 +61,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _anchor_0 = import13.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);
-    _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
+    _cancelDeferredLoad0 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
     final _anchor_1 = import13.appendAnchor(parentRenderNode);
     _appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent2);
@@ -73,11 +73,11 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _anchor_3 = import13.appendAnchor(parentRenderNode);
     _appEl_3 = ViewContainer(3, null, this, _anchor_3);
     TemplateRef _TemplateRef_3_8 = TemplateRef(_appEl_3, viewFactory_TestContainerComponent6);
-    _cancelDeferredLoad3 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_8);
+    _cancelDeferredLoad3 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_3, _TemplateRef_3_8);
     final _anchor_4 = import13.appendAnchor(parentRenderNode);
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
-    _cancelDeferredLoad4 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
+    _cancelDeferredLoad4 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
     _compView_5 = deflib1.ViewNotDeferredChildComponent0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
@@ -86,7 +86,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     final _anchor_6 = import13.appendAnchor(parentRenderNode);
     _appEl_6 = ViewContainer(6, null, this, _anchor_6);
     TemplateRef _TemplateRef_6_8 = TemplateRef(_appEl_6, viewFactory_TestContainerComponent8);
-    _cancelDeferredLoad6 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_6, _TemplateRef_6_8);
+    _cancelDeferredLoad6 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_6, _TemplateRef_6_8);
     init0();
   }
 
@@ -185,7 +185,7 @@ class _ViewTestContainerComponent2 extends AppView<import1.TestContainerComponen
     final _anchor_0 = import13.createAnchor();
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent3);
-    _cancelDeferredLoad0 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
+    _cancelDeferredLoad0 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_0, _TemplateRef_0_8);
     init1(_appEl_0);
   }
 
@@ -248,7 +248,7 @@ class _ViewTestContainerComponent4 extends AppView<import1.TestContainerComponen
     final _anchor_1 = import13.appendAnchor(_el_0);
     _appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(_appEl_1, viewFactory_TestContainerComponent5);
-    _cancelDeferredLoad1 = loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
+    _cancelDeferredLoad1 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_1, _TemplateRef_1_8);
     init1(_el_0);
   }
 

@@ -142,7 +142,8 @@ class Identifiers {
       name: "profileMarkStart", moduleUrl: _profileRuntimeModuleUrl);
   static final profileMarkEnd = CompileIdentifierMetadata(
       name: "profileMarkEnd", moduleUrl: _profileRuntimeModuleUrl);
-
+  static final loadDeferred = CompileIdentifierMetadata(
+      name: "loadDeferred", moduleUrl: _appViewUtilsModuleUrl);
   static final throwOnChanges = CompileIdentifierMetadata(
       name: "AppViewUtils.throwOnChanges", moduleUrl: _appViewUtilsModuleUrl);
   static final isDevMode = CompileIdentifierMetadata(
