@@ -591,8 +591,12 @@ class _ComponentVisitor
             _library, _exceptionHandler, annotationInfo));
 
     final template = isComp
-        ? _createTemplateMetadata(annotationValue, componentType)
+        ? _createTemplateMetadata(annotationInfo, componentType)
         : CompileTemplateMetadata();
+
+    // _createTemplateMetadata failed to create the metadata.
+    if (template == null) return null;
+
     final analyzedClass =
         AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     final lifecycleHooks = extractLifecycleHooks(element);
@@ -668,15 +672,29 @@ class _ComponentVisitor
   }
 
   CompileTemplateMetadata _createTemplateMetadata(
-      DartObject component, CompileTypeMetadata componentType) {
+    AnnotationInformation annotationInfo,
+    CompileTypeMetadata componentType,
+  ) {
+    final DartObject component = annotationInfo.constantValue;
     var template = component;
     String templateContent = coerceString(template, 'template');
     String templateUrl = coerceString(template, 'templateUrl');
     if (templateContent != null && templateUrl != null) {
-      // TODO: https://github.com/dart-lang/angular/issues/851.
-      log.severe(''
-          'Component "${componentType.name}" in\n  ${componentType.moduleUrl}:\n'
-          '  Cannot supply both "template" and "templateUrl"');
+      _exceptionHandler.handle(ErrorMessageForAnnotation(annotationInfo,
+          'Cannot supply both "template" and "templateUrl" for an @Component'));
+      return null;
+    }
+    // Verify that templateUrl can be parsed.
+    if (templateUrl != null) {
+      try {
+        Uri.parse(templateUrl);
+      } on FormatException catch (formatException) {
+        _exceptionHandler.handle(ErrorMessageForAnnotation(
+            annotationInfo,
+            '@Component.templateUrl is not a valid URI. '
+            'Parsing produced an error: ${formatException.message}'));
+        return null;
+      }
     }
     return CompileTemplateMetadata(
       encapsulation: _encapsulation(template),
