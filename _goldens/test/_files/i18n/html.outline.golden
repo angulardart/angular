@@ -18,7 +18,6 @@ import 'package:angular/angular.dart';
 // For @Component class I18nHtmlComponent.
 external List<dynamic> get styles$I18nHtmlComponent;
 external _ng.ComponentFactory<I18nHtmlComponent> get I18nHtmlComponentNgFactory;
-external _ng.AppView<I18nHtmlComponent> viewFactory_I18nHtmlComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewI18nHtmlComponent0 extends _ng.AppView<I18nHtmlComponent> {
   external ViewI18nHtmlComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

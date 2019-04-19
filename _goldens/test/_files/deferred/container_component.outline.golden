@@ -20,7 +20,6 @@ import 'deferred_component.dart';
 // For @Component class TestContainerComponent.
 external List<dynamic> get styles$TestContainerComponent;
 external _ng.ComponentFactory<TestContainerComponent> get TestContainerComponentNgFactory;
-external _ng.AppView<TestContainerComponent> viewFactory_TestContainerComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewTestContainerComponent0 extends _ng.AppView<TestContainerComponent> {
   external ViewTestContainerComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

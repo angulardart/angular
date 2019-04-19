@@ -18,14 +18,12 @@ import 'package:angular/angular.dart';
 // For @Component class EmulatedComponent.
 external List<dynamic> get styles$EmulatedComponent;
 external _ng.ComponentFactory<EmulatedComponent> get EmulatedComponentNgFactory;
-external _ng.AppView<EmulatedComponent> viewFactory_EmulatedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewEmulatedComponent0 extends _ng.AppView<EmulatedComponent> {
   external ViewEmulatedComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NoneComponent.
 external List<dynamic> get styles$NoneComponent;
 external _ng.ComponentFactory<NoneComponent> get NoneComponentNgFactory;
-external _ng.AppView<NoneComponent> viewFactory_NoneComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewNoneComponent0 extends _ng.AppView<NoneComponent> {
   external ViewNoneComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

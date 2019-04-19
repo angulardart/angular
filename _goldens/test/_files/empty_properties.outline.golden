@@ -18,14 +18,12 @@ import 'package:angular/angular.dart';
 // For @Component class EmptyPropertiesComponent.
 external List<dynamic> get styles$EmptyPropertiesComponent;
 external _ng.ComponentFactory<EmptyPropertiesComponent> get EmptyPropertiesComponentNgFactory;
-external _ng.AppView<EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewEmptyPropertiesComponent0 extends _ng.AppView<EmptyPropertiesComponent> {
   external ViewEmptyPropertiesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class FancyButtonComponent.
 external List<dynamic> get styles$FancyButtonComponent;
 external _ng.ComponentFactory<FancyButtonComponent> get FancyButtonComponentNgFactory;
-external _ng.AppView<FancyButtonComponent> viewFactory_FancyButtonComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewFancyButtonComponent0 extends _ng.AppView<FancyButtonComponent> {
   external ViewFancyButtonComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

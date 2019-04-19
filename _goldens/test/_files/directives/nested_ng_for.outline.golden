@@ -18,7 +18,6 @@ import 'package:angular/angular.dart';
 // For @Component class NestedNgForComponent.
 external List<dynamic> get styles$NestedNgForComponent;
 external _ng.ComponentFactory<NestedNgForComponent> get NestedNgForComponentNgFactory;
-external _ng.AppView<NestedNgForComponent> viewFactory_NestedNgForComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewNestedNgForComponent0 extends _ng.AppView<NestedNgForComponent> {
   external ViewNestedNgForComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }

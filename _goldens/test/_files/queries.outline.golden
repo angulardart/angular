@@ -19,28 +19,24 @@ import 'package:angular/angular.dart';
 // For @Component class QueriesComponent.
 external List<dynamic> get styles$QueriesComponent;
 external _ng.ComponentFactory<QueriesComponent> get QueriesComponentNgFactory;
-external _ng.AppView<QueriesComponent> viewFactory_QueriesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewQueriesComponent0 extends _ng.AppView<QueriesComponent> {
   external ViewQueriesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class EmbeddedQueries.
 external List<dynamic> get styles$EmbeddedQueries;
 external _ng.ComponentFactory<EmbeddedQueries> get EmbeddedQueriesNgFactory;
-external _ng.AppView<EmbeddedQueries> viewFactory_EmbeddedQueries0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewEmbeddedQueries0 extends _ng.AppView<EmbeddedQueries> {
   external ViewEmbeddedQueries0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class EmbeddedQueriesList.
 external List<dynamic> get styles$EmbeddedQueriesList;
 external _ng.ComponentFactory<EmbeddedQueriesList> get EmbeddedQueriesListNgFactory;
-external _ng.AppView<EmbeddedQueriesList> viewFactory_EmbeddedQueriesList0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewEmbeddedQueriesList0 extends _ng.AppView<EmbeddedQueriesList> {
   external ViewEmbeddedQueriesList0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
 // For @Component class NestedNgForQueriesList.
 external List<dynamic> get styles$NestedNgForQueriesList;
 external _ng.ComponentFactory<NestedNgForQueriesList> get NestedNgForQueriesListNgFactory;
-external _ng.AppView<NestedNgForQueriesList> viewFactory_NestedNgForQueriesList0(_ng.AppView<dynamic> parentView, int parentIndex);
 class ViewNestedNgForQueriesList0 extends _ng.AppView<NestedNgForQueriesList> {
   external ViewNestedNgForQueriesList0(_ng.AppView<dynamic> parentView, int parentIndex);
 }
