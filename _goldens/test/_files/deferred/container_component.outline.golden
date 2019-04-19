@@ -21,7 +21,7 @@ import 'deferred_component.dart';
 external List<dynamic> get styles$TestContainerComponent;
 external _ng.ComponentFactory<TestContainerComponent> get TestContainerComponentNgFactory;
 class ViewTestContainerComponent0 extends _ng.AppView<TestContainerComponent> {
-  external ViewTestContainerComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewTestContainerComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

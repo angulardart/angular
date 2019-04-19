@@ -19,19 +19,19 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$HasOpaqueTokens;
 external _ng.ComponentFactory<HasOpaqueTokens> get HasOpaqueTokensNgFactory;
 class ViewHasOpaqueTokens0 extends _ng.AppView<HasOpaqueTokens> {
-  external ViewHasOpaqueTokens0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewHasOpaqueTokens0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ContainsChildComponent.
 external List<dynamic> get styles$ContainsChildComponent;
 external _ng.ComponentFactory<ContainsChildComponent> get ContainsChildComponentNgFactory;
 class ViewContainsChildComponent0 extends _ng.AppView<ContainsChildComponent> {
-  external ViewContainsChildComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewContainsChildComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class InjectsTypedTokenFromSomeParent.
 external List<dynamic> get styles$InjectsTypedTokenFromSomeParent;
 external _ng.ComponentFactory<InjectsTypedTokenFromSomeParent> get InjectsTypedTokenFromSomeParentNgFactory;
 class ViewInjectsTypedTokenFromSomeParent0 extends _ng.AppView<InjectsTypedTokenFromSomeParent> {
-  external ViewInjectsTypedTokenFromSomeParent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewInjectsTypedTokenFromSomeParent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

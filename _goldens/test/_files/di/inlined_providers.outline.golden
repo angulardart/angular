@@ -19,31 +19,31 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$ParentComponent;
 external _ng.ComponentFactory<ParentComponent> get ParentComponentNgFactory;
 class ViewParentComponent0 extends _ng.AppView<ParentComponent> {
-  external ViewParentComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewParentComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ChildComponentProvidingA$B$C.
 external List<dynamic> get styles$ChildComponentProvidingA$B$C;
 external _ng.ComponentFactory<ChildComponentProvidingA$B$C> get ChildComponentProvidingA$B$CNgFactory;
 class ViewChildComponentProvidingA$B$C0 extends _ng.AppView<ChildComponentProvidingA$B$C> {
-  external ViewChildComponentProvidingA$B$C0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewChildComponentProvidingA$B$C0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ChildComponentWithNgContentProviding$D.
 external List<dynamic> get styles$ChildComponentWithNgContentProviding$D;
 external _ng.ComponentFactory<ChildComponentWithNgContentProviding$D> get ChildComponentWithNgContentProviding$DNgFactory;
 class ViewChildComponentWithNgContentProviding$D0 extends _ng.AppView<ChildComponentWithNgContentProviding$D> {
-  external ViewChildComponentWithNgContentProviding$D0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewChildComponentWithNgContentProviding$D0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ChildComponentInjecting$D.
 external List<dynamic> get styles$ChildComponentInjecting$D;
 external _ng.ComponentFactory<ChildComponentInjecting$D> get ChildComponentInjecting$DNgFactory;
 class ViewChildComponentInjecting$D0 extends _ng.AppView<ChildComponentInjecting$D> {
-  external ViewChildComponentInjecting$D0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewChildComponentInjecting$D0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ChildComponentWithVisibilityAll.
 external List<dynamic> get styles$ChildComponentWithVisibilityAll;
 external _ng.ComponentFactory<ChildComponentWithVisibilityAll> get ChildComponentWithVisibilityAllNgFactory;
 class ViewChildComponentWithVisibilityAll0 extends _ng.AppView<ChildComponentWithVisibilityAll> {
-  external ViewChildComponentWithVisibilityAll0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewChildComponentWithVisibilityAll0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class DirectiveProviding$A2$D2.
 class DirectiveProviding$A2$D2NgCd extends _ng.DirectiveChangeDetector {

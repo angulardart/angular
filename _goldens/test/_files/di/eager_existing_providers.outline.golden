@@ -19,19 +19,19 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$AppComponent;
 external _ng.ComponentFactory<AppComponent> get AppComponentNgFactory;
 class ViewAppComponent0 extends _ng.AppView<AppComponent> {
-  external ViewAppComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewAppComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class ProvidesServicesComponent.
 external List<dynamic> get styles$ProvidesServicesComponent;
 external _ng.ComponentFactory<ProvidesServicesComponent> get ProvidesServicesComponentNgFactory;
 class ViewProvidesServicesComponent0 extends _ng.AppView<ProvidesServicesComponent> {
-  external ViewProvidesServicesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewProvidesServicesComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Component class InjectsServicesComponent.
 external List<dynamic> get styles$InjectsServicesComponent;
 external _ng.ComponentFactory<InjectsServicesComponent> get InjectsServicesComponentNgFactory;
 class ViewInjectsServicesComponent0 extends _ng.AppView<InjectsServicesComponent> {
-  external ViewInjectsServicesComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewInjectsServicesComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();

@@ -19,7 +19,7 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$I18nPropertyComponent;
 external _ng.ComponentFactory<I18nPropertyComponent> get I18nPropertyComponentNgFactory;
 class ViewI18nPropertyComponent0 extends _ng.AppView<I18nPropertyComponent> {
-  external ViewI18nPropertyComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewI18nPropertyComponent0(_ng.RenderView parentView, int parentIndex);
 }
 // For @Directive class MessageDirective.
 class MessageDirectiveNgCd extends _ng.DirectiveChangeDetector {

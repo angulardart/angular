@@ -147,14 +147,13 @@ class TemplateOutliner implements Builder {
         final typeArguments = _typeArgumentsFor(component);
         final typeParameters = directiveTypeParameters[component.name];
         final componentType = '$componentName$typeArguments';
-        final viewArgs = '_ng.AppView<dynamic> parentView, int parentIndex';
         final viewName = 'View${componentName}0';
         output.write('''
 // For @Component class $componentName.
 external List<dynamic> get styles\$$componentName;
 external _ng.ComponentFactory<$componentName> get ${componentName}NgFactory;
 class $viewName$typeParameters extends _ng.AppView<$componentType> {
-  external $viewName($viewArgs);
+  external $viewName(_ng.RenderView parentView, int parentIndex);
 }
 ''');
       }

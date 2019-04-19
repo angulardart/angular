@@ -19,7 +19,7 @@ import 'package:angular/angular.dart';
 external List<dynamic> get styles$I18nAttributeComponent;
 external _ng.ComponentFactory<I18nAttributeComponent> get I18nAttributeComponentNgFactory;
 class ViewI18nAttributeComponent0 extends _ng.AppView<I18nAttributeComponent> {
-  external ViewI18nAttributeComponent0(_ng.AppView<dynamic> parentView, int parentIndex);
+  external ViewI18nAttributeComponent0(_ng.RenderView parentView, int parentIndex);
 }
 
 external void initReflector();
