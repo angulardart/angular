@@ -313,6 +313,43 @@ void main() {
     ]);
   });
 
+  test('should throw if both "template" and "templateUrl" are present',
+      () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: 'double-up',
+      template: 'boo',
+      templateUrl: 'boo.html'
+    )
+    class DoubleUp {}
+    ''', errors: [
+      allOf([
+        contains(
+            'Cannot supply both "template" and "templateUrl" for an @Component'),
+        containsSourceLocation(3, 5)
+      ])
+    ]);
+  });
+
+  test('should throw if "templateUrl" fails to parse', () async {
+    await compilesExpecting('''
+    import '$ngImport';
+
+    @Component(
+      selector: 'bad-url',
+      templateUrl: '<scheme:urlWithBadScheme'
+    )
+    class BadUrl {}
+    ''', errors: [
+      allOf([
+        contains('@Component.templateUrl is not a valid URI'),
+        containsSourceLocation(3, 5)
+      ])
+    ]);
+  });
+
   group('providers', () {
     test('should error on invalid token', () async {
       await compilesExpecting('''
