@@ -2,8 +2,9 @@ import 'package:analyzer/src/generated/source.dart';
 import 'package:angular_analyzer_plugin/src/model/navigable.dart';
 
 /// Placeholder so tests pass.
-class Template {
+abstract class Template {
   void addRange(SourceRange range, Navigable navigable) {}
+  Set<String> get ignoredErrors;
 }
 
 /// Placeholder so tests pass.
