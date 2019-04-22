@@ -65,11 +65,11 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
   @override
   ComponentRef<import1.I18nAttributeComponent> build() {
     _compView_0 = ViewI18nAttributeComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _I18nAttributeComponent_0_5 = import1.I18nAttributeComponent();
     _compView_0.create(_I18nAttributeComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _I18nAttributeComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _I18nAttributeComponent_0_5);
   }
 
   @override

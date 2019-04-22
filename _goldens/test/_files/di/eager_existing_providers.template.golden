@@ -95,11 +95,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _AppComponent_0_5);
   }
 
   @override
@@ -161,11 +161,11 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
     _compView_0.create(_ProvidesServicesComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ProvidesServicesComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ProvidesServicesComponent_0_5);
   }
 
   @override
@@ -234,15 +234,15 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     _compView_0 = ViewInjectsServicesComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InjectsServicesComponent_0_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsServicesComponent, () {
             return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex));
           })
         : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex)));
     _compView_0.create(_InjectsServicesComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InjectsServicesComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InjectsServicesComponent_0_5);
   }
 
   @override

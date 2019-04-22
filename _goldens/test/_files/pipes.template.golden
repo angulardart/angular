@@ -103,11 +103,11 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
   @override
   ComponentRef<import1.Comp> build() {
     _compView_0 = ViewComp0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _Comp_0_5 = import1.Comp();
     _compView_0.create(_Comp_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _Comp_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _Comp_0_5);
   }
 
   @override

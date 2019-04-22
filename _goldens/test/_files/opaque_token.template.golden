@@ -70,12 +70,12 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
     _compView_0 = ViewHasOpaqueTokens0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _baseUrlDescription_0_5 = 'https://localhost';
     _HasOpaqueTokens_0_6 = import1.HasOpaqueTokens(_baseUrlDescription_0_5);
     _compView_0.create(_HasOpaqueTokens_0_6, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasOpaqueTokens_0_6);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasOpaqueTokens_0_6);
   }
 
   @override
@@ -233,11 +233,11 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
     _compView_0 = ViewContainsChildComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ContainsChildComponent_0_5 = import1.ContainsChildComponent();
     _compView_0.create(_ContainsChildComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ContainsChildComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ContainsChildComponent_0_5);
   }
 
   @override
@@ -298,15 +298,15 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
     _compView_0 = ViewInjectsTypedTokenFromSomeParent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InjectsTypedTokenFromSomeParent_0_5 = (import7.isDevMode
         ? import15.debugInjectorWrap(import1.InjectsTypedTokenFromSomeParent, () {
             return import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import11.OpaqueToken<List<Duration>>('listOfDuration'), parentIndex));
           })
         : import1.InjectsTypedTokenFromSomeParent(this.injectorGet(const import11.OpaqueToken<List<Duration>>('listOfDuration'), parentIndex)));
     _compView_0.create(_InjectsTypedTokenFromSomeParent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InjectsTypedTokenFromSomeParent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InjectsTypedTokenFromSomeParent_0_5);
   }
 
   @override

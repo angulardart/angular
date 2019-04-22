@@ -73,11 +73,11 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
   @override
   ComponentRef<import1.PreserveWhitespace> build() {
     _compView_0 = ViewPreserveWhitespace0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _PreserveWhitespace_0_5 = import1.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _PreserveWhitespace_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _PreserveWhitespace_0_5);
   }
 
   @override
@@ -147,11 +147,11 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
   @override
   ComponentRef<import1.MinifyWhitespace> build() {
     _compView_0 = ViewMinifyWhitespace0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _MinifyWhitespace_0_5 = import1.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _MinifyWhitespace_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _MinifyWhitespace_0_5);
   }
 
   @override

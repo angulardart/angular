@@ -77,11 +77,11 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = ViewCompWithoutFinal0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _CompWithoutFinal_0_5 = import1.CompWithoutFinal();
     _compView_0.create(_CompWithoutFinal_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _CompWithoutFinal_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _CompWithoutFinal_0_5);
   }
 
   @override
@@ -149,11 +149,11 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   @override
   ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = ViewCompWithFinal0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _CompWithFinal_0_5 = import1.CompWithFinal();
     _compView_0.create(_CompWithFinal_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _CompWithFinal_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _CompWithFinal_0_5);
   }
 
   @override
@@ -220,11 +220,11 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _CompWithFinalStatic_0_5 = import1.CompWithFinalStatic();
     _compView_0.create(_CompWithFinalStatic_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _CompWithFinalStatic_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _CompWithFinalStatic_0_5);
   }
 
   @override
@@ -291,11 +291,11 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = ViewCompWithExternalFinal0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _CompWithExternalFinal_0_5 = import1.CompWithExternalFinal();
     _compView_0.create(_CompWithExternalFinal_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _CompWithExternalFinal_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _CompWithExternalFinal_0_5);
   }
 
   @override

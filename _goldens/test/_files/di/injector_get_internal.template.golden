@@ -487,11 +487,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _AppComponent_0_5);
   }
 
   @override
@@ -552,11 +552,11 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
     _compView_0.create(_MaterialAutoSuggestInputComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _MaterialAutoSuggestInputComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _MaterialAutoSuggestInputComponent_0_5);
   }
 
   @override
@@ -658,11 +658,11 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
     _compView_0 = ViewMaterialInputComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _MaterialInputComponent_0_5 = import1.MaterialInputComponent();
     _compView_0.create(_MaterialInputComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _MaterialInputComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _MaterialInputComponent_0_5);
   }
 
   @override

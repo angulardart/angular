@@ -872,7 +872,9 @@ class CompileView {
 
     final root = compAppViewExpr.toReadExpr().prop(appViewRootElementName);
     if (isRootNodeOfHost(nodeIndex)) {
-      // Assign root element created by viewfactory call to our own root.
+      // Assign the root element of the component view to a local variable. The
+      // host view will use this as one of its own root nodes and to create a
+      // `ComponentRef`.
       _createMethod.addStmt(elementRef.toWriteStmt(root));
     } else {
       _initializeAndAppendNode(parent, elementRef, root);

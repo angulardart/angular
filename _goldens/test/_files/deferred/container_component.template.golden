@@ -428,11 +428,11 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
   @override
   ComponentRef<import1.TestContainerComponent> build() {
     _compView_0 = ViewTestContainerComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _TestContainerComponent_0_5 = import1.TestContainerComponent();
     _compView_0.create(_TestContainerComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _TestContainerComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _TestContainerComponent_0_5);
   }
 
   @override

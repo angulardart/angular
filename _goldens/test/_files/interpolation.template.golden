@@ -80,11 +80,11 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
   @override
   ComponentRef<import1.InterpolationComponent> build() {
     _compView_0 = ViewInterpolationComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationComponent_0_5 = import1.InterpolationComponent();
     _compView_0.create(_InterpolationComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationComponent_0_5);
   }
 
   @override
@@ -155,11 +155,11 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
     _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationComponentNoWhitespace_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
@@ -235,11 +235,11 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
     _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
     _compView_0.create(_InterpolationTwoAdjacent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationTwoAdjacent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationTwoAdjacent_0_5);
   }
 
   @override
@@ -320,11 +320,11 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
     _compView_0 = ViewInterpolationLongerSentence0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
     _compView_0.create(_InterpolationLongerSentence_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationLongerSentence_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationLongerSentence_0_5);
   }
 
   @override
@@ -391,11 +391,11 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
     _compView_0 = ViewInterpolationLiterals0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
     _compView_0.create(_InterpolationLiterals_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationLiterals_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationLiterals_0_5);
   }
 
   @override
@@ -550,11 +550,11 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
   @override
   ComponentRef<import1.InterpolationLocals> build() {
     _compView_0 = ViewInterpolationLocals0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InterpolationLocals_0_5 = import1.InterpolationLocals();
     _compView_0.create(_InterpolationLocals_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InterpolationLocals_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InterpolationLocals_0_5);
   }
 
   @override
@@ -638,11 +638,11 @@ class _ViewAttributeHost0 extends AppView<import1.Attribute> {
   @override
   ComponentRef<import1.Attribute> build() {
     _compView_0 = ViewAttribute0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _Attribute_0_5 = import1.Attribute();
     _compView_0.create(_Attribute_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _Attribute_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _Attribute_0_5);
   }
 
   @override
@@ -727,11 +727,11 @@ class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
   @override
   ComponentRef<import1.AttributePW> build() {
     _compView_0 = ViewAttributePW0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _AttributePW_0_5 = import1.AttributePW();
     _compView_0.create(_AttributePW_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _AttributePW_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _AttributePW_0_5);
   }
 
   @override

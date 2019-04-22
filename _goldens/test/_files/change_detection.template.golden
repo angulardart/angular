@@ -94,11 +94,11 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
   @override
   ComponentRef<import1.UsesOnPushComponent> build() {
     _compView_0 = ViewUsesOnPushComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
     _compView_0.create(_UsesOnPushComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesOnPushComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesOnPushComponent_0_5);
   }
 
   @override
@@ -189,11 +189,11 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
   @override
   ComponentRef<import1.OnPushComponent> build() {
     _compView_0 = ViewOnPushComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _OnPushComponent_0_5 = import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _OnPushComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _OnPushComponent_0_5);
   }
 
   @override
@@ -269,11 +269,11 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
   @override
   ComponentRef<import1.OnPushChildComponent> build() {
     _compView_0 = ViewOnPushChildComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
     _compView_0.create(_OnPushChildComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _OnPushChildComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _OnPushChildComponent_0_5);
   }
 
   @override
@@ -343,11 +343,11 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
   @override
   ComponentRef<import1.StatefulComponent> build() {
     _compView_0 = ViewStatefulComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _StatefulComponent_0_5 = import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _StatefulComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _StatefulComponent_0_5);
   }
 
   @override
@@ -411,11 +411,11 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
   @override
   ComponentRef<import1.DefaultComponent> build() {
     _compView_0 = ViewDefaultComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DefaultComponent_0_5 = import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DefaultComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DefaultComponent_0_5);
   }
 
   @override
@@ -507,11 +507,11 @@ class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
   @override
   ComponentRef<import1.UsesNgModelLike> build() {
     _compView_0 = ViewUsesNgModelLike0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesNgModelLike_0_5 = import1.UsesNgModelLike();
     _compView_0.create(_UsesNgModelLike_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesNgModelLike_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesNgModelLike_0_5);
   }
 
   @override

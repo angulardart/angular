@@ -11095,7 +11095,7 @@
   };
   N._ViewRootComponentHost0.prototype = {
     build$0: function() {
-      var t2, _this = this,
+      var t2, t3, _this = this,
         t1 = new N.ViewRootComponent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
         styles = $.ViewRootComponent0__componentStyles;
       if (styles == null) {
@@ -11107,12 +11107,11 @@
       t2 = document.createElement("root-component");
       t1.rootEl = t2;
       _this._compView_0 = t1;
-      _this.rootEl = t2;
-      t2 = new O.RootComponent();
-      _this._RootComponent_0_5 = t2;
-      t1.create$2(0, t2, _this.viewData.projectedNodes);
-      _this.init1$1(_this.rootEl);
-      return new D.ComponentRef(_this, 0, _this.rootEl);
+      t3 = new O.RootComponent();
+      _this._RootComponent_0_5 = t3;
+      t1.create$2(0, t3, _this.viewData.projectedNodes);
+      _this.init1$1(t2);
+      return new D.ComponentRef(_this, 0, t2);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();

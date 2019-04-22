@@ -188,12 +188,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   }
 
   NodeReference _elementReference(ElementAst ast, int nodeIndex) {
-    final type = o.importType(identifierFromTagName(ast.name));
-    if (_view.isRootNodeOfHost(nodeIndex)) {
-      return NodeReference.appViewRoot();
-    } else {
-      return NodeReference(_view.storage, type, nodeIndex);
-    }
+    return NodeReference(
+      _view.storage,
+      o.importType(identifierFromTagName(ast.name)),
+      nodeIndex,
+    );
   }
 
   CompileDirectiveMetadata _componentFromDirectives(

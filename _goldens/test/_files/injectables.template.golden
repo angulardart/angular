@@ -89,7 +89,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
   @override
   ComponentRef<import1.InjectableComponent> build() {
     _compView_0 = ViewInjectableComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _test_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(const import11.OpaqueToken<dynamic>('test'), () {
             return import1.injectableFactory(this.injectorGet(import6.Window, parentIndex));
@@ -101,8 +101,8 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
           })
         : import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, parentIndex), _test_0_5, this.injectorGetOptional(String, parentIndex)));
     _compView_0.create(_InjectableComponent_0_6, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InjectableComponent_0_6);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InjectableComponent_0_6);
   }
 
   @override

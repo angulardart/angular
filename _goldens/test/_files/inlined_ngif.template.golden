@@ -99,11 +99,11 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
     _compView_0 = ViewInlinedNgIfComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InlinedNgIfComponent_0_5 = import1.InlinedNgIfComponent();
     _compView_0.create(_InlinedNgIfComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InlinedNgIfComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InlinedNgIfComponent_0_5);
   }
 
   @override
@@ -202,11 +202,11 @@ class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponen
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
     _compView_0 = ViewIgnoredNgIfComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _IgnoredNgIfComponent_0_5 = import1.IgnoredNgIfComponent();
     _compView_0.create(_IgnoredNgIfComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _IgnoredNgIfComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _IgnoredNgIfComponent_0_5);
   }
 
   @override
@@ -305,11 +305,11 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     _compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InlinedNgIfWithImmutableConditionComponent_0_5 = import1.InlinedNgIfWithImmutableConditionComponent();
     _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InlinedNgIfWithImmutableConditionComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InlinedNgIfWithImmutableConditionComponent_0_5);
   }
 
   @override
