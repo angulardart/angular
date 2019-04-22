@@ -793,7 +793,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     // Connect ComponentState callback to view.
     final setCallback = DetectChangesVars.internalSetStateChanged.callFn([
       DetectChangesVars.cachedCtx,
-      o.ReadClassMemberExpr('markStateChanged'),
+      o.ReadClassMemberExpr('markForCheck'),
     ]);
     statements.add(setCallback.toStmt());
   }
