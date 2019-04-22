@@ -90,11 +90,11 @@ class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
   @override
   ComponentRef<import2.EmulatedComponent> build() {
     _compView_0 = ViewEmulatedComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _EmulatedComponent_0_5 = import2.EmulatedComponent();
     _compView_0.create(_EmulatedComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _EmulatedComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _EmulatedComponent_0_5);
   }
 
   @override
@@ -179,11 +179,11 @@ class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
   @override
   ComponentRef<import2.NoneComponent> build() {
     _compView_0 = ViewNoneComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _NoneComponent_0_5 = import2.NoneComponent();
     _compView_0.create(_NoneComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _NoneComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _NoneComponent_0_5);
   }
 
   @override

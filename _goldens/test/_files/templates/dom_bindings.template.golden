@@ -71,11 +71,11 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   @override
   ComponentRef<import1.HasHostAttributes> build() {
     _compView_0 = ViewHasHostAttributes0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasHostAttributes_0_5 = import1.HasHostAttributes();
     _compView_0.create(_HasHostAttributes_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasHostAttributes_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasHostAttributes_0_5);
   }
 
   @override
@@ -152,11 +152,11 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     _compView_0 = ViewHasTemplateAttributes0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
     _compView_0.create(_HasTemplateAttributes_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasTemplateAttributes_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasTemplateAttributes_0_5);
   }
 
   @override
@@ -228,11 +228,11 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
     _compView_0 = ViewHasStaticAttribute0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
     _compView_0.create(_HasStaticAttribute_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasStaticAttribute_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasStaticAttribute_0_5);
   }
 
   @override
@@ -303,11 +303,11 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   @override
   ComponentRef<import1.HasHostClass> build() {
     _compView_0 = ViewHasHostClass0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasHostClass_0_5 = import1.HasHostClass();
     _compView_0.create(_HasHostClass_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasHostClass_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasHostClass_0_5);
   }
 
   @override
@@ -384,11 +384,11 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     _compView_0 = ViewHasTemplateClass0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasTemplateClass_0_5 = import1.HasTemplateClass();
     _compView_0.create(_HasTemplateClass_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasTemplateClass_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasTemplateClass_0_5);
   }
 
   @override
@@ -469,11 +469,11 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     _compView_0 = ViewHasStyleProperty0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasStyleProperty_0_5 = import1.HasStyleProperty();
     _compView_0.create(_HasStyleProperty_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasStyleProperty_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasStyleProperty_0_5);
   }
 
   @override

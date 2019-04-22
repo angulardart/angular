@@ -296,11 +296,11 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   @override
   ComponentRef<import1.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
     _compView_0.create(_ParentComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ParentComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ParentComponent_0_5);
   }
 
   @override
@@ -385,11 +385,11 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   @override
   ComponentRef<import1.ChildComponentProvidingA$B$C> build() {
     _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
     _compView_0.create(_ChildComponentProvidingA$B$C_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ChildComponentProvidingA$B$C_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ChildComponentProvidingA$B$C_0_5);
   }
 
   @override
@@ -475,11 +475,11 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   @override
   ComponentRef<import1.ChildComponentWithNgContentProviding$D> build() {
     _compView_0 = ViewChildComponentWithNgContentProviding$D0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
     _compView_0.create(_ChildComponentWithNgContentProviding$D_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ChildComponentWithNgContentProviding$D_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ChildComponentWithNgContentProviding$D_0_5);
   }
 
   @override
@@ -548,15 +548,15 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
     _compView_0 = ViewChildComponentInjecting$D0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ChildComponentInjecting$D_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex)));
     _compView_0.create(_ChildComponentInjecting$D_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ChildComponentInjecting$D_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ChildComponentInjecting$D_0_5);
   }
 
   @override
@@ -617,11 +617,11 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
     _compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();
     _compView_0.create(_ChildComponentWithVisibilityAll_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ChildComponentWithVisibilityAll_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ChildComponentWithVisibilityAll_0_5);
   }
 
   @override

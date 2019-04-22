@@ -73,11 +73,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
     _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _AppComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _AppComponent_0_5);
   }
 
   @override

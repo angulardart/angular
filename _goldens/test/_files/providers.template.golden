@@ -149,11 +149,11 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   @override
   ComponentRef<import1.ProvidersComponent> build() {
     _compView_0 = ViewProvidersComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ProvidersComponent_0_5 = import1.ProvidersComponent();
     _compView_0.create(_ProvidersComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ProvidersComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ProvidersComponent_0_5);
   }
 
   @override

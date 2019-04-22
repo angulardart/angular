@@ -62,11 +62,11 @@ class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Co
   @override
   ComponentRef<import1.DeferredChild1Component> build() {
     _compView_0 = ViewDeferredChild1Component0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DeferredChild1Component_0_5 = import1.DeferredChild1Component();
     _compView_0.create(_DeferredChild1Component_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChild1Component_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChild1Component_0_5);
   }
 
   @override
@@ -128,11 +128,11 @@ class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Co
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
     _compView_0 = ViewDeferredChild2Component0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DeferredChild2Component_0_5 = import1.DeferredChild2Component();
     _compView_0.create(_DeferredChild2Component_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChild2Component_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChild2Component_0_5);
   }
 
   @override
@@ -194,11 +194,11 @@ class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Co
   @override
   ComponentRef<import1.DeferredChild3Component> build() {
     _compView_0 = ViewDeferredChild3Component0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DeferredChild3Component_0_5 = import1.DeferredChild3Component();
     _compView_0.create(_DeferredChild3Component_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChild3Component_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChild3Component_0_5);
   }
 
   @override
@@ -259,11 +259,11 @@ class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChi
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
     _compView_0 = ViewNotDeferredChildComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _NotDeferredChildComponent_0_5 = import1.NotDeferredChildComponent();
     _compView_0.create(_NotDeferredChildComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _NotDeferredChildComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _NotDeferredChildComponent_0_5);
   }
 
   @override
@@ -327,11 +327,11 @@ class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.D
   @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithoutNgContent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithoutNgContent_0_5 = import1.DeferredChildComponentWithoutNgContent();
     _compView_0.create(_DeferredChildComponentWithoutNgContent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChildComponentWithoutNgContent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChildComponentWithoutNgContent_0_5);
   }
 
   @override
@@ -395,11 +395,11 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.Defe
   @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithNgContent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithNgContent_0_5 = import1.DeferredChildComponentWithNgContent();
     _compView_0.create(_DeferredChildComponentWithNgContent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChildComponentWithNgContent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChildComponentWithNgContent_0_5);
   }
 
   @override
@@ -469,12 +469,12 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   @override
   ComponentRef<import1.DeferredChildComponentWithServices> build() {
     _compView_0 = ViewDeferredChildComponentWithServices0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ExternalServiceImmediatelyCreated_0_5 = import10.ExternalServiceImmediatelyCreated();
     _DeferredChildComponentWithServices_0_6 = import1.DeferredChildComponentWithServices(_ExternalServiceImmediatelyCreated_0_5);
     _compView_0.create(_DeferredChildComponentWithServices_0_6, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DeferredChildComponentWithServices_0_6);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DeferredChildComponentWithServices_0_6);
   }
 
   @override

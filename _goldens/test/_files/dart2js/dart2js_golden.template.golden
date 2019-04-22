@@ -257,11 +257,11 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   @override
   ComponentRef<import1.RootComponent> build() {
     _compView_0 = ViewRootComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _RootComponent_0_5 = import1.RootComponent();
     _compView_0.create(_RootComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _RootComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _RootComponent_0_5);
   }
 
   @override
@@ -352,11 +352,11 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
     _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesDefaultChangeDetectionAndInputs_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesDefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -434,11 +434,11 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
     _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _DefaultChangeDetectionAndInputs_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -544,11 +544,11 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
   @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesOnPushChangeDetectionAndInputs0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesOnPushChangeDetectionAndInputs_0_5 = import1.UsesOnPushChangeDetectionAndInputs();
     _compView_0.create(_UsesOnPushChangeDetectionAndInputs_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesOnPushChangeDetectionAndInputs_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesOnPushChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -622,15 +622,15 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
   @override
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _OnPushChangeDetectionAndInputs_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.OnPushChangeDetectionAndInputs, () {
             return import1.OnPushChangeDetectionAndInputs(_compView_0, this.injectorGet(import16.Stream, parentIndex));
           })
         : import1.OnPushChangeDetectionAndInputs(_compView_0, this.injectorGet(import16.Stream, parentIndex)));
     _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _OnPushChangeDetectionAndInputs_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _OnPushChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -735,11 +735,11 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   @override
   ComponentRef<import1.InlinedNgIf> build() {
     _compView_0 = ViewInlinedNgIf0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InlinedNgIf_0_5 = import1.InlinedNgIf();
     _compView_0.create(_InlinedNgIf_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InlinedNgIf_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InlinedNgIf_0_5);
   }
 
   @override
@@ -848,11 +848,11 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
     _compView_0.create(_EmbeddedNgIf_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _EmbeddedNgIf_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _EmbeddedNgIf_0_5);
   }
 
   @override
@@ -965,11 +965,11 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
     _compView_0.create(_EmbeddedNgFor_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _EmbeddedNgFor_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _EmbeddedNgFor_0_5);
   }
 
   @override
@@ -1030,11 +1030,11 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   @override
   ComponentRef<import1.NullComponent> build() {
     _compView_0 = ViewNullComponent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _NullComponent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _NullComponent_0_5);
   }
 
   @override
@@ -1095,15 +1095,15 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InjectsFromArbitraryParent_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.InjectsFromArbitraryParent, () {
             return import1.InjectsFromArbitraryParent(this.injectorGet(const import11.MultiToken<String>('usPresidents'), parentIndex), this.injectorGet(const import11.MultiToken<String>('whiteHouse'), parentIndex), this.injectorGet(import1.InjectableService, parentIndex));
           })
         : import1.InjectsFromArbitraryParent(this.injectorGet(const import11.MultiToken<String>('usPresidents'), parentIndex), this.injectorGet(const import11.MultiToken<String>('whiteHouse'), parentIndex), this.injectorGet(import1.InjectableService, parentIndex)));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InjectsFromArbitraryParent_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InjectsFromArbitraryParent_0_5);
   }
 
   @override
@@ -1251,11 +1251,11 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _ComponentConditionalFeatures_0_5 = import1.ComponentConditionalFeatures();
     _compView_0.create(_ComponentConditionalFeatures_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _ComponentConditionalFeatures_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _ComponentConditionalFeatures_0_5);
   }
 
   @override
@@ -1317,11 +1317,11 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   @override
   ComponentRef<import1.FeatureA> build() {
     _compView_0 = ViewFeatureA0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
     _compView_0.create(_FeatureA_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _FeatureA_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _FeatureA_0_5);
   }
 
   @override
@@ -1383,11 +1383,11 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   @override
   ComponentRef<import1.FeatureB> build() {
     _compView_0 = ViewFeatureB0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
     _compView_0.create(_FeatureB_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _FeatureB_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _FeatureB_0_5);
   }
 
   @override
@@ -1484,11 +1484,11 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
   @override
   ComponentRef<import1.UsesDomBindings> build() {
     _compView_0 = ViewUsesDomBindings0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesDomBindings_0_5 = import1.UsesDomBindings();
     _compView_0.create(_UsesDomBindings_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesDomBindings_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesDomBindings_0_5);
   }
 
   @override
@@ -1616,11 +1616,11 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
   @override
   ComponentRef<import1.UsesNgDirectives> build() {
     _compView_0 = ViewUsesNgDirectives0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _UsesNgDirectives_0_5 = import1.UsesNgDirectives();
     _compView_0.create(_UsesNgDirectives_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _UsesNgDirectives_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _UsesNgDirectives_0_5);
   }
 
   @override
@@ -1770,11 +1770,11 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
   @override
   ComponentRef<import1.HasNestedProviderLookups> build() {
     _compView_0 = ViewHasNestedProviderLookups0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _HasNestedProviderLookups_0_5 = import1.HasNestedProviderLookups();
     _compView_0.create(_HasNestedProviderLookups_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _HasNestedProviderLookups_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasNestedProviderLookups_0_5);
   }
 
   @override
@@ -1835,15 +1835,15 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
   @override
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
     _compView_0 = ViewInjectsManyThingsDynamically0(this, 0);
-    rootEl = _compView_0.rootEl;
+    final _el_0 = _compView_0.rootEl;
     _InjectsManyThingsDynamically_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.InjectsManyThingsDynamically, () {
             return import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, parentIndex), this.injectorGet(import1.DepB, parentIndex), this.injectorGet(import1.DepC, parentIndex), this.injectorGetOptional(import1.DepD, parentIndex), this.injectorGetOptional(import1.DepE, parentIndex), this.injectorGetOptional(import1.DepF, parentIndex));
           })
         : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, parentIndex), this.injectorGet(import1.DepB, parentIndex), this.injectorGet(import1.DepC, parentIndex), this.injectorGetOptional(import1.DepD, parentIndex), this.injectorGetOptional(import1.DepE, parentIndex), this.injectorGetOptional(import1.DepF, parentIndex)));
     _compView_0.create(_InjectsManyThingsDynamically_0_5, projectedNodes);
-    init1(rootEl);
-    return ComponentRef(0, this, rootEl, _InjectsManyThingsDynamically_0_5);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _InjectsManyThingsDynamically_0_5);
   }
 
   @override
