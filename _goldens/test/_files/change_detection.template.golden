@@ -316,7 +316,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'Stateful');
     init0();
-    import13.internalSetStateChanged(_ctx, markStateChanged);
+    import13.internalSetStateChanged(_ctx, markForCheck);
   }
 
   @override

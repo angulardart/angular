@@ -10102,6 +10102,22 @@
     }
   };
   S.AppView.prototype = {
+    markForCheck$0: function() {
+      var t1 = this.viewData,
+        t2 = t1._cdMode;
+      if (t2 === 4)
+        return;
+      if (t1.type === C.ViewType_1) {
+        if (t2 === 2)
+          t1.set$cdMode(1);
+        this.parentView.markForCheck$0();
+      } else {
+        t1 = t1._viewContainerElement;
+        t1 = t1 == null ? null : t1.parentView;
+        if (t1 != null)
+          t1.markForCheck$0();
+      }
+    },
     create$2: function(_, context, projectedNodes) {
       this.ctx = context;
       this.viewData.projectedNodes = projectedNodes;
@@ -10178,22 +10194,6 @@
         current._lastGuardedView = this;
         current._lastCaughtException = e;
         current._lastCaughtTrace = s;
-      }
-    },
-    markPathToRootAsCheckOnce$0: function() {
-      var t1 = this.viewData,
-        t2 = t1._cdMode;
-      if (t2 === 4)
-        return;
-      if (t1.type === C.ViewType_1) {
-        if (t2 === 2)
-          t1.set$cdMode(1);
-        this.parentView.markPathToRootAsCheckOnce$0();
-      } else {
-        t1 = t1._viewContainerElement;
-        t1 = t1 == null ? null : t1.parentView;
-        if (t1 != null)
-          t1.markPathToRootAsCheckOnce$0();
       }
     },
     initViewRoot$1: function(hostElement) {
@@ -10827,7 +10827,7 @@
   };
   O.OnPushChangeDetectionAndInputs_ngOnInit_closure.prototype = {
     call$1: function(_) {
-      this.$this._changeDetector.markPathToRootAsCheckOnce$0();
+      this.$this._changeDetector.markForCheck$0();
     },
     $signature: 1
   };

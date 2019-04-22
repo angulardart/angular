@@ -216,7 +216,15 @@ abstract class AppView<T> extends DynamicView
 
   @override
   void markForCheck() {
-    markPathToRootAsCheckOnce();
+    if (cdMode == ChangeDetectionStrategy.Detached) return;
+    if (viewData.type == ViewType.component) {
+      if (cdMode == ChangeDetectionStrategy.Checked) {
+        cdMode = ChangeDetectionStrategy.CheckOnce;
+      }
+      parentView.markForCheck();
+    } else {
+      viewData._viewContainerElement?.parentView?.markForCheck();
+    }
   }
 
   @override
@@ -431,24 +439,6 @@ abstract class AppView<T> extends DynamicView
     cdMode = ChangeDetectionStrategy.CheckOnce;
   }
 
-  /// Called by ComponentState to mark view to be checked on next
-  /// change detection cycle.
-  void markStateChanged() {
-    markPathToRootAsCheckOnce();
-  }
-
-  void markPathToRootAsCheckOnce() {
-    if (cdMode == ChangeDetectionStrategy.Detached) return;
-    if (viewData.type == ViewType.component) {
-      if (cdMode == ChangeDetectionStrategy.Checked) {
-        cdMode = ChangeDetectionStrategy.CheckOnce;
-      }
-      parentView.markForCheck();
-    } else {
-      viewData._viewContainerElement?.parentView?.markForCheck();
-    }
-  }
-
   @protected
   void initComponentStyles() {
     componentStyles = parentView.componentStyles;
@@ -568,7 +558,7 @@ abstract class AppView<T> extends DynamicView
 
   void Function(E) eventHandler0<E>(void Function() handler) {
     return (E event) {
-      markPathToRootAsCheckOnce();
+      markForCheck();
       appViewUtils.eventManager.zone.runGuarded(handler);
     };
   }
@@ -587,7 +577,7 @@ abstract class AppView<T> extends DynamicView
         "Event handler '$handler' isn't assignable to expected type "
         "'($E) => void'");
     return (E event) {
-      markPathToRootAsCheckOnce();
+      markForCheck();
       appViewUtils.eventManager.zone
           .runGuarded(() => handler(unsafeCast<F>(event)));
     };
