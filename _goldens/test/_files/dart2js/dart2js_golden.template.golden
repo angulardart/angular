@@ -62,6 +62,8 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.UsesNgDirectives _UsesNgDirectives_11_5;
   ViewHasNestedProviderLookups0 _compView_12;
   import1.HasNestedProviderLookups _HasNestedProviderLookups_12_5;
+  ViewHasHostListeners0 _compView_13;
+  import1.HasHostListeners _HasHostListeners_13_5;
   static import2.ComponentStyles _componentStyles;
   ViewRootComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     initComponentStyles();
@@ -174,6 +176,11 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     parentRenderNode.append(_el_12);
     _HasNestedProviderLookups_12_5 = import1.HasNestedProviderLookups();
     _compView_12.create0(_HasNestedProviderLookups_12_5);
+    _compView_13 = ViewHasHostListeners0(this, 13);
+    final _el_13 = _compView_13.rootEl;
+    parentRenderNode.append(_el_13);
+    _HasHostListeners_13_5 = import1.HasHostListeners();
+    _compView_13.create0(_HasHostListeners_13_5);
     init0();
   }
 
@@ -217,6 +224,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_10.detectChanges();
     _compView_11.detectChanges();
     _compView_12.detectChanges();
+    _compView_13.detectChanges();
   }
 
   @override
@@ -231,6 +239,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     _compView_10.destroyInternalState();
     _compView_11.destroyInternalState();
     _compView_12.destroyInternalState();
+    _compView_13.destroyInternalState();
   }
 
   @override
@@ -1861,6 +1870,74 @@ AppView<import1.InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynam
   return _ViewInjectsManyThingsDynamicallyHost0(null, null);
 }
 
+final List<dynamic> styles$HasHostListeners = const [];
+
+class ViewHasHostListeners0 extends AppView<import1.HasHostListeners> {
+  static import2.ComponentStyles _componentStyles;
+  ViewHasHostListeners0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('has-host-listeners');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/dart2js/dart2js_golden.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.HasHostListeners> build() {
+    final _ctx = ctx;
+    final _rootEl = rootEl;
+    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    init0();
+    _rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
+    _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasHostListeners, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.HasHostListeners> _HasHostListenersNgFactory = const ComponentFactory('has-host-listeners', viewFactory_HasHostListenersHost0);
+ComponentFactory<import1.HasHostListeners> get HasHostListenersNgFactory {
+  return _HasHostListenersNgFactory;
+}
+
+final List<dynamic> styles$HasHostListenersHost = const [];
+
+class _ViewHasHostListenersHost0 extends AppView<import1.HasHostListeners> {
+  ViewHasHostListeners0 _compView_0;
+  import1.HasHostListeners _HasHostListeners_0_5;
+  _ViewHasHostListenersHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.HasHostListeners> build() {
+    _compView_0 = ViewHasHostListeners0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    _HasHostListeners_0_5 = import1.HasHostListeners();
+    _compView_0.create(_HasHostListeners_0_5, projectedNodes);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _HasHostListeners_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.HasHostListeners> viewFactory_HasHostListenersHost0() {
+  return _ViewHasHostListenersHost0(null, null);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -1885,6 +1962,7 @@ void initReflector() {
   _ngRef.registerComponent(UsesNgDirectives, UsesNgDirectivesNgFactory);
   _ngRef.registerComponent(HasNestedProviderLookups, HasNestedProviderLookupsNgFactory);
   _ngRef.registerComponent(InjectsManyThingsDynamically, InjectsManyThingsDynamicallyNgFactory);
+  _ngRef.registerComponent(HasHostListeners, HasHostListenersNgFactory);
   _ref0.initReflector();
   _ref1.initReflector();
 }

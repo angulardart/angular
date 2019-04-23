@@ -42,6 +42,7 @@ void main() {
     UsesDomBindings,
     UsesNgDirectives,
     HasNestedProviderLookups,
+    HasHostListeners,
   ],
   template: r'''
     <div hasProviders>
@@ -68,6 +69,8 @@ void main() {
     </uses-ng-directives>
     <has-nested-provider-lookups>
     </has-nested-provider-lookups>
+    <has-host-listeners>
+    </has-host-listeners>
   ''',
 )
 class RootComponent {}
@@ -365,3 +368,15 @@ class DepD {}
 class DepE {}
 
 class DepF {}
+
+@Component(
+  selector: 'has-host-listeners',
+  template: '',
+)
+class HasHostListeners {
+  @HostListener('click')
+  void onClick() {}
+
+  @HostListener('focus')
+  void onFocus() {}
+}
