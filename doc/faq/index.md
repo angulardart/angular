@@ -4,7 +4,7 @@ go/angular-dart/faq
 
 [TOC]
 
-<!--* freshness: { owner: 'matanl' reviewed: '2018-10-22' } *-->
+<!--* freshness: { owner: 'matanl' reviewed: '2019-04-23' } *-->
 
 The AngularDart team maintains a set of _FAQs_:
 
