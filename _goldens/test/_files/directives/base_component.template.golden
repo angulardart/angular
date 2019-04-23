@@ -35,8 +35,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    final _rootEl = rootEl;
-    final import8.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import8.HtmlElement parentRenderNode = initViewRoot();
     final doc = import8.document;
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'Foo');

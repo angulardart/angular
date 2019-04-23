@@ -37,8 +37,7 @@ class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
 
   @override
   ComponentRef<import1.UntypedComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -105,8 +104,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
 
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewUntypedComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -191,8 +189,7 @@ class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
 
   @override
   ComponentRef<import1.GenericComp<T>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -259,8 +256,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
 
   @override
   ComponentRef<import1.UsesGenericComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -348,8 +344,7 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
 
   @override
   ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -434,8 +429,7 @@ class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp1<K, V>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -503,8 +497,7 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
 
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewMappingComp10(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -594,8 +587,7 @@ class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp2<K, V>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -662,8 +654,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
 
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewMappingComp20(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -748,8 +739,7 @@ class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
 
   @override
   ComponentRef<import1.BoundComp<T>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -816,8 +806,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
 
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -905,8 +894,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
 
   @override
   ComponentRef<import1.UsesBoundComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -991,8 +979,7 @@ class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A
 
   @override
   ComponentRef<import1.SelfBoundComp<A, B>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1060,8 +1047,7 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
 
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewSelfBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1151,8 +1137,7 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.Recurs
 
   @override
   ComponentRef<import1.RecursiveComp<T>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1219,8 +1204,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
 
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewRecursiveComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1305,8 +1289,7 @@ class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
 
   @override
   ComponentRef<import1.FunctionTypeComp<F>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1373,8 +1356,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
 
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewFunctionTypeComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1468,8 +1450,7 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
 
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewNestedChildComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1619,8 +1600,7 @@ class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
 
   @override
   ComponentRef<import1.NestedChildComp<T>> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1689,8 +1669,7 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
 
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewNestedParentComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1791,8 +1770,7 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
 
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1892,8 +1870,7 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
 
   @override
   ComponentRef<import1.UsesGenericChangeDetector> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import13.appendDiv(doc, parentRenderNode);
     import13.setAttribute(_el_0, 'generic', '');

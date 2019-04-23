@@ -19,7 +19,6 @@ import 'compile_element.dart' show CompileElement, CompileNode;
 import 'compile_view.dart';
 import 'constants.dart'
     show
-        appViewRootElementName,
         createEnumExpression,
         changeDetectionStrategyToConst,
         parentRenderNodeVar,
@@ -706,20 +705,12 @@ o.Statement _createHostViewFactory(CompileView view, o.ClassStmt viewClass) {
 }
 
 List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
-  // Hoist the `rootEl` class field as `_rootEl` locally for Dart2JS.
-  o.ReadVarExpr cachedRootEl;
   final parentRenderNodeStmts = <o.Statement>[];
   final isComponent = view.viewType == ViewType.component;
   if (isComponent) {
-    cachedRootEl = o.variable('_rootEl');
-    parentRenderNodeStmts.add(cachedRootEl
-        .set(o.ReadClassMemberExpr(appViewRootElementName))
-        .toDeclStmt(null, [o.StmtModifier.Final]));
     final nodeType = o.importType(Identifiers.HTML_HTML_ELEMENT);
-    final parentRenderNodeExpr = o.InvokeMemberMethodExpr(
-      "initViewRoot",
-      [cachedRootEl],
-    );
+    final parentRenderNodeExpr =
+        o.InvokeMemberMethodExpr('initViewRoot', const []);
     parentRenderNodeStmts.add(parentRenderNodeVar
         .set(parentRenderNodeExpr)
         .toDeclStmt(nodeType, [o.StmtModifier.Final]));
@@ -783,7 +774,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
       view,
       parser,
       statements,
-      rootEl: cachedRootEl,
+      rootEl: parentRenderNodeVar,
     );
   }
 

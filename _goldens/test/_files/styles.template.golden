@@ -33,8 +33,7 @@ class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
 
   @override
   ComponentRef<import1.StylesComponent> build() {
-    final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot();
     final doc = import2.document;
     _el_0 = import9.appendDiv(doc, parentRenderNode);
     this.updateChildClass(_el_0, 'foo');

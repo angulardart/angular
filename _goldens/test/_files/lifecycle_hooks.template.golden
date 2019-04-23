@@ -34,8 +34,7 @@ class ViewMostLifecycleHooksComponent0 extends AppView<import1.MostLifecycleHook
 
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewEmptyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -132,8 +131,7 @@ class ViewEmptyComponent0 extends AppView<import1.EmptyComponent> {
 
   @override
   ComponentRef<import1.EmptyComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -197,8 +195,7 @@ class ViewOnChangesComponent0 extends AppView<import1.OnChangesComponent> {
 
   @override
   ComponentRef<import1.OnChangesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -264,8 +261,7 @@ class ViewAfterChangesComponent0 extends AppView<import1.AfterChangesComponent> 
 
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -342,8 +338,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
 
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);

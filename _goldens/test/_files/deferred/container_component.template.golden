@@ -56,8 +56,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
 
   @override
   ComponentRef<import1.TestContainerComponent> build() {
-    final _rootEl = rootEl;
-    final import10.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import10.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import13.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_TestContainerComponent1);

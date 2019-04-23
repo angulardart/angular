@@ -110,8 +110,7 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
 
   @override
   ComponentRef<import1.RootComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_0, 'hasProviders', '');
@@ -305,8 +304,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
 
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -399,8 +397,7 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
 
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Hello ');
     parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import9.appendText(parentRenderNode, ' ');
@@ -482,8 +479,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
 
   @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -591,8 +587,7 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
 
   @override
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Hello ');
     parentRenderNode.append(_textBinding_1.element);
     final _text_2 = import9.appendText(parentRenderNode, ' ');
@@ -682,8 +677,7 @@ class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
 
   @override
   ComponentRef<import1.InlinedNgIf> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InlinedNgIf1);
@@ -782,8 +776,7 @@ class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_EmbeddedNgIf1);
@@ -895,8 +888,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
 
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'ul');
     final _anchor_1 = import9.appendAnchor(_el_0);
@@ -1010,8 +1002,7 @@ class ViewNullComponent0 extends AppView<import1.NullComponent> {
 
   @override
   ComponentRef<import1.NullComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1075,8 +1066,7 @@ class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitra
 
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1148,8 +1138,7 @@ class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditi
 
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ComponentConditionalFeatures1);
@@ -1296,8 +1285,7 @@ class ViewFeatureA0 extends AppView<import1.FeatureA> {
 
   @override
   ComponentRef<import1.FeatureA> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'I am Feature A');
     init0();
   }
@@ -1362,8 +1350,7 @@ class ViewFeatureB0 extends AppView<import1.FeatureB> {
 
   @override
   ComponentRef<import1.FeatureB> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'I am Feature B');
     init0();
   }
@@ -1433,8 +1420,7 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
 
   @override
   ComponentRef<import1.UsesDomBindings> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
     init0();
@@ -1539,8 +1525,7 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
 
   @override
   ComponentRef<import1.UsesNgDirectives> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     _NgClass_0_5 = import21.NgClass(_el_0);
@@ -1663,8 +1648,7 @@ class ViewHasNestedProviderLookups0 extends AppView<import1.HasNestedProviderLoo
 
   @override
   ComponentRef<import1.HasNestedProviderLookups> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_HasNestedProviderLookups1);
@@ -1815,8 +1799,7 @@ class ViewInjectsManyThingsDynamically0 extends AppView<import1.InjectsManyThing
 
   @override
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -1885,11 +1868,10 @@ class ViewHasHostListeners0 extends AppView<import1.HasHostListeners> {
   @override
   ComponentRef<import1.HasHostListeners> build() {
     final _ctx = ctx;
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
-    _rootEl.addEventListener('click', eventHandler0(_ctx.onClick));
-    _rootEl.addEventListener('focus', eventHandler0(_ctx.onFocus));
+    parentRenderNode.addEventListener('click', eventHandler0(_ctx.onClick));
+    parentRenderNode.addEventListener('focus', eventHandler0(_ctx.onFocus));
   }
 
   @override

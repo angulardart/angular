@@ -33,8 +33,7 @@ class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax
 
   @override
   ComponentRef<import1.HostComponentNewSyntax> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -101,8 +100,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
 
   @override
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewHostComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -193,12 +191,11 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   @override
   ComponentRef<import1.HostComponent> build() {
     final _ctx = ctx;
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
-    _rootEl.addEventListener('click', eventHandler1(_ctx.onClick));
-    import10.appViewUtils.eventManager.addEventListener(_rootEl, 'tripleclick', eventHandler1(_handle_tripleclick__));
-    _rootEl.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
+    parentRenderNode.addEventListener('click', eventHandler1(_ctx.onClick));
+    import10.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', eventHandler1(_handle_tripleclick__));
+    parentRenderNode.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
   }
 
   bool _handle_tripleclick__($event) {

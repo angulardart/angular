@@ -40,8 +40,7 @@ class ViewComp10 extends AppView<import1.Comp1> {
 
   @override
   ComponentRef<import1.Comp1> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     init0();
   }
@@ -113,8 +112,7 @@ class ViewComp1String0 extends AppView<import1.Comp1String> {
 
   @override
   ComponentRef<import1.Comp1String> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     init0();
   }
@@ -186,8 +184,7 @@ class ViewComp20 extends AppView<import1.Comp2> {
 
   @override
   ComponentRef<import1.Comp2> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     init0();
   }
@@ -259,8 +256,7 @@ class ViewComp30 extends AppView<import1.Comp3> {
 
   @override
   ComponentRef<import1.Comp3> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     init0();
   }
@@ -333,8 +329,7 @@ class ViewComp40 extends AppView<import1.Comp4> {
 
   @override
   ComponentRef<import1.Comp4> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     _arr_0 = import11.pureProxy2((p0, p1) {
       return [p0, p1];
@@ -410,8 +405,7 @@ class ViewComp50 extends AppView<import1.Comp5> {
 
   @override
   ComponentRef<import1.Comp5> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     final _text_1 = import12.appendText(parentRenderNode, '}');
     _map_0 = import11.pureProxy1((p0) {
@@ -489,8 +483,7 @@ class ViewComp60 extends AppView<import1.Comp6> {
 
   @override
   ComponentRef<import1.Comp6> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import12.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp61);
@@ -601,8 +594,7 @@ class ViewComp70 extends AppView<import1.Comp7> {
 
   @override
   ComponentRef<import1.Comp7> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import12.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_Comp71);

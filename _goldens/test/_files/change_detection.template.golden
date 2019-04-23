@@ -38,8 +38,7 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
 
   @override
   ComponentRef<import1.UsesOnPushComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewOnPushComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -133,8 +132,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
 
   @override
   ComponentRef<import1.OnPushComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewOnPushChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -230,8 +228,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
 
   @override
   ComponentRef<import1.OnPushChildComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'OnPushChild: ');
@@ -310,8 +307,7 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   @override
   ComponentRef<import1.StatefulComponent> build() {
     final _ctx = ctx;
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'Stateful');
@@ -379,8 +375,7 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
 
   @override
   ComponentRef<import1.DefaultComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'Default');
@@ -449,8 +444,7 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
 
   @override
   ComponentRef<import1.UsesNgModelLike> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import11.appendElement(doc, parentRenderNode, 'input');
     _NgModelLike_0_5 = import1.NgModelLike();

@@ -231,8 +231,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'form');
     _NgForm_0_5 = import1.NgForm();
@@ -523,8 +522,7 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
 
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -596,8 +594,7 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
 
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     project(parentRenderNode, 0);
     init0();
   }

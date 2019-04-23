@@ -34,8 +34,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 
   @override
   ComponentRef<import1.ParentComponent> build() {
-    final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot();
     final doc = import2.document;
     _el_0 = import9.appendElement(doc, parentRenderNode, 'child-comp');
     init0();
@@ -113,8 +112,7 @@ class ViewChildComponent0 extends AppView<import1.ChildComponent> {
 
   @override
   ComponentRef<import1.ChildComponent> build() {
-    final _rootEl = rootEl;
-    final import2.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import2.HtmlElement parentRenderNode = initViewRoot();
     parentRenderNode.append(_textBinding_0.element);
     init0();
   }

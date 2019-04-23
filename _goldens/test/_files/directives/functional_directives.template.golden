@@ -31,8 +31,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_0, 'generateText', '');

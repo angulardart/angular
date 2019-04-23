@@ -39,8 +39,7 @@ class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
     final _ctx = ctx;
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, import10.interpolateString0(_ctx.baseUrl));
     init0();
   }
@@ -117,8 +116,7 @@ class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent
 
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import9.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_ContainsChildComponent1);
@@ -269,8 +267,7 @@ class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedT
 
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 

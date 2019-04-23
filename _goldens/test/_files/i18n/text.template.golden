@@ -33,8 +33,7 @@ class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
 
   @override
   ComponentRef<import1.I18nTextComponent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'p');
     final _text_1 = import10.appendText(_el_0, _message_0);

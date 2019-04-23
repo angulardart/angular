@@ -39,8 +39,7 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
 
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewFancyButtonComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -148,8 +147,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
 
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
