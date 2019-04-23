@@ -1,3 +1,6 @@
+*   New `ThrowingTemplateAstVisitor` which throws by default in each visit
+    method.
+
 ## 0.5.9
 
 *   Errors caused by parsing an invalid micro expression (i.e. `*ngFor`) are now
