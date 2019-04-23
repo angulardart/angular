@@ -58,7 +58,8 @@ export 'src/visitor.dart'
         MinimizeWhitespaceVisitor,
         TemplateAstVisitor,
         DesugarVisitor,
-        RecursiveTemplateAstVisitor;
+        RecursiveTemplateAstVisitor,
+        ThrowingTemplateAstVisitor;
 
 /// Returns [template] parsed as an abstract syntax tree.
 ///
