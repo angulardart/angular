@@ -120,6 +120,12 @@ external _ng.ComponentFactory<InjectsManyThingsDynamically> get InjectsManyThing
 class ViewInjectsManyThingsDynamically0 extends _ng.AppView<InjectsManyThingsDynamically> {
   external ViewInjectsManyThingsDynamically0(_ng.RenderView parentView, int parentIndex);
 }
+// For @Component class HasHostListeners.
+external List<dynamic> get styles$HasHostListeners;
+external _ng.ComponentFactory<HasHostListeners> get HasHostListenersNgFactory;
+class ViewHasHostListeners0 extends _ng.AppView<HasHostListeners> {
+  external ViewHasHostListeners0(_ng.RenderView parentView, int parentIndex);
+}
 // For @Directive class HasProvider.
 class HasProviderNgCd extends _ng.DirectiveChangeDetector {
   external HasProvider get instance;
