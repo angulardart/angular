@@ -33,8 +33,7 @@ class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
 
   @override
   ComponentRef<import1.PreserveWhitespace> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import10.appendText(parentRenderNode, '    ');
     final doc = import7.document;
     final _el_1 = import10.appendDiv(doc, parentRenderNode);
@@ -110,8 +109,7 @@ class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
 
   @override
   ComponentRef<import1.MinifyWhitespace> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Welcome... To... ');

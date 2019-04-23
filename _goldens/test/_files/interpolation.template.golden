@@ -38,8 +38,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
 
   @override
   ComponentRef<import1.InterpolationComponent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import10.appendText(parentRenderNode, '    ');
     final doc = import7.document;
     final _el_1 = import10.appendDiv(doc, parentRenderNode);
@@ -117,8 +116,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
 
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     _el_0.append(_textBinding_1.element);
@@ -193,8 +191,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
 
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     _el_0.append(_textBinding_1.element);
@@ -274,8 +271,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
 
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Welcome ');
@@ -356,8 +352,7 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
 
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Welcome');
@@ -430,8 +425,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
 
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _anchor_0 = import10.appendAnchor(parentRenderNode);
     _appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
@@ -590,8 +584,7 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
 
   @override
   ComponentRef<import1.Attribute> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     _el_0 = import10.appendElement(doc, parentRenderNode, 'img');
     final _text_1 = import10.appendText(parentRenderNode, ' ');
@@ -678,8 +671,7 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
 
   @override
   ComponentRef<import1.AttributePW> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import10.appendText(parentRenderNode, '    ');
     final doc = import7.document;
     _el_1 = import10.appendElement(doc, parentRenderNode, 'img');

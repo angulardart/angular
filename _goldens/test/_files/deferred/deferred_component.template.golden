@@ -32,8 +32,7 @@ class ViewDeferredChild1Component0 extends AppView<import1.DeferredChild1Compone
 
   @override
   ComponentRef<import1.DeferredChild1Component> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 1');
     init0();
   }
@@ -98,8 +97,7 @@ class ViewDeferredChild2Component0 extends AppView<import1.DeferredChild2Compone
 
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 2');
     init0();
   }
@@ -164,8 +162,7 @@ class ViewDeferredChild3Component0 extends AppView<import1.DeferredChild3Compone
 
   @override
   ComponentRef<import1.DeferredChild3Component> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Deferred Child 3');
     init0();
   }
@@ -230,8 +227,7 @@ class ViewNotDeferredChildComponent0 extends AppView<import1.NotDeferredChildCom
 
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -295,8 +291,7 @@ class ViewDeferredChildComponentWithoutNgContent0 extends AppView<import1.Deferr
 
   @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     final _text_1 = import9.appendText(_el_0, 'Child');
@@ -363,8 +358,7 @@ class ViewDeferredChildComponentWithNgContent0 extends AppView<import1.DeferredC
 
   @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     project(_el_0, 0);
@@ -431,8 +425,7 @@ class ViewDeferredChildComponentWithServices0 extends AppView<import1.DeferredCh
 
   @override
   ComponentRef<import1.DeferredChildComponentWithServices> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 

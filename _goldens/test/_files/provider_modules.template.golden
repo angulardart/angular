@@ -32,8 +32,7 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
 
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 

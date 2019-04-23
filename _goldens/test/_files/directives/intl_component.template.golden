@@ -35,8 +35,7 @@ class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
 
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
     _el_0.append(_textBinding_1.element);
@@ -114,8 +113,7 @@ class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   @override
   ComponentRef<import1.CompWithFinal> build() {
     final _ctx = ctx;
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
     final _text_1 = import10.appendText(_el_0, import11.interpolateString0(_ctx.okMessage));
@@ -185,8 +183,7 @@ class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
 
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
     final _text_1 = import10.appendText(_el_0, import11.interpolateString0(import1.CompWithFinalStatic.okMessage));
@@ -256,8 +253,7 @@ class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> 
 
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
-    final _rootEl = rootEl;
-    final import7.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'button');
     final _text_1 = import10.appendText(_el_0, import11.interpolateString0(import1.Messages.okMessage));

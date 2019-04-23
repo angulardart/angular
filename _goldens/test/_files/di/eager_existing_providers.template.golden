@@ -35,8 +35,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -131,8 +130,7 @@ class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesCom
 
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     project(parentRenderNode, 0);
     init0();
   }
@@ -205,8 +203,7 @@ class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesCompo
 
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 

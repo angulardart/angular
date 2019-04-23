@@ -10216,7 +10216,8 @@
         current._lastCaughtTrace = s;
       }
     },
-    initViewRoot$1: function(hostElement) {
+    initViewRoot$0: function() {
+      var hostElement = this.rootEl;
       this.componentStyles.toString;
       return hostElement;
     },
@@ -10893,7 +10894,7 @@
     build$0: function() {
       var t1, styles, t2, t3, t4, t5, t6, _this = this, _null = null,
         _s11_ = "hasProvider",
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         doc = document,
         _el_0 = T.appendDiv(doc, parentRenderNode);
       T.setAttribute(_el_0, "hasProviders", "");
@@ -11179,7 +11180,7 @@
   N.ViewUsesDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var t2, _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
         styles = $.ViewDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
@@ -11218,7 +11219,7 @@
   N.ViewDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl);
+        parentRenderNode = _this.initViewRoot$0();
       T.appendText(parentRenderNode, "Hello ");
       parentRenderNode.appendChild(_this._textBinding_1.element);
       T.appendText(parentRenderNode, " ");
@@ -11244,7 +11245,7 @@
   N.ViewUsesOnPushChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var t2, _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(1, C.ViewType_1, 0)),
         styles = $.ViewOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
@@ -11297,7 +11298,7 @@
   N.ViewOnPushChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl);
+        parentRenderNode = _this.initViewRoot$0();
       T.appendText(parentRenderNode, "Hello ");
       parentRenderNode.appendChild(_this._textBinding_1.element);
       T.appendText(parentRenderNode, " ");
@@ -11319,7 +11320,7 @@
   N.ViewInlinedNgIf0.prototype = {
     build$0: function() {
       var _this = this,
-        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$1(_this.rootEl)));
+        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_InlinedNgIf1$closure()), t1);
       _this.init0$0();
     },
@@ -11342,7 +11343,7 @@
   N.ViewEmbeddedNgIf0.prototype = {
     build$0: function() {
       var _this = this,
-        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$1(_this.rootEl)));
+        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1);
       _this.init0$0();
     },
@@ -11384,7 +11385,7 @@
   N.ViewEmbeddedNgFor0.prototype = {
     build$0: function() {
       var _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         t1 = _this._appEl_1 = new V.ViewContainer(1, _this, T.appendAnchor(T.appendElement(document, parentRenderNode, "ul")));
       _this._NgFor_1_9 = new R.NgFor(t1, new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure()));
       _this.init0$0();
@@ -11427,20 +11428,20 @@
   };
   N.ViewNullComponent0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl);
+      this.initViewRoot$0();
       this.init0$0();
     }
   };
   N.ViewInjectsFromArbitraryParent0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl);
+      this.initViewRoot$0();
       this.init0$0();
     }
   };
   N.ViewComponentConditionalFeatures0.prototype = {
     build$0: function() {
       var _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(parentRenderNode));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure()), t1);
       t1 = _this._appEl_1 = new V.ViewContainer(1, _this, T.appendAnchor(parentRenderNode));
@@ -11516,22 +11517,21 @@
   };
   N.ViewFeatureA0.prototype = {
     build$0: function() {
-      T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature A");
+      T.appendText(this.initViewRoot$0(), "I am Feature A");
       this.init0$0();
     }
   };
   N.ViewFeatureB0.prototype = {
     build$0: function() {
-      T.appendText(this.initViewRoot$1(this.rootEl), "I am Feature B");
+      T.appendText(this.initViewRoot$0(), "I am Feature B");
       this.init0$0();
     }
   };
   N.ViewUsesDomBindings0.prototype = {
     build$0: function() {
-      var _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl);
-      _this._el_0 = T.appendElement(document, parentRenderNode, "button");
-      _this.init0$0();
+      var parentRenderNode = this.initViewRoot$0();
+      this._el_0 = T.appendElement(document, parentRenderNode, "button");
+      this.init0$0();
     },
     detectChangesInternal$0: function() {
       var t1, t2, _this = this;
@@ -11553,7 +11553,7 @@
   N.ViewUsesNgDirectives0.prototype = {
     build$0: function() {
       var _el_2, _el_4, _el_6, _this = this,
-        parentRenderNode = _this.initViewRoot$1(_this.rootEl),
+        parentRenderNode = _this.initViewRoot$0(),
         doc = document,
         _el_0 = T.appendDiv(doc, parentRenderNode),
         t1 = [P.String];
@@ -11620,7 +11620,7 @@
   N.ViewHasNestedProviderLookups0.prototype = {
     build$0: function() {
       var _this = this,
-        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$1(_this.rootEl)));
+        t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_HasNestedProviderLookups1$closure()), t1);
       _this.init0$0();
     },
@@ -11688,7 +11688,7 @@
   };
   N.ViewInjectsManyThingsDynamically0.prototype = {
     build$0: function() {
-      this.initViewRoot$1(this.rootEl);
+      this.initViewRoot$0();
       this.init0$0();
     }
   };
@@ -11696,13 +11696,12 @@
     build$0: function() {
       var t1, t2, _this = this,
         _ctx = _this.ctx,
-        _rootEl = _this.rootEl;
-      _this.initViewRoot$1(_rootEl);
+        parentRenderNode = _this.initViewRoot$0();
       _this.init0$0();
       t1 = W.Event;
-      t2 = J.getInterceptor$x(_rootEl);
-      t2.addEventListener$2(_rootEl, "click", _this.eventHandler0$1$1(_ctx.get$onClick(_ctx), t1));
-      t2.addEventListener$2(_rootEl, "focus", _this.eventHandler0$1$1(_ctx.get$onFocus(_ctx), t1));
+      t2 = J.getInterceptor$x(parentRenderNode);
+      t2.addEventListener$2(parentRenderNode, "click", _this.eventHandler0$1$1(_ctx.get$onClick(_ctx), t1));
+      t2.addEventListener$2(parentRenderNode, "focus", _this.eventHandler0$1$1(_ctx.get$onFocus(_ctx), t1));
     }
   };
   (function aliases() {

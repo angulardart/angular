@@ -33,8 +33,7 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
 
   @override
   ComponentRef<import1.HasHostAttributes> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -111,8 +110,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
 
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
@@ -189,8 +187,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
 
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
@@ -265,8 +262,7 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
 
   @override
   ComponentRef<import1.HasHostClass> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     init0();
   }
 
@@ -343,8 +339,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
 
   @override
   ComponentRef<import1.HasTemplateClass> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();
@@ -423,8 +418,7 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
 
   @override
   ComponentRef<import1.HasStyleProperty> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     _el_0 = import10.appendDiv(doc, parentRenderNode);
     init0();

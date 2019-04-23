@@ -445,8 +445,14 @@ abstract class AppView<T> extends DynamicView
   }
 
   /// Initializes styling to enable css shim for host element.
+  ///
+  /// The return value serves as a more efficient way of referencing [rootEl]
+  /// within a component view's [build] implementation. It requires less code to
+  /// assign the return value of a function that's going to be called anyways,
+  /// than to generate an extra statement to load a field.
   @dart2js.noInline
-  HtmlElement initViewRoot(HtmlElement hostElement) {
+  HtmlElement initViewRoot() {
+    final hostElement = rootEl;
     final styles = componentStyles;
     if (styles.usesStyleEncapsulation) {
       updateClassBinding(hostElement, styles.hostPrefix, true);

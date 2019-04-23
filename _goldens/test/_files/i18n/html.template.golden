@@ -33,8 +33,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
 
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
-    final _rootEl = rootEl;
-    final import6.HtmlElement parentRenderNode = initViewRoot(_rootEl);
+    final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'p');
     final _html_1 = import10.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
