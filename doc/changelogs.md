@@ -6,7 +6,7 @@ go/angular-dart/changelogs
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'matanl' reviewed: '2018-10-22' }
+freshness: { owner: 'matanl' reviewed: '2019-04-23' }
 *-->
 
 *   [Core](/third_party/dart_src/angular/angular/g3doc/CHANGELOG.md)
