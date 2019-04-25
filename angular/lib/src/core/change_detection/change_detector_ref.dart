@@ -70,6 +70,7 @@ abstract class ChangeDetectorRef {
   /// **WARNING**: This API should be considered rather _rare_. Strongly
   /// consider reaching out if you have a bug or performance issue that leads
   /// to using [detach] over `ChangeDetectionStrategy.OnPush` / [markForCheck].
+  @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
   void detach();
 
   /// Reattaches a component that was [detach]-ed previously from the hierarchy.
@@ -78,6 +79,7 @@ abstract class ChangeDetectorRef {
   /// will be checked for changes during the next change detection run. See the
   /// docs around [detach] for details of how detaching works and why this
   /// method invocation should be rare.
+  @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
   void reattach();
 
   /// Forces synchronous change detection of this component and its children.
