@@ -60,18 +60,6 @@ class DoCheckDirective implements DoCheck {
 }
 
 @Component(
-  selector: 'on-changes',
-  template: '',
-)
-class OnChangesComponent implements OnChanges {
-  @override
-  void ngOnChanges(_) {}
-
-  @Input()
-  String input;
-}
-
-@Component(
   selector: 'after-changes',
   template: '',
 )
@@ -89,7 +77,6 @@ class AfterChangesComponent implements AfterChanges {
     MostLifecycleHooksComponent,
     EmptyComponent,
     DoCheckDirective,
-    OnChangesComponent,
     AfterChangesComponent,
   ],
   template: r'''
@@ -97,7 +84,6 @@ class AfterChangesComponent implements AfterChanges {
       <empty-comp></empty-comp>
     </lifecycle-hooks>
     <do-check [input]="input"></do-check>
-    <on-changes [input]="input"></on-changes>
     <after-changes [input]="input"></after-changes>
   ''',
 )
