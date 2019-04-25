@@ -13,12 +13,13 @@ import 'router/router_state.dart';
 /// hook into route navigation.
 ///
 /// ```
-/// @Injectable
-/// class MyHook implements RouterHook {}
+/// class MyHook extends RouterHook {}
 ///
-/// bootstrap(MyAppComponent, [
+/// @GenerateInjector([
+///   ClassProvider(RouterHook, useClass: MyHook),
 ///   routerProviders,
-///   new Provider(RouterHook, useClass: MyHook)]);
+/// ])
+/// final InjectorFactory injector = ng.injector$Injector;
 /// ```
 ///
 /// Some example uses could include programmatically redirecting or preserving
@@ -32,8 +33,7 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
+  /// class MyHook extends RouterHook {
   ///   @override
   ///   Future<String> navigationPath(String _, NavigationParams __) async {
   ///     // Maybe there is only a homepage, so redirect all to homepage.
@@ -54,19 +54,25 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
-  ///   final Router _router;
-  ///   MyHook(this._router);
+  /// class MyHook extends RouterHook {
+  ///   MyHook(this._injector);
+  ///
+  ///   final Injector _injector;
+  ///
+  ///   // Lazily inject `Router` to avoid cyclic dependency.
+  ///   Router _router;
+  ///   Router get router => _router ??= _injector.provideType(Router);
   ///
   ///   @override
   ///   Future<NavigationParams> navigationParams(
   ///       String _, NavigationParams params) async {
   ///     // Combine the query parameters with existing ones.
-  ///     return new NavigationParams(
-  ///       queryParameters: new Map()
-  ///         ..addAll(_router.current.queryParameters)
-  ///         ..addAll(params.queryParameters));
+  ///     return NavigationParams(
+  ///       queryParameters: {
+  ///         ...?router.current?.queryParameters,
+  ///         ...params.queryParameters,
+  ///       },
+  ///     );
   ///   }
   /// }
   /// ```
@@ -85,8 +91,7 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
+  /// class MyHook extends RouterHook {
   ///   final AuthService _authService;
   ///
   ///   @override
@@ -113,8 +118,7 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
+  /// class MyHook extends RouterHook {
   ///   final Window _window;
   ///
   ///   @override
@@ -140,8 +144,7 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
+  /// class MyHook extends RouterHook {
   ///   final Window _window;
   ///
   ///   @override
@@ -165,8 +168,7 @@ abstract class RouterHook {
   /// You can use `async` in order to simplify when returning synchronously:
   ///
   /// ```
-  /// @Injectable
-  /// class MyHook implements RouterHook {
+  /// class MyHook extends RouterHook {
   ///   @override
   ///   Future<bool> canReuse(
   ///       Object _, RouterState __, RouterState ___) async {
