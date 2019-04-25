@@ -9,7 +9,7 @@ homepage: https://github.com/dart-lang/angular_analyzer_plugin
 environment:
   sdk: ">=2.2.1-dev.3.0 <3.0.0"
 dependencies:
-  analyzer: ^0.35.0
+  analyzer: ^0.36.2
   plugin: '^0.2.0'
   analyzer_plugin: '0.0.1-alpha.7'
   angular_ast: '^0.5.9'
