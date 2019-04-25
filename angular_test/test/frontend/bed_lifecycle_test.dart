@@ -39,7 +39,7 @@ void main() {
     expect(docRoot.text, isEmpty);
   });
 
-  test('should invoke ngOnChanges, then ngOnInit', () async {
+  test('should invoke ngAfterChanges, then ngOnInit', () async {
     final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
@@ -50,7 +50,7 @@ void main() {
   });
 
   test(
-      'should invoke ngOnChanges with asynchronous beforeChangeDetection,'
+      'should invoke ngAfterChanges with asynchronous beforeChangeDetection,'
       ' then ngOnInit', () async {
     final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
       beforeChangeDetection: (root) async => root.name = 'Hello',
