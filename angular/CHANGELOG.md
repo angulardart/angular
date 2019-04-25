@@ -9,6 +9,12 @@
 *   Directives no longer support `OnChanges` lifecycle. Use `AfterChanges`
     instead.
 
+### Deprecations
+
+*   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.
+    Components that rely on these methods should use `changeDetection:
+    ChangeDetectionStrategy.OnPush` instead.
+
 ## 5.3.0
 
 ### New features
