@@ -27,12 +27,6 @@ external _ng.ComponentFactory<EmptyComponent> get EmptyComponentNgFactory;
 class ViewEmptyComponent0 extends _ng.AppView<EmptyComponent> {
   external ViewEmptyComponent0(_ng.RenderView parentView, int parentIndex);
 }
-// For @Component class OnChangesComponent.
-external List<dynamic> get styles$OnChangesComponent;
-external _ng.ComponentFactory<OnChangesComponent> get OnChangesComponentNgFactory;
-class ViewOnChangesComponent0 extends _ng.AppView<OnChangesComponent> {
-  external ViewOnChangesComponent0(_ng.RenderView parentView, int parentIndex);
-}
 // For @Component class AfterChangesComponent.
 external List<dynamic> get styles$AfterChangesComponent;
 external _ng.ComponentFactory<AfterChangesComponent> get AfterChangesComponentNgFactory;
