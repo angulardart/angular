@@ -1,0 +1,188 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'default_under_onpush.dart';
+export 'default_under_onpush.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/app_view.dart';
+import 'default_under_onpush.dart' as import1;
+import 'package:angular/src/runtime/text_binding.dart' as import2;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
+import 'package:angular/src/core/linker/views/render_view.dart' as import4;
+import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import7;
+import 'package:angular/src/runtime.dart' as import8;
+import 'package:angular/angular.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
+
+final List<dynamic> styles$DefaultComp = const [];
+
+class ViewDefaultComp0 extends AppView<import1.DefaultComp> {
+  final import2.TextBinding _textBinding_1 = import2.TextBinding();
+  static import3.ComponentStyles _componentStyles;
+  ViewDefaultComp0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import7.document.createElement('default-comp');
+  }
+  static String get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.DefaultComp> build() {
+    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final _text_0 = import10.appendText(parentRenderNode, 'The current time is ');
+    parentRenderNode.append(_textBinding_1.element);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    _textBinding_1.updateText(import11.interpolateString0(_ctx.time));
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$DefaultComp, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.DefaultComp> _DefaultCompNgFactory = const ComponentFactory('default-comp', viewFactory_DefaultCompHost0);
+ComponentFactory<import1.DefaultComp> get DefaultCompNgFactory {
+  return _DefaultCompNgFactory;
+}
+
+final List<dynamic> styles$DefaultCompHost = const [];
+
+class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
+  ViewDefaultComp0 _compView_0;
+  import1.DefaultComp _DefaultComp_0_5;
+  _ViewDefaultCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.DefaultComp> build() {
+    _compView_0 = ViewDefaultComp0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    _DefaultComp_0_5 = import1.DefaultComp();
+    _compView_0.create(_DefaultComp_0_5, projectedNodes);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _DefaultComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.DefaultComp> viewFactory_DefaultCompHost0() {
+  return _ViewDefaultCompHost0(null, null);
+}
+
+final List<dynamic> styles$OnPushComp = const [];
+
+class ViewOnPushComp0 extends AppView<import1.OnPushComp> {
+  ViewDefaultComp0 _compView_1;
+  import1.DefaultComp _DefaultComp_1_5;
+  static import3.ComponentStyles _componentStyles;
+  ViewOnPushComp0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    initComponentStyles();
+    rootEl = import7.document.createElement('onpush-comp');
+  }
+  static String get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.OnPushComp> build() {
+    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final doc = import7.document;
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'b');
+    _compView_1 = ViewDefaultComp0(this, 1);
+    final _el_1 = _compView_1.rootEl;
+    _el_0.append(_el_1);
+    _DefaultComp_1_5 = import1.DefaultComp();
+    _compView_1.create0(_DefaultComp_1_5);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_1.destroyInternalState();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$OnPushComp, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.OnPushComp> _OnPushCompNgFactory = const ComponentFactory('onpush-comp', viewFactory_OnPushCompHost0);
+ComponentFactory<import1.OnPushComp> get OnPushCompNgFactory {
+  return _OnPushCompNgFactory;
+}
+
+final List<dynamic> styles$OnPushCompHost = const [];
+
+class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
+  ViewOnPushComp0 _compView_0;
+  import1.OnPushComp _OnPushComp_0_5;
+  _ViewOnPushCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  ComponentRef<import1.OnPushComp> build() {
+    _compView_0 = ViewOnPushComp0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    _OnPushComp_0_5 = import1.OnPushComp();
+    _compView_0.create(_OnPushComp_0_5, projectedNodes);
+    init1(_el_0);
+    return ComponentRef(0, this, _el_0, _OnPushComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.OnPushComp> viewFactory_OnPushCompHost0() {
+  return _ViewOnPushCompHost0(null, null);
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(DefaultComp, DefaultCompNgFactory);
+  _ngRef.registerComponent(OnPushComp, OnPushCompNgFactory);
+  _ref0.initReflector();
+}
