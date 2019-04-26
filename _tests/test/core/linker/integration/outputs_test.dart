@@ -72,7 +72,7 @@ void main() {
 
   test('should provide helpful error for incorrectly typed handler', () async {
     final testBed = NgTestBed<TestMismatchedHandler>();
-    expect(
+    await expectLater(
       testBed.create,
       throwsA(const TypeMatcher<AssertionError>().having(
         (a) => a.message,
