@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/core/change_detection/change_detector_ref.dart';
+import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/di/errors.dart';
 import 'package:angular/src/di/injector/element.dart';
@@ -55,6 +56,18 @@ abstract class View implements ChangeDetectorRef {
   /// Defaults to an empty method for views with no bindings to change detect.
   @protected
   void detectChangesInternal() {}
+
+  /// Change detects this view within a try-catch block.
+  ///
+  /// This only is run after the framework has detected a crash.
+  @protected
+  void detectCrash() {
+    try {
+      detectChangesInternal();
+    } catch (e, s) {
+      ChangeDetectionHost.handleCrash(this, e, s);
+    }
+  }
 
   /// Permanently disables change detection of this view.
   ///

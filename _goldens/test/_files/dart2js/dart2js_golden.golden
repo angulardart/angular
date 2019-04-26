@@ -10203,19 +10203,6 @@
       }
       t1.set$cdState(1);
     },
-    detectCrash$0: function() {
-      var e, s, exception, current;
-      try {
-        this.detectChangesInternal$0();
-      } catch (exception) {
-        e = H.unwrapException(exception);
-        s = H.getTraceFromException(exception);
-        current = $.ChangeDetectionHost__current;
-        current._lastGuardedView = this;
-        current._lastCaughtException = e;
-        current._lastCaughtTrace = s;
-      }
-    },
     initViewRoot$0: function() {
       var hostElement = this.rootEl;
       this.componentStyles.toString;
@@ -10370,6 +10357,19 @@
     destroyInternal$0: function() {
     },
     detectChangesInternal$0: function() {
+    },
+    detectCrash$0: function() {
+      var e, s, exception, current;
+      try {
+        this.detectChangesInternal$0();
+      } catch (exception) {
+        e = H.unwrapException(exception);
+        s = H.getTraceFromException(exception);
+        current = $.ChangeDetectionHost__current;
+        current._lastGuardedView = this;
+        current._lastCaughtException = e;
+        current._lastCaughtTrace = s;
+      }
     },
     injectorGet$3: function(token, nodeIndex, notFoundResult) {
       var result = this.injectorGetViewInternal$3(token, nodeIndex, notFoundResult);

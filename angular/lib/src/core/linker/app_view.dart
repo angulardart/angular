@@ -385,19 +385,6 @@ abstract class AppView<T> extends DynamicView
     cdState = ChangeDetectorState.CheckedBefore;
   }
 
-  /// Runs change detection with a `try { ... } catch { ...}`.
-  ///
-  /// This only is run when the framework has detected a crash previously.
-  @mustCallSuper
-  @protected
-  void detectCrash() {
-    try {
-      detectChangesInternal();
-    } catch (e, s) {
-      ChangeDetectionHost.handleCrash(this, e, s);
-    }
-  }
-
   /// Generated code that is called by hosts.
   /// This is needed since deferred components don't allow call sites
   /// to use the explicit AppView type but require base class.
