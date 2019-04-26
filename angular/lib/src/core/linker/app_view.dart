@@ -578,6 +578,7 @@ abstract class AppView<T> extends DynamicView
   // from EventTarget.addEventListener() can then be safely coerced back to its
   // known type.
   void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
+    print('DEBOER event handler: E:$E F:$F');
     assert(
         E == Null || F != Null,
         "Event handler '$handler' isn't assignable to expected type "
