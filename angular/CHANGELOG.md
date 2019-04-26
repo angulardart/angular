@@ -9,6 +9,11 @@
 *   Directives no longer support `OnChanges` lifecycle. Use `AfterChanges`
     instead.
 
+*   The `/deep/` and `>>>` combinators are no longer supported in style sheets
+    of components with style encapsulation enabled. The special `::ng-deep`
+    pseudo-element should be used in their stead to pierce style encapsulation
+    when necessary.
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.

@@ -27,12 +27,12 @@ import 'package:csslib/visitor.dart';
 ///
 /// * Shadow Piercing Combinators
 ///
-///   The >>> combinator allows a selector to pierce shadow boundaries and
+///   The ::ng-deep combinator allows a selector to pierce shadow boundaries and
 ///   target nodes within a child host's shadow tree. To shim this feature, the
 ///   combinator is replaced by the descendant combinator, and the following
 ///   selectors aren't scoped with the host specific content class.
 ///
-///     .x >>> .y  =>  .x.content .y
+///     .x ::ng-deep .y  =>  .x.content .y
 ///
 /// * Polyfill Selectors - DO NOT USE, SUPPORTED FOR LEGACY ONLY
 ///
@@ -492,13 +492,13 @@ class _ShadowTransformer extends Visitor {
       // Shim '::ng-deep'
       if (compoundSelector.removeIfNgDeep()) indices.deepIndex = i;
 
-      // Shim deprecated '>>>' and '/deep/'.
-      if (compoundSelector.combinator == TokenKind.COMBINATOR_DEEP ||
-          compoundSelector.combinator ==
-              TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT) {
-        // Replace shadow piercing combinator with descendant combinator.
-        compoundSelector.combinator = TokenKind.COMBINATOR_DESCENDANT;
-        indices.deepIndex = i;
+      // Throw for unsupported combinators.
+      if (compoundSelector.combinator == TokenKind.COMBINATOR_DEEP) {
+        _throwUnsupportedDeepCombinator(compoundSelector);
+      }
+      if (compoundSelector.combinator ==
+          TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT) {
+        _throwUnsupportedShadowPiercingCombinator(compoundSelector);
       }
     }
   }
@@ -506,7 +506,7 @@ class _ShadowTransformer extends Visitor {
   /// Shims Shadow DOM CSS features to emulate style encapsulation.
   ///
   /// Example:
-  ///   :host(.x) > .y >>> .z  =>  .x.host > .y.content .z
+  ///   :host(.x) > .y ::ng-deep .z  =>  .x.host > .y.content .z
   void shimSelectors(_ComplexSelector selector) {
     var indices = _Indices(selector.compoundSelectors.length, -1);
     shimDeepCombinators(selector, indices);
@@ -633,11 +633,14 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
       } else if (compoundSelector.removeIfNgDeep()) {
         indices.deepIndex = i;
       }
-      if (compoundSelector.combinator == TokenKind.COMBINATOR_DEEP ||
-          compoundSelector.combinator ==
-              TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT) {
-        compoundSelector.combinator = TokenKind.COMBINATOR_DESCENDANT;
-        indices.deepIndex = i;
+
+      // Throw for unsupported combinators.
+      if (compoundSelector.combinator == TokenKind.COMBINATOR_DEEP) {
+        _throwUnsupportedDeepCombinator(compoundSelector);
+      }
+      if (compoundSelector.combinator ==
+          TokenKind.COMBINATOR_SHADOW_PIERCING_DESCENDANT) {
+        _throwUnsupportedShadowPiercingCombinator(compoundSelector);
       }
     }
   }
@@ -689,4 +692,18 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
     shimPolyfillNextSelector(node.topLevels);
     super.visitStyleSheet(node);
   }
+}
+
+void _throwUnsupportedDeepCombinator(_CompoundSelector selector) {
+  throwFailure(selector._sequences.first.span.message(
+    'The "/deep/" combinator is no longer supported. Instead, use "::ng-deep" '
+    'in its place to pierce style encapsulation.',
+  ));
+}
+
+void _throwUnsupportedShadowPiercingCombinator(_CompoundSelector selector) {
+  throwFailure(selector._sequences.first.span.message(
+    'The ">>>" combinator is no longer supported. Instead, use "::ng-deep" in '
+    'its place to pierce style encapsulation.',
+  ));
 }
