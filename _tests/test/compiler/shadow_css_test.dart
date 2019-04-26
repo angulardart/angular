@@ -342,31 +342,6 @@ void main() {
     });
   });
 
-  test('should handle /deep/', () {
-    var css = 'x /deep/ y {}';
-    shimAndExpect(css, 'x.$content y {}');
-    css = '/deep/ x {}';
-    shimAndExpect(css, 'x {}');
-  });
-
-  test('should handle >>>', () {
-    var css = 'x >>> y {}';
-    shimAndExpect(css, 'x.$content y {}');
-    css = '>>> y {}';
-    shimAndExpect(css, 'y {}');
-  });
-
-  test('should handle sequential shadow piercing combinators', () {
-    // Current SASS practices cause frequent occurrences of duplicate shadow
-    // piercing combinators in the generated CSS.
-    var css = 'x /deep/ /deep/ y {}';
-    shimAndExpect(css, 'x.$content y {}');
-    css = 'x >>> >>> y {}';
-    shimAndExpect(css, 'x.$content y {}');
-    css = 'x /deep/ >>> y {}';
-    shimAndExpect(css, 'x.$content y {}');
-  });
-
   test('should handle ::ng-deep', () {
     var css = '::ng-deep y {}';
     shimAndExpect(css, 'y {}');
@@ -378,6 +353,13 @@ void main() {
     shimAndExpect(css, '.$host > .x {}');
     css = ':host > ::ng-deep > .x {}';
     shimAndExpect(css, '.$host > > .x {}');
+  });
+
+  test('should handle sequential ::ng-deep', () {
+    // Current SASS practices cause frequent occurrences of duplicate shadow
+    // piercing combinators in the generated CSS.
+    var css = 'x ::ng-deep ::ng-deep y {}';
+    shimAndExpect(css, 'x.$content y {}');
   });
 
   test('should pass through @import directives', () {
