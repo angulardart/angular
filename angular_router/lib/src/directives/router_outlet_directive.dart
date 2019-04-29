@@ -120,6 +120,7 @@ class RouterOutlet implements OnInit, OnDestroy {
       final componentRef = componentFactory.create(Injector.map({
         RouterOutletToken: RouterOutletToken(),
       }, _viewContainerRef.injector));
+      // ignore: deprecated_member_use
       componentRef.changeDetectorRef.detectChanges();
       return componentRef;
     });
@@ -159,6 +160,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     _activeComponentFactory = componentFactory;
     final component = prepare(componentFactory);
     _viewContainerRef.insert(component.hostView);
+    // ignore: deprecated_member_use
     component.changeDetectorRef.detectChanges();
   }
 
