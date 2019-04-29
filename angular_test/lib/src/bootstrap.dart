@@ -106,6 +106,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   final componentRef = componentFactory.create(injector);
   final cdMode = (componentRef.hostView as AppView<void>).cdMode;
   if (cdMode != ChangeDetectionStrategy.Default &&
+      // ignore: deprecated_member_use
       cdMode != ChangeDetectionStrategy.CheckAlways) {
     throw UnsupportedError(
         'The root component in an Angular test or application must use the '
