@@ -3,7 +3,6 @@ import 'dart:html';
 
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
-import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/di/injector/injector.dart'
     show throwIfNotFound, Injector;
 import 'package:angular/src/runtime.dart';
@@ -11,8 +10,8 @@ import 'package:angular/src/runtime/dom_helpers.dart';
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
-import 'app_view_utils.dart';
 import 'component_factory.dart';
+import 'style_encapsulation.dart';
 import 'view_container.dart';
 import 'view_fragment.dart';
 import 'view_ref.dart' show EmbeddedViewRef;
@@ -144,8 +143,8 @@ class AppViewData {
 /// from the two classes can be combined into a single statement.
 // TODO(b/129013000): only embedded and host views should extend `DynamicView`.
 // TODO(b/129013000): only component and embedded views implement `RenderView`.
-abstract class AppView<T> extends DynamicView
-    implements EmbeddedViewRef, RenderView {
+abstract class AppView<T> extends RenderView
+    implements DynamicView, EmbeddedViewRef {
   /// The root element.
   ///
   /// This is _lazily_ initialized in a generated constructor.
@@ -155,7 +154,6 @@ abstract class AppView<T> extends DynamicView
   T ctx;
 
   @override
-  @protected
   ComponentStyles componentStyles;
 
   @override
@@ -201,6 +199,7 @@ abstract class AppView<T> extends DynamicView
   @override
   int get parentIndex => viewData.parentIndex;
 
+  @override
   List<Object> get projectedNodes => viewData.projectedNodes;
 
   @override
@@ -312,7 +311,7 @@ abstract class AppView<T> extends DynamicView
       return injector.get(token, notFoundValue);
     }
     return parentView.injectorGetViewInternal(
-        token, viewData.parentIndex, notFoundValue);
+        token, parentIndex, notFoundValue);
   }
 
   @override
@@ -388,6 +387,19 @@ abstract class AppView<T> extends DynamicView
   void detectHostChanges(bool firstCheck) {}
 
   @override
+  void addRootNodesAfter(Node node) {
+    insertNodesAsSibling(flatRootNodes, node);
+    domRootRendererIsDirty = true;
+  }
+
+  @override
+  void removeRootNodes() {
+    final nodes = flatRootNodes;
+    removeNodes(nodes);
+    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
+  }
+
+  @override
   void addRootNodesTo(List<Node> target) {
     viewData.rootFragment.appendDomNodesIntoList(target);
   }
@@ -446,24 +458,6 @@ abstract class AppView<T> extends DynamicView
 
   @dart2js.noInline
   @override
-  void addShimC(HtmlElement element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBinding(element, styles.contentPrefix, true);
-    }
-  }
-
-  @dart2js.noInline
-  @override
-  void addShimE(Element element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBindingNonHtml(element, styles.contentPrefix, true);
-    }
-  }
-
-  @dart2js.noInline
-  @override
   void updateChildClass(HtmlElement element, String newClass) {
     final styles = componentStyles;
     final shim = styles.usesStyleEncapsulation;
@@ -492,84 +486,5 @@ abstract class AppView<T> extends DynamicView
       updateAttribute(element, 'class',
           shim ? '$newClass ${styles.contentPrefix}' : newClass);
     }
-  }
-
-  /// Moves (appends) appropriate DOM [Node]s of [ViewData.projectedNodes].
-  ///
-  /// In the case of multiple `<ng-content>` slots [index] is used as the
-  /// discriminator to determine which parts of the template are mapped to
-  /// what parts of the DOM.
-  @dart2js.noInline
-  void project(Element target, int index) {
-    // TODO: Determine in what case this is `null`.
-    if (target == null) {
-      return;
-    }
-
-    // TODO: Determine why this would be `null` or out of bounds.
-    final projectedNodesByContentIndex = viewData.projectedNodes;
-    if (projectedNodesByContentIndex == null ||
-        index >= projectedNodesByContentIndex.length) {
-      return;
-    }
-
-    // TODO: Also determine why this might be `null`.
-    final nodesToProjectIntoTarget = unsafeCast<List<Object>>(
-      projectedNodesByContentIndex[index],
-    );
-    if (nodesToProjectIntoTarget == null) {
-      return;
-    }
-
-    // This is slightly duplicated with ViewFragment due to the fact that nodes
-    // stored in the projection list are sometimes stored as a List and
-    // sometimes not as an optimization.
-    final length = nodesToProjectIntoTarget.length;
-    for (var i = 0; i < length; i++) {
-      final node = nodesToProjectIntoTarget[i];
-      if (node is ViewContainer) {
-        target.append(node.nativeElement);
-        final nestedViews = node.nestedViews;
-        if (nestedViews != null) {
-          final length = nestedViews.length;
-          for (var n = 0; n < length; n++) {
-            nestedViews[n].addRootNodesToChildrenOf(target);
-          }
-        }
-      } else if (node is List<Object>) {
-        ViewFragment.appendDomNodes(target, node);
-      } else {
-        target.append(unsafeCast(node));
-      }
-    }
-
-    domRootRendererIsDirty = true;
-  }
-
-  void Function(E) eventHandler0<E>(void Function() handler) {
-    return (E event) {
-      markForCheck();
-      appViewUtils.eventManager.zone.runGuarded(handler);
-    };
-  }
-
-  // When registering an event listener for a native DOM event, the return value
-  // of this method is passed to EventTarget.addEventListener() which expects a
-  // function that accepts an Event parameter. This means you can't directly
-  // register an event listener for a specific subclass of Event, such as a
-  // MouseEvent for the 'click' event. A workaround is possible by ensuring the
-  // parameter of the event listener is a subclass of Event. The Event passed in
-  // from EventTarget.addEventListener() can then be safely coerced back to its
-  // known type.
-  void Function(E) eventHandler1<E, F extends E>(void Function(F) handler) {
-    assert(
-        E == Null || F != Null,
-        "Event handler '$handler' isn't assignable to expected type "
-        "'($E) => void'");
-    return (E event) {
-      markForCheck();
-      appViewUtils.eventManager.zone
-          .runGuarded(() => handler(unsafeCast<F>(event)));
-    };
   }
 }
