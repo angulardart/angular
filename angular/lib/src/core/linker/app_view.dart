@@ -206,6 +206,9 @@ abstract class AppView<T> extends RenderView
   List<Node> get rootNodes => flatRootNodes;
 
   @override
+  ViewFragment get viewFragment => viewData.rootFragment;
+
+  @override
   void detach() {
     cdMode = ChangeDetectionStrategy.Detached;
   }
@@ -397,16 +400,6 @@ abstract class AppView<T> extends RenderView
     final nodes = flatRootNodes;
     removeNodes(nodes);
     domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
-  }
-
-  @override
-  void addRootNodesTo(List<Node> target) {
-    viewData.rootFragment.appendDomNodesIntoList(target);
-  }
-
-  @override
-  void addRootNodesToChildrenOf(Element element) {
-    viewData.rootFragment.appendDomNodesInto(element);
   }
 
   @override
