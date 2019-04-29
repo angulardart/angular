@@ -6,6 +6,14 @@ import 'view.dart';
 
 /// An interface for views that render DOM content.
 abstract class RenderView implements View {
+  /// The context in which expressions bound in this view are evaluated.
+  ///
+  /// This is the component instance whose template corresponds to this view.
+  /// Implementations should override the type, which is intentionally omitted
+  /// here to avoid the cost of reifying this type wherever used (which
+  /// dramatically reduces code size).
+  Object get ctx;
+
   /// This view's CSS styles.
   ComponentStyles get componentStyles;
 
