@@ -151,10 +151,7 @@ abstract class AppView<T> extends DynamicView
   /// This is _lazily_ initialized in a generated constructor.
   HtmlElement rootEl;
 
-  /// The context against which data-binding expressions in this view are
-  /// evaluated against.
-  ///
-  /// This is always a component instance.
+  @override
   T ctx;
 
   @override
