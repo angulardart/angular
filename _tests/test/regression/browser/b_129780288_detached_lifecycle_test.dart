@@ -58,6 +58,7 @@ void main() {
 
     await fixture.update((comp) {
       comp.logs = logs = [];
+      // ignore: deprecated_member_use
       comp.child.reattach();
     });
 
@@ -119,6 +120,7 @@ void main() {
 
     await fixture.update((comp) {
       comp.logs = logs = [];
+      // ignore: deprecated_member_use
       comp.child.reattach();
     });
 
@@ -228,6 +230,7 @@ class DetachedViaStrategy extends Logger {}
 )
 class DetachedViaRef extends Logger {
   DetachedViaRef(ChangeDetectorRef changeDetectorRef) {
+    // ignore: deprecated_member_use
     changeDetectorRef.detach();
   }
 }
