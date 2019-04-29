@@ -2,12 +2,11 @@ import 'dart:html';
 
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_ref.dart' show ViewRef;
-import 'package:angular/src/runtime/dom_helpers.dart';
 
 import 'view.dart';
 
-/// A view that can be dynamically created and destroyed.
-abstract class DynamicView extends View implements ViewRef {
+/// An interface for views that can be dynamically created and destroyed.
+abstract class DynamicView implements View, ViewRef {
   /// This view's root DOM nodes.
   ///
   /// Any root view containers are recursively flattened until only HTML nodes
@@ -21,17 +20,10 @@ abstract class DynamicView extends View implements ViewRef {
   Node get lastRootNode;
 
   /// Appends this view's root DOM nodes as siblings after [node].
-  void addRootNodesAfter(Node node) {
-    insertNodesAsSibling(flatRootNodes, node);
-    domRootRendererIsDirty = true;
-  }
+  void addRootNodesAfter(Node node);
 
   /// Removes this view's root DOM nodes from their parent [ViewContainer].
-  void removeRootNodes() {
-    final nodes = flatRootNodes;
-    removeNodes(nodes);
-    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
-  }
+  void removeRootNodes();
 
   /// Appends this view's root DOM nodes to [target].
   ///
