@@ -18,7 +18,7 @@ class MessageLookup extends MessageLookupByLibrary {
   get localeName => 'en_US';
 
   static m0(startTag0, endTag0) =>
-      "Add items to the grocery list ${startTag0}below${endTag0}.";
+      "Add items to the grocery list ${startTag0}below$endTag0.";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function>{
