@@ -32,11 +32,6 @@ class ViewFragment {
     appendDomNodes(target, _nodesOrViewContainers);
   }
 
-  /// Appends all DOM [Nodes]s from this fragment into [target].
-  void appendDomNodesIntoList(List<Node> target) {
-    _flattenDomNodes(target, _nodesOrViewContainers);
-  }
-
   /// Appends all DOM [Node]s (as defined by a DFS - depth first search).
   ///
   /// This is semantically similar to [flattenDomNodes], but operates based on
@@ -58,7 +53,7 @@ class ViewFragment {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].addRootNodesToChildrenOf(target);
+            nestedViews[n].viewFragment.appendDomNodesInto(target);
           }
         }
       } else {
@@ -116,7 +111,10 @@ class ViewFragment {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].addRootNodesTo(target);
+            _flattenDomNodes(
+              target,
+              nestedViews[n].viewFragment._nodesOrViewContainers,
+            );
           }
         }
       } else {

@@ -131,7 +131,7 @@ abstract class RenderView extends View {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].addRootNodesToChildrenOf(target);
+            nestedViews[n].viewFragment.appendDomNodesInto(target);
           }
         }
       } else if (node is List<Object>) {
