@@ -1,8 +1,5 @@
-import 'package:angular/src/core/change_detection/change_detection_util.dart'
-    show SimpleChange;
-
 /// Lifecycle hooks are guaranteed to be called in the following order:
-/// - `onChanges` (if any bindings have been changed by the Angular framework),
+/// - `afterChanges` (if any bindings have been changed by the Angular framework),
 /// - `onInit` (after the first check only),
 /// - `doCheck`,
 /// - `afterContentInit`,
@@ -14,48 +11,11 @@ enum LifecycleHooks {
   onInit,
   onDestroy,
   doCheck,
-  onChanges,
   afterChanges,
   afterContentInit,
   afterContentChecked,
   afterViewInit,
   afterViewChecked
-}
-
-/// Implement this interface to get notified when any data-bound property of
-/// your directive is changed by the Angular framework.
-///
-/// [ngOnChanges] is called right after the data-bound properties have been
-/// checked and before view and content children are checked if at least one of
-/// them has changed.
-///
-/// The [changes] parameter contains an entry for each changed data-bound
-/// property. The key is the property name and the value is an instance of
-/// [SimpleChange].
-///
-/// ### Examples
-///
-/// Try this [live example][ex] from the [Lifecycle Hooks][docs] page:
-///
-/// <?code-excerpt "docs/lifecycle-hooks/lib/src/on_changes_component.dart (ng-on-changes)"?>
-/// ```dart
-/// void ngOnChanges(Map<String, SimpleChange> changes) {
-///   changes.forEach((String propName, SimpleChange change) {
-///     String cur = JSON.encode(change.currentValue);
-///     String prev = change.previousValue == null
-///         ? "{}"
-///         : JSON.encode(change.previousValue);
-///     changeLog.add('$propName: currentValue = $cur, previousValue = $prev');
-///   });
-/// }
-/// ```
-///
-/// [docs]: https://webdev.dartlang.org/angular/guide/lifecycle-hooks.html#onchanges
-/// [ex]: https://webdev.dartlang.org/examples/lifecycle-hooks#onchanges
-@Deprecated('Please use AfterChanges instead.')
-abstract class OnChanges {
-  @Deprecated('Please use ngAfterChanges instead.')
-  void ngOnChanges(Map<String, SimpleChange> changes);
 }
 
 /// Implement this interface to get notified when any data-bound property of

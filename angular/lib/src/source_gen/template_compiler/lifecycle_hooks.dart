@@ -8,7 +8,6 @@ List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
     TypeChecker.fromRuntime(OnInit): LifecycleHooks.onInit,
     TypeChecker.fromRuntime(OnDestroy): LifecycleHooks.onDestroy,
     TypeChecker.fromRuntime(DoCheck): LifecycleHooks.doCheck,
-    TypeChecker.fromRuntime(OnChanges): LifecycleHooks.onChanges,
     TypeChecker.fromRuntime(AfterChanges): LifecycleHooks.afterChanges,
     TypeChecker.fromRuntime(AfterContentInit): LifecycleHooks.afterContentInit,
     TypeChecker.fromRuntime(AfterContentChecked):

@@ -19,20 +19,6 @@ void bindDirectiveDetectChangesLifecycleCallbacks(
   final detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   final directive = directiveAst.directive;
   final lifecycleHooks = directive.lifecycleHooks;
-  if (lifecycleHooks.contains(LifecycleHooks.onChanges) &&
-      directiveAst.inputs.isNotEmpty) {
-    detectChangesInInputsMethod.addStmt(
-      o.IfStmt(
-        DetectChangesVars.changes.notIdentical(o.NULL_EXPR),
-        [
-          directiveInstance.callMethod(
-            'ngOnChanges',
-            [DetectChangesVars.changes],
-          ).toStmt()
-        ],
-      ),
-    );
-  }
   if (lifecycleHooks.contains(LifecycleHooks.afterChanges) &&
       directiveAst.inputs.isNotEmpty) {
     if (directiveAst.directive.changeDetection ==

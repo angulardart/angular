@@ -655,19 +655,6 @@ class _ComponentVisitor
             '(or getters/setters) that directly run asynchronous code (such as '
             'microtasks, timers).'));
       }
-      if (lifecycleHooks.contains(LifecycleHooks.onChanges)) {
-        _exceptionHandler.handle(ErrorMessageForElement(
-            element,
-            'Cannot implement both the DoCheck and OnChanges lifecycle '
-            'events. By implementing "DoCheck", default change detection of '
-            'inputs is disabled, meaning that "ngOnChanges" will never be '
-            'invoked with values. Consider "AfterChanges" instead.'));
-      }
-    } else if (lifecycleHooks.contains(LifecycleHooks.onChanges) && !isComp) {
-      _exceptionHandler.handle(ErrorMessageForElement(
-          element,
-          'The OnChanges lifecycle is not supported for @Directives(). Please '
-          'use AfterChanges instead.'));
     }
   }
 
