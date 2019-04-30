@@ -57,8 +57,6 @@ class Directive implements IRNode {
 
   final CompileDirectiveMetadata metadata;
 
-  final bool implementsOnChanges;
-
   final List<Binding> hostProperties;
 
   Directive({
@@ -66,7 +64,6 @@ class Directive implements IRNode {
     this.typeParameters,
     this.hostProperties,
     this.metadata,
-    this.implementsOnChanges,
   });
 
   /// Whether the directive requires a change detector class to be generated.

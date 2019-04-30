@@ -1,13 +1,13 @@
 ## Breaking changes
 
+*   The `OnChanges` lifecycle has been completely removed. Use `AfterChanges`
+    instead.
+
 *   `ExceptionHandler` is no longer exported via `angular/di.dart`. Import this
     symbol via `angular/angular.dart` instead.
 
 *   Directives no longer support extending, implementing, or mixing in
     `ComponentState`.
-
-*   Directives no longer support `OnChanges` lifecycle. Use `AfterChanges`
-    instead.
 
 *   The `/deep/` and `>>>` combinators are no longer supported in style sheets
     of components with style encapsulation enabled. The special `::ng-deep`

@@ -1,7 +1,9 @@
-import '../identifiers.dart';
-import '../ir/model.dart' as ir;
-import '../output/convert.dart' show typeArgumentsFrom;
-import '../output/output_ast.dart' as o;
+import 'package:angular/src/compiler/identifiers.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/convert.dart'
+    show typeArgumentsFrom;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+
 import 'bound_value_converter.dart';
 import 'compile_method.dart';
 import 'compile_view.dart' show CompileViewStorage, NodeReference;
@@ -68,23 +70,15 @@ class DirectiveCompiler {
       directive.metadata.type.identifier,
       typeArgumentsFrom(directive.typeParameters),
     );
-    final instance = storage.allocate(
+    storage.allocate(
       'instance',
       outputType: instanceType,
       modifiers: [
         o.StmtModifier.Final,
       ],
     );
-    final statements = <o.Statement>[];
-    if (directive.implementsOnChanges) {
-      final setDirective = o.WriteClassMemberExpr(
-        'directive',
-        storage.buildReadExpr(instance),
-      );
-      statements.add(setDirective.toStmt());
-    }
     final constructorArgs = [o.FnParam('this.instance')];
-    return o.Constructor(params: constructorArgs, body: statements);
+    return o.Constructor(params: constructorArgs);
   }
 
   List<o.ClassMethod> _buildDetectHostChanges(

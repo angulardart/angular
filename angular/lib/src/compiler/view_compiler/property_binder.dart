@@ -37,7 +37,6 @@ void bindAndWriteToRenderer(
   CompileMethod targetMethod, {
   bool isHostComponent = false,
   bool calcChanged = false,
-  bool calcChangesMap = false,
 }) {
   final dynamicMethod = CompileMethod();
   final constantMethod = CompileMethod();
@@ -60,7 +59,6 @@ void bindAndWriteToRenderer(
         appViewInstance,
         renderNode,
         isHtmlElement,
-        calcChangesMap,
         calcChanged,
         storage,
         dynamicMethod,
@@ -125,19 +123,11 @@ void bindDirectiveInputs(
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var lifecycleHooks = directive.lifecycleHooks;
-  bool calcChangesMap = lifecycleHooks.contains(LifecycleHooks.onChanges);
   bool afterChanges = lifecycleHooks.contains(LifecycleHooks.afterChanges);
   var isOnPushComp = directive.isComponent &&
       directive.changeDetection == ChangeDetectionStrategy.OnPush;
   var calcChanged = isOnPushComp || afterChanges;
 
-  if (calcChangesMap) {
-    // We need to reinitialize changes, otherwise a second change
-    // detection cycle would cause extra ngOnChanges call.
-    view.requiresOnChangesCall = true;
-    detectChangesInInputsMethod
-        .addStmt(DetectChangesVars.changes.set(o.NULL_EXPR).toStmt());
-  }
   if (afterChanges) {
     view.requiresAfterChangesCall = true;
   }
@@ -162,7 +152,6 @@ void bindDirectiveInputs(
     detectChangesInInputsMethod,
     isHostComponent: isHostComponent,
     calcChanged: calcChanged,
-    calcChangesMap: calcChangesMap,
   );
   if (isOnPushComp) {
     detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
@@ -206,7 +195,6 @@ void _checkBinding(
     o.Expression appViewInstance,
     NodeReference renderNode,
     bool isHtmlElement,
-    bool calcChangesMap,
     bool calcChanged,
     ViewStorage storage,
     CompileMethod dynamicMethod,
@@ -231,14 +219,6 @@ void _checkBinding(
     )
   ];
 
-  // TODO(b/130033689): Remove changes map logic when all OnChanges usages
-  // are removed.
-  if (calcChangesMap) {
-    // We only calculate a changes map for "OnChanges" directives, so we can
-    // safely assume that the binding target will be an input.
-    var inputName = (binding.target as ir.InputBinding).name;
-    updateStmts.addAll(_changesMap(inputName, fieldExpr, currValExpr));
-  }
   if (calcChanged) {
     updateStmts.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
   }
@@ -374,22 +354,6 @@ void bindDirectiveHostProps(DirectiveAst directiveAst,
   compileElement.view.detectChangesRenderPropertiesMethod
       .addStmt(callDetectHostPropertiesExpr.toStmt());
 }
-
-List<o.Statement> _changesMap(String inputName, o.ReadClassMemberExpr fieldExpr,
-        o.ReadVarExpr currValExpr) =>
-    [
-      o.WriteIfNullExpr(
-              DetectChangesVars.changes.name,
-              o.literalMap(
-                  [], o.MapType(o.importType(Identifiers.SimpleChange))))
-          .toStmt(),
-      DetectChangesVars.changes
-          .key(o.literal(inputName))
-          .set(o
-              .importExpr(Identifiers.SimpleChange)
-              .instantiate([fieldExpr, currValExpr]))
-          .toStmt(),
-    ];
 
 bool _isPrimitiveFieldType(o.OutputType type) {
   if (type == o.BOOL_TYPE ||

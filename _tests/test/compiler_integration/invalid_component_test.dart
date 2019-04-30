@@ -92,7 +92,7 @@ void main() {
       )
       bool functionDirective() {};
 
-      
+
     ''', errors: [
       allOf(
           contains('Compiling annotation @Directive'),
@@ -217,7 +217,7 @@ void main() {
   test('should throw on unused directive types', () async {
     await compilesExpecting('''
     import '$ngImport';
-    
+
     @Component(
       selector: 'generic',
       template: 'Bye',
@@ -225,15 +225,15 @@ void main() {
     class GenericComponent<T> {
       GenericComponent() {}
     }
-    
+
     @Component(
       selector: 'mis-match',
       template: 'Aye',
       directves: [],
       directiveTypes: [Typed<GenericComponent<String>>()])
-      
+
       class ExampleComponent {}
- 
+
     ''', errors: [
       allOf([
         contains('Entry in "directiveTypes" missing corresponding entry in'
@@ -291,24 +291,6 @@ void main() {
       allOf([
         contains('ngDoCheck should not be "async"'),
         containsSourceLocation(8, 12)
-      ])
-    ]);
-  });
-
-  test('should throw on DoCheck and OnChanges', () async {
-    await compilesExpecting('''
-    import '$ngImport';
-
-    @Component(
-      selector: 'do-check-and-on-changes',
-      template: 'boo'
-    )
-    class DoCheckAndOnChanges implements DoCheck, OnChanges {}
-    ''', errors: [
-      allOf([
-        contains(
-            'Cannot implement both the DoCheck and OnChanges lifecycle events'),
-        containsSourceLocation(7, 11)
       ])
     ]);
   });
