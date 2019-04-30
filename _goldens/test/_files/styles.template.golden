@@ -74,6 +74,11 @@ class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
   import1.StylesComponent _StylesComponent_0_5;
   _ViewStylesComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.StylesComponent> build() {
     _compView_0 = ViewStylesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;

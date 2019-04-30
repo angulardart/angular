@@ -156,6 +156,11 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
   _ViewNestedNgForComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.NestedNgForComponent> build() {
     _compView_0 = ViewNestedNgForComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;

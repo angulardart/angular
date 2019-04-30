@@ -58,6 +58,11 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   import1.TestComponent _TestComponent_0_5;
   _ViewTestComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.TestComponent> build() {
     _compView_0 = ViewTestComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;

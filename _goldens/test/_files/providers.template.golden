@@ -71,6 +71,11 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   dynamic __useEnums_0_16;
   String __XsrfToken_0_17;
   _ViewProvidersComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
     if ((__MyTypeAnnotation_0_6 == null)) {
       (__MyTypeAnnotation_0_6 = import1.MyTypeAnnotation());

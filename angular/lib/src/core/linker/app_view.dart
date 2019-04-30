@@ -194,6 +194,12 @@ abstract class AppView<T> extends RenderView
   @override
   bool get firstCheck => cdState == ChangeDetectorState.NeverChecked;
 
+  /// The hosted component view, if this is a host view, and null otherwise.
+  ///
+  /// This getter is only exposed for [debugUsesDefaultChangeDetection] and
+  /// should not be referenced via any other means.
+  AppView<void> get hostedComponentView => null;
+
   Map<String, dynamic> get locals => viewData.locals;
 
   @override

@@ -109,6 +109,11 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
   import1.EmptyPropertiesComponent _EmptyPropertiesComponent_0_5;
   _ViewEmptyPropertiesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
     _compView_0 = ViewEmptyPropertiesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -172,6 +177,11 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
   ViewFancyButtonComponent0 _compView_0;
   import1.FancyButtonComponent _FancyButtonComponent_0_5;
   _ViewFancyButtonComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
     _compView_0 = ViewFancyButtonComponent0(this, 0);

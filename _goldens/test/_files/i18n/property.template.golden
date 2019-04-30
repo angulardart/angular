@@ -72,6 +72,11 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
   import1.I18nPropertyComponent _I18nPropertyComponent_0_5;
   _ViewI18nPropertyComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.I18nPropertyComponent> build() {
     _compView_0 = ViewI18nPropertyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;

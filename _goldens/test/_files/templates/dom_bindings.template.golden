@@ -68,6 +68,11 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   import1.HasHostAttributes _HasHostAttributes_0_5;
   _ViewHasHostAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.HasHostAttributes> build() {
     _compView_0 = ViewHasHostAttributes0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -148,6 +153,11 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
   import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
   _ViewHasTemplateAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     _compView_0 = ViewHasTemplateAttributes0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -223,6 +233,11 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   import1.HasStaticAttribute _HasStaticAttribute_0_5;
   _ViewHasStaticAttributeHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.HasStaticAttribute> build() {
     _compView_0 = ViewHasStaticAttribute0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -296,6 +311,11 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   ViewHasHostClass0 _compView_0;
   import1.HasHostClass _HasHostClass_0_5;
   _ViewHasHostClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasHostClass> build() {
     _compView_0 = ViewHasHostClass0(this, 0);
@@ -376,6 +396,11 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   ViewHasTemplateClass0 _compView_0;
   import1.HasTemplateClass _HasTemplateClass_0_5;
   _ViewHasTemplateClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     _compView_0 = ViewHasTemplateClass0(this, 0);
@@ -460,6 +485,11 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   ViewHasStyleProperty0 _compView_0;
   import1.HasStyleProperty _HasStyleProperty_0_5;
   _ViewHasStylePropertyHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     _compView_0 = ViewHasStyleProperty0(this, 0);

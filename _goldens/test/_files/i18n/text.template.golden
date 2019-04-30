@@ -62,6 +62,11 @@ class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
   import1.I18nTextComponent _I18nTextComponent_0_5;
   _ViewI18nTextComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.I18nTextComponent> build() {
     _compView_0 = ViewI18nTextComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;

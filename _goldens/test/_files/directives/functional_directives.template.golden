@@ -62,6 +62,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   import1.AppComponent _AppComponent_0_5;
   import1.TextService __TextService_0_6;
   _ViewAppComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   import1.TextService get _TextService_0_6 {
     if ((__TextService_0_6 == null)) {
       (__TextService_0_6 = import1.TextService());

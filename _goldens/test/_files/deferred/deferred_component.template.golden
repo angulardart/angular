@@ -59,6 +59,11 @@ class _ViewDeferredChild1ComponentHost0 extends AppView<import1.DeferredChild1Co
   import1.DeferredChild1Component _DeferredChild1Component_0_5;
   _ViewDeferredChild1ComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.DeferredChild1Component> build() {
     _compView_0 = ViewDeferredChild1Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -123,6 +128,11 @@ class _ViewDeferredChild2ComponentHost0 extends AppView<import1.DeferredChild2Co
   ViewDeferredChild2Component0 _compView_0;
   import1.DeferredChild2Component _DeferredChild2Component_0_5;
   _ViewDeferredChild2ComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.DeferredChild2Component> build() {
     _compView_0 = ViewDeferredChild2Component0(this, 0);
@@ -189,6 +199,11 @@ class _ViewDeferredChild3ComponentHost0 extends AppView<import1.DeferredChild3Co
   import1.DeferredChild3Component _DeferredChild3Component_0_5;
   _ViewDeferredChild3ComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.DeferredChild3Component> build() {
     _compView_0 = ViewDeferredChild3Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -252,6 +267,11 @@ class _ViewNotDeferredChildComponentHost0 extends AppView<import1.NotDeferredChi
   ViewNotDeferredChildComponent0 _compView_0;
   import1.NotDeferredChildComponent _NotDeferredChildComponent_0_5;
   _ViewNotDeferredChildComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.NotDeferredChildComponent> build() {
     _compView_0 = ViewNotDeferredChildComponent0(this, 0);
@@ -320,6 +340,11 @@ class _ViewDeferredChildComponentWithoutNgContentHost0 extends AppView<import1.D
   import1.DeferredChildComponentWithoutNgContent _DeferredChildComponentWithoutNgContent_0_5;
   _ViewDeferredChildComponentWithoutNgContentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.DeferredChildComponentWithoutNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithoutNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -387,6 +412,11 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends AppView<import1.Defe
   import1.DeferredChildComponentWithNgContent _DeferredChildComponentWithNgContent_0_5;
   _ViewDeferredChildComponentWithNgContentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.DeferredChildComponentWithNgContent> build() {
     _compView_0 = ViewDeferredChildComponentWithNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -452,6 +482,11 @@ class _ViewDeferredChildComponentWithServicesHost0 extends AppView<import1.Defer
   import1.DeferredChildComponentWithServices _DeferredChildComponentWithServices_0_6;
   import10.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
   _ViewDeferredChildComponentWithServicesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   import10.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
       (__ExternalServiceLazilyCreatedMaybe_0_7 = import10.ExternalServiceLazilyCreatedMaybe());

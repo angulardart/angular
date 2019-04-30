@@ -263,6 +263,11 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   import1.RootComponent _RootComponent_0_5;
   _ViewRootComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.RootComponent> build() {
     _compView_0 = ViewRootComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -357,6 +362,11 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
   import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
   _ViewUsesDefaultChangeDetectionAndInputsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -437,6 +447,11 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
   ViewDefaultChangeDetectionAndInputs0 _compView_0;
   import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
   _ViewDefaultChangeDetectionAndInputsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
@@ -547,6 +562,11 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
   import1.UsesOnPushChangeDetectionAndInputs _UsesOnPushChangeDetectionAndInputs_0_5;
   _ViewUsesOnPushChangeDetectionAndInputsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewUsesOnPushChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -623,6 +643,11 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
   ViewOnPushChangeDetectionAndInputs0 _compView_0;
   import1.OnPushChangeDetectionAndInputs _OnPushChangeDetectionAndInputs_0_5;
   _ViewOnPushChangeDetectionAndInputsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
@@ -736,6 +761,11 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   import1.InlinedNgIf _InlinedNgIf_0_5;
   _ViewInlinedNgIfHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.InlinedNgIf> build() {
     _compView_0 = ViewInlinedNgIf0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -847,6 +877,11 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   ViewEmbeddedNgIf0 _compView_0;
   import1.EmbeddedNgIf _EmbeddedNgIf_0_5;
   _ViewEmbeddedNgIfHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
@@ -964,6 +999,11 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   import1.EmbeddedNgFor _EmbeddedNgFor_0_5;
   _ViewEmbeddedNgForHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.EmbeddedNgFor> build() {
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -1028,6 +1068,11 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   import1.NullComponent _NullComponent_0_5;
   _ViewNullComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.NullComponent> build() {
     _compView_0 = ViewNullComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -1091,6 +1136,11 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
   ViewInjectsFromArbitraryParent0 _compView_0;
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_0_5;
   _ViewInjectsFromArbitraryParentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
@@ -1247,6 +1297,11 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_0_5;
   _ViewComponentConditionalFeaturesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -1312,6 +1367,11 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   import1.FeatureA _FeatureA_0_5;
   _ViewFeatureAHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.FeatureA> build() {
     _compView_0 = ViewFeatureA0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -1376,6 +1436,11 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   ViewFeatureB0 _compView_0;
   import1.FeatureB _FeatureB_0_5;
   _ViewFeatureBHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.FeatureB> build() {
     _compView_0 = ViewFeatureB0(this, 0);
@@ -1476,6 +1541,11 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
   ViewUsesDomBindings0 _compView_0;
   import1.UsesDomBindings _UsesDomBindings_0_5;
   _ViewUsesDomBindingsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.UsesDomBindings> build() {
     _compView_0 = ViewUsesDomBindings0(this, 0);
@@ -1607,6 +1677,11 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
   ViewUsesNgDirectives0 _compView_0;
   import1.UsesNgDirectives _UsesNgDirectives_0_5;
   _ViewUsesNgDirectivesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.UsesNgDirectives> build() {
     _compView_0 = ViewUsesNgDirectives0(this, 0);
@@ -1761,6 +1836,11 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
   import1.HasNestedProviderLookups _HasNestedProviderLookups_0_5;
   _ViewHasNestedProviderLookupsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.HasNestedProviderLookups> build() {
     _compView_0 = ViewHasNestedProviderLookups0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -1824,6 +1904,11 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
   ViewInjectsManyThingsDynamically0 _compView_0;
   import1.InjectsManyThingsDynamically _InjectsManyThingsDynamically_0_5;
   _ViewInjectsManyThingsDynamicallyHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
     _compView_0 = ViewInjectsManyThingsDynamically0(this, 0);
@@ -1895,6 +1980,11 @@ class _ViewHasHostListenersHost0 extends AppView<import1.HasHostListeners> {
   ViewHasHostListeners0 _compView_0;
   import1.HasHostListeners _HasHostListeners_0_5;
   _ViewHasHostListenersHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasHostListeners> build() {
     _compView_0 = ViewHasHostListeners0(this, 0);

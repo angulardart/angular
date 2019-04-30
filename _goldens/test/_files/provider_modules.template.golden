@@ -61,6 +61,11 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
   _ViewProviderModulesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   import1.FooService get _FooService_0_6 {
     if ((__FooService_0_6 == null)) {
       (__FooService_0_6 = import1.FooService());

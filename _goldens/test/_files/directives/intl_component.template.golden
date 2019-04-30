@@ -74,6 +74,11 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
   _ViewCompWithoutFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.CompWithoutFinal> build() {
     _compView_0 = ViewCompWithoutFinal0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -145,6 +150,11 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   import1.CompWithFinal _CompWithFinal_0_5;
   _ViewCompWithFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.CompWithFinal> build() {
     _compView_0 = ViewCompWithFinal0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -215,6 +225,11 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
   _ViewCompWithFinalStaticHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.CompWithFinalStatic> build() {
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -284,6 +299,11 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
   _ViewCompWithExternalFinalHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
     _compView_0 = ViewCompWithExternalFinal0(this, 0);

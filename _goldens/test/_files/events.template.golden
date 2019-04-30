@@ -62,6 +62,11 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   import1.UsesNativeEvents _UsesNativeEvents_0_5;
   _ViewUsesNativeEventsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.UsesNativeEvents> build() {
     _compView_0 = ViewUsesNativeEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -145,6 +150,11 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   import1.UsesAngularEvents _UsesAngularEvents_0_5;
   _ViewUsesAngularEventsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.UsesAngularEvents> build() {
     _compView_0 = ViewUsesAngularEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -208,6 +218,11 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_5;
   _ViewHasAngularEventsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasAngularEvents> build() {
     _compView_0 = ViewHasAngularEvents0(this, 0);
@@ -279,6 +294,11 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
   ViewHasManyNativeHostEvents0 _compView_0;
   import1.HasManyNativeHostEvents _HasManyNativeHostEvents_0_5;
   _ViewHasManyNativeHostEventsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
     _compView_0 = ViewHasManyNativeHostEvents0(this, 0);

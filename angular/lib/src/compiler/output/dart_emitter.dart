@@ -203,6 +203,11 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   }
 
   void _visitClassGetter(o.ClassGetter getter, EmitterVisitorContext context) {
+    for (final annotation in getter.annotations) {
+      context.print('@');
+      annotation.visitExpression(this, context);
+      context.println();
+    }
     if (getter.hasModifier(o.StmtModifier.Static)) {
       context.print('static ');
     }

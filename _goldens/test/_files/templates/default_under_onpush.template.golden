@@ -68,6 +68,11 @@ class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
   import1.DefaultComp _DefaultComp_0_5;
   _ViewDefaultCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.DefaultComp> build() {
     _compView_0 = ViewDefaultComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -150,6 +155,11 @@ class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
   ViewOnPushComp0 _compView_0;
   import1.OnPushComp _OnPushComp_0_5;
   _ViewOnPushCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.OnPushComp> build() {
     _compView_0 = ViewOnPushComp0(this, 0);

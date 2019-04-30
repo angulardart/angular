@@ -902,7 +902,8 @@ class ClassGetter extends AbstractClassPart {
     this.body, [
     OutputType type,
     List<StmtModifier> modifiers,
-  ]) : super(type, modifiers);
+    List<Expression> annotations,
+  ]) : super(type, modifiers, annotations);
 }
 
 /// A generic type parameter.
