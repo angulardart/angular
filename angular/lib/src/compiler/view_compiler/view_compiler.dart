@@ -1,5 +1,4 @@
 import 'package:meta/meta.dart';
-import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../../core/linker/view_type.dart';
@@ -8,12 +7,11 @@ import '../compile_metadata.dart'
 import '../expression_parser/parser.dart';
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
-import '../parse_util.dart' show ParseErrorLevel;
 import '../schema/element_schema_registry.dart';
 import '../template_ast.dart' show TemplateAst, templateVisitAll;
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
-import 'view_binder.dart' show bindView, bindViewHostProperties;
+import 'view_binder.dart' show bindView;
 import 'view_builder.dart';
 import 'view_compiler_utils.dart' show getHostViewFactoryName;
 
@@ -50,23 +48,10 @@ class ViewCompiler {
     _buildView(view, template);
     // Need to separate binding from creation to be able to refer to
     // variables that have been declared after usage.
-    bindView(view, template);
-    _bindHostProperties(view);
+    bindView(view, template, _schemaRegistry, bindHostProperties: true);
     _finishView(view, statements,
         registerComponentFactory: registerComponentFactory);
     return ViewCompileResult(statements);
-  }
-
-  void _bindHostProperties(CompileView view) {
-    var errorHandler =
-        (String message, SourceSpan sourceSpan, [ParseErrorLevel level]) {
-      if (level == ParseErrorLevel.FATAL) {
-        throwFailure(message);
-      } else {
-        logWarning(message);
-      }
-    };
-    bindViewHostProperties(view, _schemaRegistry, errorHandler);
   }
 
   /// Builds the view and returns number of nested views generated.
