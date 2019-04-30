@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/src/error/codes.dart';
 import 'package:analyzer/src/generated/source.dart';
+import 'package:test/test.dart';
+import 'package:test_reflective_loader/test_reflective_loader.dart';
 import 'package:angular_analyzer_plugin/errors.dart';
 import 'package:angular_analyzer_plugin/src/model/syntactic/component.dart';
 import 'package:angular_analyzer_plugin/src/model/syntactic/directive.dart';
@@ -14,8 +16,6 @@ import 'package:angular_analyzer_plugin/src/model/syntactic/top_level.dart';
 import 'package:angular_analyzer_plugin/src/selector/and_selector.dart';
 import 'package:angular_analyzer_plugin/src/selector/element_name_selector.dart';
 import 'package:angular_analyzer_plugin/src/syntactic_discovery.dart';
-import 'package:test/test.dart';
-import 'package:test_reflective_loader/test_reflective_loader.dart';
 
 import 'angular_base.dart';
 
@@ -69,19 +69,19 @@ class ComponentB {
     expect(directives, hasLength(2));
     {
       final component = directives[0];
-      expect(component, const isInstanceOf<Component>());
+      expect(component, isA<Component>());
       {
         final selector = component.selector;
-        expect(selector, const isInstanceOf<ElementNameSelector>());
+        expect(selector, isA<ElementNameSelector>());
         expect(selector.toString(), 'comp-a');
       }
     }
     {
       final component = directives[1];
-      expect(component, const isInstanceOf<Component>());
+      expect(component, isA<Component>());
       {
         final selector = component.selector;
-        expect(selector, const isInstanceOf<ElementNameSelector>());
+        expect(selector, isA<ElementNameSelector>());
         expect(selector.toString(), 'comp-b');
       }
     }
@@ -104,19 +104,19 @@ class DirectiveB {
     expect(directives, hasLength(2));
     {
       final directive = directives[0];
-      expect(directive, const isInstanceOf<Directive>());
+      expect(directive, isA<Directive>());
       {
         final selector = directive.selector;
-        expect(selector, const isInstanceOf<ElementNameSelector>());
+        expect(selector, isA<ElementNameSelector>());
         expect(selector.toString(), 'dir-a');
       }
     }
     {
       final directive = directives[1];
-      expect(directive, const isInstanceOf<Directive>());
+      expect(directive, isA<Directive>());
       {
         final selector = directive.selector;
-        expect(selector, const isInstanceOf<ElementNameSelector>());
+        expect(selector, isA<ElementNameSelector>());
         expect(selector.toString(), 'dir-b');
       }
     }
@@ -229,7 +229,7 @@ void directiveA() {
     final directive = directives.single as FunctionalDirective;
     expect(directive.functionName, "directiveA");
     final selector = directive.selector;
-    expect(selector, const isInstanceOf<AndSelector>());
+    expect(selector, isA<AndSelector>());
     expect((selector as AndSelector).selectors, hasLength(3));
   }
 
@@ -446,7 +446,7 @@ class ComponentA {
     final source = newSource('/test.dart', code);
     await getDirectives(source);
     final component = directives.first as Component;
-    expect(component.exports, const isInstanceOf<ListLiteral>());
+    expect(component.exports, isA<ListLiteral>());
     final exports = (component.exports as ListLiteral).items;
     expect(exports, hasLength(3));
     {
@@ -673,12 +673,12 @@ class PipeB extends PipeTransform {
     expect(pipes, hasLength(2));
     {
       final pipe = pipes[0];
-      expect(pipe, const isInstanceOf<Pipe>());
+      expect(pipe, isA<Pipe>());
       expect(pipe.pipeName, 'pipeA');
     }
     {
       final pipe = pipes[1];
-      expect(pipe, const isInstanceOf<Pipe>());
+      expect(pipe, isA<Pipe>());
       expect(pipe.pipeName, 'pipeB');
     }
     errorListener.assertNoErrors();
@@ -699,9 +699,9 @@ abstract class PipeA extends PipeTransform{
     await getDirectives(source);
     expect(pipes, hasLength(1));
     final pipe = pipes[0];
-    expect(pipe, const isInstanceOf<Pipe>());
+    expect(pipe, isA<Pipe>());
     final pipeName = pipe.pipeName;
-    expect(pipeName, const isInstanceOf<String>());
+    expect(pipeName, isA<String>());
     expect(pipeName, 'pipeA');
 
     errorListener
@@ -725,7 +725,7 @@ class ComponentA {
     final source = newSource('/test.dart', code);
     await getDirectives(source);
     final component = directives.first as Component;
-    expect(component.exports, const isInstanceOf<ListLiteral>());
+    expect(component.exports, isA<ListLiteral>());
     final exports = (component.exports as ListLiteral).items;
     expect(exports, hasLength(2));
     {
