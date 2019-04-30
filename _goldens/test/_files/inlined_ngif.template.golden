@@ -96,6 +96,11 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
   import1.InlinedNgIfComponent _InlinedNgIfComponent_0_5;
   _ViewInlinedNgIfComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
     _compView_0 = ViewInlinedNgIfComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -198,6 +203,11 @@ class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponen
   import1.IgnoredNgIfComponent _IgnoredNgIfComponent_0_5;
   _ViewIgnoredNgIfComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
     _compView_0 = ViewIgnoredNgIfComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -299,6 +309,11 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
   ViewInlinedNgIfWithImmutableConditionComponent0 _compView_0;
   import1.InlinedNgIfWithImmutableConditionComponent _InlinedNgIfWithImmutableConditionComponent_0_5;
   _ViewInlinedNgIfWithImmutableConditionComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     _compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);

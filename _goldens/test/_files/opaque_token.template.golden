@@ -67,6 +67,11 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   import1.HasOpaqueTokens _HasOpaqueTokens_0_6;
   _ViewHasOpaqueTokensHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.HasOpaqueTokens> build() {
     _compView_0 = ViewHasOpaqueTokens0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -229,6 +234,11 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
   import1.ContainsChildComponent _ContainsChildComponent_0_5;
   _ViewContainsChildComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.ContainsChildComponent> build() {
     _compView_0 = ViewContainsChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -292,6 +302,11 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;
   import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_5;
   _ViewInjectsTypedTokenFromSomeParentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
     _compView_0 = ViewInjectsTypedTokenFromSomeParent0(this, 0);

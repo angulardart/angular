@@ -232,6 +232,20 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
         component, parent, elementRef, nodeIndex, ast,
         isDeferred: isDeferred);
 
+    if (_view.viewType == ViewType.host) {
+      // For host views, override the getter that returns the hosted component
+      // view. This is used only to fufill an experimental debug API.
+      _view.getters.add(
+        o.ClassGetter(
+          'hostedComponentView',
+          [o.ReturnStatement(compAppViewRef.toReadExpr())],
+          o.importType(Identifiers.AppView, [o.VOID_TYPE]),
+          null,
+          [o.importExpr(Identifiers.dartCoreOverride)],
+        ),
+      );
+    }
+
     var isHtmlElement = detectHtmlElementFromTagName(ast.name);
 
     if (_view.viewType != ViewType.host) {

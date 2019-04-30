@@ -141,6 +141,11 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   import1.QueriesComponent _QueriesComponent_0_5;
   _ViewQueriesComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.QueriesComponent> build() {
     _compView_0 = ViewQueriesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -284,6 +289,11 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
   import1.EmbeddedQueries _EmbeddedQueries_0_5;
   _ViewEmbeddedQueriesHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.EmbeddedQueries> build() {
     _compView_0 = ViewEmbeddedQueries0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -425,6 +435,11 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_5;
   _ViewEmbeddedQueriesListHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
     _compView_0 = ViewEmbeddedQueriesList0(this, 0);
@@ -621,6 +636,11 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
   ViewNestedNgForQueriesList0 _compView_0;
   import1.NestedNgForQueriesList _NestedNgForQueriesList_0_5;
   _ViewNestedNgForQueriesListHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
     _compView_0 = ViewNestedNgForQueriesList0(this, 0);

@@ -100,6 +100,11 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
   import1.Comp _Comp_0_5;
   _ViewCompHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.Comp> build() {
     _compView_0 = ViewComp0(this, 0);
     final _el_0 = _compView_0.rootEl;

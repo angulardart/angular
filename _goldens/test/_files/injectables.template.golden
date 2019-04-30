@@ -67,6 +67,11 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
   dynamic __SomeDep_0_7;
   dynamic __BaseService_0_8;
   _ViewInjectableComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   dynamic get _SomeDep_0_7 {
     if ((__SomeDep_0_7 == null)) {
       (__SomeDep_0_7 = import1.createLinkedHashMap(_test_0_5));

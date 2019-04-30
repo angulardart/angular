@@ -92,6 +92,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   import1.AppComponent _AppComponent_0_5;
   _ViewAppComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -156,6 +161,11 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
   _ViewProvidesServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
@@ -228,6 +238,11 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
   ViewInjectsServicesComponent0 _compView_0;
   import1.InjectsServicesComponent _InjectsServicesComponent_0_5;
   _ViewInjectsServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     _compView_0 = ViewInjectsServicesComponent0(this, 0);

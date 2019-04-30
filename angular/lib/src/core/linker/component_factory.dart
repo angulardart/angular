@@ -1,10 +1,47 @@
 import 'dart:html';
 
+import 'package:angular/src/core/change_detection.dart'
+    show ChangeDetectionStrategy, ChangeDetectorRef;
 import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/runtime.dart' show isDevMode;
 
-import '../change_detection/change_detection.dart' show ChangeDetectorRef;
 import 'app_view.dart';
 import 'view_ref.dart' show ViewRef;
+
+/// Returns whether [componentRef] uses [ChangeDetectionStrategy.Default].
+///
+/// In practice this can be used to assert that a component does *not* use
+/// default change detection in non-default or performance sensitive contexts.
+///
+/// ```
+/// final componentRef = viewContainerRef.createComponent(componentFactory);
+/// assert(!debugUsesDefaultChangeDetection(componentRef));
+/// ```
+///
+/// Note that at runtime, we can only tell whether a component uses default
+/// change detection or not. It's not possible to distinguish which non-default
+/// change detection strategy is used because they all use the same runtime
+/// representation.
+bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
+  if (!isDevMode) {
+    throw StateError(
+      'This function should only be used for assertions. Consider wrapping the '
+      'invocation in an "assert()" statement.\n'
+      '\n'
+      'See "debugUsesDefaultChangeDetection()" documentation for details.',
+    );
+  }
+  // `ComponentRef._parentView` should only ever be a host view.
+  final hostView = componentRef._parentView;
+  final componentView = hostView.hostedComponentView;
+  if (componentView == null) {
+    throw StateError(
+      'A "ComponentRef" should always reference a host view that hosts a '
+      'non-null component view.',
+    );
+  }
+  return componentView.cdMode == ChangeDetectionStrategy.CheckAlways;
+}
 
 /// Represents an instance of a Component created via a [ComponentFactory].
 ///

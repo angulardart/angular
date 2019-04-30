@@ -76,6 +76,11 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
   import1.MostLifecycleHooksComponent _MostLifecycleHooksComponent_0_5;
   _ViewMostLifecycleHooksComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -157,6 +162,11 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
   import1.EmptyComponent _EmptyComponent_0_5;
   _ViewEmptyComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.EmptyComponent> build() {
     _compView_0 = ViewEmptyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -220,6 +230,11 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
   ViewAfterChangesComponent0 _compView_0;
   import1.AfterChangesComponent _AfterChangesComponent_0_5;
   _ViewAfterChangesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
     _compView_0 = ViewAfterChangesComponent0(this, 0);
@@ -369,6 +384,11 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
   ViewUsesLifecycleHooksComponent0 _compView_0;
   import1.UsesLifecycleHooksComponent _UsesLifecycleHooksComponent_0_5;
   _ViewUsesLifecycleHooksComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
     _compView_0 = ViewUsesLifecycleHooksComponent0(this, 0);

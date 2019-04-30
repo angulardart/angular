@@ -73,6 +73,11 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   import1.ParentComponent _ParentComponent_0_5;
   _ViewParentComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.ParentComponent> build() {
     _compView_0 = ViewParentComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -144,6 +149,11 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   ViewChildComponent0 _compView_0;
   import1.ChildComponent _ChildComponent_0_5;
   _ViewChildComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.ChildComponent> build() {
     _compView_0 = ViewChildComponent0(this, 0);

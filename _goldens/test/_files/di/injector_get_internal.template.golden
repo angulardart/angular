@@ -484,6 +484,11 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   import1.AppComponent _AppComponent_0_5;
   _ViewAppComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
   ComponentRef<import1.AppComponent> build() {
     _compView_0 = ViewAppComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
@@ -547,6 +552,11 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
   ViewMaterialAutoSuggestInputComponent0 _compView_0;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_0_5;
   _ViewMaterialAutoSuggestInputComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
@@ -624,6 +634,11 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   List<import1.Validator> __MultiToken_0_8;
   int __luckyNumber_0_12;
   _ViewMaterialInputComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
   import1.ServiceB get _Service_0_6 {
     if ((__Service_0_6 == null)) {
       (__Service_0_6 = import1.ServiceB());
