@@ -1,12 +1,15 @@
+import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/parse_util.dart' show ParseErrorLevel;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/compiler/view_compiler/constants.dart';
 import 'package:angular/src/core/linker/view_type.dart';
+import 'package:angular_compiler/cli.dart' show logWarning, throwFailure;
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement;
@@ -38,11 +41,23 @@ import 'property_binder.dart'
 ///
 /// Called by ViewCompiler for each top level CompileView and the
 /// ViewBinderVisitor recursively for each embedded template.
-void bindView(CompileView view, List<TemplateAst> parsedTemplate) {
+///
+/// HostProperties are bound for Component and Host views, but not embedded
+/// views.
+void bindView(
+  CompileView view,
+  List<TemplateAst> parsedTemplate,
+  ElementSchemaRegistry schemaRegistry, {
+  @required bool bindHostProperties,
+}) {
   var visitor = _ViewBinderVisitor(view);
   templateVisitAll(visitor, parsedTemplate);
   for (var pipe in view.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
+  }
+
+  if (bindHostProperties) {
+    _bindViewHostProperties(view, schemaRegistry);
   }
 }
 
@@ -172,7 +187,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       bindDirectiveDestroyLifecycleCallbacks(
           directiveAst.directive, directiveInstance, compileElement);
     }
-    bindView(compileElement.embeddedView, ast.children);
+    bindView(compileElement.embeddedView, ast.children, null,
+        bindHostProperties: false);
   }
 
   @override
@@ -208,8 +224,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   void visitProvider(ProviderAst ast, _) {}
 }
 
-void bindViewHostProperties(CompileView view,
-    ElementSchemaRegistry schemaRegistry, ErrorCallback errorCallback) {
+void _bindViewHostProperties(
+    CompileView view, ElementSchemaRegistry schemaRegistry) {
   if (view.viewIndex != 0 || view.viewType != ViewType.component) return;
   var hostProps = view.component.hostProperties;
   if (hostProps == null) return;
@@ -220,7 +236,7 @@ void bindViewHostProperties(CompileView view,
   hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
     hostProperties.add(createElementPropertyAst(elementName, propName,
-        BoundExpression(expression), span, schemaRegistry, errorCallback));
+        BoundExpression(expression), span, schemaRegistry, _handleError));
   });
 
   final method = CompileMethod();
@@ -241,5 +257,14 @@ void bindViewHostProperties(CompileView view,
   );
   if (method.isNotEmpty) {
     view.detectHostChangesMethod = method;
+  }
+}
+
+void _handleError(String message, SourceSpan sourceSpan,
+    [ParseErrorLevel level]) {
+  if (level == ParseErrorLevel.FATAL) {
+    throwFailure(message);
+  } else {
+    logWarning(message);
   }
 }
