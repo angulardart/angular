@@ -98,12 +98,4 @@ abstract class ChangeDetectorRef {
   /// also worth filing a bug if this is needed.
   @Deprecated('Breaks assumptions around change detection and will be removed')
   void detectChanges();
-
-  /// Forces synchronous change detection, failing if any bindings have changed.
-  ///
-  /// **WARNING**: In practice, this API was not intended to be public and was
-  /// for creating testing and local debugging infrastructure. A future version
-  /// of Angular will remove it from the public API entirely.
-  @Deprecated('Not intended be public API and will be removed')
-  void checkNoChanges();
 }
