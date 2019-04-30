@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorRef;
 import 'package:angular/src/core/di.dart' show Injector;
@@ -22,6 +23,7 @@ import 'view_ref.dart' show ViewRef;
 /// change detection or not. It's not possible to distinguish which non-default
 /// change detection strategy is used because they all use the same runtime
 /// representation.
+@experimental
 bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
   if (!isDevMode) {
     throw StateError(
