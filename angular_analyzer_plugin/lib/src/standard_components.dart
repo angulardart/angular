@@ -313,6 +313,9 @@ class SecurityContext {
 /// Used when getting input information from `dart:html` and building the
 /// standard html inputs.
 class SecuritySchema {
+  static const securitySourcePath = 'package:angular/security.dart';
+  static const protoSecuritySourcePath =
+      'package:webutil.html.types.proto/html.pb.dart';
   final Map<String, SecurityContext> schema = {};
 
   SecuritySchema(
