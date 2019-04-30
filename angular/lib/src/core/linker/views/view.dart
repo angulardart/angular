@@ -1,8 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
-import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/core/change_detection/host.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/di/errors.dart';
 import 'package:angular/src/di/injector/element.dart';
 import 'package:angular/src/di/injector/injector.dart';
@@ -20,13 +19,6 @@ abstract class View implements ChangeDetectorRef {
   /// [detectChanges] or [destroyInternalState]).
   @protected
   void build();
-
-  @override
-  void checkNoChanges() {
-    AppViewUtils.enterThrowOnChanges();
-    detectChanges();
-    AppViewUtils.exitThrowOnChanges();
-  }
 
   /// Destroys the internal state of this view.
   ///

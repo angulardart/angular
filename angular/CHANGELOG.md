@@ -14,6 +14,8 @@
     pseudo-element should be used in their stead to pierce style encapsulation
     when necessary.
 
+*   `ChangeDetectorRef.checkNoChanges()` has been removed from the public API.
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.
