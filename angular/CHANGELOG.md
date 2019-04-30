@@ -986,7 +986,7 @@ everyone).
     annotations (`@Input()`, `@Output()`, `@HostBinding()`, `@HostListener()`)
     instead.
 
-*   The default for `@Component(preserveWhitespace: ...)` is now `true`. Many
+*   The default for `@Component(preserveWhitespace: ...)` is now `false`. Many
     improvements were put into the whitespace optimziation in order to make the
     results easier to understand and work around.
 
