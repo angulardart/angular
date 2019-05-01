@@ -6,7 +6,6 @@ import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
-import 'compiler_utils.dart';
 import 'expression_parser/ast.dart' as ast;
 import 'output/convert.dart' show typeArgumentsFrom;
 import 'output/output_ast.dart' as o;
@@ -213,8 +212,11 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   }
 
   String get name {
-    return value != null ? sanitizeIdentifier(value) : identifier?.name;
+    return value != null ? _sanitizeIdentifier(value) : identifier?.name;
   }
+
+  static String _sanitizeIdentifier(Object name) =>
+      name.toString().replaceAll(RegExp(r'\W'), "_");
 
   @override
   // ignore: hash_and_equals
