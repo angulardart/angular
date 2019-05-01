@@ -79,7 +79,7 @@ class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
     _DefaultComp_0_5 = import1.DefaultComp();
     _compView_0.create(_DefaultComp_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _DefaultComp_0_5);
+    return ComponentRef(this, _el_0, _DefaultComp_0_5);
   }
 
   @override
@@ -167,7 +167,7 @@ class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
     _OnPushComp_0_5 = import1.OnPushComp();
     _compView_0.create(_OnPushComp_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _OnPushComp_0_5);
+    return ComponentRef(this, _el_0, _OnPushComp_0_5);
   }
 
   @override

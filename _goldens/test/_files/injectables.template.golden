@@ -106,7 +106,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
         : import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, parentIndex), _test_0_5, this.injectorGetOptional(String, parentIndex)));
     _compView_0.create(_InjectableComponent_0_6, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _InjectableComponent_0_6);
+    return ComponentRef(this, _el_0, _InjectableComponent_0_6);
   }
 
   @override

@@ -167,7 +167,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
     _NestedNgForComponent_0_5 = import1.NestedNgForComponent();
     _compView_0.create(_NestedNgForComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _NestedNgForComponent_0_5);
+    return ComponentRef(this, _el_0, _NestedNgForComponent_0_5);
   }
 
   @override

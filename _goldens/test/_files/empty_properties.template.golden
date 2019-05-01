@@ -120,7 +120,7 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
     _EmptyPropertiesComponent_0_5 = import1.EmptyPropertiesComponent();
     _compView_0.create(_EmptyPropertiesComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _EmptyPropertiesComponent_0_5);
+    return ComponentRef(this, _el_0, _EmptyPropertiesComponent_0_5);
   }
 
   @override
@@ -189,7 +189,7 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
     _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
     _compView_0.create(_FancyButtonComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _FancyButtonComponent_0_5);
+    return ComponentRef(this, _el_0, _FancyButtonComponent_0_5);
   }
 
   @override

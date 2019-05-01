@@ -52,12 +52,10 @@ bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
 /// Component Instance via the [ComponentRef.destroy] method.
 class ComponentRef<C> {
   final AppView<Object> _parentView;
-  final int _nodeIndex;
   final Element _nativeElement;
   final C _component;
 
   ComponentRef(
-    this._nodeIndex,
     this._parentView,
     this._nativeElement,
     this._component,
@@ -67,7 +65,7 @@ class ComponentRef<C> {
   Element get location => _nativeElement;
 
   /// The injector on which the component instance exists.
-  Injector get injector => _parentView.injector(_nodeIndex);
+  Injector get injector => _parentView.injector(0);
 
   /// The instance of the Component.
   C get instance => _component;

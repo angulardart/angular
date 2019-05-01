@@ -3505,7 +3505,7 @@
     },
     ElementInjector: function ElementInjector(t0, t1, t2) {
       this._view = t0;
-      this._element$_nodeIndex = t1;
+      this._nodeIndex = t1;
       this.parent = t2;
     }
   },
@@ -3989,10 +3989,9 @@
       this.eventManager = t0;
       this.sanitizer = t1;
     }},
-  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
+  D = {ComponentRef: function ComponentRef(t0, t1) {
       this._parentView = t0;
-      this._nodeIndex = t1;
-      this._nativeElement = t2;
+      this._nativeElement = t1;
     }, ComponentFactory: function ComponentFactory(t0, t1) {
       this.selector = t0;
       this._viewFactory = t1;
@@ -9298,7 +9297,7 @@
   };
   Y.ApplicationRef_bootstrap_closure.prototype = {
     call$0: function() {
-      var component, existing, newElement, replacement, t5, testability,
+      var component, existing, newElement, replacement, testability,
         t1 = this.componentFactory,
         t2 = this.$this,
         t3 = t2._injector,
@@ -9325,8 +9324,7 @@
         replacement = null;
       }
       t4 = component._parentView;
-      t5 = component._nodeIndex;
-      testability = new G.ElementInjector(t4, t5, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, null);
+      testability = new G.ElementInjector(t4, 0, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, null);
       if (testability != null)
         t3.$get$1(0, C.Type_TestabilityRegistry_IMm)._applications.$indexSet(0, t1, testability);
       t2._loadedRootComponent$2(component, replacement);
@@ -10640,7 +10638,7 @@
   Y.NgZoneError.prototype = {};
   G.ElementInjector.prototype = {
     provideUntyped$2: function(token, orElse) {
-      return this._view.injectorGet$3(token, this._element$_nodeIndex, orElse);
+      return this._view.injectorGet$3(token, this._nodeIndex, orElse);
     },
     injectFromAncestryOptional$2: function(token, orElse) {
       return H.throwExpression(P.UnimplementedError$(null));
@@ -11167,7 +11165,7 @@
       _this._RootComponent_0_5 = t3;
       t1.create$2(0, t3, _this.viewData.projectedNodes);
       _this.init1$1(t2);
-      return new D.ComponentRef(_this, 0, t2);
+      return new D.ComponentRef(_this, t2);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();

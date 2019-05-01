@@ -73,7 +73,7 @@ class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
     _UsesEventTearoff_0_5 = import1.UsesEventTearoff();
     _compView_0.create(_UsesEventTearoff_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesEventTearoff_0_5);
+    return ComponentRef(this, _el_0, _UsesEventTearoff_0_5);
   }
 
   @override

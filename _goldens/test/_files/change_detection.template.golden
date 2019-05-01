@@ -102,7 +102,7 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
     _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
     _compView_0.create(_UsesOnPushComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesOnPushComponent_0_5);
+    return ComponentRef(this, _el_0, _UsesOnPushComponent_0_5);
   }
 
   @override
@@ -201,7 +201,7 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
     _OnPushComponent_0_5 = import1.OnPushComponent();
     _compView_0.create(_OnPushComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _OnPushComponent_0_5);
+    return ComponentRef(this, _el_0, _OnPushComponent_0_5);
   }
 
   @override
@@ -285,7 +285,7 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
     _compView_0.create(_OnPushChildComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _OnPushChildComponent_0_5);
+    return ComponentRef(this, _el_0, _OnPushChildComponent_0_5);
   }
 
   @override
@@ -363,7 +363,7 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
     _StatefulComponent_0_5 = import1.StatefulComponent();
     _compView_0.create(_StatefulComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _StatefulComponent_0_5);
+    return ComponentRef(this, _el_0, _StatefulComponent_0_5);
   }
 
   @override
@@ -435,7 +435,7 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
     _DefaultComponent_0_5 = import1.DefaultComponent();
     _compView_0.create(_DefaultComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _DefaultComponent_0_5);
+    return ComponentRef(this, _el_0, _DefaultComponent_0_5);
   }
 
   @override
@@ -535,7 +535,7 @@ class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
     _UsesNgModelLike_0_5 = import1.UsesNgModelLike();
     _compView_0.create(_UsesNgModelLike_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesNgModelLike_0_5);
+    return ComponentRef(this, _el_0, _UsesNgModelLike_0_5);
   }
 
   @override

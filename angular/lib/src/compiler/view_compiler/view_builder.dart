@@ -812,14 +812,14 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     }
     var hostElement = view.nodes[0] as CompileElement;
     statements.add(
-        o.ReturnStatement(o.importExpr(Identifiers.ComponentRef).instantiate(
-      [
-        o.literal(hostElement.nodeIndex),
-        o.THIS_EXPR,
-        hostElement.renderNode.toReadExpr(),
-        hostElement.getComponent()
-      ],
-    )));
+      o.ReturnStatement(
+        o.importExpr(Identifiers.ComponentRef).instantiate([
+          o.THIS_EXPR,
+          hostElement.renderNode.toReadExpr(),
+          hostElement.getComponent(),
+        ]),
+      ),
+    );
     // Rely on the implicit `return null` for non host views. This reduces the
     // size of output from dart2js.
   }

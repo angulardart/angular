@@ -304,7 +304,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
     _ParentComponent_0_5 = import1.ParentComponent();
     _compView_0.create(_ParentComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ParentComponent_0_5);
+    return ComponentRef(this, _el_0, _ParentComponent_0_5);
   }
 
   @override
@@ -397,7 +397,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
     _compView_0.create(_ChildComponentProvidingA$B$C_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ChildComponentProvidingA$B$C_0_5);
+    return ComponentRef(this, _el_0, _ChildComponentProvidingA$B$C_0_5);
   }
 
   @override
@@ -491,7 +491,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
     _ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
     _compView_0.create(_ChildComponentWithNgContentProviding$D_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ChildComponentWithNgContentProviding$D_0_5);
+    return ComponentRef(this, _el_0, _ChildComponentWithNgContentProviding$D_0_5);
   }
 
   @override
@@ -572,7 +572,7 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex)));
     _compView_0.create(_ChildComponentInjecting$D_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ChildComponentInjecting$D_0_5);
+    return ComponentRef(this, _el_0, _ChildComponentInjecting$D_0_5);
   }
 
   @override
@@ -641,7 +641,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
     _ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();
     _compView_0.create(_ChildComponentWithVisibilityAll_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ChildComponentWithVisibilityAll_0_5);
+    return ComponentRef(this, _el_0, _ChildComponentWithVisibilityAll_0_5);
   }
 
   @override
