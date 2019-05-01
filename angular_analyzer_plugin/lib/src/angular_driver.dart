@@ -492,10 +492,7 @@ class AngularDriver
     final htmlSource = _sourceFactory.forUri('file:$htmlPath');
     if (!ignoreCache && bytes != null) {
       final summary = LinkedHtmlSummary.fromBuffer(bytes);
-      final errors = List<AnalysisError>.from(
-          _deserializeErrors(htmlSource, summary.errors))
-        ..addAll(
-            _deserializeFromPathErrors(htmlSource, summary.errorsFromPath));
+      final errors = _deserializeErrors(htmlSource, summary.errors);
       final result = DirectivesResult.fromCache(htmlPath, errors);
       _htmlResultsController.add(result);
       return result;
@@ -512,17 +509,7 @@ class AngularDriver
     }
 
     final summary = LinkedHtmlSummaryBuilder()
-      ..errors = summarizeErrors(result.errors
-          .where((error) => error is! FromFilePrefixedError)
-          .toList())
-      ..errorsFromPath = result.errors
-          .where((error) => error is FromFilePrefixedError)
-          .map((error) => SummarizedAnalysisErrorFromPathBuilder()
-            ..path = (error as FromFilePrefixedError).fromSourcePath
-            ..classname = (error as FromFilePrefixedError).classname
-            ..originalError =
-                summarizeError((error as FromFilePrefixedError).originalError))
-          .toList();
+      ..errors = summarizeErrors(result.errors);
     final newBytes = summary.toBuffer();
     byteStore.put(key, newBytes);
 
@@ -593,7 +580,7 @@ class AngularDriver
           if (shorten(directive.source.fullName) !=
               shorten(directive.templateSource.fullName)) {
             errors.addAll(tplErrorListener.errors.where(rightErrorType).map(
-                (e) => FromFilePrefixedError(
+                (e) => prefixError(
                     directive.source, directive.classElement.name, e)));
           } else {
             errors.addAll(tplErrorListener.errors.where(rightErrorType));
@@ -809,21 +796,6 @@ class AngularDriver
           Source source, List<SummarizedAnalysisError> errors) =>
       errors
           .map((error) => _deserializeError(source, error))
-          .where((e) => e != null)
-          .toList();
-
-  List<AnalysisError> _deserializeFromPathErrors(
-          Source source, List<SummarizedAnalysisErrorFromPath> errors) =>
-      errors
-          .map((error) {
-            final originalError =
-                _deserializeError(source, error.originalError);
-            if (originalError == null) {
-              return null;
-            }
-            return FromFilePrefixedError.fromPath(
-                error.path, error.classname, originalError);
-          })
           .where((e) => e != null)
           .toList();
 }
