@@ -79,7 +79,7 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
     _HasHostAttributes_0_5 = import1.HasHostAttributes();
     _compView_0.create(_HasHostAttributes_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasHostAttributes_0_5);
+    return ComponentRef(this, _el_0, _HasHostAttributes_0_5);
   }
 
   @override
@@ -164,7 +164,7 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
     _HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
     _compView_0.create(_HasTemplateAttributes_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasTemplateAttributes_0_5);
+    return ComponentRef(this, _el_0, _HasTemplateAttributes_0_5);
   }
 
   @override
@@ -244,7 +244,7 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
     _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
     _compView_0.create(_HasStaticAttribute_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasStaticAttribute_0_5);
+    return ComponentRef(this, _el_0, _HasStaticAttribute_0_5);
   }
 
   @override
@@ -323,7 +323,7 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
     _HasHostClass_0_5 = import1.HasHostClass();
     _compView_0.create(_HasHostClass_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasHostClass_0_5);
+    return ComponentRef(this, _el_0, _HasHostClass_0_5);
   }
 
   @override
@@ -408,7 +408,7 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
     _HasTemplateClass_0_5 = import1.HasTemplateClass();
     _compView_0.create(_HasTemplateClass_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasTemplateClass_0_5);
+    return ComponentRef(this, _el_0, _HasTemplateClass_0_5);
   }
 
   @override
@@ -497,7 +497,7 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
     _HasStyleProperty_0_5 = import1.HasStyleProperty();
     _compView_0.create(_HasStyleProperty_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasStyleProperty_0_5);
+    return ComponentRef(this, _el_0, _HasStyleProperty_0_5);
   }
 
   @override

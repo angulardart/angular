@@ -274,7 +274,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
     _RootComponent_0_5 = import1.RootComponent();
     _compView_0.create(_RootComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _RootComponent_0_5);
+    return ComponentRef(this, _el_0, _RootComponent_0_5);
   }
 
   @override
@@ -373,7 +373,7 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
     _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
     _compView_0.create(_UsesDefaultChangeDetectionAndInputs_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesDefaultChangeDetectionAndInputs_0_5);
+    return ComponentRef(this, _el_0, _UsesDefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -459,7 +459,7 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
     _compView_0.create(_DefaultChangeDetectionAndInputs_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _DefaultChangeDetectionAndInputs_0_5);
+    return ComponentRef(this, _el_0, _DefaultChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -573,7 +573,7 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
     _UsesOnPushChangeDetectionAndInputs_0_5 = import1.UsesOnPushChangeDetectionAndInputs();
     _compView_0.create(_UsesOnPushChangeDetectionAndInputs_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesOnPushChangeDetectionAndInputs_0_5);
+    return ComponentRef(this, _el_0, _UsesOnPushChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -659,7 +659,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
         : import1.OnPushChangeDetectionAndInputs(_compView_0, this.injectorGet(import16.Stream, parentIndex)));
     _compView_0.create(_OnPushChangeDetectionAndInputs_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _OnPushChangeDetectionAndInputs_0_5);
+    return ComponentRef(this, _el_0, _OnPushChangeDetectionAndInputs_0_5);
   }
 
   @override
@@ -772,7 +772,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
     _InlinedNgIf_0_5 = import1.InlinedNgIf();
     _compView_0.create(_InlinedNgIf_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _InlinedNgIf_0_5);
+    return ComponentRef(this, _el_0, _InlinedNgIf_0_5);
   }
 
   @override
@@ -889,7 +889,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
     _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
     _compView_0.create(_EmbeddedNgIf_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _EmbeddedNgIf_0_5);
+    return ComponentRef(this, _el_0, _EmbeddedNgIf_0_5);
   }
 
   @override
@@ -1010,7 +1010,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
     _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
     _compView_0.create(_EmbeddedNgFor_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _EmbeddedNgFor_0_5);
+    return ComponentRef(this, _el_0, _EmbeddedNgFor_0_5);
   }
 
   @override
@@ -1079,7 +1079,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
     _NullComponent_0_5 = import1.NullComponent();
     _compView_0.create(_NullComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _NullComponent_0_5);
+    return ComponentRef(this, _el_0, _NullComponent_0_5);
   }
 
   @override
@@ -1152,7 +1152,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
         : import1.InjectsFromArbitraryParent(this.injectorGet(const import11.MultiToken<String>('usPresidents'), parentIndex), this.injectorGet(const import11.MultiToken<String>('whiteHouse'), parentIndex), this.injectorGet(import1.InjectableService, parentIndex)));
     _compView_0.create(_InjectsFromArbitraryParent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _InjectsFromArbitraryParent_0_5);
+    return ComponentRef(this, _el_0, _InjectsFromArbitraryParent_0_5);
   }
 
   @override
@@ -1308,7 +1308,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
     _ComponentConditionalFeatures_0_5 = import1.ComponentConditionalFeatures();
     _compView_0.create(_ComponentConditionalFeatures_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _ComponentConditionalFeatures_0_5);
+    return ComponentRef(this, _el_0, _ComponentConditionalFeatures_0_5);
   }
 
   @override
@@ -1378,7 +1378,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
     _FeatureA_0_5 = import1.FeatureA();
     _compView_0.create(_FeatureA_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _FeatureA_0_5);
+    return ComponentRef(this, _el_0, _FeatureA_0_5);
   }
 
   @override
@@ -1448,7 +1448,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
     _FeatureB_0_5 = import1.FeatureB();
     _compView_0.create(_FeatureB_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _FeatureB_0_5);
+    return ComponentRef(this, _el_0, _FeatureB_0_5);
   }
 
   @override
@@ -1553,7 +1553,7 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
     _UsesDomBindings_0_5 = import1.UsesDomBindings();
     _compView_0.create(_UsesDomBindings_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesDomBindings_0_5);
+    return ComponentRef(this, _el_0, _UsesDomBindings_0_5);
   }
 
   @override
@@ -1689,7 +1689,7 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
     _UsesNgDirectives_0_5 = import1.UsesNgDirectives();
     _compView_0.create(_UsesNgDirectives_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesNgDirectives_0_5);
+    return ComponentRef(this, _el_0, _UsesNgDirectives_0_5);
   }
 
   @override
@@ -1847,7 +1847,7 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
     _HasNestedProviderLookups_0_5 = import1.HasNestedProviderLookups();
     _compView_0.create(_HasNestedProviderLookups_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasNestedProviderLookups_0_5);
+    return ComponentRef(this, _el_0, _HasNestedProviderLookups_0_5);
   }
 
   @override
@@ -1920,7 +1920,7 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
         : import1.InjectsManyThingsDynamically(this.injectorGet(import1.DepA, parentIndex), this.injectorGet(import1.DepB, parentIndex), this.injectorGet(import1.DepC, parentIndex), this.injectorGetOptional(import1.DepD, parentIndex), this.injectorGetOptional(import1.DepE, parentIndex), this.injectorGetOptional(import1.DepF, parentIndex)));
     _compView_0.create(_InjectsManyThingsDynamically_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _InjectsManyThingsDynamically_0_5);
+    return ComponentRef(this, _el_0, _InjectsManyThingsDynamically_0_5);
   }
 
   @override
@@ -1992,7 +1992,7 @@ class _ViewHasHostListenersHost0 extends AppView<import1.HasHostListeners> {
     _HasHostListeners_0_5 = import1.HasHostListeners();
     _compView_0.create(_HasHostListeners_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasHostListeners_0_5);
+    return ComponentRef(this, _el_0, _HasHostListeners_0_5);
   }
 
   @override

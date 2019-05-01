@@ -83,7 +83,7 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
     _I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();
     _compView_0.create(_I18nPropertyComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _I18nPropertyComponent_0_5);
+    return ComponentRef(this, _el_0, _I18nPropertyComponent_0_5);
   }
 
   @override

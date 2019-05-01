@@ -73,7 +73,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
     _UsesNativeEvents_0_5 = import1.UsesNativeEvents();
     _compView_0.create(_UsesNativeEvents_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesNativeEvents_0_5);
+    return ComponentRef(this, _el_0, _UsesNativeEvents_0_5);
   }
 
   @override
@@ -161,7 +161,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
     _UsesAngularEvents_0_5 = import1.UsesAngularEvents();
     _compView_0.create(_UsesAngularEvents_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesAngularEvents_0_5);
+    return ComponentRef(this, _el_0, _UsesAngularEvents_0_5);
   }
 
   @override
@@ -230,7 +230,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
     _HasAngularEvents_0_5 = import1.HasAngularEvents();
     _compView_0.create(_HasAngularEvents_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasAngularEvents_0_5);
+    return ComponentRef(this, _el_0, _HasAngularEvents_0_5);
   }
 
   @override
@@ -306,7 +306,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
     _HasManyNativeHostEvents_0_5 = import1.HasManyNativeHostEvents();
     _compView_0.create(_HasManyNativeHostEvents_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _HasManyNativeHostEvents_0_5);
+    return ComponentRef(this, _el_0, _HasManyNativeHostEvents_0_5);
   }
 
   @override

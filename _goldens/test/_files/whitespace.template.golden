@@ -81,7 +81,7 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
     _PreserveWhitespace_0_5 = import1.PreserveWhitespace();
     _compView_0.create(_PreserveWhitespace_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _PreserveWhitespace_0_5);
+    return ComponentRef(this, _el_0, _PreserveWhitespace_0_5);
   }
 
   @override
@@ -159,7 +159,7 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
     _MinifyWhitespace_0_5 = import1.MinifyWhitespace();
     _compView_0.create(_MinifyWhitespace_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _MinifyWhitespace_0_5);
+    return ComponentRef(this, _el_0, _MinifyWhitespace_0_5);
   }
 
   @override

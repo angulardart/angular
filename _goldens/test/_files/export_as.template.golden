@@ -71,7 +71,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
     _TestFooComponent_0_5 = import1.TestFooComponent();
     _compView_0.create(_TestFooComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _TestFooComponent_0_5);
+    return ComponentRef(this, _el_0, _TestFooComponent_0_5);
   }
 
   @override

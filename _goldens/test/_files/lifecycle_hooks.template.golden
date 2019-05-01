@@ -87,7 +87,7 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
     _MostLifecycleHooksComponent_0_5 = import1.MostLifecycleHooksComponent();
     _compView_0.create(_MostLifecycleHooksComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _MostLifecycleHooksComponent_0_5);
+    return ComponentRef(this, _el_0, _MostLifecycleHooksComponent_0_5);
   }
 
   @override
@@ -173,7 +173,7 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
     _EmptyComponent_0_5 = import1.EmptyComponent();
     _compView_0.create(_EmptyComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _EmptyComponent_0_5);
+    return ComponentRef(this, _el_0, _EmptyComponent_0_5);
   }
 
   @override
@@ -242,7 +242,7 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
     _AfterChangesComponent_0_5 = import1.AfterChangesComponent();
     _compView_0.create(_AfterChangesComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _AfterChangesComponent_0_5);
+    return ComponentRef(this, _el_0, _AfterChangesComponent_0_5);
   }
 
   @override
@@ -396,7 +396,7 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
     _UsesLifecycleHooksComponent_0_5 = import1.UsesLifecycleHooksComponent();
     _compView_0.create(_UsesLifecycleHooksComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _UsesLifecycleHooksComponent_0_5);
+    return ComponentRef(this, _el_0, _UsesLifecycleHooksComponent_0_5);
   }
 
   @override

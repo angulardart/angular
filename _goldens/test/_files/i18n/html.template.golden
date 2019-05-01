@@ -78,7 +78,7 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
     _I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
     _compView_0.create(_I18nHtmlComponent_0_5, projectedNodes);
     init1(_el_0);
-    return ComponentRef(0, this, _el_0, _I18nHtmlComponent_0_5);
+    return ComponentRef(this, _el_0, _I18nHtmlComponent_0_5);
   }
 
   @override
