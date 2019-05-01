@@ -1,9 +1,11 @@
+import 'package:angular/src/compiler/compile_metadata.dart'
+    show CompileDirectiveMetadata;
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/view_compiler/compile_view.dart';
+import 'package:angular/src/compiler/view_compiler/constants.dart';
 
-import '../compile_metadata.dart' show CompileDirectiveMetadata;
-import '../output/output_ast.dart' as o;
-import '../view_compiler/compile_view.dart';
 import 'expression_converter.dart' show convertCdExpressionToIr, NameResolver;
 
 /// An abstract utility for converting bound values to output expressions.
@@ -40,7 +42,6 @@ abstract class BoundValueConverter
   /// `ctx`, the expression `foo(bar)` is rewritten as `ctx.foo(ctx.bar)`.
   factory BoundValueConverter.forView(
     CompileView view,
-    o.Expression implicitReceiver,
   ) = _ViewBoundValueConverter;
 
   o.Expression convertSourceToExpression(
@@ -90,8 +91,8 @@ class _DirectiveBoundValueConverter extends BoundValueConverter {
 class _ViewBoundValueConverter extends BoundValueConverter {
   final CompileView _view;
 
-  _ViewBoundValueConverter(this._view, o.Expression implicitReceiver)
-      : super(_view.component, implicitReceiver, _view.nameResolver);
+  _ViewBoundValueConverter(this._view)
+      : super(_view.component, DetectChangesVars.cachedCtx, _view.nameResolver);
 
   @override
   o.Expression _createI18nMessage(I18nMessage message) =>
