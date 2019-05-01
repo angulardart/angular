@@ -7,7 +7,6 @@ import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
-import 'package:angular/src/compiler/view_compiler/constants.dart';
 import 'package:angular/src/core/linker/view_type.dart';
 import 'package:angular_compiler/cli.dart' show logWarning, throwFailure;
 
@@ -242,8 +241,7 @@ void _bindViewHostProperties(
   final method = CompileMethod();
   final compileElement = view.componentView.declarationElement;
   final renderNode = view.componentView.declarationElement.renderNode;
-  final implicitReceiver = DetectChangesVars.cachedCtx;
-  final converter = BoundValueConverter.forView(view, implicitReceiver);
+  final converter = BoundValueConverter.forView(view);
   bindAndWriteToRenderer(
     convertAllToBinding(hostProperties,
         analyzedClass: view.component.analyzedClass),
