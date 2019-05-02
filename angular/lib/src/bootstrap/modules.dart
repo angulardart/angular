@@ -6,23 +6,17 @@ library angular.src.bootstrap.modules;
 import 'dart:html';
 import 'dart:math';
 
-import 'package:angular/src/core/application_ref.dart';
 import 'package:angular/src/core/application_tokens.dart';
 import 'package:angular/src/core/di.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/core/testability/testability.dart';
 import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
 import 'package:angular/src/runtime.dart';
-import 'package:angular/src/runtime/dom_events.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
-
-import 'package:meta/meta.dart';
 
 import 'modules.template.dart' as ng;
 
@@ -83,23 +77,3 @@ String createRandomAppId() {
   String char() => String.fromCharCode(97 + random.nextInt(26));
   return '${char()}${char()}${char()}';
 }
-
-/// Compatibility module (extension of [minimalModule]).
-///
-/// Adds support for soft-deprecated runtime reflective-like APIs.
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
-const bootstrapLegacyModule = <Object>[
-  bootstrapMinimalModule,
-  Provider(EventManager),
-  Provider(NgZone, useFactory: createNgZone, deps: []),
-  Provider(
-    ApplicationRef,
-    useFactory: internalCreateApplicationRef,
-    deps: [NgZone, Injector],
-  ),
-  Provider(AppViewUtils),
-  Provider(SlowComponentLoader),
-  Provider(Testability, useClass: Testability),
-];
