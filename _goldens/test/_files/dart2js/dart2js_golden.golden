@@ -10717,19 +10717,17 @@
   };
   K.BrowserGetTestability.prototype = {
     addToWindow$1: function(registry) {
-      var t1, t2, getAllAngularTestabilities, whenAllStable,
+      var getAllAngularTestabilities, whenAllStable,
         jsRegistry = self.self.ngTestabilityRegistries;
       if (jsRegistry == null) {
-        t1 = self.self;
-        t2 = [P.Object];
-        jsRegistry = H.setRuntimeTypeInfo([], t2);
-        t1.ngTestabilityRegistries = jsRegistry;
+        jsRegistry = [];
+        self.self.ngTestabilityRegistries = jsRegistry;
         self.self.getAngularTestability = P.allowInterop(new K.BrowserGetTestability_addToWindow_closure());
         getAllAngularTestabilities = new K.BrowserGetTestability_addToWindow_closure0();
         self.self.getAllAngularTestabilities = P.allowInterop(getAllAngularTestabilities);
         whenAllStable = P.allowInterop(new K.BrowserGetTestability_addToWindow_closure1(getAllAngularTestabilities));
         if (!("frameworkStabilizers" in self.self))
-          self.self.frameworkStabilizers = H.setRuntimeTypeInfo([], t2);
+          self.self.frameworkStabilizers = [];
         J.add$1$ax(self.self.frameworkStabilizers, whenAllStable);
       }
       J.add$1$ax(jsRegistry, this._createRegistry$1(registry));
@@ -10772,7 +10770,7 @@
     call$0: function() {
       var t1, i, t2, testabilities, testabilityCount, j,
         registry = self.self.ngTestabilityRegistries,
-        result = H.setRuntimeTypeInfo([], [P.Object]);
+        result = [];
       for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
         t2 = t1.$index(registry, i);
         testabilities = t2.getAllAngularTestabilities.apply(t2, []);
