@@ -9,8 +9,6 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/bootstrap/modules.dart';
 import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
-import 'package:angular/src/core/change_detection/constants.dart';
-import 'package:angular/src/core/linker/app_view.dart';
 
 /// Returns an application injector factory for [providers], if any.
 InjectorFactory testInjectorFactory(List<dynamic> providers) {
@@ -104,15 +102,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   final componentRef = componentFactory.create(injector);
-  final cdMode = (componentRef.hostView as AppView<void>).cdMode;
-  if (cdMode != ChangeDetectionStrategy.Default &&
-      // ignore: deprecated_member_use
-      cdMode != ChangeDetectionStrategy.CheckAlways) {
-    throw UnsupportedError(
-        'The root component in an Angular test or application must use the '
-        'default form of change detection (ChangeDetectionStrategy.Default). '
-        'Instead got $cdMode on component $E.');
-  }
+  // TODO(b/131856980): assert(debugUsesDefaultChangeDetection(componentRef));
 
   Future<ComponentRef<E>> loadComponent() {
     hostElement.append(componentRef.location);
