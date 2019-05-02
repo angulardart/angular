@@ -372,19 +372,11 @@ class NgZone {
   /// ```
   /// void example(NgZone zone) async {
   ///   someValue = true;
-  ///   // TODO(...): Remove this statement after following up with bug XXX.
   ///   zone.runAfterChangesObserved(() {
   ///     doSomethingDependentOnSomeValueChanging();
   ///   });
   /// }
   /// ```
-  ///
-  /// **WARNING**: This is not to be considered a permanent API fixture, as it
-  /// allows observing an event that is not relevant to all AngularDart apps -
-  /// for example components that use _stateful_ or other future types of change
-  /// detection may not be counted as part of this event. **Use sparingly**, and
-  /// consider filing bugs if you find yourself needing this function.
-  @experimental
   void runAfterChangesObserved(void Function() callback) {
     if (isRunning) {
       onTurnDone.first.whenComplete(() => scheduleMicrotask(callback));
