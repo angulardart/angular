@@ -6,4 +6,4 @@ go/angular-dart/advanced
 
 <!--* freshness: { owner: 'matanl' reviewed: '2019-05-01' } *-->
 
-*   [Managing Asynchronous Behavior with `NgZone`](zones.md)
+*   [Async Updates](async.md)

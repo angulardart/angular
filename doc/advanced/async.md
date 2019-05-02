@@ -1,4 +1,4 @@
-# Managing Asynchronous Behavior with `NgZone`
+# Async Updates
 
 
 In most apps and components, it is not necessary to precisely know how
@@ -8,6 +8,11 @@ are handled automatically.
 
 [futures]: https://www.dartlang.org/tutorials/language/futures
 [streams]: https://www.dartlang.org/tutorials/language/streams
+
+WARNING: The advice and recommendations in this article pertain to users of
+_default_ change detection. Components that use `ChangeDetectionStrategy.OnPush`
+should inject `ChangeDetectorRef` and call `markForCheck()` as a signal whenever
+necessary.
 
 In _some_ cases, you may want to inject [`NgZone`][ng-zone] (as a constructor
 parameter) to control how AngularDart uses [zones][zones] to observe your
