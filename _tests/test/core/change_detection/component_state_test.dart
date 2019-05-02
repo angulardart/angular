@@ -6,28 +6,36 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'component_state_test.template.dart' as ng_generated;
+import 'component_state_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(() => disposeAnyRunningTest());
 
   test('should update bound properties when setState is called', () async {
-    var testBed = NgTestBed<SingleBindingTest>();
+    var testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
     var testRoot = await testBed.create();
     Element targetElement = testRoot.rootElement.querySelector('.target');
     expect(targetElement.text, '');
-    await testRoot.update((SingleBindingTest test) {
-      test.title = 'Matan';
+    await testRoot.update((component) {
+      component.componentStateChild.title = 'Matan';
     });
     expect(targetElement.text, 'Matan');
-    await testRoot.update((SingleBindingTest test) {
-      test.updateTitle('Lurey');
+    await testRoot.update((component) {
+      component.componentStateChild.updateTitle('Lurey');
     });
     // Should not have updated the template, i.e. not change detection.
     expect(targetElement.text, 'Matan');
   });
+}
+
+@Component(
+  selector: 'test',
+  template: '<child-with-single-binding></child-with-single-binding>',
+  directives: [SingleBindingTest],
+)
+class TestComponent {
+  @ViewChild(SingleBindingTest)
+  SingleBindingTest componentStateChild;
 }
 
 @Component(
