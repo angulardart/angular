@@ -29,6 +29,10 @@ import 'package:angular_analyzer_plugin/src/summary/idl.dart';
 /// in an ideal implementation, those would not be distinct stages, and the
 /// linker would not be distinct from resolution. That behavior would then all
 /// exist here.
+///
+/// During template resolution, this should be created with [linkHtmlNgContents]
+/// to false, as those can be discovered during template resolution and would
+/// otherwise occur multiple times.
 class EagerLinker implements TopLevelLinker {
   final DirectiveProvider _directiveProvider;
   final StandardAngular _standardAngular;
@@ -37,9 +41,11 @@ class EagerLinker implements TopLevelLinker {
   final SubDirectiveLinker _subDirectiveLinker;
   final SubPipeLinker _subPipeLinker;
   final ContentChildLinker _contentChildLinker;
+  final bool linkHtmlNgContents;
 
   EagerLinker(this._standardAngular, StandardHtml standardHtml,
-      this._errorReporter, this._directiveProvider)
+      this._errorReporter, this._directiveProvider,
+      {this.linkHtmlNgContents = true})
       : _exportLinker = ExportLinker(_errorReporter),
         _subDirectiveLinker =
             SubDirectiveLinker(_directiveProvider, _errorReporter),
@@ -101,6 +107,7 @@ class EagerLinker implements TopLevelLinker {
         (dirSum) => _subDirectiveLinker.link(dirSum, scope, subDirectives));
     Source templateUrlSource;
     SourceRange templateUrlRange;
+    final ngContents = <NgContent>[];
     if (dirSum.templateUrl != '') {
       templateUrlSource = classElement.context.sourceFactory
           .resolveUri(classElement.library.source, dirSum.templateUrl);
@@ -112,12 +119,14 @@ class EagerLinker implements TopLevelLinker {
           dirSum.templateUrlOffset,
           dirSum.templateUrlLength,
         );
+      } else if (linkHtmlNgContents) {
+        ngContents.addAll(
+            _directiveProvider.getHtmlNgContent(templateUrlSource.fullName));
       }
     }
 
-    final ngContents = dirSum.ngContents
-        .map((ngContentSum) => ngContent(ngContentSum, directiveInfo.source))
-        .toList();
+    ngContents.addAll(dirSum.ngContents
+        .map((ngContentSum) => ngContent(ngContentSum, directiveInfo.source)));
 
     return Component(
       classElement,

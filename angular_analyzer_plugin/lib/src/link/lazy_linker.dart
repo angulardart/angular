@@ -53,12 +53,8 @@ class LazyLinker implements TopLevelLinker {
     final elementTags = <ElementNameSelector>[];
     selector.recordElementNameSelectors(elementTags);
 
-    final inlineNgContents = dirSum.ngContents
-        .map((ngContentSum) => _eagerLinker.ngContent(ngContentSum, source))
-        .toList();
-
-    return lazy.Component(selector, source, inlineNgContents,
-        () => _eagerLinker.component(dirSum, classElement))
+    return lazy.Component(
+        selector, source, () => _eagerLinker.component(dirSum, classElement))
       ..classElement = classElement;
   }
 

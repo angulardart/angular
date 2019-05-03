@@ -525,12 +525,14 @@ class AngularDriver
       return null;
     }
 
-    final summary = _buildUnlinkedAngularTopLevels(dartPath);
-    final linker = LazyLinker(standardAngular, standardHtml, this);
-    final directives = linkTopLevels(summary, unit, linker);
     final htmlSource = _sourceFactory.forUri('file:$htmlPath');
-    final context = unit.context;
     final dartSource = _sourceFactory.forUri('file:$dartPath');
+    final summary = _buildUnlinkedAngularTopLevels(dartPath);
+    final linker = EagerLinker(standardAngular, standardHtml,
+        ErrorReporter(AnalysisErrorListener.NULL_LISTENER, htmlSource), this,
+        linkHtmlNgContents: false);
+    final directives = linkTopLevels(summary, unit, linker);
+    final context = unit.context;
     final htmlContent = fileContent(htmlPath);
 
     final errors = <AnalysisError>[];

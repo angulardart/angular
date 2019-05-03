@@ -4598,18 +4598,60 @@ class ChildComponent {}
 ''';
     final source = newSource('/test.dart', code);
     newSource('/child_file.dart', childCode);
-    await getDirectives(source);
-    expect(templates, hasLength(1));
-    // no errors
-    errorListener.assertNoErrors();
 
-    final childDirectives = templates.first.component.directives;
-    expect(childDirectives, hasLength(1));
+    // do this twice to confirm cache result is correct as well.
+    for (var i = 0; i < 2; ++i) {
+      await getDirectives(source);
+      expect(templates, hasLength(1));
+      // no errors
+      errorListener.assertNoErrors();
 
-    final childComponents = childDirectives.whereType<Component>().toList();
-    expect(childComponents, hasLength(1));
-    final childComponent = childComponents.first;
-    expect(childComponent.ngContents, hasLength(1));
+      final childDirectives = templates.first.component.directives;
+      expect(childDirectives, hasLength(1));
+
+      final childComponents = childDirectives.whereType<Component>().toList();
+      expect(childComponents, hasLength(1));
+      final childComponent = childComponents.first;
+      expect(childComponent.ngContents, hasLength(1));
+    }
+  }
+
+  // ignore: non_constant_identifier_names
+  Future test_resolveGetChildDirectivesNgContentSelectors_templateUrl() async {
+    final code = r'''
+import 'package:angular/angular.dart';
+import 'child_file.dart';
+
+@Component(selector: 'my-component', template: 'My template',
+    directives: const [ChildComponent])
+class MyComponent {}
+''';
+    final childCode = r'''
+import 'package:angular/angular.dart';
+@Component(selector: 'child-component',
+    templateUrl: 'child_file.html',
+    directives: const [])
+class ChildComponent {}
+''';
+    final source = newSource('/test.dart', code);
+    newSource('/child_file.dart', childCode);
+    newSource('/child_file.html', 'My template <ng-content></ng-content>');
+
+    // do this twice to confirm cache result is correct as well.
+    for (var i = 0; i < 2; ++i) {
+      await getDirectives(source);
+      expect(templates, hasLength(1));
+      // no errors
+      errorListener.assertNoErrors();
+
+      final childDirectives = templates.first.component.directives;
+      expect(childDirectives, hasLength(1));
+
+      final childComponents = childDirectives.whereType<Component>().toList();
+      expect(childComponents, hasLength(1));
+      final childComponent = childComponents.first;
+      expect(childComponent.ngContents, hasLength(1));
+    }
   }
 
   // ignore: non_constant_identifier_names
