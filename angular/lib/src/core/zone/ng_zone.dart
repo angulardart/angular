@@ -414,7 +414,7 @@ bool hasPendingMacrotasks(NgZone zone) => zone._hasPendingMacrotasks;
 /// **INTERNAL ONLY**: This is an experimental API subject to change.
 @experimental
 bool inAngularZone(NgZone ngZone, Zone zone) {
-  return identical(Zone.current[ngZone._thisZoneKey], true);
+  return identical(zone[ngZone._thisZoneKey], true);
 }
 
 /// A `Timer` wrapper that lets you specify additional functions to call when it
