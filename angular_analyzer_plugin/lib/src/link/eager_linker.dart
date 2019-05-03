@@ -113,7 +113,7 @@ class EagerLinker implements TopLevelLinker {
           .resolveUri(classElement.library.source, dirSum.templateUrl);
       templateUrlRange =
           SourceRange(dirSum.templateUrlOffset, dirSum.templateUrlLength);
-      if (!templateUrlSource.exists()) {
+      if (templateUrlSource == null || !templateUrlSource.exists()) {
         _errorReporter.reportErrorForOffset(
           AngularWarningCode.REFERENCED_HTML_FILE_DOESNT_EXIST,
           dirSum.templateUrlOffset,
