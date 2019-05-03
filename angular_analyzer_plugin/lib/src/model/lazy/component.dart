@@ -10,10 +10,6 @@ import 'package:angular_analyzer_plugin/src/selector.dart';
 /// A [Component] that can be matched by its [selector] and then lazy-loads.
 ///
 /// See README.md for more info on performance and design.
-///
-/// One quirk here is that inline ngContents are also part of the syntactic
-/// model, and therefore they are carefully tracked here to be available in the
-/// resolved model.
 class Component implements resolved.Component {
   @override
   final Selector selector;
@@ -25,9 +21,7 @@ class Component implements resolved.Component {
 
   resolved.Component _linkedComponent;
 
-  List<NgContent> _inlineNgContents;
-
-  Component(this.selector, Source source, this._inlineNgContents, this.linkFn);
+  Component(this.selector, Source source, this.linkFn);
 
   @override
   List<NavigableString> get attributes => load().attributes;
@@ -63,8 +57,7 @@ class Component implements resolved.Component {
   bool get looksLikeTemplate => load().looksLikeTemplate;
 
   @override
-  List<NgContent> get ngContents =>
-      _inlineNgContents == null ? load().ngContents : _inlineNgContents;
+  List<NgContent> get ngContents => load().ngContents;
 
   @override
   List<Output> get outputs => load().outputs;
