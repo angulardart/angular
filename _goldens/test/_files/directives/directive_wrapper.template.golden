@@ -60,12 +60,27 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   @override
   void detectChangesInternal() {
     final _ctx = ctx;
+    bool changed = false;
+    bool firstCheck = (this.cdState == 0);
+    changed = false;
     final currVal_0 = _ctx.rowIndex;
     if (import11.checkBinding(_expr_0, currVal_0)) {
       _ChildDirective_0_5.instance.gridRow = currVal_0;
+      changed = true;
       _expr_0 = currVal_0;
     }
+    if (changed) {
+      _ChildDirective_0_5.instance.ngAfterChanges();
+    }
+    if (((!import11.AppViewUtils.throwOnChanges) && firstCheck)) {
+      _ChildDirective_0_5.instance.ngOnInit();
+    }
     _ChildDirective_0_5.detectHostChanges(this, _el_0);
+  }
+
+  @override
+  void destroyInternal() {
+    _ChildDirective_0_5.instance.ngOnDestroy();
   }
 
   @override

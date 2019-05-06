@@ -5,10 +5,12 @@ import 'package:angular/angular.dart';
 @Directive(
   selector: '[some-child-directive]',
 )
-class ChildDirective {
+class ChildDirective implements OnInit, OnDestroy, AfterChanges {
   Element element;
+
   // ignore: deprecated_member_use
   ElementRef elementRef;
+
   ChildDirective(this.element, this.elementRef);
 
   StreamController _triggerController;
@@ -53,6 +55,15 @@ class ChildDirective {
 
   @HostBinding('class.is-disabled')
   bool get disabled => false;
+
+  @override
+  void ngOnInit() {}
+
+  @override
+  void ngOnDestroy() {}
+
+  @override
+  void ngAfterChanges() {}
 }
 
 @Directive(
