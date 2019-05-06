@@ -80,7 +80,7 @@ void main() {
         contains("isn't assignable to expected type"),
       )),
     );
-  });
+  }, skip: 'https://github.com/dart-lang/sdk/issues/36832');
 }
 
 @Directive(
