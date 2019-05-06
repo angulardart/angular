@@ -5,6 +5,11 @@
     active route. Prior to this fix, the browser location would be left in the
     state changed by the `popstate` event.
 
+*   The history stack prior to the current entry is now preserved when
+    preventing a navigation triggered by the back button. Previously, preventing
+    such a navigation would erase the previous history entry, causing subsequent
+    history manipulations to have unexpected results.
+
 ## 2.0.0-alpha+22
 
 ### New features
