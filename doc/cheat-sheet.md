@@ -121,3 +121,42 @@ freshness: { owner: 'alorenzen' reviewed: '2019-04-23' }
 
     Transforms the current value of expression `cardNumber` via the pipe called
     `myCardNumberFormatter`.
+
+## Core directives
+
+*   ```html
+    <section *ngIf="showSection">
+    ```
+
+    Removes or recreates a portion of the DOM tree based on the `showSection`
+    expression.
+
+*   ```html
+    <li *ngFor="let item of list">
+    ```
+
+    Turns the `li` element and its contents into a template, and uses that to
+    instantiate a view for each `item` in `list`.
+
+*   ```html
+    <div [ngSwitch]="conditionExpression">
+      <template [ngSwitchCase]="case1Exp">...</template>
+      <template ngSwitchCase="case2LiteralString">...</template>
+      <template ngSwitchDefault>...</template>
+    </div>
+    ```
+
+    Conditionally swaps the contents of the `div` by selecting one of the
+    embedded templates based on the current value of `conditionExpression`.
+
+*   ```html
+    <div [ngClass]="classes">
+    ```
+
+    ```dart
+    var classes = {'active': isActive, 'disabled': isDisabled};
+    ```
+
+    Binds the presence of CSS classes on the element to the truthiness of the
+    associated map values. The right-hand expression should return {class-name:
+    true/false} map.
