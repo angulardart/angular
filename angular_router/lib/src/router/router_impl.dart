@@ -55,7 +55,7 @@ class RouterImpl extends Router {
         // If the back navigation was blocked (DeactivateGuard), push the
         // activeState back into the history.
         if (navigationResult == NavigationResult.BLOCKED_BY_GUARD) {
-          _location.replaceState(_activeState.toUrl());
+          _location.go(_activeState.toUrl());
         }
       });
     });
