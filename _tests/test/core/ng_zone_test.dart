@@ -283,5 +283,24 @@ void main() {
       expect(onTurnDoneTriggered, 1);
       await sub.cancel();
     });
+
+    test('should execute "runAfterChangesObserved" callback in this zone',
+        () async {
+      createNgZone(enableLongStackTrace: true);
+      var onMicrotaskEmptyTriggered = 0;
+      var counter = 0;
+      var sub = zone.onMicrotaskEmpty.listen((_) {
+        onMicrotaskEmptyTriggered++;
+      });
+      await zone.run(() {
+        zone.runAfterChangesObserved(() {
+          expect(onMicrotaskEmptyTriggered, 1);
+          counter++;
+        });
+      });
+      expect(counter, 1);
+      expect(onMicrotaskEmptyTriggered, 2); // onMicrotaskEmpty ran again.
+      await sub.cancel();
+    });
   });
 }
