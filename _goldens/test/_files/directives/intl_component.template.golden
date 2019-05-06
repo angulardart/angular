@@ -21,6 +21,7 @@ import 'package:angular/src/runtime/interpolate.dart' as import11;
 
 final List<dynamic> styles$CompWithoutFinal = const [];
 
+// View for component CompWithoutFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class ViewCompWithoutFinal0 extends AppView<import1.CompWithoutFinal> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   final import2.TextBinding _textBinding_4 = import2.TextBinding();
@@ -69,6 +70,7 @@ ComponentFactory<import1.CompWithoutFinal> get CompWithoutFinalNgFactory {
 
 final List<dynamic> styles$CompWithoutFinalHost = const [];
 
+// Host for component CompWithoutFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
   ViewCompWithoutFinal0 _compView_0;
   import1.CompWithoutFinal _CompWithoutFinal_0_5;
@@ -80,6 +82,7 @@ class _ViewCompWithoutFinalHost0 extends AppView<import1.CompWithoutFinal> {
 
   @override
   ComponentRef<import1.CompWithoutFinal> build() {
+    // Child component CompWithoutFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
     _compView_0 = ViewCompWithoutFinal0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _CompWithoutFinal_0_5 = import1.CompWithoutFinal();
@@ -105,6 +108,7 @@ AppView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0() {
 
 final List<dynamic> styles$CompWithFinal = const [];
 
+// View for component CompWithFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class ViewCompWithFinal0 extends AppView<import1.CompWithFinal> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithFinal0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -145,6 +149,7 @@ ComponentFactory<import1.CompWithFinal> get CompWithFinalNgFactory {
 
 final List<dynamic> styles$CompWithFinalHost = const [];
 
+// Host for component CompWithFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
   ViewCompWithFinal0 _compView_0;
   import1.CompWithFinal _CompWithFinal_0_5;
@@ -156,6 +161,7 @@ class _ViewCompWithFinalHost0 extends AppView<import1.CompWithFinal> {
 
   @override
   ComponentRef<import1.CompWithFinal> build() {
+    // Child component CompWithFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
     _compView_0 = ViewCompWithFinal0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _CompWithFinal_0_5 = import1.CompWithFinal();
@@ -181,6 +187,7 @@ AppView<import1.CompWithFinal> viewFactory_CompWithFinalHost0() {
 
 final List<dynamic> styles$CompWithFinalStatic = const [];
 
+// View for component CompWithFinalStatic in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class ViewCompWithFinalStatic0 extends AppView<import1.CompWithFinalStatic> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithFinalStatic0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -220,6 +227,7 @@ ComponentFactory<import1.CompWithFinalStatic> get CompWithFinalStaticNgFactory {
 
 final List<dynamic> styles$CompWithFinalStaticHost = const [];
 
+// Host for component CompWithFinalStatic in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic> {
   ViewCompWithFinalStatic0 _compView_0;
   import1.CompWithFinalStatic _CompWithFinalStatic_0_5;
@@ -231,6 +239,7 @@ class _ViewCompWithFinalStaticHost0 extends AppView<import1.CompWithFinalStatic>
 
   @override
   ComponentRef<import1.CompWithFinalStatic> build() {
+    // Child component CompWithFinalStatic in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
     _compView_0 = ViewCompWithFinalStatic0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _CompWithFinalStatic_0_5 = import1.CompWithFinalStatic();
@@ -256,6 +265,7 @@ AppView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0() {
 
 final List<dynamic> styles$CompWithExternalFinal = const [];
 
+// View for component CompWithExternalFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class ViewCompWithExternalFinal0 extends AppView<import1.CompWithExternalFinal> {
   static import3.ComponentStyles _componentStyles;
   ViewCompWithExternalFinal0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -295,6 +305,7 @@ ComponentFactory<import1.CompWithExternalFinal> get CompWithExternalFinalNgFacto
 
 final List<dynamic> styles$CompWithExternalFinalHost = const [];
 
+// Host for component CompWithExternalFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFinal> {
   ViewCompWithExternalFinal0 _compView_0;
   import1.CompWithExternalFinal _CompWithExternalFinal_0_5;
@@ -306,6 +317,7 @@ class _ViewCompWithExternalFinalHost0 extends AppView<import1.CompWithExternalFi
 
   @override
   ComponentRef<import1.CompWithExternalFinal> build() {
+    // Child component CompWithExternalFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
     _compView_0 = ViewCompWithExternalFinal0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _CompWithExternalFinal_0_5 = import1.CompWithExternalFinal();

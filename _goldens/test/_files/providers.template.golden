@@ -23,6 +23,7 @@ import 'providers.dart' as import13;
 
 final List<dynamic> styles$ProvidersComponent = const [];
 
+// View for component ProvidersComponent in asset:_goldens/test/_files/providers.dart (changeDetection: Default)
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidersComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -57,6 +58,7 @@ ComponentFactory<import1.ProvidersComponent> get ProvidersComponentNgFactory {
 
 final List<dynamic> styles$ProvidersComponentHost = const [];
 
+// Host for component ProvidersComponent in asset:_goldens/test/_files/providers.dart (changeDetection: Default)
 class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   ViewProvidersComponent0 _compView_0;
   import1.ProvidersComponent _ProvidersComponent_0_5;
@@ -152,6 +154,7 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
 
   @override
   ComponentRef<import1.ProvidersComponent> build() {
+    // Child component ProvidersComponent in asset:_goldens/test/_files/providers.dart (changeDetection: Default)
     _compView_0 = ViewProvidersComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ProvidersComponent_0_5 = import1.ProvidersComponent();

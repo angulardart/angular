@@ -21,6 +21,7 @@ import 'package:angular/src/runtime/interpolate.dart' as import11;
 
 final List<dynamic> styles$ParentComponent = const [];
 
+// View for component ParentComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import2.Element _el_0;
   static import3.ComponentStyles _componentStyles;
@@ -68,6 +69,7 @@ ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
 
 final List<dynamic> styles$ParentComponentHost = const [];
 
+// Host for component ParentComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
@@ -79,6 +81,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 
   @override
   ComponentRef<import1.ParentComponent> build() {
+    // Child component ParentComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
     _compView_0 = ViewParentComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
@@ -104,6 +107,7 @@ AppView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
 
 final List<dynamic> styles$ChildComponent = const [];
 
+// View for component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class ViewChildComponent0 extends AppView<import1.ChildComponent> {
   final import10.TextBinding _textBinding_0 = import10.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -145,6 +149,7 @@ ComponentFactory<import1.ChildComponent> get ChildComponentNgFactory {
 
 final List<dynamic> styles$ChildComponentHost = const [];
 
+// Host for component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
   ViewChildComponent0 _compView_0;
   import1.ChildComponent _ChildComponent_0_5;
@@ -156,6 +161,7 @@ class _ViewChildComponentHost0 extends AppView<import1.ChildComponent> {
 
   @override
   ComponentRef<import1.ChildComponent> build() {
+    // Child component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
     _compView_0 = ViewChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ChildComponent_0_5 = import1.ChildComponent();

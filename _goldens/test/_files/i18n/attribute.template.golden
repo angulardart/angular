@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$I18nAttributeComponent = const [];
 
+// View for component I18nAttributeComponent in asset:_goldens/test/_files/i18n/attribute.dart (changeDetection: Default)
 class ViewI18nAttributeComponent0 extends AppView<import1.I18nAttributeComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
   static import3.ComponentStyles _componentStyles;
@@ -57,6 +58,7 @@ ComponentFactory<import1.I18nAttributeComponent> get I18nAttributeComponentNgFac
 
 final List<dynamic> styles$I18nAttributeComponentHost = const [];
 
+// Host for component I18nAttributeComponent in asset:_goldens/test/_files/i18n/attribute.dart (changeDetection: Default)
 class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComponent> {
   ViewI18nAttributeComponent0 _compView_0;
   import1.I18nAttributeComponent _I18nAttributeComponent_0_5;
@@ -68,6 +70,7 @@ class _ViewI18nAttributeComponentHost0 extends AppView<import1.I18nAttributeComp
 
   @override
   ComponentRef<import1.I18nAttributeComponent> build() {
+    // Child component I18nAttributeComponent in asset:_goldens/test/_files/i18n/attribute.dart (changeDetection: Default)
     _compView_0 = ViewI18nAttributeComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _I18nAttributeComponent_0_5 = import1.I18nAttributeComponent();

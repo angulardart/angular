@@ -24,6 +24,7 @@ import 'dart:core';
 
 final List<dynamic> styles$InjectableComponent = const [];
 
+// View for component InjectableComponent in asset:_goldens/test/_files/injectables.dart (changeDetection: Default)
 class ViewInjectableComponent0 extends AppView<import1.InjectableComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectableComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -60,6 +61,7 @@ ComponentFactory<import1.InjectableComponent> get InjectableComponentNgFactory {
 
 final List<dynamic> styles$InjectableComponentHost = const [];
 
+// Host for component InjectableComponent in asset:_goldens/test/_files/injectables.dart (changeDetection: Default)
 class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent> {
   ViewInjectableComponent0 _compView_0;
   dynamic _test_0_5;
@@ -92,6 +94,7 @@ class _ViewInjectableComponentHost0 extends AppView<import1.InjectableComponent>
 
   @override
   ComponentRef<import1.InjectableComponent> build() {
+    // Child component InjectableComponent in asset:_goldens/test/_files/injectables.dart (changeDetection: Default)
     _compView_0 = ViewInjectableComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _test_0_5 = (import7.isDevMode

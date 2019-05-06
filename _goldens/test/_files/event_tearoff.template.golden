@@ -19,6 +19,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$UsesEventTearoff = const [];
 
+// View for component UsesEventTearoff in asset:_goldens/test/_files/event_tearoff.dart (changeDetection: Default)
 class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
   static import2.ComponentStyles _componentStyles;
   ViewUsesEventTearoff0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -57,6 +58,7 @@ ComponentFactory<import1.UsesEventTearoff> get UsesEventTearoffNgFactory {
 
 final List<dynamic> styles$UsesEventTearoffHost = const [];
 
+// Host for component UsesEventTearoff in asset:_goldens/test/_files/event_tearoff.dart (changeDetection: Default)
 class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   ViewUsesEventTearoff0 _compView_0;
   import1.UsesEventTearoff _UsesEventTearoff_0_5;
@@ -68,6 +70,7 @@ class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
 
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
+    // Child component UsesEventTearoff in asset:_goldens/test/_files/event_tearoff.dart (changeDetection: Default)
     _compView_0 = ViewUsesEventTearoff0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesEventTearoff_0_5 = import1.UsesEventTearoff();

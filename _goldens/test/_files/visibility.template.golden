@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$Dependent = const [];
 
+// View for component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewDependent0 extends AppView<import1.Dependent> {
   static import2.ComponentStyles _componentStyles;
   ViewDependent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -53,6 +54,7 @@ ComponentFactory<import1.Dependent> get DependentNgFactory {
 
 final List<dynamic> styles$DependentHost = const [];
 
+// Host for component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependentHost0 extends AppView<import1.Dependent> {
   ViewDependent0 _compView_0;
   import1.Dependent _Dependent_0_5;
@@ -64,6 +66,7 @@ class _ViewDependentHost0 extends AppView<import1.Dependent> {
 
   @override
   ComponentRef<import1.Dependent> build() {
+    // Child component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewDependent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Dependent_0_5 = (import7.isDevMode
@@ -93,6 +96,7 @@ AppView<import1.Dependent> viewFactory_DependentHost0() {
 
 final List<dynamic> styles$DependencyWithDependentInView = const [];
 
+// View for component DependencyWithDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithDependentInView> {
   ViewDependent0 _compView_0;
   import1.Dependent _Dependent_0_5;
@@ -108,6 +112,7 @@ class ViewDependencyWithDependentInView0 extends AppView<import1.DependencyWithD
   @override
   ComponentRef<import1.DependencyWithDependentInView> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewDependent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -147,6 +152,7 @@ ComponentFactory<import1.DependencyWithDependentInView> get DependencyWithDepend
 
 final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 
+// Host for component DependencyWithDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.DependencyWithDependentInView> {
   ViewDependencyWithDependentInView0 _compView_0;
   import1.DependencyWithDependentInView _DependencyWithDependentInView_0_5;
@@ -158,6 +164,7 @@ class _ViewDependencyWithDependentInViewHost0 extends AppView<import1.Dependency
 
   @override
   ComponentRef<import1.DependencyWithDependentInView> build() {
+    // Child component DependencyWithDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewDependencyWithDependentInView0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DependencyWithDependentInView_0_5 = import1.DependencyWithDependentInView();
@@ -191,6 +198,7 @@ AppView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDepende
 
 final List<dynamic> styles$DependencyWithContent = const [];
 
+// View for component DependencyWithContent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewDependencyWithContent0 extends AppView<import1.DependencyWithContent> {
   static import2.ComponentStyles _componentStyles;
   ViewDependencyWithContent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -225,6 +233,7 @@ ComponentFactory<import1.DependencyWithContent> get DependencyWithContentNgFacto
 
 final List<dynamic> styles$DependencyWithContentHost = const [];
 
+// Host for component DependencyWithContent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithContent> {
   ViewDependencyWithContent0 _compView_0;
   import1.DependencyWithContent _DependencyWithContent_0_5;
@@ -236,6 +245,7 @@ class _ViewDependencyWithContentHost0 extends AppView<import1.DependencyWithCont
 
   @override
   ComponentRef<import1.DependencyWithContent> build() {
+    // Child component DependencyWithContent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewDependencyWithContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DependencyWithContent_0_5 = import1.DependencyWithContent();
@@ -269,6 +279,7 @@ AppView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0() 
 
 final List<dynamic> styles$DependencyAndDependentInView = const [];
 
+// View for component DependencyAndDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDependentInView> {
   ViewDependent0 _compView_1;
   import1.Dependent _Dependent_1_5;
@@ -286,6 +297,7 @@ class ViewDependencyAndDependentInView0 extends AppView<import1.DependencyAndDep
     final import6.HtmlElement parentRenderNode = initViewRoot();
     final doc = import6.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'dependency');
+    // Child component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_1 = ViewDependent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -325,6 +337,7 @@ ComponentFactory<import1.DependencyAndDependentInView> get DependencyAndDependen
 
 final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 
+// Host for component DependencyAndDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyAndDependentInView> {
   ViewDependencyAndDependentInView0 _compView_0;
   import1.DependencyAndDependentInView _DependencyAndDependentInView_0_5;
@@ -336,6 +349,7 @@ class _ViewDependencyAndDependentInViewHost0 extends AppView<import1.DependencyA
 
   @override
   ComponentRef<import1.DependencyAndDependentInView> build() {
+    // Child component DependencyAndDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewDependencyAndDependentInView0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DependencyAndDependentInView_0_5 = import1.DependencyAndDependentInView();
@@ -361,6 +375,7 @@ AppView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependent
 
 final List<dynamic> styles$HasVisibilityAll = const [];
 
+// View for component HasVisibilityAll in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewHasVisibilityAll0 extends AppView<import1.HasVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
   ViewHasVisibilityAll0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -394,6 +409,7 @@ ComponentFactory<import1.HasVisibilityAll> get HasVisibilityAllNgFactory {
 
 final List<dynamic> styles$HasVisibilityAllHost = const [];
 
+// Host for component HasVisibilityAll in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
   ViewHasVisibilityAll0 _compView_0;
   import1.HasVisibilityAll _HasVisibilityAll_0_5;
@@ -405,6 +421,7 @@ class _ViewHasVisibilityAllHost0 extends AppView<import1.HasVisibilityAll> {
 
   @override
   ComponentRef<import1.HasVisibilityAll> build() {
+    // Child component HasVisibilityAll in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewHasVisibilityAll0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasVisibilityAll_0_5 = import1.HasVisibilityAll();
@@ -438,6 +455,7 @@ AppView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0() {
 
 final List<dynamic> styles$HasVisibilityLocal = const [];
 
+// View for component HasVisibilityLocal in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class ViewHasVisibilityLocal0 extends AppView<import1.HasVisibilityLocal> {
   static import2.ComponentStyles _componentStyles;
   ViewHasVisibilityLocal0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -471,6 +489,7 @@ ComponentFactory<import1.HasVisibilityLocal> get HasVisibilityLocalNgFactory {
 
 final List<dynamic> styles$HasVisibilityLocalHost = const [];
 
+// Host for component HasVisibilityLocal in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
   ViewHasVisibilityLocal0 _compView_0;
   import1.HasVisibilityLocal _HasVisibilityLocal_0_5;
@@ -482,6 +501,7 @@ class _ViewHasVisibilityLocalHost0 extends AppView<import1.HasVisibilityLocal> {
 
   @override
   ComponentRef<import1.HasVisibilityLocal> build() {
+    // Child component HasVisibilityLocal in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     _compView_0 = ViewHasVisibilityLocal0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasVisibilityLocal_0_5 = import1.HasVisibilityLocal();

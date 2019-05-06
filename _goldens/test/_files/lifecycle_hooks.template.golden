@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$MostLifecycleHooksComponent = const [];
 
+// View for component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class ViewMostLifecycleHooksComponent0 extends AppView<import1.MostLifecycleHooksComponent> {
   ViewEmptyComponent0 _compView_0;
   import1.EmptyComponent _EmptyComponent_0_5;
@@ -35,6 +36,7 @@ class ViewMostLifecycleHooksComponent0 extends AppView<import1.MostLifecycleHook
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewEmptyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -71,6 +73,7 @@ ComponentFactory<import1.MostLifecycleHooksComponent> get MostLifecycleHooksComp
 
 final List<dynamic> styles$MostLifecycleHooksComponentHost = const [];
 
+// Host for component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycleHooksComponent> {
   ViewMostLifecycleHooksComponent0 _compView_0;
   import1.MostLifecycleHooksComponent _MostLifecycleHooksComponent_0_5;
@@ -82,6 +85,7 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
 
   @override
   ComponentRef<import1.MostLifecycleHooksComponent> build() {
+    // Child component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MostLifecycleHooksComponent_0_5 = import1.MostLifecycleHooksComponent();
@@ -124,6 +128,7 @@ AppView<import1.MostLifecycleHooksComponent> viewFactory_MostLifecycleHooksCompo
 
 final List<dynamic> styles$EmptyComponent = const [];
 
+// View for component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class ViewEmptyComponent0 extends AppView<import1.EmptyComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewEmptyComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -157,6 +162,7 @@ ComponentFactory<import1.EmptyComponent> get EmptyComponentNgFactory {
 
 final List<dynamic> styles$EmptyComponentHost = const [];
 
+// Host for component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
   ViewEmptyComponent0 _compView_0;
   import1.EmptyComponent _EmptyComponent_0_5;
@@ -168,6 +174,7 @@ class _ViewEmptyComponentHost0 extends AppView<import1.EmptyComponent> {
 
   @override
   ComponentRef<import1.EmptyComponent> build() {
+    // Child component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewEmptyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmptyComponent_0_5 = import1.EmptyComponent();
@@ -193,6 +200,7 @@ AppView<import1.EmptyComponent> viewFactory_EmptyComponentHost0() {
 
 final List<dynamic> styles$AfterChangesComponent = const [];
 
+// View for component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class ViewAfterChangesComponent0 extends AppView<import1.AfterChangesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewAfterChangesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -226,6 +234,7 @@ ComponentFactory<import1.AfterChangesComponent> get AfterChangesComponentNgFacto
 
 final List<dynamic> styles$AfterChangesComponentHost = const [];
 
+// Host for component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesComponent> {
   ViewAfterChangesComponent0 _compView_0;
   import1.AfterChangesComponent _AfterChangesComponent_0_5;
@@ -237,6 +246,7 @@ class _ViewAfterChangesComponentHost0 extends AppView<import1.AfterChangesCompon
 
   @override
   ComponentRef<import1.AfterChangesComponent> build() {
+    // Child component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewAfterChangesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _AfterChangesComponent_0_5 = import1.AfterChangesComponent();
@@ -262,6 +272,7 @@ AppView<import1.AfterChangesComponent> viewFactory_AfterChangesComponentHost0() 
 
 final List<dynamic> styles$UsesLifecycleHooksComponent = const [];
 
+// View for component UsesLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHooksComponent> {
   ViewMostLifecycleHooksComponent0 _compView_0;
   import1.MostLifecycleHooksComponent _MostLifecycleHooksComponent_0_5;
@@ -285,10 +296,12 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewMostLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _MostLifecycleHooksComponent_0_5 = import1.MostLifecycleHooksComponent();
+    // Child component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_1 = ViewEmptyComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _EmptyComponent_1_5 = import1.EmptyComponent();
@@ -299,6 +312,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     final doc = import6.document;
     final _el_2 = import10.appendElement(doc, parentRenderNode, 'do-check');
     _DoCheckDirective_2_5 = import1.DoCheckDirective();
+    // Child component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_3 = ViewAfterChangesComponent0(this, 3);
     final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
@@ -380,6 +394,7 @@ ComponentFactory<import1.UsesLifecycleHooksComponent> get UsesLifecycleHooksComp
 
 final List<dynamic> styles$UsesLifecycleHooksComponentHost = const [];
 
+// Host for component UsesLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycleHooksComponent> {
   ViewUsesLifecycleHooksComponent0 _compView_0;
   import1.UsesLifecycleHooksComponent _UsesLifecycleHooksComponent_0_5;
@@ -391,6 +406,7 @@ class _ViewUsesLifecycleHooksComponentHost0 extends AppView<import1.UsesLifecycl
 
   @override
   ComponentRef<import1.UsesLifecycleHooksComponent> build() {
+    // Child component UsesLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     _compView_0 = ViewUsesLifecycleHooksComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesLifecycleHooksComponent_0_5 = import1.UsesLifecycleHooksComponent();

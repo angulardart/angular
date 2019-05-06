@@ -26,6 +26,7 @@ import 'package:angular/src/runtime/interpolate.dart' as import16;
 
 final List<dynamic> styles$NestedNgForComponent = const [];
 
+// View for component NestedNgForComponent in asset:_goldens/test/_files/directives/nested_ng_for.dart (changeDetection: Default)
 class ViewNestedNgForComponent0 extends AppView<import1.NestedNgForComponent> {
   ViewContainer _appEl_0;
   import3.NgFor _NgFor_0_9;
@@ -151,6 +152,7 @@ AppView<void> viewFactory_NestedNgForComponent2(import5.RenderView parentView, i
 
 final List<dynamic> styles$NestedNgForComponentHost = const [];
 
+// Host for component NestedNgForComponent in asset:_goldens/test/_files/directives/nested_ng_for.dart (changeDetection: Default)
 class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponent> {
   ViewNestedNgForComponent0 _compView_0;
   import1.NestedNgForComponent _NestedNgForComponent_0_5;
@@ -162,6 +164,7 @@ class _ViewNestedNgForComponentHost0 extends AppView<import1.NestedNgForComponen
 
   @override
   ComponentRef<import1.NestedNgForComponent> build() {
+    // Child component NestedNgForComponent in asset:_goldens/test/_files/directives/nested_ng_for.dart (changeDetection: Default)
     _compView_0 = ViewNestedNgForComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NestedNgForComponent_0_5 = import1.NestedNgForComponent();

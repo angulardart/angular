@@ -33,6 +33,7 @@ import 'package:angular/src/common/directives/ng_style.dart' as import22;
 
 final List<dynamic> styles$RootComponent = const [];
 
+// View for component RootComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewRootComponent0 extends AppView<import1.RootComponent> {
   import1.HasProviders _HasProviders_0_5;
   import1.A __A_0_6;
@@ -121,31 +122,37 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
     final _el_2 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_2, 'hasProvider', '');
     _HasProvider_2_5 = import1.HasProvider();
+    // Child component UsesDefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_3 = ViewUsesDefaultChangeDetectionAndInputs0(this, 3);
     final _el_3 = _compView_3.rootEl;
     parentRenderNode.append(_el_3);
     _UsesDefaultChangeDetectionAndInputs_3_5 = import1.UsesDefaultChangeDetectionAndInputs();
     _compView_3.create0(_UsesDefaultChangeDetectionAndInputs_3_5);
+    // Child component UsesOnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_4 = ViewUsesOnPushChangeDetectionAndInputs0(this, 4);
     final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _UsesOnPushChangeDetectionAndInputs_4_5 = import1.UsesOnPushChangeDetectionAndInputs();
     _compView_4.create0(_UsesOnPushChangeDetectionAndInputs_4_5);
+    // Child component InlinedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_5 = ViewInlinedNgIf0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
     _InlinedNgIf_5_5 = import1.InlinedNgIf();
     _compView_5.create0(_InlinedNgIf_5_5);
+    // Child component EmbeddedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_6 = ViewEmbeddedNgIf0(this, 6);
     final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
     _EmbeddedNgIf_6_5 = import1.EmbeddedNgIf();
     _compView_6.create0(_EmbeddedNgIf_6_5);
+    // Child component EmbeddedNgFor in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_7 = ViewEmbeddedNgFor0(this, 7);
     final _el_7 = _compView_7.rootEl;
     parentRenderNode.append(_el_7);
     _EmbeddedNgFor_7_5 = import1.EmbeddedNgFor();
     _compView_7.create0(_EmbeddedNgFor_7_5);
+    // Child component InjectsFromArbitraryParent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_8 = ViewInjectsFromArbitraryParent0(this, 8);
     final _el_8 = _compView_8.rootEl;
     parentRenderNode.append(_el_8);
@@ -155,26 +162,31 @@ class ViewRootComponent0 extends AppView<import1.RootComponent> {
           })
         : import1.InjectsFromArbitraryParent(parentView.injectorGet(const import11.MultiToken<String>('usPresidents'), parentIndex), parentView.injectorGet(const import11.MultiToken<String>('whiteHouse'), parentIndex), parentView.injectorGet(import1.InjectableService, parentIndex)));
     _compView_8.create0(_InjectsFromArbitraryParent_8_5);
+    // Child component ComponentConditionalFeatures in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_9 = ViewComponentConditionalFeatures0(this, 9);
     final _el_9 = _compView_9.rootEl;
     parentRenderNode.append(_el_9);
     _ComponentConditionalFeatures_9_5 = import1.ComponentConditionalFeatures();
     _compView_9.create0(_ComponentConditionalFeatures_9_5);
+    // Child component UsesDomBindings in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_10 = ViewUsesDomBindings0(this, 10);
     final _el_10 = _compView_10.rootEl;
     parentRenderNode.append(_el_10);
     _UsesDomBindings_10_5 = import1.UsesDomBindings();
     _compView_10.create0(_UsesDomBindings_10_5);
+    // Child component UsesNgDirectives in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_11 = ViewUsesNgDirectives0(this, 11);
     final _el_11 = _compView_11.rootEl;
     parentRenderNode.append(_el_11);
     _UsesNgDirectives_11_5 = import1.UsesNgDirectives();
     _compView_11.create0(_UsesNgDirectives_11_5);
+    // Child component HasNestedProviderLookups in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_12 = ViewHasNestedProviderLookups0(this, 12);
     final _el_12 = _compView_12.rootEl;
     parentRenderNode.append(_el_12);
     _HasNestedProviderLookups_12_5 = import1.HasNestedProviderLookups();
     _compView_12.create0(_HasNestedProviderLookups_12_5);
+    // Child component HasHostListeners in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_13 = ViewHasHostListeners0(this, 13);
     final _el_13 = _compView_13.rootEl;
     parentRenderNode.append(_el_13);
@@ -258,6 +270,7 @@ ComponentFactory<import1.RootComponent> get RootComponentNgFactory {
 
 final List<dynamic> styles$RootComponentHost = const [];
 
+// Host for component RootComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
   ViewRootComponent0 _compView_0;
   import1.RootComponent _RootComponent_0_5;
@@ -269,6 +282,7 @@ class _ViewRootComponentHost0 extends AppView<import1.RootComponent> {
 
   @override
   ComponentRef<import1.RootComponent> build() {
+    // Child component RootComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewRootComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _RootComponent_0_5 = import1.RootComponent();
@@ -294,6 +308,7 @@ AppView<import1.RootComponent> viewFactory_RootComponentHost0() {
 
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInputs = const [];
 
+// View for component UsesDefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefaultChangeDetectionAndInputs> {
   ViewDefaultChangeDetectionAndInputs0 _compView_0;
   import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
@@ -310,6 +325,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component DefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -357,6 +373,7 @@ ComponentFactory<import1.UsesDefaultChangeDetectionAndInputs> get UsesDefaultCha
 
 final List<dynamic> styles$UsesDefaultChangeDetectionAndInputsHost = const [];
 
+// Host for component UsesDefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.UsesDefaultChangeDetectionAndInputs> {
   ViewUsesDefaultChangeDetectionAndInputs0 _compView_0;
   import1.UsesDefaultChangeDetectionAndInputs _UsesDefaultChangeDetectionAndInputs_0_5;
@@ -368,6 +385,7 @@ class _ViewUsesDefaultChangeDetectionAndInputsHost0 extends AppView<import1.Uses
 
   @override
   ComponentRef<import1.UsesDefaultChangeDetectionAndInputs> build() {
+    // Child component UsesDefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewUsesDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesDefaultChangeDetectionAndInputs_0_5 = import1.UsesDefaultChangeDetectionAndInputs();
@@ -393,6 +411,7 @@ AppView<import1.UsesDefaultChangeDetectionAndInputs> viewFactory_UsesDefaultChan
 
 final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
 
+// View for component DefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
   final import14.TextBinding _textBinding_1 = import14.TextBinding();
   final import14.TextBinding _textBinding_3 = import14.TextBinding();
@@ -443,6 +462,7 @@ ComponentFactory<import1.DefaultChangeDetectionAndInputs> get DefaultChangeDetec
 
 final List<dynamic> styles$DefaultChangeDetectionAndInputsHost = const [];
 
+// Host for component DefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
   ViewDefaultChangeDetectionAndInputs0 _compView_0;
   import1.DefaultChangeDetectionAndInputs _DefaultChangeDetectionAndInputs_0_5;
@@ -454,6 +474,7 @@ class _ViewDefaultChangeDetectionAndInputsHost0 extends AppView<import1.DefaultC
 
   @override
   ComponentRef<import1.DefaultChangeDetectionAndInputs> build() {
+    // Child component DefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewDefaultChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DefaultChangeDetectionAndInputs_0_5 = import1.DefaultChangeDetectionAndInputs();
@@ -479,6 +500,7 @@ AppView<import1.DefaultChangeDetectionAndInputs> viewFactory_DefaultChangeDetect
 
 final List<dynamic> styles$UsesOnPushChangeDetectionAndInputs = const [];
 
+// View for component UsesOnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPushChangeDetectionAndInputs> {
   ViewOnPushChangeDetectionAndInputs0 _compView_0;
   import1.OnPushChangeDetectionAndInputs _OnPushChangeDetectionAndInputs_0_5;
@@ -495,6 +517,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
   @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component OnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -557,6 +580,7 @@ ComponentFactory<import1.UsesOnPushChangeDetectionAndInputs> get UsesOnPushChang
 
 final List<dynamic> styles$UsesOnPushChangeDetectionAndInputsHost = const [];
 
+// Host for component UsesOnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesOnPushChangeDetectionAndInputs> {
   ViewUsesOnPushChangeDetectionAndInputs0 _compView_0;
   import1.UsesOnPushChangeDetectionAndInputs _UsesOnPushChangeDetectionAndInputs_0_5;
@@ -568,6 +592,7 @@ class _ViewUsesOnPushChangeDetectionAndInputsHost0 extends AppView<import1.UsesO
 
   @override
   ComponentRef<import1.UsesOnPushChangeDetectionAndInputs> build() {
+    // Child component UsesOnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewUsesOnPushChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesOnPushChangeDetectionAndInputs_0_5 = import1.UsesOnPushChangeDetectionAndInputs();
@@ -593,6 +618,7 @@ AppView<import1.UsesOnPushChangeDetectionAndInputs> viewFactory_UsesOnPushChange
 
 final List<dynamic> styles$OnPushChangeDetectionAndInputs = const [];
 
+// View for component OnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: OnPush)
 class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
   final import14.TextBinding _textBinding_1 = import14.TextBinding();
   final import14.TextBinding _textBinding_3 = import14.TextBinding();
@@ -639,6 +665,7 @@ ComponentFactory<import1.OnPushChangeDetectionAndInputs> get OnPushChangeDetecti
 
 final List<dynamic> styles$OnPushChangeDetectionAndInputsHost = const [];
 
+// Host for component OnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
   ViewOnPushChangeDetectionAndInputs0 _compView_0;
   import1.OnPushChangeDetectionAndInputs _OnPushChangeDetectionAndInputs_0_5;
@@ -650,6 +677,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
 
   @override
   ComponentRef<import1.OnPushChangeDetectionAndInputs> build() {
+    // Child component OnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushChangeDetectionAndInputs0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _OnPushChangeDetectionAndInputs_0_5 = (import7.isDevMode
@@ -688,6 +716,7 @@ AppView<import1.OnPushChangeDetectionAndInputs> viewFactory_OnPushChangeDetectio
 
 final List<dynamic> styles$InlinedNgIf = const [];
 
+// View for component InlinedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewInlinedNgIf0 extends AppView<import1.InlinedNgIf> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
@@ -756,6 +785,7 @@ AppView<void> viewFactory_InlinedNgIf1(import3.RenderView parentView, int parent
 
 final List<dynamic> styles$InlinedNgIfHost = const [];
 
+// Host for component InlinedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
   ViewInlinedNgIf0 _compView_0;
   import1.InlinedNgIf _InlinedNgIf_0_5;
@@ -767,6 +797,7 @@ class _ViewInlinedNgIfHost0 extends AppView<import1.InlinedNgIf> {
 
   @override
   ComponentRef<import1.InlinedNgIf> build() {
+    // Child component InlinedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewInlinedNgIf0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InlinedNgIf_0_5 = import1.InlinedNgIf();
@@ -792,6 +823,7 @@ AppView<import1.InlinedNgIf> viewFactory_InlinedNgIfHost0() {
 
 final List<dynamic> styles$EmbeddedNgIf = const [];
 
+// View for component EmbeddedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewEmbeddedNgIf0 extends AppView<import1.EmbeddedNgIf> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
@@ -849,6 +881,7 @@ class _ViewEmbeddedNgIf1 extends AppView<import1.EmbeddedNgIf> {
   }
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
+    // Child component NullComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewNullComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
@@ -873,6 +906,7 @@ AppView<void> viewFactory_EmbeddedNgIf1(import3.RenderView parentView, int paren
 
 final List<dynamic> styles$EmbeddedNgIfHost = const [];
 
+// Host for component EmbeddedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
   ViewEmbeddedNgIf0 _compView_0;
   import1.EmbeddedNgIf _EmbeddedNgIf_0_5;
@@ -884,6 +918,7 @@ class _ViewEmbeddedNgIfHost0 extends AppView<import1.EmbeddedNgIf> {
 
   @override
   ComponentRef<import1.EmbeddedNgIf> build() {
+    // Child component EmbeddedNgIf in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewEmbeddedNgIf0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmbeddedNgIf_0_5 = import1.EmbeddedNgIf();
@@ -909,6 +944,7 @@ AppView<import1.EmbeddedNgIf> viewFactory_EmbeddedNgIfHost0() {
 
 final List<dynamic> styles$EmbeddedNgFor = const [];
 
+// View for component EmbeddedNgFor in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
   import20.NgFor _NgFor_1_9;
@@ -994,6 +1030,7 @@ AppView<void> viewFactory_EmbeddedNgFor1(import3.RenderView parentView, int pare
 
 final List<dynamic> styles$EmbeddedNgForHost = const [];
 
+// Host for component EmbeddedNgFor in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
   ViewEmbeddedNgFor0 _compView_0;
   import1.EmbeddedNgFor _EmbeddedNgFor_0_5;
@@ -1005,6 +1042,7 @@ class _ViewEmbeddedNgForHost0 extends AppView<import1.EmbeddedNgFor> {
 
   @override
   ComponentRef<import1.EmbeddedNgFor> build() {
+    // Child component EmbeddedNgFor in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewEmbeddedNgFor0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmbeddedNgFor_0_5 = import1.EmbeddedNgFor();
@@ -1030,6 +1068,7 @@ AppView<import1.EmbeddedNgFor> viewFactory_EmbeddedNgForHost0() {
 
 final List<dynamic> styles$NullComponent = const [];
 
+// View for component NullComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewNullComponent0 extends AppView<import1.NullComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewNullComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1063,6 +1102,7 @@ ComponentFactory<import1.NullComponent> get NullComponentNgFactory {
 
 final List<dynamic> styles$NullComponentHost = const [];
 
+// Host for component NullComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
   ViewNullComponent0 _compView_0;
   import1.NullComponent _NullComponent_0_5;
@@ -1074,6 +1114,7 @@ class _ViewNullComponentHost0 extends AppView<import1.NullComponent> {
 
   @override
   ComponentRef<import1.NullComponent> build() {
+    // Child component NullComponent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewNullComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NullComponent_0_5 = import1.NullComponent();
@@ -1099,6 +1140,7 @@ AppView<import1.NullComponent> viewFactory_NullComponentHost0() {
 
 final List<dynamic> styles$InjectsFromArbitraryParent = const [];
 
+// View for component InjectsFromArbitraryParent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewInjectsFromArbitraryParent0 extends AppView<import1.InjectsFromArbitraryParent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsFromArbitraryParent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1132,6 +1174,7 @@ ComponentFactory<import1.InjectsFromArbitraryParent> get InjectsFromArbitraryPar
 
 final List<dynamic> styles$InjectsFromArbitraryParentHost = const [];
 
+// Host for component InjectsFromArbitraryParent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromArbitraryParent> {
   ViewInjectsFromArbitraryParent0 _compView_0;
   import1.InjectsFromArbitraryParent _InjectsFromArbitraryParent_0_5;
@@ -1143,6 +1186,7 @@ class _ViewInjectsFromArbitraryParentHost0 extends AppView<import1.InjectsFromAr
 
   @override
   ComponentRef<import1.InjectsFromArbitraryParent> build() {
+    // Child component InjectsFromArbitraryParent in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewInjectsFromArbitraryParent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InjectsFromArbitraryParent_0_5 = (import7.isDevMode
@@ -1172,6 +1216,7 @@ AppView<import1.InjectsFromArbitraryParent> viewFactory_InjectsFromArbitraryPare
 
 final List<dynamic> styles$ComponentConditionalFeatures = const [];
 
+// View for component ComponentConditionalFeatures in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewComponentConditionalFeatures0 extends AppView<import1.ComponentConditionalFeatures> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
@@ -1238,6 +1283,7 @@ class _ViewComponentConditionalFeatures1 extends AppView<import1.ComponentCondit
   }
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
+    // Child component FeatureA in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewFeatureA0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
@@ -1268,6 +1314,7 @@ class _ViewComponentConditionalFeatures2 extends AppView<import1.ComponentCondit
   }
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
+    // Child component FeatureB in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewFeatureB0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
@@ -1292,6 +1339,7 @@ AppView<void> viewFactory_ComponentConditionalFeatures2(import3.RenderView paren
 
 final List<dynamic> styles$ComponentConditionalFeaturesHost = const [];
 
+// Host for component ComponentConditionalFeatures in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentConditionalFeatures> {
   ViewComponentConditionalFeatures0 _compView_0;
   import1.ComponentConditionalFeatures _ComponentConditionalFeatures_0_5;
@@ -1303,6 +1351,7 @@ class _ViewComponentConditionalFeaturesHost0 extends AppView<import1.ComponentCo
 
   @override
   ComponentRef<import1.ComponentConditionalFeatures> build() {
+    // Child component ComponentConditionalFeatures in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewComponentConditionalFeatures0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ComponentConditionalFeatures_0_5 = import1.ComponentConditionalFeatures();
@@ -1328,6 +1377,7 @@ AppView<import1.ComponentConditionalFeatures> viewFactory_ComponentConditionalFe
 
 final List<dynamic> styles$FeatureA = const [];
 
+// View for component FeatureA in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewFeatureA0 extends AppView<import1.FeatureA> {
   static import2.ComponentStyles _componentStyles;
   ViewFeatureA0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1362,6 +1412,7 @@ ComponentFactory<import1.FeatureA> get FeatureANgFactory {
 
 final List<dynamic> styles$FeatureAHost = const [];
 
+// Host for component FeatureA in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
   ViewFeatureA0 _compView_0;
   import1.FeatureA _FeatureA_0_5;
@@ -1373,6 +1424,7 @@ class _ViewFeatureAHost0 extends AppView<import1.FeatureA> {
 
   @override
   ComponentRef<import1.FeatureA> build() {
+    // Child component FeatureA in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewFeatureA0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureA_0_5 = import1.FeatureA();
@@ -1398,6 +1450,7 @@ AppView<import1.FeatureA> viewFactory_FeatureAHost0() {
 
 final List<dynamic> styles$FeatureB = const [];
 
+// View for component FeatureB in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewFeatureB0 extends AppView<import1.FeatureB> {
   static import2.ComponentStyles _componentStyles;
   ViewFeatureB0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1432,6 +1485,7 @@ ComponentFactory<import1.FeatureB> get FeatureBNgFactory {
 
 final List<dynamic> styles$FeatureBHost = const [];
 
+// Host for component FeatureB in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
   ViewFeatureB0 _compView_0;
   import1.FeatureB _FeatureB_0_5;
@@ -1443,6 +1497,7 @@ class _ViewFeatureBHost0 extends AppView<import1.FeatureB> {
 
   @override
   ComponentRef<import1.FeatureB> build() {
+    // Child component FeatureB in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewFeatureB0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FeatureB_0_5 = import1.FeatureB();
@@ -1468,6 +1523,7 @@ AppView<import1.FeatureB> viewFactory_FeatureBHost0() {
 
 final List<dynamic> styles$UsesDomBindings = const [];
 
+// View for component UsesDomBindings in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   var _expr_0;
   bool _expr_1;
@@ -1537,6 +1593,7 @@ ComponentFactory<import1.UsesDomBindings> get UsesDomBindingsNgFactory {
 
 final List<dynamic> styles$UsesDomBindingsHost = const [];
 
+// Host for component UsesDomBindings in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
   ViewUsesDomBindings0 _compView_0;
   import1.UsesDomBindings _UsesDomBindings_0_5;
@@ -1548,6 +1605,7 @@ class _ViewUsesDomBindingsHost0 extends AppView<import1.UsesDomBindings> {
 
   @override
   ComponentRef<import1.UsesDomBindings> build() {
+    // Child component UsesDomBindings in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewUsesDomBindings0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesDomBindings_0_5 = import1.UsesDomBindings();
@@ -1575,6 +1633,7 @@ AppView<import1.UsesDomBindings> viewFactory_UsesDomBindingsHost0() {
 
 final List<dynamic> styles$UsesNgDirectives = const [];
 
+// View for component UsesNgDirectives in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
   import21.NgClass _NgClass_0_5;
   import21.NgClass _NgClass_2_5;
@@ -1673,6 +1732,7 @@ ComponentFactory<import1.UsesNgDirectives> get UsesNgDirectivesNgFactory {
 
 final List<dynamic> styles$UsesNgDirectivesHost = const [];
 
+// Host for component UsesNgDirectives in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
   ViewUsesNgDirectives0 _compView_0;
   import1.UsesNgDirectives _UsesNgDirectives_0_5;
@@ -1684,6 +1744,7 @@ class _ViewUsesNgDirectivesHost0 extends AppView<import1.UsesNgDirectives> {
 
   @override
   ComponentRef<import1.UsesNgDirectives> build() {
+    // Child component UsesNgDirectives in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewUsesNgDirectives0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesNgDirectives_0_5 = import1.UsesNgDirectives();
@@ -1709,6 +1770,7 @@ AppView<import1.UsesNgDirectives> viewFactory_UsesNgDirectivesHost0() {
 
 final List<dynamic> styles$HasNestedProviderLookups = const [];
 
+// View for component HasNestedProviderLookups in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewHasNestedProviderLookups0 extends AppView<import1.HasNestedProviderLookups> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
@@ -1802,6 +1864,7 @@ class _ViewHasNestedProviderLookups2 extends AppView<import1.HasNestedProviderLo
   ComponentRef<import1.HasNestedProviderLookups> build() {
     final doc = import6.document;
     final _el_0 = doc.createElement('div');
+    // Child component InjectsManyThingsDynamically in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_1 = ViewInjectsManyThingsDynamically0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -1831,6 +1894,7 @@ AppView<void> viewFactory_HasNestedProviderLookups2(import3.RenderView parentVie
 
 final List<dynamic> styles$HasNestedProviderLookupsHost = const [];
 
+// Host for component HasNestedProviderLookups in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProviderLookups> {
   ViewHasNestedProviderLookups0 _compView_0;
   import1.HasNestedProviderLookups _HasNestedProviderLookups_0_5;
@@ -1842,6 +1906,7 @@ class _ViewHasNestedProviderLookupsHost0 extends AppView<import1.HasNestedProvid
 
   @override
   ComponentRef<import1.HasNestedProviderLookups> build() {
+    // Child component HasNestedProviderLookups in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewHasNestedProviderLookups0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasNestedProviderLookups_0_5 = import1.HasNestedProviderLookups();
@@ -1867,6 +1932,7 @@ AppView<import1.HasNestedProviderLookups> viewFactory_HasNestedProviderLookupsHo
 
 final List<dynamic> styles$InjectsManyThingsDynamically = const [];
 
+// View for component InjectsManyThingsDynamically in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewInjectsManyThingsDynamically0 extends AppView<import1.InjectsManyThingsDynamically> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsManyThingsDynamically0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1900,6 +1966,7 @@ ComponentFactory<import1.InjectsManyThingsDynamically> get InjectsManyThingsDyna
 
 final List<dynamic> styles$InjectsManyThingsDynamicallyHost = const [];
 
+// Host for component InjectsManyThingsDynamically in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsManyThingsDynamically> {
   ViewInjectsManyThingsDynamically0 _compView_0;
   import1.InjectsManyThingsDynamically _InjectsManyThingsDynamically_0_5;
@@ -1911,6 +1978,7 @@ class _ViewInjectsManyThingsDynamicallyHost0 extends AppView<import1.InjectsMany
 
   @override
   ComponentRef<import1.InjectsManyThingsDynamically> build() {
+    // Child component InjectsManyThingsDynamically in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewInjectsManyThingsDynamically0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InjectsManyThingsDynamically_0_5 = (import7.isDevMode
@@ -1940,6 +2008,7 @@ AppView<import1.InjectsManyThingsDynamically> viewFactory_InjectsManyThingsDynam
 
 final List<dynamic> styles$HasHostListeners = const [];
 
+// View for component HasHostListeners in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewHasHostListeners0 extends AppView<import1.HasHostListeners> {
   static import2.ComponentStyles _componentStyles;
   ViewHasHostListeners0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1976,6 +2045,7 @@ ComponentFactory<import1.HasHostListeners> get HasHostListenersNgFactory {
 
 final List<dynamic> styles$HasHostListenersHost = const [];
 
+// Host for component HasHostListeners in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class _ViewHasHostListenersHost0 extends AppView<import1.HasHostListeners> {
   ViewHasHostListeners0 _compView_0;
   import1.HasHostListeners _HasHostListeners_0_5;
@@ -1987,6 +2057,7 @@ class _ViewHasHostListenersHost0 extends AppView<import1.HasHostListeners> {
 
   @override
   ComponentRef<import1.HasHostListeners> build() {
+    // Child component HasHostListeners in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
     _compView_0 = ViewHasHostListeners0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasHostListeners_0_5 = import1.HasHostListeners();

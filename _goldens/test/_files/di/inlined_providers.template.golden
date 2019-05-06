@@ -20,6 +20,7 @@ import 'package:angular/src/di/errors.dart' as import10;
 
 final List<dynamic> styles$ParentComponent = const [];
 
+// View for component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   ViewChildComponentProvidingA$B$C0 _compView_0;
   import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_0_5;
@@ -141,21 +142,25 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   @override
   ComponentRef<import1.ParentComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
     _compView_0.create0(_ChildComponentProvidingA$B$C_0_5);
+    // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_1 = ViewChildComponentProvidingA$B$C0(this, 1);
     final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
     _ChildComponentProvidingA$B$C_1_5 = import1.ChildComponentProvidingA$B$C();
     _compView_1.create0(_ChildComponentProvidingA$B$C_1_5);
+    // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_2 = ViewChildComponentWithNgContentProviding$D0(this, 2);
     final _el_2 = _compView_2.rootEl;
     parentRenderNode.append(_el_2);
     _ChildComponentWithNgContentProviding$D_2_5 = import1.ChildComponentWithNgContentProviding$D();
     _D_2_6 = import1.D();
+    // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_3 = ViewChildComponentInjecting$D0(this, 3);
     final _el_3 = _compView_3.rootEl;
     _ChildComponentInjecting$D_3_5 = import1.ChildComponentInjecting$D(_D_2_6);
@@ -163,11 +168,13 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     _compView_2.create(_ChildComponentWithNgContentProviding$D_2_5, [
       [_el_3]
     ]);
+    // Child component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_4 = ViewChildComponentWithVisibilityAll0(this, 4);
     final _el_4 = _compView_4.rootEl;
     parentRenderNode.append(_el_4);
     _ChildComponentWithVisibilityAll_4_5 = import1.ChildComponentWithVisibilityAll();
     _compView_4.create0(_ChildComponentWithVisibilityAll_4_5);
+    // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_5 = ViewChildComponentProvidingA$B$C0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
@@ -175,6 +182,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     _ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     _DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
     _compView_5.create0(_ChildComponentProvidingA$B$C_5_5);
+    // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
     final _el_6 = _compView_6.rootEl;
     parentRenderNode.append(_el_6);
@@ -182,6 +190,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     _ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
     _DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     _D_6_7 = import1.D2();
+    // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_7 = ViewChildComponentInjecting$D0(this, 7);
     final _el_7 = _compView_7.rootEl;
     _ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(_D_6_7);
@@ -288,6 +297,7 @@ ComponentFactory<import1.ParentComponent> get ParentComponentNgFactory {
 
 final List<dynamic> styles$ParentComponentHost = const [];
 
+// Host for component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   ViewParentComponent0 _compView_0;
   import1.ParentComponent _ParentComponent_0_5;
@@ -299,6 +309,7 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
 
   @override
   ComponentRef<import1.ParentComponent> build() {
+    // Child component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewParentComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ParentComponent_0_5 = import1.ParentComponent();
@@ -324,6 +335,7 @@ AppView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
 
 final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
 
+// View for component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentProvidingA$B$C0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -357,6 +369,7 @@ ComponentFactory<import1.ChildComponentProvidingA$B$C> get ChildComponentProvidi
 
 final List<dynamic> styles$ChildComponentProvidingA$B$CHost = const [];
 
+// Host for component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   ViewChildComponentProvidingA$B$C0 _compView_0;
   import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_0_5;
@@ -392,6 +405,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
 
   @override
   ComponentRef<import1.ChildComponentProvidingA$B$C> build() {
+    // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
@@ -433,6 +447,7 @@ AppView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidin
 
 final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
 
+// View for component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithNgContentProviding$D0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -467,6 +482,7 @@ ComponentFactory<import1.ChildComponentWithNgContentProviding$D> get ChildCompon
 
 final List<dynamic> styles$ChildComponentWithNgContentProviding$DHost = const [];
 
+// Host for component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   ViewChildComponentWithNgContentProviding$D0 _compView_0;
   import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_0_5;
@@ -486,6 +502,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
 
   @override
   ComponentRef<import1.ChildComponentWithNgContentProviding$D> build() {
+    // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewChildComponentWithNgContentProviding$D0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
@@ -519,6 +536,7 @@ AppView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildCompone
 
 final List<dynamic> styles$ChildComponentInjecting$D = const [];
 
+// View for component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjecting$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentInjecting$D0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -552,6 +570,7 @@ ComponentFactory<import1.ChildComponentInjecting$D> get ChildComponentInjecting$
 
 final List<dynamic> styles$ChildComponentInjecting$DHost = const [];
 
+// Host for component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponentInjecting$D> {
   ViewChildComponentInjecting$D0 _compView_0;
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_0_5;
@@ -563,6 +582,7 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
 
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
+    // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewChildComponentInjecting$D0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ChildComponentInjecting$D_0_5 = (import7.isDevMode
@@ -592,6 +612,7 @@ AppView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$D
 
 final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
 
+// View for component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithVisibilityAll0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -625,6 +646,7 @@ ComponentFactory<import1.ChildComponentWithVisibilityAll> get ChildComponentWith
 
 final List<dynamic> styles$ChildComponentWithVisibilityAllHost = const [];
 
+// Host for component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   ViewChildComponentWithVisibilityAll0 _compView_0;
   import1.ChildComponentWithVisibilityAll _ChildComponentWithVisibilityAll_0_5;
@@ -636,6 +658,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
 
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
+    // Child component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     _compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();

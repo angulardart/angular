@@ -512,6 +512,15 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
   CompileIdentifierMetadata get identifier => type;
 
+  String toPrettyString() {
+    String name = type.name;
+    if (name.endsWith('Host')) {
+      name = name.substring(0, name.length - 4);
+    }
+    return '$name in ${type.moduleUrl} '
+        '(changeDetection: ${ChangeDetectionStrategy.toPrettyString(changeDetection)})';
+  }
+
   bool get isComponent =>
       metadataType == CompileDirectiveMetadataType.Component;
 

@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$I18nTextComponent = const [];
 
+// View for component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
 class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
   static import3.ComponentStyles _componentStyles;
@@ -57,6 +58,7 @@ ComponentFactory<import1.I18nTextComponent> get I18nTextComponentNgFactory {
 
 final List<dynamic> styles$I18nTextComponentHost = const [];
 
+// Host for component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
 class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
   ViewI18nTextComponent0 _compView_0;
   import1.I18nTextComponent _I18nTextComponent_0_5;
@@ -68,6 +70,7 @@ class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
 
   @override
   ComponentRef<import1.I18nTextComponent> build() {
+    // Child component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
     _compView_0 = ViewI18nTextComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _I18nTextComponent_0_5 = import1.I18nTextComponent();

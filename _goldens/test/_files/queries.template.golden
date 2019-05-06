@@ -26,6 +26,7 @@ import 'package:angular/src/common/directives/ng_for.dart' as import16;
 
 final List<dynamic> styles$QueriesComponent = const [];
 
+// View for component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
   bool _query_AnotherDirective_1_5_isDirty = true;
   bool _query_q3_1_6_isDirty = true;
@@ -136,6 +137,7 @@ AppView<void> viewFactory_QueriesComponent1(import5.RenderView parentView, int p
 
 final List<dynamic> styles$QueriesComponentHost = const [];
 
+// Host for component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
   ViewQueriesComponent0 _compView_0;
   import1.QueriesComponent _QueriesComponent_0_5;
@@ -147,6 +149,7 @@ class _ViewQueriesComponentHost0 extends AppView<import1.QueriesComponent> {
 
   @override
   ComponentRef<import1.QueriesComponent> build() {
+    // Child component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
     _compView_0 = ViewQueriesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _QueriesComponent_0_5 = import1.QueriesComponent();
@@ -173,6 +176,7 @@ AppView<import1.QueriesComponent> viewFactory_QueriesComponentHost0() {
 
 final List<dynamic> styles$EmbeddedQueries = const [];
 
+// View for component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   bool _query_AnotherDirective_1_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
@@ -284,6 +288,7 @@ AppView<void> viewFactory_EmbeddedQueries2(import5.RenderView parentView, int pa
 
 final List<dynamic> styles$EmbeddedQueriesHost = const [];
 
+// Host for component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
   ViewEmbeddedQueries0 _compView_0;
   import1.EmbeddedQueries _EmbeddedQueries_0_5;
@@ -295,6 +300,7 @@ class _ViewEmbeddedQueriesHost0 extends AppView<import1.EmbeddedQueries> {
 
   @override
   ComponentRef<import1.EmbeddedQueries> build() {
+    // Child component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
     _compView_0 = ViewEmbeddedQueries0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmbeddedQueries_0_5 = import1.EmbeddedQueries();
@@ -320,6 +326,7 @@ AppView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0() {
 
 final List<dynamic> styles$EmbeddedQueriesList = const [];
 
+// View for component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   bool _query_AnotherDirective_1_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
@@ -431,6 +438,7 @@ AppView<void> viewFactory_EmbeddedQueriesList2(import5.RenderView parentView, in
 
 final List<dynamic> styles$EmbeddedQueriesListHost = const [];
 
+// Host for component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList> {
   ViewEmbeddedQueriesList0 _compView_0;
   import1.EmbeddedQueriesList _EmbeddedQueriesList_0_5;
@@ -442,6 +450,7 @@ class _ViewEmbeddedQueriesListHost0 extends AppView<import1.EmbeddedQueriesList>
 
   @override
   ComponentRef<import1.EmbeddedQueriesList> build() {
+    // Child component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
     _compView_0 = ViewEmbeddedQueriesList0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmbeddedQueriesList_0_5 = import1.EmbeddedQueriesList();
@@ -467,6 +476,7 @@ AppView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0() {
 
 final List<dynamic> styles$NestedNgForQueriesList = const [];
 
+// View for component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList> {
   bool _query_taggedItem_1_0_isDirty = true;
   ViewContainer _appEl_0;
@@ -632,6 +642,7 @@ AppView<void> viewFactory_NestedNgForQueriesList3(import5.RenderView parentView,
 
 final List<dynamic> styles$NestedNgForQueriesListHost = const [];
 
+// Host for component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQueriesList> {
   ViewNestedNgForQueriesList0 _compView_0;
   import1.NestedNgForQueriesList _NestedNgForQueriesList_0_5;
@@ -643,6 +654,7 @@ class _ViewNestedNgForQueriesListHost0 extends AppView<import1.NestedNgForQuerie
 
   @override
   ComponentRef<import1.NestedNgForQueriesList> build() {
+    // Child component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
     _compView_0 = ViewNestedNgForQueriesList0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NestedNgForQueriesList_0_5 = import1.NestedNgForQueriesList();

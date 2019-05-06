@@ -87,6 +87,11 @@ class ViewCompiler {
       CompileView view, List<o.Statement> targetStatements,
       {@required bool registerComponentFactory}) {
     final viewClass = createViewClass(view, parser);
+    if (view.viewIndex == 0) {
+      targetStatements
+          .add(o.CommentStmt('${view.component.type.isHost ? 'Host' : 'View'} '
+              'for component ${view.component.toPrettyString()}'));
+    }
     targetStatements.add(viewClass);
     if (view.viewType != ViewType.component) {
       // View factories are only needed for embedded and host views, to be used

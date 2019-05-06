@@ -27,6 +27,7 @@ import 'dart:core';
 
 final List<dynamic> styles$Comp1 = const [];
 
+// View for component Comp1 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp10 extends AppView<import1.Comp1> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -68,6 +69,7 @@ ComponentFactory<import1.Comp1> get Comp1NgFactory {
 
 final List<dynamic> styles$Comp1Host = const [];
 
+// Host for component Comp1 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp1Host0 extends AppView<import1.Comp1> {
   ViewComp10 _compView_0;
   import1.Comp1 _Comp1_0_5;
@@ -79,6 +81,7 @@ class _ViewComp1Host0 extends AppView<import1.Comp1> {
 
   @override
   ComponentRef<import1.Comp1> build() {
+    // Child component Comp1 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp10(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp1_0_5 = import1.Comp1();
@@ -104,6 +107,7 @@ AppView<import1.Comp1> viewFactory_Comp1Host0() {
 
 final List<dynamic> styles$Comp1String = const [];
 
+// View for component Comp1String in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp1String0 extends AppView<import1.Comp1String> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -145,6 +149,7 @@ ComponentFactory<import1.Comp1String> get Comp1StringNgFactory {
 
 final List<dynamic> styles$Comp1StringHost = const [];
 
+// Host for component Comp1String in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
   ViewComp1String0 _compView_0;
   import1.Comp1String _Comp1String_0_5;
@@ -156,6 +161,7 @@ class _ViewComp1StringHost0 extends AppView<import1.Comp1String> {
 
   @override
   ComponentRef<import1.Comp1String> build() {
+    // Child component Comp1String in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp1String0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp1String_0_5 = import1.Comp1String();
@@ -181,6 +187,7 @@ AppView<import1.Comp1String> viewFactory_Comp1StringHost0() {
 
 final List<dynamic> styles$Comp2 = const [];
 
+// View for component Comp2 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp20 extends AppView<import1.Comp2> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -222,6 +229,7 @@ ComponentFactory<import1.Comp2> get Comp2NgFactory {
 
 final List<dynamic> styles$Comp2Host = const [];
 
+// Host for component Comp2 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp2Host0 extends AppView<import1.Comp2> {
   ViewComp20 _compView_0;
   import1.Comp2 _Comp2_0_5;
@@ -233,6 +241,7 @@ class _ViewComp2Host0 extends AppView<import1.Comp2> {
 
   @override
   ComponentRef<import1.Comp2> build() {
+    // Child component Comp2 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp20(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp2_0_5 = import1.Comp2();
@@ -258,6 +267,7 @@ AppView<import1.Comp2> viewFactory_Comp2Host0() {
 
 final List<dynamic> styles$Comp3 = const [];
 
+// View for component Comp3 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp30 extends AppView<import1.Comp3> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -299,6 +309,7 @@ ComponentFactory<import1.Comp3> get Comp3NgFactory {
 
 final List<dynamic> styles$Comp3Host = const [];
 
+// Host for component Comp3 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp3Host0 extends AppView<import1.Comp3> {
   ViewComp30 _compView_0;
   import1.Comp3 _Comp3_0_5;
@@ -310,6 +321,7 @@ class _ViewComp3Host0 extends AppView<import1.Comp3> {
 
   @override
   ComponentRef<import1.Comp3> build() {
+    // Child component Comp3 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp30(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp3_0_5 = import1.Comp3();
@@ -335,6 +347,7 @@ AppView<import1.Comp3> viewFactory_Comp3Host0() {
 
 final List<dynamic> styles$Comp4 = const [];
 
+// View for component Comp4 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp40 extends AppView<import1.Comp4> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   List<dynamic> Function(dynamic, dynamic) _arr_0;
@@ -380,6 +393,7 @@ ComponentFactory<import1.Comp4> get Comp4NgFactory {
 
 final List<dynamic> styles$Comp4Host = const [];
 
+// Host for component Comp4 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp4Host0 extends AppView<import1.Comp4> {
   ViewComp40 _compView_0;
   import1.Comp4 _Comp4_0_5;
@@ -391,6 +405,7 @@ class _ViewComp4Host0 extends AppView<import1.Comp4> {
 
   @override
   ComponentRef<import1.Comp4> build() {
+    // Child component Comp4 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp40(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp4_0_5 = import1.Comp4();
@@ -416,6 +431,7 @@ AppView<import1.Comp4> viewFactory_Comp4Host0() {
 
 final List<dynamic> styles$Comp5 = const [];
 
+// View for component Comp5 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp50 extends AppView<import1.Comp5> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   Map<String, dynamic> Function(dynamic) _map_0;
@@ -462,6 +478,7 @@ ComponentFactory<import1.Comp5> get Comp5NgFactory {
 
 final List<dynamic> styles$Comp5Host = const [];
 
+// Host for component Comp5 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp5Host0 extends AppView<import1.Comp5> {
   ViewComp50 _compView_0;
   import1.Comp5 _Comp5_0_5;
@@ -473,6 +490,7 @@ class _ViewComp5Host0 extends AppView<import1.Comp5> {
 
   @override
   ComponentRef<import1.Comp5> build() {
+    // Child component Comp5 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp50(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp5_0_5 = import1.Comp5();
@@ -498,6 +516,7 @@ AppView<import1.Comp5> viewFactory_Comp5Host0() {
 
 final List<dynamic> styles$Comp6 = const [];
 
+// View for component Comp6 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp60 extends AppView<import1.Comp6> {
   ViewContainer _appEl_0;
   import14.NgFor _NgFor_0_9;
@@ -578,6 +597,7 @@ AppView<void> viewFactory_Comp61(import4.RenderView parentView, int parentIndex)
 
 final List<dynamic> styles$Comp6Host = const [];
 
+// Host for component Comp6 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp6Host0 extends AppView<import1.Comp6> {
   ViewComp60 _compView_0;
   import1.Comp6 _Comp6_0_5;
@@ -589,6 +609,7 @@ class _ViewComp6Host0 extends AppView<import1.Comp6> {
 
   @override
   ComponentRef<import1.Comp6> build() {
+    // Child component Comp6 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp60(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp6_0_5 = import1.Comp6();
@@ -614,6 +635,7 @@ AppView<import1.Comp6> viewFactory_Comp6Host0() {
 
 final List<dynamic> styles$Comp7 = const [];
 
+// View for component Comp7 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class ViewComp70 extends AppView<import1.Comp7> {
   ViewContainer _appEl_0;
   import14.NgFor _NgFor_0_9;
@@ -734,6 +756,7 @@ AppView<void> viewFactory_Comp72(import4.RenderView parentView, int parentIndex)
 
 final List<dynamic> styles$Comp7Host = const [];
 
+// Host for component Comp7 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
 class _ViewComp7Host0 extends AppView<import1.Comp7> {
   ViewComp70 _compView_0;
   import1.Comp7 _Comp7_0_5;
@@ -745,6 +768,7 @@ class _ViewComp7Host0 extends AppView<import1.Comp7> {
 
   @override
   ComponentRef<import1.Comp7> build() {
+    // Child component Comp7 in asset:_goldens/test/_files/templates/dynamic_expressions.dart (changeDetection: Default)
     _compView_0 = ViewComp70(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp7_0_5 = import1.Comp7();

@@ -23,6 +23,7 @@ import 'package:angular/src/core/change_detection/component_state.dart' as impor
 
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
+// View for component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
   ViewOnPushComponent0 _compView_0;
   import1.OnPushComponent _OnPushComponent_0_5;
@@ -39,6 +40,7 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
   @override
   ComponentRef<import1.UsesOnPushComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -86,6 +88,7 @@ ComponentFactory<import1.UsesOnPushComponent> get UsesOnPushComponentNgFactory {
 
 final List<dynamic> styles$UsesOnPushComponentHost = const [];
 
+// Host for component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent> {
   ViewUsesOnPushComponent0 _compView_0;
   import1.UsesOnPushComponent _UsesOnPushComponent_0_5;
@@ -97,6 +100,7 @@ class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent>
 
   @override
   ComponentRef<import1.UsesOnPushComponent> build() {
+    // Child component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
     _compView_0 = ViewUsesOnPushComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
@@ -122,6 +126,7 @@ AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0() {
 
 final List<dynamic> styles$OnPushComponent = const [];
 
+// View for component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   ViewOnPushChildComponent0 _compView_0;
   import1.OnPushChildComponent _OnPushChildComponent_0_5;
@@ -138,6 +143,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
   @override
   ComponentRef<import1.OnPushComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -185,6 +191,7 @@ ComponentFactory<import1.OnPushComponent> get OnPushComponentNgFactory {
 
 final List<dynamic> styles$OnPushComponentHost = const [];
 
+// Host for component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
   ViewOnPushComponent0 _compView_0;
   import1.OnPushComponent _OnPushComponent_0_5;
@@ -196,6 +203,7 @@ class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
 
   @override
   ComponentRef<import1.OnPushComponent> build() {
+    // Child component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _OnPushComponent_0_5 = import1.OnPushComponent();
@@ -225,6 +233,7 @@ AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0() {
 
 final List<dynamic> styles$OnPushChildComponent = const [];
 
+// View for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   final import10.TextBinding _textBinding_2 = import10.TextBinding();
   static import2.ComponentStyles _componentStyles;
@@ -269,6 +278,7 @@ ComponentFactory<import1.OnPushChildComponent> get OnPushChildComponentNgFactory
 
 final List<dynamic> styles$OnPushChildComponentHost = const [];
 
+// Host for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponent> {
   ViewOnPushChildComponent0 _compView_0;
   import1.OnPushChildComponent _OnPushChildComponent_0_5;
@@ -280,6 +290,7 @@ class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponen
 
   @override
   ComponentRef<import1.OnPushChildComponent> build() {
+    // Child component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _OnPushChildComponent_0_5 = import1.OnPushChildComponent();
@@ -309,6 +320,7 @@ AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0() {
 
 final List<dynamic> styles$StatefulComponent = const [];
 
+// View for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
 class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewStatefulComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
@@ -347,6 +359,7 @@ ComponentFactory<import1.StatefulComponent> get StatefulComponentNgFactory {
 
 final List<dynamic> styles$StatefulComponentHost = const [];
 
+// Host for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
   ViewStatefulComponent0 _compView_0;
   import1.StatefulComponent _StatefulComponent_0_5;
@@ -358,6 +371,7 @@ class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
 
   @override
   ComponentRef<import1.StatefulComponent> build() {
+    // Child component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
     _compView_0 = ViewStatefulComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _StatefulComponent_0_5 = import1.StatefulComponent();
@@ -383,6 +397,7 @@ AppView<import1.StatefulComponent> viewFactory_StatefulComponentHost0() {
 
 final List<dynamic> styles$DefaultComponent = const [];
 
+// View for component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewDefaultComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -419,6 +434,7 @@ ComponentFactory<import1.DefaultComponent> get DefaultComponentNgFactory {
 
 final List<dynamic> styles$DefaultComponentHost = const [];
 
+// Host for component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
   ViewDefaultComponent0 _compView_0;
   import1.DefaultComponent _DefaultComponent_0_5;
@@ -430,6 +446,7 @@ class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
 
   @override
   ComponentRef<import1.DefaultComponent> build() {
+    // Child component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
     _compView_0 = ViewDefaultComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DefaultComponent_0_5 = import1.DefaultComponent();
@@ -455,6 +472,7 @@ AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0() {
 
 final List<dynamic> styles$UsesNgModelLike = const [];
 
+// View for component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
   import1.NgModelLike _NgModelLike_0_5;
   var _expr_0;
@@ -519,6 +537,7 @@ ComponentFactory<import1.UsesNgModelLike> get UsesNgModelLikeNgFactory {
 
 final List<dynamic> styles$UsesNgModelLikeHost = const [];
 
+// Host for component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
   ViewUsesNgModelLike0 _compView_0;
   import1.UsesNgModelLike _UsesNgModelLike_0_5;
@@ -530,6 +549,7 @@ class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
 
   @override
   ComponentRef<import1.UsesNgModelLike> build() {
+    // Child component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
     _compView_0 = ViewUsesNgModelLike0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesNgModelLike_0_5 = import1.UsesNgModelLike();

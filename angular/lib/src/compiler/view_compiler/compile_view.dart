@@ -804,6 +804,11 @@ class CompileView {
         .importExpr(componentViewIdentifier)
         .instantiate([o.THIS_EXPR, o.literal(nodeIndex)],
             genericTypes: constructorTypeArguments);
+
+    _createMethod.addStmt(o.CommentStmt(
+      'Child component ${childComponent.toPrettyString()}',
+    ));
+
     _createMethod.addStmt(
         o.WriteClassMemberExpr(appViewRef._name, createComponentInstanceExpr)
             .toStmt());

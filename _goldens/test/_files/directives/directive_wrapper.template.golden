@@ -22,6 +22,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px}'];
 
+// View for component TestFooComponent in asset:_goldens/test/_files/directives/directive_wrapper.dart (changeDetection: Default)
 class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   ChildDirectiveNgCd _ChildDirective_0_5;
   import1.DirectiveWithOutput _DirectiveWithOutput_0_6;
@@ -84,6 +85,7 @@ ComponentFactory<import1.TestFooComponent> get TestFooComponentNgFactory {
 
 final List<dynamic> styles$TestFooComponentHost = const [];
 
+// Host for component TestFooComponent in asset:_goldens/test/_files/directives/directive_wrapper.dart (changeDetection: Default)
 class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   ViewTestFooComponent0 _compView_0;
   import1.TestFooComponent _TestFooComponent_0_5;
@@ -95,6 +97,7 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
 
   @override
   ComponentRef<import1.TestFooComponent> build() {
+    // Child component TestFooComponent in asset:_goldens/test/_files/directives/directive_wrapper.dart (changeDetection: Default)
     _compView_0 = ViewTestFooComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _TestFooComponent_0_5 = import1.TestFooComponent();
