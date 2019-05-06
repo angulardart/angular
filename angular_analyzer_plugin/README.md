@@ -1,7 +1,3 @@
-** WARNING: ** You are looking at a copy of [https://github.com/dart-lang/angular_analyzer_plugin].
-We are in the process of moving that repo into the angular repo. This is still
-ongoing and so the code here is not complete.
-
 [![Build Status](https://travis-ci.org/dart-lang/angular_analyzer_plugin.svg?branch=master)](https://travis-ci.org/dart-lang/angular_analyzer_plugin) [![pub package](https://img.shields.io/pub/v/angular_analyzer_plugin.svg)](https://pub.dartlang.org/packages/angular_analyzer_plugin)
 
 **Requires angular-5.0.0\* and dart SDK 2.0.0-dev.31\*\* or higher to work.**
