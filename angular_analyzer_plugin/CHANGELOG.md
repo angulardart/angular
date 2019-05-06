@@ -1,3 +1,8 @@
+## 1.0.0-alpha
+
+*  The Angular analyzer plugin has moved into the core angular repo, and will be
+   developed by the Angular team going forward.
+
 ## 0.0.17+6
 
 *   Fixed an issue where an unnecessary navigation range was added to HTML

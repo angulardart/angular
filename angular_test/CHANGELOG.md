@@ -1,3 +1,7 @@
+## 2.3.1
+
+*   Maintenance release to support Angular 6.0-alpha.
+
 ## 2.3.0
 
 ### New Features

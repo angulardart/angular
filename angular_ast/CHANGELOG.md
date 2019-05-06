@@ -1,3 +1,5 @@
+## 0.5.10
+
 *   New `ThrowingTemplateAstVisitor` which throws by default in each visit
     method.
 

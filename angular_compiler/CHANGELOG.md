@@ -1,3 +1,7 @@
+## 0.4.4
+
+*   Maintenance release to support the newest version of `analyzer`.
+
 ## 0.4.3
 
 *   FormatExceptions thrown while parsing modules in InjectorReader are now

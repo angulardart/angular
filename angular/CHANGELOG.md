@@ -1,3 +1,5 @@
+## 6.0.0-alpha
+
 ## Breaking changes
 
 *   The `OnChanges` lifecycle has been completely removed. Use `AfterChanges`

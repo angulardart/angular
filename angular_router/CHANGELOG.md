@@ -1,3 +1,5 @@
+## 2.0.0-alpha+23
+
 ### Bug fixes
 
 *   Navigation requests triggered by `popstate` events that redirect back to the
