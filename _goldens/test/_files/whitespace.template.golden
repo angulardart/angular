@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$PreserveWhitespace = const [];
 
+// View for component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
 class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
   static final String _message_0 = import2.Intl.message('\n      Default i18n text\n    ', desc: 'i18n description');
   static import3.ComponentStyles _componentStyles;
@@ -65,6 +66,7 @@ ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
 
 final List<dynamic> styles$PreserveWhitespaceHost = const [];
 
+// Host for component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
 class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
   ViewPreserveWhitespace0 _compView_0;
   import1.PreserveWhitespace _PreserveWhitespace_0_5;
@@ -76,6 +78,7 @@ class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
 
   @override
   ComponentRef<import1.PreserveWhitespace> build() {
+    // Child component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
     _compView_0 = ViewPreserveWhitespace0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _PreserveWhitespace_0_5 = import1.PreserveWhitespace();
@@ -101,6 +104,7 @@ AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0() {
 
 final List<dynamic> styles$MinifyWhitespace = const [];
 
+// View for component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
 class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
   static final String _message_0 = import2.Intl.message('Default i18n text', desc: 'i18n description');
   static import3.ComponentStyles _componentStyles;
@@ -143,6 +147,7 @@ ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
 
 final List<dynamic> styles$MinifyWhitespaceHost = const [];
 
+// Host for component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
 class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
   ViewMinifyWhitespace0 _compView_0;
   import1.MinifyWhitespace _MinifyWhitespace_0_5;
@@ -154,6 +159,7 @@ class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
 
   @override
   ComponentRef<import1.MinifyWhitespace> build() {
+    // Child component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
     _compView_0 = ViewMinifyWhitespace0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MinifyWhitespace_0_5 = import1.MinifyWhitespace();

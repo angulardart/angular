@@ -19,6 +19,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$TestSubComponent = const [];
 
+// View for component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
 class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewTestSubComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -55,6 +56,7 @@ ComponentFactory<import1.TestSubComponent> get TestSubComponentNgFactory {
 
 final List<dynamic> styles$TestSubComponentHost = const [];
 
+// Host for component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
 class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
   ViewTestSubComponent0 _compView_0;
   import1.TestSubComponent _TestSubComponent_0_5;
@@ -66,6 +68,7 @@ class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
 
   @override
   ComponentRef<import1.TestSubComponent> build() {
+    // Child component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
     _compView_0 = ViewTestSubComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _TestSubComponent_0_5 = import1.TestSubComponent();

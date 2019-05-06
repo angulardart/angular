@@ -20,6 +20,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 
 final List<dynamic> styles$HostComponentNewSyntax = const [];
 
+// View for component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax> {
   static import2.ComponentStyles _componentStyles;
   ViewHostComponentNewSyntax0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -54,6 +55,7 @@ ComponentFactory<import1.HostComponentNewSyntax> get HostComponentNewSyntaxNgFac
 
 final List<dynamic> styles$HostComponentNewSyntaxHost = const [];
 
+// Host for component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewSyntax> {
   ViewHostComponentNewSyntax0 _compView_0;
   import1.HostComponentNewSyntax _HostComponentNewSyntax_0_5;
@@ -65,6 +67,7 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
 
   @override
   ComponentRef<import1.HostComponentNewSyntax> build() {
+    // Child component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
     _compView_0 = ViewHostComponentNewSyntax0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
@@ -90,6 +93,7 @@ AppView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(
 
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
 
+// View for component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostComponentWithDirective> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
@@ -106,6 +110,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
   @override
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
     _compView_0 = ViewHostComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -146,6 +151,7 @@ ComponentFactory<import1.UsesHostComponentWithDirective> get UsesHostComponentWi
 
 final List<dynamic> styles$UsesHostComponentWithDirectiveHost = const [];
 
+// Host for component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostComponentWithDirective> {
   ViewUsesHostComponentWithDirective0 _compView_0;
   import1.UsesHostComponentWithDirective _UsesHostComponentWithDirective_0_5;
@@ -157,6 +163,7 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
 
   @override
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
+    // Child component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
     _compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
@@ -182,6 +189,7 @@ AppView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWit
 
 final List<dynamic> styles$HostComponent = const [];
 
+// View for component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class ViewHostComponent0 extends AppView<import1.HostComponent> {
   var _expr_0;
   var _expr_1;
@@ -267,6 +275,7 @@ ComponentFactory<import1.HostComponent> get HostComponentNgFactory {
 
 final List<dynamic> styles$HostComponentHost = const [];
 
+// Host for component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   ViewHostComponent0 _compView_0;
   import1.HostComponent _HostComponent_0_5;
@@ -278,6 +287,7 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
 
   @override
   ComponentRef<import1.HostComponent> build() {
+    // Child component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
     _compView_0 = ViewHostComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HostComponent_0_5 = import1.HostComponent();

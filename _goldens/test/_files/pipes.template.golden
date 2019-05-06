@@ -23,6 +23,7 @@ import 'package:angular/src/runtime/interpolate.dart' as import13;
 
 final List<dynamic> styles$Comp = const [];
 
+// View for component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
 class ViewComp0 extends AppView<import1.Comp> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   final import2.TextBinding _textBinding_2 = import2.TextBinding();
@@ -95,6 +96,7 @@ ComponentFactory<import1.Comp> get CompNgFactory {
 
 final List<dynamic> styles$CompHost = const [];
 
+// Host for component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
 class _ViewCompHost0 extends AppView<import1.Comp> {
   ViewComp0 _compView_0;
   import1.Comp _Comp_0_5;
@@ -106,6 +108,7 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
 
   @override
   ComponentRef<import1.Comp> build() {
+    // Child component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
     _compView_0 = ViewComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Comp_0_5 = import1.Comp();

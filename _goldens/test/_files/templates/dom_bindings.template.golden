@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
+// View for component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
@@ -63,6 +64,7 @@ ComponentFactory<import1.HasHostAttributes> get HasHostAttributesNgFactory {
 
 final List<dynamic> styles$HasHostAttributesHost = const [];
 
+// Host for component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   ViewHasHostAttributes0 _compView_0;
   import1.HasHostAttributes _HasHostAttributes_0_5;
@@ -74,6 +76,7 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
 
   @override
   ComponentRef<import1.HasHostAttributes> build() {
+    // Child component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasHostAttributes0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasHostAttributes_0_5 = import1.HasHostAttributes();
@@ -101,6 +104,7 @@ AppView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0() {
 
 final List<dynamic> styles$HasTemplateAttributes = const [];
 
+// View for component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> {
   var _expr_0;
   import6.DivElement _el_0;
@@ -148,6 +152,7 @@ ComponentFactory<import1.HasTemplateAttributes> get HasTemplateAttributesNgFacto
 
 final List<dynamic> styles$HasTemplateAttributesHost = const [];
 
+// Host for component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttributes> {
   ViewHasTemplateAttributes0 _compView_0;
   import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
@@ -159,6 +164,7 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
 
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
+    // Child component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasTemplateAttributes0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
@@ -184,6 +190,7 @@ AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0() 
 
 final List<dynamic> styles$HasStaticAttribute = const [];
 
+// View for component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
@@ -228,6 +235,7 @@ ComponentFactory<import1.HasStaticAttribute> get HasStaticAttributeNgFactory {
 
 final List<dynamic> styles$HasStaticAttributeHost = const [];
 
+// Host for component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   ViewHasStaticAttribute0 _compView_0;
   import1.HasStaticAttribute _HasStaticAttribute_0_5;
@@ -239,6 +247,7 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
 
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
+    // Child component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasStaticAttribute0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
@@ -264,6 +273,7 @@ AppView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0() {
 
 final List<dynamic> styles$HasHostClass = const [];
 
+// View for component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
@@ -307,6 +317,7 @@ ComponentFactory<import1.HasHostClass> get HasHostClassNgFactory {
 
 final List<dynamic> styles$HasHostClassHost = const [];
 
+// Host for component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   ViewHasHostClass0 _compView_0;
   import1.HasHostClass _HasHostClass_0_5;
@@ -318,6 +329,7 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
 
   @override
   ComponentRef<import1.HasHostClass> build() {
+    // Child component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasHostClass0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasHostClass_0_5 = import1.HasHostClass();
@@ -345,6 +357,7 @@ AppView<import1.HasHostClass> viewFactory_HasHostClassHost0() {
 
 final List<dynamic> styles$HasTemplateClass = const [];
 
+// View for component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   bool _expr_0;
   import6.DivElement _el_0;
@@ -392,6 +405,7 @@ ComponentFactory<import1.HasTemplateClass> get HasTemplateClassNgFactory {
 
 final List<dynamic> styles$HasTemplateClassHost = const [];
 
+// Host for component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   ViewHasTemplateClass0 _compView_0;
   import1.HasTemplateClass _HasTemplateClass_0_5;
@@ -403,6 +417,7 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
 
   @override
   ComponentRef<import1.HasTemplateClass> build() {
+    // Child component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasTemplateClass0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasTemplateClass_0_5 = import1.HasTemplateClass();
@@ -428,6 +443,7 @@ AppView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0() {
 
 final List<dynamic> styles$HasStyleProperty = const [];
 
+// View for component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   var _expr_0;
   var _expr_1;
@@ -481,6 +497,7 @@ ComponentFactory<import1.HasStyleProperty> get HasStylePropertyNgFactory {
 
 final List<dynamic> styles$HasStylePropertyHost = const [];
 
+// Host for component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   ViewHasStyleProperty0 _compView_0;
   import1.HasStyleProperty _HasStyleProperty_0_5;
@@ -492,6 +509,7 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
 
   @override
   ComponentRef<import1.HasStyleProperty> build() {
+    // Child component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
     _compView_0 = ViewHasStyleProperty0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasStyleProperty_0_5 = import1.HasStyleProperty();

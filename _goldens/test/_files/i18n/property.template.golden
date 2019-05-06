@@ -20,6 +20,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$I18nPropertyComponent = const [];
 
+// View for component I18nPropertyComponent in asset:_goldens/test/_files/i18n/property.dart (changeDetection: Default)
 class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description');
   import1.MessageDirective _MessageDirective_0_5;
@@ -67,6 +68,7 @@ ComponentFactory<import1.I18nPropertyComponent> get I18nPropertyComponentNgFacto
 
 final List<dynamic> styles$I18nPropertyComponentHost = const [];
 
+// Host for component I18nPropertyComponent in asset:_goldens/test/_files/i18n/property.dart (changeDetection: Default)
 class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyComponent> {
   ViewI18nPropertyComponent0 _compView_0;
   import1.I18nPropertyComponent _I18nPropertyComponent_0_5;
@@ -78,6 +80,7 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
 
   @override
   ComponentRef<import1.I18nPropertyComponent> build() {
+    // Child component I18nPropertyComponent in asset:_goldens/test/_files/i18n/property.dart (changeDetection: Default)
     _compView_0 = ViewI18nPropertyComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();

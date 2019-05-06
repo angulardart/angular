@@ -29,6 +29,7 @@ import 'deferred_component.template.dart' deferred as deflib1;
 
 final List<dynamic> styles$TestContainerComponent = const [];
 
+// View for component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
 class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent> {
   bool _query_queryMe_1_0_isDirty = true;
   ViewContainer _appEl_0;
@@ -77,6 +78,7 @@ class ViewTestContainerComponent0 extends AppView<import1.TestContainerComponent
     _appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(_appEl_4, viewFactory_TestContainerComponent7);
     _cancelDeferredLoad4 = import15.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, _appEl_4, _TemplateRef_4_8);
+    // Child component NotDeferredChildComponent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_5 = deflib1.ViewNotDeferredChildComponent0(this, 5);
     final _el_5 = _compView_5.rootEl;
     parentRenderNode.append(_el_5);
@@ -151,6 +153,7 @@ class _ViewTestContainerComponent1 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChild1Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChild1Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild1Component_0_5 = deflib0.DeferredChild1Component();
@@ -212,6 +215,7 @@ class _ViewTestContainerComponent3 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChild2Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChild2Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild2Component_0_5 = deflib0.DeferredChild2Component();
@@ -275,6 +279,7 @@ class _ViewTestContainerComponent5 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChild3Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChild3Component0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChild3Component_0_5 = deflib0.DeferredChild3Component();
@@ -310,6 +315,7 @@ class _ViewTestContainerComponent6 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChildComponentWithoutNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChildComponentWithoutNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithoutNgContent_0_5 = deflib0.DeferredChildComponentWithoutNgContent();
@@ -340,6 +346,7 @@ class _ViewTestContainerComponent7 extends AppView<import1.TestContainerComponen
   }
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChildComponentWithNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChildComponentWithNgContent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DeferredChildComponentWithNgContent_0_5 = deflib0.DeferredChildComponentWithNgContent();
@@ -382,6 +389,7 @@ class _ViewTestContainerComponent8 extends AppView<import1.TestContainerComponen
 
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component DeferredChildComponentWithServices in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     _compView_0 = deflib1.ViewDeferredChildComponentWithServices0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ExternalServiceImmediatelyCreated_0_5 = import17.ExternalServiceImmediatelyCreated();
@@ -420,6 +428,7 @@ AppView<void> viewFactory_TestContainerComponent8(import7.RenderView parentView,
 
 final List<dynamic> styles$TestContainerComponentHost = const [];
 
+// Host for component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
 class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComponent> {
   ViewTestContainerComponent0 _compView_0;
   import1.TestContainerComponent _TestContainerComponent_0_5;
@@ -431,6 +440,7 @@ class _ViewTestContainerComponentHost0 extends AppView<import1.TestContainerComp
 
   @override
   ComponentRef<import1.TestContainerComponent> build() {
+    // Child component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
     _compView_0 = ViewTestContainerComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _TestContainerComponent_0_5 = import1.TestContainerComponent();

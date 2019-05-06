@@ -25,6 +25,7 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import15;
 
 final List<dynamic> styles$InterpolationComponent = const [];
 
+// View for component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent> {
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -72,6 +73,7 @@ ComponentFactory<import1.InterpolationComponent> get InterpolationComponentNgFac
 
 final List<dynamic> styles$InterpolationComponentHost = const [];
 
+// Host for component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComponent> {
   ViewInterpolationComponent0 _compView_0;
   import1.InterpolationComponent _InterpolationComponent_0_5;
@@ -83,6 +85,7 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
 
   @override
   ComponentRef<import1.InterpolationComponent> build() {
+    // Child component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationComponent_0_5 = import1.InterpolationComponent();
@@ -108,6 +111,7 @@ AppView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(
 
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
 
+// View for component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -151,6 +155,7 @@ ComponentFactory<import1.InterpolationComponentNoWhitespace> get InterpolationCo
 
 final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
+// Host for component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.InterpolationComponentNoWhitespace> {
   ViewInterpolationComponentNoWhitespace0 _compView_0;
   import1.InterpolationComponentNoWhitespace _InterpolationComponentNoWhitespace_0_5;
@@ -162,6 +167,7 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
 
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
+    // Child component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
@@ -187,6 +193,7 @@ AppView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationCom
 
 final List<dynamic> styles$InterpolationTwoAdjacent = const [];
 
+// View for component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdjacent> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
@@ -235,6 +242,7 @@ ComponentFactory<import1.InterpolationTwoAdjacent> get InterpolationTwoAdjacentN
 
 final List<dynamic> styles$InterpolationTwoAdjacentHost = const [];
 
+// Host for component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTwoAdjacent> {
   ViewInterpolationTwoAdjacent0 _compView_0;
   import1.InterpolationTwoAdjacent _InterpolationTwoAdjacent_0_5;
@@ -246,6 +254,7 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
 
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
+    // Child component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
@@ -271,6 +280,7 @@ AppView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHo
 
 final List<dynamic> styles$InterpolationLongerSentence = const [];
 
+// View for component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLongerSentence> {
   final import2.TextBinding _textBinding_2 = import2.TextBinding();
   final import2.TextBinding _textBinding_4 = import2.TextBinding();
@@ -324,6 +334,7 @@ ComponentFactory<import1.InterpolationLongerSentence> get InterpolationLongerSen
 
 final List<dynamic> styles$InterpolationLongerSentenceHost = const [];
 
+// Host for component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.InterpolationLongerSentence> {
   ViewInterpolationLongerSentence0 _compView_0;
   import1.InterpolationLongerSentence _InterpolationLongerSentence_0_5;
@@ -335,6 +346,7 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
 
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
+    // Child component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationLongerSentence0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
@@ -360,6 +372,7 @@ AppView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSent
 
 final List<dynamic> styles$InterpolationLiterals = const [];
 
+// View for component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> {
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLiterals0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -399,6 +412,7 @@ ComponentFactory<import1.InterpolationLiterals> get InterpolationLiteralsNgFacto
 
 final List<dynamic> styles$InterpolationLiteralsHost = const [];
 
+// Host for component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiterals> {
   ViewInterpolationLiterals0 _compView_0;
   import1.InterpolationLiterals _InterpolationLiterals_0_5;
@@ -410,6 +424,7 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
 
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
+    // Child component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationLiterals0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
@@ -435,6 +450,7 @@ AppView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0() 
 
 final List<dynamic> styles$InterpolationLocals = const [];
 
+// View for component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
   import13.NgFor _NgFor_0_9;
@@ -562,6 +578,7 @@ AppView<void> viewFactory_InterpolationLocals2(import4.RenderView parentView, in
 
 final List<dynamic> styles$InterpolationLocalsHost = const [];
 
+// Host for component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals> {
   ViewInterpolationLocals0 _compView_0;
   import1.InterpolationLocals _InterpolationLocals_0_5;
@@ -573,6 +590,7 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
 
   @override
   ComponentRef<import1.InterpolationLocals> build() {
+    // Child component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewInterpolationLocals0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InterpolationLocals_0_5 = import1.InterpolationLocals();
@@ -598,6 +616,7 @@ AppView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0() {
 
 final List<dynamic> styles$Attribute = const [];
 
+// View for component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewAttribute0 extends AppView<import1.Attribute> {
   var _expr_0;
   var _expr_1;
@@ -654,6 +673,7 @@ ComponentFactory<import1.Attribute> get AttributeNgFactory {
 
 final List<dynamic> styles$AttributeHost = const [];
 
+// Host for component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewAttributeHost0 extends AppView<import1.Attribute> {
   ViewAttribute0 _compView_0;
   import1.Attribute _Attribute_0_5;
@@ -665,6 +685,7 @@ class _ViewAttributeHost0 extends AppView<import1.Attribute> {
 
   @override
   ComponentRef<import1.Attribute> build() {
+    // Child component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewAttribute0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _Attribute_0_5 = import1.Attribute();
@@ -690,6 +711,7 @@ AppView<import1.Attribute> viewFactory_AttributeHost0() {
 
 final List<dynamic> styles$AttributePW = const [];
 
+// View for component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewAttributePW0 extends AppView<import1.AttributePW> {
   var _expr_0;
   var _expr_1;
@@ -747,6 +769,7 @@ ComponentFactory<import1.AttributePW> get AttributePWNgFactory {
 
 final List<dynamic> styles$AttributePWHost = const [];
 
+// Host for component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
   ViewAttributePW0 _compView_0;
   import1.AttributePW _AttributePW_0_5;
@@ -758,6 +781,7 @@ class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
 
   @override
   ComponentRef<import1.AttributePW> build() {
+    // Child component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
     _compView_0 = ViewAttributePW0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _AttributePW_0_5 = import1.AttributePW();

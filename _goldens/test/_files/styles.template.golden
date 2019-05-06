@@ -19,6 +19,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$StylesComponent = const [];
 
+// View for component StylesComponent in asset:_goldens/test/_files/styles.dart (changeDetection: Default)
 class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
   import2.DivElement _el_0;
   static import3.ComponentStyles _componentStyles;
@@ -69,6 +70,7 @@ ComponentFactory<import1.StylesComponent> get StylesComponentNgFactory {
 
 final List<dynamic> styles$StylesComponentHost = const [];
 
+// Host for component StylesComponent in asset:_goldens/test/_files/styles.dart (changeDetection: Default)
 class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
   ViewStylesComponent0 _compView_0;
   import1.StylesComponent _StylesComponent_0_5;
@@ -80,6 +82,7 @@ class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
 
   @override
   ComponentRef<import1.StylesComponent> build() {
+    // Child component StylesComponent in asset:_goldens/test/_files/styles.dart (changeDetection: Default)
     _compView_0 = ViewStylesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _StylesComponent_0_5 = import1.StylesComponent();

@@ -22,6 +22,7 @@ import 'injector_get_internal.dart' as import12;
 
 final List<dynamic> styles$AppComponent = const [];
 
+// View for component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.NgForm _NgForm_0_5;
   ViewMaterialInputComponent0 _compView_1;
@@ -235,6 +236,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'form');
     _NgForm_0_5 = import1.NgForm();
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_1 = ViewMaterialInputComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -253,6 +255,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     final _el_3 = import10.appendDiv(doc, _el_0);
     import10.setAttribute(_el_3, 'ngControlGroup', 'address');
     _NgControlGroup_3_5 = import1.NgControlGroup();
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_4 = ViewMaterialInputComponent0(this, 4);
     final _el_4 = _compView_4.rootEl;
     _el_3.append(_el_4);
@@ -263,6 +266,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _NgControlName_4_7 = import1.NgControlName();
     _RequiredValidator_4_8 = import1.RequiredValidator();
     _compView_4.create(_MaterialInputComponent_4_5, [const []]);
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_5 = ViewMaterialInputComponent0(this, 5);
     final _el_5 = _compView_5.rootEl;
     _el_3.append(_el_5);
@@ -271,6 +275,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _MaterialInputValueAccessor_5_6 = import1.MaterialInputValueAccessor();
     _NgControlName_5_7 = import1.NgControlName();
     _compView_5.create(_MaterialInputComponent_5_5, [const []]);
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_6 = ViewMaterialInputComponent0(this, 6);
     final _el_6 = _compView_6.rootEl;
     _el_3.append(_el_6);
@@ -281,6 +286,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _NgControlName_6_7 = import1.NgControlName();
     _RequiredValidator_6_8 = import1.RequiredValidator();
     _compView_6.create(_MaterialInputComponent_6_5, [const []]);
+    // Child component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_7 = ViewMaterialAutoSuggestInputComponent0(this, 7);
     final _el_7 = _compView_7.rootEl;
     _el_3.append(_el_7);
@@ -290,6 +296,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     _NgControlName_7_6 = import1.NgControlName();
     _RequiredValidator_7_7 = import1.RequiredValidator();
     _compView_7.create0(_MaterialAutoSuggestInputComponent_7_5);
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_8 = ViewMaterialInputComponent0(this, 8);
     final _el_8 = _compView_8.rootEl;
     _el_3.append(_el_8);
@@ -479,6 +486,7 @@ ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
 
 final List<dynamic> styles$AppComponentHost = const [];
 
+// Host for component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
@@ -490,6 +498,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
+    // Child component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_0 = ViewAppComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
@@ -515,6 +524,7 @@ AppView<import1.AppComponent> viewFactory_AppComponentHost0() {
 
 final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
 
+// View for component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialAutoSuggestInputComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -548,6 +558,7 @@ ComponentFactory<import1.MaterialAutoSuggestInputComponent> get MaterialAutoSugg
 
 final List<dynamic> styles$MaterialAutoSuggestInputComponentHost = const [];
 
+// Host for component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   ViewMaterialAutoSuggestInputComponent0 _compView_0;
   import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_0_5;
@@ -559,6 +570,7 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
 
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
+    // Child component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
@@ -592,6 +604,7 @@ AppView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSugge
 
 final List<dynamic> styles$MaterialInputComponent = const [];
 
+// View for component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialInputComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -626,6 +639,7 @@ ComponentFactory<import1.MaterialInputComponent> get MaterialInputComponentNgFac
 
 final List<dynamic> styles$MaterialInputComponentHost = const [];
 
+// Host for component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComponent> {
   ViewMaterialInputComponent0 _compView_0;
   import1.MaterialInputComponent _MaterialInputComponent_0_5;
@@ -669,6 +683,7 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
 
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
+    // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
     _compView_0 = ViewMaterialInputComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MaterialInputComponent_0_5 = import1.MaterialInputComponent();

@@ -20,6 +20,7 @@ import 'package:angular/src/core/di/opaque_token.dart' as import10;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
+// View for component ProviderModulesComponent in asset:_goldens/test/_files/provider_modules.dart (changeDetection: Default)
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProviderModulesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -53,6 +54,7 @@ ComponentFactory<import1.ProviderModulesComponent> get ProviderModulesComponentN
 
 final List<dynamic> styles$ProviderModulesComponentHost = const [];
 
+// Host for component ProviderModulesComponent in asset:_goldens/test/_files/provider_modules.dart (changeDetection: Default)
 class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModulesComponent> {
   ViewProviderModulesComponent0 _compView_0;
   import1.ProviderModulesComponent _ProviderModulesComponent_0_5;
@@ -96,6 +98,7 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
+    // Child component ProviderModulesComponent in asset:_goldens/test/_files/provider_modules.dart (changeDetection: Default)
     _compView_0 = ViewProviderModulesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();

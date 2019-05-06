@@ -21,6 +21,7 @@ import 'package:angular/src/runtime/interpolate.dart' as import11;
 
 final List<dynamic> styles$DefaultComp = const [];
 
+// View for component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
 class ViewDefaultComp0 extends AppView<import1.DefaultComp> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
@@ -63,6 +64,7 @@ ComponentFactory<import1.DefaultComp> get DefaultCompNgFactory {
 
 final List<dynamic> styles$DefaultCompHost = const [];
 
+// Host for component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
 class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
   ViewDefaultComp0 _compView_0;
   import1.DefaultComp _DefaultComp_0_5;
@@ -74,6 +76,7 @@ class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
 
   @override
   ComponentRef<import1.DefaultComp> build() {
+    // Child component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
     _compView_0 = ViewDefaultComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _DefaultComp_0_5 = import1.DefaultComp();
@@ -99,6 +102,7 @@ AppView<import1.DefaultComp> viewFactory_DefaultCompHost0() {
 
 final List<dynamic> styles$OnPushComp = const [];
 
+// View for component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: OnPush)
 class ViewOnPushComp0 extends AppView<import1.OnPushComp> {
   ViewDefaultComp0 _compView_1;
   import1.DefaultComp _DefaultComp_1_5;
@@ -116,6 +120,7 @@ class ViewOnPushComp0 extends AppView<import1.OnPushComp> {
     final import7.HtmlElement parentRenderNode = initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'b');
+    // Child component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
     _compView_1 = ViewDefaultComp0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -151,6 +156,7 @@ ComponentFactory<import1.OnPushComp> get OnPushCompNgFactory {
 
 final List<dynamic> styles$OnPushCompHost = const [];
 
+// Host for component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
 class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
   ViewOnPushComp0 _compView_0;
   import1.OnPushComp _OnPushComp_0_5;
@@ -162,6 +168,7 @@ class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
 
   @override
   ComponentRef<import1.OnPushComp> build() {
+    // Child component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: OnPush)
     _compView_0 = ViewOnPushComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _OnPushComp_0_5 = import1.OnPushComp();

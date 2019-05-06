@@ -25,6 +25,7 @@ import 'package:angular/src/core/change_detection/directive_change_detector.dart
 
 final List<dynamic> styles$UntypedComp = const [];
 
+// View for component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
   static import2.ComponentStyles _componentStyles;
   ViewUntypedComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -58,6 +59,7 @@ ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
 
 final List<dynamic> styles$UntypedCompHost = const [];
 
+// Host for component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
@@ -69,6 +71,7 @@ class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
 
   @override
   ComponentRef<import1.UntypedComp> build() {
+    // Child component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUntypedComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UntypedComp_0_5 = import1.UntypedComp();
@@ -94,6 +97,7 @@ AppView<import1.UntypedComp> viewFactory_UntypedCompHost0() {
 
 final List<dynamic> styles$UsesUntypedComp = const [];
 
+// View for component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   ViewUntypedComp0 _compView_0;
   import1.UntypedComp _UntypedComp_0_5;
@@ -110,6 +114,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUntypedComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -151,6 +156,7 @@ ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
 
 final List<dynamic> styles$UsesUntypedCompHost = const [];
 
+// Host for component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
   ViewUsesUntypedComp0 _compView_0;
   import1.UsesUntypedComp _UsesUntypedComp_0_5;
@@ -162,6 +168,7 @@ class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
 
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
+    // Child component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesUntypedComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesUntypedComp_0_5 = import1.UsesUntypedComp();
@@ -187,6 +194,7 @@ AppView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0() {
 
 final List<dynamic> styles$GenericComp = const [];
 
+// View for component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewGenericComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -220,6 +228,7 @@ ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
 
 final List<dynamic> styles$GenericCompHost = const [];
 
+// Host for component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
   ViewGenericComp0<T> _compView_0;
   import1.GenericComp<T> _GenericComp_0_5;
@@ -231,6 +240,7 @@ class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
 
   @override
   ComponentRef<import1.GenericComp<T>> build() {
+    // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _GenericComp_0_5 = import1.GenericComp();
@@ -256,6 +266,7 @@ AppView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>() {
 
 final List<dynamic> styles$UsesGenericComp = const [];
 
+// View for component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   ViewGenericComp0<int> _compView_0;
   import1.GenericComp<int> _GenericComp_0_5;
@@ -272,6 +283,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   @override
   ComponentRef<import1.UsesGenericComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -313,6 +325,7 @@ ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
 
 final List<dynamic> styles$UsesGenericCompHost = const [];
 
+// Host for component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
   ViewUsesGenericComp0 _compView_0;
   import1.UsesGenericComp _UsesGenericComp_0_5;
@@ -324,6 +337,7 @@ class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
 
   @override
   ComponentRef<import1.UsesGenericComp> build() {
+    // Child component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesGenericComp_0_5 = import1.UsesGenericComp();
@@ -349,6 +363,7 @@ AppView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0() {
 
 final List<dynamic> styles$UsesGenericCompGeneric = const [];
 
+// View for component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGeneric<E>> {
   ViewGenericComp0<List<E>> _compView_0;
   import1.GenericComp<List<E>> _GenericComp_0_5;
@@ -365,6 +380,7 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
   @override
   ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -406,6 +422,7 @@ ComponentFactory<import1.UsesGenericCompGeneric> get UsesGenericCompGenericNgFac
 
 final List<dynamic> styles$UsesGenericCompGenericHost = const [];
 
+// Host for component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericCompGenericHost0<E> extends AppView<import1.UsesGenericCompGeneric<E>> {
   ViewUsesGenericCompGeneric0<E> _compView_0;
   import1.UsesGenericCompGeneric<E> _UsesGenericCompGeneric_0_5;
@@ -417,6 +434,7 @@ class _ViewUsesGenericCompGenericHost0<E> extends AppView<import1.UsesGenericCom
 
   @override
   ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
+    // Child component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesGenericCompGeneric0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesGenericCompGeneric_0_5 = import1.UsesGenericCompGeneric();
@@ -442,6 +460,7 @@ AppView<import1.UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGenericHos
 
 final List<dynamic> styles$MappingComp1 = const [];
 
+// View for component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp10(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -475,6 +494,7 @@ ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
 
 final List<dynamic> styles$MappingComp1Host = const [];
 
+// Host for component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
   ViewMappingComp10<K, V> _compView_0;
   import1.MappingComp1<K, V> _MappingComp1_0_5;
@@ -486,6 +506,7 @@ class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp1<K, V>> build() {
+    // Child component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewMappingComp10(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MappingComp1_0_5 = import1.MappingComp1();
@@ -511,6 +532,7 @@ AppView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>() {
 
 final List<dynamic> styles$UsesMappingComp1 = const [];
 
+// View for component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   ViewMappingComp10<int, String> _compView_0;
   import1.MappingComp1<int, String> _MappingComp1_0_5;
@@ -528,6 +550,7 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewMappingComp10(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -574,6 +597,7 @@ ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
 
 final List<dynamic> styles$UsesMappingComp1Host = const [];
 
+// Host for component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
   ViewUsesMappingComp10 _compView_0;
   import1.UsesMappingComp1 _UsesMappingComp1_0_5;
@@ -585,6 +609,7 @@ class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
 
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
+    // Child component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesMappingComp10(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesMappingComp1_0_5 = import1.UsesMappingComp1();
@@ -610,6 +635,7 @@ AppView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0() {
 
 final List<dynamic> styles$MappingComp2 = const [];
 
+// View for component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp20(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -643,6 +669,7 @@ ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
 
 final List<dynamic> styles$MappingComp2Host = const [];
 
+// Host for component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
   ViewMappingComp20<K, V> _compView_0;
   import1.MappingComp2<K, V> _MappingComp2_0_5;
@@ -654,6 +681,7 @@ class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp2<K, V>> build() {
+    // Child component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewMappingComp20(this, 0);
     final _el_0 = _compView_0.rootEl;
     _MappingComp2_0_5 = import1.MappingComp2();
@@ -679,6 +707,7 @@ AppView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>() {
 
 final List<dynamic> styles$UsesMappingComp2 = const [];
 
+// View for component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   ViewMappingComp20<int, String> _compView_0;
   import1.MappingComp2<int, String> _MappingComp2_0_5;
@@ -695,6 +724,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewMappingComp20(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -736,6 +766,7 @@ ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
 
 final List<dynamic> styles$UsesMappingComp2Host = const [];
 
+// Host for component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
   ViewUsesMappingComp20 _compView_0;
   import1.UsesMappingComp2 _UsesMappingComp2_0_5;
@@ -747,6 +778,7 @@ class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
 
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
+    // Child component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesMappingComp20(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesMappingComp2_0_5 = import1.UsesMappingComp2();
@@ -772,6 +804,7 @@ AppView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0() {
 
 final List<dynamic> styles$BoundComp = const [];
 
+// View for component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -805,6 +838,7 @@ ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
 
 final List<dynamic> styles$BoundCompHost = const [];
 
+// Host for component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
   ViewBoundComp0<T> _compView_0;
   import1.BoundComp<T> _BoundComp_0_5;
@@ -816,6 +850,7 @@ class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
 
   @override
   ComponentRef<import1.BoundComp<T>> build() {
+    // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _BoundComp_0_5 = import1.BoundComp();
@@ -841,6 +876,7 @@ AppView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>() {
 
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
 
+// View for component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBounds> {
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
@@ -857,6 +893,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -898,6 +935,7 @@ ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgF
 
 final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
 
+// Host for component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWithBounds> {
   ViewUsesBoundCompWithBounds0 _compView_0;
   import1.UsesBoundCompWithBounds _UsesBoundCompWithBounds_0_5;
@@ -909,6 +947,7 @@ class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWit
 
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
+    // Child component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesBoundCompWithBounds0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesBoundCompWithBounds_0_5 = import1.UsesBoundCompWithBounds();
@@ -934,6 +973,7 @@ AppView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost
 
 final List<dynamic> styles$UsesBoundComp = const [];
 
+// View for component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   ViewBoundComp0 _compView_0;
   import1.BoundComp _BoundComp_0_5;
@@ -950,6 +990,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   @override
   ComponentRef<import1.UsesBoundComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -991,6 +1032,7 @@ ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
 
 final List<dynamic> styles$UsesBoundCompHost = const [];
 
+// Host for component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
   ViewUsesBoundComp0 _compView_0;
   import1.UsesBoundComp _UsesBoundComp_0_5;
@@ -1002,6 +1044,7 @@ class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
 
   @override
   ComponentRef<import1.UsesBoundComp> build() {
+    // Child component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesBoundComp_0_5 = import1.UsesBoundComp();
@@ -1027,6 +1070,7 @@ AppView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0() {
 
 final List<dynamic> styles$SelfBoundComp = const [];
 
+// View for component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   static import2.ComponentStyles _componentStyles;
   ViewSelfBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1060,6 +1104,7 @@ ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
 
 final List<dynamic> styles$SelfBoundCompHost = const [];
 
+// Host for component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   ViewSelfBoundComp0<A, B> _compView_0;
   import1.SelfBoundComp<A, B> _SelfBoundComp_0_5;
@@ -1071,6 +1116,7 @@ class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundC
 
   @override
   ComponentRef<import1.SelfBoundComp<A, B>> build() {
+    // Child component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewSelfBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _SelfBoundComp_0_5 = import1.SelfBoundComp();
@@ -1096,6 +1142,7 @@ AppView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends
 
 final List<dynamic> styles$UsesSelfBoundComp = const [];
 
+// View for component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   ViewSelfBoundComp0 _compView_0;
   import1.SelfBoundComp _SelfBoundComp_0_5;
@@ -1113,6 +1160,7 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewSelfBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1159,6 +1207,7 @@ ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
 
 final List<dynamic> styles$UsesSelfBoundCompHost = const [];
 
+// Host for component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
   ViewUsesSelfBoundComp0 _compView_0;
   import1.UsesSelfBoundComp _UsesSelfBoundComp_0_5;
@@ -1170,6 +1219,7 @@ class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
 
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
+    // Child component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesSelfBoundComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesSelfBoundComp_0_5 = import1.UsesSelfBoundComp();
@@ -1195,6 +1245,7 @@ AppView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0() {
 
 final List<dynamic> styles$RecursiveComp = const [];
 
+// View for component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewRecursiveComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1228,6 +1279,7 @@ ComponentFactory<import1.RecursiveComp> get RecursiveCompNgFactory {
 
 final List<dynamic> styles$RecursiveCompHost = const [];
 
+// Host for component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   ViewRecursiveComp0<T> _compView_0;
   import1.RecursiveComp<T> _RecursiveComp_0_5;
@@ -1239,6 +1291,7 @@ class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.R
 
   @override
   ComponentRef<import1.RecursiveComp<T>> build() {
+    // Child component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewRecursiveComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _RecursiveComp_0_5 = import1.RecursiveComp();
@@ -1264,6 +1317,7 @@ AppView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Compa
 
 final List<dynamic> styles$UsesRecursiveComp = const [];
 
+// View for component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   ViewRecursiveComp0 _compView_0;
   import1.RecursiveComp _RecursiveComp_0_5;
@@ -1280,6 +1334,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewRecursiveComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1321,6 +1376,7 @@ ComponentFactory<import1.UsesRecursiveComp> get UsesRecursiveCompNgFactory {
 
 final List<dynamic> styles$UsesRecursiveCompHost = const [];
 
+// Host for component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
   ViewUsesRecursiveComp0 _compView_0;
   import1.UsesRecursiveComp _UsesRecursiveComp_0_5;
@@ -1332,6 +1388,7 @@ class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
 
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
+    // Child component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesRecursiveComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesRecursiveComp_0_5 = import1.UsesRecursiveComp();
@@ -1357,6 +1414,7 @@ AppView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0() {
 
 final List<dynamic> styles$FunctionTypeComp = const [];
 
+// View for component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
   static import2.ComponentStyles _componentStyles;
   ViewFunctionTypeComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1390,6 +1448,7 @@ ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
 
 final List<dynamic> styles$FunctionTypeCompHost = const [];
 
+// Host for component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>> {
   ViewFunctionTypeComp0<F> _compView_0;
   import1.FunctionTypeComp<F> _FunctionTypeComp_0_5;
@@ -1401,6 +1460,7 @@ class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>>
 
   @override
   ComponentRef<import1.FunctionTypeComp<F>> build() {
+    // Child component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewFunctionTypeComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
@@ -1426,6 +1486,7 @@ AppView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>() {
 
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
 
+// View for component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   ViewFunctionTypeComp0<String> _compView_0;
   import1.FunctionTypeComp<String> _FunctionTypeComp_0_5;
@@ -1442,6 +1503,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewFunctionTypeComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1483,6 +1545,7 @@ ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory
 
 final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
 
+// Host for component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeComp> {
   ViewUsesFunctionTypeComp0 _compView_0;
   import1.UsesFunctionTypeComp _UsesFunctionTypeComp_0_5;
@@ -1494,6 +1557,7 @@ class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeCom
 
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
+    // Child component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesFunctionTypeComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesFunctionTypeComp_0_5 = import1.UsesFunctionTypeComp();
@@ -1519,6 +1583,7 @@ AppView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0() {
 
 final List<dynamic> styles$NestedParentComp = const [];
 
+// View for component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
@@ -1541,11 +1606,13 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewNestedChildComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _NestedChildComp_0_5 = import1.NestedChildComp();
     _compView_0.create0(_NestedChildComp_0_5);
+    // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_1 = ViewNestedChildComp0(this, 1);
     final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
@@ -1617,6 +1684,7 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   }
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
+    // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewNestedChildComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NestedChildComp_0_5 = import1.NestedChildComp();
@@ -1647,6 +1715,7 @@ AppView<void> viewFactory_NestedParentComp1<T>(import3.RenderView parentView, in
 
 final List<dynamic> styles$NestedParentCompHost = const [];
 
+// Host for component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>> {
   ViewNestedParentComp0<T> _compView_0;
   import1.NestedParentComp<T> _NestedParentComp_0_5;
@@ -1658,6 +1727,7 @@ class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>>
 
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
+    // Child component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewNestedParentComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NestedParentComp_0_5 = import1.NestedParentComp();
@@ -1683,6 +1753,7 @@ AppView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>() {
 
 final List<dynamic> styles$NestedChildComp = const [];
 
+// View for component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewNestedChildComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -1716,6 +1787,7 @@ ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
 
 final List<dynamic> styles$NestedChildCompHost = const [];
 
+// Host for component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
@@ -1727,6 +1799,7 @@ class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
 
   @override
   ComponentRef<import1.NestedChildComp<T>> build() {
+    // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewNestedChildComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NestedChildComp_0_5 = import1.NestedChildComp();
@@ -1752,6 +1825,7 @@ AppView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>() {
 
 final List<dynamic> styles$UsesNestedParentComp = const [];
 
+// View for component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   ViewNestedParentComp0<int> _compView_0;
   import1.NestedParentComp<int> _NestedParentComp_0_5;
@@ -1770,6 +1844,7 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewNestedParentComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -1821,6 +1896,7 @@ ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory
 
 final List<dynamic> styles$UsesNestedParentCompHost = const [];
 
+// Host for component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentComp> {
   ViewUsesNestedParentComp0 _compView_0;
   import1.UsesNestedParentComp _UsesNestedParentComp_0_5;
@@ -1832,6 +1908,7 @@ class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentCom
 
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
+    // Child component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesNestedParentComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesNestedParentComp_0_5 = import1.UsesNestedParentComp();
@@ -1857,6 +1934,7 @@ AppView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0() {
 
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
 
+// View for component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> {
   ViewGenericComp0<String> _compView_0;
   import1.GenericComp<String> _GenericComp_0_5;
@@ -1876,11 +1954,13 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewGenericComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _GenericComp_0_5 = import1.GenericComp();
     _compView_0.create0(_GenericComp_0_5);
+    // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_1 = ViewGenericComp0(this, 1);
     final _el_1 = _compView_1.rootEl;
     parentRenderNode.append(_el_1);
@@ -1929,6 +2009,7 @@ ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFacto
 
 final List<dynamic> styles$UsesMultipleTypesCompHost = const [];
 
+// Host for component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesComp> {
   ViewUsesMultipleTypesComp0 _compView_0;
   import1.UsesMultipleTypesComp _UsesMultipleTypesComp_0_5;
@@ -1940,6 +2021,7 @@ class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesC
 
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
+    // Child component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesMultipleTypesComp0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesMultipleTypesComp_0_5 = import1.UsesMultipleTypesComp();
@@ -1965,6 +2047,7 @@ AppView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0() 
 
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
 
+// View for component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDetector> {
   GenericDirectiveNgCd<String> _GenericDirective_0_5;
   var _expr_0;
@@ -2016,6 +2099,7 @@ ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetecto
 
 final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
 
+// Host for component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericChangeDetector> {
   ViewUsesGenericChangeDetector0 _compView_0;
   import1.UsesGenericChangeDetector _UsesGenericChangeDetector_0_5;
@@ -2027,6 +2111,7 @@ class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericCha
 
   @override
   ComponentRef<import1.UsesGenericChangeDetector> build() {
+    // Child component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
     _compView_0 = ViewUsesGenericChangeDetector0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesGenericChangeDetector_0_5 = import1.UsesGenericChangeDetector();

@@ -26,6 +26,7 @@ import 'dart:core';
 
 final List<dynamic> styles$HasOpaqueTokens = const [];
 
+// View for component HasOpaqueTokens in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class ViewHasOpaqueTokens0 extends AppView<import1.HasOpaqueTokens> {
   static import2.ComponentStyles _componentStyles;
   ViewHasOpaqueTokens0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -61,6 +62,7 @@ ComponentFactory<import1.HasOpaqueTokens> get HasOpaqueTokensNgFactory {
 
 final List<dynamic> styles$HasOpaqueTokensHost = const [];
 
+// Host for component HasOpaqueTokens in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
   ViewHasOpaqueTokens0 _compView_0;
   String _baseUrlDescription_0_5;
@@ -73,6 +75,7 @@ class _ViewHasOpaqueTokensHost0 extends AppView<import1.HasOpaqueTokens> {
 
   @override
   ComponentRef<import1.HasOpaqueTokens> build() {
+    // Child component HasOpaqueTokens in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
     _compView_0 = ViewHasOpaqueTokens0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _baseUrlDescription_0_5 = 'https://localhost';
@@ -107,6 +110,7 @@ AppView<import1.HasOpaqueTokens> viewFactory_HasOpaqueTokensHost0() {
 
 final List<dynamic> styles$ContainsChildComponent = const [];
 
+// View for component ContainsChildComponent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class ViewContainsChildComponent0 extends AppView<import1.ContainsChildComponent> {
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
@@ -200,6 +204,7 @@ class _ViewContainsChildComponent2 extends AppView<import1.ContainsChildComponen
   ComponentRef<import1.ContainsChildComponent> build() {
     final doc = import6.document;
     final _el_0 = doc.createElement('div');
+    // Child component InjectsTypedTokenFromSomeParent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
     _compView_1 = ViewInjectsTypedTokenFromSomeParent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _el_0.append(_el_1);
@@ -229,6 +234,7 @@ AppView<void> viewFactory_ContainsChildComponent2(import3.RenderView parentView,
 
 final List<dynamic> styles$ContainsChildComponentHost = const [];
 
+// Host for component ContainsChildComponent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComponent> {
   ViewContainsChildComponent0 _compView_0;
   import1.ContainsChildComponent _ContainsChildComponent_0_5;
@@ -240,6 +246,7 @@ class _ViewContainsChildComponentHost0 extends AppView<import1.ContainsChildComp
 
   @override
   ComponentRef<import1.ContainsChildComponent> build() {
+    // Child component ContainsChildComponent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
     _compView_0 = ViewContainsChildComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ContainsChildComponent_0_5 = import1.ContainsChildComponent();
@@ -265,6 +272,7 @@ AppView<import1.ContainsChildComponent> viewFactory_ContainsChildComponentHost0(
 
 final List<dynamic> styles$InjectsTypedTokenFromSomeParent = const [];
 
+// View for component InjectsTypedTokenFromSomeParent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class ViewInjectsTypedTokenFromSomeParent0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsTypedTokenFromSomeParent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -298,6 +306,7 @@ ComponentFactory<import1.InjectsTypedTokenFromSomeParent> get InjectsTypedTokenF
 
 final List<dynamic> styles$InjectsTypedTokenFromSomeParentHost = const [];
 
+// Host for component InjectsTypedTokenFromSomeParent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
 class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsTypedTokenFromSomeParent> {
   ViewInjectsTypedTokenFromSomeParent0 _compView_0;
   import1.InjectsTypedTokenFromSomeParent _InjectsTypedTokenFromSomeParent_0_5;
@@ -309,6 +318,7 @@ class _ViewInjectsTypedTokenFromSomeParentHost0 extends AppView<import1.InjectsT
 
   @override
   ComponentRef<import1.InjectsTypedTokenFromSomeParent> build() {
+    // Child component InjectsTypedTokenFromSomeParent in asset:_goldens/test/_files/opaque_token.dart (changeDetection: Default)
     _compView_0 = ViewInjectsTypedTokenFromSomeParent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InjectsTypedTokenFromSomeParent_0_5 = (import7.isDevMode

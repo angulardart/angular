@@ -23,6 +23,7 @@ import 'view_encapsulated_styles.css.dart' as import13;
 
 final List<dynamic> styles$EmulatedComponent = [import0.styles, '._nghost-%ID%{border:1px solid black}', 'div._ngcontent-%ID%{color:red}'];
 
+// View for component EmulatedComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class ViewEmulatedComponent0 extends AppView<import2.EmulatedComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
@@ -82,6 +83,7 @@ AppView<void> viewFactory_EmulatedComponent1(import5.RenderView parentView, int 
 
 final List<dynamic> styles$EmulatedComponentHost = const [];
 
+// Host for component EmulatedComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
   ViewEmulatedComponent0 _compView_0;
   import2.EmulatedComponent _EmulatedComponent_0_5;
@@ -93,6 +95,7 @@ class _ViewEmulatedComponentHost0 extends AppView<import2.EmulatedComponent> {
 
   @override
   ComponentRef<import2.EmulatedComponent> build() {
+    // Child component EmulatedComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
     _compView_0 = ViewEmulatedComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _EmulatedComponent_0_5 = import2.EmulatedComponent();
@@ -118,6 +121,7 @@ AppView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0() {
 
 final List<dynamic> styles$NoneComponent = [import13.styles, ':host { border: 1px solid #000; } ', 'div { color: red; }'];
 
+// View for component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class ViewNoneComponent0 extends AppView<import2.NoneComponent> {
   ViewContainer _appEl_2;
   static import4.ComponentStyles _componentStyles;
@@ -175,6 +179,7 @@ AppView<void> viewFactory_NoneComponent1(import5.RenderView parentView, int pare
 
 final List<dynamic> styles$NoneComponentHost = const [];
 
+// Host for component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
   ViewNoneComponent0 _compView_0;
   import2.NoneComponent _NoneComponent_0_5;
@@ -186,6 +191,7 @@ class _ViewNoneComponentHost0 extends AppView<import2.NoneComponent> {
 
   @override
   ComponentRef<import2.NoneComponent> build() {
+    // Child component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
     _compView_0 = ViewNoneComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _NoneComponent_0_5 = import2.NoneComponent();

@@ -19,6 +19,7 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$UsesNativeEvents = const [];
 
+// View for component UsesNativeEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class ViewUsesNativeEvents0 extends AppView<import1.UsesNativeEvents> {
   static import2.ComponentStyles _componentStyles;
   ViewUsesNativeEvents0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -57,6 +58,7 @@ ComponentFactory<import1.UsesNativeEvents> get UsesNativeEventsNgFactory {
 
 final List<dynamic> styles$UsesNativeEventsHost = const [];
 
+// Host for component UsesNativeEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
   ViewUsesNativeEvents0 _compView_0;
   import1.UsesNativeEvents _UsesNativeEvents_0_5;
@@ -68,6 +70,7 @@ class _ViewUsesNativeEventsHost0 extends AppView<import1.UsesNativeEvents> {
 
   @override
   ComponentRef<import1.UsesNativeEvents> build() {
+    // Child component UsesNativeEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
     _compView_0 = ViewUsesNativeEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesNativeEvents_0_5 = import1.UsesNativeEvents();
@@ -93,6 +96,7 @@ AppView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0() {
 
 final List<dynamic> styles$UsesAngularEvents = const [];
 
+// View for component UsesAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_5;
@@ -109,6 +113,7 @@ class ViewUsesAngularEvents0 extends AppView<import1.UsesAngularEvents> {
   ComponentRef<import1.UsesAngularEvents> build() {
     final _ctx = ctx;
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
     _compView_0 = ViewHasAngularEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
@@ -145,6 +150,7 @@ ComponentFactory<import1.UsesAngularEvents> get UsesAngularEventsNgFactory {
 
 final List<dynamic> styles$UsesAngularEventsHost = const [];
 
+// Host for component UsesAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
   ViewUsesAngularEvents0 _compView_0;
   import1.UsesAngularEvents _UsesAngularEvents_0_5;
@@ -156,6 +162,7 @@ class _ViewUsesAngularEventsHost0 extends AppView<import1.UsesAngularEvents> {
 
   @override
   ComponentRef<import1.UsesAngularEvents> build() {
+    // Child component UsesAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
     _compView_0 = ViewUsesAngularEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _UsesAngularEvents_0_5 = import1.UsesAngularEvents();
@@ -181,6 +188,7 @@ AppView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0() {
 
 final List<dynamic> styles$HasAngularEvents = const [];
 
+// View for component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class ViewHasAngularEvents0 extends AppView<import1.HasAngularEvents> {
   static import2.ComponentStyles _componentStyles;
   ViewHasAngularEvents0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -214,6 +222,7 @@ ComponentFactory<import1.HasAngularEvents> get HasAngularEventsNgFactory {
 
 final List<dynamic> styles$HasAngularEventsHost = const [];
 
+// Host for component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
   ViewHasAngularEvents0 _compView_0;
   import1.HasAngularEvents _HasAngularEvents_0_5;
@@ -225,6 +234,7 @@ class _ViewHasAngularEventsHost0 extends AppView<import1.HasAngularEvents> {
 
   @override
   ComponentRef<import1.HasAngularEvents> build() {
+    // Child component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
     _compView_0 = ViewHasAngularEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasAngularEvents_0_5 = import1.HasAngularEvents();
@@ -250,6 +260,7 @@ AppView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0() {
 
 final List<dynamic> styles$HasManyNativeHostEvents = const [];
 
+// View for component HasManyNativeHostEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class ViewHasManyNativeHostEvents0 extends AppView<import1.HasManyNativeHostEvents> {
   static import2.ComponentStyles _componentStyles;
   ViewHasManyNativeHostEvents0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -290,6 +301,7 @@ ComponentFactory<import1.HasManyNativeHostEvents> get HasManyNativeHostEventsNgF
 
 final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
 
+// Host for component HasManyNativeHostEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHostEvents> {
   ViewHasManyNativeHostEvents0 _compView_0;
   import1.HasManyNativeHostEvents _HasManyNativeHostEvents_0_5;
@@ -301,6 +313,7 @@ class _ViewHasManyNativeHostEventsHost0 extends AppView<import1.HasManyNativeHos
 
   @override
   ComponentRef<import1.HasManyNativeHostEvents> build() {
+    // Child component HasManyNativeHostEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
     _compView_0 = ViewHasManyNativeHostEvents0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _HasManyNativeHostEvents_0_5 = import1.HasManyNativeHostEvents();

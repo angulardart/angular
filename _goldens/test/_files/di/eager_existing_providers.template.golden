@@ -19,6 +19,7 @@ import 'package:angular/src/di/errors.dart' as import9;
 
 final List<dynamic> styles$AppComponent = const [];
 
+// View for component AppComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class ViewAppComponent0 extends AppView<import1.AppComponent> {
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
@@ -36,10 +37,12 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   @override
   ComponentRef<import1.AppComponent> build() {
     final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     parentRenderNode.append(_el_0);
     _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    // Child component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
     _compView_1 = ViewInjectsServicesComponent0(this, 1);
     final _el_1 = _compView_1.rootEl;
     _InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(_ProvidesServicesComponent_0_5, _ProvidesServicesComponent_0_5);
@@ -87,6 +90,7 @@ ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
 
 final List<dynamic> styles$AppComponentHost = const [];
 
+// Host for component AppComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   ViewAppComponent0 _compView_0;
   import1.AppComponent _AppComponent_0_5;
@@ -98,6 +102,7 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
+    // Child component AppComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
     _compView_0 = ViewAppComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _AppComponent_0_5 = import1.AppComponent();
@@ -123,6 +128,7 @@ AppView<import1.AppComponent> viewFactory_AppComponentHost0() {
 
 final List<dynamic> styles$ProvidesServicesComponent = const [];
 
+// View for component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidesServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -157,6 +163,7 @@ ComponentFactory<import1.ProvidesServicesComponent> get ProvidesServicesComponen
 
 final List<dynamic> styles$ProvidesServicesComponentHost = const [];
 
+// Host for component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServicesComponent> {
   ViewProvidesServicesComponent0 _compView_0;
   import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
@@ -168,6 +175,7 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
 
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
+    // Child component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
     _compView_0 = ViewProvidesServicesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
@@ -201,6 +209,7 @@ AppView<import1.ProvidesServicesComponent> viewFactory_ProvidesServicesComponent
 
 final List<dynamic> styles$InjectsServicesComponent = const [];
 
+// View for component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
@@ -234,6 +243,7 @@ ComponentFactory<import1.InjectsServicesComponent> get InjectsServicesComponentN
 
 final List<dynamic> styles$InjectsServicesComponentHost = const [];
 
+// Host for component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
 class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServicesComponent> {
   ViewInjectsServicesComponent0 _compView_0;
   import1.InjectsServicesComponent _InjectsServicesComponent_0_5;
@@ -245,6 +255,7 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
 
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
+    // Child component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
     _compView_0 = ViewInjectsServicesComponent0(this, 0);
     final _el_0 = _compView_0.rootEl;
     _InjectsServicesComponent_0_5 = (import7.isDevMode
