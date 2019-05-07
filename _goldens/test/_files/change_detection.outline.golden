@@ -56,7 +56,7 @@ class NgModelLikeNgCd extends _ng.DirectiveChangeDetector {
   external NgModelLike get instance;
   external void deliverChanges();
   external NgModelLikeNgCd(NgModelLike instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

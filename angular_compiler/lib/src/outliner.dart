@@ -171,7 +171,7 @@ class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {
   external $directiveType get instance;
   external void deliverChanges();
   external $changeDetectorName($directiveType instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 ''');
       }

@@ -45,7 +45,7 @@ class AnotherDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external AnotherDirective get instance;
   external void deliverChanges();
   external AnotherDirectiveNgCd(AnotherDirective instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

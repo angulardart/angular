@@ -131,14 +131,14 @@ class HasProviderNgCd extends _ng.DirectiveChangeDetector {
   external HasProvider get instance;
   external void deliverChanges();
   external HasProviderNgCd(HasProvider instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class HasProviders.
 class HasProvidersNgCd extends _ng.DirectiveChangeDetector {
   external HasProviders get instance;
   external void deliverChanges();
   external HasProvidersNgCd(HasProviders instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

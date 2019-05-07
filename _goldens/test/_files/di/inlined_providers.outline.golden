@@ -50,7 +50,7 @@ class DirectiveProviding$A2$D2NgCd extends _ng.DirectiveChangeDetector {
   external DirectiveProviding$A2$D2 get instance;
   external void deliverChanges();
   external DirectiveProviding$A2$D2NgCd(DirectiveProviding$A2$D2 instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

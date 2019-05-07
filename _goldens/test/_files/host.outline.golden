@@ -39,7 +39,7 @@ class ListensToFooEventNgCd extends _ng.DirectiveChangeDetector {
   external ListensToFooEvent get instance;
   external void deliverChanges();
   external ListensToFooEventNgCd(ListensToFooEvent instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();
