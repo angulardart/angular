@@ -27,7 +27,7 @@ abstract class FileHasher {
 /// less important, and avoiding a cache increases correctness guarantees.
 class FileTracker {
   /// Define a salt to invalidate all hashes on new feature additions etc.
-  static const int salt = 5;
+  static const int salt = 6;
 
   final FileHasher _fileHasher;
   final AngularOptions _options;
