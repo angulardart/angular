@@ -158,7 +158,7 @@ class GenericDirectiveNgCd<T> extends _ng.DirectiveChangeDetector {
   external GenericDirective<T> get instance;
   external void deliverChanges();
   external GenericDirectiveNgCd(GenericDirective<T> instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

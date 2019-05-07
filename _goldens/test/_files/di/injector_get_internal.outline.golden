@@ -38,35 +38,35 @@ class NgFormNgCd extends _ng.DirectiveChangeDetector {
   external NgForm get instance;
   external void deliverChanges();
   external NgFormNgCd(NgForm instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class NgControlName.
 class NgControlNameNgCd extends _ng.DirectiveChangeDetector {
   external NgControlName get instance;
   external void deliverChanges();
   external NgControlNameNgCd(NgControlName instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class NgControlGroup.
 class NgControlGroupNgCd extends _ng.DirectiveChangeDetector {
   external NgControlGroup get instance;
   external void deliverChanges();
   external NgControlGroupNgCd(NgControlGroup instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class RequiredValidator.
 class RequiredValidatorNgCd extends _ng.DirectiveChangeDetector {
   external RequiredValidator get instance;
   external void deliverChanges();
   external RequiredValidatorNgCd(RequiredValidator instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class MaterialInputValueAccessor.
 class MaterialInputValueAccessorNgCd extends _ng.DirectiveChangeDetector {
   external MaterialInputValueAccessor get instance;
   external void deliverChanges();
   external MaterialInputValueAccessorNgCd(MaterialInputValueAccessor instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

@@ -26,7 +26,7 @@ class MessageDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external MessageDirective get instance;
   external void deliverChanges();
   external MessageDirectiveNgCd(MessageDirective instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

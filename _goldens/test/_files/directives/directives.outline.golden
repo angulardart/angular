@@ -21,14 +21,14 @@ class TestDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external TestDirective get instance;
   external void deliverChanges();
   external TestDirectiveNgCd(TestDirective instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 // For @Directive class TestDirectiveWithInputs.
 class TestDirectiveWithInputsNgCd extends _ng.DirectiveChangeDetector {
   external TestDirectiveWithInputs get instance;
   external void deliverChanges();
   external TestDirectiveWithInputsNgCd(TestDirectiveWithInputs instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

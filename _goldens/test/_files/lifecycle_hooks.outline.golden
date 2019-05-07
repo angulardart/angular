@@ -44,7 +44,7 @@ class DoCheckDirectiveNgCd extends _ng.DirectiveChangeDetector {
   external DoCheckDirective get instance;
   external void deliverChanges();
   external DoCheckDirectiveNgCd(DoCheckDirective instance);
-  external void detectHostChanges(_ng.RenderView view, _html.Element node);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
 }
 
 external void initReflector();

@@ -3,6 +3,7 @@ import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
+import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
 import 'package:angular/src/core/change_detection/constants.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
@@ -15,7 +16,6 @@ import 'compile_view.dart' show CompileView, NodeReference;
 import 'constants.dart' show DetectChangesVars;
 import 'ir/view_storage.dart';
 import 'update_statement_visitor.dart' show bindingToUpdateStatement;
-import 'view_compiler_utils.dart' show unwrapDirective, unwrapDirectiveInstance;
 import 'view_name_resolver.dart';
 
 /// For each binding, creates code to update the binding.
@@ -331,27 +331,52 @@ void _bindLiteral(
 // Component or directive level host properties are change detected inside
 // the component itself inside detectHostChanges method, no need to
 // generate code at call-site.
-void bindDirectiveHostProps(DirectiveAst directiveAst,
-    o.Expression directiveInstance, CompileElement compileElement) {
-  if (!directiveAst.hasHostProperties) return;
-  var directive = directiveAst.directive;
-  o.Expression callDetectHostPropertiesExpr;
-  if (directive.isComponent) {
-    final target = compileElement.componentView;
-    callDetectHostPropertiesExpr =
-        target.callMethod('detectHostChanges', [DetectChangesVars.firstCheck]);
-  } else {
-    if (unwrapDirectiveInstance(directiveInstance) == null) return;
-    final target = unwrapDirective(directiveInstance);
-    callDetectHostPropertiesExpr = target.callMethod('detectHostChanges', [
-      compileElement.component != null
-          ? compileElement.componentView
-          : o.THIS_EXPR,
-      compileElement.renderNode.toReadExpr()
-    ]);
+void bindDirectiveHostProps(
+  DirectiveAst directiveAst,
+  o.Expression directiveInstance,
+  CompileElement compileElement,
+) {
+  if (!directiveAst.hasHostProperties) {
+    return;
   }
-  compileElement.view.detectChangesRenderPropertiesMethod
-      .addStmt(callDetectHostPropertiesExpr.toStmt());
+  o.Expression detectHostChanges;
+  if (directiveAst.directive.isComponent) {
+    detectHostChanges = compileElement.componentView.callMethod(
+      'detectHostChanges',
+      [DetectChangesVars.firstCheck],
+    );
+  } else {
+    final directive = unwrapDirectiveInstance(directiveInstance);
+    // For @Component-annotated classes that extend @Directive classes, i.e.:
+    //
+    // @Directive(...)
+    // class D {
+    //   @HostBinding()
+    //   ...
+    // }
+    //
+    // @Component(...)
+    // class C extends D {}
+    //
+    // In this case, `directiveInstance` is `Instance of C`, which in case will
+    // not have a  `detectHostChanges()` (if it did, it would have returned true
+    // for `.directive.isComponent` above).
+    if (directive == null) {
+      return;
+    }
+    detectHostChanges = directive.callMethod(
+      'detectHostChanges',
+      [
+        compileElement.component != null
+            ? compileElement.componentView
+            : o.THIS_EXPR,
+        compileElement.renderNode.toReadExpr(),
+      ],
+    );
+  }
+  compileElement.view.detectChangesRenderPropertiesMethod.addStmt(
+    detectHostChanges.toStmt(),
+  );
 }
 
 bool _isPrimitiveFieldType(o.OutputType type) {
