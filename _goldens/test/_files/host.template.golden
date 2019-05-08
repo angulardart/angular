@@ -216,9 +216,9 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     parentRenderNode.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
   }
 
-  bool _handle_tripleclick__($event) {
+  void _handle_tripleclick__($event) {
     final _ctx = ctx;
-    return _ctx.onClickNotSimple($event, _ctx.title);
+    _ctx.onClickNotSimple($event, _ctx.title);
   }
 
   void detectHostChanges(bool firstCheck) {

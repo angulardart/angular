@@ -859,8 +859,7 @@ void _writeComponentHostEventListeners(
         null,
         component,
       );
-      var actionExpr = convertStmtIntoExpression(actionStmts.last);
-      List<o.Statement> stmts = <o.Statement>[o.ReturnStatement(actionExpr)];
+      List<o.Statement> stmts = actionStmts.toList();
       String methodName = '_handle_${sanitizeEventName(eventName)}__';
       view.methods.add(o.ClassMethod(
           methodName,
@@ -868,7 +867,7 @@ void _writeComponentHostEventListeners(
           []
             ..addAll(maybeCachedCtxDeclarationStatement(statements: stmts))
             ..addAll(stmts),
-          o.BOOL_TYPE,
+          null,
           [o.StmtModifier.Private]));
       handlerExpr = o.ReadClassMemberExpr(methodName);
       numArgs = 1;
