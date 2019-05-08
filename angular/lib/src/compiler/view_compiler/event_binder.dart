@@ -91,9 +91,7 @@ class CompileEventListener {
 
   void _finish() {
     if (_isSimple) {
-      final stmts = _method.finish();
-      stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      final returnExpr = convertStmtIntoExpression(stmts.last);
+      final returnExpr = convertStmtIntoExpression(_method.finish().last);
       if (returnExpr is! o.InvokeMethodExpr) {
         final message = "Expected method for event binding.";
         throwFailure(_simpleHostEvent != null
