@@ -822,9 +822,9 @@ class DirectivesResult {
   DirectivesResult.fromCache(this.filename, this.errors)
       : angularTopLevels = const [],
         cacheResult = true;
-  List<AnnotatedClass> get angularAnnotatedClasses => List<AnnotatedClass>.from(
-      angularTopLevels.where((c) => c is AnnotatedClass));
+  List<AnnotatedClass> get angularAnnotatedClasses =>
+      List<AnnotatedClass>.from(angularTopLevels.whereType<AnnotatedClass>());
 
-  List<DirectiveBase> get directives => List<DirectiveBase>.from(
-      angularTopLevels.where((c) => c is DirectiveBase));
+  List<DirectiveBase> get directives =>
+      List<DirectiveBase>.from(angularTopLevels.whereType<DirectiveBase>());
 }
