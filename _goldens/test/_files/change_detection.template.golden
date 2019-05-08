@@ -573,6 +573,200 @@ AppView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0() {
   return _ViewUsesNgModelLikeHost0(null, null);
 }
 
+final List<dynamic> styles$UsesDoCheckOnPushComponent = const [];
+
+// View for component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
+class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushComponent> {
+  ViewDoCheckOnPushComponent0 _compView_0;
+  import1.DoCheckOnPushComponent _DoCheckOnPushComponent_0_5;
+  String _expr_0;
+  static import2.ComponentStyles _componentStyles;
+  ViewUsesDoCheckOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('uses-do-check-on-push');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.UsesDoCheckOnPushComponent> build() {
+    final import6.HtmlElement parentRenderNode = initViewRoot();
+    // Child component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
+    _compView_0 = ViewDoCheckOnPushComponent0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    parentRenderNode.append(_el_0);
+    _DoCheckOnPushComponent_0_5 = import1.DoCheckOnPushComponent();
+    _compView_0.create0(_DoCheckOnPushComponent_0_5);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    bool changed = false;
+    changed = false;
+    final currVal_0 = _ctx.name;
+    if (import9.checkBinding(_expr_0, currVal_0)) {
+      _DoCheckOnPushComponent_0_5.name = currVal_0;
+      changed = true;
+      _expr_0 = currVal_0;
+    }
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
+    if ((!import9.AppViewUtils.throwOnChanges)) {
+      _DoCheckOnPushComponent_0_5.ngDoCheck();
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesDoCheckOnPushComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.UsesDoCheckOnPushComponent> _UsesDoCheckOnPushComponentNgFactory = const ComponentFactory('uses-do-check-on-push', viewFactory_UsesDoCheckOnPushComponentHost0);
+ComponentFactory<import1.UsesDoCheckOnPushComponent> get UsesDoCheckOnPushComponentNgFactory {
+  return _UsesDoCheckOnPushComponentNgFactory;
+}
+
+final List<dynamic> styles$UsesDoCheckOnPushComponentHost = const [];
+
+// Host for component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
+class _ViewUsesDoCheckOnPushComponentHost0 extends AppView<import1.UsesDoCheckOnPushComponent> {
+  ViewUsesDoCheckOnPushComponent0 _compView_0;
+  import1.UsesDoCheckOnPushComponent _UsesDoCheckOnPushComponent_0_5;
+  _ViewUsesDoCheckOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
+  ComponentRef<import1.UsesDoCheckOnPushComponent> build() {
+    // Child component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
+    _compView_0 = ViewUsesDoCheckOnPushComponent0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    _UsesDoCheckOnPushComponent_0_5 = import1.UsesDoCheckOnPushComponent();
+    _compView_0.create(_UsesDoCheckOnPushComponent_0_5, projectedNodes);
+    init1(_el_0);
+    return ComponentRef(this, _el_0, _UsesDoCheckOnPushComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.UsesDoCheckOnPushComponent> viewFactory_UsesDoCheckOnPushComponentHost0() {
+  return _ViewUsesDoCheckOnPushComponentHost0(null, null);
+}
+
+final List<dynamic> styles$DoCheckOnPushComponent = const [];
+
+// View for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
+class ViewDoCheckOnPushComponent0 extends AppView<import1.DoCheckOnPushComponent> {
+  final import10.TextBinding _textBinding_1 = import10.TextBinding();
+  static import2.ComponentStyles _componentStyles;
+  ViewDoCheckOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    initComponentStyles();
+    rootEl = import6.document.createElement('cd-on-push-do-check');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+  }
+
+  @override
+  ComponentRef<import1.DoCheckOnPushComponent> build() {
+    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
+    parentRenderNode.append(_textBinding_1.element);
+    init0();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = ctx;
+    _textBinding_1.updateText(import12.interpolateString0(_ctx.name));
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DoCheckOnPushComponent, _debugComponentUrl))));
+    }
+    componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.DoCheckOnPushComponent> _DoCheckOnPushComponentNgFactory = const ComponentFactory('cd-on-push-do-check', viewFactory_DoCheckOnPushComponentHost0);
+ComponentFactory<import1.DoCheckOnPushComponent> get DoCheckOnPushComponentNgFactory {
+  return _DoCheckOnPushComponentNgFactory;
+}
+
+final List<dynamic> styles$DoCheckOnPushComponentHost = const [];
+
+// Host for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
+class _ViewDoCheckOnPushComponentHost0 extends AppView<import1.DoCheckOnPushComponent> {
+  ViewDoCheckOnPushComponent0 _compView_0;
+  import1.DoCheckOnPushComponent _DoCheckOnPushComponent_0_5;
+  _ViewDoCheckOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+  @override
+  AppView<void> get hostedComponentView {
+    return _compView_0;
+  }
+
+  @override
+  ComponentRef<import1.DoCheckOnPushComponent> build() {
+    // Child component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
+    _compView_0 = ViewDoCheckOnPushComponent0(this, 0);
+    final _el_0 = _compView_0.rootEl;
+    _DoCheckOnPushComponent_0_5 = import1.DoCheckOnPushComponent();
+    _compView_0.create(_DoCheckOnPushComponent_0_5, projectedNodes);
+    init1(_el_0);
+    return ComponentRef(this, _el_0, _DoCheckOnPushComponent_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool changed = false;
+    if (changed) {
+      _compView_0.markAsCheckOnce();
+    }
+    if ((!import9.AppViewUtils.throwOnChanges)) {
+      _DoCheckOnPushComponent_0_5.ngDoCheck();
+    }
+    _compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    _compView_0.destroyInternalState();
+  }
+}
+
+AppView<import1.DoCheckOnPushComponent> viewFactory_DoCheckOnPushComponentHost0() {
+  return _ViewDoCheckOnPushComponentHost0(null, null);
+}
+
 var _visited = false;
 void initReflector() {
   if (_visited) {
@@ -586,5 +780,7 @@ void initReflector() {
   _ngRef.registerComponent(StatefulComponent, StatefulComponentNgFactory);
   _ngRef.registerComponent(DefaultComponent, DefaultComponentNgFactory);
   _ngRef.registerComponent(UsesNgModelLike, UsesNgModelLikeNgFactory);
+  _ngRef.registerComponent(UsesDoCheckOnPushComponent, UsesDoCheckOnPushComponentNgFactory);
+  _ngRef.registerComponent(DoCheckOnPushComponent, DoCheckOnPushComponentNgFactory);
   _ref0.initReflector();
 }

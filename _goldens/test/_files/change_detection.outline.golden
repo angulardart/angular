@@ -51,6 +51,18 @@ external _ng.ComponentFactory<UsesNgModelLike> get UsesNgModelLikeNgFactory;
 class ViewUsesNgModelLike0 extends _ng.AppView<UsesNgModelLike> {
   external ViewUsesNgModelLike0(_ng.RenderView parentView, int parentIndex);
 }
+// For @Component class UsesDoCheckOnPushComponent.
+external List<dynamic> get styles$UsesDoCheckOnPushComponent;
+external _ng.ComponentFactory<UsesDoCheckOnPushComponent> get UsesDoCheckOnPushComponentNgFactory;
+class ViewUsesDoCheckOnPushComponent0 extends _ng.AppView<UsesDoCheckOnPushComponent> {
+  external ViewUsesDoCheckOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+}
+// For @Component class DoCheckOnPushComponent.
+external List<dynamic> get styles$DoCheckOnPushComponent;
+external _ng.ComponentFactory<DoCheckOnPushComponent> get DoCheckOnPushComponentNgFactory;
+class ViewDoCheckOnPushComponent0 extends _ng.AppView<DoCheckOnPushComponent> {
+  external ViewDoCheckOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+}
 // For @Directive class NgModelLike.
 class NgModelLikeNgCd extends _ng.DirectiveChangeDetector {
   external NgModelLike get instance;

@@ -69,3 +69,25 @@ class NgModelLike implements AfterChanges, OnInit {
   @override
   void ngOnInit() {}
 }
+
+@Component(
+  selector: 'uses-do-check-on-push',
+  template: '<cd-on-push-do-check [name]="name"></cd-on-push-do-check>',
+  directives: [DoCheckOnPushComponent],
+)
+class UsesDoCheckOnPushComponent {
+  String name;
+}
+
+@Component(
+  selector: 'cd-on-push-do-check',
+  template: 'Name: {{name}}',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class DoCheckOnPushComponent implements DoCheck {
+  @Input()
+  String name;
+
+  @override
+  void ngDoCheck() {}
+}
