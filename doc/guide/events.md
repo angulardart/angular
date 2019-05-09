@@ -1,4 +1,4 @@
-# Custom Events
+# Custom Events with `@Output`
 
 
 A `@Directive` or `@Component` may define _custom_ events, or _outputs_, that
