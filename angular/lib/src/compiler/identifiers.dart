@@ -131,8 +131,6 @@ class Identifiers {
       name: "ChangeDetectorState", moduleUrl: _cdModuleUrl);
   static final checkBinding = CompileIdentifierMetadata(
       name: "checkBinding", moduleUrl: _appViewUtilsModuleUrl);
-  static final createText = CompileIdentifierMetadata(
-      name: "createText", moduleUrl: _appViewModuleUrl);
   static final devModeEqual =
       CompileIdentifierMetadata(name: "devModeEqual", moduleUrl: _cdModuleUrl);
   static final identical = CompileIdentifierMetadata(name: "identical");
