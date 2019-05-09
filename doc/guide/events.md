@@ -84,7 +84,7 @@ class ExampleView {
 
 While not obvious, `StreamController<Type>.broadcast()` should **always** be
 used over the default constructor (`StreamController<Type>()`). A non-broadcast
-stream is meant to be used I/O purposes, and has several contracts that are
+stream is meant to be used for I/O purposes, and has several contracts that are
 either incompatible or can cause serious issues within AngularDart:
 
 *   All events are buffered until the first subscriber (e.g. can leak memory).
