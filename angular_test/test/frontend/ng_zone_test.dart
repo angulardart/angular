@@ -11,7 +11,7 @@ void main() {
     FakeTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
-      final timerZone = new TimerHookZone();
+      final timerZone = TimerHookZone();
       ngZone = timerZone.run(() => NgZone(enableLongStackTrace: true));
       stabilizer = FakeTimeNgZoneStabilizer(timerZone, ngZone);
     });
@@ -199,7 +199,7 @@ void main() {
     RealTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
-      final timerZone = new TimerHookZone();
+      final timerZone = TimerHookZone();
       ngZone = timerZone.run(() => NgZone(enableLongStackTrace: true));
       stabilizer = RealTimeNgZoneStabilizer(timerZone, ngZone);
     });

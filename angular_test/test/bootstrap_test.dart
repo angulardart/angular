@@ -91,7 +91,7 @@ void main() {
     final test = await bootstrapForTest(ng_generated.AddProvidersNgFactory,
         host, ([i]) => Injector.map({TestService: TestService()}, i),
         beforeComponentCreated: (injector) =>
-            new Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
+            Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
               testService = injector.get(TestService);
               testService.count++;
             }),

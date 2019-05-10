@@ -103,7 +103,7 @@ void main() {
 
 /// This base type serves as a trigger for any runtime type errors.
 abstract class IO<T> {
-  final _controller = new StreamController<T>();
+  final _controller = StreamController<T>();
 
   @Input()
   set input(T value) {

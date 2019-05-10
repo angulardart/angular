@@ -95,7 +95,7 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
 
       if (++totalIterations > _maxIterations) {
         final willNeverComplete = pendingTimers.toList().where(shouldComplete);
-        throw new StateError(
+        throw StateError(
           'Timers will never complete: ${willNeverComplete.toList()}',
         );
       }

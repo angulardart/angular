@@ -1236,7 +1236,7 @@ class CompileView {
     final cancelHandlerName = '_cancelDeferredLoad${targetElement.nodeIndex}';
     storage.allocate(
       cancelHandlerName,
-      outputType: new o.FunctionType(o.VOID_TYPE, []),
+      outputType: o.FunctionType(o.VOID_TYPE, []),
     );
     _createMethod.addStmt(
       o.ReadClassMemberExpr(cancelHandlerName).set(deferredLoadExpr).toStmt(),

@@ -312,7 +312,7 @@ class HtmlTreeConverter {
     }
     for (final node in asts) {
       final convertedNode =
-          node.accept(new _HtmlTreeConverterVisitor(this), parent);
+          node.accept(_HtmlTreeConverterVisitor(this), parent);
       if (convertedNode != null) {
         parent.childNodes.add(convertedNode);
       }
@@ -412,8 +412,7 @@ class HtmlTreeConverter {
       StandaloneTemplateAst node, ElementInfo parent) {
     final children = <NodeInfo>[];
     for (final child in node.childNodes) {
-      final childNode =
-          child.accept(new _HtmlTreeConverterVisitor(this), parent);
+      final childNode = child.accept(_HtmlTreeConverterVisitor(this), parent);
       if (childNode != null) {
         children.add(childNode);
         if (childNode is ElementInfo) {

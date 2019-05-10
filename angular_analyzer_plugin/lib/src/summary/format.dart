@@ -98,7 +98,7 @@ class LinkedDartSummaryBuilder extends Object
   }
 
   List<int> toBuffer() {
-    fb.Builder fbBuilder = new fb.Builder();
+    fb.Builder fbBuilder = fb.Builder();
     return fbBuilder.finish(finish(fbBuilder), "APLD");
   }
 
@@ -136,7 +136,7 @@ class LinkedDartSummaryBuilder extends Object
 }
 
 idl.LinkedDartSummary readLinkedDartSummary(List<int> buffer) {
-  fb.BufferContext rootRef = new fb.BufferContext.fromBytes(buffer);
+  fb.BufferContext rootRef = fb.BufferContext.fromBytes(buffer);
   return const _LinkedDartSummaryReader().read(rootRef, 0);
 }
 
@@ -145,7 +145,7 @@ class _LinkedDartSummaryReader extends fb.TableReader<_LinkedDartSummaryImpl> {
 
   @override
   _LinkedDartSummaryImpl createObject(fb.BufferContext bc, int offset) =>
-      new _LinkedDartSummaryImpl(bc, offset);
+      _LinkedDartSummaryImpl(bc, offset);
 }
 
 class _LinkedDartSummaryImpl extends Object
@@ -279,7 +279,7 @@ class LinkedHtmlSummaryBuilder extends Object
   }
 
   List<int> toBuffer() {
-    fb.Builder fbBuilder = new fb.Builder();
+    fb.Builder fbBuilder = fb.Builder();
     return fbBuilder.finish(finish(fbBuilder), "APLH");
   }
 
@@ -306,7 +306,7 @@ class LinkedHtmlSummaryBuilder extends Object
 }
 
 idl.LinkedHtmlSummary readLinkedHtmlSummary(List<int> buffer) {
-  fb.BufferContext rootRef = new fb.BufferContext.fromBytes(buffer);
+  fb.BufferContext rootRef = fb.BufferContext.fromBytes(buffer);
   return const _LinkedHtmlSummaryReader().read(rootRef, 0);
 }
 
@@ -315,7 +315,7 @@ class _LinkedHtmlSummaryReader extends fb.TableReader<_LinkedHtmlSummaryImpl> {
 
   @override
   _LinkedHtmlSummaryImpl createObject(fb.BufferContext bc, int offset) =>
-      new _LinkedHtmlSummaryImpl(bc, offset);
+      _LinkedHtmlSummaryImpl(bc, offset);
 }
 
 class _LinkedHtmlSummaryImpl extends Object
@@ -406,7 +406,7 @@ class PackageBundleBuilder extends Object
   }
 
   List<int> toBuffer() {
-    fb.Builder fbBuilder = new fb.Builder();
+    fb.Builder fbBuilder = fb.Builder();
     return fbBuilder.finish(finish(fbBuilder), "APdl");
   }
 
@@ -425,7 +425,7 @@ class PackageBundleBuilder extends Object
 }
 
 idl.PackageBundle readPackageBundle(List<int> buffer) {
-  fb.BufferContext rootRef = new fb.BufferContext.fromBytes(buffer);
+  fb.BufferContext rootRef = fb.BufferContext.fromBytes(buffer);
   return const _PackageBundleReader().read(rootRef, 0);
 }
 
@@ -434,7 +434,7 @@ class _PackageBundleReader extends fb.TableReader<_PackageBundleImpl> {
 
   @override
   _PackageBundleImpl createObject(fb.BufferContext bc, int offset) =>
-      new _PackageBundleImpl(bc, offset);
+      _PackageBundleImpl(bc, offset);
 }
 
 class _PackageBundleImpl extends Object
@@ -585,7 +585,7 @@ class _SummarizedAnalysisErrorReader
 
   @override
   _SummarizedAnalysisErrorImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedAnalysisErrorImpl(bc, offset);
+      _SummarizedAnalysisErrorImpl(bc, offset);
 }
 
 class _SummarizedAnalysisErrorImpl extends Object
@@ -742,7 +742,7 @@ class _SummarizedAnalysisErrorFromPathReader
   @override
   _SummarizedAnalysisErrorFromPathImpl createObject(
           fb.BufferContext bc, int offset) =>
-      new _SummarizedAnalysisErrorFromPathImpl(bc, offset);
+      _SummarizedAnalysisErrorFromPathImpl(bc, offset);
 }
 
 class _SummarizedAnalysisErrorFromPathImpl extends Object
@@ -889,7 +889,7 @@ class _SummarizedBindableReader
 
   @override
   _SummarizedBindableImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedBindableImpl(bc, offset);
+      _SummarizedBindableImpl(bc, offset);
 }
 
 class _SummarizedBindableImpl extends Object
@@ -1110,7 +1110,7 @@ class _SummarizedClassAnnotationsReader
   @override
   _SummarizedClassAnnotationsImpl createObject(
           fb.BufferContext bc, int offset) =>
-      new _SummarizedClassAnnotationsImpl(bc, offset);
+      _SummarizedClassAnnotationsImpl(bc, offset);
 }
 
 class _SummarizedClassAnnotationsImpl extends Object
@@ -1310,7 +1310,7 @@ class _SummarizedContentChildFieldReader
   @override
   _SummarizedContentChildFieldImpl createObject(
           fb.BufferContext bc, int offset) =>
-      new _SummarizedContentChildFieldImpl(bc, offset);
+      _SummarizedContentChildFieldImpl(bc, offset);
 }
 
 class _SummarizedContentChildFieldImpl extends Object
@@ -1769,7 +1769,7 @@ class _SummarizedDirectiveReader
 
   @override
   _SummarizedDirectiveImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedDirectiveImpl(bc, offset);
+      _SummarizedDirectiveImpl(bc, offset);
 }
 
 class _SummarizedDirectiveImpl extends Object
@@ -2096,7 +2096,7 @@ class _SummarizedDirectiveUseReader
 
   @override
   _SummarizedDirectiveUseImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedDirectiveUseImpl(bc, offset);
+      _SummarizedDirectiveUseImpl(bc, offset);
 }
 
 class _SummarizedDirectiveUseImpl extends Object
@@ -2250,7 +2250,7 @@ class _SummarizedExportedIdentifierReader
   @override
   _SummarizedExportedIdentifierImpl createObject(
           fb.BufferContext bc, int offset) =>
-      new _SummarizedExportedIdentifierImpl(bc, offset);
+      _SummarizedExportedIdentifierImpl(bc, offset);
 }
 
 class _SummarizedExportedIdentifierImpl extends Object
@@ -2400,7 +2400,7 @@ class _SummarizedNgContentReader
 
   @override
   _SummarizedNgContentImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedNgContentImpl(bc, offset);
+      _SummarizedNgContentImpl(bc, offset);
 }
 
 class _SummarizedNgContentImpl extends Object
@@ -2553,7 +2553,7 @@ class _SummarizedPipeReader extends fb.TableReader<_SummarizedPipeImpl> {
 
   @override
   _SummarizedPipeImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedPipeImpl(bc, offset);
+      _SummarizedPipeImpl(bc, offset);
 }
 
 class _SummarizedPipeImpl extends Object
@@ -2708,7 +2708,7 @@ class _SummarizedPipesUseReader
 
   @override
   _SummarizedPipesUseImpl createObject(fb.BufferContext bc, int offset) =>
-      new _SummarizedPipesUseImpl(bc, offset);
+      _SummarizedPipesUseImpl(bc, offset);
 }
 
 class _SummarizedPipesUseImpl extends Object
@@ -2867,7 +2867,7 @@ class UnlinkedDartSummaryBuilder extends Object
   }
 
   List<int> toBuffer() {
-    fb.Builder fbBuilder = new fb.Builder();
+    fb.Builder fbBuilder = fb.Builder();
     return fbBuilder.finish(finish(fbBuilder), "APUD");
   }
 
@@ -2910,7 +2910,7 @@ class UnlinkedDartSummaryBuilder extends Object
 }
 
 idl.UnlinkedDartSummary readUnlinkedDartSummary(List<int> buffer) {
-  fb.BufferContext rootRef = new fb.BufferContext.fromBytes(buffer);
+  fb.BufferContext rootRef = fb.BufferContext.fromBytes(buffer);
   return const _UnlinkedDartSummaryReader().read(rootRef, 0);
 }
 
@@ -2920,7 +2920,7 @@ class _UnlinkedDartSummaryReader
 
   @override
   _UnlinkedDartSummaryImpl createObject(fb.BufferContext bc, int offset) =>
-      new _UnlinkedDartSummaryImpl(bc, offset);
+      _UnlinkedDartSummaryImpl(bc, offset);
 }
 
 class _UnlinkedDartSummaryImpl extends Object
@@ -3037,7 +3037,7 @@ class UnlinkedHtmlSummaryBuilder extends Object
   }
 
   List<int> toBuffer() {
-    fb.Builder fbBuilder = new fb.Builder();
+    fb.Builder fbBuilder = fb.Builder();
     return fbBuilder.finish(finish(fbBuilder), "APUH");
   }
 
@@ -3056,7 +3056,7 @@ class UnlinkedHtmlSummaryBuilder extends Object
 }
 
 idl.UnlinkedHtmlSummary readUnlinkedHtmlSummary(List<int> buffer) {
-  fb.BufferContext rootRef = new fb.BufferContext.fromBytes(buffer);
+  fb.BufferContext rootRef = fb.BufferContext.fromBytes(buffer);
   return const _UnlinkedHtmlSummaryReader().read(rootRef, 0);
 }
 
@@ -3066,7 +3066,7 @@ class _UnlinkedHtmlSummaryReader
 
   @override
   _UnlinkedHtmlSummaryImpl createObject(fb.BufferContext bc, int offset) =>
-      new _UnlinkedHtmlSummaryImpl(bc, offset);
+      _UnlinkedHtmlSummaryImpl(bc, offset);
 }
 
 class _UnlinkedHtmlSummaryImpl extends Object
