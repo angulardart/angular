@@ -45,7 +45,7 @@ Injector appInjector(
     ApplicationRef: () => applicationRef,
     AppViewUtils: () => appViewUtils,
     NgZone: () => ngZone,
-    Testability: () => new Testability(ngZone),
+    Testability: () => Testability(ngZone),
   }, unsafeCast(minimalInjector));
 
   // These are the user-provided overrides.

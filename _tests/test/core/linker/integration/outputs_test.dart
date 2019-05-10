@@ -224,7 +224,7 @@ class TestPreventDefaultComponent {}
 )
 class OutputComponent {
   @Output()
-  Stream<String> output = new Stream.empty();
+  Stream<String> output = Stream.empty();
 }
 
 @Component(

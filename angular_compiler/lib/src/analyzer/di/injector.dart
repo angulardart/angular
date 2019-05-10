@@ -316,7 +316,7 @@ class InjectorReader {
           .map((a) => _reviveAny(provider, a))
           .toList();
       final namedArgs = invocation.namedArguments
-          .map((name, a) => new MapEntry(name, _reviveAny(provider, a)));
+          .map((name, a) => MapEntry(name, _reviveAny(provider, a)));
       final clazz = refer(name, '$import');
       if (invocation.accessor.isNotEmpty) {
         return clazz.constInstanceNamed(

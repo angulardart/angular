@@ -7,7 +7,7 @@ import 'package:angular/angular.dart';
   template: '',
 )
 class GenericComponent<T> {
-  final _controller = new StreamController<T>();
+  final _controller = StreamController<T>();
 
   @Input()
   set input(T value) {
