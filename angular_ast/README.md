@@ -3,7 +3,7 @@
 <!-- Badges -->
 
 [![Pub
-Package](https://img.shields.io/pub/v/angular_ast.svg)](https://pub.dartlang.org/packages/angular_ast)
+Package](https://img.shields.io/pub/v/angular_ast.svg)](https://pub.dev/packages/angular_ast)
 
 Parser and utilities for [AngularDart][gh_angular_dart] templates.
 

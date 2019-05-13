@@ -1,8 +1,8 @@
 /// Configuration for using `package:build`-compatible build systems.
 ///
 /// See:
-/// * [build_runner](https://pub.dartlang.org/packages/build_runner)
-/// * [_bazel_codegen](https://pub.dartlang.org/packages/_bazel_codegen)
+/// * [build_runner](https://pub.dev/packages/build_runner)
+/// * [_bazel_codegen](https://pub.dev/packages/_bazel_codegen)
 ///
 /// This library is **not** intended to be imported by typical end-users unless
 /// you are creating a custom compilation pipeline. See documentation for
