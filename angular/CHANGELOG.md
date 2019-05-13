@@ -374,7 +374,7 @@
     Note that internationalization in templates currently only supports messages
     with static text and HTML. See the [example][i18n_example] for more details.
 
-[intl]: https://pub.dartlang.org/packages/intl
+[intl]: https://pub.dev/packages/intl
 [i18n_example]: https://github.com/dart-lang/angular/blob/master/examples/i18n
 
 ### Bug fixes
@@ -514,9 +514,8 @@ this release is not compatible with older versions of Dart 1.XX. Additionally:
 *   _Dartium_ is no longer supported. Instead, use the new
     [DartDevCompiler](https://webdev.dartlang.org/tools/dartdevc)
 *   Pub _transformers_ are no longer used. Instead, use the new
-    [webdev](https://pub.dartlang.org/packages/webdev) CLI, or, for advanced
-    users, the [build_runner](https://pub.dartlang.org/packages/build_runner)
-    CLI.
+    [webdev](https://pub.dev/packages/webdev) CLI, or, for advanced users, the
+    [build_runner](https://pub.dev/packages/build_runner) CLI.
 
 More details of
 [changes to Dart 2 for web users](https://webdev.dartlang.org/dart-2) are

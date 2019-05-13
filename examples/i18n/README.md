@@ -178,9 +178,9 @@ are locked to the locale in which they're initialized.  If you wish to change
 the locale of `@i18n`-annotated messages after calling `runApp()`, a full reload
 is required.
 
-[angular_components]: https://pub.dartlang.org/packages/angular_components
+[angular_components]: https://pub.dev/packages/angular_components
 [app_component.html]: https://github.com/dart-lang/angular/blob/master/examples/i18n/lib/app_component.html
-[intl]: https://pub.dartlang.org/packages/intl
-[intl_find_system_locale]: https://pub.dartlang.org/documentation/intl/latest/intl_browser/findSystemLocale.html
-[intl_message]: https://pub.dartlang.org/documentation/intl/latest/intl/Intl/message.html
-[intl_translation]: https://pub.dartlang.org/packages/intl_translation
+[intl]: https://pub.dev/packages/intl
+[intl_find_system_locale]: https://pub.dev/documentation/intl/latest/intl_browser/findSystemLocale.html
+[intl_message]: https://pub.dev/documentation/intl/latest/intl/Intl/message.html
+[intl_translation]: https://pub.dev/packages/intl_translation

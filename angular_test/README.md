@@ -18,9 +18,9 @@ Documentation and examples:
 
 **NOTE**: Some of the guides above are out of date the for the latest `angular_test` versions.
 
-[pub_angular_test]: https://pub.dartlang.org/packages/angular_test
-[pub_test]: https://pub.dartlang.org/packages/test
-[build_runner]: https://pub.dartlang.org/packages/build_runner
+[pub_angular_test]: https://pub.dev/packages/angular_test
+[pub_test]: https://pub.dev/packages/test
+[build_runner]: https://pub.dev/packages/build_runner
 [test_folder]: https://github.com/dart-lang/angular/tree/master/_tests/test
 [webdev_angular]: https://webdev.dartlang.org/angular
 [webdev_testing]: https://webdev.dartlang.org/angular/guide/testing/component

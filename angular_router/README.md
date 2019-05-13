@@ -21,7 +21,7 @@ the next as users perform application tasks.
 [dartdoc]: https://www.dartdocs.org/documentation/angular_router/latest
 [Gitter chat room]: https://gitter.im/dart-lang/angular
 [mailing list]: https://groups.google.com/a/dartlang.org/forum/#!forum/web
-[pub_angular_router]: https://pub.dartlang.org/packages/angular_router
+[pub_angular_router]: https://pub.dev/packages/angular_router
 [router issues]: https://github.com/dart-lang/angular/issues?q=is%3Aopen+is%3Aissue+label%3A%22area%3A+router%22
 [source code]: https://github.com/dart-lang/angular
 [webdev_angular]: https://webdev.dartlang.org/angular
