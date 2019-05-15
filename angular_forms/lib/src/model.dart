@@ -18,6 +18,7 @@ AbstractControl _find(AbstractControl control, List<String> path) {
   });
 }
 
+@optionalTypeArgs
 abstract class AbstractControl<T> {
   /// Indicates that a Control is valid, i.e. that no errors exist in the input
   /// value.
@@ -535,6 +536,7 @@ class ControlGroup extends AbstractControlGroup<Map<String, dynamic>> {
 
 /// Generic control group that allows creating your own group that is backed
 /// by a value that is not a Map.
+@optionalTypeArgs
 abstract class AbstractControlGroup<T> extends AbstractControl<T> {
   final Map<String, AbstractControl> controls;
 
