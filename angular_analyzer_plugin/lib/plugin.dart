@@ -237,10 +237,9 @@ class AngularAnalyzerPlugin extends ServerPlugin
       return;
     }
 
-    AngularNavigation(driver.contentOverlay)
-      ..computeNavigation(
-          AngularNavigationRequest(filename, null, null, result), collector,
-          templatesOnly: isHtml);
+    AngularNavigation(driver.contentOverlay).computeNavigation(
+        AngularNavigationRequest(filename, null, null, result), collector,
+        templatesOnly: isHtml);
     collector.createRegions();
     channel.sendNotification(plugin.AnalysisNavigationParams(
             filename, collector.regions, collector.targets, collector.files)
