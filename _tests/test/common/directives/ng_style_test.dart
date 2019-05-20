@@ -12,12 +12,6 @@ void main() {
   group('ngStyle', () {
     tearDown(() => disposeAnyRunningTest());
 
-    test('should add styles specified in an map literal', () async {
-      var testBed = NgTestBed<MapLiteralTest>();
-      var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      expect(content.style.maxWidth, '40px');
-    });
     test('should update styles specified in an map literal', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -31,6 +25,7 @@ void main() {
       });
       expect(content.style.maxWidth, '30%');
     });
+
     test('should remove styles when deleting a key in a map literal', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -44,6 +39,7 @@ void main() {
       });
       expect(content.style.maxWidth, '');
     });
+
     test('should cooperate with the style attribute', () async {
       var testBed = NgTestBed<MapUpdateWithDefaultTest>();
       var testFixture = await testBed.create();
@@ -59,6 +55,7 @@ void main() {
       expect(content.style.maxWidth, '');
       expect(content.style.fontSize, '12px');
     });
+
     test('should cooperate with the style.[styleName]="expr" special-case',
         () async {
       var testBed = NgTestBed<MapUpdateWithStyleExprTest>();
@@ -77,13 +74,6 @@ void main() {
     });
   });
 }
-
-@Component(
-  selector: 'map-literal-test',
-  directives: [NgStyle],
-  template: '<div [ngStyle]="{\'max-width\': \'40px\'}"></div>',
-)
-class MapLiteralTest {}
 
 @Component(
   selector: 'map-update-test',

@@ -63,21 +63,6 @@ class Comp4 {
   var b = Duration(seconds: 2);
 }
 
-// Dynamic :(
-//
-// Compiles to:
-//   "Map<String, dynamic> Function(dynamic) _map_0;"
-//   "_map_0 = import6.pureProxy1((p0) => {'1': p0}))"
-// ...
-//   "_map_0(_ctx.b).values.first.inMilliseconds"
-@Component(
-  selector: 'comp-5',
-  template: '{{{"1": b}.values.first.inMilliseconds}}}',
-)
-class Comp5 {
-  var v = Duration(seconds: 1);
-}
-
 // OK!
 //
 // Compiles to:
