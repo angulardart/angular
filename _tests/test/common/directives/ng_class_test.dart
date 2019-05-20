@@ -28,12 +28,7 @@ void main() {
       expect(
           testFixture.rootElement.querySelector('div').classes, equals(['1']));
     });
-    test('should add classes specified in a map literal', () async {
-      var testBed = NgTestBed<MapLiteralTest>();
-      var testFixture = await testBed.create();
-      expect(testFixture.rootElement.querySelector('div').classes,
-          equals(['foo']));
-    });
+
     test('should add classes specified in map without change in class names',
         () async {
       var testBed = NgTestBed<ClassWithNames>();
@@ -41,6 +36,7 @@ void main() {
       expect(testFixture.rootElement.querySelector('div').classes,
           equals(['foo-bar', 'fooBar']));
     });
+
     test('should update classes based on changes in map values', () async {
       var testBed = NgTestBed<ConditionMapTest>();
       var testFixture = await testBed.create();
@@ -51,6 +47,7 @@ void main() {
       });
       expect(content.classes, equals(['bar']));
     });
+
     test('should update classes based on changes to the map', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -69,6 +66,7 @@ void main() {
       });
       expect(content.classes, equals(['foo', 'baz']));
     });
+
     test('should update classes based on reference changes to the map',
         () async {
       var testBed = NgTestBed<MapUpdateTest>();
@@ -84,6 +82,7 @@ void main() {
       });
       expect(content.classes, equals(['baz']));
     });
+
     test('should remove classes when expression is null', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -98,6 +97,7 @@ void main() {
       });
       expect(content.classes, equals(['bar']));
     });
+
     test('should allow multiple classes per expression', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -111,6 +111,7 @@ void main() {
       });
       expect(content.classes, equals(['bar1', 'baz1']));
     });
+
     test('should split by one or more spaces between classes', () async {
       var testBed = NgTestBed<MapUpdateTest>();
       var testFixture = await testBed.create();
@@ -120,12 +121,14 @@ void main() {
       });
       expect(content.classes, equals(['foo', 'bar', 'baz']));
     });
+
     test('should add classes specified in a list literal', () async {
       var testBed = NgTestBed<ListLiteralTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.classes, equals(['foo', 'bar', 'foo-bar', 'fooBar']));
     });
+
     test('should update classes based on changes to the list', () async {
       var testBed = NgTestBed<ListUpdateTest>();
       var testFixture = await testBed.create();
@@ -144,6 +147,7 @@ void main() {
       });
       expect(content.classes, equals(['foo']));
     });
+
     test('should update classes when list reference changes', () async {
       var testBed = NgTestBed<ListUpdateTest>();
       var testFixture = await testBed.create();
@@ -154,6 +158,7 @@ void main() {
       });
       expect(content.classes, equals(['bar']));
     });
+
     test('should take initial classes into account when a reference changes',
         () async {
       var testBed = NgTestBed<ListUpdateWithInitialTest>();
@@ -165,6 +170,7 @@ void main() {
       });
       expect(content.classes, equals(['foo', 'bar']));
     });
+
     test('should ignore empty or blank class names', () async {
       var testBed = NgTestBed<ListUpdateWithInitialTest>();
       var testFixture = await testBed.create();
@@ -174,6 +180,7 @@ void main() {
       });
       expect(content.classes, equals(['foo']));
     });
+
     test('should trim blanks from class names', () async {
       var testBed = NgTestBed<ListUpdateWithInitialTest>();
       var testFixture = await testBed.create();
@@ -183,6 +190,7 @@ void main() {
       });
       expect(content.classes, equals(['foo', 'bar']));
     });
+
     test('should allow multiple classes per item in lists', () async {
       var testBed = NgTestBed<ListUpdateTest>();
       var testFixture = await testBed.create();
@@ -197,6 +205,7 @@ void main() {
       });
       expect(content.classes, equals(['foo', 'bar', 'baz', 'foobar']));
     });
+
     test('should update classes if the set instance changes', () async {
       var testBed = NgTestBed<SetUpdateTest>();
       var testFixture = await testBed.create();
@@ -214,12 +223,14 @@ void main() {
       });
       expect(content.classes, equals(['baz']));
     });
+
     test('should add classes specified in a string literal', () async {
       var testBed = NgTestBed<StringLiteralTest>();
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       expect(content.classes, equals(['foo', 'bar', 'foo-bar', 'fooBar']));
     });
+
     test('should update classes based on changes to the string', () async {
       var testBed = NgTestBed<StringUpdateTest>();
       var testFixture = await testBed.create();
@@ -234,6 +245,7 @@ void main() {
       });
       expect(content.classes, equals(['baz']));
     });
+
     test('should remove active classes when switching from string to null',
         () async {
       var testBed = NgTestBed<StringUpdateTest>();
@@ -245,6 +257,7 @@ void main() {
       });
       expect(content.classes, isEmpty);
     });
+
     test(
         'should take initial classes into account when '
         'switching from string to null', () async {
@@ -257,6 +270,7 @@ void main() {
       });
       expect(content.classes, equals(['foo']));
     });
+
     test('should ignore empty and blank strings', () async {
       var testBed = NgTestBed<StringUpdateWithInitialTest>();
       var testFixture = await testBed.create();
@@ -266,6 +280,7 @@ void main() {
       });
       expect(content.classes, equals(['foo']));
     });
+
     test('should cooperate with the class attribute', () async {
       var testBed = NgTestBed<MapUpdateWithInitialTest>();
       var testFixture = await testBed.create();
@@ -283,6 +298,7 @@ void main() {
       });
       expect(content.classes, equals(['init', 'foo']));
     });
+
     test('should cooperate with interpolated class attribute', () async {
       var testBed = NgTestBed<MapUpdateWithInitialInterpolationTest>();
       var testFixture = await testBed.create();
@@ -303,6 +319,7 @@ void main() {
       });
       expect(content.classes, equals(['init', 'foo']));
     });
+
     test('should cooperate with class attribute and binding to it', () async {
       var testBed = NgTestBed<MapUpdateWithInitialBindingTest>();
       var testFixture = await testBed.create();
@@ -320,6 +337,7 @@ void main() {
       });
       expect(content.classes, equals(['init', 'foo']));
     });
+
     test('should cooperate with class attribute and class.name binding',
         () async {
       var testBed = NgTestBed<MapUpdateWithConditionBindingTest>();
@@ -339,6 +357,7 @@ void main() {
       });
       expect(content.classes, equals(['init', 'bar']));
     });
+
     test(
         'should cooperate with initial class and class '
         'attribute binding when binding changes', () async {
@@ -359,6 +378,7 @@ void main() {
       });
       expect(content.classes, equals(['init', 'baz']));
     });
+
     test(
         'should cooperate with interpolated class attribute '
         'and clas.name binding', () async {
@@ -396,13 +416,6 @@ class Base {
 class DestroyClassTest {
   List<List<String>> items;
 }
-
-@Component(
-  selector: 'map-literal-test',
-  directives: [NgClass],
-  template: '<div [ngClass]="{foo: true, bar: false}"></div>',
-)
-class MapLiteralTest {}
 
 @Component(
   selector: 'class-with-names',

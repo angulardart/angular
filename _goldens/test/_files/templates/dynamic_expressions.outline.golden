@@ -45,12 +45,6 @@ external _ng.ComponentFactory<Comp4> get Comp4NgFactory;
 class ViewComp40 extends _ng.AppView<Comp4> {
   external ViewComp40(_ng.RenderView parentView, int parentIndex);
 }
-// For @Component class Comp5.
-external List<dynamic> get styles$Comp5;
-external _ng.ComponentFactory<Comp5> get Comp5NgFactory;
-class ViewComp50 extends _ng.AppView<Comp5> {
-  external ViewComp50(_ng.RenderView parentView, int parentIndex);
-}
 // For @Component class Comp6.
 external List<dynamic> get styles$Comp6;
 external _ng.ComponentFactory<Comp6> get Comp6NgFactory;

@@ -33,26 +33,6 @@ void main() {
     }));
   });
 
-  test('should not recreate literal maps unless content changes', () async {
-    Map boundMap;
-    final fixture = await NgTestBed<BoundMapTest>().create(
-      beforeChangeDetection: (comp) {
-        comp.value = 'bar';
-      },
-    );
-    await fixture.update(expectAsync1((comp) {
-      boundMap = comp.child.value;
-      expect(boundMap, {'key': 'bar'});
-    }));
-    await fixture.update(expectAsync1((comp) {
-      expect(boundMap, same(comp.child.value), reason: 'Should be identical');
-      comp.value = 'foo';
-    }));
-    await fixture.update(expectAsync1((comp) {
-      expect(comp.child.value, {'key': 'foo'});
-    }));
-  });
-
   test('should not recreate literal lists unless content changes', () async {
     List boundList;
     final fixture = await NgTestBed<BoundListTest>().create(
@@ -110,18 +90,6 @@ class ChildComponent {
 )
 class BoundValueTest {
   var boundValue;
-
-  @ViewChild(ChildComponent)
-  ChildComponent child;
-}
-
-@Component(
-  selector: 'test',
-  directives: [ChildComponent],
-  template: r'''<child [value]="{'key': value}"></child>''',
-)
-class BoundMapTest {
-  var value;
 
   @ViewChild(ChildComponent)
   ChildComponent child;
