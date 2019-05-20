@@ -2,10 +2,7 @@
 import 'dart:html';
 
 import 'package:test/test.dart';
-import 'package:angular/core.dart'
-    show Component, Directive, Input, ViewChild, ViewChildren;
-import 'package:angular/src/core/linker.dart'
-    show TemplateRef, ViewContainerRef;
+import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'projection_integration_test.template.dart' as ng_generated;
@@ -212,6 +209,12 @@ void main() {
         component.conditional.viewport.hide();
       });
       expect(fixture.text, '(, D)');
+    });
+    test('should support <ng-content> as root of an embedded view', () async {
+      final testBed =
+          NgTestBed.forComponent(ng_generated.TestNgIfNgContentNgFactory);
+      final fixture = await testBed.create();
+      expect(fixture.text, 'Hello world!');
     });
   });
 }
@@ -706,3 +709,27 @@ class CmpA1 {}
   directives: [CmpB21, CmpB22],
 )
 class CmpA2 {}
+
+@Component(
+  selector: 'ng-if-ng-content',
+  directives: [NgIf],
+  template: '''
+    <ng-container *ngIf="isContentVisible">
+      <ng-content></ng-content>
+    </ng-container>
+  ''',
+)
+class NgIfNgContent {
+  var isContentVisible = true;
+}
+
+@Component(
+  selector: 'test',
+  directives: [NgIfNgContent],
+  template: '''
+    <ng-if-ng-content>
+      <div>Hello world!</div>
+    </ng-if-ng-content>
+  ''',
+)
+class TestNgIfNgContent {}
