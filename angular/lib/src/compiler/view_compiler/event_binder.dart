@@ -1,16 +1,16 @@
+import 'package:angular/src/compiler/analyzed_class.dart';
+import 'package:angular/src/compiler/expression_parser/ast.dart';
+import 'package:angular/src/compiler/html_events.dart';
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/template_ast.dart'
+    show BoundEventAst, DirectiveAst;
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
 import 'package:angular_compiler/cli.dart';
 
-import '../analyzed_class.dart';
-import '../compile_metadata.dart' show CompileDirectiveMetadata;
-import '../expression_parser/ast.dart';
-import '../html_events.dart';
-import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show BoundEventAst, DirectiveAst;
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'constants.dart' show DetectChangesVars, EventHandlerVars;
-import 'expression_converter.dart' show convertCdStatementToIr, NameResolver;
+import 'expression_converter.dart' show NameResolver, convertCdStatementToIr;
 import 'ir/provider_source.dart';
 import 'parse_utils.dart';
 
@@ -46,7 +46,7 @@ class CompileEventListener {
   /// add a new one if it doesn't exist yet.
   /// TODO: try using Map, this code is quadratic and assumes typical event
   /// lists are very small.
-  static CompileEventListener getOrCreate(CompileElement compileElement,
+  static CompileEventListener _getOrCreate(CompileElement compileElement,
       String eventName, List<CompileEventListener> targetEventListeners) {
     for (var existingListener in targetEventListeners) {
       if (existingListener.eventName == eventName) return existingListener;
@@ -65,7 +65,6 @@ class CompileEventListener {
 
   void _addAction(
     BoundEventAst hostEvent,
-    CompileDirectiveMetadata directive,
     ProviderSource directiveInstance,
     AnalyzedClass clazz,
   ) {
@@ -187,12 +186,12 @@ List<CompileEventListener> collectEventListeners(
 ) {
   final eventListeners = <CompileEventListener>[];
   for (final hostEvent in hostEvents) {
-    final listener = CompileEventListener.getOrCreate(
+    final listener = CompileEventListener._getOrCreate(
       compileElement,
       hostEvent.name,
       eventListeners,
     );
-    listener._addAction(hostEvent, null, null, analyzedClass);
+    listener._addAction(hostEvent, null, analyzedClass);
   }
   for (var i = 0, len = dirs.length; i < len; i++) {
     final directiveAst = dirs[i];
@@ -202,14 +201,13 @@ List<CompileEventListener> collectEventListeners(
       continue;
     }
     for (final hostEvent in directiveAst.hostEvents) {
-      final listener = CompileEventListener.getOrCreate(
+      final listener = CompileEventListener._getOrCreate(
         compileElement,
         hostEvent.name,
         eventListeners,
       );
       listener._addAction(
         hostEvent,
-        directiveAst.directive,
         compileElement.directiveInstances[i],
         analyzedClass,
       );
