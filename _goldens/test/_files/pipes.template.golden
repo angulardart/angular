@@ -38,8 +38,8 @@ class ViewComp0 extends AppView<import1.Comp> {
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
   static import4.ComponentStyles _componentStyles;
   ViewComp0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import8.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import8.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import9.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null);
@@ -47,36 +47,36 @@ class ViewComp0 extends AppView<import1.Comp> {
 
   @override
   ComponentRef<import1.Comp> build() {
-    final import8.HtmlElement parentRenderNode = initViewRoot();
-    parentRenderNode.append(_textBinding_0.element);
+    final import8.HtmlElement parentRenderNode = this.initViewRoot();
+    parentRenderNode.append(this._textBinding_0.element);
     final _text_1 = import11.appendText(parentRenderNode, ' ');
-    parentRenderNode.append(_textBinding_2.element);
+    parentRenderNode.append(this._textBinding_2.element);
     final _text_3 = import11.appendText(parentRenderNode, ' ');
-    parentRenderNode.append(_textBinding_4.element);
+    parentRenderNode.append(this._textBinding_4.element);
     final _text_5 = import11.appendText(parentRenderNode, ' ');
-    parentRenderNode.append(_textBinding_6.element);
-    _pipe_pure_0 = import1.PurePipe();
-    _pipe_pure_0_0 = import12.pureProxy1(_pipe_pure_0.transform);
-    _pipe_dirty_1 = import1.DirtyPipe();
-    _pipe_lifecycle_2 = import1.LifecyclePipe();
-    _pipe_lifecycle_2_0 = import12.pureProxy1(_pipe_lifecycle_2.transform);
-    _pipe_types_3 = import1.TypesPipe();
-    _pipe_types_3_0 = import12.pureProxy5(_pipe_types_3.transform);
-    init0();
+    parentRenderNode.append(this._textBinding_6.element);
+    this._pipe_pure_0 = import1.PurePipe();
+    this._pipe_pure_0_0 = import12.pureProxy1(this._pipe_pure_0.transform);
+    this._pipe_dirty_1 = import1.DirtyPipe();
+    this._pipe_lifecycle_2 = import1.LifecyclePipe();
+    this._pipe_lifecycle_2_0 = import12.pureProxy1(this._pipe_lifecycle_2.transform);
+    this._pipe_types_3 = import1.TypesPipe();
+    this._pipe_types_3_0 = import12.pureProxy5(this._pipe_types_3.transform);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _textBinding_0.updateText(import13.interpolate0(_pipe_pure_0_0('foo')));
-    _textBinding_2.updateText(import13.interpolate0(_pipe_dirty_1.transform('bar')));
-    _textBinding_4.updateText(import13.interpolate0(_pipe_lifecycle_2_0('lifecycle')));
-    _textBinding_6.updateText(import13.interpolate0(_pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
+    final _ctx = this.ctx;
+    this._textBinding_0.updateText(import13.interpolate0(this._pipe_pure_0_0('foo')));
+    this._textBinding_2.updateText(import13.interpolate0(this._pipe_dirty_1.transform('bar')));
+    this._textBinding_4.updateText(import13.interpolate0(this._pipe_lifecycle_2_0('lifecycle')));
+    this._textBinding_6.updateText(import13.interpolate0(this._pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
   }
 
   @override
   void destroyInternal() {
-    _pipe_lifecycle_2.ngOnDestroy();
+    this._pipe_lifecycle_2.ngOnDestroy();
   }
 
   @override
@@ -85,7 +85,7 @@ class ViewComp0 extends AppView<import1.Comp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$Comp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -103,28 +103,28 @@ class _ViewCompHost0 extends AppView<import1.Comp> {
   _ViewCompHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.Comp> build() {
     // Child component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
-    _compView_0 = ViewComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _Comp_0_5 = import1.Comp();
-    _compView_0.create(_Comp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _Comp_0_5);
+    this._compView_0 = ViewComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._Comp_0_5 = import1.Comp();
+    this._compView_0.create(this._Comp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._Comp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

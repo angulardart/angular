@@ -874,8 +874,6 @@ class Constructor extends ClassMethod {
 class ClassMethod extends AbstractClassPart {
   String name;
   List<FnParam> params;
-  // Set for fast lookup of parameter names to see if we need 'this.' prefix.
-  Set<String> paramNames;
   List<Statement> body;
   ClassMethod(
     this.name,
@@ -884,14 +882,7 @@ class ClassMethod extends AbstractClassPart {
     OutputType type,
     List<StmtModifier> modifiers,
     List<Expression> annotations,
-  ]) : super(type, modifiers, annotations) {
-    if (params != null) {
-      paramNames = Set<String>();
-      for (FnParam param in params) {
-        paramNames.add(param.name);
-      }
-    }
-  }
+  ]) : super(type, modifiers, annotations);
 }
 
 class ClassGetter extends AbstractClassPart {

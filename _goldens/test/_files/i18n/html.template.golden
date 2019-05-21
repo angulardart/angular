@@ -25,8 +25,8 @@ final List<dynamic> styles$I18nHtmlComponent = const [];
 class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewI18nHtmlComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('message');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('message');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);
@@ -34,12 +34,12 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
 
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'p');
     final _html_1 = import10.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
-    init0();
+    this.init0();
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
@@ -52,7 +52,7 @@ class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$I18nHtmlComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -70,28 +70,28 @@ class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
   _ViewI18nHtmlComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.I18nHtmlComponent> build() {
     // Child component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
-    _compView_0 = ViewI18nHtmlComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
-    _compView_0.create(_I18nHtmlComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _I18nHtmlComponent_0_5);
+    this._compView_0 = ViewI18nHtmlComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
+    this._compView_0.create(this._I18nHtmlComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._I18nHtmlComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

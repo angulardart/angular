@@ -24,8 +24,8 @@ final List<dynamic> styles$ProviderModulesComponent = const [];
 class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProviderModulesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('provider-modules');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('provider-modules');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/provider_modules.dart' : null);
@@ -33,8 +33,8 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
 
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -43,7 +43,7 @@ class ViewProviderModulesComponent0 extends AppView<import1.ProviderModulesCompo
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProviderModulesComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -65,62 +65,62 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
   _ViewProviderModulesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.FooService get _FooService_0_6 {
-    if ((__FooService_0_6 == null)) {
-      (__FooService_0_6 = import1.FooService());
+    if ((this.__FooService_0_6 == null)) {
+      (this.__FooService_0_6 = import1.FooService());
     }
-    return __FooService_0_6;
+    return this.__FooService_0_6;
   }
 
   Duration get _fooToken_0_7 {
-    if ((__fooToken_0_7 == null)) {
-      (__fooToken_0_7 = const Duration(seconds: 500));
+    if ((this.__fooToken_0_7 == null)) {
+      (this.__fooToken_0_7 = const Duration(seconds: 500));
     }
-    return __fooToken_0_7;
+    return this.__fooToken_0_7;
   }
 
   List<dynamic> get _barToken_0_8 {
-    if ((__barToken_0_8 == null)) {
-      (__barToken_0_8 = const ['a', 'b', 'c']);
+    if ((this.__barToken_0_8 == null)) {
+      (this.__barToken_0_8 = const ['a', 'b', 'c']);
     }
-    return __barToken_0_8;
+    return this.__barToken_0_8;
   }
 
   dynamic get _bazToken_0_9 {
-    if ((__bazToken_0_9 == null)) {
-      (__bazToken_0_9 = import1.getSomeValues());
+    if ((this.__bazToken_0_9 == null)) {
+      (this.__bazToken_0_9 = import1.getSomeValues());
     }
-    return __bazToken_0_9;
+    return this.__bazToken_0_9;
   }
 
   @override
   ComponentRef<import1.ProviderModulesComponent> build() {
     // Child component ProviderModulesComponent in asset:_goldens/test/_files/provider_modules.dart (changeDetection: Default)
-    _compView_0 = ViewProviderModulesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
-    _compView_0.create(_ProviderModulesComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ProviderModulesComponent_0_5);
+    this._compView_0 = ViewProviderModulesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ProviderModulesComponent_0_5 = import1.ProviderModulesComponent();
+    this._compView_0.create(this._ProviderModulesComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ProviderModulesComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
       if (identical(token, import1.FooService)) {
-        return _FooService_0_6;
+        return this._FooService_0_6;
       }
       if (identical(token, const import10.OpaqueToken<dynamic>('fooToken'))) {
-        return _fooToken_0_7;
+        return this._fooToken_0_7;
       }
       if (identical(token, const import10.OpaqueToken<dynamic>('barToken'))) {
-        return _barToken_0_8;
+        return this._barToken_0_8;
       }
       if (identical(token, const import10.OpaqueToken<dynamic>('bazToken'))) {
-        return _bazToken_0_9;
+        return this._bazToken_0_9;
       }
     }
     return notFoundResult;
@@ -128,12 +128,12 @@ class _ViewProviderModulesComponentHost0 extends AppView<import1.ProviderModules
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

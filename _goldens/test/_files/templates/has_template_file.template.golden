@@ -24,8 +24,8 @@ final List<dynamic> styles$HasTemplateFileComponent = [import0.styles];
 class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewHasTemplateFileComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('has-template-file');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('has-template-file');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/templates/has_template_file.dart' : null);
@@ -33,12 +33,12 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
 
   @override
   ComponentRef<import2.HasTemplateFileComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    addShimC(_el_0);
+    this.addShimC(_el_0);
     final _text_1 = import10.appendText(_el_0, 'Has Template File!');
-    init0();
+    this.init0();
   }
 
   @override
@@ -47,7 +47,7 @@ class ViewHasTemplateFileComponent0 extends AppView<import2.HasTemplateFileCompo
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.scoped(styles$HasTemplateFileComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -65,28 +65,28 @@ class _ViewHasTemplateFileComponentHost0 extends AppView<import2.HasTemplateFile
   _ViewHasTemplateFileComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import2.HasTemplateFileComponent> build() {
     // Child component HasTemplateFileComponent in asset:_goldens/test/_files/templates/has_template_file.dart (changeDetection: Default)
-    _compView_0 = ViewHasTemplateFileComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasTemplateFileComponent_0_5 = import2.HasTemplateFileComponent();
-    _compView_0.create(_HasTemplateFileComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasTemplateFileComponent_0_5);
+    this._compView_0 = ViewHasTemplateFileComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasTemplateFileComponent_0_5 = import2.HasTemplateFileComponent();
+    this._compView_0.create(this._HasTemplateFileComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasTemplateFileComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

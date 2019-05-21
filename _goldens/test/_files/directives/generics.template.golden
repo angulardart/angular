@@ -29,8 +29,8 @@ final List<dynamic> styles$UntypedComp = const [];
 class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
   static import2.ComponentStyles _componentStyles;
   ViewUntypedComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -38,8 +38,8 @@ class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
 
   @override
   ComponentRef<import1.UntypedComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -48,7 +48,7 @@ class ViewUntypedComp0 extends AppView<import1.UntypedComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -66,28 +66,28 @@ class _ViewUntypedCompHost0 extends AppView<import1.UntypedComp> {
   _ViewUntypedCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UntypedComp> build() {
     // Child component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUntypedComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UntypedComp_0_5 = import1.UntypedComp();
-    _compView_0.create(_UntypedComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UntypedComp_0_5);
+    this._compView_0 = ViewUntypedComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UntypedComp_0_5 = import1.UntypedComp();
+    this._compView_0.create(this._UntypedComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UntypedComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -104,8 +104,8 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesUntypedComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -113,30 +113,30 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
 
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUntypedComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewUntypedComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _UntypedComp_0_5 = import1.UntypedComp();
-    _compView_0.create0(_UntypedComp_0_5);
-    init0();
+    this._UntypedComp_0_5 = import1.UntypedComp();
+    this._compView_0.create0(this._UntypedComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _UntypedComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._UntypedComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -145,7 +145,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -163,28 +163,28 @@ class _ViewUsesUntypedCompHost0 extends AppView<import1.UsesUntypedComp> {
   _ViewUsesUntypedCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesUntypedComp> build() {
     // Child component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesUntypedComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesUntypedComp_0_5 = import1.UsesUntypedComp();
-    _compView_0.create(_UsesUntypedComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesUntypedComp_0_5);
+    this._compView_0 = ViewUsesUntypedComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesUntypedComp_0_5 = import1.UsesUntypedComp();
+    this._compView_0.create(this._UsesUntypedComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesUntypedComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -198,8 +198,8 @@ final List<dynamic> styles$GenericComp = const [];
 class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewGenericComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -207,8 +207,8 @@ class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
 
   @override
   ComponentRef<import1.GenericComp<T>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -217,7 +217,7 @@ class ViewGenericComp0<T> extends AppView<import1.GenericComp<T>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -235,28 +235,28 @@ class _ViewGenericCompHost0<T> extends AppView<import1.GenericComp<T>> {
   _ViewGenericCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.GenericComp<T>> build() {
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewGenericComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _GenericComp_0_5 = import1.GenericComp();
-    _compView_0.create(_GenericComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _GenericComp_0_5);
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create(this._GenericComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._GenericComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -273,8 +273,8 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesGenericComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -282,30 +282,30 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
 
   @override
   ComponentRef<import1.UsesGenericComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewGenericComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _GenericComp_0_5 = import1.GenericComp();
-    _compView_0.create0(_GenericComp_0_5);
-    init0();
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create0(this._GenericComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _GenericComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -314,7 +314,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -332,28 +332,28 @@ class _ViewUsesGenericCompHost0 extends AppView<import1.UsesGenericComp> {
   _ViewUsesGenericCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesGenericComp> build() {
     // Child component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesGenericComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesGenericComp_0_5 = import1.UsesGenericComp();
-    _compView_0.create(_UsesGenericComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesGenericComp_0_5);
+    this._compView_0 = ViewUsesGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesGenericComp_0_5 = import1.UsesGenericComp();
+    this._compView_0.create(this._UsesGenericComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesGenericComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -370,8 +370,8 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesGenericCompGeneric0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -379,30 +379,30 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
 
   @override
   ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewGenericComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _GenericComp_0_5 = import1.GenericComp();
-    _compView_0.create0(_GenericComp_0_5);
-    init0();
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create0(this._GenericComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _GenericComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -411,7 +411,7 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -429,28 +429,28 @@ class _ViewUsesGenericCompGenericHost0<E> extends AppView<import1.UsesGenericCom
   _ViewUsesGenericCompGenericHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesGenericCompGeneric<E>> build() {
     // Child component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesGenericCompGeneric0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesGenericCompGeneric_0_5 = import1.UsesGenericCompGeneric();
-    _compView_0.create(_UsesGenericCompGeneric_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesGenericCompGeneric_0_5);
+    this._compView_0 = ViewUsesGenericCompGeneric0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesGenericCompGeneric_0_5 = import1.UsesGenericCompGeneric();
+    this._compView_0.create(this._UsesGenericCompGeneric_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesGenericCompGeneric_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -464,8 +464,8 @@ final List<dynamic> styles$MappingComp1 = const [];
 class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp10(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -473,8 +473,8 @@ class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp1<K, V>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -483,7 +483,7 @@ class ViewMappingComp10<K, V> extends AppView<import1.MappingComp1<K, V>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -501,28 +501,28 @@ class _ViewMappingComp1Host0<K, V> extends AppView<import1.MappingComp1<K, V>> {
   _ViewMappingComp1Host0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.MappingComp1<K, V>> build() {
     // Child component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewMappingComp10(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _MappingComp1_0_5 = import1.MappingComp1();
-    _compView_0.create(_MappingComp1_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _MappingComp1_0_5);
+    this._compView_0 = ViewMappingComp10(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._MappingComp1_0_5 = import1.MappingComp1();
+    this._compView_0.create(this._MappingComp1_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._MappingComp1_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -540,8 +540,8 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMappingComp10(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -549,35 +549,35 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
 
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewMappingComp10(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewMappingComp10(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _MappingComp1_0_5 = import1.MappingComp1();
-    _compView_0.create0(_MappingComp1_0_5);
-    init0();
+    this._MappingComp1_0_5 = import1.MappingComp1();
+    this._compView_0.create0(this._MappingComp1_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.bindKey;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _MappingComp1_0_5.key = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._MappingComp1_0_5.key = currVal_0;
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _MappingComp1_0_5.value = currVal_1;
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._MappingComp1_0_5.value = currVal_1;
+      this._expr_1 = currVal_1;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -586,7 +586,7 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -604,28 +604,28 @@ class _ViewUsesMappingComp1Host0 extends AppView<import1.UsesMappingComp1> {
   _ViewUsesMappingComp1Host0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesMappingComp1> build() {
     // Child component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesMappingComp10(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesMappingComp1_0_5 = import1.UsesMappingComp1();
-    _compView_0.create(_UsesMappingComp1_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesMappingComp1_0_5);
+    this._compView_0 = ViewUsesMappingComp10(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesMappingComp1_0_5 = import1.UsesMappingComp1();
+    this._compView_0.create(this._UsesMappingComp1_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesMappingComp1_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -639,8 +639,8 @@ final List<dynamic> styles$MappingComp2 = const [];
 class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
   static import2.ComponentStyles _componentStyles;
   ViewMappingComp20(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -648,8 +648,8 @@ class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
 
   @override
   ComponentRef<import1.MappingComp2<K, V>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -658,7 +658,7 @@ class ViewMappingComp20<K, V> extends AppView<import1.MappingComp2<K, V>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -676,28 +676,28 @@ class _ViewMappingComp2Host0<K, V> extends AppView<import1.MappingComp2<K, V>> {
   _ViewMappingComp2Host0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.MappingComp2<K, V>> build() {
     // Child component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewMappingComp20(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _MappingComp2_0_5 = import1.MappingComp2();
-    _compView_0.create(_MappingComp2_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _MappingComp2_0_5);
+    this._compView_0 = ViewMappingComp20(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._MappingComp2_0_5 = import1.MappingComp2();
+    this._compView_0.create(this._MappingComp2_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._MappingComp2_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -714,8 +714,8 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMappingComp20(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -723,30 +723,30 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
 
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewMappingComp20(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewMappingComp20(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _MappingComp2_0_5 = import1.MappingComp2();
-    _compView_0.create0(_MappingComp2_0_5);
-    init0();
+    this._MappingComp2_0_5 = import1.MappingComp2();
+    this._compView_0.create0(this._MappingComp2_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _MappingComp2_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._MappingComp2_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -755,7 +755,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -773,28 +773,28 @@ class _ViewUsesMappingComp2Host0 extends AppView<import1.UsesMappingComp2> {
   _ViewUsesMappingComp2Host0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesMappingComp2> build() {
     // Child component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesMappingComp20(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesMappingComp2_0_5 = import1.UsesMappingComp2();
-    _compView_0.create(_UsesMappingComp2_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesMappingComp2_0_5);
+    this._compView_0 = ViewUsesMappingComp20(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesMappingComp2_0_5 = import1.UsesMappingComp2();
+    this._compView_0.create(this._UsesMappingComp2_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesMappingComp2_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -808,8 +808,8 @@ final List<dynamic> styles$BoundComp = const [];
 class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -817,8 +817,8 @@ class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
 
   @override
   ComponentRef<import1.BoundComp<T>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -827,7 +827,7 @@ class ViewBoundComp0<T extends num> extends AppView<import1.BoundComp<T>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -845,28 +845,28 @@ class _ViewBoundCompHost0<T extends num> extends AppView<import1.BoundComp<T>> {
   _ViewBoundCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.BoundComp<T>> build() {
     // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _BoundComp_0_5 = import1.BoundComp();
-    _compView_0.create(_BoundComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _BoundComp_0_5);
+    this._compView_0 = ViewBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._BoundComp_0_5 = import1.BoundComp();
+    this._compView_0.create(this._BoundComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._BoundComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -883,8 +883,8 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   num _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesBoundCompWithBounds0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -892,30 +892,30 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
 
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _BoundComp_0_5 = import1.BoundComp();
-    _compView_0.create0(_BoundComp_0_5);
-    init0();
+    this._BoundComp_0_5 = import1.BoundComp();
+    this._compView_0.create0(this._BoundComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _BoundComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._BoundComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -924,7 +924,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -942,28 +942,28 @@ class _ViewUsesBoundCompWithBoundsHost0 extends AppView<import1.UsesBoundCompWit
   _ViewUsesBoundCompWithBoundsHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesBoundCompWithBounds> build() {
     // Child component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesBoundCompWithBounds0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesBoundCompWithBounds_0_5 = import1.UsesBoundCompWithBounds();
-    _compView_0.create(_UsesBoundCompWithBounds_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesBoundCompWithBounds_0_5);
+    this._compView_0 = ViewUsesBoundCompWithBounds0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesBoundCompWithBounds_0_5 = import1.UsesBoundCompWithBounds();
+    this._compView_0.create(this._UsesBoundCompWithBounds_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesBoundCompWithBounds_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -980,8 +980,8 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   num _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -989,30 +989,30 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
 
   @override
   ComponentRef<import1.UsesBoundComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _BoundComp_0_5 = import1.BoundComp();
-    _compView_0.create0(_BoundComp_0_5);
-    init0();
+    this._BoundComp_0_5 = import1.BoundComp();
+    this._compView_0.create0(this._BoundComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _BoundComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._BoundComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -1021,7 +1021,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1039,28 +1039,28 @@ class _ViewUsesBoundCompHost0 extends AppView<import1.UsesBoundComp> {
   _ViewUsesBoundCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesBoundComp> build() {
     // Child component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesBoundComp_0_5 = import1.UsesBoundComp();
-    _compView_0.create(_UsesBoundComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesBoundComp_0_5);
+    this._compView_0 = ViewUsesBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesBoundComp_0_5 = import1.UsesBoundComp();
+    this._compView_0.create(this._UsesBoundComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesBoundComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1074,8 +1074,8 @@ final List<dynamic> styles$SelfBoundComp = const [];
 class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A, B>> {
   static import2.ComponentStyles _componentStyles;
   ViewSelfBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1083,8 +1083,8 @@ class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A
 
   @override
   ComponentRef<import1.SelfBoundComp<A, B>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -1093,7 +1093,7 @@ class ViewSelfBoundComp0<A, B extends A> extends AppView<import1.SelfBoundComp<A
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1111,28 +1111,28 @@ class _ViewSelfBoundCompHost0<A, B extends A> extends AppView<import1.SelfBoundC
   _ViewSelfBoundCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.SelfBoundComp<A, B>> build() {
     // Child component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewSelfBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _SelfBoundComp_0_5 = import1.SelfBoundComp();
-    _compView_0.create(_SelfBoundComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _SelfBoundComp_0_5);
+    this._compView_0 = ViewSelfBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._SelfBoundComp_0_5 = import1.SelfBoundComp();
+    this._compView_0.create(this._SelfBoundComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._SelfBoundComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1150,8 +1150,8 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesSelfBoundComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1159,35 +1159,35 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
 
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewSelfBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewSelfBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _SelfBoundComp_0_5 = import1.SelfBoundComp();
-    _compView_0.create0(_SelfBoundComp_0_5);
-    init0();
+    this._SelfBoundComp_0_5 = import1.SelfBoundComp();
+    this._compView_0.create0(this._SelfBoundComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.bindA;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _SelfBoundComp_0_5.a = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._SelfBoundComp_0_5.a = currVal_0;
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _SelfBoundComp_0_5.b = currVal_1;
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._SelfBoundComp_0_5.b = currVal_1;
+      this._expr_1 = currVal_1;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -1196,7 +1196,7 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1214,28 +1214,28 @@ class _ViewUsesSelfBoundCompHost0 extends AppView<import1.UsesSelfBoundComp> {
   _ViewUsesSelfBoundCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesSelfBoundComp> build() {
     // Child component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesSelfBoundComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesSelfBoundComp_0_5 = import1.UsesSelfBoundComp();
-    _compView_0.create(_UsesSelfBoundComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesSelfBoundComp_0_5);
+    this._compView_0 = ViewUsesSelfBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesSelfBoundComp_0_5 = import1.UsesSelfBoundComp();
+    this._compView_0.create(this._UsesSelfBoundComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesSelfBoundComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1249,8 +1249,8 @@ final List<dynamic> styles$RecursiveComp = const [];
 class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.RecursiveComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewRecursiveComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1258,8 +1258,8 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.Recurs
 
   @override
   ComponentRef<import1.RecursiveComp<T>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -1268,7 +1268,7 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends AppView<import1.Recurs
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$RecursiveComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1286,28 +1286,28 @@ class _ViewRecursiveCompHost0<T extends Comparable<T>> extends AppView<import1.R
   _ViewRecursiveCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.RecursiveComp<T>> build() {
     // Child component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewRecursiveComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _RecursiveComp_0_5 = import1.RecursiveComp();
-    _compView_0.create(_RecursiveComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _RecursiveComp_0_5);
+    this._compView_0 = ViewRecursiveComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._RecursiveComp_0_5 = import1.RecursiveComp();
+    this._compView_0.create(this._RecursiveComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._RecursiveComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1324,8 +1324,8 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesRecursiveComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1333,30 +1333,30 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
 
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewRecursiveComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewRecursiveComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _RecursiveComp_0_5 = import1.RecursiveComp();
-    _compView_0.create0(_RecursiveComp_0_5);
-    init0();
+    this._RecursiveComp_0_5 = import1.RecursiveComp();
+    this._compView_0.create0(this._RecursiveComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _RecursiveComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._RecursiveComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -1365,7 +1365,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesRecursiveComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1383,28 +1383,28 @@ class _ViewUsesRecursiveCompHost0 extends AppView<import1.UsesRecursiveComp> {
   _ViewUsesRecursiveCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesRecursiveComp> build() {
     // Child component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesRecursiveComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesRecursiveComp_0_5 = import1.UsesRecursiveComp();
-    _compView_0.create(_UsesRecursiveComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesRecursiveComp_0_5);
+    this._compView_0 = ViewUsesRecursiveComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesRecursiveComp_0_5 = import1.UsesRecursiveComp();
+    this._compView_0.create(this._UsesRecursiveComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesRecursiveComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1418,8 +1418,8 @@ final List<dynamic> styles$FunctionTypeComp = const [];
 class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
   static import2.ComponentStyles _componentStyles;
   ViewFunctionTypeComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1427,8 +1427,8 @@ class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
 
   @override
   ComponentRef<import1.FunctionTypeComp<F>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -1437,7 +1437,7 @@ class ViewFunctionTypeComp0<F> extends AppView<import1.FunctionTypeComp<F>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1455,28 +1455,28 @@ class _ViewFunctionTypeCompHost0<F> extends AppView<import1.FunctionTypeComp<F>>
   _ViewFunctionTypeCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.FunctionTypeComp<F>> build() {
     // Child component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewFunctionTypeComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
-    _compView_0.create(_FunctionTypeComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _FunctionTypeComp_0_5);
+    this._compView_0 = ViewFunctionTypeComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._FunctionTypeComp_0_5 = import1.FunctionTypeComp();
+    this._compView_0.create(this._FunctionTypeComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._FunctionTypeComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1493,8 +1493,8 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesFunctionTypeComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1502,30 +1502,30 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
 
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewFunctionTypeComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewFunctionTypeComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _FunctionTypeComp_0_5 = import1.FunctionTypeComp();
-    _compView_0.create0(_FunctionTypeComp_0_5);
-    init0();
+    this._FunctionTypeComp_0_5 = import1.FunctionTypeComp();
+    this._compView_0.create0(this._FunctionTypeComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _FunctionTypeComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._FunctionTypeComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -1534,7 +1534,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1552,28 +1552,28 @@ class _ViewUsesFunctionTypeCompHost0 extends AppView<import1.UsesFunctionTypeCom
   _ViewUsesFunctionTypeCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesFunctionTypeComp> build() {
     // Child component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesFunctionTypeComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesFunctionTypeComp_0_5 = import1.UsesFunctionTypeComp();
-    _compView_0.create(_UsesFunctionTypeComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesFunctionTypeComp_0_5);
+    this._compView_0 = ViewUsesFunctionTypeComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesFunctionTypeComp_0_5 = import1.UsesFunctionTypeComp();
+    this._compView_0.create(this._UsesFunctionTypeComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesFunctionTypeComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1596,8 +1596,8 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   var _expr_2;
   static import2.ComponentStyles _componentStyles;
   ViewNestedParentComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('parent');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('parent');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1605,59 +1605,59 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
 
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewNestedChildComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewNestedChildComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _NestedChildComp_0_5 = import1.NestedChildComp();
-    _compView_0.create0(_NestedChildComp_0_5);
+    this._NestedChildComp_0_5 = import1.NestedChildComp();
+    this._compView_0.create0(this._NestedChildComp_0_5);
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_1 = ViewNestedChildComp0(this, 1);
-    final _el_1 = _compView_1.rootEl;
+    this._compView_1 = ViewNestedChildComp0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _NestedChildComp_1_5 = import1.NestedChildComp();
-    _compView_1.create0(_NestedChildComp_1_5);
+    this._NestedChildComp_1_5 = import1.NestedChildComp();
+    this._compView_1.create0(this._NestedChildComp_1_5);
     final _anchor_2 = import13.appendAnchor(parentRenderNode);
-    _appEl_2 = ViewContainer(2, null, this, _anchor_2);
-    TemplateRef _TemplateRef_2_8 = TemplateRef(_appEl_2, (parentView, parentIndex) {
+    this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_8 = TemplateRef(this._appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
-    _NgFor_2_9 = import12.NgFor(_appEl_2, _TemplateRef_2_8);
-    init0();
+    this._NgFor_2_9 = import12.NgFor(this._appEl_2, _TemplateRef_2_8);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.input1;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _NestedChildComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._NestedChildComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _NestedChildComp_1_5.input = currVal_1;
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._NestedChildComp_1_5.input = currVal_1;
+      this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
-    if (import9.checkBinding(_expr_2, currVal_2)) {
-      _NgFor_2_9.ngForOf = currVal_2;
-      _expr_2 = currVal_2;
+    if (import9.checkBinding(this._expr_2, currVal_2)) {
+      this._NgFor_2_9.ngForOf = currVal_2;
+      this._expr_2 = currVal_2;
     }
     if ((!import9.AppViewUtils.throwOnChanges)) {
-      _NgFor_2_9.ngDoCheck();
+      this._NgFor_2_9.ngDoCheck();
     }
-    _appEl_2.detectChangesInNestedViews();
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
+    this._appEl_2.detectChangesInNestedViews();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _appEl_2.destroyNestedViews();
-    _compView_0.destroyInternalState();
-    _compView_1.destroyInternalState();
+    this._appEl_2.destroyNestedViews();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
   }
 
   @override
@@ -1666,7 +1666,7 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1680,32 +1680,32 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   import1.NestedChildComp<T> _NestedChildComp_0_5;
   var _expr_0;
   _ViewNestedParentComp1(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewNestedChildComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _NestedChildComp_0_5 = import1.NestedChildComp();
-    _compView_0.create0(_NestedChildComp_0_5);
-    init1(_el_0);
+    this._compView_0 = ViewNestedChildComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._NestedChildComp_0_5 = import1.NestedChildComp();
+    this._compView_0.create0(this._NestedChildComp_0_5);
+    this.init1(_el_0);
   }
 
   @override
   void detectChangesInternal() {
-    final local_input = import7.unsafeCast<T>(locals['\$implicit']);
+    final local_input = import7.unsafeCast<T>(this.locals['\$implicit']);
     final currVal_0 = local_input;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _NestedChildComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._NestedChildComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1722,28 +1722,28 @@ class _ViewNestedParentCompHost0<T> extends AppView<import1.NestedParentComp<T>>
   _ViewNestedParentCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.NestedParentComp<T>> build() {
     // Child component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewNestedParentComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _NestedParentComp_0_5 = import1.NestedParentComp();
-    _compView_0.create(_NestedParentComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _NestedParentComp_0_5);
+    this._compView_0 = ViewNestedParentComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._NestedParentComp_0_5 = import1.NestedParentComp();
+    this._compView_0.create(this._NestedParentComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._NestedParentComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1757,8 +1757,8 @@ final List<dynamic> styles$NestedChildComp = const [];
 class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
   static import2.ComponentStyles _componentStyles;
   ViewNestedChildComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('child');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('child');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1766,8 +1766,8 @@ class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
 
   @override
   ComponentRef<import1.NestedChildComp<T>> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -1776,7 +1776,7 @@ class ViewNestedChildComp0<T> extends AppView<import1.NestedChildComp<T>> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1794,28 +1794,28 @@ class _ViewNestedChildCompHost0<T> extends AppView<import1.NestedChildComp<T>> {
   _ViewNestedChildCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.NestedChildComp<T>> build() {
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewNestedChildComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _NestedChildComp_0_5 = import1.NestedChildComp();
-    _compView_0.create(_NestedChildComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _NestedChildComp_0_5);
+    this._compView_0 = ViewNestedChildComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._NestedChildComp_0_5 = import1.NestedChildComp();
+    this._compView_0.create(this._NestedChildComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._NestedChildComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1834,8 +1834,8 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   var _expr_2;
   static import2.ComponentStyles _componentStyles;
   ViewUsesNestedParentComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1843,40 +1843,40 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
 
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewNestedParentComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewNestedParentComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _NestedParentComp_0_5 = import1.NestedParentComp();
-    _compView_0.create0(_NestedParentComp_0_5);
-    init0();
+    this._NestedParentComp_0_5 = import1.NestedParentComp();
+    this._compView_0.create0(this._NestedParentComp_0_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.binding1;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _NestedParentComp_0_5.input1 = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._NestedParentComp_0_5.input1 = currVal_0;
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _NestedParentComp_0_5.input2 = currVal_1;
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._NestedParentComp_0_5.input2 = currVal_1;
+      this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
-    if (import9.checkBinding(_expr_2, currVal_2)) {
-      _NestedParentComp_0_5.moreInputs = currVal_2;
-      _expr_2 = currVal_2;
+    if (import9.checkBinding(this._expr_2, currVal_2)) {
+      this._NestedParentComp_0_5.moreInputs = currVal_2;
+      this._expr_2 = currVal_2;
     }
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -1885,7 +1885,7 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -1903,28 +1903,28 @@ class _ViewUsesNestedParentCompHost0 extends AppView<import1.UsesNestedParentCom
   _ViewUsesNestedParentCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesNestedParentComp> build() {
     // Child component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesNestedParentComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesNestedParentComp_0_5 = import1.UsesNestedParentComp();
-    _compView_0.create(_UsesNestedParentComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesNestedParentComp_0_5);
+    this._compView_0 = ViewUsesNestedParentComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesNestedParentComp_0_5 = import1.UsesNestedParentComp();
+    this._compView_0.create(this._UsesNestedParentComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesNestedParentComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -1944,8 +1944,8 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
   var _expr_1;
   static import2.ComponentStyles _componentStyles;
   ViewUsesMultipleTypesComp0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -1953,43 +1953,43 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
 
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewGenericComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _GenericComp_0_5 = import1.GenericComp();
-    _compView_0.create0(_GenericComp_0_5);
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create0(this._GenericComp_0_5);
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_1 = ViewGenericComp0(this, 1);
-    final _el_1 = _compView_1.rootEl;
+    this._compView_1 = ViewGenericComp0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _GenericComp_1_5 = import1.GenericComp();
-    _compView_1.create0(_GenericComp_1_5);
-    init0();
+    this._GenericComp_1_5 = import1.GenericComp();
+    this._compView_1.create0(this._GenericComp_1_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.name;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _GenericComp_0_5.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.index;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _GenericComp_1_5.input = currVal_1;
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._GenericComp_1_5.input = currVal_1;
+      this._expr_1 = currVal_1;
     }
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
-    _compView_1.destroyInternalState();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
   }
 
   @override
@@ -1998,7 +1998,7 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -2016,28 +2016,28 @@ class _ViewUsesMultipleTypesCompHost0 extends AppView<import1.UsesMultipleTypesC
   _ViewUsesMultipleTypesCompHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesMultipleTypesComp> build() {
     // Child component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesMultipleTypesComp0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesMultipleTypesComp_0_5 = import1.UsesMultipleTypesComp();
-    _compView_0.create(_UsesMultipleTypesComp_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesMultipleTypesComp_0_5);
+    this._compView_0 = ViewUsesMultipleTypesComp0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesMultipleTypesComp_0_5 = import1.UsesMultipleTypesComp();
+    this._compView_0.create(this._UsesMultipleTypesComp_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesMultipleTypesComp_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -2054,8 +2054,8 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesGenericChangeDetector0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('comp');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('comp');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/generics.dart' : null);
@@ -2063,23 +2063,23 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
 
   @override
   ComponentRef<import1.UsesGenericChangeDetector> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    _el_0 = import13.appendDiv(doc, parentRenderNode);
-    import13.setAttribute(_el_0, 'generic', '');
-    _GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
-    init0();
+    this._el_0 = import13.appendDiv(doc, parentRenderNode);
+    import13.setAttribute(this._el_0, 'generic', '');
+    this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _GenericDirective_0_5.instance.input = currVal_0;
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._GenericDirective_0_5.instance.input = currVal_0;
+      this._expr_0 = currVal_0;
     }
-    _GenericDirective_0_5.detectHostChanges(this, _el_0);
+    this._GenericDirective_0_5.detectHostChanges(this, this._el_0);
   }
 
   @override
@@ -2088,7 +2088,7 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -2106,28 +2106,28 @@ class _ViewUsesGenericChangeDetectorHost0 extends AppView<import1.UsesGenericCha
   _ViewUsesGenericChangeDetectorHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesGenericChangeDetector> build() {
     // Child component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
-    _compView_0 = ViewUsesGenericChangeDetector0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesGenericChangeDetector_0_5 = import1.UsesGenericChangeDetector();
-    _compView_0.create(_UsesGenericChangeDetector_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesGenericChangeDetector_0_5);
+    this._compView_0 = ViewUsesGenericChangeDetector0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesGenericChangeDetector_0_5 = import1.UsesGenericChangeDetector();
+    this._compView_0.create(this._UsesGenericChangeDetector_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesGenericChangeDetector_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -2140,10 +2140,10 @@ class GenericDirectiveNgCd<T> extends import15.DirectiveChangeDetector {
   var _expr_0;
   GenericDirectiveNgCd(this.instance);
   void detectHostChanges(import3.RenderView view, import6.Element el) {
-    final currVal_0 = instance.input;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
+    final currVal_0 = this.instance.input;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
       import13.updateAttribute(el, 'a', currVal_0?.toString());
-      _expr_0 = currVal_0;
+      this._expr_0 = currVal_0;
     }
   }
 }
