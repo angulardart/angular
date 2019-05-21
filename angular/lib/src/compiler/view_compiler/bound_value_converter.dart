@@ -74,6 +74,7 @@ abstract class BoundValueConverter
   o.Expression visitStringLiteral(ir.StringLiteral stringLiteral, [_]) =>
       o.literal(stringLiteral.value);
 
+  @override
   o.Expression visitSimpleEventHandler(ir.SimpleEventHandler handler, [_]) {
     List<o.Statement> actionStmts = _convertToStatements(handler);
     var returnExpr = convertStmtIntoExpression(actionStmts.last);
@@ -83,6 +84,12 @@ abstract class BoundValueConverter
     }
     var simpleHandler = extractFunction(returnExpr);
     return wrapHandler(simpleHandler, handler.numArgs);
+  }
+
+  @override
+  o.Expression visitComplexEventHandler(ir.ComplexEventHandler handler, [_]) {
+    var statements = _convertToStatements(handler);
+    return wrapHandler(_createEventHandler(statements, handler), 1);
   }
 
   List<o.Statement> _convertToStatements(ir.EventHandler handler) {
@@ -102,11 +109,6 @@ abstract class BoundValueConverter
     }
     throw ArgumentError.value(
         handler, 'handler', 'Unknown ${ir.EventHandler} type.');
-  }
-
-  o.Expression visitComplexEventHandler(ir.ComplexEventHandler handler, [_]) {
-    var statements = _convertToStatements(handler);
-    return wrapHandler(_createEventHandler(statements, handler), 1);
   }
 
   o.Expression _createEventHandler(
