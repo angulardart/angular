@@ -5,8 +5,11 @@ import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular/src/compiler/view_compiler/constants.dart';
+import 'package:angular/src/compiler/view_compiler/event_binder.dart';
+import 'package:angular_compiler/cli.dart';
 
-import 'expression_converter.dart' show convertCdExpressionToIr, NameResolver;
+import 'expression_converter.dart'
+    show NameResolver, convertCdExpressionToIr, convertCdStatementToIr;
 
 /// An abstract utility for converting bound values to output expressions.
 abstract class BoundValueConverter
@@ -70,6 +73,44 @@ abstract class BoundValueConverter
   @override
   o.Expression visitStringLiteral(ir.StringLiteral stringLiteral, [_]) =>
       o.literal(stringLiteral.value);
+
+  o.Expression visitSimpleEventHandler(ir.SimpleEventHandler handler, [_]) {
+    List<o.Statement> actionStmts = _convertToStatements(handler);
+    var returnExpr = convertStmtIntoExpression(actionStmts.last);
+    if (returnExpr is! o.InvokeMethodExpr) {
+      final message = "Expected method for event binding.";
+      throwFailure(handler.sourceSpan?.message(message) ?? message);
+    }
+    var simpleHandler = extractFunction(returnExpr);
+    return wrapHandler(simpleHandler, handler.numArgs);
+  }
+
+  List<o.Statement> _convertToStatements(ir.EventHandler handler) {
+    if (handler is ir.SimpleEventHandler) {
+      return convertCdStatementToIr(
+        _nameResolver,
+        _implicitReceiver,
+        handler.handler,
+        handler.sourceSpan,
+        _metadata,
+      );
+    } else if (handler is ir.ComplexEventHandler) {
+      return [
+        for (var nestedHandler in handler.handlers)
+          ..._convertToStatements(nestedHandler)
+      ];
+    }
+    throw ArgumentError.value(
+        handler, 'handler', 'Unknown ${ir.EventHandler} type.');
+  }
+
+  o.Expression visitComplexEventHandler(ir.ComplexEventHandler handler, [_]) {
+    var statements = _convertToStatements(handler);
+    return wrapHandler(_createEventHandler(statements, handler), 1);
+  }
+
+  o.Expression _createEventHandler(
+      List<o.Statement> statements, ir.ComplexEventHandler handler);
 }
 
 /// Converts values bound by a directive change detector.
@@ -85,6 +126,13 @@ class _DirectiveBoundValueConverter extends BoundValueConverter {
     throw UnsupportedError(
         'Cannot create internationalized message expression without a view');
   }
+
+  @override
+  o.Expression _createEventHandler(
+      List<o.Statement> statements, ir.ComplexEventHandler handler) {
+    throw UnsupportedError(
+        'Cannot create event handler expression without a view');
+  }
 }
 
 // Converts values bound in a view.
@@ -97,4 +145,21 @@ class _ViewBoundValueConverter extends BoundValueConverter {
   @override
   o.Expression _createI18nMessage(I18nMessage message) =>
       _view.createI18nMessage(message);
+
+  @override
+  o.Expression _createEventHandler(
+          List<o.Statement> statements, ir.ComplexEventHandler handler) =>
+      _view.createEventHandler(handler.methodName, statements);
+}
+
+o.Expression wrapHandler(o.Expression handlerExpr, int numArgs) =>
+    o.InvokeMemberMethodExpr(
+      'eventHandler$numArgs',
+      [handlerExpr],
+    );
+
+o.Expression extractFunction(o.Expression returnExpr) {
+  assert(returnExpr is o.InvokeMethodExpr);
+  final callExpr = returnExpr as o.InvokeMethodExpr;
+  return o.ReadPropExpr(callExpr.receiver, callExpr.name);
 }
