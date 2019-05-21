@@ -535,10 +535,12 @@ class CompileView {
         [o.StmtModifier.Static, o.StmtModifier.Private],
       );
       methods.add(method);
-      messageExpression = o.InvokeMemberMethodExpr(
-        name,
+      // A hack to invoke a static class method.
+      messageExpression = o.InvokeFunctionExpr(
+        o.ReadStaticMemberExpr(name),
         methodArgs,
-        outputType: o.STRING_TYPE,
+        [],
+        type: o.STRING_TYPE,
       );
     } else {
       // A message with no arguments is generated as a static final field.
@@ -1483,11 +1485,15 @@ class CompileViewStorage implements ViewStorage {
 
   @override
   o.Expression buildWriteExpr(ViewStorageItem item, o.Expression value) {
-    return o.WriteClassMemberExpr(item.name, value);
+    return item.isStatic
+        ? o.WriteStaticMemberExpr(item.name, value)
+        : o.WriteClassMemberExpr(item.name, value);
   }
 
   @override
   o.Expression buildReadExpr(ViewStorageItem item) {
-    return o.ReadClassMemberExpr(item.name, item.outputType);
+    return item.isStatic
+        ? o.ReadStaticMemberExpr(item.name, type: item.outputType)
+        : o.ReadClassMemberExpr(item.name, item.outputType);
   }
 }

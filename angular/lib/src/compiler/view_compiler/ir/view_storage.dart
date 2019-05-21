@@ -19,4 +19,6 @@ class ViewStorageItem {
   final o.Expression initializer;
   ViewStorageItem(this.name,
       {this.outputType, this.modifiers, this.initializer});
+
+  bool get isStatic => modifiers.contains(o.StmtModifier.Static);
 }
