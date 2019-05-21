@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/analysis/features.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/error/listener.dart';
@@ -154,8 +155,10 @@ class OffsettingConstantValueVisitorTest {
   }
 
   Expression _parseDartExpression(String code) {
+    final featureSet = FeatureSet.forTesting();
     final token = _scanDartCode(code);
-    final parser = Parser(_MockSource(), BooleanErrorListener());
+    final parser =
+        Parser(_MockSource(), BooleanErrorListener(), featureSet: featureSet);
     return parser.parseExpression(token);
   }
 
