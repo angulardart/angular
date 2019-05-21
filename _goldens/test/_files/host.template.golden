@@ -24,9 +24,9 @@ final List<dynamic> styles$HostComponentNewSyntax = const [];
 class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax> {
   static import2.ComponentStyles _componentStyles;
   ViewHostComponentNewSyntax0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('host');
-    this.updateChildClassNonHtml(rootEl, import1.HostComponentNewSyntax.hostClass);
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('host');
+    this.updateChildClassNonHtml(this.rootEl, import1.HostComponentNewSyntax.hostClass);
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);
@@ -34,8 +34,8 @@ class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax
 
   @override
   ComponentRef<import1.HostComponentNewSyntax> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -44,7 +44,7 @@ class ViewHostComponentNewSyntax0 extends AppView<import1.HostComponentNewSyntax
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HostComponentNewSyntax, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -62,28 +62,28 @@ class _ViewHostComponentNewSyntaxHost0 extends AppView<import1.HostComponentNewS
   _ViewHostComponentNewSyntaxHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HostComponentNewSyntax> build() {
     // Child component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
-    _compView_0 = ViewHostComponentNewSyntax0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
-    _compView_0.create(_HostComponentNewSyntax_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HostComponentNewSyntax_0_5);
+    this._compView_0 = ViewHostComponentNewSyntax0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HostComponentNewSyntax_0_5 = import1.HostComponentNewSyntax();
+    this._compView_0.create(this._HostComponentNewSyntax_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HostComponentNewSyntax_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -100,8 +100,8 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
   import1.ListensToFooEvent _ListensToFooEvent_0_6;
   static import2.ComponentStyles _componentStyles;
   ViewUsesHostComponentWithDirective0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('uses-host');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('uses-host');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);
@@ -109,29 +109,29 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
 
   @override
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
-    _compView_0 = ViewHostComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewHostComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
     import9.setAttribute(_el_0, 'listens-to-foo', '');
-    _HostComponent_0_5 = import1.HostComponent();
-    _ListensToFooEvent_0_6 = import1.ListensToFooEvent();
-    _compView_0.create0(_HostComponent_0_5);
-    final subscription_0 = _HostComponent_0_5.fooEvents.listen(eventHandler0(_ListensToFooEvent_0_6.onOutputFoo));
-    init(const [], [subscription_0]);
+    this._HostComponent_0_5 = import1.HostComponent();
+    this._ListensToFooEvent_0_6 = import1.ListensToFooEvent();
+    this._compView_0.create0(this._HostComponent_0_5);
+    final subscription_0 = this._HostComponent_0_5.fooEvents.listen(this.eventHandler0(this._ListensToFooEvent_0_6.onOutputFoo));
+    this.init(const [], [subscription_0]);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    _compView_0.detectHostChanges(firstCheck);
-    _compView_0.detectChanges();
+    this._compView_0.detectHostChanges(firstCheck);
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 
   @override
@@ -140,7 +140,7 @@ class ViewUsesHostComponentWithDirective0 extends AppView<import1.UsesHostCompon
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesHostComponentWithDirective, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -158,28 +158,28 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends AppView<import1.UsesHostC
   _ViewUsesHostComponentWithDirectiveHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesHostComponentWithDirective> build() {
     // Child component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
-    _compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
-    _compView_0.create(_UsesHostComponentWithDirective_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesHostComponentWithDirective_0_5);
+    this._compView_0 = ViewUsesHostComponentWithDirective0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesHostComponentWithDirective_0_5 = import1.UsesHostComponentWithDirective();
+    this._compView_0.create(this._UsesHostComponentWithDirective_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesHostComponentWithDirective_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -198,9 +198,9 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
   bool _expr_4;
   static import2.ComponentStyles _componentStyles;
   ViewHostComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('host');
-    import9.updateAttribute(rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('host');
+    import9.updateAttribute(this.rootEl, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);
@@ -208,53 +208,53 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
 
   @override
   ComponentRef<import1.HostComponent> build() {
-    final _ctx = ctx;
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
-    parentRenderNode.addEventListener('click', eventHandler1(_ctx.onClick));
-    import10.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', eventHandler1(_handle_tripleclick__));
-    parentRenderNode.addEventListener('keydown', eventHandler0(_ctx.onKeyDown));
+    final _ctx = this.ctx;
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
+    parentRenderNode.addEventListener('click', this.eventHandler1(_ctx.onClick));
+    import10.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', this.eventHandler1(this._handle_tripleclick__));
+    parentRenderNode.addEventListener('keydown', this.eventHandler0(_ctx.onKeyDown));
   }
 
   void _handle_tripleclick__($event) {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     _ctx.onClickNotSimple($event, _ctx.title);
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     if (firstCheck) {
       if (!identical(import1.HostComponent.hostClassFoo, null)) {
-        import9.updateClassBindingNonHtml(rootEl, 'foo', import1.HostComponent.hostClassFoo);
+        import9.updateClassBindingNonHtml(this.rootEl, 'foo', import1.HostComponent.hostClassFoo);
       }
       if (!identical(import1.HostComponent.hostStyleColor, null)) {
-        rootEl.style.setProperty('color', import1.HostComponent.hostStyleColor);
+        this.rootEl.style.setProperty('color', import1.HostComponent.hostStyleColor);
       }
     }
     final currVal_0 = import1.HostComponent.hasTerrible;
-    if (import10.checkBinding(_expr_0, currVal_0)) {
-      import9.updateAttribute(rootEl, 'has-terrible', (currVal_0 ? '' : null));
-      _expr_0 = currVal_0;
+    if (import10.checkBinding(this._expr_0, currVal_0)) {
+      import9.updateAttribute(this.rootEl, 'has-terrible', (currVal_0 ? '' : null));
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.title;
-    if (import10.checkBinding(_expr_1, currVal_1)) {
-      import9.setProperty(rootEl, 'title', currVal_1);
-      _expr_1 = currVal_1;
+    if (import10.checkBinding(this._expr_1, currVal_1)) {
+      import9.setProperty(this.rootEl, 'title', currVal_1);
+      this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.title;
-    if (import10.checkBinding(_expr_2, currVal_2)) {
-      import9.updateAttribute(rootEl, 'aria-title', currVal_2);
-      _expr_2 = currVal_2;
+    if (import10.checkBinding(this._expr_2, currVal_2)) {
+      import9.updateAttribute(this.rootEl, 'aria-title', currVal_2);
+      this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.isDisabled;
-    if (import10.checkBinding(_expr_3, currVal_3)) {
-      import9.updateAttribute(rootEl, 'aria-disabled', (currVal_3 ? '' : null));
-      _expr_3 = currVal_3;
+    if (import10.checkBinding(this._expr_3, currVal_3)) {
+      import9.updateAttribute(this.rootEl, 'aria-disabled', (currVal_3 ? '' : null));
+      this._expr_3 = currVal_3;
     }
     final currVal_4 = _ctx.isDisabled;
-    if (import10.checkBinding(_expr_4, currVal_4)) {
-      import9.updateClassBindingNonHtml(rootEl, 'is-disabled', currVal_4);
-      _expr_4 = currVal_4;
+    if (import10.checkBinding(this._expr_4, currVal_4)) {
+      import9.updateClassBindingNonHtml(this.rootEl, 'is-disabled', currVal_4);
+      this._expr_4 = currVal_4;
     }
   }
 
@@ -264,7 +264,7 @@ class ViewHostComponent0 extends AppView<import1.HostComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HostComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -282,30 +282,30 @@ class _ViewHostComponentHost0 extends AppView<import1.HostComponent> {
   _ViewHostComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HostComponent> build() {
     // Child component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
-    _compView_0 = ViewHostComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HostComponent_0_5 = import1.HostComponent();
-    _compView_0.create(_HostComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HostComponent_0_5);
+    this._compView_0 = ViewHostComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HostComponent_0_5 = import1.HostComponent();
+    this._compView_0.create(this._HostComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HostComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    _compView_0.detectHostChanges(firstCheck);
-    _compView_0.detectChanges();
+    this._compView_0.detectHostChanges(firstCheck);
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

@@ -31,8 +31,8 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
   import1.FancyButtonComponent _FancyButtonComponent_3_5;
   static import2.ComponentStyles _componentStyles;
   ViewEmptyPropertiesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('empty-properties');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('empty-properties');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null);
@@ -40,56 +40,56 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
 
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_0 = ViewFancyButtonComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewFancyButtonComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
     import9.setAttribute(_el_0, 'raised', '');
-    _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
-    _compView_0.create0(_FancyButtonComponent_0_5);
+    this._FancyButtonComponent_0_5 = import1.FancyButtonComponent();
+    this._compView_0.create0(this._FancyButtonComponent_0_5);
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_1 = ViewFancyButtonComponent0(this, 1);
-    final _el_1 = _compView_1.rootEl;
+    this._compView_1 = ViewFancyButtonComponent0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _FancyButtonComponent_1_5 = import1.FancyButtonComponent();
-    _compView_1.create0(_FancyButtonComponent_1_5);
+    this._FancyButtonComponent_1_5 = import1.FancyButtonComponent();
+    this._compView_1.create0(this._FancyButtonComponent_1_5);
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_2 = ViewFancyButtonComponent0(this, 2);
-    final _el_2 = _compView_2.rootEl;
+    this._compView_2 = ViewFancyButtonComponent0(this, 2);
+    final _el_2 = this._compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    _FancyButtonComponent_2_5 = import1.FancyButtonComponent();
-    _compView_2.create0(_FancyButtonComponent_2_5);
+    this._FancyButtonComponent_2_5 = import1.FancyButtonComponent();
+    this._compView_2.create0(this._FancyButtonComponent_2_5);
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_3 = ViewFancyButtonComponent0(this, 3);
-    final _el_3 = _compView_3.rootEl;
+    this._compView_3 = ViewFancyButtonComponent0(this, 3);
+    final _el_3 = this._compView_3.rootEl;
     parentRenderNode.append(_el_3);
-    _FancyButtonComponent_3_5 = import1.FancyButtonComponent();
-    _compView_3.create0(_FancyButtonComponent_3_5);
-    init0();
+    this._FancyButtonComponent_3_5 = import1.FancyButtonComponent();
+    this._compView_3.create0(this._FancyButtonComponent_3_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      _FancyButtonComponent_0_5.raised = true;
-      _FancyButtonComponent_1_5.raised = true;
-      _FancyButtonComponent_2_5.raised = true;
-      _FancyButtonComponent_3_5.raised = false;
+      this._FancyButtonComponent_0_5.raised = true;
+      this._FancyButtonComponent_1_5.raised = true;
+      this._FancyButtonComponent_2_5.raised = true;
+      this._FancyButtonComponent_3_5.raised = false;
     }
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
-    _compView_2.detectChanges();
-    _compView_3.detectChanges();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+    this._compView_2.detectChanges();
+    this._compView_3.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
-    _compView_1.destroyInternalState();
-    _compView_2.destroyInternalState();
-    _compView_3.destroyInternalState();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._compView_2.destroyInternalState();
+    this._compView_3.destroyInternalState();
   }
 
   @override
@@ -98,7 +98,7 @@ class ViewEmptyPropertiesComponent0 extends AppView<import1.EmptyPropertiesCompo
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$EmptyPropertiesComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -116,28 +116,28 @@ class _ViewEmptyPropertiesComponentHost0 extends AppView<import1.EmptyProperties
   _ViewEmptyPropertiesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.EmptyPropertiesComponent> build() {
     // Child component EmptyPropertiesComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_0 = ViewEmptyPropertiesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _EmptyPropertiesComponent_0_5 = import1.EmptyPropertiesComponent();
-    _compView_0.create(_EmptyPropertiesComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _EmptyPropertiesComponent_0_5);
+    this._compView_0 = ViewEmptyPropertiesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._EmptyPropertiesComponent_0_5 = import1.EmptyPropertiesComponent();
+    this._compView_0.create(this._EmptyPropertiesComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._EmptyPropertiesComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -151,8 +151,8 @@ final List<dynamic> styles$FancyButtonComponent = const [];
 class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewFancyButtonComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('fancy-button');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('fancy-button');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/empty_properties.dart' : null);
@@ -160,8 +160,8 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
 
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -170,7 +170,7 @@ class ViewFancyButtonComponent0 extends AppView<import1.FancyButtonComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$FancyButtonComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -188,28 +188,28 @@ class _ViewFancyButtonComponentHost0 extends AppView<import1.FancyButtonComponen
   _ViewFancyButtonComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.FancyButtonComponent> build() {
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
-    _compView_0 = ViewFancyButtonComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _FancyButtonComponent_0_5 = import1.FancyButtonComponent();
-    _compView_0.create(_FancyButtonComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _FancyButtonComponent_0_5);
+    this._compView_0 = ViewFancyButtonComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._FancyButtonComponent_0_5 = import1.FancyButtonComponent();
+    this._compView_0.create(this._FancyButtonComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._FancyButtonComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

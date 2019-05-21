@@ -23,8 +23,8 @@ final List<dynamic> styles$UsesEventTearoff = const [];
 class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
   static import2.ComponentStyles _componentStyles;
   ViewUsesEventTearoff0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('uses-event-tearoff');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('uses-event-tearoff');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/event_tearoff.dart' : null);
@@ -32,13 +32,13 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
 
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
-    final _ctx = ctx;
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final _ctx = this.ctx;
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendElement(doc, parentRenderNode, 'button');
-    _el_0.addEventListener('click', eventHandler1(_ctx.onClick));
-    _el_0.addEventListener('blur', eventHandler0(_ctx.onBlur));
-    init0();
+    _el_0.addEventListener('click', this.eventHandler1(_ctx.onClick));
+    _el_0.addEventListener('blur', this.eventHandler0(_ctx.onBlur));
+    this.init0();
   }
 
   @override
@@ -47,7 +47,7 @@ class ViewUsesEventTearoff0 extends AppView<import1.UsesEventTearoff> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesEventTearoff, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -65,28 +65,28 @@ class _ViewUsesEventTearoffHost0 extends AppView<import1.UsesEventTearoff> {
   _ViewUsesEventTearoffHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.UsesEventTearoff> build() {
     // Child component UsesEventTearoff in asset:_goldens/test/_files/event_tearoff.dart (changeDetection: Default)
-    _compView_0 = ViewUsesEventTearoff0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _UsesEventTearoff_0_5 = import1.UsesEventTearoff();
-    _compView_0.create(_UsesEventTearoff_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _UsesEventTearoff_0_5);
+    this._compView_0 = ViewUsesEventTearoff0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._UsesEventTearoff_0_5 = import1.UsesEventTearoff();
+    this._compView_0.create(this._UsesEventTearoff_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._UsesEventTearoff_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

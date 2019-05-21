@@ -27,8 +27,8 @@ final List<dynamic> styles$ProvidersComponent = const [];
 class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidersComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('providers');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('providers');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/providers.dart' : null);
@@ -36,9 +36,9 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
 
   @override
   ComponentRef<import1.ProvidersComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final _text_0 = import9.appendText(parentRenderNode, 'Hello');
-    init0();
+    this.init0();
   }
 
   @override
@@ -47,7 +47,7 @@ class ViewProvidersComponent0 extends AppView<import1.ProvidersComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProvidersComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -75,126 +75,126 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
   _ViewProvidersComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.MyTypeAnnotation get _MyTypeAnnotation_0_6 {
-    if ((__MyTypeAnnotation_0_6 == null)) {
-      (__MyTypeAnnotation_0_6 = import1.MyTypeAnnotation());
+    if ((this.__MyTypeAnnotation_0_6 == null)) {
+      (this.__MyTypeAnnotation_0_6 = import1.MyTypeAnnotation());
     }
-    return __MyTypeAnnotation_0_6;
+    return this.__MyTypeAnnotation_0_6;
   }
 
   import1.MyInjectableTypeAnnotation get _MyInjectableTypeAnnotation_0_7 {
-    if ((__MyInjectableTypeAnnotation_0_7 == null)) {
-      (__MyInjectableTypeAnnotation_0_7 = import1.MyInjectableTypeAnnotation());
+    if ((this.__MyInjectableTypeAnnotation_0_7 == null)) {
+      (this.__MyInjectableTypeAnnotation_0_7 = import1.MyInjectableTypeAnnotation());
     }
-    return __MyInjectableTypeAnnotation_0_7;
+    return this.__MyInjectableTypeAnnotation_0_7;
   }
 
   dynamic get _MyUseFactory_0_8 {
-    if ((__MyUseFactory_0_8 == null)) {
-      (__MyUseFactory_0_8 = (import7.isDevMode
+    if ((this.__MyUseFactory_0_8 == null)) {
+      (this.__MyUseFactory_0_8 = (import7.isDevMode
           ? import10.debugInjectorWrap(import1.MyUseFactory, () {
-              return import1.ProvidersComponent.createService(this.injectorGet(import11.NgZone, parentIndex));
+              return import1.ProvidersComponent.createService(this.injectorGet(import11.NgZone, this.parentIndex));
             })
-          : import1.ProvidersComponent.createService(this.injectorGet(import11.NgZone, parentIndex))));
+          : import1.ProvidersComponent.createService(this.injectorGet(import11.NgZone, this.parentIndex))));
     }
-    return __MyUseFactory_0_8;
+    return this.__MyUseFactory_0_8;
   }
 
   import1.MyUseClass get _MyUseClass_0_9 {
-    if ((__MyUseClass_0_9 == null)) {
-      (__MyUseClass_0_9 = import1.MyUseClass());
+    if ((this.__MyUseClass_0_9 == null)) {
+      (this.__MyUseClass_0_9 = import1.MyUseClass());
     }
-    return __MyUseClass_0_9;
+    return this.__MyUseClass_0_9;
   }
 
   import1.MyUseValue get _MyUseValue_0_12 {
-    if ((__MyUseValue_0_12 == null)) {
-      (__MyUseValue_0_12 = const import1.MyUseValue('Matan'));
+    if ((this.__MyUseValue_0_12 == null)) {
+      (this.__MyUseValue_0_12 = const import1.MyUseValue('Matan'));
     }
-    return __MyUseValue_0_12;
+    return this.__MyUseValue_0_12;
   }
 
   String get _useValueString_0_13 {
-    if ((__useValueString_0_13 == null)) {
-      (__useValueString_0_13 = 'foo');
+    if ((this.__useValueString_0_13 == null)) {
+      (this.__useValueString_0_13 = 'foo');
     }
-    return __useValueString_0_13;
+    return this.__useValueString_0_13;
   }
 
   List<dynamic> get _useValueList_0_14 {
-    if ((__useValueList_0_14 == null)) {
-      (__useValueList_0_14 = const [import1.MyUseValue('Andrew'), import1.MyUseValue('Matan'), import1.MyUseValue.named(optional: true)]);
+    if ((this.__useValueList_0_14 == null)) {
+      (this.__useValueList_0_14 = const [import1.MyUseValue('Andrew'), import1.MyUseValue('Matan'), import1.MyUseValue.named(optional: true)]);
     }
-    return __useValueList_0_14;
+    return this.__useValueList_0_14;
   }
 
   Map<String, dynamic> get _useValueMap_0_15 {
-    if ((__useValueMap_0_15 == null)) {
-      (__useValueMap_0_15 = const {'Andrew': import1.MyUseValue('Andrew'), 'Matan': import1.MyUseValue('Matan')});
+    if ((this.__useValueMap_0_15 == null)) {
+      (this.__useValueMap_0_15 = const {'Andrew': import1.MyUseValue('Andrew'), 'Matan': import1.MyUseValue('Matan')});
     }
-    return __useValueMap_0_15;
+    return this.__useValueMap_0_15;
   }
 
   dynamic get _useEnums_0_16 {
-    if ((__useEnums_0_16 == null)) {
-      (__useEnums_0_16 = import1.MyEnum.first);
+    if ((this.__useEnums_0_16 == null)) {
+      (this.__useEnums_0_16 = import1.MyEnum.first);
     }
-    return __useEnums_0_16;
+    return this.__useEnums_0_16;
   }
 
   String get _XsrfToken_0_17 {
-    if ((__XsrfToken_0_17 == null)) {
-      (__XsrfToken_0_17 = 'ABC123');
+    if ((this.__XsrfToken_0_17 == null)) {
+      (this.__XsrfToken_0_17 = 'ABC123');
     }
-    return __XsrfToken_0_17;
+    return this.__XsrfToken_0_17;
   }
 
   @override
   ComponentRef<import1.ProvidersComponent> build() {
     // Child component ProvidersComponent in asset:_goldens/test/_files/providers.dart (changeDetection: Default)
-    _compView_0 = ViewProvidersComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ProvidersComponent_0_5 = import1.ProvidersComponent();
-    _compView_0.create(_ProvidersComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ProvidersComponent_0_5);
+    this._compView_0 = ViewProvidersComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ProvidersComponent_0_5 = import1.ProvidersComponent();
+    this._compView_0.create(this._ProvidersComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ProvidersComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
       if (identical(token, import1.MyTypeAnnotation)) {
-        return _MyTypeAnnotation_0_6;
+        return this._MyTypeAnnotation_0_6;
       }
       if (identical(token, import1.MyInjectableTypeAnnotation)) {
-        return _MyInjectableTypeAnnotation_0_7;
+        return this._MyInjectableTypeAnnotation_0_7;
       }
       if (identical(token, import1.MyUseFactory)) {
-        return _MyUseFactory_0_8;
+        return this._MyUseFactory_0_8;
       }
       if (((identical(token, import1.MyUseClass) || identical(token, import1.MyUseExisting)) || identical(token, import1.MyUseExistingNested))) {
-        return _MyUseClass_0_9;
+        return this._MyUseClass_0_9;
       }
       if (identical(token, import1.MyUseValue)) {
-        return _MyUseValue_0_12;
+        return this._MyUseValue_0_12;
       }
       if (identical(token, const import12.OpaqueToken<dynamic>('useValueString'))) {
-        return _useValueString_0_13;
+        return this._useValueString_0_13;
       }
       if (identical(token, const import12.OpaqueToken<dynamic>('useValueList'))) {
-        return _useValueList_0_14;
+        return this._useValueList_0_14;
       }
       if (identical(token, const import12.OpaqueToken<dynamic>('useValueMap'))) {
-        return _useValueMap_0_15;
+        return this._useValueMap_0_15;
       }
       if (identical(token, const import12.OpaqueToken<dynamic>('useEnums'))) {
-        return _useEnums_0_16;
+        return this._useEnums_0_16;
       }
       if (identical(token, const import13.XsrfToken())) {
-        return _XsrfToken_0_17;
+        return this._XsrfToken_0_17;
       }
     }
     return notFoundResult;
@@ -202,12 +202,12 @@ class _ViewProvidersComponentHost0 extends AppView<import1.ProvidersComponent> {
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

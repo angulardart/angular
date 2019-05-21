@@ -30,8 +30,8 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -39,21 +39,21 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
 
   @override
   ComponentRef<import1.InterpolationComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final _text_0 = import10.appendText(parentRenderNode, '    ');
     final doc = import7.document;
     final _el_1 = import10.appendDiv(doc, parentRenderNode);
     final _text_2 = import10.appendText(_el_1, '\n      ');
-    _el_1.append(_textBinding_3.element);
+    _el_1.append(this._textBinding_3.element);
     final _text_4 = import10.appendText(_el_1, '\n    ');
     final _text_5 = import10.appendText(parentRenderNode, '\n  ');
-    init0();
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _textBinding_3.updateText(import11.interpolateString0(_ctx.foo));
+    final _ctx = this.ctx;
+    this._textBinding_3.updateText(import11.interpolateString0(_ctx.foo));
   }
 
   @override
@@ -62,7 +62,7 @@ class ViewInterpolationComponent0 extends AppView<import1.InterpolationComponent
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -80,28 +80,28 @@ class _ViewInterpolationComponentHost0 extends AppView<import1.InterpolationComp
   _ViewInterpolationComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationComponent> build() {
     // Child component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationComponent_0_5 = import1.InterpolationComponent();
-    _compView_0.create(_InterpolationComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationComponent_0_5);
+    this._compView_0 = ViewInterpolationComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationComponent_0_5 = import1.InterpolationComponent();
+    this._compView_0.create(this._InterpolationComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -116,8 +116,8 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationComponentNoWhitespace0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -125,17 +125,17 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
 
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    _el_0.append(_textBinding_1.element);
-    init0();
+    _el_0.append(this._textBinding_1.element);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _textBinding_1.updateText(import11.interpolateString0(_ctx.foo));
+    final _ctx = this.ctx;
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.foo));
   }
 
   @override
@@ -144,7 +144,7 @@ class ViewInterpolationComponentNoWhitespace0 extends AppView<import1.Interpolat
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationComponentNoWhitespace, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -162,28 +162,28 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends AppView<import1.Inter
   _ViewInterpolationComponentNoWhitespaceHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationComponentNoWhitespace> build() {
     // Child component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
-    _compView_0.create(_InterpolationComponentNoWhitespace_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationComponentNoWhitespace_0_5);
+    this._compView_0 = ViewInterpolationComponentNoWhitespace0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationComponentNoWhitespace_0_5 = import1.InterpolationComponentNoWhitespace();
+    this._compView_0.create(this._InterpolationComponentNoWhitespace_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationComponentNoWhitespace_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -199,8 +199,8 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationTwoAdjacent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -208,21 +208,21 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
 
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    _el_0.append(_textBinding_1.element);
+    _el_0.append(this._textBinding_1.element);
     final _text_2 = import10.appendText(_el_0, ' ');
-    _el_0.append(_textBinding_3.element);
+    _el_0.append(this._textBinding_3.element);
     final _text_4 = import10.appendText(_el_0, '!');
-    init0();
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _textBinding_1.updateText(import11.interpolateString0(_ctx.greeting));
-    _textBinding_3.updateText(import11.interpolateString0(_ctx.noun));
+    final _ctx = this.ctx;
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.greeting));
+    this._textBinding_3.updateText(import11.interpolateString0(_ctx.noun));
   }
 
   @override
@@ -231,7 +231,7 @@ class ViewInterpolationTwoAdjacent0 extends AppView<import1.InterpolationTwoAdja
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationTwoAdjacent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -249,28 +249,28 @@ class _ViewInterpolationTwoAdjacentHost0 extends AppView<import1.InterpolationTw
   _ViewInterpolationTwoAdjacentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationTwoAdjacent> build() {
     // Child component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
-    _compView_0.create(_InterpolationTwoAdjacent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationTwoAdjacent_0_5);
+    this._compView_0 = ViewInterpolationTwoAdjacent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationTwoAdjacent_0_5 = import1.InterpolationTwoAdjacent();
+    this._compView_0.create(this._InterpolationTwoAdjacent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationTwoAdjacent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -287,8 +287,8 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
   final import2.TextBinding _textBinding_6 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLongerSentence0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -296,25 +296,25 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
 
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Welcome ');
-    _el_0.append(_textBinding_2.element);
+    _el_0.append(this._textBinding_2.element);
     final _text_3 = import10.appendText(_el_0, ' to the ');
-    _el_0.append(_textBinding_4.element);
+    _el_0.append(this._textBinding_4.element);
     final _text_5 = import10.appendText(_el_0, ' of ');
-    _el_0.append(_textBinding_6.element);
+    _el_0.append(this._textBinding_6.element);
     final _text_7 = import10.appendText(_el_0, '!');
-    init0();
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _textBinding_2.updateText(import11.interpolateString0(_ctx.name));
-    _textBinding_4.updateText(import11.interpolateString0(_ctx.business));
-    _textBinding_6.updateText(import11.interpolateString0(_ctx.location));
+    final _ctx = this.ctx;
+    this._textBinding_2.updateText(import11.interpolateString0(_ctx.name));
+    this._textBinding_4.updateText(import11.interpolateString0(_ctx.business));
+    this._textBinding_6.updateText(import11.interpolateString0(_ctx.location));
   }
 
   @override
@@ -323,7 +323,7 @@ class ViewInterpolationLongerSentence0 extends AppView<import1.InterpolationLong
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLongerSentence, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -341,28 +341,28 @@ class _ViewInterpolationLongerSentenceHost0 extends AppView<import1.Interpolatio
   _ViewInterpolationLongerSentenceHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationLongerSentence> build() {
     // Child component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationLongerSentence0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
-    _compView_0.create(_InterpolationLongerSentence_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationLongerSentence_0_5);
+    this._compView_0 = ViewInterpolationLongerSentence0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationLongerSentence_0_5 = import1.InterpolationLongerSentence();
+    this._compView_0.create(this._InterpolationLongerSentence_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationLongerSentence_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -376,8 +376,8 @@ final List<dynamic> styles$InterpolationLiterals = const [];
 class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> {
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLiterals0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -385,14 +385,14 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
 
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
     final _text_1 = import10.appendText(_el_0, 'Welcome');
     final _text_2 = import10.appendText(_el_0, ' ');
     final _text_3 = import10.appendText(_el_0, 'Home');
     final _text_4 = import10.appendText(_el_0, '!');
-    init0();
+    this.init0();
   }
 
   @override
@@ -401,7 +401,7 @@ class ViewInterpolationLiterals0 extends AppView<import1.InterpolationLiterals> 
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLiterals, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -419,28 +419,28 @@ class _ViewInterpolationLiteralsHost0 extends AppView<import1.InterpolationLiter
   _ViewInterpolationLiteralsHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationLiterals> build() {
     // Child component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationLiterals0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationLiterals_0_5 = import1.InterpolationLiterals();
-    _compView_0.create(_InterpolationLiterals_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationLiterals_0_5);
+    this._compView_0 = ViewInterpolationLiterals0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationLiterals_0_5 = import1.InterpolationLiterals();
+    this._compView_0.create(this._InterpolationLiterals_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationLiterals_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -457,8 +457,8 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
   var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLocals0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('interpolation');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('interpolation');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -466,31 +466,31 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
 
   @override
   ComponentRef<import1.InterpolationLocals> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final _anchor_0 = import10.appendAnchor(parentRenderNode);
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals1);
-    _NgFor_0_9 = import13.NgFor(_appEl_0, _TemplateRef_0_8);
-    init0();
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InterpolationLocals1);
+    this._NgFor_0_9 = import13.NgFor(this._appEl_0, _TemplateRef_0_8);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.bars;
-    if (import15.checkBinding(_expr_0, currVal_0)) {
-      _NgFor_0_9.ngForOf = currVal_0;
-      _expr_0 = currVal_0;
+    if (import15.checkBinding(this._expr_0, currVal_0)) {
+      this._NgFor_0_9.ngForOf = currVal_0;
+      this._expr_0 = currVal_0;
     }
     if ((!import15.AppViewUtils.throwOnChanges)) {
-      _NgFor_0_9.ngDoCheck();
+      this._NgFor_0_9.ngDoCheck();
     }
-    _appEl_0.detectChangesInNestedViews();
+    this._appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0.destroyNestedViews();
+    this._appEl_0.destroyNestedViews();
   }
 
   @override
@@ -499,7 +499,7 @@ class ViewInterpolationLocals0 extends AppView<import1.InterpolationLocals> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLocals, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -513,34 +513,34 @@ class _ViewInterpolationLocals1 extends AppView<import1.InterpolationLocals> {
   import13.NgFor _NgFor_0_9;
   var _expr_0;
   _ViewInterpolationLocals1(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
     final _anchor_0 = import10.createAnchor();
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InterpolationLocals2);
-    _NgFor_0_9 = import13.NgFor(_appEl_0, _TemplateRef_0_8);
-    init1(_appEl_0);
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InterpolationLocals2);
+    this._NgFor_0_9 = import13.NgFor(this._appEl_0, _TemplateRef_0_8);
+    this.init1(this._appEl_0);
   }
 
   @override
   void detectChangesInternal() {
-    final local_bar = locals['\$implicit'];
+    final local_bar = this.locals['\$implicit'];
     final currVal_0 = local_bar;
-    if (import15.checkBinding(_expr_0, currVal_0)) {
-      _NgFor_0_9.ngForOf = currVal_0;
-      _expr_0 = currVal_0;
+    if (import15.checkBinding(this._expr_0, currVal_0)) {
+      this._NgFor_0_9.ngForOf = currVal_0;
+      this._expr_0 = currVal_0;
     }
     if ((!import15.AppViewUtils.throwOnChanges)) {
-      _NgFor_0_9.ngDoCheck();
+      this._NgFor_0_9.ngDoCheck();
     }
-    _appEl_0.detectChangesInNestedViews();
+    this._appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0.destroyNestedViews();
+    this._appEl_0.destroyNestedViews();
   }
 }
 
@@ -552,23 +552,23 @@ class _ViewInterpolationLocals2 extends AppView<import1.InterpolationLocals> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
   _ViewInterpolationLocals2(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.InterpolationLocals> build() {
     final _text_0 = import10.createText('Hello ');
     final _text_2 = import10.createText(': ');
     final _text_4 = import10.createText('!');
-    init([_text_0, _textBinding_1.element, _text_2, _textBinding_3.element, _text_4], null);
+    this.init([_text_0, this._textBinding_1.element, _text_2, this._textBinding_3.element, _text_4], null);
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    final local_bar = import8.unsafeCast<_ViewInterpolationLocals1>(parentView).locals['\$implicit'];
-    final local_foo = locals['\$implicit'];
-    _textBinding_1.updateText(import11.interpolateString0(_ctx.callMethod(local_bar)));
-    _textBinding_3.updateText(import11.interpolate0(local_foo));
+    final _ctx = this.ctx;
+    final local_bar = import8.unsafeCast<_ViewInterpolationLocals1>(this.parentView).locals['\$implicit'];
+    final local_foo = this.locals['\$implicit'];
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.callMethod(local_bar)));
+    this._textBinding_3.updateText(import11.interpolate0(local_foo));
   }
 }
 
@@ -585,28 +585,28 @@ class _ViewInterpolationLocalsHost0 extends AppView<import1.InterpolationLocals>
   _ViewInterpolationLocalsHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InterpolationLocals> build() {
     // Child component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewInterpolationLocals0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InterpolationLocals_0_5 = import1.InterpolationLocals();
-    _compView_0.create(_InterpolationLocals_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InterpolationLocals_0_5);
+    this._compView_0 = ViewInterpolationLocals0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InterpolationLocals_0_5 = import1.InterpolationLocals();
+    this._compView_0.create(this._InterpolationLocals_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InterpolationLocals_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -624,8 +624,8 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
   import7.Element _el_2;
   static import3.ComponentStyles _componentStyles;
   ViewAttribute0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('attribute');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('attribute');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -633,26 +633,26 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
 
   @override
   ComponentRef<import1.Attribute> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
-    _el_0 = import10.appendElement(doc, parentRenderNode, 'img');
+    this._el_0 = import10.appendElement(doc, parentRenderNode, 'img');
     final _text_1 = import10.appendText(parentRenderNode, ' ');
-    _el_2 = import10.appendElement(doc, parentRenderNode, 'img');
-    init0();
+    this._el_2 = import10.appendElement(doc, parentRenderNode, 'img');
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = import11.interpolateString0(_ctx.altText);
-    if (import15.checkBinding(_expr_0, currVal_0)) {
-      import10.setProperty(_el_0, 'alt', currVal_0);
-      _expr_0 = currVal_0;
+    if (import15.checkBinding(this._expr_0, currVal_0)) {
+      import10.setProperty(this._el_0, 'alt', currVal_0);
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = import11.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
-    if (import15.checkBinding(_expr_1, currVal_1)) {
-      import10.setProperty(_el_2, 'alt', currVal_1);
-      _expr_1 = currVal_1;
+    if (import15.checkBinding(this._expr_1, currVal_1)) {
+      import10.setProperty(this._el_2, 'alt', currVal_1);
+      this._expr_1 = currVal_1;
     }
   }
 
@@ -662,7 +662,7 @@ class ViewAttribute0 extends AppView<import1.Attribute> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -680,28 +680,28 @@ class _ViewAttributeHost0 extends AppView<import1.Attribute> {
   _ViewAttributeHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.Attribute> build() {
     // Child component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewAttribute0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _Attribute_0_5 = import1.Attribute();
-    _compView_0.create(_Attribute_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _Attribute_0_5);
+    this._compView_0 = ViewAttribute0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._Attribute_0_5 = import1.Attribute();
+    this._compView_0.create(this._Attribute_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._Attribute_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -719,8 +719,8 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
   import7.Element _el_3;
   static import3.ComponentStyles _componentStyles;
   ViewAttributePW0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('attribute');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('attribute');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/interpolation.dart' : null);
@@ -728,27 +728,27 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
 
   @override
   ComponentRef<import1.AttributePW> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final _text_0 = import10.appendText(parentRenderNode, '    ');
     final doc = import7.document;
-    _el_1 = import10.appendElement(doc, parentRenderNode, 'img');
+    this._el_1 = import10.appendElement(doc, parentRenderNode, 'img');
     final _text_2 = import10.appendText(parentRenderNode, '\n    ');
-    _el_3 = import10.appendElement(doc, parentRenderNode, 'img');
-    init0();
+    this._el_3 = import10.appendElement(doc, parentRenderNode, 'img');
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = import11.interpolateString1('\n', _ctx.altText, '\n');
-    if (import15.checkBinding(_expr_0, currVal_0)) {
-      import10.setProperty(_el_1, 'alt', currVal_0);
-      _expr_0 = currVal_0;
+    if (import15.checkBinding(this._expr_0, currVal_0)) {
+      import10.setProperty(this._el_1, 'alt', currVal_0);
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = import11.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
-    if (import15.checkBinding(_expr_1, currVal_1)) {
-      import10.setProperty(_el_3, 'alt', currVal_1);
-      _expr_1 = currVal_1;
+    if (import15.checkBinding(this._expr_1, currVal_1)) {
+      import10.setProperty(this._el_3, 'alt', currVal_1);
+      this._expr_1 = currVal_1;
     }
   }
 
@@ -758,7 +758,7 @@ class ViewAttributePW0 extends AppView<import1.AttributePW> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -776,28 +776,28 @@ class _ViewAttributePWHost0 extends AppView<import1.AttributePW> {
   _ViewAttributePWHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.AttributePW> build() {
     // Child component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
-    _compView_0 = ViewAttributePW0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _AttributePW_0_5 = import1.AttributePW();
-    _compView_0.create(_AttributePW_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _AttributePW_0_5);
+    this._compView_0 = ViewAttributePW0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._AttributePW_0_5 = import1.AttributePW();
+    this._compView_0.create(this._AttributePW_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._AttributePW_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

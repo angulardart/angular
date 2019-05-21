@@ -27,8 +27,8 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
   static import2.ComponentStyles _componentStyles;
   ViewAppComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('app');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('app');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
@@ -36,41 +36,41 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
-    _compView_0 = ViewProvidesServicesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewProvidesServicesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    this._ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
     // Child component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
-    _compView_1 = ViewInjectsServicesComponent0(this, 1);
-    final _el_1 = _compView_1.rootEl;
-    _InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(_ProvidesServicesComponent_0_5, _ProvidesServicesComponent_0_5);
-    _compView_1.create0(_InjectsServicesComponent_1_5);
-    _compView_0.create(_ProvidesServicesComponent_0_5, [
+    this._compView_1 = ViewInjectsServicesComponent0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
+    this._InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(this._ProvidesServicesComponent_0_5, this._ProvidesServicesComponent_0_5);
+    this._compView_1.create0(this._InjectsServicesComponent_1_5);
+    this._compView_0.create(this._ProvidesServicesComponent_0_5, [
       [_el_1]
     ]);
-    init0();
+    this.init0();
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
-      return _ProvidesServicesComponent_0_5;
+      return this._ProvidesServicesComponent_0_5;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
-    _compView_1.destroyInternalState();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
   }
 
   @override
@@ -79,7 +79,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -97,28 +97,28 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   _ViewAppComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
     // Child component AppComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
-    _compView_0 = ViewAppComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _AppComponent_0_5 = import1.AppComponent();
-    _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _AppComponent_0_5);
+    this._compView_0 = ViewAppComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._AppComponent_0_5 = import1.AppComponent();
+    this._compView_0.create(this._AppComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._AppComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -132,8 +132,8 @@ final List<dynamic> styles$ProvidesServicesComponent = const [];
 class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewProvidesServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('provides-services');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('provides-services');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
@@ -141,9 +141,9 @@ class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesCom
 
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    project(parentRenderNode, 0);
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.project(parentRenderNode, 0);
+    this.init0();
   }
 
   @override
@@ -152,7 +152,7 @@ class ViewProvidesServicesComponent0 extends AppView<import1.ProvidesServicesCom
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProvidesServicesComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -170,36 +170,36 @@ class _ViewProvidesServicesComponentHost0 extends AppView<import1.ProvidesServic
   _ViewProvidesServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.ProvidesServicesComponent> build() {
     // Child component ProvidesServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
-    _compView_0 = ViewProvidesServicesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
-    _compView_0.create(_ProvidesServicesComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ProvidesServicesComponent_0_5);
+    this._compView_0 = ViewProvidesServicesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    this._compView_0.create(this._ProvidesServicesComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ProvidesServicesComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (0 == nodeIndex))) {
-      return _ProvidesServicesComponent_0_5;
+      return this._ProvidesServicesComponent_0_5;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -213,8 +213,8 @@ final List<dynamic> styles$InjectsServicesComponent = const [];
 class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewInjectsServicesComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('injects-services');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('injects-services');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/eager_existing_providers.dart' : null);
@@ -222,8 +222,8 @@ class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesCompo
 
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -232,7 +232,7 @@ class ViewInjectsServicesComponent0 extends AppView<import1.InjectsServicesCompo
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectsServicesComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -250,32 +250,32 @@ class _ViewInjectsServicesComponentHost0 extends AppView<import1.InjectsServices
   _ViewInjectsServicesComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InjectsServicesComponent> build() {
     // Child component InjectsServicesComponent in asset:_goldens/test/_files/di/eager_existing_providers.dart (changeDetection: Default)
-    _compView_0 = ViewInjectsServicesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InjectsServicesComponent_0_5 = (import7.isDevMode
+    this._compView_0 = ViewInjectsServicesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InjectsServicesComponent_0_5 = (import7.isDevMode
         ? import9.debugInjectorWrap(import1.InjectsServicesComponent, () {
-            return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex));
+            return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, this.parentIndex), this.injectorGet(import1.EagerProviderB, this.parentIndex));
           })
-        : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, parentIndex), this.injectorGet(import1.EagerProviderB, parentIndex)));
-    _compView_0.create(_InjectsServicesComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InjectsServicesComponent_0_5);
+        : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, this.parentIndex), this.injectorGet(import1.EagerProviderB, this.parentIndex)));
+    this._compView_0.create(this._InjectsServicesComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InjectsServicesComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

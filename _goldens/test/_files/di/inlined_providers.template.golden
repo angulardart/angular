@@ -55,84 +55,84 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
   import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static import2.ComponentStyles _componentStyles;
   ViewParentComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('parent-component');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('parent-component');
   }
   import1.A get _A_0_6 {
-    if ((__A_0_6 == null)) {
-      (__A_0_6 = import1.A());
+    if ((this.__A_0_6 == null)) {
+      (this.__A_0_6 = import1.A());
     }
-    return __A_0_6;
+    return this.__A_0_6;
   }
 
   import1.B get _B_0_7 {
-    if ((__B_0_7 == null)) {
-      (__B_0_7 = import1.B());
+    if ((this.__B_0_7 == null)) {
+      (this.__B_0_7 = import1.B());
     }
-    return __B_0_7;
+    return this.__B_0_7;
   }
 
   import1.C get _C_0_8 {
-    if ((__C_0_8 == null)) {
-      (__C_0_8 = import1.C());
+    if ((this.__C_0_8 == null)) {
+      (this.__C_0_8 = import1.C());
     }
-    return __C_0_8;
+    return this.__C_0_8;
   }
 
   import1.A get _A_1_6 {
-    if ((__A_1_6 == null)) {
-      (__A_1_6 = import1.A());
+    if ((this.__A_1_6 == null)) {
+      (this.__A_1_6 = import1.A());
     }
-    return __A_1_6;
+    return this.__A_1_6;
   }
 
   import1.B get _B_1_7 {
-    if ((__B_1_7 == null)) {
-      (__B_1_7 = import1.B());
+    if ((this.__B_1_7 == null)) {
+      (this.__B_1_7 = import1.B());
     }
-    return __B_1_7;
+    return this.__B_1_7;
   }
 
   import1.C get _C_1_8 {
-    if ((__C_1_8 == null)) {
-      (__C_1_8 = import1.C());
+    if ((this.__C_1_8 == null)) {
+      (this.__C_1_8 = import1.C());
     }
-    return __C_1_8;
+    return this.__C_1_8;
   }
 
   import1.A2 get _A_5_7 {
-    if ((__A_5_7 == null)) {
-      (__A_5_7 = import1.A2());
+    if ((this.__A_5_7 == null)) {
+      (this.__A_5_7 = import1.A2());
     }
-    return __A_5_7;
+    return this.__A_5_7;
   }
 
   import1.B get _B_5_8 {
-    if ((__B_5_8 == null)) {
-      (__B_5_8 = import1.B());
+    if ((this.__B_5_8 == null)) {
+      (this.__B_5_8 = import1.B());
     }
-    return __B_5_8;
+    return this.__B_5_8;
   }
 
   import1.C get _C_5_9 {
-    if ((__C_5_9 == null)) {
-      (__C_5_9 = import1.C());
+    if ((this.__C_5_9 == null)) {
+      (this.__C_5_9 = import1.C());
     }
-    return __C_5_9;
+    return this.__C_5_9;
   }
 
   import1.D2 get _D_5_10 {
-    if ((__D_5_10 == null)) {
-      (__D_5_10 = import1.D2());
+    if ((this.__D_5_10 == null)) {
+      (this.__D_5_10 = import1.D2());
     }
-    return __D_5_10;
+    return this.__D_5_10;
   }
 
   import1.A2 get _A_6_8 {
-    if ((__A_6_8 == null)) {
-      (__A_6_8 = import1.A2());
+    if ((this.__A_6_8 == null)) {
+      (this.__A_6_8 = import1.A2());
     }
-    return __A_6_8;
+    return this.__A_6_8;
   }
 
   static String get _debugComponentUrl {
@@ -141,116 +141,116 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 
   @override
   ComponentRef<import1.ParentComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
-    final _el_0 = _compView_0.rootEl;
+    this._compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
     parentRenderNode.append(_el_0);
-    _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
-    _compView_0.create0(_ChildComponentProvidingA$B$C_0_5);
+    this._ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
+    this._compView_0.create0(this._ChildComponentProvidingA$B$C_0_5);
     // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_1 = ViewChildComponentProvidingA$B$C0(this, 1);
-    final _el_1 = _compView_1.rootEl;
+    this._compView_1 = ViewChildComponentProvidingA$B$C0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
     parentRenderNode.append(_el_1);
-    _ChildComponentProvidingA$B$C_1_5 = import1.ChildComponentProvidingA$B$C();
-    _compView_1.create0(_ChildComponentProvidingA$B$C_1_5);
+    this._ChildComponentProvidingA$B$C_1_5 = import1.ChildComponentProvidingA$B$C();
+    this._compView_1.create0(this._ChildComponentProvidingA$B$C_1_5);
     // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_2 = ViewChildComponentWithNgContentProviding$D0(this, 2);
-    final _el_2 = _compView_2.rootEl;
+    this._compView_2 = ViewChildComponentWithNgContentProviding$D0(this, 2);
+    final _el_2 = this._compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    _ChildComponentWithNgContentProviding$D_2_5 = import1.ChildComponentWithNgContentProviding$D();
-    _D_2_6 = import1.D();
+    this._ChildComponentWithNgContentProviding$D_2_5 = import1.ChildComponentWithNgContentProviding$D();
+    this._D_2_6 = import1.D();
     // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_3 = ViewChildComponentInjecting$D0(this, 3);
-    final _el_3 = _compView_3.rootEl;
-    _ChildComponentInjecting$D_3_5 = import1.ChildComponentInjecting$D(_D_2_6);
-    _compView_3.create0(_ChildComponentInjecting$D_3_5);
-    _compView_2.create(_ChildComponentWithNgContentProviding$D_2_5, [
+    this._compView_3 = ViewChildComponentInjecting$D0(this, 3);
+    final _el_3 = this._compView_3.rootEl;
+    this._ChildComponentInjecting$D_3_5 = import1.ChildComponentInjecting$D(this._D_2_6);
+    this._compView_3.create0(this._ChildComponentInjecting$D_3_5);
+    this._compView_2.create(this._ChildComponentWithNgContentProviding$D_2_5, [
       [_el_3]
     ]);
     // Child component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_4 = ViewChildComponentWithVisibilityAll0(this, 4);
-    final _el_4 = _compView_4.rootEl;
+    this._compView_4 = ViewChildComponentWithVisibilityAll0(this, 4);
+    final _el_4 = this._compView_4.rootEl;
     parentRenderNode.append(_el_4);
-    _ChildComponentWithVisibilityAll_4_5 = import1.ChildComponentWithVisibilityAll();
-    _compView_4.create0(_ChildComponentWithVisibilityAll_4_5);
+    this._ChildComponentWithVisibilityAll_4_5 = import1.ChildComponentWithVisibilityAll();
+    this._compView_4.create0(this._ChildComponentWithVisibilityAll_4_5);
     // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_5 = ViewChildComponentProvidingA$B$C0(this, 5);
-    final _el_5 = _compView_5.rootEl;
+    this._compView_5 = ViewChildComponentProvidingA$B$C0(this, 5);
+    final _el_5 = this._compView_5.rootEl;
     parentRenderNode.append(_el_5);
     import9.setAttribute(_el_5, 'directive-providing-a2-d2', '');
-    _ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
-    _DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
-    _compView_5.create0(_ChildComponentProvidingA$B$C_5_5);
+    this._ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
+    this._DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
+    this._compView_5.create0(this._ChildComponentProvidingA$B$C_5_5);
     // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
-    final _el_6 = _compView_6.rootEl;
+    this._compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
+    final _el_6 = this._compView_6.rootEl;
     parentRenderNode.append(_el_6);
     import9.setAttribute(_el_6, 'directive-providing-a2-d2', '');
-    _ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
-    _DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
-    _D_6_7 = import1.D2();
+    this._ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
+    this._DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
+    this._D_6_7 = import1.D2();
     // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_7 = ViewChildComponentInjecting$D0(this, 7);
-    final _el_7 = _compView_7.rootEl;
-    _ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(_D_6_7);
-    _compView_7.create0(_ChildComponentInjecting$D_7_5);
-    _compView_6.create(_ChildComponentWithNgContentProviding$D_6_5, [
+    this._compView_7 = ViewChildComponentInjecting$D0(this, 7);
+    final _el_7 = this._compView_7.rootEl;
+    this._ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(this._D_6_7);
+    this._compView_7.create0(this._ChildComponentInjecting$D_7_5);
+    this._compView_6.create(this._ChildComponentWithNgContentProviding$D_6_5, [
       [_el_7]
     ]);
-    init0();
+    this.init0();
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
       if (identical(token, import1.A)) {
-        return _A_0_6;
+        return this._A_0_6;
       }
       if (identical(token, import1.B)) {
-        return _B_0_7;
+        return this._B_0_7;
       }
       if (identical(token, import1.C)) {
-        return _C_0_8;
+        return this._C_0_8;
       }
     }
     if ((1 == nodeIndex)) {
       if (identical(token, import1.A)) {
-        return _A_1_6;
+        return this._A_1_6;
       }
       if (identical(token, import1.B)) {
-        return _B_1_7;
+        return this._B_1_7;
       }
       if (identical(token, import1.C)) {
-        return _C_1_8;
+        return this._C_1_8;
       }
     }
     if ((identical(token, import1.D) && ((2 <= nodeIndex) && (nodeIndex <= 3)))) {
-      return _D_2_6;
+      return this._D_2_6;
     }
     if ((identical(token, import1.ChildComponentWithVisibilityAll) && (4 == nodeIndex))) {
-      return _ChildComponentWithVisibilityAll_4_5;
+      return this._ChildComponentWithVisibilityAll_4_5;
     }
     if ((5 == nodeIndex)) {
       if (identical(token, import1.A)) {
-        return _A_5_7;
+        return this._A_5_7;
       }
       if (identical(token, import1.B)) {
-        return _B_5_8;
+        return this._B_5_8;
       }
       if (identical(token, import1.C)) {
-        return _C_5_9;
+        return this._C_5_9;
       }
       if (identical(token, import1.D)) {
-        return _D_5_10;
+        return this._D_5_10;
       }
     }
     if (((6 <= nodeIndex) && (nodeIndex <= 7))) {
       if (identical(token, import1.D)) {
-        return _D_6_7;
+        return this._D_6_7;
       }
       if (identical(token, import1.A)) {
-        return _A_6_8;
+        return this._A_6_8;
       }
     }
     return notFoundResult;
@@ -258,26 +258,26 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
-    _compView_1.detectChanges();
-    _compView_2.detectChanges();
-    _compView_3.detectChanges();
-    _compView_4.detectChanges();
-    _compView_5.detectChanges();
-    _compView_6.detectChanges();
-    _compView_7.detectChanges();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+    this._compView_2.detectChanges();
+    this._compView_3.detectChanges();
+    this._compView_4.detectChanges();
+    this._compView_5.detectChanges();
+    this._compView_6.detectChanges();
+    this._compView_7.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
-    _compView_1.destroyInternalState();
-    _compView_2.destroyInternalState();
-    _compView_3.destroyInternalState();
-    _compView_4.destroyInternalState();
-    _compView_5.destroyInternalState();
-    _compView_6.destroyInternalState();
-    _compView_7.destroyInternalState();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._compView_2.destroyInternalState();
+    this._compView_3.destroyInternalState();
+    this._compView_4.destroyInternalState();
+    this._compView_5.destroyInternalState();
+    this._compView_6.destroyInternalState();
+    this._compView_7.destroyInternalState();
   }
 
   @override
@@ -286,7 +286,7 @@ class ViewParentComponent0 extends AppView<import1.ParentComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -304,28 +304,28 @@ class _ViewParentComponentHost0 extends AppView<import1.ParentComponent> {
   _ViewParentComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.ParentComponent> build() {
     // Child component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewParentComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ParentComponent_0_5 = import1.ParentComponent();
-    _compView_0.create(_ParentComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ParentComponent_0_5);
+    this._compView_0 = ViewParentComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ParentComponent_0_5 = import1.ParentComponent();
+    this._compView_0.create(this._ParentComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ParentComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -339,8 +339,8 @@ final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
 class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentProvidingA$B$C> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentProvidingA$B$C0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('child-component-providing-a-b-c');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('child-component-providing-a-b-c');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -348,8 +348,8 @@ class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentPr
 
   @override
   ComponentRef<import1.ChildComponentProvidingA$B$C> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -358,7 +358,7 @@ class ViewChildComponentProvidingA$B$C0 extends AppView<import1.ChildComponentPr
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentProvidingA$B$C, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -379,52 +379,52 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
   _ViewChildComponentProvidingA$B$CHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.A get _A_0_6 {
-    if ((__A_0_6 == null)) {
-      (__A_0_6 = import1.A());
+    if ((this.__A_0_6 == null)) {
+      (this.__A_0_6 = import1.A());
     }
-    return __A_0_6;
+    return this.__A_0_6;
   }
 
   import1.B get _B_0_7 {
-    if ((__B_0_7 == null)) {
-      (__B_0_7 = import1.B());
+    if ((this.__B_0_7 == null)) {
+      (this.__B_0_7 = import1.B());
     }
-    return __B_0_7;
+    return this.__B_0_7;
   }
 
   import1.C get _C_0_8 {
-    if ((__C_0_8 == null)) {
-      (__C_0_8 = import1.C());
+    if ((this.__C_0_8 == null)) {
+      (this.__C_0_8 = import1.C());
     }
-    return __C_0_8;
+    return this.__C_0_8;
   }
 
   @override
   ComponentRef<import1.ChildComponentProvidingA$B$C> build() {
     // Child component ChildComponentProvidingA$B$C in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
-    _compView_0.create(_ChildComponentProvidingA$B$C_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ChildComponentProvidingA$B$C_0_5);
+    this._compView_0 = ViewChildComponentProvidingA$B$C0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ChildComponentProvidingA$B$C_0_5 = import1.ChildComponentProvidingA$B$C();
+    this._compView_0.create(this._ChildComponentProvidingA$B$C_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ChildComponentProvidingA$B$C_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
       if (identical(token, import1.A)) {
-        return _A_0_6;
+        return this._A_0_6;
       }
       if (identical(token, import1.B)) {
-        return _B_0_7;
+        return this._B_0_7;
       }
       if (identical(token, import1.C)) {
-        return _C_0_8;
+        return this._C_0_8;
       }
     }
     return notFoundResult;
@@ -432,12 +432,12 @@ class _ViewChildComponentProvidingA$B$CHost0 extends AppView<import1.ChildCompon
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -451,8 +451,8 @@ final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
 class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildComponentWithNgContentProviding$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithNgContentProviding$D0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('child-component-with-ngcontent-providing-d');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('child-component-with-ngcontent-providing-d');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -460,9 +460,9 @@ class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildC
 
   @override
   ComponentRef<import1.ChildComponentWithNgContentProviding$D> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    project(parentRenderNode, 0);
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.project(parentRenderNode, 0);
+    this.init0();
   }
 
   @override
@@ -471,7 +471,7 @@ class ViewChildComponentWithNgContentProviding$D0 extends AppView<import1.ChildC
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentWithNgContentProviding$D, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -490,43 +490,43 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends AppView<import1.C
   _ViewChildComponentWithNgContentProviding$DHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.D get _D_0_6 {
-    if ((__D_0_6 == null)) {
-      (__D_0_6 = import1.D());
+    if ((this.__D_0_6 == null)) {
+      (this.__D_0_6 = import1.D());
     }
-    return __D_0_6;
+    return this.__D_0_6;
   }
 
   @override
   ComponentRef<import1.ChildComponentWithNgContentProviding$D> build() {
     // Child component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewChildComponentWithNgContentProviding$D0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
-    _compView_0.create(_ChildComponentWithNgContentProviding$D_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ChildComponentWithNgContentProviding$D_0_5);
+    this._compView_0 = ViewChildComponentWithNgContentProviding$D0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ChildComponentWithNgContentProviding$D_0_5 = import1.ChildComponentWithNgContentProviding$D();
+    this._compView_0.create(this._ChildComponentWithNgContentProviding$D_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ChildComponentWithNgContentProviding$D_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.D) && (0 == nodeIndex))) {
-      return _D_0_6;
+      return this._D_0_6;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -540,8 +540,8 @@ final List<dynamic> styles$ChildComponentInjecting$D = const [];
 class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjecting$D> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentInjecting$D0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('child-component-injecting-d');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('child-component-injecting-d');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -549,8 +549,8 @@ class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjec
 
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -559,7 +559,7 @@ class ViewChildComponentInjecting$D0 extends AppView<import1.ChildComponentInjec
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentInjecting$D, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -577,32 +577,32 @@ class _ViewChildComponentInjecting$DHost0 extends AppView<import1.ChildComponent
   _ViewChildComponentInjecting$DHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.ChildComponentInjecting$D> build() {
     // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewChildComponentInjecting$D0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ChildComponentInjecting$D_0_5 = (import7.isDevMode
+    this._compView_0 = ViewChildComponentInjecting$D0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ChildComponentInjecting$D_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
-            return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex));
+            return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex));
           })
-        : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, parentIndex)));
-    _compView_0.create(_ChildComponentInjecting$D_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ChildComponentInjecting$D_0_5);
+        : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex)));
+    this._compView_0.create(this._ChildComponentInjecting$D_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ChildComponentInjecting$D_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -616,8 +616,8 @@ final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
 class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponentWithVisibilityAll> {
   static import2.ComponentStyles _componentStyles;
   ViewChildComponentWithVisibilityAll0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('child-component-with-visibility-all');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('child-component-with-visibility-all');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/di/inlined_providers.dart' : null);
@@ -625,8 +625,8 @@ class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponen
 
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -635,7 +635,7 @@ class ViewChildComponentWithVisibilityAll0 extends AppView<import1.ChildComponen
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentWithVisibilityAll, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -653,36 +653,36 @@ class _ViewChildComponentWithVisibilityAllHost0 extends AppView<import1.ChildCom
   _ViewChildComponentWithVisibilityAllHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.ChildComponentWithVisibilityAll> build() {
     // Child component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
-    _compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();
-    _compView_0.create(_ChildComponentWithVisibilityAll_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _ChildComponentWithVisibilityAll_0_5);
+    this._compView_0 = ViewChildComponentWithVisibilityAll0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._ChildComponentWithVisibilityAll_0_5 = import1.ChildComponentWithVisibilityAll();
+    this._compView_0.create(this._ChildComponentWithVisibilityAll_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._ChildComponentWithVisibilityAll_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.ChildComponentWithVisibilityAll) && (0 == nodeIndex))) {
-      return _ChildComponentWithVisibilityAll_0_5;
+      return this._ChildComponentWithVisibilityAll_0_5;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

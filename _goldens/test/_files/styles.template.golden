@@ -24,9 +24,9 @@ class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
   import2.DivElement _el_0;
   static import3.ComponentStyles _componentStyles;
   ViewStylesComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import2.document.createElement('styles');
-    this.updateChildClassNonHtml(rootEl, import1.StylesComponent.baz);
+    this.initComponentStyles();
+    this.rootEl = import2.document.createElement('styles');
+    this.updateChildClassNonHtml(this.rootEl, import1.StylesComponent.baz);
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/styles.dart' : null);
@@ -34,21 +34,21 @@ class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
 
   @override
   ComponentRef<import1.StylesComponent> build() {
-    final import2.HtmlElement parentRenderNode = initViewRoot();
+    final import2.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import2.document;
-    _el_0 = import9.appendDiv(doc, parentRenderNode);
-    this.updateChildClass(_el_0, 'foo');
-    init0();
+    this._el_0 = import9.appendDiv(doc, parentRenderNode);
+    this.updateChildClass(this._el_0, 'foo');
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      _el_0.style.setProperty('width', '5px;');
+      this._el_0.style.setProperty('width', '5px;');
       if (!identical(_ctx.bar, null)) {
-        this.updateChildClass(_el_0, _ctx.bar);
+        this.updateChildClass(this._el_0, _ctx.bar);
       }
     }
   }
@@ -59,7 +59,7 @@ class ViewStylesComponent0 extends AppView<import1.StylesComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$StylesComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -77,28 +77,28 @@ class _ViewStylesComponentHost0 extends AppView<import1.StylesComponent> {
   _ViewStylesComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.StylesComponent> build() {
     // Child component StylesComponent in asset:_goldens/test/_files/styles.dart (changeDetection: Default)
-    _compView_0 = ViewStylesComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _StylesComponent_0_5 = import1.StylesComponent();
-    _compView_0.create(_StylesComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _StylesComponent_0_5);
+    this._compView_0 = ViewStylesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._StylesComponent_0_5 = import1.StylesComponent();
+    this._compView_0.create(this._StylesComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._StylesComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

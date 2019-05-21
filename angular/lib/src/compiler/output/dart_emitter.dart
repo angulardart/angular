@@ -259,7 +259,6 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       annotation.visitExpression(this, context);
       context.println();
     }
-    context.enterMethod(method);
     if (method.hasModifier(o.StmtModifier.Static)) {
       context.print('static ');
     }
@@ -275,7 +274,6 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     visitAllStatements(method.body, context);
     context.decIndent();
     context.println('}');
-    context.exitMethod();
   }
 
   void _visitTypeArguments(
@@ -374,10 +372,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   @override
   void visitReadClassMemberExpr(
       o.ReadClassMemberExpr ast, EmitterVisitorContext context) {
-    if (context.shadows(ast.name)) {
-      context.print('this.');
-    }
-    context.print(ast.name);
+    context.print('this.${ast.name}');
   }
 
   @override
@@ -387,10 +382,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (!lineWasEmpty) {
       context.print('(');
     }
-    if (context.shadows(expr.name)) {
-      context.print('this.');
-    }
-    context.print('${expr.name} = ');
+    context.print('this.${expr.name} = ');
     expr.value.visitExpression(this, context);
     if (!lineWasEmpty) {
       context.print(')');

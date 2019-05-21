@@ -24,8 +24,8 @@ final List<dynamic> styles$TestComponent = const [];
 class ViewTestComponent0 extends AppView<import1.TestComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewTestComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('test');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('test');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
@@ -33,8 +33,8 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
 
   @override
   ComponentRef<import1.TestComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -43,7 +43,7 @@ class ViewTestComponent0 extends AppView<import1.TestComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$TestComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -61,28 +61,28 @@ class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
   _ViewTestComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.TestComponent> build() {
     // Child component TestComponent in asset:_goldens/test/_files/component_loader_pattern.dart (changeDetection: Default)
-    _compView_0 = ViewTestComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _TestComponent_0_5 = import1.TestComponent();
-    _compView_0.create(_TestComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _TestComponent_0_5);
+    this._compView_0 = ViewTestComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._TestComponent_0_5 = import1.TestComponent();
+    this._compView_0.create(this._TestComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._TestComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

@@ -25,8 +25,8 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasHostAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-host-attributes');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-host-attributes');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -34,16 +34,16 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
 
   @override
   ComponentRef<import1.HasHostAttributes> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      import10.updateAttribute(rootEl, 'title', currVal_0);
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      import10.updateAttribute(this.rootEl, 'title', currVal_0);
+      this._expr_0 = currVal_0;
     }
   }
 
@@ -53,7 +53,7 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasHostAttributes, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -71,30 +71,30 @@ class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
   _ViewHasHostAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasHostAttributes> build() {
     // Child component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasHostAttributes0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasHostAttributes_0_5 = import1.HasHostAttributes();
-    _compView_0.create(_HasHostAttributes_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasHostAttributes_0_5);
+    this._compView_0 = ViewHasHostAttributes0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasHostAttributes_0_5 = import1.HasHostAttributes();
+    this._compView_0.create(this._HasHostAttributes_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasHostAttributes_0_5);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    _compView_0.detectHostChanges(firstCheck);
-    _compView_0.detectChanges();
+    this._compView_0.detectHostChanges(firstCheck);
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -110,8 +110,8 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasTemplateAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-template-attributes');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-template-attributes');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -119,19 +119,19 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
 
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    _el_0 = import10.appendDiv(doc, parentRenderNode);
-    init0();
+    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      import10.updateAttribute(_el_0, 'title', currVal_0);
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      import10.updateAttribute(this._el_0, 'title', currVal_0);
+      this._expr_0 = currVal_0;
     }
   }
 
@@ -141,7 +141,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasTemplateAttributes, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -159,28 +159,28 @@ class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttribu
   _ViewHasTemplateAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasTemplateAttributes> build() {
     // Child component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasTemplateAttributes0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
-    _compView_0.create(_HasTemplateAttributes_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasTemplateAttributes_0_5);
+    this._compView_0 = ViewHasTemplateAttributes0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
+    this._compView_0.create(this._HasTemplateAttributes_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasTemplateAttributes_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -195,8 +195,8 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasStaticAttribute0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-static-attribute');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-static-attribute');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -204,17 +204,17 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
 
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    _el_0 = import10.appendDiv(doc, parentRenderNode);
-    init0();
+    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      import10.setAttribute(_el_0, 'title', 'title');
+      import10.setAttribute(this._el_0, 'title', 'title');
     }
   }
 
@@ -224,7 +224,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStaticAttribute, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -242,28 +242,28 @@ class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
   _ViewHasStaticAttributeHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasStaticAttribute> build() {
     // Child component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasStaticAttribute0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasStaticAttribute_0_5 = import1.HasStaticAttribute();
-    _compView_0.create(_HasStaticAttribute_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasStaticAttribute_0_5);
+    this._compView_0 = ViewHasStaticAttribute0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasStaticAttribute_0_5 = import1.HasStaticAttribute();
+    this._compView_0.create(this._HasStaticAttribute_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasStaticAttribute_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -278,8 +278,8 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasHostClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-host-class');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-host-class');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -287,16 +287,16 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
 
   @override
   ComponentRef<import1.HasHostClass> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   void detectHostChanges(bool firstCheck) {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      import10.updateClassBindingNonHtml(rootEl, 'fancy', currVal_0);
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      import10.updateClassBindingNonHtml(this.rootEl, 'fancy', currVal_0);
+      this._expr_0 = currVal_0;
     }
   }
 
@@ -306,7 +306,7 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasHostClass, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -324,30 +324,30 @@ class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
   _ViewHasHostClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasHostClass> build() {
     // Child component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasHostClass0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasHostClass_0_5 = import1.HasHostClass();
-    _compView_0.create(_HasHostClass_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasHostClass_0_5);
+    this._compView_0 = ViewHasHostClass0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasHostClass_0_5 = import1.HasHostClass();
+    this._compView_0.create(this._HasHostClass_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasHostClass_0_5);
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    _compView_0.detectHostChanges(firstCheck);
-    _compView_0.detectChanges();
+    this._compView_0.detectHostChanges(firstCheck);
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -363,8 +363,8 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasTemplateClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-template-class');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-template-class');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -372,19 +372,19 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
 
   @override
   ComponentRef<import1.HasTemplateClass> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    _el_0 = import10.appendDiv(doc, parentRenderNode);
-    init0();
+    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      import10.updateClassBinding(_el_0, 'fancy', currVal_0);
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      import10.updateClassBinding(this._el_0, 'fancy', currVal_0);
+      this._expr_0 = currVal_0;
     }
   }
 
@@ -394,7 +394,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasTemplateClass, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -412,28 +412,28 @@ class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
   _ViewHasTemplateClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasTemplateClass> build() {
     // Child component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasTemplateClass0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasTemplateClass_0_5 = import1.HasTemplateClass();
-    _compView_0.create(_HasTemplateClass_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasTemplateClass_0_5);
+    this._compView_0 = ViewHasTemplateClass0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasTemplateClass_0_5 = import1.HasTemplateClass();
+    this._compView_0.create(this._HasTemplateClass_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasTemplateClass_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -450,8 +450,8 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   import6.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
   ViewHasStyleProperty0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('has-style-property');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('has-style-property');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
@@ -459,24 +459,24 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
 
   @override
   ComponentRef<import1.HasStyleProperty> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    _el_0 = import10.appendDiv(doc, parentRenderNode);
-    init0();
+    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final currVal_0 = _ctx.width;
-    if (import9.checkBinding(_expr_0, currVal_0)) {
-      _el_0.style.setProperty('width', currVal_0?.toString());
-      _expr_0 = currVal_0;
+    if (import9.checkBinding(this._expr_0, currVal_0)) {
+      this._el_0.style.setProperty('width', currVal_0?.toString());
+      this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import9.checkBinding(_expr_1, currVal_1)) {
-      _el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
-      _expr_1 = currVal_1;
+    if (import9.checkBinding(this._expr_1, currVal_1)) {
+      this._el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
+      this._expr_1 = currVal_1;
     }
   }
 
@@ -486,7 +486,7 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStyleProperty, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -504,28 +504,28 @@ class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
   _ViewHasStylePropertyHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.HasStyleProperty> build() {
     // Child component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    _compView_0 = ViewHasStyleProperty0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _HasStyleProperty_0_5 = import1.HasStyleProperty();
-    _compView_0.create(_HasStyleProperty_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _HasStyleProperty_0_5);
+    this._compView_0 = ViewHasStyleProperty0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._HasStyleProperty_0_5 = import1.HasStyleProperty();
+    this._compView_0.create(this._HasStyleProperty_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._HasStyleProperty_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

@@ -76,154 +76,154 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
   int __luckyNumber_8_14;
   static import3.ComponentStyles _componentStyles;
   ViewAppComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('app');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('app');
   }
   import1.ServiceB get _Service_1_9 {
-    if ((__Service_1_9 == null)) {
-      (__Service_1_9 = import1.ServiceB());
+    if ((this.__Service_1_9 == null)) {
+      (this.__Service_1_9 = import1.ServiceB());
     }
-    return __Service_1_9;
+    return this.__Service_1_9;
   }
 
   import1.DeferredValidator get _DeferredValidator_1_10 {
-    if ((__DeferredValidator_1_10 == null)) {
-      (__DeferredValidator_1_10 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_1_10 == null)) {
+      (this.__DeferredValidator_1_10 = import1.DeferredValidator());
     }
-    return __DeferredValidator_1_10;
+    return this.__DeferredValidator_1_10;
   }
 
   List<import1.Validator> get _MultiToken_1_11 {
-    if ((__MultiToken_1_11 == null)) {
-      (__MultiToken_1_11 = [_DeferredValidator_1_10, _RequiredValidator_1_8]);
+    if ((this.__MultiToken_1_11 == null)) {
+      (this.__MultiToken_1_11 = [this._DeferredValidator_1_10, this._RequiredValidator_1_8]);
     }
-    return __MultiToken_1_11;
+    return this.__MultiToken_1_11;
   }
 
   int get _luckyNumber_1_15 {
-    if ((__luckyNumber_1_15 == null)) {
-      (__luckyNumber_1_15 = 12);
+    if ((this.__luckyNumber_1_15 == null)) {
+      (this.__luckyNumber_1_15 = 12);
     }
-    return __luckyNumber_1_15;
+    return this.__luckyNumber_1_15;
   }
 
   import1.ServiceB get _Service_4_9 {
-    if ((__Service_4_9 == null)) {
-      (__Service_4_9 = import1.ServiceB());
+    if ((this.__Service_4_9 == null)) {
+      (this.__Service_4_9 = import1.ServiceB());
     }
-    return __Service_4_9;
+    return this.__Service_4_9;
   }
 
   import1.DeferredValidator get _DeferredValidator_4_10 {
-    if ((__DeferredValidator_4_10 == null)) {
-      (__DeferredValidator_4_10 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_4_10 == null)) {
+      (this.__DeferredValidator_4_10 = import1.DeferredValidator());
     }
-    return __DeferredValidator_4_10;
+    return this.__DeferredValidator_4_10;
   }
 
   List<import1.Validator> get _MultiToken_4_11 {
-    if ((__MultiToken_4_11 == null)) {
-      (__MultiToken_4_11 = [_DeferredValidator_4_10, _RequiredValidator_4_8]);
+    if ((this.__MultiToken_4_11 == null)) {
+      (this.__MultiToken_4_11 = [this._DeferredValidator_4_10, this._RequiredValidator_4_8]);
     }
-    return __MultiToken_4_11;
+    return this.__MultiToken_4_11;
   }
 
   int get _luckyNumber_4_15 {
-    if ((__luckyNumber_4_15 == null)) {
-      (__luckyNumber_4_15 = 12);
+    if ((this.__luckyNumber_4_15 == null)) {
+      (this.__luckyNumber_4_15 = 12);
     }
-    return __luckyNumber_4_15;
+    return this.__luckyNumber_4_15;
   }
 
   import1.ServiceB get _Service_5_8 {
-    if ((__Service_5_8 == null)) {
-      (__Service_5_8 = import1.ServiceB());
+    if ((this.__Service_5_8 == null)) {
+      (this.__Service_5_8 = import1.ServiceB());
     }
-    return __Service_5_8;
+    return this.__Service_5_8;
   }
 
   import1.DeferredValidator get _DeferredValidator_5_9 {
-    if ((__DeferredValidator_5_9 == null)) {
-      (__DeferredValidator_5_9 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_5_9 == null)) {
+      (this.__DeferredValidator_5_9 = import1.DeferredValidator());
     }
-    return __DeferredValidator_5_9;
+    return this.__DeferredValidator_5_9;
   }
 
   List<import1.Validator> get _MultiToken_5_10 {
-    if ((__MultiToken_5_10 == null)) {
-      (__MultiToken_5_10 = [_DeferredValidator_5_9]);
+    if ((this.__MultiToken_5_10 == null)) {
+      (this.__MultiToken_5_10 = [this._DeferredValidator_5_9]);
     }
-    return __MultiToken_5_10;
+    return this.__MultiToken_5_10;
   }
 
   int get _luckyNumber_5_14 {
-    if ((__luckyNumber_5_14 == null)) {
-      (__luckyNumber_5_14 = 12);
+    if ((this.__luckyNumber_5_14 == null)) {
+      (this.__luckyNumber_5_14 = 12);
     }
-    return __luckyNumber_5_14;
+    return this.__luckyNumber_5_14;
   }
 
   import1.ServiceB get _Service_6_9 {
-    if ((__Service_6_9 == null)) {
-      (__Service_6_9 = import1.ServiceB());
+    if ((this.__Service_6_9 == null)) {
+      (this.__Service_6_9 = import1.ServiceB());
     }
-    return __Service_6_9;
+    return this.__Service_6_9;
   }
 
   import1.DeferredValidator get _DeferredValidator_6_10 {
-    if ((__DeferredValidator_6_10 == null)) {
-      (__DeferredValidator_6_10 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_6_10 == null)) {
+      (this.__DeferredValidator_6_10 = import1.DeferredValidator());
     }
-    return __DeferredValidator_6_10;
+    return this.__DeferredValidator_6_10;
   }
 
   List<import1.Validator> get _MultiToken_6_11 {
-    if ((__MultiToken_6_11 == null)) {
-      (__MultiToken_6_11 = [_DeferredValidator_6_10, _RequiredValidator_6_8]);
+    if ((this.__MultiToken_6_11 == null)) {
+      (this.__MultiToken_6_11 = [this._DeferredValidator_6_10, this._RequiredValidator_6_8]);
     }
-    return __MultiToken_6_11;
+    return this.__MultiToken_6_11;
   }
 
   int get _luckyNumber_6_15 {
-    if ((__luckyNumber_6_15 == null)) {
-      (__luckyNumber_6_15 = 12);
+    if ((this.__luckyNumber_6_15 == null)) {
+      (this.__luckyNumber_6_15 = 12);
     }
-    return __luckyNumber_6_15;
+    return this.__luckyNumber_6_15;
   }
 
   List<import1.Validator> get _MultiToken_7_13 {
-    if ((__MultiToken_7_13 == null)) {
-      (__MultiToken_7_13 = [_RequiredValidator_7_7]);
+    if ((this.__MultiToken_7_13 == null)) {
+      (this.__MultiToken_7_13 = [this._RequiredValidator_7_7]);
     }
-    return __MultiToken_7_13;
+    return this.__MultiToken_7_13;
   }
 
   import1.ServiceB get _Service_8_8 {
-    if ((__Service_8_8 == null)) {
-      (__Service_8_8 = import1.ServiceB());
+    if ((this.__Service_8_8 == null)) {
+      (this.__Service_8_8 = import1.ServiceB());
     }
-    return __Service_8_8;
+    return this.__Service_8_8;
   }
 
   import1.DeferredValidator get _DeferredValidator_8_9 {
-    if ((__DeferredValidator_8_9 == null)) {
-      (__DeferredValidator_8_9 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_8_9 == null)) {
+      (this.__DeferredValidator_8_9 = import1.DeferredValidator());
     }
-    return __DeferredValidator_8_9;
+    return this.__DeferredValidator_8_9;
   }
 
   List<import1.Validator> get _MultiToken_8_10 {
-    if ((__MultiToken_8_10 == null)) {
-      (__MultiToken_8_10 = [_DeferredValidator_8_9]);
+    if ((this.__MultiToken_8_10 == null)) {
+      (this.__MultiToken_8_10 = [this._DeferredValidator_8_9]);
     }
-    return __MultiToken_8_10;
+    return this.__MultiToken_8_10;
   }
 
   int get _luckyNumber_8_14 {
-    if ((__luckyNumber_8_14 == null)) {
-      (__luckyNumber_8_14 = 12);
+    if ((this.__luckyNumber_8_14 == null)) {
+      (this.__luckyNumber_8_14 = 12);
     }
-    return __luckyNumber_8_14;
+    return this.__luckyNumber_8_14;
   }
 
   static String get _debugComponentUrl {
@@ -232,80 +232,80 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendElement(doc, parentRenderNode, 'form');
-    _NgForm_0_5 = import1.NgForm();
+    this._NgForm_0_5 = import1.NgForm();
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_1 = ViewMaterialInputComponent0(this, 1);
-    final _el_1 = _compView_1.rootEl;
+    this._compView_1 = ViewMaterialInputComponent0(this, 1);
+    final _el_1 = this._compView_1.rootEl;
     _el_0.append(_el_1);
     import10.setAttribute(_el_1, 'ngControl', 'name');
     import10.setAttribute(_el_1, 'required', '');
-    _MaterialInputComponent_1_5 = import1.MaterialInputComponent();
-    _MaterialInputValueAccessor_1_6 = import1.MaterialInputValueAccessor();
-    _NgControlName_1_7 = import1.NgControlName();
-    _RequiredValidator_1_8 = import1.RequiredValidator();
+    this._MaterialInputComponent_1_5 = import1.MaterialInputComponent();
+    this._MaterialInputValueAccessor_1_6 = import1.MaterialInputValueAccessor();
+    this._NgControlName_1_7 = import1.NgControlName();
+    this._RequiredValidator_1_8 = import1.RequiredValidator();
     final _el_2 = doc.createElement('material-icon');
     import10.setAttribute(_el_2, 'tooltipTarget', '');
     import10.setAttribute(_el_2, 'trailing', '');
-    _compView_1.create(_MaterialInputComponent_1_5, [
+    this._compView_1.create(this._MaterialInputComponent_1_5, [
       [_el_2]
     ]);
     final _el_3 = import10.appendDiv(doc, _el_0);
     import10.setAttribute(_el_3, 'ngControlGroup', 'address');
-    _NgControlGroup_3_5 = import1.NgControlGroup();
+    this._NgControlGroup_3_5 = import1.NgControlGroup();
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_4 = ViewMaterialInputComponent0(this, 4);
-    final _el_4 = _compView_4.rootEl;
+    this._compView_4 = ViewMaterialInputComponent0(this, 4);
+    final _el_4 = this._compView_4.rootEl;
     _el_3.append(_el_4);
     import10.setAttribute(_el_4, 'ngControl', 'address1');
     import10.setAttribute(_el_4, 'required', '');
-    _MaterialInputComponent_4_5 = import1.MaterialInputComponent();
-    _MaterialInputValueAccessor_4_6 = import1.MaterialInputValueAccessor();
-    _NgControlName_4_7 = import1.NgControlName();
-    _RequiredValidator_4_8 = import1.RequiredValidator();
-    _compView_4.create(_MaterialInputComponent_4_5, [const []]);
+    this._MaterialInputComponent_4_5 = import1.MaterialInputComponent();
+    this._MaterialInputValueAccessor_4_6 = import1.MaterialInputValueAccessor();
+    this._NgControlName_4_7 = import1.NgControlName();
+    this._RequiredValidator_4_8 = import1.RequiredValidator();
+    this._compView_4.create(this._MaterialInputComponent_4_5, [const []]);
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_5 = ViewMaterialInputComponent0(this, 5);
-    final _el_5 = _compView_5.rootEl;
+    this._compView_5 = ViewMaterialInputComponent0(this, 5);
+    final _el_5 = this._compView_5.rootEl;
     _el_3.append(_el_5);
     import10.setAttribute(_el_5, 'ngControl', 'address2');
-    _MaterialInputComponent_5_5 = import1.MaterialInputComponent();
-    _MaterialInputValueAccessor_5_6 = import1.MaterialInputValueAccessor();
-    _NgControlName_5_7 = import1.NgControlName();
-    _compView_5.create(_MaterialInputComponent_5_5, [const []]);
+    this._MaterialInputComponent_5_5 = import1.MaterialInputComponent();
+    this._MaterialInputValueAccessor_5_6 = import1.MaterialInputValueAccessor();
+    this._NgControlName_5_7 = import1.NgControlName();
+    this._compView_5.create(this._MaterialInputComponent_5_5, [const []]);
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_6 = ViewMaterialInputComponent0(this, 6);
-    final _el_6 = _compView_6.rootEl;
+    this._compView_6 = ViewMaterialInputComponent0(this, 6);
+    final _el_6 = this._compView_6.rootEl;
     _el_3.append(_el_6);
     import10.setAttribute(_el_6, 'ngControl', 'city');
     import10.setAttribute(_el_6, 'required', '');
-    _MaterialInputComponent_6_5 = import1.MaterialInputComponent();
-    _MaterialInputValueAccessor_6_6 = import1.MaterialInputValueAccessor();
-    _NgControlName_6_7 = import1.NgControlName();
-    _RequiredValidator_6_8 = import1.RequiredValidator();
-    _compView_6.create(_MaterialInputComponent_6_5, [const []]);
+    this._MaterialInputComponent_6_5 = import1.MaterialInputComponent();
+    this._MaterialInputValueAccessor_6_6 = import1.MaterialInputValueAccessor();
+    this._NgControlName_6_7 = import1.NgControlName();
+    this._RequiredValidator_6_8 = import1.RequiredValidator();
+    this._compView_6.create(this._MaterialInputComponent_6_5, [const []]);
     // Child component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_7 = ViewMaterialAutoSuggestInputComponent0(this, 7);
-    final _el_7 = _compView_7.rootEl;
+    this._compView_7 = ViewMaterialAutoSuggestInputComponent0(this, 7);
+    final _el_7 = this._compView_7.rootEl;
     _el_3.append(_el_7);
     import10.setAttribute(_el_7, 'ngControl', 'state');
     import10.setAttribute(_el_7, 'required', '');
-    _MaterialAutoSuggestInputComponent_7_5 = import1.MaterialAutoSuggestInputComponent();
-    _NgControlName_7_6 = import1.NgControlName();
-    _RequiredValidator_7_7 = import1.RequiredValidator();
-    _compView_7.create0(_MaterialAutoSuggestInputComponent_7_5);
+    this._MaterialAutoSuggestInputComponent_7_5 = import1.MaterialAutoSuggestInputComponent();
+    this._NgControlName_7_6 = import1.NgControlName();
+    this._RequiredValidator_7_7 = import1.RequiredValidator();
+    this._compView_7.create0(this._MaterialAutoSuggestInputComponent_7_5);
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_8 = ViewMaterialInputComponent0(this, 8);
-    final _el_8 = _compView_8.rootEl;
+    this._compView_8 = ViewMaterialInputComponent0(this, 8);
+    final _el_8 = this._compView_8.rootEl;
     _el_3.append(_el_8);
     import10.setAttribute(_el_8, 'ngControl', 'zip');
-    _MaterialInputComponent_8_5 = import1.MaterialInputComponent();
-    _MaterialInputValueAccessor_8_6 = import1.MaterialInputValueAccessor();
-    _NgControlName_8_7 = import1.NgControlName();
-    _compView_8.create(_MaterialInputComponent_8_5, [const []]);
-    init0();
+    this._MaterialInputComponent_8_5 = import1.MaterialInputComponent();
+    this._MaterialInputValueAccessor_8_6 = import1.MaterialInputValueAccessor();
+    this._NgControlName_8_7 = import1.NgControlName();
+    this._compView_8.create(this._MaterialInputComponent_8_5, [const []]);
+    this.init0();
   }
 
   @override
@@ -313,137 +313,137 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if ((nodeIndex <= 8)) {
       if (((1 <= nodeIndex) && (nodeIndex <= 2))) {
         if ((identical(token, const import11.OpaqueToken<int>('luckyNumber')) && (1 == nodeIndex))) {
-          return _luckyNumber_1_15;
+          return this._luckyNumber_1_15;
         }
         if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-          return _MaterialInputComponent_1_5;
+          return this._MaterialInputComponent_1_5;
         }
         if (identical(token, import1.MaterialInputValueAccessor)) {
-          return _MaterialInputValueAccessor_1_6;
+          return this._MaterialInputValueAccessor_1_6;
         }
         if (identical(token, import1.NgControl)) {
-          return _NgControlName_1_7;
+          return this._NgControlName_1_7;
         }
         if (identical(token, import1.Service)) {
-          return _Service_1_9;
+          return this._Service_1_9;
         }
         if (identical(token, import1.DeferredValidator)) {
-          return _DeferredValidator_1_10;
+          return this._DeferredValidator_1_10;
         }
         if (identical(token, const import11.MultiToken<import12.Validator>())) {
-          return _MultiToken_1_11;
+          return this._MultiToken_1_11;
         }
       }
       if ((3 <= nodeIndex)) {
         if ((4 == nodeIndex)) {
           if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-            return _MaterialInputComponent_4_5;
+            return this._MaterialInputComponent_4_5;
           }
           if (identical(token, import1.MaterialInputValueAccessor)) {
-            return _MaterialInputValueAccessor_4_6;
+            return this._MaterialInputValueAccessor_4_6;
           }
           if (identical(token, import1.NgControl)) {
-            return _NgControlName_4_7;
+            return this._NgControlName_4_7;
           }
           if (identical(token, import1.Service)) {
-            return _Service_4_9;
+            return this._Service_4_9;
           }
           if (identical(token, import1.DeferredValidator)) {
-            return _DeferredValidator_4_10;
+            return this._DeferredValidator_4_10;
           }
           if (identical(token, const import11.MultiToken<import12.Validator>())) {
-            return _MultiToken_4_11;
+            return this._MultiToken_4_11;
           }
           if (identical(token, const import11.OpaqueToken<int>('luckyNumber'))) {
-            return _luckyNumber_4_15;
+            return this._luckyNumber_4_15;
           }
         }
         if ((5 == nodeIndex)) {
           if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-            return _MaterialInputComponent_5_5;
+            return this._MaterialInputComponent_5_5;
           }
           if (identical(token, import1.MaterialInputValueAccessor)) {
-            return _MaterialInputValueAccessor_5_6;
+            return this._MaterialInputValueAccessor_5_6;
           }
           if (identical(token, import1.NgControl)) {
-            return _NgControlName_5_7;
+            return this._NgControlName_5_7;
           }
           if (identical(token, import1.Service)) {
-            return _Service_5_8;
+            return this._Service_5_8;
           }
           if (identical(token, import1.DeferredValidator)) {
-            return _DeferredValidator_5_9;
+            return this._DeferredValidator_5_9;
           }
           if (identical(token, const import11.MultiToken<import12.Validator>())) {
-            return _MultiToken_5_10;
+            return this._MultiToken_5_10;
           }
           if (identical(token, const import11.OpaqueToken<int>('luckyNumber'))) {
-            return _luckyNumber_5_14;
+            return this._luckyNumber_5_14;
           }
         }
         if ((6 == nodeIndex)) {
           if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-            return _MaterialInputComponent_6_5;
+            return this._MaterialInputComponent_6_5;
           }
           if (identical(token, import1.MaterialInputValueAccessor)) {
-            return _MaterialInputValueAccessor_6_6;
+            return this._MaterialInputValueAccessor_6_6;
           }
           if (identical(token, import1.NgControl)) {
-            return _NgControlName_6_7;
+            return this._NgControlName_6_7;
           }
           if (identical(token, import1.Service)) {
-            return _Service_6_9;
+            return this._Service_6_9;
           }
           if (identical(token, import1.DeferredValidator)) {
-            return _DeferredValidator_6_10;
+            return this._DeferredValidator_6_10;
           }
           if (identical(token, const import11.MultiToken<import12.Validator>())) {
-            return _MultiToken_6_11;
+            return this._MultiToken_6_11;
           }
           if (identical(token, const import11.OpaqueToken<int>('luckyNumber'))) {
-            return _luckyNumber_6_15;
+            return this._luckyNumber_6_15;
           }
         }
         if ((7 == nodeIndex)) {
           if (((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable))) {
-            return _MaterialAutoSuggestInputComponent_7_5;
+            return this._MaterialAutoSuggestInputComponent_7_5;
           }
           if (identical(token, import1.NgControl)) {
-            return _NgControlName_7_6;
+            return this._NgControlName_7_6;
           }
           if (identical(token, const import11.MultiToken<import12.Validator>())) {
-            return _MultiToken_7_13;
+            return this._MultiToken_7_13;
           }
         }
         if ((8 == nodeIndex)) {
           if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-            return _MaterialInputComponent_8_5;
+            return this._MaterialInputComponent_8_5;
           }
           if (identical(token, import1.MaterialInputValueAccessor)) {
-            return _MaterialInputValueAccessor_8_6;
+            return this._MaterialInputValueAccessor_8_6;
           }
           if (identical(token, import1.NgControl)) {
-            return _NgControlName_8_7;
+            return this._NgControlName_8_7;
           }
           if (identical(token, import1.Service)) {
-            return _Service_8_8;
+            return this._Service_8_8;
           }
           if (identical(token, import1.DeferredValidator)) {
-            return _DeferredValidator_8_9;
+            return this._DeferredValidator_8_9;
           }
           if (identical(token, const import11.MultiToken<import12.Validator>())) {
-            return _MultiToken_8_10;
+            return this._MultiToken_8_10;
           }
           if (identical(token, const import11.OpaqueToken<int>('luckyNumber'))) {
-            return _luckyNumber_8_14;
+            return this._luckyNumber_8_14;
           }
         }
         if (identical(token, import1.ControlContainer)) {
-          return _NgControlGroup_3_5;
+          return this._NgControlGroup_3_5;
         }
       }
       if ((identical(token, import1.NgForm) || identical(token, import1.ControlContainer))) {
-        return _NgForm_0_5;
+        return this._NgForm_0_5;
       }
     }
     return notFoundResult;
@@ -451,22 +451,22 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   void detectChangesInternal() {
-    _compView_1.detectChanges();
-    _compView_4.detectChanges();
-    _compView_5.detectChanges();
-    _compView_6.detectChanges();
-    _compView_7.detectChanges();
-    _compView_8.detectChanges();
+    this._compView_1.detectChanges();
+    this._compView_4.detectChanges();
+    this._compView_5.detectChanges();
+    this._compView_6.detectChanges();
+    this._compView_7.detectChanges();
+    this._compView_8.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_1.destroyInternalState();
-    _compView_4.destroyInternalState();
-    _compView_5.destroyInternalState();
-    _compView_6.destroyInternalState();
-    _compView_7.destroyInternalState();
-    _compView_8.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._compView_4.destroyInternalState();
+    this._compView_5.destroyInternalState();
+    this._compView_6.destroyInternalState();
+    this._compView_7.destroyInternalState();
+    this._compView_8.destroyInternalState();
   }
 
   @override
@@ -475,7 +475,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -493,28 +493,28 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   _ViewAppComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
     // Child component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_0 = ViewAppComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _AppComponent_0_5 = import1.AppComponent();
-    _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _AppComponent_0_5);
+    this._compView_0 = ViewAppComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._AppComponent_0_5 = import1.AppComponent();
+    this._compView_0.create(this._AppComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._AppComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -528,8 +528,8 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
 class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAutoSuggestInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialAutoSuggestInputComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('material-auto-suggest-input');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('material-auto-suggest-input');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
@@ -537,8 +537,8 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
 
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
-    init0();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
+    this.init0();
   }
 
   @override
@@ -547,7 +547,7 @@ class ViewMaterialAutoSuggestInputComponent0 extends AppView<import1.MaterialAut
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialAutoSuggestInputComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -565,36 +565,36 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends AppView<import1.Materi
   _ViewMaterialAutoSuggestInputComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.MaterialAutoSuggestInputComponent> build() {
     // Child component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
-    _compView_0.create(_MaterialAutoSuggestInputComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _MaterialAutoSuggestInputComponent_0_5);
+    this._compView_0 = ViewMaterialAutoSuggestInputComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._MaterialAutoSuggestInputComponent_0_5 = import1.MaterialAutoSuggestInputComponent();
+    this._compView_0.create(this._MaterialAutoSuggestInputComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._MaterialAutoSuggestInputComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((((((identical(token, import1.MaterialAutoSuggestInputComponent) || identical(token, import1.HasDisabled)) || identical(token, import1.HasRenderer)) || identical(token, import1.SelectionContainer)) || identical(token, import1.Focusable)) && (0 == nodeIndex))) {
-      return _MaterialAutoSuggestInputComponent_0_5;
+      return this._MaterialAutoSuggestInputComponent_0_5;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -608,8 +608,8 @@ final List<dynamic> styles$MaterialInputComponent = const [];
 class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent> {
   static import3.ComponentStyles _componentStyles;
   ViewMaterialInputComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('material-input');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('material-input');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
@@ -617,9 +617,9 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
 
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
-    project(parentRenderNode, 0);
-    init0();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
+    this.project(parentRenderNode, 0);
+    this.init0();
   }
 
   @override
@@ -628,7 +628,7 @@ class ViewMaterialInputComponent0 extends AppView<import1.MaterialInputComponent
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialInputComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -650,65 +650,65 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
   _ViewMaterialInputComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.ServiceB get _Service_0_6 {
-    if ((__Service_0_6 == null)) {
-      (__Service_0_6 = import1.ServiceB());
+    if ((this.__Service_0_6 == null)) {
+      (this.__Service_0_6 = import1.ServiceB());
     }
-    return __Service_0_6;
+    return this.__Service_0_6;
   }
 
   import1.DeferredValidator get _DeferredValidator_0_7 {
-    if ((__DeferredValidator_0_7 == null)) {
-      (__DeferredValidator_0_7 = import1.DeferredValidator());
+    if ((this.__DeferredValidator_0_7 == null)) {
+      (this.__DeferredValidator_0_7 = import1.DeferredValidator());
     }
-    return __DeferredValidator_0_7;
+    return this.__DeferredValidator_0_7;
   }
 
   List<import1.Validator> get _MultiToken_0_8 {
-    if ((__MultiToken_0_8 == null)) {
-      (__MultiToken_0_8 = [_DeferredValidator_0_7]);
+    if ((this.__MultiToken_0_8 == null)) {
+      (this.__MultiToken_0_8 = [this._DeferredValidator_0_7]);
     }
-    return __MultiToken_0_8;
+    return this.__MultiToken_0_8;
   }
 
   int get _luckyNumber_0_12 {
-    if ((__luckyNumber_0_12 == null)) {
-      (__luckyNumber_0_12 = 12);
+    if ((this.__luckyNumber_0_12 == null)) {
+      (this.__luckyNumber_0_12 = 12);
     }
-    return __luckyNumber_0_12;
+    return this.__luckyNumber_0_12;
   }
 
   @override
   ComponentRef<import1.MaterialInputComponent> build() {
     // Child component MaterialInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
-    _compView_0 = ViewMaterialInputComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _MaterialInputComponent_0_5 = import1.MaterialInputComponent();
-    _compView_0.create(_MaterialInputComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _MaterialInputComponent_0_5);
+    this._compView_0 = ViewMaterialInputComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._MaterialInputComponent_0_5 = import1.MaterialInputComponent();
+    this._compView_0.create(this._MaterialInputComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._MaterialInputComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
       if ((((identical(token, import1.MaterialInputBase) || identical(token, import1.Focusable)) || identical(token, import1.HasDisabled)) || identical(token, import1.ReferenceDirective))) {
-        return _MaterialInputComponent_0_5;
+        return this._MaterialInputComponent_0_5;
       }
       if (identical(token, import1.Service)) {
-        return _Service_0_6;
+        return this._Service_0_6;
       }
       if (identical(token, import1.DeferredValidator)) {
-        return _DeferredValidator_0_7;
+        return this._DeferredValidator_0_7;
       }
       if (identical(token, const import11.MultiToken<import12.Validator>())) {
-        return _MultiToken_0_8;
+        return this._MultiToken_0_8;
       }
       if (identical(token, const import11.OpaqueToken<int>('luckyNumber'))) {
-        return _luckyNumber_0_12;
+        return this._luckyNumber_0_12;
       }
     }
     return notFoundResult;
@@ -716,12 +716,12 @@ class _ViewMaterialInputComponentHost0 extends AppView<import1.MaterialInputComp
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

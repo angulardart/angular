@@ -23,8 +23,8 @@ final List<dynamic> styles$AppComponent = const [];
 class ViewAppComponent0 extends AppView<import1.AppComponent> {
   static import2.ComponentStyles _componentStyles;
   ViewAppComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import6.document.createElement('app');
+    this.initComponentStyles();
+    this.rootEl = import6.document.createElement('app');
   }
   static String get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/functional_directives.dart' : null);
@@ -32,13 +32,13 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
 
   @override
   ComponentRef<import1.AppComponent> build() {
-    final import6.HtmlElement parentRenderNode = initViewRoot();
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
     import9.setAttribute(_el_0, 'generateText', '');
     final _el_1 = import9.appendDiv(doc, _el_0);
-    import1.generateTextDirective(_el_0, parentView.injectorGet(import1.TextService, parentIndex));
-    init0();
+    import1.generateTextDirective(_el_0, this.parentView.injectorGet(import1.TextService, this.parentIndex));
+    this.init0();
   }
 
   @override
@@ -47,7 +47,7 @@ class ViewAppComponent0 extends AppView<import1.AppComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -66,43 +66,43 @@ class _ViewAppComponentHost0 extends AppView<import1.AppComponent> {
   _ViewAppComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   import1.TextService get _TextService_0_6 {
-    if ((__TextService_0_6 == null)) {
-      (__TextService_0_6 = import1.TextService());
+    if ((this.__TextService_0_6 == null)) {
+      (this.__TextService_0_6 = import1.TextService());
     }
-    return __TextService_0_6;
+    return this.__TextService_0_6;
   }
 
   @override
   ComponentRef<import1.AppComponent> build() {
     // Child component AppComponent in asset:_goldens/test/_files/directives/functional_directives.dart (changeDetection: Default)
-    _compView_0 = ViewAppComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _AppComponent_0_5 = import1.AppComponent();
-    _compView_0.create(_AppComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _AppComponent_0_5);
+    this._compView_0 = ViewAppComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._AppComponent_0_5 = import1.AppComponent();
+    this._compView_0.create(this._AppComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._AppComponent_0_5);
   }
 
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
-      return _TextService_0_6;
+      return this._TextService_0_6;
     }
     return notFoundResult;
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

@@ -29,8 +29,8 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
   NgIf _NgIf_0_9;
   static import4.ComponentStyles _componentStyles;
   ViewInlinedNgIfComponent0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import8.document.createElement('inlined-ngif');
+    this.initComponentStyles();
+    this.rootEl = import8.document.createElement('inlined-ngif');
   }
   static String get _debugComponentUrl {
     return (import9.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
@@ -38,24 +38,24 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
 
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
-    final import8.HtmlElement parentRenderNode = initViewRoot();
+    final import8.HtmlElement parentRenderNode = this.initViewRoot();
     final _anchor_0 = import11.appendAnchor(parentRenderNode);
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InlinedNgIfComponent1);
-    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init0();
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InlinedNgIfComponent1);
+    this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _NgIf_0_9.ngIf = _ctx.foo;
-    _appEl_0.detectChangesInNestedViews();
+    final _ctx = this.ctx;
+    this._NgIf_0_9.ngIf = _ctx.foo;
+    this._appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0.destroyNestedViews();
+    this._appEl_0.destroyNestedViews();
   }
 
   @override
@@ -64,7 +64,7 @@ class ViewInlinedNgIfComponent0 extends AppView<import1.InlinedNgIfComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$InlinedNgIfComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -75,14 +75,14 @@ ComponentFactory<import1.InlinedNgIfComponent> get InlinedNgIfComponentNgFactory
 
 class _ViewInlinedNgIfComponent1 extends AppView<import1.InlinedNgIfComponent> {
   _ViewInlinedNgIfComponent1(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
     final doc = import8.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import11.appendText(_el_0, 'Hello World!');
-    init1(_el_0);
+    this.init1(_el_0);
   }
 }
 
@@ -99,28 +99,28 @@ class _ViewInlinedNgIfComponentHost0 extends AppView<import1.InlinedNgIfComponen
   _ViewInlinedNgIfComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InlinedNgIfComponent> build() {
     // Child component InlinedNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
-    _compView_0 = ViewInlinedNgIfComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InlinedNgIfComponent_0_5 = import1.InlinedNgIfComponent();
-    _compView_0.create(_InlinedNgIfComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InlinedNgIfComponent_0_5);
+    this._compView_0 = ViewInlinedNgIfComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InlinedNgIfComponent_0_5 = import1.InlinedNgIfComponent();
+    this._compView_0.create(this._InlinedNgIfComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InlinedNgIfComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -136,8 +136,8 @@ class ViewIgnoredNgIfComponent0 extends AppView<import1.IgnoredNgIfComponent> {
   NgIf _NgIf_0_9;
   static import4.ComponentStyles _componentStyles;
   ViewIgnoredNgIfComponent0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import8.document.createElement('inlined-ngif');
+    this.initComponentStyles();
+    this.rootEl = import8.document.createElement('inlined-ngif');
   }
   static String get _debugComponentUrl {
     return (import9.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
@@ -145,24 +145,24 @@ class ViewIgnoredNgIfComponent0 extends AppView<import1.IgnoredNgIfComponent> {
 
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
-    final import8.HtmlElement parentRenderNode = initViewRoot();
+    final import8.HtmlElement parentRenderNode = this.initViewRoot();
     final _anchor_0 = import11.appendAnchor(parentRenderNode);
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_IgnoredNgIfComponent1);
-    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init0();
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_IgnoredNgIfComponent1);
+    this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
-    _NgIf_0_9.ngIf = _ctx.foo;
-    _appEl_0.detectChangesInNestedViews();
+    final _ctx = this.ctx;
+    this._NgIf_0_9.ngIf = _ctx.foo;
+    this._appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0.destroyNestedViews();
+    this._appEl_0.destroyNestedViews();
   }
 
   @override
@@ -171,7 +171,7 @@ class ViewIgnoredNgIfComponent0 extends AppView<import1.IgnoredNgIfComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -182,17 +182,17 @@ ComponentFactory<import1.IgnoredNgIfComponent> get IgnoredNgIfComponentNgFactory
 
 class _ViewIgnoredNgIfComponent1 extends AppView<import1.IgnoredNgIfComponent> {
   _ViewIgnoredNgIfComponent1(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     final doc = import8.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import11.appendText(_el_0, 'Hello ');
     final _text_2 = import11.appendText(_el_0, import13.interpolateString0(_ctx.name));
     final _text_3 = import11.appendText(_el_0, '!');
-    init1(_el_0);
+    this.init1(_el_0);
   }
 }
 
@@ -209,28 +209,28 @@ class _ViewIgnoredNgIfComponentHost0 extends AppView<import1.IgnoredNgIfComponen
   _ViewIgnoredNgIfComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.IgnoredNgIfComponent> build() {
     // Child component IgnoredNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
-    _compView_0 = ViewIgnoredNgIfComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _IgnoredNgIfComponent_0_5 = import1.IgnoredNgIfComponent();
-    _compView_0.create(_IgnoredNgIfComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _IgnoredNgIfComponent_0_5);
+    this._compView_0 = ViewIgnoredNgIfComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._IgnoredNgIfComponent_0_5 = import1.IgnoredNgIfComponent();
+    this._compView_0.create(this._IgnoredNgIfComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._IgnoredNgIfComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
@@ -246,8 +246,8 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
   NgIf _NgIf_0_9;
   static import4.ComponentStyles _componentStyles;
   ViewInlinedNgIfWithImmutableConditionComponent0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import8.document.createElement('inlined-ngif-with-immutable-condition');
+    this.initComponentStyles();
+    this.rootEl = import8.document.createElement('inlined-ngif-with-immutable-condition');
   }
   static String get _debugComponentUrl {
     return (import9.isDevMode ? 'asset:_goldens/test/_files/inlined_ngif.dart' : null);
@@ -255,27 +255,27 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
 
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
-    final import8.HtmlElement parentRenderNode = initViewRoot();
+    final import8.HtmlElement parentRenderNode = this.initViewRoot();
     final _anchor_0 = import11.appendAnchor(parentRenderNode);
-    _appEl_0 = ViewContainer(0, null, this, _anchor_0);
-    TemplateRef _TemplateRef_0_8 = TemplateRef(_appEl_0, viewFactory_InlinedNgIfWithImmutableConditionComponent1);
-    _NgIf_0_9 = NgIf(_appEl_0, _TemplateRef_0_8);
-    init0();
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InlinedNgIfWithImmutableConditionComponent1);
+    this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    final _ctx = ctx;
+    final _ctx = this.ctx;
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_NgIf_0_9.ngIf = _ctx.foo);
+      (this._NgIf_0_9.ngIf = _ctx.foo);
     }
-    _appEl_0.detectChangesInNestedViews();
+    this._appEl_0.detectChangesInNestedViews();
   }
 
   @override
   void destroyInternal() {
-    _appEl_0.destroyNestedViews();
+    this._appEl_0.destroyNestedViews();
   }
 
   @override
@@ -284,7 +284,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends AppView<import1.In
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$InlinedNgIfWithImmutableConditionComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -295,14 +295,14 @@ ComponentFactory<import1.InlinedNgIfWithImmutableConditionComponent> get Inlined
 
 class _ViewInlinedNgIfWithImmutableConditionComponent1 extends AppView<import1.InlinedNgIfWithImmutableConditionComponent> {
   _ViewInlinedNgIfWithImmutableConditionComponent1(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
+    this.initComponentStyles();
   }
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     final doc = import8.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import11.appendText(_el_0, 'Hello World!');
-    init1(_el_0);
+    this.init1(_el_0);
   }
 }
 
@@ -319,28 +319,28 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends AppView<impor
   _ViewInlinedNgIfWithImmutableConditionComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.InlinedNgIfWithImmutableConditionComponent> build() {
     // Child component InlinedNgIfWithImmutableConditionComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
-    _compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _InlinedNgIfWithImmutableConditionComponent_0_5 = import1.InlinedNgIfWithImmutableConditionComponent();
-    _compView_0.create(_InlinedNgIfWithImmutableConditionComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _InlinedNgIfWithImmutableConditionComponent_0_5);
+    this._compView_0 = ViewInlinedNgIfWithImmutableConditionComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._InlinedNgIfWithImmutableConditionComponent_0_5 = import1.InlinedNgIfWithImmutableConditionComponent();
+    this._compView_0.create(this._InlinedNgIfWithImmutableConditionComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._InlinedNgIfWithImmutableConditionComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

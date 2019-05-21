@@ -27,8 +27,8 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
   import3.TestSubComponent _TestSubComponent_2_5;
   static import4.ComponentStyles _componentStyles;
   ViewTestFooComponent0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import8.document.createElement('test-foo');
+    this.initComponentStyles();
+    this.rootEl = import8.document.createElement('test-foo');
   }
   static String get _debugComponentUrl {
     return (import9.isDevMode ? 'asset:_goldens/test/_files/directives/base_component.dart' : null);
@@ -36,27 +36,27 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
 
   @override
   ComponentRef<import1.TestFooComponent> build() {
-    final import8.HtmlElement parentRenderNode = initViewRoot();
+    final import8.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import8.document;
     final _el_0 = import11.appendDiv(doc, parentRenderNode);
     final _text_1 = import11.appendText(_el_0, 'Foo');
     // Child component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
-    _compView_2 = import2.ViewTestSubComponent0(this, 2);
-    final _el_2 = _compView_2.rootEl;
+    this._compView_2 = import2.ViewTestSubComponent0(this, 2);
+    final _el_2 = this._compView_2.rootEl;
     parentRenderNode.append(_el_2);
-    _TestSubComponent_2_5 = import3.TestSubComponent();
-    _compView_2.create0(_TestSubComponent_2_5);
-    init0();
+    this._TestSubComponent_2_5 = import3.TestSubComponent();
+    this._compView_2.create0(this._TestSubComponent_2_5);
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
-    _compView_2.detectChanges();
+    this._compView_2.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_2.destroyInternalState();
+    this._compView_2.destroyInternalState();
   }
 
   @override
@@ -65,7 +65,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$TestFooComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -83,28 +83,28 @@ class _ViewTestFooComponentHost0 extends AppView<import1.TestFooComponent> {
   _ViewTestFooComponentHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.TestFooComponent> build() {
     // Child component TestFooComponent in asset:_goldens/test/_files/directives/base_component.dart (changeDetection: Default)
-    _compView_0 = ViewTestFooComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _TestFooComponent_0_5 = import1.TestFooComponent();
-    _compView_0.create(_TestFooComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _TestFooComponent_0_5);
+    this._compView_0 = ViewTestFooComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._TestFooComponent_0_5 = import1.TestFooComponent();
+    this._compView_0.create(this._TestFooComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._TestFooComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 

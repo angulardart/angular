@@ -26,8 +26,8 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
   import1.MessageDirective _MessageDirective_0_5;
   static import3.ComponentStyles _componentStyles;
   ViewI18nPropertyComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
-    initComponentStyles();
-    rootEl = import7.document.createElement('message');
+    this.initComponentStyles();
+    this.rootEl = import7.document.createElement('message');
   }
   static String get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:_goldens/test/_files/i18n/property.dart' : null);
@@ -35,19 +35,19 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
 
   @override
   ComponentRef<import1.I18nPropertyComponent> build() {
-    final import7.HtmlElement parentRenderNode = initViewRoot();
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import7.document;
     final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    _MessageDirective_0_5 = import1.MessageDirective();
+    this._MessageDirective_0_5 = import1.MessageDirective();
     final _text_1 = import10.appendText(parentRenderNode, ',');
-    init0();
+    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      (_MessageDirective_0_5.message = _message_0);
+      (this._MessageDirective_0_5.message = _message_0);
     }
   }
 
@@ -57,7 +57,7 @@ class ViewI18nPropertyComponent0 extends AppView<import1.I18nPropertyComponent> 
     if (identical(styles, null)) {
       (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$I18nPropertyComponent, _debugComponentUrl))));
     }
-    componentStyles = styles;
+    this.componentStyles = styles;
   }
 }
 
@@ -75,28 +75,28 @@ class _ViewI18nPropertyComponentHost0 extends AppView<import1.I18nPropertyCompon
   _ViewI18nPropertyComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
   @override
   AppView<void> get hostedComponentView {
-    return _compView_0;
+    return this._compView_0;
   }
 
   @override
   ComponentRef<import1.I18nPropertyComponent> build() {
     // Child component I18nPropertyComponent in asset:_goldens/test/_files/i18n/property.dart (changeDetection: Default)
-    _compView_0 = ViewI18nPropertyComponent0(this, 0);
-    final _el_0 = _compView_0.rootEl;
-    _I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();
-    _compView_0.create(_I18nPropertyComponent_0_5, projectedNodes);
-    init1(_el_0);
-    return ComponentRef(this, _el_0, _I18nPropertyComponent_0_5);
+    this._compView_0 = ViewI18nPropertyComponent0(this, 0);
+    final _el_0 = this._compView_0.rootEl;
+    this._I18nPropertyComponent_0_5 = import1.I18nPropertyComponent();
+    this._compView_0.create(this._I18nPropertyComponent_0_5, this.projectedNodes);
+    this.init1(_el_0);
+    return ComponentRef(this, _el_0, this._I18nPropertyComponent_0_5);
   }
 
   @override
   void detectChangesInternal() {
-    _compView_0.detectChanges();
+    this._compView_0.detectChanges();
   }
 
   @override
   void destroyInternal() {
-    _compView_0.destroyInternalState();
+    this._compView_0.destroyInternalState();
   }
 }
 
