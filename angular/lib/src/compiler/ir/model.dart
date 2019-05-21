@@ -336,6 +336,46 @@ class InputBinding implements BindingTarget {
       visitor.visitInputBinding(this, context);
 }
 
+abstract class BoundEvent implements BindingTarget {
+  final String name;
+
+  BoundEvent(this.name);
+
+  @override
+  final securityContext = TemplateSecurityContext.none;
+  @override
+  final o.OutputType type = null;
+}
+
+class NativeEvent extends BoundEvent {
+  NativeEvent(String name) : super(name);
+
+  @override
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
+      visitor.visitNativeEvent(this, context);
+}
+
+class CustomEvent extends BoundEvent {
+  CustomEvent(String name) : super(name);
+
+  @override
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
+      visitor.visitCustomEvent(this, context);
+}
+
+class DirectiveOutput extends BoundEvent {
+  final bool isMockLike;
+
+  DirectiveOutput(String name, this.isMockLike) : super(name);
+
+  @override
+  R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
+          [CO context]) =>
+      visitor.visitDirectiveOutput(this, context);
+}
+
 abstract class BindingSource extends IRNode {
   bool get isImmutable;
   bool get isNullable;
@@ -423,6 +463,46 @@ class BoundExpression implements BindingSource {
       visitor.visitBoundExpression(this, context);
 }
 
+abstract class EventHandler implements BindingSource {
+  @override
+  final bool isImmutable = false;
+  @override
+  final bool isNullable = false;
+  @override
+  final bool isString = false;
+}
+
+class SimpleEventHandler extends EventHandler {
+  final ast.AST handler;
+  final SourceSpan sourceSpan;
+
+  final int numArgs;
+
+  SimpleEventHandler(this.handler, this.sourceSpan, {this.numArgs});
+
+  @override
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+          [CO context]) =>
+      visitor.visitSimpleEventHandler(this, context);
+}
+
+class ComplexEventHandler extends EventHandler {
+  final List<EventHandler> handlers;
+
+  String methodName;
+
+  ComplexEventHandler(this.handlers, this.methodName);
+
+  ComplexEventHandler.forAst(
+      ast.AST handler, SourceSpan sourceSpan, String methodName)
+      : this([SimpleEventHandler(handler, sourceSpan)], methodName);
+
+  @override
+  R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
+          [CO context]) =>
+      visitor.visitComplexEventHandler(this, context);
+}
+
 abstract class BindingTargetVisitor<R, C> {
   R visitTextBinding(TextBinding textBinding, [C context]);
   R visitHtmlBinding(HtmlBinding htmlBinding, [C context]);
@@ -432,12 +512,18 @@ abstract class BindingTargetVisitor<R, C> {
   R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
   R visitPropertyBinding(PropertyBinding propertyBinding, [C context]);
   R visitInputBinding(InputBinding inputBinding, [C context]);
+  R visitNativeEvent(NativeEvent nativeEvent, [C context]);
+  R visitCustomEvent(CustomEvent customEvent, [C context]);
+  R visitDirectiveOutput(DirectiveOutput directiveOutput, [C context]);
 }
 
 abstract class BindingSourceVisitor<R, C> {
   R visitBoundI18nMessage(BoundI18nMessage boundI18nMessage, [C context]);
   R visitStringLiteral(StringLiteral stringLiteral, [C context]);
   R visitBoundExpression(BoundExpression boundExpression, [C context]);
+  R visitSimpleEventHandler(SimpleEventHandler simpleEventHandler, [C context]);
+  R visitComplexEventHandler(ComplexEventHandler complexEventHandler,
+      [C context]);
 }
 
 abstract class IRVisitor<R, C> extends Object

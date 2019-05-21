@@ -194,6 +194,36 @@ class _UpdateStatementsVisitor
       [o.Expression renderValue]) {
     return appViewInstance.prop(inputBinding.name).set(renderValue).toStmt();
   }
+
+  @override
+  o.Statement visitCustomEvent(ir.CustomEvent customEvent,
+      [o.Expression renderValue]) {
+    final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
+    final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
+    return eventManagerExpr.callMethod(
+      'addEventListener',
+      [
+        renderNode?.toReadExpr() ?? appViewInstance,
+        o.literal(customEvent.name),
+        renderValue
+      ],
+    ).toStmt();
+  }
+
+  @override
+  o.Statement visitDirectiveOutput(ir.DirectiveOutput directiveOutput,
+      [o.Expression context]) {
+    // TODO: implement visitDirectiveOutput
+    return null;
+  }
+
+  @override
+  o.Statement visitNativeEvent(ir.NativeEvent nativeEvent,
+          [o.Expression renderValue]) =>
+      (renderNode?.toReadExpr() ?? appViewInstance).callMethod(
+        'addEventListener',
+        [o.literal(nativeEvent.name), renderValue],
+      ).toStmt();
 }
 
 o.Expression _sanitizedValue(

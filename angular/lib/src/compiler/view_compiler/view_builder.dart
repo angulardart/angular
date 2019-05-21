@@ -3,13 +3,17 @@ import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata;
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
-import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart'
-    show convertHostAttributeToBinding, convertToBinding;
+    show
+        convertHostAttributeToBinding,
+        convertHostListenerToBinding,
+        convertToBinding;
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/view_compiler/bound_value_converter.dart';
+import 'package:angular/src/compiler/view_compiler/update_statement_visitor.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart';
@@ -23,12 +27,8 @@ import 'constants.dart'
         changeDetectionStrategyToConst,
         parentRenderNodeVar,
         DetectChangesVars,
-        EventHandlerVars,
         ViewConstructorVars,
         ViewProperties;
-import 'event_binder.dart' show convertStmtIntoExpression;
-import 'expression_converter.dart';
-import 'parse_utils.dart';
 import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest, ProviderNode;
 import 'view_compiler_utils.dart'
@@ -841,76 +841,29 @@ void _writeComponentHostEventListeners(
   @required o.Expression rootEl,
 }) {
   CompileDirectiveMetadata component = view.component;
+  var converter = BoundValueConverter.forView(view);
   for (String eventName in component.hostListeners.keys) {
-    String handlerSource = component.hostListeners[eventName];
-    var handlerAst = parser.parseAction(handlerSource, '', component.exports);
-    HandlerType handlerType = handlerTypeFromExpression(handlerAst);
-    o.Expression handlerExpr;
-    int numArgs;
-    if (handlerType == HandlerType.notSimple) {
-      var context = DetectChangesVars.cachedCtx;
-      var actionStmts = convertCdStatementToIr(
-        view.nameResolver,
-        context,
-        handlerAst,
-        // The only way a host listener could fail expression conversion is if
-        // the arguments specified in the `HostListener` annotation are invalid,
-        // but we don't have its source span to provide here.
-        null,
-        component,
-      );
-      List<o.Statement> stmts = actionStmts.toList();
-      String methodName = '_handle_${sanitizeEventName(eventName)}__';
-      view.methods.add(o.ClassMethod(
-          methodName,
-          [o.FnParam(EventHandlerVars.event.name, o.importType(null))],
-          []
-            ..addAll(maybeCachedCtxDeclarationStatement(statements: stmts))
-            ..addAll(stmts),
-          null,
-          [o.StmtModifier.Private]));
-      handlerExpr = o.ReadClassMemberExpr(methodName);
-      numArgs = 1;
-    } else {
-      var context = DetectChangesVars.cachedCtx;
-      var actionStmts = convertCdStatementToIr(
-        view.nameResolver,
-        context,
-        handlerAst,
-        // The only way a host listener could fail expression conversion is if
-        // the arguments specified in the `HostListener` annotation are invalid,
-        // but we don't have its source span to provide here.
-        null,
-        component,
-      );
-      var actionExpr = convertStmtIntoExpression(actionStmts.last);
-      assert(actionExpr is o.InvokeMethodExpr);
-      var callExpr = actionExpr as o.InvokeMethodExpr;
-      handlerExpr = o.ReadPropExpr(callExpr.receiver, callExpr.name);
-      numArgs = handlerType == HandlerType.simpleNoArgs ? 0 : 1;
-    }
+    var boundEvent = _parseEvent(component, eventName, parser);
 
-    final wrappedHandlerExpr = o.InvokeMemberMethodExpr(
-      'eventHandler$numArgs',
-      [handlerExpr],
-    );
+    o.Expression handlerExpr =
+        converter.convertSourceToExpression(boundEvent.source, null);
 
-    o.Expression listenExpr;
-    if (isNativeHtmlEvent(eventName)) {
-      listenExpr = rootEl.callMethod(
-        'addEventListener',
-        [o.literal(eventName), wrappedHandlerExpr],
-      );
-    } else {
-      final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
-      final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
-      listenExpr = eventManagerExpr.callMethod(
-        'addEventListener',
-        [rootEl, o.literal(eventName), wrappedHandlerExpr],
-      );
-    }
-    statements.add(listenExpr.toStmt());
+    statements.add(bindingToUpdateStatement(
+      boundEvent,
+      rootEl,
+      null,
+      false,
+      handlerExpr,
+    ));
   }
+}
+
+ir.Binding _parseEvent(
+    CompileDirectiveMetadata component, String eventName, Parser parser) {
+  String handlerSource = component.hostListeners[eventName];
+  var handlerAst = parser.parseAction(handlerSource, '', component.exports);
+  var boundEvent = convertHostListenerToBinding(eventName, handlerAst);
+  return boundEvent;
 }
 
 o.OutputType _getContextType(CompileView view) {

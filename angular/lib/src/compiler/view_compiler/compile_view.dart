@@ -39,11 +39,12 @@ import 'compile_pipe.dart' show CompilePipe;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'constants.dart'
     show
-        parentRenderNodeVar,
-        appViewRootElementName,
         DetectChangesVars,
+        EventHandlerVars,
+        InjectMethodVars,
         ViewProperties,
-        InjectMethodVars;
+        appViewRootElementName,
+        parentRenderNodeVar;
 import 'expression_converter.dart';
 import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
@@ -688,6 +689,35 @@ class CompileView {
     }
   }
 
+  // TODO(alorenzen): Convert to NodeReference.
+  o.Expression createEventHandler(String methodName, List<o.Statement> stmts,
+      {List<o.Statement> localDeclarations = const []}) {
+    methods.add(_createEventHandlerMethod(
+      methodName,
+      stmts,
+      localDeclarations,
+    ));
+    return o.ReadClassMemberExpr(methodName);
+  }
+
+  o.ClassMethod _createEventHandlerMethod(String methodName,
+          List<o.Statement> stmts, List<o.Statement> localDeclarations) =>
+      o.ClassMethod(
+          methodName,
+          [_eventParam],
+          [
+            ...localDeclarations,
+            ...maybeCachedCtxDeclarationStatement(statements: stmts),
+            ...stmts,
+          ],
+          null,
+          [o.StmtModifier.Private]);
+
+  final _eventParam = o.FnParam(
+    EventHandlerVars.event.name,
+    o.importType(null),
+  );
+
   /// Create an html node and appends to parent element.
   void createElement(CompileElement parent, NodeReference elementRef,
       int nodeIndex, String tagName, TemplateAst ast) {
@@ -959,6 +989,13 @@ class CompileView {
     }
   }
 
+  void addEventListener(
+      NodeReference node, ir.Binding binding, o.Expression handler) {
+    _createMethod
+        .addStmt(bindingToUpdateStatement(binding, null, node, false, handler));
+  }
+
+  // TODO(alorenzen): Remove in favor of addEventListener().
   void addDomEventListener(
       NodeReference node, String eventName, o.Expression handler) {
     var listenExpr = node
@@ -967,6 +1004,7 @@ class CompileView {
     _createMethod.addStmt(listenExpr.toStmt());
   }
 
+  // TODO(alorenzen): Remove in favor of addEventListener().
   void addCustomEventListener(
       NodeReference node, String eventName, o.Expression handler) {
     final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);

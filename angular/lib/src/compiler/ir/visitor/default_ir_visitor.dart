@@ -31,10 +31,19 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   R visitClassBinding(ClassBinding classBinding, [C context]) => null;
 
   @override
+  R visitCustomEvent(CustomEvent customEvent, [C context]) => null;
+
+  @override
+  R visitDirectiveOutput(DirectiveOutput directiveOutput, [C context]) => null;
+
+  @override
   R visitHtmlBinding(HtmlBinding htmlBinding, [C context]) => null;
 
   @override
   R visitInputBinding(InputBinding inputBinding, [C context]) => null;
+
+  @override
+  R visitNativeEvent(NativeEvent nativeEvent, [C context]) => null;
 
   @override
   R visitPropertyBinding(PropertyBinding propertyBinding, [C context]) => null;
@@ -53,6 +62,16 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
 
   @override
   R visitBoundI18nMessage(BoundI18nMessage boundI18nMessage, [C context]) =>
+      null;
+
+  @override
+  R visitComplexEventHandler(ComplexEventHandler complexEventHandler,
+          [C context]) =>
+      null;
+
+  @override
+  R visitSimpleEventHandler(SimpleEventHandler simpleEventHandler,
+          [C context]) =>
       null;
 
   @override

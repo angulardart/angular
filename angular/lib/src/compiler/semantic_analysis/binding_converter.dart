@@ -3,9 +3,12 @@ import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart'
     as expression_ast;
+import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' as ast;
+import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
+    show HandlerType, handlerTypeFromExpression, sanitizeEventName;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
@@ -39,6 +42,30 @@ ir.Binding convertHostAttributeToBinding(
     ir.Binding(
         source: ir.BoundExpression(value, null, analyzedClass),
         target: _attributeName(name));
+
+/// Converts a host listener to an [ir.Binding] instance.
+///
+/// Current host listeners are represented as a map from [name] to [value].
+// TODO(b/130184376): Create a better HostListener representation.
+ir.Binding convertHostListenerToBinding(
+        String eventName, expression_ast.AST handlerAst) =>
+    ir.Binding(
+      source: _handlerFor(eventName, handlerAst),
+      target: isNativeHtmlEvent(eventName)
+          ? ir.NativeEvent(eventName)
+          : ir.CustomEvent(eventName),
+    );
+
+ir.EventHandler _handlerFor(String eventName, expression_ast.AST handlerAst) {
+  HandlerType handlerType = handlerTypeFromExpression(handlerAst);
+  if (handlerType == HandlerType.notSimple) {
+    String methodName = '_handle_${sanitizeEventName(eventName)}__';
+    return ir.ComplexEventHandler.forAst(handlerAst, null, methodName);
+  } else {
+    return ir.SimpleEventHandler(handlerAst, null,
+        numArgs: handlerType == HandlerType.simpleNoArgs ? 0 : 1);
+  }
+}
 
 class _ToBindingVisitor
     implements ast.TemplateAstVisitor<ir.Binding, _IrBindingContext> {
