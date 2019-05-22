@@ -34,12 +34,14 @@ const _statefulDirectiveFields = [
 ];
 
 AngularArtifacts findComponentsAndDirectives(
-    LibraryReader library, ComponentVisitorExceptionHandler exceptionHandler) {
-  var componentVisitor = _NormalizedComponentVisitor(library, exceptionHandler);
-  library.element.accept(componentVisitor);
+  LibraryReader library,
+  ComponentVisitorExceptionHandler exceptionHandler,
+) {
+  final visitor = _NormalizedComponentVisitor(library, exceptionHandler);
+  library.element.accept(visitor);
   return AngularArtifacts(
-    componentVisitor.components,
-    componentVisitor.directives,
+    components: visitor.components,
+    directives: visitor.directives,
   );
 }
 
@@ -52,22 +54,28 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   _NormalizedComponentVisitor(this._library, this._exceptionHandler);
 
+  _ComponentVisitor _visitor() =>
+      _ComponentVisitor(_library, _exceptionHandler);
+
   @override
   Null visitClassElement(ClassElement element) {
-    final directive =
-        element.accept(_ComponentVisitor(_library, _exceptionHandler));
+    final directive = element.accept(_visitor());
     if (directive != null) {
       if (directive.isComponent) {
         final directives = _visitDirectives(element);
         final directiveTypes = _visitDirectiveTypes(element);
         final pipes = _visitPipes(element);
         _errorOnUnusedDirectiveTypes(
-            element, directives, directiveTypes, _exceptionHandler);
-        components.add(NormalizedComponentWithViewDirectives(
-          directive,
+          element,
           directives,
           directiveTypes,
-          pipes,
+          _exceptionHandler,
+        );
+        components.add(NormalizedComponentWithViewDirectives(
+          component: directive,
+          directives: directives,
+          directiveTypes: directiveTypes,
+          pipes: pipes,
         ));
       } else {
         directives.add(directive);
@@ -78,8 +86,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
 
   @override
   Null visitFunctionElement(FunctionElement element) {
-    final directive =
-        element.accept(_ComponentVisitor(_library, _exceptionHandler));
+    final directive = element.accept(_visitor());
     if (directive != null) {
       directives.add(directive);
     }
@@ -89,8 +96,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) {
     final values = _getResolvedArgumentsOrFail(element, 'directives');
     return visitAll(values, (value) {
-      return typeDeclarationOf(value)
-          ?.accept(_ComponentVisitor(_library, _exceptionHandler));
+      return typeDeclarationOf(value)?.accept(_visitor());
     });
   }
 
