@@ -406,6 +406,7 @@ abstract class AbstractControl<T> {
 /// With [NgFormControl] or [NgFormModel] an existing [Control] can be
 /// bound to a DOM element instead. This `Control` can be configured with a
 /// custom validation function.
+@optionalTypeArgs
 class Control<T> extends AbstractControl<T> {
   Function _onChange;
   String _rawValue;
