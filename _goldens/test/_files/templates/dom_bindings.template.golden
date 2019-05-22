@@ -15,8 +15,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
@@ -41,8 +40,8 @@ class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
-      import10.updateAttribute(this.rootEl, 'title', currVal_0);
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
+      import9.updateAttribute(this.rootEl, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -121,7 +120,7 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   ComponentRef<import1.HasTemplateAttributes> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this._el_0 = import9.appendDiv(doc, parentRenderNode);
     this.init0();
   }
 
@@ -129,8 +128,8 @@ class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> 
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
-      import10.updateAttribute(this._el_0, 'title', currVal_0);
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
+      import9.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -206,7 +205,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   ComponentRef<import1.HasStaticAttribute> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this._el_0 = import9.appendDiv(doc, parentRenderNode);
     this.init0();
   }
 
@@ -214,7 +213,7 @@ class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
     if (firstCheck) {
-      import10.setAttribute(this._el_0, 'title', 'title');
+      import9.setAttribute(this._el_0, 'title', 'title');
     }
   }
 
@@ -294,8 +293,8 @@ class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
-      import10.updateClassBindingNonHtml(this.rootEl, 'fancy', currVal_0);
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
+      import9.updateClassBindingNonHtml(this.rootEl, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -374,7 +373,7 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   ComponentRef<import1.HasTemplateClass> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this._el_0 = import9.appendDiv(doc, parentRenderNode);
     this.init0();
   }
 
@@ -382,8 +381,8 @@ class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
-      import10.updateClassBinding(this._el_0, 'fancy', currVal_0);
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
+      import9.updateClassBinding(this._el_0, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -461,7 +460,7 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   ComponentRef<import1.HasStyleProperty> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import10.appendDiv(doc, parentRenderNode);
+    this._el_0 = import9.appendDiv(doc, parentRenderNode);
     this.init0();
   }
 
@@ -469,12 +468,12 @@ class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.width;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._el_0.style.setProperty('width', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       this._expr_1 = currVal_1;
     }

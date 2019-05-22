@@ -20,10 +20,9 @@ import 'package:angular/src/runtime.dart' as import10;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import14;
-import 'package:angular/src/runtime/text_binding.dart' as import15;
+import 'package:angular/src/runtime/text_binding.dart' as import14;
 import 'dart:core';
-import 'package:angular/src/runtime/interpolate.dart' as import17;
+import 'package:angular/src/runtime/interpolate.dart' as import16;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -66,7 +65,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
         (this._NgFor_1_9.ngForOf = _ctx.bars);
       }
     }
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import10.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_0.detectChangesInNestedViews();
@@ -112,9 +111,9 @@ AppView<void> viewFactory_TestFooComponent1(import6.RenderView parentView, int p
 }
 
 class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
-  final import15.TextBinding _textBinding_2 = import15.TextBinding();
-  final import15.TextBinding _textBinding_4 = import15.TextBinding();
-  final import15.TextBinding _textBinding_6 = import15.TextBinding();
+  final import14.TextBinding _textBinding_2 = import14.TextBinding();
+  final import14.TextBinding _textBinding_4 = import14.TextBinding();
+  final import14.TextBinding _textBinding_6 = import14.TextBinding();
   _ViewTestFooComponent2(import6.RenderView parentView, int parentIndex) : super(import7.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
   }
@@ -137,9 +136,9 @@ class _ViewTestFooComponent2 extends AppView<import1.TestFooComponent> {
     final local_bar = import10.unsafeCast<String>(this.locals['\$implicit']);
     final local_index = import10.unsafeCast<int>(this.locals['index']);
     final local_odd = import10.unsafeCast<bool>(this.locals['odd']);
-    this._textBinding_2.updateText(import17.interpolateString0(local_bar));
-    this._textBinding_4.updateText(import17.interpolate0(local_index));
-    this._textBinding_6.updateText(import17.interpolate0(local_odd));
+    this._textBinding_2.updateText(import16.interpolateString0(local_bar));
+    this._textBinding_4.updateText(import16.interpolate0(local_index));
+    this._textBinding_6.updateText(import16.interpolate0(local_odd));
   }
 
   void _handle_click_1_0($event) {

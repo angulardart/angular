@@ -15,11 +15,10 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
-import 'package:angular/src/runtime/text_binding.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
-import 'package:angular/src/runtime/interpolate.dart' as import12;
-import 'package:angular/src/core/change_detection/component_state.dart' as import13;
+import 'package:angular/src/runtime/text_binding.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/src/core/change_detection/component_state.dart' as import12;
 
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
@@ -55,7 +54,7 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._OnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -158,7 +157,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._OnPushChildComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -235,7 +234,7 @@ final List<dynamic> styles$OnPushChildComponent = const [];
 
 // View for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
-  final import10.TextBinding _textBinding_2 = import10.TextBinding();
+  final import9.TextBinding _textBinding_2 = import9.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChildComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -249,8 +248,8 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   ComponentRef<import1.OnPushChildComponent> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'OnPushChild: ');
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'OnPushChild: ');
     _el_0.append(this._textBinding_2.element);
     this.init0();
   }
@@ -258,7 +257,7 @@ class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_2.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_2.updateText(import11.interpolateString0(_ctx.name));
   }
 
   @override
@@ -336,10 +335,10 @@ class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
     final _ctx = this.ctx;
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'Stateful');
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'Stateful');
     this.init0();
-    import13.internalSetStateChanged(_ctx, this.markForCheck);
+    import12.internalSetStateChanged(_ctx, this.markForCheck);
   }
 
   @override
@@ -412,8 +411,8 @@ class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
   ComponentRef<import1.DefaultComponent> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'Default');
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'Default');
     this.init0();
   }
 
@@ -489,7 +488,7 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
   ComponentRef<import1.UsesNgModelLike> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import11.appendElement(doc, parentRenderNode, 'input');
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handle_ngModelChange_0_0));
     this.init(const [], [subscription_0]);
@@ -502,7 +501,7 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
     bool firstCheck = (this.cdState == 0);
     changed = false;
     final currVal_0 = _ctx.value;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NgModelLike_0_5.model = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -510,7 +509,7 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
     if (changed) {
       this._NgModelLike_0_5.ngAfterChanges();
     }
-    if (((!import9.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._NgModelLike_0_5.ngOnInit();
     }
   }
@@ -607,7 +606,7 @@ class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushC
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._DoCheckOnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -615,7 +614,7 @@ class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushC
     if (changed) {
       this._compView_0.markAsCheckOnce();
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._DoCheckOnPushComponent_0_5.ngDoCheck();
     }
     this._compView_0.detectChanges();
@@ -683,7 +682,7 @@ final List<dynamic> styles$DoCheckOnPushComponent = const [];
 
 // View for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewDoCheckOnPushComponent0 extends AppView<import1.DoCheckOnPushComponent> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
+  final import9.TextBinding _textBinding_1 = import9.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewDoCheckOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -696,7 +695,7 @@ class ViewDoCheckOnPushComponent0 extends AppView<import1.DoCheckOnPushComponent
   @override
   ComponentRef<import1.DoCheckOnPushComponent> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
+    final _text_0 = import10.appendText(parentRenderNode, 'Name: ');
     parentRenderNode.append(this._textBinding_1.element);
     this.init0();
   }
@@ -704,7 +703,7 @@ class ViewDoCheckOnPushComponent0 extends AppView<import1.DoCheckOnPushComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.name));
   }
 
   @override
@@ -751,7 +750,7 @@ class _ViewDoCheckOnPushComponentHost0 extends AppView<import1.DoCheckOnPushComp
     if (changed) {
       this._compView_0.markAsCheckOnce();
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._DoCheckOnPushComponent_0_5.ngDoCheck();
     }
     this._compView_0.detectChanges();

@@ -22,7 +22,6 @@ import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_for.dart' as import13;
 import 'package:angular/src/runtime/dom_helpers.dart' as import14;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import16;
 import 'dart:core';
 
 final List<dynamic> styles$Comp1 = const [];
@@ -459,11 +458,11 @@ class ViewComp60 extends AppView<import1.Comp6> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.durations;
-    if (import16.checkBinding(this._expr_0, currVal_0)) {
+    if (import8.checkBinding(this._expr_0, currVal_0)) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
-    if ((!import16.AppViewUtils.throwOnChanges)) {
+    if ((!import8.debugThrowIfChanged)) {
       this._NgFor_0_9.ngDoCheck();
     }
     this._appEl_0.detectChangesInNestedViews();
@@ -578,11 +577,11 @@ class ViewComp70 extends AppView<import1.Comp7> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.items;
-    if (import16.checkBinding(this._expr_0, currVal_0)) {
+    if (import8.checkBinding(this._expr_0, currVal_0)) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
-    if ((!import16.AppViewUtils.throwOnChanges)) {
+    if ((!import8.debugThrowIfChanged)) {
       this._NgFor_0_9.ngDoCheck();
     }
     this._appEl_0.detectChangesInNestedViews();
@@ -628,11 +627,11 @@ class _ViewComp71 extends AppView<import1.Comp7> {
   void detectChangesInternal() {
     final local_durations = import8.unsafeCast<List<Duration>>(this.locals['\$implicit']);
     final currVal_0 = local_durations;
-    if (import16.checkBinding(this._expr_0, currVal_0)) {
+    if (import8.checkBinding(this._expr_0, currVal_0)) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
-    if ((!import16.AppViewUtils.throwOnChanges)) {
+    if ((!import8.debugThrowIfChanged)) {
       this._NgFor_0_9.ngDoCheck();
     }
     this._appEl_0.detectChangesInNestedViews();

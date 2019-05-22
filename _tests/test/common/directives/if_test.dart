@@ -2,9 +2,10 @@
 
 import 'dart:html';
 
+import 'package:angular/angular.dart';
+import 'package:angular/src/runtime.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
-import 'package:angular/angular.dart';
 
 import 'if_test.template.dart' as ng_generated;
 
@@ -118,8 +119,7 @@ void main() {
   });
 }
 
-const isExpressionChanged =
-    TypeMatcher<ExpressionChangedAfterItHasBeenCheckedException>();
+const isExpressionChanged = TypeMatcher<UnstableExpressionError>();
 
 @Component(
   selector: 'ngif-intemplate-test',

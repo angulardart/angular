@@ -4,7 +4,6 @@ import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 
 import 'package:angular/src/runtime.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/views/view.dart';
 
 import 'change_detection.dart';
@@ -102,11 +101,11 @@ abstract class ChangeDetectionHost {
       detectors[i].detectChanges();
     }
     if (isDevMode) {
-      AppViewUtils.enterThrowOnChanges();
+      debugEnterThrowOnChanged();
       for (var i = 0; i < length; i++) {
         detectors[i].detectChanges();
       }
-      AppViewUtils.exitThrowOnChanges();
+      debugExitThrowOnChanged();
     }
   }
 

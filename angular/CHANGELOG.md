@@ -18,6 +18,10 @@
 
 *   `ChangeDetectorRef.checkNoChanges()` has been removed from the public API.
 
+*   Removed `ExpressionChangedAfterItHasBeenCheckedException`. It is supported
+    for end-users to interact with this object (it is now private to the
+    framework).
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.

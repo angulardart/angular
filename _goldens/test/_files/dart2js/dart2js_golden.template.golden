@@ -20,16 +20,15 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/di/errors.dart' as import10;
 import 'package:angular/src/core/di/opaque_token.dart' as import11;
 import 'dart:core';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import13;
-import 'package:angular/src/runtime/text_binding.dart' as import14;
-import 'package:angular/src/runtime/interpolate.dart' as import15;
-import 'dart:async' as import16;
+import 'package:angular/src/runtime/text_binding.dart' as import13;
+import 'package:angular/src/runtime/interpolate.dart' as import14;
+import 'dart:async' as import15;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import20;
-import 'package:angular/src/common/directives/ng_class.dart' as import21;
-import 'package:angular/src/common/directives/ng_style.dart' as import22;
+import 'package:angular/src/common/directives/ng_for.dart' as import19;
+import 'package:angular/src/common/directives/ng_class.dart' as import20;
+import 'package:angular/src/common/directives/ng_style.dart' as import21;
 
 final List<dynamic> styles$RootComponent = const [];
 
@@ -344,7 +343,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends AppView<import1.UsesDefau
       }
     }
     final currVal_1 = _ctx.name;
-    if (import13.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._DefaultChangeDetectionAndInputs_0_5.name = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -413,8 +412,8 @@ final List<dynamic> styles$DefaultChangeDetectionAndInputs = const [];
 
 // View for component DefaultChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChangeDetectionAndInputs> {
-  final import14.TextBinding _textBinding_1 = import14.TextBinding();
-  final import14.TextBinding _textBinding_3 = import14.TextBinding();
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
+  final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewDefaultChangeDetectionAndInputs0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -441,8 +440,8 @@ class ViewDefaultChangeDetectionAndInputs0 extends AppView<import1.DefaultChange
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import15.interpolateString0(_ctx.title));
-    this._textBinding_3.updateText(import15.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import14.interpolateString0(_ctx.title));
+    this._textBinding_3.updateText(import14.interpolateString0(_ctx.name));
   }
 
   @override
@@ -523,9 +522,9 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
     parentRenderNode.append(_el_0);
     this._OnPushChangeDetectionAndInputs_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.OnPushChangeDetectionAndInputs, () {
-            return import1.OnPushChangeDetectionAndInputs(this._compView_0, this.parentView.injectorGet(import16.Stream, this.parentIndex));
+            return import1.OnPushChangeDetectionAndInputs(this._compView_0, this.parentView.injectorGet(import15.Stream, this.parentIndex));
           })
-        : import1.OnPushChangeDetectionAndInputs(this._compView_0, this.parentView.injectorGet(import16.Stream, this.parentIndex)));
+        : import1.OnPushChangeDetectionAndInputs(this._compView_0, this.parentView.injectorGet(import15.Stream, this.parentIndex)));
     this._compView_0.create0(this._OnPushChangeDetectionAndInputs_0_5);
     this.init0();
   }
@@ -543,7 +542,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
       }
     }
     final currVal_1 = _ctx.name;
-    if (import13.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._OnPushChangeDetectionAndInputs_0_5.name = currVal_1;
       changed = true;
       this._expr_1 = currVal_1;
@@ -551,7 +550,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends AppView<import1.UsesOnPush
     if (changed) {
       this._compView_0.markAsCheckOnce();
     }
-    if (((!import13.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._OnPushChangeDetectionAndInputs_0_5.ngOnInit();
     }
     this._compView_0.detectChanges();
@@ -620,8 +619,8 @@ final List<dynamic> styles$OnPushChangeDetectionAndInputs = const [];
 
 // View for component OnPushChangeDetectionAndInputs in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: OnPush)
 class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDetectionAndInputs> {
-  final import14.TextBinding _textBinding_1 = import14.TextBinding();
-  final import14.TextBinding _textBinding_3 = import14.TextBinding();
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
+  final import13.TextBinding _textBinding_3 = import13.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChangeDetectionAndInputs0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -644,8 +643,8 @@ class ViewOnPushChangeDetectionAndInputs0 extends AppView<import1.OnPushChangeDe
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import15.interpolateString0(_ctx.title));
-    this._textBinding_3.updateText(import15.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import14.interpolateString0(_ctx.title));
+    this._textBinding_3.updateText(import14.interpolateString0(_ctx.name));
   }
 
   @override
@@ -682,9 +681,9 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
     final _el_0 = this._compView_0.rootEl;
     this._OnPushChangeDetectionAndInputs_0_5 = (import7.isDevMode
         ? import10.debugInjectorWrap(import1.OnPushChangeDetectionAndInputs, () {
-            return import1.OnPushChangeDetectionAndInputs(this._compView_0, this.injectorGet(import16.Stream, this.parentIndex));
+            return import1.OnPushChangeDetectionAndInputs(this._compView_0, this.injectorGet(import15.Stream, this.parentIndex));
           })
-        : import1.OnPushChangeDetectionAndInputs(this._compView_0, this.injectorGet(import16.Stream, this.parentIndex)));
+        : import1.OnPushChangeDetectionAndInputs(this._compView_0, this.injectorGet(import15.Stream, this.parentIndex)));
     this._compView_0.create(this._OnPushChangeDetectionAndInputs_0_5, this.projectedNodes);
     this.init1(_el_0);
     return ComponentRef(this, _el_0, this._OnPushChangeDetectionAndInputs_0_5);
@@ -697,7 +696,7 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends AppView<import1.OnPushCha
     if (changed) {
       this._compView_0.markAsCheckOnce();
     }
-    if (((!import13.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._OnPushChangeDetectionAndInputs_0_5.ngOnInit();
     }
     this._compView_0.detectChanges();
@@ -947,7 +946,7 @@ final List<dynamic> styles$EmbeddedNgFor = const [];
 // View for component EmbeddedNgFor in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
   ViewContainer _appEl_1;
-  import20.NgFor _NgFor_1_9;
+  import19.NgFor _NgFor_1_9;
   static import2.ComponentStyles _componentStyles;
   ViewEmbeddedNgFor0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -965,7 +964,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
     final _anchor_1 = import9.appendAnchor(_el_0);
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_EmbeddedNgFor1);
-    this._NgFor_1_9 = import20.NgFor(this._appEl_1, _TemplateRef_1_8);
+    this._NgFor_1_9 = import19.NgFor(this._appEl_1, _TemplateRef_1_8);
     this.init0();
   }
 
@@ -978,7 +977,7 @@ class ViewEmbeddedNgFor0 extends AppView<import1.EmbeddedNgFor> {
         (this._NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_1.detectChangesInNestedViews();
@@ -1005,7 +1004,7 @@ ComponentFactory<import1.EmbeddedNgFor> get EmbeddedNgForNgFactory {
 }
 
 class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
-  final import14.TextBinding _textBinding_1 = import14.TextBinding();
+  final import13.TextBinding _textBinding_1 = import13.TextBinding();
   _ViewEmbeddedNgFor1(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
   }
@@ -1020,7 +1019,7 @@ class _ViewEmbeddedNgFor1 extends AppView<import1.EmbeddedNgFor> {
   @override
   void detectChangesInternal() {
     final local_item = import7.unsafeCast<String>(this.locals['\$implicit']);
-    this._textBinding_1.updateText(import15.interpolateString0(local_item));
+    this._textBinding_1.updateText(import14.interpolateString0(local_item));
   }
 }
 
@@ -1551,12 +1550,12 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import13.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       import9.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.isFancy;
-    if (import13.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       import9.updateClassBinding(this._el_0, 'fancy', currVal_1);
       this._expr_1 = currVal_1;
     }
@@ -1565,12 +1564,12 @@ class ViewUsesDomBindings0 extends AppView<import1.UsesDomBindings> {
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_2 = _ctx.title;
-    if (import13.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       import9.updateAttribute(this.rootEl, 'title', currVal_2);
       this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.isFancy;
-    if (import13.checkBinding(this._expr_3, currVal_3)) {
+    if (import7.checkBinding(this._expr_3, currVal_3)) {
       import9.updateClassBindingNonHtml(this.rootEl, 'fancy', currVal_3);
       this._expr_3 = currVal_3;
     }
@@ -1635,10 +1634,10 @@ final List<dynamic> styles$UsesNgDirectives = const [];
 
 // View for component UsesNgDirectives in asset:_goldens/test/_files/dart2js/dart2js_golden.dart (changeDetection: Default)
 class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
-  import21.NgClass _NgClass_0_5;
-  import21.NgClass _NgClass_2_5;
-  import21.NgClass _NgClass_4_5;
-  import22.NgStyle _NgStyle_6_5;
+  import20.NgClass _NgClass_0_5;
+  import20.NgClass _NgClass_2_5;
+  import20.NgClass _NgClass_4_5;
+  import21.NgStyle _NgStyle_6_5;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -1657,16 +1656,16 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
     final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    this._NgClass_0_5 = import21.NgClass(_el_0);
+    this._NgClass_0_5 = import20.NgClass(_el_0);
     final _text_1 = import9.appendText(_el_0, 'Classes From Map');
     final _el_2 = import9.appendDiv(doc, parentRenderNode);
-    this._NgClass_2_5 = import21.NgClass(_el_2);
+    this._NgClass_2_5 = import20.NgClass(_el_2);
     final _text_3 = import9.appendText(_el_2, 'Classes from List');
     final _el_4 = import9.appendDiv(doc, parentRenderNode);
-    this._NgClass_4_5 = import21.NgClass(_el_4);
+    this._NgClass_4_5 = import20.NgClass(_el_4);
     final _text_5 = import9.appendText(_el_4, 'Classes from String');
     final _el_6 = import9.appendDiv(doc, parentRenderNode);
-    this._NgStyle_6_5 = import22.NgStyle(_el_6);
+    this._NgStyle_6_5 = import21.NgStyle(_el_6);
     final _text_7 = import9.appendText(_el_6, 'Styles');
     this.init0();
   }
@@ -1675,35 +1674,35 @@ class ViewUsesNgDirectives0 extends AppView<import1.UsesNgDirectives> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.ngClassesMap;
-    if (import13.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NgClass_0_5.rawClass = currVal_0;
       this._expr_0 = currVal_0;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgClass_0_5.ngDoCheck();
     }
     final currVal_1 = _ctx.ngClassesList;
-    if (import13.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._NgClass_2_5.rawClass = currVal_1;
       this._expr_1 = currVal_1;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgClass_2_5.ngDoCheck();
     }
     final currVal_2 = _ctx.ngClassesString;
-    if (import13.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       this._NgClass_4_5.rawClass = currVal_2;
       this._expr_2 = currVal_2;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgClass_4_5.ngDoCheck();
     }
     final currVal_3 = _ctx.ngStyles;
-    if (import13.checkBinding(this._expr_3, currVal_3)) {
+    if (import7.checkBinding(this._expr_3, currVal_3)) {
       this._NgStyle_6_5.rawStyle = currVal_3;
       this._expr_3 = currVal_3;
     }
-    if ((!import13.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgStyle_6_5.ngDoCheck();
     }
   }

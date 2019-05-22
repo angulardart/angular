@@ -130,9 +130,7 @@ class Identifiers {
   static final ChangeDetectorState = CompileIdentifierMetadata(
       name: "ChangeDetectorState", moduleUrl: _cdModuleUrl);
   static final checkBinding = CompileIdentifierMetadata(
-      name: "checkBinding", moduleUrl: _appViewUtilsModuleUrl);
-  static final devModeEqual =
-      CompileIdentifierMetadata(name: "devModeEqual", moduleUrl: _cdModuleUrl);
+      name: "checkBinding", moduleUrl: _runtimeUtilsModuleUrl);
   static final identical = CompileIdentifierMetadata(name: "identical");
   static final profileSetup = CompileIdentifierMetadata(
       name: "profileSetup", moduleUrl: _profileRuntimeModuleUrl);
@@ -142,8 +140,8 @@ class Identifiers {
       name: "profileMarkEnd", moduleUrl: _profileRuntimeModuleUrl);
   static final loadDeferred = CompileIdentifierMetadata(
       name: "loadDeferred", moduleUrl: _appViewUtilsModuleUrl);
-  static final throwOnChanges = CompileIdentifierMetadata(
-      name: "AppViewUtils.throwOnChanges", moduleUrl: _appViewUtilsModuleUrl);
+  static final debugThrowIfChanged = CompileIdentifierMetadata(
+      name: "debugThrowIfChanged", moduleUrl: _runtimeUtilsModuleUrl);
   static final isDevMode = CompileIdentifierMetadata(
       name: "isDevMode", moduleUrl: _runtimeUtilsModuleUrl);
   static final unsafeCast = CompileIdentifierMetadata(

@@ -5,4 +5,12 @@
 /// rely on.
 library angular.src.runtime;
 
+export 'runtime/check_binding.dart'
+    show
+        UnstableExpressionError,
+        checkBinding,
+        debugEnterThrowOnChanged,
+        debugExitThrowOnChanged,
+        debugThrowIfChanged;
+
 export 'runtime/optimizations.dart' show isDevMode, unsafeCast;

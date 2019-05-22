@@ -17,8 +17,7 @@ import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import12;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import11;
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px}'];
 
@@ -64,7 +63,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     bool firstCheck = (this.cdState == 0);
     changed = false;
     final currVal_0 = _ctx.rowIndex;
-    if (import11.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._ChildDirective_0_5.instance.gridRow = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -72,7 +71,7 @@ class ViewTestFooComponent0 extends AppView<import1.TestFooComponent> {
     if (changed) {
       this._ChildDirective_0_5.instance.ngAfterChanges();
     }
-    if (((!import11.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._ChildDirective_0_5.instance.ngOnInit();
     }
     this._ChildDirective_0_5.detectHostChanges(this, this._el_0);
@@ -136,7 +135,7 @@ AppView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
   return _ViewTestFooComponentHost0(null, null);
 }
 
-class ChildDirectiveNgCd extends import12.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
@@ -150,17 +149,17 @@ class ChildDirectiveNgCd extends import12.DirectiveChangeDetector {
       }
     }
     final currVal_0 = this.instance.tabIndex;
-    if (import11.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       import9.setProperty(el, 'tabIndex', currVal_0);
       this._expr_0 = currVal_0;
     }
     final currVal_1 = this.instance.disabledStr;
-    if (import11.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       import9.updateAttribute(el, 'aria-disabled', currVal_1);
       this._expr_1 = currVal_1;
     }
     final currVal_2 = this.instance.disabled;
-    if (import11.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       import9.updateClassBindingNonHtml(el, 'is-disabled', currVal_2);
       this._expr_2 = currVal_2;
     }
