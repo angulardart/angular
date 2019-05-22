@@ -389,7 +389,6 @@ class CompileView {
   o.OutputType classType;
   o.Expression viewFactory;
   String viewFactoryName;
-  bool requiresOnChangesCall = false;
   bool requiresAfterChangesCall = false;
   var pipeCount = 0;
   ViewNameResolver nameResolver;
@@ -1351,11 +1350,6 @@ class CompileView {
       varStmts.add(DetectChangesVars.changed
           .set(o.literal(false))
           .toDeclStmt(o.BOOL_TYPE));
-    }
-    if (readVars.contains(DetectChangesVars.changes.name) ||
-        requiresOnChangesCall) {
-      varStmts.add(o.DeclareVarStmt(DetectChangesVars.changes.name, null,
-          o.MapType(o.importType(Identifiers.SimpleChange))));
     }
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
       varStmts.add(o.DeclareVarStmt(

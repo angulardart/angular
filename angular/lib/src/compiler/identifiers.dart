@@ -100,35 +100,21 @@ class Identifiers {
       name: 'DirectiveChangeDetector',
       moduleUrl: 'asset:angular/lib/src/core/'
           'change_detection/directive_change_detector.dart');
-  static final RenderComponentType = CompileIdentifierMetadata(
-      name: "RenderComponentType",
-      moduleUrl: "asset:angular/lib/src/core/render/api.dart");
   static final ComponentRef = CompileIdentifierMetadata(
       name: "ComponentRef", moduleUrl: _angularRootUrl);
   static final TemplateRef = CompileIdentifierMetadata(
       name: "TemplateRef",
       moduleUrl: "asset:angular/lib/src/core/linker/template_ref.dart");
   static final TemplateRefToken = identifierToken(Identifiers.TemplateRef);
-  static final ValueUnwrapper = CompileIdentifierMetadata(
-      name: "ValueUnwrapper", moduleUrl: _cdModuleUrl);
   static final Injector = CompileIdentifierMetadata(
       name: "Injector",
       moduleUrl: 'asset:angular/lib/src/di/injector/injector.dart');
   static final InjectorToken = identifierToken(Identifiers.Injector);
-  static final ViewEncapsulation = CompileIdentifierMetadata(
-      name: "ViewEncapsulation", moduleUrl: _angularRootUrl);
   static final ViewType = CompileIdentifierMetadata(
       name: "ViewType",
       moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = CompileIdentifierMetadata(
       name: "ChangeDetectionStrategy", moduleUrl: _cdModuleUrl);
-  static final TemplateSecurityContext = CompileIdentifierMetadata(
-      name: 'TemplateSecurityContext',
-      moduleUrl: 'asset:angular/lib/src/core/security.dart');
-  static final SimpleChange =
-      CompileIdentifierMetadata(name: "SimpleChange", moduleUrl: _cdModuleUrl);
-  static final ChangeDetectorState = CompileIdentifierMetadata(
-      name: "ChangeDetectorState", moduleUrl: _cdModuleUrl);
   static final checkBinding = CompileIdentifierMetadata(
       name: "checkBinding", moduleUrl: _runtimeUtilsModuleUrl);
   static final identical = CompileIdentifierMetadata(name: "identical");
@@ -295,8 +281,6 @@ class Identifiers {
       name: "TableColElement", moduleUrl: "dart:html");
   static final HTML_ULIST_ELEMENT =
       CompileIdentifierMetadata(name: "UListElement", moduleUrl: "dart:html");
-  static final HTML_EVENT =
-      CompileIdentifierMetadata(name: "Event", moduleUrl: "dart:html");
   static final HTML_NODE =
       CompileIdentifierMetadata(name: "Node", moduleUrl: "dart:html");
 
