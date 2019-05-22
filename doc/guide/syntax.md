@@ -13,6 +13,82 @@ AngularDart templates are written in a _variant_ of HTML. Most HTML is valid
 AngularDart, with some exceptions (for example, only double quotes `"` are
 accepted for wrapping values of elements).
 
+## Elements
+
+### Static HTML
+
+AngularDart supports any built-in HTML element:
+
+```html
+<button>An example of an HTML Element</button>
+```
+
+Or a registered [web component](https://developers.google.com/web/fundamentals/web-components/customelements):
+
+```html
+<social-favicon></social-favicon>
+```
+
+<!-- TODO: Add Dynamic HTML/Link To Security? -->
+
+### Components
+
+HTML tags that are recognized by Angular are automatically used as components:
+
+```dart
+@Component(
+  selector: 'example-app',
+  template: '<coffee-machine></coffee-machine>',
+  directives: [CoffeeMachineComponent],
+)
+class ExampleApp {}
+
+@Component(
+  selector: 'coffee-machine',
+  template: '...',
+)
+class CoffeeMachineComponent {}
+```
+
+### Directives
+
+It's also possible to use a _directive_ whose selector may be defined using a
+subset of the CSS selector syntax.
+
+| Supported selectors   | Example     |
+| --------------------- | ----------- |
+| Type (or element)     | `foo`       |
+| Attribute             | `[bar]`     |
+| Class                 | `.baz`      |
+| `:not()` pseudo-class | `:not(qux)` |
+
+For example here is creation and usage of a directive with an `[attribute]`
+selector:
+
+```dart
+@Component(
+  selector: 'example-app',
+  template: '''
+    <button auto-id>...</button>
+  ''',
+  directives: [AutoIdDirective],
+)
+class ExampleApp {}
+
+@Directive(
+  selector: '[auto-id]',
+)
+class AutoIdDirective {
+  static var _nextId = 0;
+  
+  // Sets the attribute "auto-id" to the next auto-incrementing number.
+  //
+  // (Note this is a sample only and not a best practice)
+  @HostBinding('attr.auto-id')
+  final int assignId = ++_nextId;
+}
+```
+
 ## Attributes
 
 ### Static Attributes
@@ -204,6 +280,77 @@ It is also possible to combine these filters with modifier key(s):
 > WARNING: This syntax is explicitly not supported for `(keypress)` which is now
 > deprecated.
 
+## Properties
+
+Assign a value to a property of an HTML element or an `@Input()` of a component:
+
+```html
+<img [src]="photoUrl" />
+
+<coffee-machine [decaf]="isDecaf"></coffee-machine>
+```
+
+## Structural Directives
+
+Use _structural_ directives (directives prefixed with a `*`) to control the
+structure of the DOM.
+
+For example, the built-in `NgIf` directive creates and destroys content based on
+an [expression](#expressions) evaluating to `true` or `false`:
+
+```html
+<section *ngIf="isLoggedIn">
+  Welcome back {{user}}!
+</section>
+```
+
+The built-in directive `NgFor` iterates over a Dart `Iterable` repeating DOM:
+
+```html
+<ul>
+  <li *ngFor="let dog of dogs">
+    {{dog.name}} ({{dog.age}} year(s) old)
+  </li>
+</ul>
+```
+
+> NOTE: This syntax for ngFor may seem strange.
+>
+> Originally there was a shared code-base between both Angular TypeScript and
+> Dart, and we decided for backwards compatibility to keep "let" even though it
+> is not a keyword in Dart. This may change in the future.
+
+When you see a `*`, it is syntactic sugar for an [embedded template](#embedded-templates):
+
+```html
+<!-- These two blocks are identical -->
+
+<section *ngIf="isLoggedIn">
+  Welcome back {{user}}!
+</section>
+
+<template [ngIf]="isLoggedIn">
+  <section>
+    Welcome back {{user}}!
+  </section>
+</template>
+```
+
+You can also use `<ng-container>` to host a structural directive, without
+introducing a superfluous DOM node (identical to the above):
+
+```html
+<ng-container *ngIf="isLoggedIn">
+  <section>
+    Welcome back {{user}}!
+  </section>
+</ng-container>
+```
+
+This avoids having to write `<template>`, which can be confusing, in particular
+with `*ngFor`, which relies on the `*`-syntax to desugar into a more complicated
+set of elements and properties.
+
 ## References
 
 AngularDart supports tagging a component or element with `#name`:
@@ -222,13 +369,58 @@ It is then possible to use that name as an identifier in expressions:
 > available when the element is active (i.e. not destroyed by something like
 > `*ngIf` or `*ngFor`).
 
-### References to a template
+## Embedded Templates
 
-### Accessing via an exported name
+The `<template>` tag can be used to create lazily instantiated/loaded content:
 
-## Properties
+```html
+<template #sayHello>
+  Hello {{name}}!
+</template>
 
-TBD
+<some-component [template]="sayHello"></some-component>
+```
+
+In the above, we are declaring a reference to a `TemplateRef` and passing it as
+an [input](#properties) to a component.
+
+## Projected Content
+
+The `<ng-content>` tag can mark a part of the template as accepting children
+from its parent. This is the normal way to create reusable components that
+don't necessarily know their children:
+
+```html
+<div class="wooden-frame">
+  <ng-content></ng-content>
+</div>
+```
+
+A parent would then use this component like so:
+
+```html
+<picture-frame>
+  <img src="my-dog.jpg" />
+</picture-frame>
+```
+
+In this example, the `<img/>` would be rendered at the location of the
+`<ng-content>` slot in the `<picture-frame>`.
+
+It is also possible to use the `selector` property to project by CSS matching:
+
+```html
+<header>
+  <ng-content select=".header"></ng-content>
+</header>
+<footer>
+  <ng-content select=".footer"></ng-content>
+</footer>
+```
+
+> WARNING: The full set of CSS selection is not available.
+
+<!-- TODO: Expand what is available. -->
 
 ## Two-Way Bindings
 
@@ -239,13 +431,5 @@ TBD
 TBD
 
 ## Expressions
-
-TBD
-
-## Embedded Templates
-
-TBD
-
-## Structural Directives
 
 TBD
