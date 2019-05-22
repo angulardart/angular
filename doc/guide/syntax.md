@@ -432,4 +432,82 @@ TBD
 
 ## Expressions
 
+AngularDart supports a subset of the Dart language for template bindings:
+
+### Identifiers
+
+Any _identifier_ (i.e. `foo`) in the context of the template is normally
+resolved in the context of the accompanying `@Component` class. For example:
+
+```html
+Hello {{name}}!
+```
+
+... the `name` identifier is assumed to be a getter (or a field) on the class:
+
+```dart
+class NameTagComponent {
+  @Input()
+  var name = 'World';
+}
+```
+
+> NOTE: See [references](#references) for accessing template-level identifiers.
+> Some other elements, like [structural directives](#structural-directives) may
+> also add identifiers to the template scope (such as iterating with `*ngFor`).
+
+#### Static Identifiers
+
+It is possible to access class static members as well:
+
+```html
+Hello {{defaultName}}!
+```
+
+```dart
+class NameTagComponent {
+  static const defaultName = 'Guest';
+}
+```
+
+Using the `exports: [ ... ]` property, you may also access additional members:
+
+```html
+<button (click)="newState = WorkingStates.resting">Rest</button>
+```
+
+```dart
+enum WorkingStates {
+  resting,
+  working,
+}
+
+@Component(
+  exports: [
+    WorkingStates,
+  ],
+)
+class WorkflowComponent {
+  WorkingStates newState;
+}
+```
+
+### Property Access
+
+TBD
+
+### Function Calls
+
+TBD
+
+### Operators
+
+TBD
+
+### Literals
+
+TBD
+
+### Pipes
+
 TBD
