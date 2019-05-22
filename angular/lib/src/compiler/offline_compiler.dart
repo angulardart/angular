@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypedMetadata, CompilePipeMetadata;
 import 'compiler_utils.dart' show stylesModuleUrl;
@@ -9,38 +11,44 @@ import 'stylesheet_compiler/style_compiler.dart' show StyleCompiler;
 import 'view_compiler/directive_compiler.dart';
 import 'view_compiler/view_compiler.dart' show ViewCompiler;
 
-/// List of components and directives in source module.
+/// A collection of all components and directives in a given input module.
 class AngularArtifacts {
+  /// Processed `@Component`-annotated classes.
   final List<NormalizedComponentWithViewDirectives> components;
+
+  /// Processed `@Directive`-annotated classes.
   final List<CompileDirectiveMetadata> directives;
 
-  AngularArtifacts(this.components, this.directives);
+  const AngularArtifacts({
+    @required this.components,
+    @required this.directives,
+  })  : assert(components != null),
+        assert(directives != null);
 
+  /// Whether the input has no component and directives.
   bool get isEmpty => components.isEmpty && directives.isEmpty;
 }
 
+/// A processed `@Component`-annotated class with relevant metadata.
+///
+/// Contains the [component]'s metadata, as well as a link to the [directives],
+/// [directiveTypes], and [pipes] that the component was configured to create
+/// and use.
 class NormalizedComponentWithViewDirectives {
-  CompileDirectiveMetadata component;
-  List<CompileDirectiveMetadata> directives;
-  List<CompileTypedMetadata> directiveTypes;
-  List<CompilePipeMetadata> pipes;
+  final CompileDirectiveMetadata component;
+  final List<CompileDirectiveMetadata> directives;
+  final List<CompileTypedMetadata> directiveTypes;
+  final List<CompilePipeMetadata> pipes;
 
-  NormalizedComponentWithViewDirectives(
-    this.component,
-    this.directives,
-    this.directiveTypes,
-    this.pipes,
-  ) {
-    _assertComponent(component);
-  }
-
-  static void _assertComponent(CompileDirectiveMetadata meta) {
-    if (!meta.isComponent) {
-      throw StateError(
-          'Could not compile \'${meta.type.name}\' because it is not a '
-          'component.');
-    }
-  }
+  const NormalizedComponentWithViewDirectives({
+    @required this.component,
+    @required this.directives,
+    @required this.directiveTypes,
+    @required this.pipes,
+  })  : assert(component != null),
+        assert(directives != null),
+        assert(directiveTypes != null),
+        assert(pipes != null);
 }
 
 /// Compiles a view template.
@@ -63,12 +71,12 @@ class OfflineCompiler {
   );
 
   SourceModule compile(ir.Library library, String moduleUrl) {
-    var statements = <o.Statement>[];
-    for (var component in library.components) {
+    final statements = <o.Statement>[];
+    for (final component in library.components) {
       _compileComponent(component, statements);
     }
 
-    for (var directive in library.directives) {
+    for (final directive in library.directives) {
       if (!directive.requiresDirectiveChangeDetector) continue;
       _compileDirective(directive, statements);
     }
@@ -77,17 +85,20 @@ class OfflineCompiler {
   }
 
   void _compileComponent(ir.Component component, List<o.Statement> statements) {
-    for (var view in component.views) {
+    for (final view in component.views) {
       _compileView(component, view, statements);
     }
   }
 
   void _compileView(
-      ir.Component component, ir.View view, List<o.Statement> statements) {
-    var styleResult = view is ir.HostView
+    ir.Component component,
+    ir.View view,
+    List<o.Statement> statements,
+  ) {
+    final styleResult = view is ir.HostView
         ? _styleCompiler.compileHostComponent(component)
         : _styleCompiler.compileComponent(component);
-    var viewResult = _viewCompiler.compileComponent(
+    final viewResult = _viewCompiler.compileComponent(
         view.cmpMetadata,
         view.parsedTemplate,
         o.variable(styleResult.stylesVar),
@@ -100,9 +111,9 @@ class OfflineCompiler {
   }
 
   List<SourceModule> compileStylesheet(String stylesheetUrl, String cssText) {
-    var plainStyles =
+    final plainStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, false);
-    var shimStyles =
+    final shimStyles =
         _styleCompiler.compileStylesheet(stylesheetUrl, cssText, true);
     return [
       _createSourceModule(
@@ -113,14 +124,20 @@ class OfflineCompiler {
   }
 
   void _compileDirective(ir.Directive directive, List<o.Statement> statements) {
-    var result = _directiveCompiler.compile(directive);
+    final result = _directiveCompiler.compile(directive);
     statements.addAll(result.statements);
   }
 
-  SourceModule _createSourceModule(String moduleUrl,
-      List<o.Statement> statements, Map<String, String> deferredModules) {
-    String sourceCode =
-        _outputEmitter.emitStatements(moduleUrl, statements, deferredModules);
+  SourceModule _createSourceModule(
+    String moduleUrl,
+    List<o.Statement> statements,
+    Map<String, String> deferredModules,
+  ) {
+    final sourceCode = _outputEmitter.emitStatements(
+      moduleUrl,
+      statements,
+      deferredModules,
+    );
     return SourceModule(moduleUrl, sourceCode, deferredModules);
   }
 }

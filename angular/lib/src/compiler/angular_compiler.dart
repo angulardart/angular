@@ -56,22 +56,26 @@ class AngularCompiler {
 
     // Compile the intermediate representation into the output dart template.
     final compiledTemplates = templateCompiler.compile(
-        ir.Library(components, directives),
-        _moduleUrlFor(compileComponentsData));
+      ir.Library(components, directives),
+      _moduleUrlFor(compileComponentsData),
+    );
 
     return compiledTemplates;
   }
 
   Future<NormalizedComponentWithViewDirectives> _normalizeComponent(
-      NormalizedComponentWithViewDirectives component) async {
-    final normalizedComp = await _directiveNormalizer.normalizeDirective(
-      component.component,
-    );
-    final normalizedDirs = await Future.wait(
-        component.directives.map(_directiveNormalizer.normalizeDirective));
-    return NormalizedComponentWithViewDirectives(normalizedComp, normalizedDirs,
-        component.directiveTypes, component.pipes);
-  }
+    NormalizedComponentWithViewDirectives component,
+  ) async =>
+      NormalizedComponentWithViewDirectives(
+        component: await _directiveNormalizer.normalizeDirective(
+          component.component,
+        ),
+        directives: await Future.wait(
+          component.directives.map(_directiveNormalizer.normalizeDirective),
+        ),
+        directiveTypes: component.directiveTypes,
+        pipes: component.pipes,
+      );
 
   ir.Component _convertToIR(
       NormalizedComponentWithViewDirectives componentWithDirs) {

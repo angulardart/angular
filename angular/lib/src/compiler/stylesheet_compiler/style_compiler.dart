@@ -71,7 +71,7 @@ class StyleCompiler {
     }
 
     /// Add contents of style sheet after @import statements. This allows an
-    /// imported style to be overriden after its @import statement.
+    /// imported style to be overridden after its @import statement.
     for (final style in styles) {
       styleExpressions.add(o.literal(_shimIfNeeded(style, shim)));
     }
