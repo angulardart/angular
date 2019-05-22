@@ -17,7 +17,7 @@ void main() {
           String methodNotValid() => '...';
         }
       """, errors: [
-        contains('@HostBinding must be used on a getter or field'),
+        contains('@HostBinding must be on a field or getter'),
       ]);
     });
 
@@ -34,10 +34,10 @@ void main() {
           set setterNotValid(_) {}
         }
       """, errors: [
-        contains('@HostBinding must be used on a getter or field'),
+        contains('@HostBinding must be on a field or getter'),
       ]);
     });
-  }, skip: 'Not yet supported');
+  });
 
   group('should fail on @HostListener', () {
     test('on a getter', () {
@@ -53,7 +53,7 @@ void main() {
           String get onClick => '';
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on a method'),
       ]);
     });
 
@@ -70,7 +70,7 @@ void main() {
           set onClick(_) {}
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on a method'),
       ]);
     });
 
@@ -87,7 +87,7 @@ void main() {
           static void onClick() {}
         }
       """, errors: [
-        contains('@HostListener must be used on an instance method'),
+        contains('@HostListener must be on a non-static member'),
       ]);
     });
 
@@ -104,9 +104,9 @@ void main() {
           void onClick(arg1, arg2) {}
         }
       """, errors: [
-        contains('@HostListener can only infer a single argument, but 2 found'),
+        contains('@HostListener is only valid on methods with 0 or 1'),
       ]);
-    });
+    }, skip: 'b/133248314');
 
     test('on a method where specified arguments > number of arguments', () {
       return compilesExpecting("""
@@ -117,12 +117,12 @@ void main() {
           template: '',
         )
         class BadComp {
-          @HostListener('click', const [r'\$event', r'\$event'])
-          void onClick(arg1) {}
+          @HostListener('click', const [r'\$event'])
+          void onClick() {}
         }
       """, errors: [
-        contains('@HostListener expected 2 arguments, but 1 found'),
+        contains('@HostListener expected a method with 1 parameter(s)'),
       ]);
     });
-  }, skip: 'Not yet supported (tracked in b/122730445)');
+  });
 }
