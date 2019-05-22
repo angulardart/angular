@@ -4,12 +4,13 @@ import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart'
     show BoundEventAst, DirectiveAst;
-import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
+import 'package:angular/src/compiler/view_compiler/bound_value_converter.dart'
+    show extractFunction, wrapHandler;
 import 'package:angular_compiler/cli.dart';
 
 import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
-import 'constants.dart' show DetectChangesVars, EventHandlerVars;
+import 'constants.dart' show DetectChangesVars;
 import 'expression_converter.dart' show NameResolver, convertCdStatementToIr;
 import 'ir/provider_source.dart';
 import 'parse_utils.dart';
@@ -36,11 +37,6 @@ class CompileEventListener {
   var _handlerType = HandlerType.notSimple;
   o.Expression _simpleHandler;
   BoundEventAst _simpleHostEvent;
-
-  static final _eventParam = o.FnParam(
-    EventHandlerVars.event.name,
-    o.importType(null),
-  );
 
   /// Helper function to search for an event in [targetEventListeners] list and
   /// add a new one if it doesn't exist yet.
@@ -100,22 +96,13 @@ class CompileEventListener {
 
       // If debug info is enabled, the first statement is a call to [dbg], so
       // retrieve last statement to ensure it's the handler invocation.
-      _simpleHandler = _extractFunction(returnExpr);
+      _simpleHandler = extractFunction(returnExpr);
     } else {
-      final stmts = <o.Statement>[];
-      // Declare variables for locals used in this event listener.
-      stmts.insertAll(0, _nameResolver.getLocalDeclarations());
-      final methodStmts = _method.finish();
-      stmts.addAll(maybeCachedCtxDeclarationStatement(statements: methodStmts));
-
-      stmts.addAll(methodStmts);
-      _compileElement.view.methods.add(o.ClassMethod(
+      _compileElement.view.createEventHandler(
         _methodName,
-        [_eventParam],
-        stmts,
-        null,
-        [o.StmtModifier.Private],
-      ));
+        _method.finish(),
+        localDeclarations: _nameResolver.getLocalDeclarations(),
+      );
     }
   }
 
@@ -161,8 +148,7 @@ class CompileEventListener {
       numArgs = 1;
     }
 
-    final wrapperName = 'eventHandler$numArgs';
-    return o.InvokeMemberMethodExpr(wrapperName, [handlerExpr]);
+    return wrapHandler(handlerExpr, numArgs);
   }
 
   bool _isTearOff(BoundEventAst hostEvent) =>
@@ -250,9 +236,4 @@ o.Expression convertStmtIntoExpression(o.Statement stmt) {
     return stmt.value;
   }
   return null;
-}
-
-o.Expression _extractFunction(o.Expression returnExpr) {
-  final callExpr = returnExpr as o.InvokeMethodExpr;
-  return o.ReadPropExpr(callExpr.receiver, callExpr.name);
 }
