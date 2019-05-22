@@ -20,9 +20,8 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import14;
-import 'package:angular/src/runtime/queries.dart' as import15;
-import 'package:angular/src/common/directives/ng_for.dart' as import16;
+import 'package:angular/src/runtime/queries.dart' as import14;
+import 'package:angular/src/common/directives/ng_for.dart' as import15;
 
 final List<dynamic> styles$QueriesComponent = const [];
 
@@ -70,9 +69,9 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
     final _ctx = this.ctx;
     this._NgIf_2_9.ngIf = _ctx.someValue;
     this._appEl_2.detectChangesInNestedViews();
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import9.debugThrowIfChanged)) {
       if (this._query_AnotherDirective_1_5_isDirty) {
-        _ctx.usingTypeFromField = import15.flattenNodes([
+        _ctx.usingTypeFromField = import14.flattenNodes([
           [this._AnotherDirective_0_5],
           [this._AnotherDirective_1_5],
           this._appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
@@ -82,7 +81,7 @@ class ViewQueriesComponent0 extends AppView<import1.QueriesComponent> {
         this._query_AnotherDirective_1_5_isDirty = false;
       }
       if (this._query_q3_1_6_isDirty) {
-        _ctx.nestedViewChild = import15.firstOrNull(this._appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
+        _ctx.nestedViewChild = import14.firstOrNull(this._appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
           return [ElementRef(nestedView._el_0)];
         }));
         this._query_q3_1_6_isDirty = false;
@@ -209,9 +208,9 @@ class ViewEmbeddedQueries0 extends AppView<import1.EmbeddedQueries> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import9.debugThrowIfChanged)) {
       if (this._query_AnotherDirective_1_0_isDirty) {
-        _ctx.viewChildren = import15.flattenNodes([
+        _ctx.viewChildren = import14.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
             return [nestedView._AnotherDirective_0_5];
@@ -359,9 +358,9 @@ class ViewEmbeddedQueriesList0 extends AppView<import1.EmbeddedQueriesList> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import9.debugThrowIfChanged)) {
       if (this._query_AnotherDirective_1_0_isDirty) {
-        _ctx.viewChildren = import15.flattenNodes([
+        _ctx.viewChildren = import14.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
             return [nestedView._AnotherDirective_0_5];
@@ -505,7 +504,7 @@ class ViewNestedNgForQueriesList0 extends AppView<import1.NestedNgForQueriesList
     final _ctx = this.ctx;
     this._NgIf_0_9.ngIf = _ctx.conditionA;
     this._appEl_0.detectChangesInNestedViews();
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import9.debugThrowIfChanged)) {
       if (this._query_taggedItem_1_0_isDirty) {
         _ctx.taggedItems = this._appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
@@ -575,7 +574,7 @@ AppView<void> viewFactory_NestedNgForQueriesList1(import5.RenderView parentView,
 
 class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesList> {
   ViewContainer _appEl_1;
-  import16.NgFor _NgFor_1_9;
+  import15.NgFor _NgFor_1_9;
   _ViewNestedNgForQueriesList2(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.embedded, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
   }
@@ -586,7 +585,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
     final _anchor_1 = import11.appendAnchor(_el_0);
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_NestedNgForQueriesList3);
-    this._NgFor_1_9 = import16.NgFor(this._appEl_1, _TemplateRef_1_8);
+    this._NgFor_1_9 = import15.NgFor(this._appEl_1, _TemplateRef_1_8);
     this.init1(_el_0);
   }
 
@@ -599,7 +598,7 @@ class _ViewNestedNgForQueriesList2 extends AppView<import1.NestedNgForQueriesLis
         (this._NgFor_1_9.ngForOf = _ctx.items);
       }
     }
-    if ((!import14.AppViewUtils.throwOnChanges)) {
+    if ((!import9.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_1.detectChangesInNestedViews();

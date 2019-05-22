@@ -67,7 +67,7 @@ enum NodeReferenceVisibility {
   build, // Only visible inside DOM build process.
 }
 
-final notThrowOnChanges = o.not(o.importExpr(Identifiers.throwOnChanges));
+final notThrowOnChanges = o.not(o.importExpr(Identifiers.debugThrowIfChanged));
 
 /// A reference to an HTML, Text, or View node created during `AppView.build()`.
 class NodeReference {

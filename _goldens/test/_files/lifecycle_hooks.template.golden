@@ -15,8 +15,7 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$MostLifecycleHooksComponent = const [];
 
@@ -97,17 +96,17 @@ class _ViewMostLifecycleHooksComponentHost0 extends AppView<import1.MostLifecycl
   @override
   void detectChangesInternal() {
     bool firstCheck = (this.cdState == 0);
-    if (((!import9.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._MostLifecycleHooksComponent_0_5.ngOnInit();
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       if (firstCheck) {
         this._MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
       this._MostLifecycleHooksComponent_0_5.ngAfterContentChecked();
     }
     this._compView_0.detectChanges();
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       if (firstCheck) {
         this._MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }
@@ -310,7 +309,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
       [_el_1]
     ]);
     final doc = import6.document;
-    final _el_2 = import10.appendElement(doc, parentRenderNode, 'do-check');
+    final _el_2 = import9.appendElement(doc, parentRenderNode, 'do-check');
     this._DoCheckDirective_2_5 = import1.DoCheckDirective();
     // Child component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     this._compView_3 = ViewAfterChangesComponent0(this, 3);
@@ -327,24 +326,24 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     bool changed = false;
     bool firstCheck = (this.cdState == 0);
     final currVal_0 = _ctx.input;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._MostLifecycleHooksComponent_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
-    if (((!import9.AppViewUtils.throwOnChanges) && firstCheck)) {
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
       this._MostLifecycleHooksComponent_0_5.ngOnInit();
     }
     final currVal_1 = _ctx.input;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._DoCheckDirective_2_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._DoCheckDirective_2_5.ngDoCheck();
     }
     changed = false;
     final currVal_2 = _ctx.input;
-    if (import9.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       this._AfterChangesComponent_3_5.input = currVal_2;
       changed = true;
       this._expr_2 = currVal_2;
@@ -352,7 +351,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     if (changed) {
       this._AfterChangesComponent_3_5.ngAfterChanges();
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       if (firstCheck) {
         this._MostLifecycleHooksComponent_0_5.ngAfterContentInit();
       }
@@ -361,7 +360,7 @@ class ViewUsesLifecycleHooksComponent0 extends AppView<import1.UsesLifecycleHook
     this._compView_0.detectChanges();
     this._compView_1.detectChanges();
     this._compView_3.detectChanges();
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       if (firstCheck) {
         this._MostLifecycleHooksComponent_0_5.ngAfterViewInit();
       }

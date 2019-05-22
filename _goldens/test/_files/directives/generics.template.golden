@@ -15,13 +15,12 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'dart:html' as import6;
 import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
 import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import12;
-import 'package:angular/src/runtime/dom_helpers.dart' as import13;
+import 'package:angular/src/common/directives/ng_for.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import15;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import14;
 
 final List<dynamic> styles$UntypedComp = const [];
 
@@ -127,7 +126,7 @@ class ViewUsesUntypedComp0 extends AppView<import1.UsesUntypedComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._UntypedComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -296,7 +295,7 @@ class ViewUsesGenericComp0 extends AppView<import1.UsesGenericComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -393,7 +392,7 @@ class ViewUsesGenericCompGeneric0<E> extends AppView<import1.UsesGenericCompGene
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -563,12 +562,12 @@ class ViewUsesMappingComp10 extends AppView<import1.UsesMappingComp1> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindKey;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._MappingComp1_0_5.key = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._MappingComp1_0_5.value = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -737,7 +736,7 @@ class ViewUsesMappingComp20 extends AppView<import1.UsesMappingComp2> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._MappingComp2_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -906,7 +905,7 @@ class ViewUsesBoundCompWithBounds0 extends AppView<import1.UsesBoundCompWithBoun
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1003,7 +1002,7 @@ class ViewUsesBoundComp0 extends AppView<import1.UsesBoundComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1173,12 +1172,12 @@ class ViewUsesSelfBoundComp0 extends AppView<import1.UsesSelfBoundComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindA;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._SelfBoundComp_0_5.a = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._SelfBoundComp_0_5.b = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1347,7 +1346,7 @@ class ViewUsesRecursiveComp0 extends AppView<import1.UsesRecursiveComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._RecursiveComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1516,7 +1515,7 @@ class ViewUsesFunctionTypeComp0 extends AppView<import1.UsesFunctionTypeComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._FunctionTypeComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1590,7 +1589,7 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   ViewNestedChildComp0<T> _compView_1;
   import1.NestedChildComp<T> _NestedChildComp_1_5;
   ViewContainer _appEl_2;
-  import12.NgFor _NgFor_2_9;
+  import11.NgFor _NgFor_2_9;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -1618,12 +1617,12 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
     parentRenderNode.append(_el_1);
     this._NestedChildComp_1_5 = import1.NestedChildComp();
     this._compView_1.create0(this._NestedChildComp_1_5);
-    final _anchor_2 = import13.appendAnchor(parentRenderNode);
+    final _anchor_2 = import12.appendAnchor(parentRenderNode);
     this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(this._appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
-    this._NgFor_2_9 = import12.NgFor(this._appEl_2, _TemplateRef_2_8);
+    this._NgFor_2_9 = import11.NgFor(this._appEl_2, _TemplateRef_2_8);
     this.init0();
   }
 
@@ -1631,21 +1630,21 @@ class ViewNestedParentComp0<T> extends AppView<import1.NestedParentComp<T>> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.input1;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._NestedChildComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
-    if (import9.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       this._NgFor_2_9.ngForOf = currVal_2;
       this._expr_2 = currVal_2;
     }
-    if ((!import9.AppViewUtils.throwOnChanges)) {
+    if ((!import7.debugThrowIfChanged)) {
       this._NgFor_2_9.ngDoCheck();
     }
     this._appEl_2.detectChangesInNestedViews();
@@ -1696,7 +1695,7 @@ class _ViewNestedParentComp1<T> extends AppView<import1.NestedParentComp<T>> {
   void detectChangesInternal() {
     final local_input = import7.unsafeCast<T>(this.locals['\$implicit']);
     final currVal_0 = local_input;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1857,17 +1856,17 @@ class ViewUsesNestedParentComp0 extends AppView<import1.UsesNestedParentComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding1;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NestedParentComp_0_5.input1 = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._NestedParentComp_0_5.input2 = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
-    if (import9.checkBinding(this._expr_2, currVal_2)) {
+    if (import7.checkBinding(this._expr_2, currVal_2)) {
       this._NestedParentComp_0_5.moreInputs = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1973,12 +1972,12 @@ class ViewUsesMultipleTypesComp0 extends AppView<import1.UsesMultipleTypesComp> 
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.name;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.index;
-    if (import9.checkBinding(this._expr_1, currVal_1)) {
+    if (import7.checkBinding(this._expr_1, currVal_1)) {
       this._GenericComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -2065,8 +2064,8 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
   ComponentRef<import1.UsesGenericChangeDetector> build() {
     final import6.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import13.appendDiv(doc, parentRenderNode);
-    import13.setAttribute(this._el_0, 'generic', '');
+    this._el_0 = import12.appendDiv(doc, parentRenderNode);
+    import12.setAttribute(this._el_0, 'generic', '');
     this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
     this.init0();
   }
@@ -2075,7 +2074,7 @@ class ViewUsesGenericChangeDetector0 extends AppView<import1.UsesGenericChangeDe
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._GenericDirective_0_5.instance.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -2135,14 +2134,14 @@ AppView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetector
   return _ViewUsesGenericChangeDetectorHost0(null, null);
 }
 
-class GenericDirectiveNgCd<T> extends import15.DirectiveChangeDetector {
+class GenericDirectiveNgCd<T> extends import14.DirectiveChangeDetector {
   final import1.GenericDirective<T> instance;
   var _expr_0;
   GenericDirectiveNgCd(this.instance);
   void detectHostChanges(import3.RenderView view, import6.Element el) {
     final currVal_0 = this.instance.input;
-    if (import9.checkBinding(this._expr_0, currVal_0)) {
-      import13.updateAttribute(el, 'a', currVal_0?.toString());
+    if (import7.checkBinding(this._expr_0, currVal_0)) {
+      import12.updateAttribute(el, 'a', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
   }

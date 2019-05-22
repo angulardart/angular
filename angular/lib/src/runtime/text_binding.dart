@@ -1,7 +1,7 @@
 import 'dart:html';
 
 import 'package:meta/dart2js.dart' as dart2js;
-import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/runtime.dart';
 
 /// Wraps an HTML [Text] node, implementing change detection to make updating
 /// the node's text property very fast.
