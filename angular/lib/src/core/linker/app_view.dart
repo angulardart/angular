@@ -3,8 +3,7 @@ import 'dart:html';
 
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
-import 'package:angular/src/di/injector/injector.dart'
-    show throwIfNotFound, Injector;
+import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
 import 'package:meta/meta.dart';
@@ -20,8 +19,6 @@ import 'views/dynamic_view.dart';
 import 'views/render_view.dart';
 
 export 'package:angular/src/core/change_detection/component_state.dart';
-
-const _UndefinedInjectorResult = Object();
 
 /// Shared app view members used to reduce polymorphic calls and
 /// dart2js code size of constructors.
@@ -301,26 +298,16 @@ abstract class AppView<T> extends RenderView
   }
 
   @override
-  Object injectorGetViewInternal(
-    Object token,
-    int nodeIndex, [
-    Object notFoundValue = throwIfNotFound,
-  ]) {
-    if (nodeIndex != null) {
-      final result =
-          injectorGetInternal(token, nodeIndex, _UndefinedInjectorResult);
-      if (!identical(result, _UndefinedInjectorResult)) {
-        // This view has a provider for `token`.
-        return result;
-      }
-    }
+  Object injectFromAncestry(Object token, Object notFoundValue) {
     final injector = viewData._hostInjector;
     if (injector != null) {
-      // This must be a host view, which has an injector, but no parent view.
+      // If the host injector is not null, this must be a host view which has no
+      // parent view.
       return injector.get(token, notFoundValue);
     }
-    return parentView.injectorGetViewInternal(
-        token, parentIndex, notFoundValue);
+    // Otherwise this must be a component or embedded view, both of which always
+    // have a parent view.
+    return parentView.inject(token, parentIndex, notFoundValue);
   }
 
   @override

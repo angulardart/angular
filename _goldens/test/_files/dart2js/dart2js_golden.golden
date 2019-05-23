@@ -10160,18 +10160,12 @@
       t1.rootFragment = D.ViewFragment_ViewFragment(rootNodesOrViewContainers);
       t1.subscriptions = subscriptions;
     },
-    injectorGetViewInternal$3: function(token, nodeIndex, notFoundValue) {
-      var result, t1, injector;
-      if (nodeIndex != null) {
-        result = this.injectorGetInternal$3(token, nodeIndex, C.C_Object);
-        if (result !== C.C_Object)
-          return result;
-      }
-      t1 = this.viewData;
-      injector = t1._hostInjector;
+    injectFromAncestry$2: function(token, notFoundValue) {
+      var t1 = this.viewData,
+        injector = t1._hostInjector;
       if (injector != null)
         return injector.$get$2(0, token, notFoundValue);
-      return this.parentView.injectorGetViewInternal$3(token, t1.parentIndex, notFoundValue);
+      return this.parentView.inject$3(token, t1.parentIndex, notFoundValue);
     },
     destroyInternalState$0: function() {
       var t1 = this.viewData;
@@ -10372,7 +10366,7 @@
       }
     },
     injectorGet$3: function(token, nodeIndex, notFoundResult) {
-      var result = this.injectorGetViewInternal$3(token, nodeIndex, notFoundResult);
+      var result = this.inject$3(token, nodeIndex, notFoundResult);
       return result;
     },
     injectorGet$2: function(token, nodeIndex) {
@@ -10383,6 +10377,10 @@
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       return notFoundResult;
+    },
+    inject$3: function(token, nodeIndex, notFoundResult) {
+      var result = nodeIndex != null ? this.injectorGetInternal$3(token, nodeIndex, C.C_Object) : C.C_Object;
+      return result === C.C_Object ? this.injectFromAncestry$2(token, notFoundResult) : result;
     }
   };
   E.SanitizationService.prototype = {};

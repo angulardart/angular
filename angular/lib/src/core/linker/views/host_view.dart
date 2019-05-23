@@ -210,25 +210,8 @@ abstract class HostView<T> extends View implements DynamicView {
   // Dependency injection ------------------------------------------------------
 
   @override
-  Object injectorGetViewInternal(
-    Object token,
-    int nodeIndex, [
-    Object notFoundValue = throwIfNotFound,
-  ]) {
-    // The node index may be null if the request comes from content loaded
-    // within a `ViewContainer` injected by `component`.
-    if (nodeIndex != null) {
-      // Inject from view.
-      final result =
-          injectorGetInternal(token, nodeIndex, View.providerNotFound);
-      // Return result if found.
-      if (!identical(result, View.providerNotFound)) {
-        return result;
-      }
-    }
-    // Otherwise inject from host.
-    return _injector.get(token, notFoundValue);
-  }
+  Object injectFromAncestry(Object token, Object notFoundValue) =>
+      _injector.get(token, notFoundValue);
 
   // View manipulation ---------------------------------------------------------
 
