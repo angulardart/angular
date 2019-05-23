@@ -141,6 +141,36 @@ class MyComponent {
 }
 ```
 
+### AVOID using getters to generate function objects for the template
+
+This is bad for performance, as Angular calls the getter during change detection
+, which creates a new function object giving Angular illusion that the field has
+been changed. In fact, this will become a runtime error in dev mode soon.
+
+**BAD**
+
+```dart
+@Component(
+  selector: 'foo',
+  template: '<bar [foo]="fooName"></bar>',
+)
+class Foo {
+  ItemRenderer get fooName => (foo) => foo.name;
+}
+```
+
+**GOOD**
+
+```dart
+@Component(
+  selector: 'foo',
+  template: '<bar [foo]="fooName"></bar>'
+)
+class Foo {
+  static final String fooName(foo) => foo.name;
+}
+```
+
 ## Components
 
 ### AVOID order-dependent input setters
