@@ -32,6 +32,7 @@ import 'ast.dart'
         TemplateBinding;
 import 'lexer.dart'
     show
+        LexerError,
         Lexer,
         EOF,
         isQuote,
@@ -87,7 +88,7 @@ class Parser {
       );
     }
     this._checkNoInterpolation(input, location);
-    var tokens = _lexer.tokenize(this._stripComments(input));
+    var tokens = _tokenizeOrThrow(this._stripComments(input), input, location);
     var ast = _ParseAST(input, location, tokens, true, exports).parseChain();
     return ASTWithSource(ast, input, location);
   }
@@ -110,16 +111,24 @@ class Parser {
     return ASTWithSource(ast, input, location);
   }
 
+  List<Token> _tokenizeOrThrow(String text, String input, String location) {
+    try {
+      return _lexer.tokenize(text);
+    } on LexerError catch (e) {
+      throw ParseException(e.messageWithPosition, input, '', location);
+    }
+  }
+
   AST _parseBindingAst(
       String input, String location, List<CompileIdentifierMetadata> exports) {
     this._checkNoInterpolation(input, location);
-    var tokens = _lexer.tokenize(this._stripComments(input));
+    var tokens = _tokenizeOrThrow(this._stripComments(input), input, location);
     return _ParseAST(input, location, tokens, false, exports).parseChain();
   }
 
   TemplateBindingParseResult parseTemplateBindings(
       String input, String location, List<CompileIdentifierMetadata> exports) {
-    var tokens = _lexer.tokenize(input);
+    var tokens = _tokenizeOrThrow(input, input, location);
     return _ParseAST(input, location, tokens, false, exports)
         .parseTemplateBindings();
   }
@@ -130,7 +139,8 @@ class Parser {
     if (split == null) return null;
     var expressions = <AST>[];
     for (var i = 0; i < split.expressions.length; ++i) {
-      var tokens = this._lexer.tokenize(_stripComments(split.expressions[i]));
+      var tokens = _tokenizeOrThrow(
+          _stripComments(split.expressions[i]), input, location);
       var ast = _ParseAST(input, location, tokens, false, exports).parseChain();
       expressions.add(ast);
     }
