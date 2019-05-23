@@ -259,6 +259,10 @@ void main() {
         // in case lets avoid an NPE error that is impossible to debug.
         expectActionError(null, throwsWith('Blank expressions are not'));
       });
+      test("should throw on a lexer error", () {
+        expectActionError("a = 1E-",
+            throwsWith("Invalid exponent at offset 6 of expression"));
+      });
     });
     group("parseBinding", () {
       group("pipes", () {
