@@ -6,7 +6,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_fragment.dart';
-import 'package:angular/src/di/injector/injector.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
 
@@ -115,21 +114,8 @@ abstract class RenderView extends View {
   // Dependency injection ------------------------------------------------------
 
   @override
-  Object injectorGetViewInternal(
-    Object token,
-    int nodeIndex, [
-    Object notFoundValue = throwIfNotFound,
-  ]) {
-    // Inject from view.
-    final result = injectorGetInternal(token, nodeIndex, View.providerNotFound);
-    // Return result if found.
-    if (!identical(result, View.providerNotFound)) {
-      return result;
-    }
-    // Otherwise inject from ancestry.
-    return parentView.injectorGetViewInternal(
-        token, parentIndex, notFoundValue);
-  }
+  Object injectFromAncestry(Object token, Object notFoundValue) =>
+      parentView.inject(token, parentIndex, notFoundValue);
 
   // Change detection ----------------------------------------------------------
 

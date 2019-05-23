@@ -12,9 +12,7 @@ import 'package:angular/src/di/injector/injector.dart';
 /// rather one of its specializations.
 abstract class View implements ChangeDetectorRef {
   /// Sentinel value that means an injector has no provider for a given token.
-  ///
-  /// This is used by [injectorGetViewInternal] implementations.
-  static const providerNotFound = Object();
+  static const _providerNotFound = Object();
 
   /// Returns whether this is the first change detection pass.
   bool get firstCheck;
@@ -120,7 +118,7 @@ abstract class View implements ChangeDetectorRef {
     Object notFoundResult = throwIfNotFound,
   ]) {
     debugInjectorEnter(token);
-    final result = injectorGetViewInternal(token, nodeIndex, notFoundResult);
+    final result = inject(token, nodeIndex, notFoundResult);
     debugInjectorLeave(token);
     return result;
   }
@@ -131,17 +129,6 @@ abstract class View implements ChangeDetectorRef {
   @dart2js.noInline
   Object injectorGetOptional(Object token, int nodeIndex) =>
       injectorGet(token, nodeIndex, null);
-
-  /// The view-specific implementation of [injectorGet].
-  ///
-  /// This indirection allows [injectorGet] to wrap the invocation of this
-  /// method with [debugInjectorEnter] and [debugInjectorLeave].
-  @protected
-  Object injectorGetViewInternal(
-    Object token,
-    int nodeIndex, [
-    Object notFoundResult = throwIfNotFound,
-  ]);
 
   /// Backing implementation of [injectorGet] for this view.
   ///
@@ -159,6 +146,33 @@ abstract class View implements ChangeDetectorRef {
     Object notFoundResult,
   ) =>
       notFoundResult;
+
+  /// The dependency lookup implementation for [injectorGet].
+  ///
+  /// This indirection allows [injectorGet] to wrap the invocation of this
+  /// method with [debugInjectorEnter] and [debugInjectorLeave].
+  @protected
+  Object inject(Object token, int nodeIndex, Object notFoundResult) {
+    var result = _providerNotFound;
+    // This is null when the requests originates from the `parentInjector` field
+    // of a view container declared at the top-level of a template.
+    if (nodeIndex != null) {
+      result = injectorGetInternal(token, nodeIndex, _providerNotFound);
+    }
+    // If this didn't have a provider for `token`, try injecting from an
+    // ancestor.
+    if (identical(result, _providerNotFound)) {
+      result = injectFromAncestry(token, notFoundResult);
+    }
+    return result;
+  }
+
+  /// Finds an object provided for [token] from this view's ancestry.
+  ///
+  /// This should be implemented by specific base view types, as each has a
+  /// unique way of delegating dependency injection to an ancestor.
+  @protected
+  Object injectFromAncestry(Object token, Object notFoundResult);
 }
 
 /// The interface for [View] data bundled together as an optimization.
