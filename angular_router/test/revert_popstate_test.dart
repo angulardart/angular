@@ -1,4 +1,7 @@
 @TestOn('browser')
+import 'dart:async' show Completer;
+import 'dart:html' show window;
+
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -40,19 +43,32 @@ void main() {
     result = await router.navigate('/c');
     expect(result, NavigationResult.SUCCESS);
 
+    // The `popstate` event triggered by `History.back()` is not guaranteed to
+    // occur before the future returned by `NgTestFixture.update()` has
+    // resolved. In order to be sure we're testing the correct state, we listen
+    // for the next `popstate` event and use a completer to signal that it has
+    // occured.
+    var nextPopState = Completer<void>()..complete(window.onPopState.first);
     // Prevent navigation on back button.
     await testFixture.update((_) {
       routerHook.canLeave = false;
       location.back();
     });
+    // In rare cases, not waiting for this `popstate` event causes the
+    // subsequent code to execute first.
+    await nextPopState.future;
+
     // Location should not have changed.
     expect(location.path(), '/c');
 
+    nextPopState = Completer<void>()..complete(window.onPopState.first);
     // Allow navigation on back button.
     await testFixture.update((_) {
       routerHook.canLeave = true;
       location.back();
     });
+    await nextPopState.future;
+
     // Location should now be the correct previous history location.
     expect(location.path(), '/b');
   });
