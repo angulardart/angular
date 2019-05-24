@@ -494,19 +494,73 @@ class WorkflowComponent {
 
 ### Property Access
 
-TBD
+Use `.` to access a field (or a getter) on an expression:
+
+```html
+Hello {{user.name}}
+```
+
+To avoid `NoSuchMethodError` when the expression may be null you can either
+guard with something like an `*ngIf`, or use the null-safe property access
+operator, `?.`:
+
+```html
+<!-- Passes `null` if coffee is null, otherwise coffee.brand -->
+<coffee-machine [brand]="coffee?.brand"></coffee-machine>
+```
 
 ### Function Calls
 
-TBD
+Use `(...)` to invoke a function or method:
 
-### Operators
+```html
+<coffee-machine [brand]="getCoffee().brand"></coffee-machine>
+```
 
-TBD
+Named arguments are also supported:
+
+```html
+<coffee-machine [brand]="getCoffee(decaf: false)"></coffee-machine>
+```
+
+> WARNING: Using [pipes](#pipes) as a value to a named argument has limited
+> support and requires wrapping in parentheses in order to disambiguate in the
+> parser.
+>
+> The pipe syntax will be changed in a future version of AngularDart to avoid
+> this ambiguity.
 
 ### Literals
 
-TBD
+Standard Dart literals are supported:
+
+* `'Strings'`
+* `false` and `true`
+* Integers (`6`) and Doubles (`3.14`)
+
+> WARNING: There is limited existing support for List literals `[...]`, but this
+> feature is on track to be deprecated and removed as it has many limitations
+> (maximum number of elements, drops type information) and can't support Dart's
+> new language features.
+>
+> List and Map and Set literals continue to be supported in your Dart code.
+
+### Operators
+
+Some simple operators are also supported:
+
+* Most binary operators:
+  * `+`
+  * `-`
+  * `==`
+  * `&&`
+  * `||`
+  * `*`
+  * `/`
+* Logical Not: `!` (i.e. `!isSupported`).
+* Ternary: `value ? ifTrue : ifFalse`.
+* Null Aware Conditional: `??` (i.e. `firstValue ?? secondValueIfFirstNull`).
+* Map/List Access: `[]` (i.e. `someMap[someKey]`).
 
 ### Pipes
 
