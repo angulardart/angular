@@ -2,7 +2,6 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
-import 'package:analyzer/src/dart/analysis/results.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
@@ -46,9 +45,8 @@ class ComponentVisitorExceptionHandler {
 
 Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
   var libraryElement = element.library;
-  // We are intentionally using this until we are migrated by the analyzer team.
-  // ignore: deprecated_member_use
-  var libraryResult = await ResolvedLibraryResultImpl.tmp(libraryElement);
+  var libraryResult =
+      await libraryElement.session.getResolvedLibraryByElement(libraryElement);
   if (libraryResult.state == ResultState.NOT_A_FILE) {
     // We don't have access to source information in summarized libraries,
     // but another build step will likely emit the root cause errors.
