@@ -6,8 +6,9 @@ export 'injector_get_internal.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'injector_get_internal.dart';
@@ -18,20 +19,20 @@ import 'package:angular/angular.dart';
 // For @Component class AppComponent.
 external List<dynamic> get styles$AppComponent;
 external _ng.ComponentFactory<AppComponent> get AppComponentNgFactory;
-class ViewAppComponent0 extends _ng.AppView<AppComponent> {
-  external ViewAppComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewAppComponent0 extends _ng.ComponentView<AppComponent> {
+  external ViewAppComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class MaterialAutoSuggestInputComponent.
 external List<dynamic> get styles$MaterialAutoSuggestInputComponent;
 external _ng.ComponentFactory<MaterialAutoSuggestInputComponent> get MaterialAutoSuggestInputComponentNgFactory;
-class ViewMaterialAutoSuggestInputComponent0 extends _ng.AppView<MaterialAutoSuggestInputComponent> {
-  external ViewMaterialAutoSuggestInputComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewMaterialAutoSuggestInputComponent0 extends _ng.ComponentView<MaterialAutoSuggestInputComponent> {
+  external ViewMaterialAutoSuggestInputComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class MaterialInputComponent.
 external List<dynamic> get styles$MaterialInputComponent;
 external _ng.ComponentFactory<MaterialInputComponent> get MaterialInputComponentNgFactory;
-class ViewMaterialInputComponent0 extends _ng.AppView<MaterialInputComponent> {
-  external ViewMaterialInputComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewMaterialInputComponent0 extends _ng.ComponentView<MaterialInputComponent> {
+  external ViewMaterialInputComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Directive class NgForm.
 class NgFormNgCd extends _ng.DirectiveChangeDetector {

@@ -6,8 +6,9 @@ export 'visibility.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'visibility.dart';
@@ -18,38 +19,38 @@ import 'package:angular/angular.dart';
 // For @Component class Dependent.
 external List<dynamic> get styles$Dependent;
 external _ng.ComponentFactory<Dependent> get DependentNgFactory;
-class ViewDependent0 extends _ng.AppView<Dependent> {
-  external ViewDependent0(_ng.RenderView parentView, int parentIndex);
+class ViewDependent0 extends _ng.ComponentView<Dependent> {
+  external ViewDependent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DependencyWithDependentInView.
 external List<dynamic> get styles$DependencyWithDependentInView;
 external _ng.ComponentFactory<DependencyWithDependentInView> get DependencyWithDependentInViewNgFactory;
-class ViewDependencyWithDependentInView0 extends _ng.AppView<DependencyWithDependentInView> {
-  external ViewDependencyWithDependentInView0(_ng.RenderView parentView, int parentIndex);
+class ViewDependencyWithDependentInView0 extends _ng.ComponentView<DependencyWithDependentInView> {
+  external ViewDependencyWithDependentInView0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DependencyWithContent.
 external List<dynamic> get styles$DependencyWithContent;
 external _ng.ComponentFactory<DependencyWithContent> get DependencyWithContentNgFactory;
-class ViewDependencyWithContent0 extends _ng.AppView<DependencyWithContent> {
-  external ViewDependencyWithContent0(_ng.RenderView parentView, int parentIndex);
+class ViewDependencyWithContent0 extends _ng.ComponentView<DependencyWithContent> {
+  external ViewDependencyWithContent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DependencyAndDependentInView.
 external List<dynamic> get styles$DependencyAndDependentInView;
 external _ng.ComponentFactory<DependencyAndDependentInView> get DependencyAndDependentInViewNgFactory;
-class ViewDependencyAndDependentInView0 extends _ng.AppView<DependencyAndDependentInView> {
-  external ViewDependencyAndDependentInView0(_ng.RenderView parentView, int parentIndex);
+class ViewDependencyAndDependentInView0 extends _ng.ComponentView<DependencyAndDependentInView> {
+  external ViewDependencyAndDependentInView0(_ng.View parentView, int parentIndex);
 }
 // For @Component class HasVisibilityAll.
 external List<dynamic> get styles$HasVisibilityAll;
 external _ng.ComponentFactory<HasVisibilityAll> get HasVisibilityAllNgFactory;
-class ViewHasVisibilityAll0 extends _ng.AppView<HasVisibilityAll> {
-  external ViewHasVisibilityAll0(_ng.RenderView parentView, int parentIndex);
+class ViewHasVisibilityAll0 extends _ng.ComponentView<HasVisibilityAll> {
+  external ViewHasVisibilityAll0(_ng.View parentView, int parentIndex);
 }
 // For @Component class HasVisibilityLocal.
 external List<dynamic> get styles$HasVisibilityLocal;
 external _ng.ComponentFactory<HasVisibilityLocal> get HasVisibilityLocalNgFactory;
-class ViewHasVisibilityLocal0 extends _ng.AppView<HasVisibilityLocal> {
-  external ViewHasVisibilityLocal0(_ng.RenderView parentView, int parentIndex);
+class ViewHasVisibilityLocal0 extends _ng.ComponentView<HasVisibilityLocal> {
+  external ViewHasVisibilityLocal0(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();

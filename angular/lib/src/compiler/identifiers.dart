@@ -3,7 +3,6 @@ import "compile_metadata.dart"
 
 const _angularLib = 'asset:angular/lib';
 
-const _appViewModuleUrl = "$_angularLib/src/core/linker/app_view.dart";
 const _appViewUtilsModuleUrl =
     "$_angularLib/src/core/linker/app_view_utils.dart";
 const _interpolateModuleUrl = '$_angularLib/src/runtime/interpolate.dart';
@@ -62,15 +61,26 @@ class StyleEncapsulation {
   static final componentStylesUnscoped = _of('ComponentStyles.unscoped');
 }
 
+class Views {
+  const Views._();
+
+  static CompileIdentifierMetadata _of(String name, String file) {
+    return CompileIdentifierMetadata(
+      name: name,
+      moduleUrl: '$_angularLib/src/core/linker/views/$file',
+    );
+  }
+
+  static final componentView = _of('ComponentView', 'component_view.dart');
+  static final embeddedView = _of('EmbeddedView', 'embedded_view.dart');
+  static final hostView = _of('HostView', 'host_view.dart');
+  static final renderView = _of('RenderView', 'render_view.dart');
+  static final view = _of('View', 'view.dart');
+}
+
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata(
       name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);
-  static final AppView =
-      CompileIdentifierMetadata(name: "AppView", moduleUrl: _appViewModuleUrl);
-  static final RenderView = CompileIdentifierMetadata(
-    name: 'RenderView',
-    moduleUrl: '$_angularLib/src/core/linker/views/render_view.dart',
-  );
   static final ViewContainer = CompileIdentifierMetadata(
       name: "ViewContainer",
       moduleUrl: "asset:angular/lib/src/core/linker/view_container.dart");

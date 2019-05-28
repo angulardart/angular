@@ -6,37 +6,37 @@ import 'components.dart';
 export 'components.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'components.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/views/render_view.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/views/host_view.dart' as import9;
+import 'package:angular/src/di/injector/injector.dart' as import10;
 
 final List<dynamic> styles$TestSubComponent = const [];
 
 // View for component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
-class ViewTestSubComponent0 extends AppView<import1.TestSubComponent> {
+class ViewTestSubComponent0 extends import0.ComponentView<import1.TestSubComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewTestSubComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestSubComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('test-bar');
+    this.rootElement = import5.document.createElement('test-bar');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/directives/components.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/directives/components.dart' : null);
   }
 
   @override
-  ComponentRef<import1.TestSubComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import9.appendDiv(doc, parentRenderNode);
-    final _text_1 = import9.appendText(_el_0, 'Bar');
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import7.appendDiv(doc, parentRenderNode);
+    final _text_1 = import7.appendText(_el_0, 'Bar');
   }
 
   @override
@@ -57,39 +57,20 @@ ComponentFactory<import1.TestSubComponent> get TestSubComponentNgFactory {
 final List<dynamic> styles$TestSubComponentHost = const [];
 
 // Host for component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
-class _ViewTestSubComponentHost0 extends AppView<import1.TestSubComponent> {
-  ViewTestSubComponent0 _compView_0;
-  import1.TestSubComponent _TestSubComponent_0_5;
-  _ViewTestSubComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewTestSubComponentHost0 extends import9.HostView<import1.TestSubComponent> {
+  _ViewTestSubComponentHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.TestSubComponent> build() {
+  void build() {
     // Child component TestSubComponent in asset:_goldens/test/_files/directives/components.dart (changeDetection: Default)
-    this._compView_0 = ViewTestSubComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._TestSubComponent_0_5 = import1.TestSubComponent();
-    this._compView_0.create(this._TestSubComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._TestSubComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewTestSubComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.TestSubComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.TestSubComponent> viewFactory_TestSubComponentHost0() {
-  return _ViewTestSubComponentHost0(null, null);
+import9.HostView<import1.TestSubComponent> viewFactory_TestSubComponentHost0(import10.Injector injector) {
+  return _ViewTestSubComponentHost0(injector);
 }
 
 var _visited = false;

@@ -6,47 +6,47 @@ import 'whitespace.dart';
 export 'whitespace.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'whitespace.dart' as import1;
 import 'package:intl/intl.dart' as import2;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
-import 'package:angular/src/core/linker/views/render_view.dart' as import4;
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/views/view.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import7;
-import 'package:angular/src/runtime.dart' as import8;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/di/injector/injector.dart' as import11;
 
 final List<dynamic> styles$PreserveWhitespace = const [];
 
 // View for component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-class ViewPreserveWhitespace0 extends AppView<import1.PreserveWhitespace> {
+class ViewPreserveWhitespace0 extends import0.ComponentView<import1.PreserveWhitespace> {
   static final String _message_0 = import2.Intl.message('\n      Default i18n text\n    ', desc: 'i18n description');
   static import3.ComponentStyles _componentStyles;
-  ViewPreserveWhitespace0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewPreserveWhitespace0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import7.document.createElement('preserve-whitespace');
+    this.rootElement = import6.document.createElement('preserve-whitespace');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);
   }
 
   @override
-  ComponentRef<import1.PreserveWhitespace> build() {
-    final import7.HtmlElement parentRenderNode = this.initViewRoot();
-    final _text_0 = import10.appendText(parentRenderNode, '    ');
-    final doc = import7.document;
-    final _el_1 = import10.appendDiv(doc, parentRenderNode);
-    final _text_2 = import10.appendText(_el_1, '\n      Welcome...\n      To...\n      ');
-    final _el_3 = import10.appendElement(doc, _el_1, 'strong');
-    final _text_4 = import10.appendText(_el_3, 'Jurassic...');
-    final _text_5 = import10.appendText(_el_1, '\n      Park!\n    ');
-    final _text_6 = import10.appendText(parentRenderNode, '\n    ');
-    final _el_7 = import10.appendDiv(doc, parentRenderNode);
-    final _text_8 = import10.appendText(_el_7, _message_0);
-    final _text_9 = import10.appendText(parentRenderNode, '\n  ');
-    this.init0();
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import8.appendText(parentRenderNode, '    ');
+    final doc = import6.document;
+    final _el_1 = import8.appendDiv(doc, parentRenderNode);
+    final _text_2 = import8.appendText(_el_1, '\n      Welcome...\n      To...\n      ');
+    final _el_3 = import8.appendElement(doc, _el_1, 'strong');
+    final _text_4 = import8.appendText(_el_3, 'Jurassic...');
+    final _text_5 = import8.appendText(_el_1, '\n      Park!\n    ');
+    final _text_6 = import8.appendText(parentRenderNode, '\n    ');
+    final _el_7 = import8.appendDiv(doc, parentRenderNode);
+    final _text_8 = import8.appendText(_el_7, _message_0);
+    final _text_9 = import8.appendText(parentRenderNode, '\n  ');
   }
 
   @override
@@ -67,67 +67,47 @@ ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
 final List<dynamic> styles$PreserveWhitespaceHost = const [];
 
 // Host for component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-class _ViewPreserveWhitespaceHost0 extends AppView<import1.PreserveWhitespace> {
-  ViewPreserveWhitespace0 _compView_0;
-  import1.PreserveWhitespace _PreserveWhitespace_0_5;
-  _ViewPreserveWhitespaceHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewPreserveWhitespaceHost0 extends import10.HostView<import1.PreserveWhitespace> {
+  _ViewPreserveWhitespaceHost0(import11.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.PreserveWhitespace> build() {
+  void build() {
     // Child component PreserveWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-    this._compView_0 = ViewPreserveWhitespace0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._PreserveWhitespace_0_5 = import1.PreserveWhitespace();
-    this._compView_0.create(this._PreserveWhitespace_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._PreserveWhitespace_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewPreserveWhitespace0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.PreserveWhitespace();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0() {
-  return _ViewPreserveWhitespaceHost0(null, null);
+import10.HostView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0(import11.Injector injector) {
+  return _ViewPreserveWhitespaceHost0(injector);
 }
 
 final List<dynamic> styles$MinifyWhitespace = const [];
 
 // View for component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-class ViewMinifyWhitespace0 extends AppView<import1.MinifyWhitespace> {
+class ViewMinifyWhitespace0 extends import0.ComponentView<import1.MinifyWhitespace> {
   static final String _message_0 = import2.Intl.message('Default i18n text', desc: 'i18n description');
   static import3.ComponentStyles _componentStyles;
-  ViewMinifyWhitespace0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewMinifyWhitespace0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import7.document.createElement('preserve-whitespace');
+    this.rootElement = import6.document.createElement('preserve-whitespace');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/whitespace.dart' : null);
   }
 
   @override
-  ComponentRef<import1.MinifyWhitespace> build() {
-    final import7.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import7.document;
-    final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    final _text_1 = import10.appendText(_el_0, 'Welcome... To... ');
-    final _el_2 = import10.appendElement(doc, _el_0, 'strong');
-    final _text_3 = import10.appendText(_el_2, 'Jurassic...');
-    final _text_4 = import10.appendText(_el_0, ' Park!');
-    final _el_5 = import10.appendDiv(doc, parentRenderNode);
-    final _text_6 = import10.appendText(_el_5, _message_0);
-    this.init0();
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    final _el_0 = import8.appendDiv(doc, parentRenderNode);
+    final _text_1 = import8.appendText(_el_0, 'Welcome... To... ');
+    final _el_2 = import8.appendElement(doc, _el_0, 'strong');
+    final _text_3 = import8.appendText(_el_2, 'Jurassic...');
+    final _text_4 = import8.appendText(_el_0, ' Park!');
+    final _el_5 = import8.appendDiv(doc, parentRenderNode);
+    final _text_6 = import8.appendText(_el_5, _message_0);
   }
 
   @override
@@ -148,39 +128,20 @@ ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
 final List<dynamic> styles$MinifyWhitespaceHost = const [];
 
 // Host for component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-class _ViewMinifyWhitespaceHost0 extends AppView<import1.MinifyWhitespace> {
-  ViewMinifyWhitespace0 _compView_0;
-  import1.MinifyWhitespace _MinifyWhitespace_0_5;
-  _ViewMinifyWhitespaceHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewMinifyWhitespaceHost0 extends import10.HostView<import1.MinifyWhitespace> {
+  _ViewMinifyWhitespaceHost0(import11.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.MinifyWhitespace> build() {
+  void build() {
     // Child component MinifyWhitespace in asset:_goldens/test/_files/whitespace.dart (changeDetection: Default)
-    this._compView_0 = ViewMinifyWhitespace0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._MinifyWhitespace_0_5 = import1.MinifyWhitespace();
-    this._compView_0.create(this._MinifyWhitespace_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._MinifyWhitespace_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewMinifyWhitespace0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.MinifyWhitespace();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0() {
-  return _ViewMinifyWhitespaceHost0(null, null);
+import10.HostView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0(import11.Injector injector) {
+  return _ViewMinifyWhitespaceHost0(injector);
 }
 
 var _visited = false;

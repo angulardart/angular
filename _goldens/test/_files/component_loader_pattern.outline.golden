@@ -6,8 +6,9 @@ export 'component_loader_pattern.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'component_loader_pattern.dart';
@@ -20,8 +21,8 @@ import 'example_of_file_that_is_not_generated_yet.template.dart' as example_lib;
 // For @Component class TestComponent.
 external List<dynamic> get styles$TestComponent;
 external _ng.ComponentFactory<TestComponent> get TestComponentNgFactory;
-class ViewTestComponent0 extends _ng.AppView<TestComponent> {
-  external ViewTestComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewTestComponent0 extends _ng.ComponentView<TestComponent> {
+  external ViewTestComponent0(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();

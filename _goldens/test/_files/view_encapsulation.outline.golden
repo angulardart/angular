@@ -6,8 +6,9 @@ export 'view_encapsulation.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'view_encapsulation.dart';
@@ -18,14 +19,14 @@ import 'package:angular/angular.dart';
 // For @Component class EmulatedComponent.
 external List<dynamic> get styles$EmulatedComponent;
 external _ng.ComponentFactory<EmulatedComponent> get EmulatedComponentNgFactory;
-class ViewEmulatedComponent0 extends _ng.AppView<EmulatedComponent> {
-  external ViewEmulatedComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewEmulatedComponent0 extends _ng.ComponentView<EmulatedComponent> {
+  external ViewEmulatedComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class NoneComponent.
 external List<dynamic> get styles$NoneComponent;
 external _ng.ComponentFactory<NoneComponent> get NoneComponentNgFactory;
-class ViewNoneComponent0 extends _ng.AppView<NoneComponent> {
-  external ViewNoneComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewNoneComponent0 extends _ng.ComponentView<NoneComponent> {
+  external ViewNoneComponent0(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();
