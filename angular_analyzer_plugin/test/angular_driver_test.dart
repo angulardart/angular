@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/file_system/memory_file_system.dart';
 import 'package:analyzer/src/error/codes.dart';
@@ -2261,9 +2262,12 @@ typedef TypeDef = int Function<T>();
       final event = html.customEvents['typedef'];
       expect(event, isNotNull);
       expect(event.getter, isNull);
-      expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), '() → int');
-      expect(event.eventType.element.source.fullName, '/typedef.dart');
+      final eventType = event.eventType as FunctionType;
+      expect(eventType, isNotNull);
+      expect(eventType.returnType.toString(), 'int');
+      expect(eventType.typeFormals, isEmpty);
+      expect(eventType.parameters, isEmpty);
+      expect(eventType.element.source.fullName, '/typedef.dart');
     }
   }
 
