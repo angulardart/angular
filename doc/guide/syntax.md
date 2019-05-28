@@ -564,4 +564,29 @@ Some simple operators are also supported:
 
 ### Pipes
 
-TBD
+You can create and invoke a `@Pipe` using the `|` operator:
+
+```dart
+@Pipe('uppercase')
+class UpperCasePipe {
+  String transform(String value) {
+    return value.toUpperCase();
+  }
+}
+```
+
+```html
+{{ name | uppercase }}
+```
+
+Additional arguments can be passed to pipes by appending `:argument`:
+
+```html
+{{ name | complexPipe:someArg:someOtherArg }
+```
+
+> WARNING: Pipes are highly discouraged. They currently do not work with type
+> inference, and have negative performance ramifications in both code-size and
+> runtime speed compared to imperative code.
+>
+> Additionally, pipe syntax will be changed in a future version of AngularDart.
