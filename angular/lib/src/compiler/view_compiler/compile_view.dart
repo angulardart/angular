@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy, ChangeDetectorState;
+    show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/source_gen/common/url_resolver.dart'
@@ -41,9 +41,10 @@ import 'constants.dart'
     show
         DetectChangesVars,
         EventHandlerVars,
-        InjectMethodVars,
         ViewProperties,
-        appViewRootElementName,
+        InjectMethodVars,
+        componentViewRootElementFieldName,
+        hostViewComponentFieldName,
         parentRenderNodeVar;
 import 'expression_converter.dart';
 import 'ir/provider_resolver.dart';
@@ -121,10 +122,10 @@ class NodeReference {
         _initialValue = null;
 
   /// Create a [NodeReference] for the root element of a view.
-  NodeReference.appViewRoot()
+  NodeReference.rootElement()
       : _storage = null,
         _type = o.importType(Identifiers.HTML_ELEMENT),
-        _name = appViewRootElementName,
+        _name = componentViewRootElementFieldName,
         _visibility = NodeReferenceVisibility.classPublic,
         _initialValue = null;
 
@@ -302,7 +303,7 @@ class AppViewReference {
   AppViewReference(this.parent, this.nodeIndex)
       : _name = '_compView_$nodeIndex';
 
-  o.Expression toReadExpr() {
+  o.ReadClassMemberExpr toReadExpr() {
     return o.ReadClassMemberExpr(_name);
   }
 
@@ -789,9 +790,12 @@ class CompileView {
     _initializeAndAppendNode(parent, elementRef, createRenderNodeExpr);
   }
 
-  /// Adds a field member that holds the reference to a child app view for
-  /// a hosted component.
-  AppViewReference _createAppViewNodeAndComponent(
+  /// Initializes a component view for [childComponent].
+  ///
+  /// This will allocate a field member for the component view if necessary.
+  ///
+  /// Returns an expression that references the initialized component view.
+  o.Expression _createAppViewNodeAndComponent(
       CompileElement parent,
       CompileDirectiveMetadata childComponent,
       NodeReference elementRef,
@@ -803,25 +807,33 @@ class CompileView {
             name: 'View${childComponent.type.name}0',
             moduleUrl: templateModuleUrl(childComponent.type));
 
-    AppViewReference appViewRef = AppViewReference(parent, nodeIndex);
-
-    // For non-deferred generic components, these type arguments (if any) can be
-    // applied to the field that stores the view. However, for deferred
+    // For non-deferred generic components, these type arguments (if any) can
+    // be applied to the field that stores the view. However, for deferred
     // components, the field can't be explicitly typed so these type arguments
     // are instead applied to the constructor invocation.
     final componentTypeArguments =
         lookupTypeArgumentsOf(childComponent.type, ast);
 
-    // If the component is deferred, we can't type the field which stores it.
-    final componentViewType = isDeferred
-        ? o.importType(Identifiers.AppView)
-        : o.importType(componentViewIdentifier, componentTypeArguments);
+    o.ReadClassMemberExpr componentViewExpr;
+    if (viewType == ViewType.host) {
+      // Unlike other view types, host views always have exactly component view,
+      // for which they already have a dedicated field named `componentView`.
+      componentViewExpr = o.ReadClassMemberExpr('componentView');
+    } else {
+      final appViewRef = AppViewReference(parent, nodeIndex);
 
-    // Create the field which stores the component view:
-    //
-    //   ViewSomeComponent0 _compView_0;
-    //
-    appViewRef.allocate(storage, outputType: componentViewType);
+      // If the component is deferred, we can't type the field which stores it.
+      final componentViewType = isDeferred
+          ? o.importType(Views.componentView)
+          : o.importType(componentViewIdentifier, componentTypeArguments);
+
+      // Create the field which stores the component view:
+      //
+      //   ViewSomeComponent0 _compView_0;
+      //
+      appViewRef.allocate(storage, outputType: componentViewType);
+      componentViewExpr = appViewRef.toReadExpr();
+    }
 
     // If the component is deferred, its type arguments can't be inferred from
     // the field to which it's assigned.
@@ -840,10 +852,9 @@ class CompileView {
       'Child component ${childComponent.toPrettyString()}',
     ));
 
-    _createMethod.addStmt(
-        o.WriteClassMemberExpr(appViewRef._name, createComponentInstanceExpr)
-            .toStmt());
-    return appViewRef;
+    _createMethod
+        .addStmt(componentViewExpr.set(createComponentInstanceExpr).toStmt());
+    return componentViewExpr;
   }
 
   /// Creates a node 'anchor' to mark the insertion point for dynamically
@@ -896,38 +907,40 @@ class CompileView {
     return appViewContainer;
   }
 
-  AppViewReference createComponentNodeAndAppend(
+  o.Expression createComponentNodeAndAppend(
       CompileDirectiveMetadata component,
       CompileElement parent,
       NodeReference elementRef,
       int nodeIndex,
       ElementAst ast,
       {bool isDeferred}) {
-    AppViewReference compAppViewExpr = _createAppViewNodeAndComponent(
+    final componentViewExpr = _createAppViewNodeAndComponent(
         parent, component, elementRef, nodeIndex, isDeferred, ast);
 
-    final root = compAppViewExpr.toReadExpr().prop(appViewRootElementName);
+    final root = componentViewExpr.prop(componentViewRootElementFieldName);
     if (isRootNodeOfHost(nodeIndex)) {
       // Assign the root element of the component view to a local variable. The
-      // host view will use this as one of its own root nodes and to create a
-      // `ComponentRef`.
+      // host view will use this as its root node, or the host element of a root
+      // view container.
       _createMethod.addStmt(elementRef.toWriteStmt(root));
     } else {
       _initializeAndAppendNode(parent, elementRef, root);
     }
-    return compAppViewExpr;
+    return componentViewExpr;
   }
 
-  void createAppView(
-    AppViewReference appViewRef,
-    o.Expression context,
+  void createComponentView(
+    o.Expression componentViewExpr,
+    o.Expression componentExpr,
     o.Expression projectedNodes,
   ) {
-    final appViewExpr = appViewRef.toReadExpr();
     final createExpr =
         projectedNodes is o.LiteralArrayExpr && projectedNodes.entries.isEmpty
-            ? appViewExpr.callMethod('create0', [context])
-            : appViewExpr.callMethod('create', [context, projectedNodes]);
+            ? componentViewExpr.callMethod('create', [componentExpr])
+            : componentViewExpr.callMethod('createAndProject', [
+                componentExpr,
+                projectedNodes,
+              ]);
     _createMethod.addStmt(createExpr.toStmt());
   }
 
@@ -1125,11 +1138,24 @@ class CompileView {
               o.ReadClassMemberExpr(propName, changeDetectorType), 'instance',
               outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
         } else {
-          ViewStorageItem item = storage.allocate(propName,
-              outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
-              modifiers: const [o.StmtModifier.Private]);
-          _createMethod.addStmt(
-              storage.buildWriteExpr(item, resolvedProviderValueExpr).toStmt());
+          if (viewType == ViewType.host &&
+              provider.providerType == ProviderAstType.Component) {
+            // Host views always have a exactly one component instance, so when
+            // the provider type is a component, it must be this instance.
+            // There's no need to allocate a new field for this provider, as
+            // `HostView` already has a dedicated field for it.
+            propName = hostViewComponentFieldName;
+            _createMethod.addStmt(o.ReadClassMemberExpr(propName)
+                .set(resolvedProviderValueExpr)
+                .toStmt());
+          } else {
+            ViewStorageItem item = storage.allocate(propName,
+                outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
+                modifiers: const [o.StmtModifier.Private]);
+            _createMethod.addStmt(storage
+                .buildWriteExpr(item, resolvedProviderValueExpr)
+                .toStmt());
+          }
         }
       } else {
         // Since provider is not dynamically reachable and we only need
@@ -1297,7 +1323,11 @@ class CompileView {
         detectChangesRenderPropertiesMethod.isEmpty &&
         _updateViewQueriesMethod.isEmpty &&
         afterViewLifecycleCallbacksMethod.isEmpty &&
-        viewChildren.isEmpty &&
+        // Host views have a default implementation of `detectChangesInternal()`
+        // that change detects their only child component view, so the presence
+        // of child views is only an indicator for generating change detection
+        // statements for component and embedded views.
+        (viewType == ViewType.host || viewChildren.isEmpty) &&
         viewContainers.isEmpty) {
       return statements;
     }
@@ -1352,12 +1382,8 @@ class CompileView {
           .toDeclStmt(o.BOOL_TYPE));
     }
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
-      varStmts.add(o.DeclareVarStmt(
-          DetectChangesVars.firstCheck.name,
-          o.THIS_EXPR
-              .prop('cdState')
-              .equals(o.literal(ChangeDetectorState.NeverChecked)),
-          o.BOOL_TYPE));
+      varStmts.add(o.DeclareVarStmt(DetectChangesVars.firstCheck.name,
+          o.THIS_EXPR.prop('firstCheck'), o.BOOL_TYPE));
     }
     if (genConfig.profileFor == Profile.build) {
       genProfileCdEnd(this, statements);

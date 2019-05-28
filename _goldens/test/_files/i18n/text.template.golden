@@ -6,39 +6,39 @@ import 'text.dart';
 export 'text.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'text.dart' as import1;
 import 'package:intl/intl.dart' as import2;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
-import 'package:angular/src/core/linker/views/render_view.dart' as import4;
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/views/view.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import7;
-import 'package:angular/src/runtime.dart' as import8;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/di/injector/injector.dart' as import11;
 
 final List<dynamic> styles$I18nTextComponent = const [];
 
 // View for component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
-class ViewI18nTextComponent0 extends AppView<import1.I18nTextComponent> {
+class ViewI18nTextComponent0 extends import0.ComponentView<import1.I18nTextComponent> {
   static final String _message_0 = import2.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
   static import3.ComponentStyles _componentStyles;
-  ViewI18nTextComponent0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nTextComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import7.document.createElement('message');
+    this.rootElement = import6.document.createElement('message');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/i18n/text.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/i18n/text.dart' : null);
   }
 
   @override
-  ComponentRef<import1.I18nTextComponent> build() {
-    final import7.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import7.document;
-    final _el_0 = import10.appendElement(doc, parentRenderNode, 'p');
-    final _text_1 = import10.appendText(_el_0, _message_0);
-    this.init0();
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    final _el_0 = import8.appendElement(doc, parentRenderNode, 'p');
+    final _text_1 = import8.appendText(_el_0, _message_0);
   }
 
   @override
@@ -59,39 +59,20 @@ ComponentFactory<import1.I18nTextComponent> get I18nTextComponentNgFactory {
 final List<dynamic> styles$I18nTextComponentHost = const [];
 
 // Host for component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
-class _ViewI18nTextComponentHost0 extends AppView<import1.I18nTextComponent> {
-  ViewI18nTextComponent0 _compView_0;
-  import1.I18nTextComponent _I18nTextComponent_0_5;
-  _ViewI18nTextComponentHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewI18nTextComponentHost0 extends import10.HostView<import1.I18nTextComponent> {
+  _ViewI18nTextComponentHost0(import11.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.I18nTextComponent> build() {
+  void build() {
     // Child component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
-    this._compView_0 = ViewI18nTextComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._I18nTextComponent_0_5 = import1.I18nTextComponent();
-    this._compView_0.create(this._I18nTextComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._I18nTextComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewI18nTextComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.I18nTextComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.I18nTextComponent> viewFactory_I18nTextComponentHost0() {
-  return _ViewI18nTextComponentHost0(null, null);
+import10.HostView<import1.I18nTextComponent> viewFactory_I18nTextComponentHost0(import11.Injector injector) {
+  return _ViewI18nTextComponentHost0(injector);
 }
 
 var _visited = false;

@@ -6,44 +6,44 @@ import 'html.dart';
 export 'html.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'html.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/views/render_view.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/runtime/dom_helpers.dart' as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:intl/intl.dart' as import9;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
-import 'package:intl/intl.dart' as import11;
+import 'package:angular/src/core/linker/views/host_view.dart' as import11;
+import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
 // View for component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
-class ViewI18nHtmlComponent0 extends AppView<import1.I18nHtmlComponent> {
+class ViewI18nHtmlComponent0 extends import0.ComponentView<import1.I18nHtmlComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewI18nHtmlComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewI18nHtmlComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('message');
+    this.rootElement = import5.document.createElement('message');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/i18n/html.dart' : null);
   }
 
   @override
-  ComponentRef<import1.I18nHtmlComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import9.appendElement(doc, parentRenderNode, 'p');
-    final _html_1 = import10.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import7.appendElement(doc, parentRenderNode, 'p');
+    final _html_1 = import8.createTrustedHtml(_message_0('<i>', '<b>', '</b>', '</i>'));
     _el_0.append(_html_1);
-    this.init0();
   }
 
   static String _message_0(String startTag0, String startTag1, String endTag1, String endTag0) {
-    return import11.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+    return import9.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewI18nHtmlComponent0__message_0', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
   }
 
   @override
@@ -64,39 +64,20 @@ ComponentFactory<import1.I18nHtmlComponent> get I18nHtmlComponentNgFactory {
 final List<dynamic> styles$I18nHtmlComponentHost = const [];
 
 // Host for component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
-class _ViewI18nHtmlComponentHost0 extends AppView<import1.I18nHtmlComponent> {
-  ViewI18nHtmlComponent0 _compView_0;
-  import1.I18nHtmlComponent _I18nHtmlComponent_0_5;
-  _ViewI18nHtmlComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewI18nHtmlComponentHost0 extends import11.HostView<import1.I18nHtmlComponent> {
+  _ViewI18nHtmlComponentHost0(import12.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.I18nHtmlComponent> build() {
+  void build() {
     // Child component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
-    this._compView_0 = ViewI18nHtmlComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._I18nHtmlComponent_0_5 = import1.I18nHtmlComponent();
-    this._compView_0.create(this._I18nHtmlComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._I18nHtmlComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewI18nHtmlComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.I18nHtmlComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0() {
-  return _ViewI18nHtmlComponentHost0(null, null);
+import11.HostView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(import12.Injector injector) {
+  return _ViewI18nHtmlComponentHost0(injector);
 }
 
 var _visited = false;

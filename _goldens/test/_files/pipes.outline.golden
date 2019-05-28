@@ -6,8 +6,9 @@ export 'pipes.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'pipes.dart';
@@ -18,8 +19,8 @@ import 'package:angular/angular.dart';
 // For @Component class Comp.
 external List<dynamic> get styles$Comp;
 external _ng.ComponentFactory<Comp> get CompNgFactory;
-class ViewComp0 extends _ng.AppView<Comp> {
-  external ViewComp0(_ng.RenderView parentView, int parentIndex);
+class ViewComp0 extends _ng.ComponentView<Comp> {
+  external ViewComp0(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();

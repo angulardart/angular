@@ -87,9 +87,7 @@ abstract class HostView<T> extends View implements DynamicView {
   ComponentRef<T> create(List<List<Object>> projectedNodes) {
     build(); // This initializes `component` and `componentView`.
     componentView.createAndProject(component, projectedNodes);
-    // TODO: uncomment this when `ComponentRef` accepts a `HostView`.
-    // return ComponentRef(this, componentView.rootElement, component);
-    return null;
+    return ComponentRef(this, componentView.rootElement, component);
   }
 
   /// Called by [build] once all root nodes are created.

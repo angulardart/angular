@@ -6,8 +6,8 @@ import 'package:angular/src/core/change_detection.dart'
 import 'package:angular/src/core/di.dart' show Injector;
 import 'package:angular/src/runtime.dart' show isDevMode;
 
-import 'app_view.dart';
 import 'view_ref.dart' show ViewRef;
+import 'views/host_view.dart';
 
 /// Returns whether [componentRef] uses [ChangeDetectionStrategy.Default].
 ///
@@ -33,16 +33,7 @@ bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
       'See "debugUsesDefaultChangeDetection()" documentation for details.',
     );
   }
-  // `ComponentRef._parentView` should only ever be a host view.
-  final hostView = componentRef._parentView;
-  final componentView = hostView.hostedComponentView;
-  if (componentView == null) {
-    throw StateError(
-      'A "ComponentRef" should always reference a host view that hosts a '
-      'non-null component view.',
-    );
-  }
-  return componentView.cdMode == ChangeDetectionStrategy.CheckAlways;
+  return componentRef._hostView.componentView.usesDefaultChangeDetection;
 }
 
 /// Represents an instance of a Component created via a [ComponentFactory].
@@ -51,12 +42,12 @@ bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
 /// objects related to this Component Instance and allows you to destroy the
 /// Component Instance via the [ComponentRef.destroy] method.
 class ComponentRef<C> {
-  final AppView<Object> _parentView;
+  final HostView<void> _hostView;
   final Element _nativeElement;
   final C _component;
 
   ComponentRef(
-    this._parentView,
+    this._hostView,
     this._nativeElement,
     this._component,
   );
@@ -65,21 +56,21 @@ class ComponentRef<C> {
   Element get location => _nativeElement;
 
   /// The injector on which the component instance exists.
-  Injector get injector => _parentView.injector(0);
+  Injector get injector => _hostView.injector(0);
 
   /// The instance of the Component.
   C get instance => _component;
 
   /// The [ViewRef] of the Host View of this Component instance.
-  ViewRef get hostView => _parentView;
+  ViewRef get hostView => _hostView;
 
   /// The [ChangeDetectorRef] of the Component instance.
-  ChangeDetectorRef get changeDetectorRef => _parentView;
+  ChangeDetectorRef get changeDetectorRef => _hostView;
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.
   void destroy() {
-    _parentView.destroy();
+    _hostView.destroy();
   }
 
   /// Register a callback that will be called when the component is destroyed.
@@ -117,7 +108,7 @@ class ComponentFactory<T> {
   // Not intuitive, but the _Host{Comp}View0 is NOT AppView<{Comp}>, but is a
   // special (not-typed to a user-defined class) AppView that itself creates a
   // AppView<{Comp}> as a child view.
-  final AppView<T> Function() _viewFactory;
+  final HostView<T> Function(Injector) _viewFactory;
 
   /// Internal constructor for generated code only - **do not invoke**.
   const ComponentFactory(
@@ -133,7 +124,7 @@ class ComponentFactory<T> {
     Injector injector, [
     List<List<Object>> projectableNodes,
   ]) {
-    final hostView = _viewFactory();
-    return hostView.createHostView(injector, projectableNodes ?? const []);
+    final hostView = _viewFactory(injector);
+    return hostView.create(projectableNodes ?? const []);
   }
 }

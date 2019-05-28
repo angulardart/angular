@@ -6,8 +6,9 @@ export 'opaque_token.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'opaque_token.dart';
@@ -18,20 +19,20 @@ import 'package:angular/angular.dart';
 // For @Component class HasOpaqueTokens.
 external List<dynamic> get styles$HasOpaqueTokens;
 external _ng.ComponentFactory<HasOpaqueTokens> get HasOpaqueTokensNgFactory;
-class ViewHasOpaqueTokens0 extends _ng.AppView<HasOpaqueTokens> {
-  external ViewHasOpaqueTokens0(_ng.RenderView parentView, int parentIndex);
+class ViewHasOpaqueTokens0 extends _ng.ComponentView<HasOpaqueTokens> {
+  external ViewHasOpaqueTokens0(_ng.View parentView, int parentIndex);
 }
 // For @Component class ContainsChildComponent.
 external List<dynamic> get styles$ContainsChildComponent;
 external _ng.ComponentFactory<ContainsChildComponent> get ContainsChildComponentNgFactory;
-class ViewContainsChildComponent0 extends _ng.AppView<ContainsChildComponent> {
-  external ViewContainsChildComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewContainsChildComponent0 extends _ng.ComponentView<ContainsChildComponent> {
+  external ViewContainsChildComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class InjectsTypedTokenFromSomeParent.
 external List<dynamic> get styles$InjectsTypedTokenFromSomeParent;
 external _ng.ComponentFactory<InjectsTypedTokenFromSomeParent> get InjectsTypedTokenFromSomeParentNgFactory;
-class ViewInjectsTypedTokenFromSomeParent0 extends _ng.AppView<InjectsTypedTokenFromSomeParent> {
-  external ViewInjectsTypedTokenFromSomeParent0(_ng.RenderView parentView, int parentIndex);
+class ViewInjectsTypedTokenFromSomeParent0 extends _ng.ComponentView<InjectsTypedTokenFromSomeParent> {
+  external ViewInjectsTypedTokenFromSomeParent0(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();

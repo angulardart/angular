@@ -6,8 +6,9 @@ export 'change_detection.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'change_detection.dart';
@@ -18,50 +19,50 @@ import 'package:angular/angular.dart';
 // For @Component class UsesOnPushComponent.
 external List<dynamic> get styles$UsesOnPushComponent;
 external _ng.ComponentFactory<UsesOnPushComponent> get UsesOnPushComponentNgFactory;
-class ViewUsesOnPushComponent0 extends _ng.AppView<UsesOnPushComponent> {
-  external ViewUsesOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewUsesOnPushComponent0 extends _ng.ComponentView<UsesOnPushComponent> {
+  external ViewUsesOnPushComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class OnPushComponent.
 external List<dynamic> get styles$OnPushComponent;
 external _ng.ComponentFactory<OnPushComponent> get OnPushComponentNgFactory;
-class ViewOnPushComponent0 extends _ng.AppView<OnPushComponent> {
-  external ViewOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewOnPushComponent0 extends _ng.ComponentView<OnPushComponent> {
+  external ViewOnPushComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class OnPushChildComponent.
 external List<dynamic> get styles$OnPushChildComponent;
 external _ng.ComponentFactory<OnPushChildComponent> get OnPushChildComponentNgFactory;
-class ViewOnPushChildComponent0 extends _ng.AppView<OnPushChildComponent> {
-  external ViewOnPushChildComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewOnPushChildComponent0 extends _ng.ComponentView<OnPushChildComponent> {
+  external ViewOnPushChildComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class StatefulComponent.
 external List<dynamic> get styles$StatefulComponent;
 external _ng.ComponentFactory<StatefulComponent> get StatefulComponentNgFactory;
-class ViewStatefulComponent0 extends _ng.AppView<StatefulComponent> {
-  external ViewStatefulComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewStatefulComponent0 extends _ng.ComponentView<StatefulComponent> {
+  external ViewStatefulComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DefaultComponent.
 external List<dynamic> get styles$DefaultComponent;
 external _ng.ComponentFactory<DefaultComponent> get DefaultComponentNgFactory;
-class ViewDefaultComponent0 extends _ng.AppView<DefaultComponent> {
-  external ViewDefaultComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewDefaultComponent0 extends _ng.ComponentView<DefaultComponent> {
+  external ViewDefaultComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class UsesNgModelLike.
 external List<dynamic> get styles$UsesNgModelLike;
 external _ng.ComponentFactory<UsesNgModelLike> get UsesNgModelLikeNgFactory;
-class ViewUsesNgModelLike0 extends _ng.AppView<UsesNgModelLike> {
-  external ViewUsesNgModelLike0(_ng.RenderView parentView, int parentIndex);
+class ViewUsesNgModelLike0 extends _ng.ComponentView<UsesNgModelLike> {
+  external ViewUsesNgModelLike0(_ng.View parentView, int parentIndex);
 }
 // For @Component class UsesDoCheckOnPushComponent.
 external List<dynamic> get styles$UsesDoCheckOnPushComponent;
 external _ng.ComponentFactory<UsesDoCheckOnPushComponent> get UsesDoCheckOnPushComponentNgFactory;
-class ViewUsesDoCheckOnPushComponent0 extends _ng.AppView<UsesDoCheckOnPushComponent> {
-  external ViewUsesDoCheckOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewUsesDoCheckOnPushComponent0 extends _ng.ComponentView<UsesDoCheckOnPushComponent> {
+  external ViewUsesDoCheckOnPushComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DoCheckOnPushComponent.
 external List<dynamic> get styles$DoCheckOnPushComponent;
 external _ng.ComponentFactory<DoCheckOnPushComponent> get DoCheckOnPushComponentNgFactory;
-class ViewDoCheckOnPushComponent0 extends _ng.AppView<DoCheckOnPushComponent> {
-  external ViewDoCheckOnPushComponent0(_ng.RenderView parentView, int parentIndex);
+class ViewDoCheckOnPushComponent0 extends _ng.ComponentView<DoCheckOnPushComponent> {
+  external ViewDoCheckOnPushComponent0(_ng.View parentView, int parentIndex);
 }
 // For @Directive class NgModelLike.
 class NgModelLikeNgCd extends _ng.DirectiveChangeDetector {

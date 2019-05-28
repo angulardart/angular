@@ -6,46 +6,46 @@ import 'change_detection.dart';
 export 'change_detection.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'change_detection.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/views/render_view.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/text_binding.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
-import 'package:angular/src/runtime/interpolate.dart' as import11;
-import 'package:angular/src/core/change_detection/component_state.dart' as import12;
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/di/injector/injector.dart' as import9;
+import 'package:angular/src/runtime/text_binding.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
+import 'package:angular/src/runtime/interpolate.dart' as import12;
+import 'package:angular/src/core/change_detection/component_state.dart' as import13;
 
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
 // View for component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
+class ViewUsesOnPushComponent0 extends import0.ComponentView<import1.UsesOnPushComponent> {
   ViewOnPushComponent0 _compView_0;
   import1.OnPushComponent _OnPushComponent_0_5;
   String _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewUsesOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewUsesOnPushComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('uses-cd-on-push');
+    this.rootElement = import5.document.createElement('uses-cd-on-push');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.UsesOnPushComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     this._compView_0 = ViewOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
+    final _el_0 = this._compView_0.rootElement;
     parentRenderNode.append(_el_0);
     this._OnPushComponent_0_5 = import1.OnPushComponent();
-    this._compView_0.create0(this._OnPushComponent_0_5);
-    this.init0();
+    this._compView_0.create(this._OnPushComponent_0_5);
   }
 
   @override
@@ -54,7 +54,7 @@ class ViewUsesOnPushComponent0 extends AppView<import1.UsesOnPushComponent> {
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
       this._OnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -88,67 +88,47 @@ ComponentFactory<import1.UsesOnPushComponent> get UsesOnPushComponentNgFactory {
 final List<dynamic> styles$UsesOnPushComponentHost = const [];
 
 // Host for component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewUsesOnPushComponentHost0 extends AppView<import1.UsesOnPushComponent> {
-  ViewUsesOnPushComponent0 _compView_0;
-  import1.UsesOnPushComponent _UsesOnPushComponent_0_5;
-  _ViewUsesOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewUsesOnPushComponentHost0 extends import8.HostView<import1.UsesOnPushComponent> {
+  _ViewUsesOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.UsesOnPushComponent> build() {
+  void build() {
     // Child component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-    this._compView_0 = ViewUsesOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._UsesOnPushComponent_0_5 = import1.UsesOnPushComponent();
-    this._compView_0.create(this._UsesOnPushComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._UsesOnPushComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewUsesOnPushComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesOnPushComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0() {
-  return _ViewUsesOnPushComponentHost0(null, null);
+import8.HostView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0(import9.Injector injector) {
+  return _ViewUsesOnPushComponentHost0(injector);
 }
 
 final List<dynamic> styles$OnPushComponent = const [];
 
 // View for component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
+class ViewOnPushComponent0 extends import0.ComponentView<import1.OnPushComponent> {
   ViewOnPushChildComponent0 _compView_0;
   import1.OnPushChildComponent _OnPushChildComponent_0_5;
   String _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewOnPushComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('cd-on-push');
+    this.rootElement = import5.document.createElement('cd-on-push');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.OnPushComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     this._compView_0 = ViewOnPushChildComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
+    final _el_0 = this._compView_0.rootElement;
     parentRenderNode.append(_el_0);
     this._OnPushChildComponent_0_5 = import1.OnPushChildComponent();
-    this._compView_0.create0(this._OnPushChildComponent_0_5);
-    this.init0();
+    this._compView_0.create(this._OnPushChildComponent_0_5);
   }
 
   @override
@@ -157,7 +137,7 @@ class ViewOnPushComponent0 extends AppView<import1.OnPushComponent> {
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
       this._OnPushChildComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -191,73 +171,58 @@ ComponentFactory<import1.OnPushComponent> get OnPushComponentNgFactory {
 final List<dynamic> styles$OnPushComponentHost = const [];
 
 // Host for component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewOnPushComponentHost0 extends AppView<import1.OnPushComponent> {
-  ViewOnPushComponent0 _compView_0;
-  import1.OnPushComponent _OnPushComponent_0_5;
-  _ViewOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewOnPushComponentHost0 extends import8.HostView<import1.OnPushComponent> {
+  _ViewOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.OnPushComponent> build() {
+  void build() {
     // Child component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-    this._compView_0 = ViewOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._OnPushComponent_0_5 = import1.OnPushComponent();
-    this._compView_0.create(this._OnPushComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._OnPushComponent_0_5);
+    this.componentView = ViewOnPushComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.OnPushComponent();
+    this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     bool changed = false;
     if (changed) {
-      this._compView_0.markAsCheckOnce();
+      this.componentView.markAsCheckOnce();
     }
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView.detectChanges();
   }
 }
 
-AppView<import1.OnPushComponent> viewFactory_OnPushComponentHost0() {
-  return _ViewOnPushComponentHost0(null, null);
+import8.HostView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(import9.Injector injector) {
+  return _ViewOnPushComponentHost0(injector);
 }
 
 final List<dynamic> styles$OnPushChildComponent = const [];
 
 // View for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-class ViewOnPushChildComponent0 extends AppView<import1.OnPushChildComponent> {
-  final import9.TextBinding _textBinding_2 = import9.TextBinding();
+class ViewOnPushChildComponent0 extends import0.ComponentView<import1.OnPushChildComponent> {
+  final import10.TextBinding _textBinding_2 = import10.TextBinding();
   static import2.ComponentStyles _componentStyles;
-  ViewOnPushChildComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewOnPushChildComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('cd-on-push-child');
+    this.rootElement = import5.document.createElement('cd-on-push-child');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.OnPushChildComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    final _text_1 = import10.appendText(_el_0, 'OnPushChild: ');
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import11.appendDiv(doc, parentRenderNode);
+    final _text_1 = import11.appendText(_el_0, 'OnPushChild: ');
     _el_0.append(this._textBinding_2.element);
-    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_2.updateText(import11.interpolateString0(_ctx.name));
+    this._textBinding_2.updateText(import12.interpolateString0(_ctx.name));
   }
 
   @override
@@ -278,67 +243,52 @@ ComponentFactory<import1.OnPushChildComponent> get OnPushChildComponentNgFactory
 final List<dynamic> styles$OnPushChildComponentHost = const [];
 
 // Host for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewOnPushChildComponentHost0 extends AppView<import1.OnPushChildComponent> {
-  ViewOnPushChildComponent0 _compView_0;
-  import1.OnPushChildComponent _OnPushChildComponent_0_5;
-  _ViewOnPushChildComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewOnPushChildComponentHost0 extends import8.HostView<import1.OnPushChildComponent> {
+  _ViewOnPushChildComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.OnPushChildComponent> build() {
+  void build() {
     // Child component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-    this._compView_0 = ViewOnPushChildComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._OnPushChildComponent_0_5 = import1.OnPushChildComponent();
-    this._compView_0.create(this._OnPushChildComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._OnPushChildComponent_0_5);
+    this.componentView = ViewOnPushChildComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.OnPushChildComponent();
+    this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     bool changed = false;
     if (changed) {
-      this._compView_0.markAsCheckOnce();
+      this.componentView.markAsCheckOnce();
     }
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView.detectChanges();
   }
 }
 
-AppView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0() {
-  return _ViewOnPushChildComponentHost0(null, null);
+import8.HostView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0(import9.Injector injector) {
+  return _ViewOnPushChildComponentHost0(injector);
 }
 
 final List<dynamic> styles$StatefulComponent = const [];
 
 // View for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
-class ViewStatefulComponent0 extends AppView<import1.StatefulComponent> {
+class ViewStatefulComponent0 extends import0.ComponentView<import1.StatefulComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewStatefulComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewStatefulComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('Stateful');
+    this.rootElement = import5.document.createElement('Stateful');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.StatefulComponent> build() {
+  void build() {
     final _ctx = this.ctx;
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    final _text_1 = import10.appendText(_el_0, 'Stateful');
-    this.init0();
-    import12.internalSetStateChanged(_ctx, this.markForCheck);
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import11.appendDiv(doc, parentRenderNode);
+    final _text_1 = import11.appendText(_el_0, 'Stateful');
+    import13.internalSetStateChanged(_ctx, this.markForCheck);
   }
 
   @override
@@ -359,61 +309,41 @@ ComponentFactory<import1.StatefulComponent> get StatefulComponentNgFactory {
 final List<dynamic> styles$StatefulComponentHost = const [];
 
 // Host for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewStatefulComponentHost0 extends AppView<import1.StatefulComponent> {
-  ViewStatefulComponent0 _compView_0;
-  import1.StatefulComponent _StatefulComponent_0_5;
-  _ViewStatefulComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewStatefulComponentHost0 extends import8.HostView<import1.StatefulComponent> {
+  _ViewStatefulComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.StatefulComponent> build() {
+  void build() {
     // Child component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
-    this._compView_0 = ViewStatefulComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._StatefulComponent_0_5 = import1.StatefulComponent();
-    this._compView_0.create(this._StatefulComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._StatefulComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewStatefulComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.StatefulComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.StatefulComponent> viewFactory_StatefulComponentHost0() {
-  return _ViewStatefulComponentHost0(null, null);
+import8.HostView<import1.StatefulComponent> viewFactory_StatefulComponentHost0(import9.Injector injector) {
+  return _ViewStatefulComponentHost0(injector);
 }
 
 final List<dynamic> styles$DefaultComponent = const [];
 
 // View for component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class ViewDefaultComponent0 extends AppView<import1.DefaultComponent> {
+class ViewDefaultComponent0 extends import0.ComponentView<import1.DefaultComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewDefaultComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDefaultComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('Default');
+    this.rootElement = import5.document.createElement('Default');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.DefaultComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import10.appendDiv(doc, parentRenderNode);
-    final _text_1 = import10.appendText(_el_0, 'Default');
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import11.appendDiv(doc, parentRenderNode);
+    final _text_1 = import11.appendText(_el_0, 'Default');
   }
 
   @override
@@ -434,74 +364,55 @@ ComponentFactory<import1.DefaultComponent> get DefaultComponentNgFactory {
 final List<dynamic> styles$DefaultComponentHost = const [];
 
 // Host for component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewDefaultComponentHost0 extends AppView<import1.DefaultComponent> {
-  ViewDefaultComponent0 _compView_0;
-  import1.DefaultComponent _DefaultComponent_0_5;
-  _ViewDefaultComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewDefaultComponentHost0 extends import8.HostView<import1.DefaultComponent> {
+  _ViewDefaultComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.DefaultComponent> build() {
+  void build() {
     // Child component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-    this._compView_0 = ViewDefaultComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._DefaultComponent_0_5 = import1.DefaultComponent();
-    this._compView_0.create(this._DefaultComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._DefaultComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewDefaultComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.DefaultComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.DefaultComponent> viewFactory_DefaultComponentHost0() {
-  return _ViewDefaultComponentHost0(null, null);
+import8.HostView<import1.DefaultComponent> viewFactory_DefaultComponentHost0(import9.Injector injector) {
+  return _ViewDefaultComponentHost0(injector);
 }
 
 final List<dynamic> styles$UsesNgModelLike = const [];
 
 // View for component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
+class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike> {
   import1.NgModelLike _NgModelLike_0_5;
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewUsesNgModelLike0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewUsesNgModelLike0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('uses-ng-model');
+    this.rootElement = import5.document.createElement('uses-ng-model');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.UsesNgModelLike> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    final _el_0 = import10.appendElement(doc, parentRenderNode, 'input');
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import11.appendElement(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handle_ngModelChange_0_0));
-    this.init(const [], [subscription_0]);
+    this.initSubscriptions([subscription_0]);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     bool changed = false;
-    bool firstCheck = (this.cdState == 0);
+    bool firstCheck = this.firstCheck;
     changed = false;
     final currVal_0 = _ctx.value;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
       this._NgModelLike_0_5.model = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -509,7 +420,7 @@ class ViewUsesNgModelLike0 extends AppView<import1.UsesNgModelLike> {
     if (changed) {
       this._NgModelLike_0_5.ngAfterChanges();
     }
-    if (((!import7.debugThrowIfChanged) && firstCheck)) {
+    if (((!import6.debugThrowIfChanged) && firstCheck)) {
       this._NgModelLike_0_5.ngOnInit();
     }
   }
@@ -537,67 +448,47 @@ ComponentFactory<import1.UsesNgModelLike> get UsesNgModelLikeNgFactory {
 final List<dynamic> styles$UsesNgModelLikeHost = const [];
 
 // Host for component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewUsesNgModelLikeHost0 extends AppView<import1.UsesNgModelLike> {
-  ViewUsesNgModelLike0 _compView_0;
-  import1.UsesNgModelLike _UsesNgModelLike_0_5;
-  _ViewUsesNgModelLikeHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewUsesNgModelLikeHost0 extends import8.HostView<import1.UsesNgModelLike> {
+  _ViewUsesNgModelLikeHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.UsesNgModelLike> build() {
+  void build() {
     // Child component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-    this._compView_0 = ViewUsesNgModelLike0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._UsesNgModelLike_0_5 = import1.UsesNgModelLike();
-    this._compView_0.create(this._UsesNgModelLike_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._UsesNgModelLike_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewUsesNgModelLike0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesNgModelLike();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0() {
-  return _ViewUsesNgModelLikeHost0(null, null);
+import8.HostView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0(import9.Injector injector) {
+  return _ViewUsesNgModelLikeHost0(injector);
 }
 
 final List<dynamic> styles$UsesDoCheckOnPushComponent = const [];
 
 // View for component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushComponent> {
+class ViewUsesDoCheckOnPushComponent0 extends import0.ComponentView<import1.UsesDoCheckOnPushComponent> {
   ViewDoCheckOnPushComponent0 _compView_0;
   import1.DoCheckOnPushComponent _DoCheckOnPushComponent_0_5;
   String _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewUsesDoCheckOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewUsesDoCheckOnPushComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('uses-do-check-on-push');
+    this.rootElement = import5.document.createElement('uses-do-check-on-push');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.UsesDoCheckOnPushComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
     // Child component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
     this._compView_0 = ViewDoCheckOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
+    final _el_0 = this._compView_0.rootElement;
     parentRenderNode.append(_el_0);
     this._DoCheckOnPushComponent_0_5 = import1.DoCheckOnPushComponent();
-    this._compView_0.create0(this._DoCheckOnPushComponent_0_5);
-    this.init0();
+    this._compView_0.create(this._DoCheckOnPushComponent_0_5);
   }
 
   @override
@@ -606,7 +497,7 @@ class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushC
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
       this._DoCheckOnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -614,7 +505,7 @@ class ViewUsesDoCheckOnPushComponent0 extends AppView<import1.UsesDoCheckOnPushC
     if (changed) {
       this._compView_0.markAsCheckOnce();
     }
-    if ((!import7.debugThrowIfChanged)) {
+    if ((!import6.debugThrowIfChanged)) {
       this._DoCheckOnPushComponent_0_5.ngDoCheck();
     }
     this._compView_0.detectChanges();
@@ -643,67 +534,47 @@ ComponentFactory<import1.UsesDoCheckOnPushComponent> get UsesDoCheckOnPushCompon
 final List<dynamic> styles$UsesDoCheckOnPushComponentHost = const [];
 
 // Host for component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewUsesDoCheckOnPushComponentHost0 extends AppView<import1.UsesDoCheckOnPushComponent> {
-  ViewUsesDoCheckOnPushComponent0 _compView_0;
-  import1.UsesDoCheckOnPushComponent _UsesDoCheckOnPushComponent_0_5;
-  _ViewUsesDoCheckOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewUsesDoCheckOnPushComponentHost0 extends import8.HostView<import1.UsesDoCheckOnPushComponent> {
+  _ViewUsesDoCheckOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.UsesDoCheckOnPushComponent> build() {
+  void build() {
     // Child component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-    this._compView_0 = ViewUsesDoCheckOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._UsesDoCheckOnPushComponent_0_5 = import1.UsesDoCheckOnPushComponent();
-    this._compView_0.create(this._UsesDoCheckOnPushComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._UsesDoCheckOnPushComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewUsesDoCheckOnPushComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesDoCheckOnPushComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.UsesDoCheckOnPushComponent> viewFactory_UsesDoCheckOnPushComponentHost0() {
-  return _ViewUsesDoCheckOnPushComponentHost0(null, null);
+import8.HostView<import1.UsesDoCheckOnPushComponent> viewFactory_UsesDoCheckOnPushComponentHost0(import9.Injector injector) {
+  return _ViewUsesDoCheckOnPushComponentHost0(injector);
 }
 
 final List<dynamic> styles$DoCheckOnPushComponent = const [];
 
 // View for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-class ViewDoCheckOnPushComponent0 extends AppView<import1.DoCheckOnPushComponent> {
-  final import9.TextBinding _textBinding_1 = import9.TextBinding();
+class ViewDoCheckOnPushComponent0 extends import0.ComponentView<import1.DoCheckOnPushComponent> {
+  final import10.TextBinding _textBinding_1 = import10.TextBinding();
   static import2.ComponentStyles _componentStyles;
-  ViewDoCheckOnPushComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewDoCheckOnPushComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('cd-on-push-do-check');
+    this.rootElement = import5.document.createElement('cd-on-push-do-check');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
   }
 
   @override
-  ComponentRef<import1.DoCheckOnPushComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final _text_0 = import10.appendText(parentRenderNode, 'Name: ');
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
     parentRenderNode.append(this._textBinding_1.element);
-    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import11.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import12.interpolateString0(_ctx.name));
   }
 
   @override
@@ -724,46 +595,32 @@ ComponentFactory<import1.DoCheckOnPushComponent> get DoCheckOnPushComponentNgFac
 final List<dynamic> styles$DoCheckOnPushComponentHost = const [];
 
 // Host for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewDoCheckOnPushComponentHost0 extends AppView<import1.DoCheckOnPushComponent> {
-  ViewDoCheckOnPushComponent0 _compView_0;
-  import1.DoCheckOnPushComponent _DoCheckOnPushComponent_0_5;
-  _ViewDoCheckOnPushComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewDoCheckOnPushComponentHost0 extends import8.HostView<import1.DoCheckOnPushComponent> {
+  _ViewDoCheckOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.DoCheckOnPushComponent> build() {
+  void build() {
     // Child component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
-    this._compView_0 = ViewDoCheckOnPushComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._DoCheckOnPushComponent_0_5 = import1.DoCheckOnPushComponent();
-    this._compView_0.create(this._DoCheckOnPushComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._DoCheckOnPushComponent_0_5);
+    this.componentView = ViewDoCheckOnPushComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.DoCheckOnPushComponent();
+    this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     bool changed = false;
     if (changed) {
-      this._compView_0.markAsCheckOnce();
+      this.componentView.markAsCheckOnce();
     }
-    if ((!import7.debugThrowIfChanged)) {
-      this._DoCheckOnPushComponent_0_5.ngDoCheck();
+    if ((!import6.debugThrowIfChanged)) {
+      this.component.ngDoCheck();
     }
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView.detectChanges();
   }
 }
 
-AppView<import1.DoCheckOnPushComponent> viewFactory_DoCheckOnPushComponentHost0() {
-  return _ViewDoCheckOnPushComponentHost0(null, null);
+import8.HostView<import1.DoCheckOnPushComponent> viewFactory_DoCheckOnPushComponentHost0(import9.Injector injector) {
+  return _ViewDoCheckOnPushComponentHost0(injector);
 }
 
 var _visited = false;

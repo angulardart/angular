@@ -2,25 +2,15 @@ import "../compile_metadata.dart" show CompileIdentifierMetadata;
 import "../identifiers.dart";
 import "../output/output_ast.dart" as o;
 
-const String appViewRootElementName = 'rootEl';
+/// The name of the `ComponentView` field that stores its root element.
+const componentViewRootElementFieldName = 'rootElement';
+
+/// The name of the `HostView` field that stores the hosted component instance.
+const hostViewComponentFieldName = 'component';
+
 const classAttrName = 'class';
 const styleAttrName = 'style';
 final parentRenderNodeVar = o.variable('parentRenderNode');
-
-o.Expression createEnumExpression(
-  CompileIdentifierMetadata classIdentifier,
-  Object value,
-) {
-  if (value == null) {
-    return o.NULL_EXPR;
-  }
-  final enumStr = value.toString();
-  final name = enumStr.substring(enumStr.lastIndexOf('.') + 1);
-  return o.importExpr(CompileIdentifierMetadata(
-    name: '${classIdentifier.name}.$name',
-    moduleUrl: classIdentifier.moduleUrl,
-  ));
-}
 
 const List<String> _changeDetectionStrategies = [
   'Default',

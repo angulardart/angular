@@ -154,7 +154,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   }
 
   CompileElement.root()
-      : this(null, null, null, NodeReference.appViewRoot(), null, null, [], [],
+      : this(null, null, null, NodeReference.rootElement(), null, null, [], [],
             false, false, []);
 
   void setEmbeddedView(CompileView view) {

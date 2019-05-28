@@ -6,45 +6,45 @@ import 'default_under_onpush.dart';
 export 'default_under_onpush.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'default_under_onpush.dart' as import1;
 import 'package:angular/src/runtime/text_binding.dart' as import2;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
-import 'package:angular/src/core/linker/views/render_view.dart' as import4;
-import 'package:angular/src/core/linker/view_type.dart' as import5;
+import 'package:angular/src/core/linker/views/view.dart' as import4;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import7;
-import 'package:angular/src/runtime.dart' as import8;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime.dart' as import7;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/runtime/interpolate.dart' as import9;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
-import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/src/core/linker/views/host_view.dart' as import11;
+import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$DefaultComp = const [];
 
 // View for component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
-class ViewDefaultComp0 extends AppView<import1.DefaultComp> {
+class ViewDefaultComp0 extends import0.ComponentView<import1.DefaultComp> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   static import3.ComponentStyles _componentStyles;
-  ViewDefaultComp0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewDefaultComp0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import7.document.createElement('default-comp');
+    this.rootElement = import6.document.createElement('default-comp');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
   }
 
   @override
-  ComponentRef<import1.DefaultComp> build() {
-    final import7.HtmlElement parentRenderNode = this.initViewRoot();
-    final _text_0 = import10.appendText(parentRenderNode, 'The current time is ');
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import8.appendText(parentRenderNode, 'The current time is ');
     parentRenderNode.append(this._textBinding_1.element);
-    this.init0();
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import11.interpolateString0(_ctx.time));
+    this._textBinding_1.updateText(import9.interpolateString0(_ctx.time));
   }
 
   @override
@@ -65,68 +65,48 @@ ComponentFactory<import1.DefaultComp> get DefaultCompNgFactory {
 final List<dynamic> styles$DefaultCompHost = const [];
 
 // Host for component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
-class _ViewDefaultCompHost0 extends AppView<import1.DefaultComp> {
-  ViewDefaultComp0 _compView_0;
-  import1.DefaultComp _DefaultComp_0_5;
-  _ViewDefaultCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewDefaultCompHost0 extends import11.HostView<import1.DefaultComp> {
+  _ViewDefaultCompHost0(import12.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.DefaultComp> build() {
+  void build() {
     // Child component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
-    this._compView_0 = ViewDefaultComp0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._DefaultComp_0_5 = import1.DefaultComp();
-    this._compView_0.create(this._DefaultComp_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._DefaultComp_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewDefaultComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.DefaultComp();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.DefaultComp> viewFactory_DefaultCompHost0() {
-  return _ViewDefaultCompHost0(null, null);
+import11.HostView<import1.DefaultComp> viewFactory_DefaultCompHost0(import12.Injector injector) {
+  return _ViewDefaultCompHost0(injector);
 }
 
 final List<dynamic> styles$OnPushComp = const [];
 
 // View for component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: OnPush)
-class ViewOnPushComp0 extends AppView<import1.OnPushComp> {
+class ViewOnPushComp0 extends import0.ComponentView<import1.OnPushComp> {
   ViewDefaultComp0 _compView_1;
   import1.DefaultComp _DefaultComp_1_5;
   static import3.ComponentStyles _componentStyles;
-  ViewOnPushComp0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewOnPushComp0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootEl = import7.document.createElement('onpush-comp');
+    this.rootElement = import6.document.createElement('onpush-comp');
   }
   static String get _debugComponentUrl {
-    return (import8.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/default_under_onpush.dart' : null);
   }
 
   @override
-  ComponentRef<import1.OnPushComp> build() {
-    final import7.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import7.document;
-    final _el_0 = import10.appendElement(doc, parentRenderNode, 'b');
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    final _el_0 = import8.appendElement(doc, parentRenderNode, 'b');
     // Child component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
     this._compView_1 = ViewDefaultComp0(this, 1);
-    final _el_1 = this._compView_1.rootEl;
+    final _el_1 = this._compView_1.rootElement;
     _el_0.append(_el_1);
     this._DefaultComp_1_5 = import1.DefaultComp();
-    this._compView_1.create0(this._DefaultComp_1_5);
-    this.init0();
+    this._compView_1.create(this._DefaultComp_1_5);
   }
 
   @override
@@ -157,39 +137,20 @@ ComponentFactory<import1.OnPushComp> get OnPushCompNgFactory {
 final List<dynamic> styles$OnPushCompHost = const [];
 
 // Host for component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
-class _ViewOnPushCompHost0 extends AppView<import1.OnPushComp> {
-  ViewOnPushComp0 _compView_0;
-  import1.OnPushComp _OnPushComp_0_5;
-  _ViewOnPushCompHost0(import4.RenderView parentView, int parentIndex) : super(import5.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewOnPushCompHost0 extends import11.HostView<import1.OnPushComp> {
+  _ViewOnPushCompHost0(import12.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.OnPushComp> build() {
+  void build() {
     // Child component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: OnPush)
-    this._compView_0 = ViewOnPushComp0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._OnPushComp_0_5 = import1.OnPushComp();
-    this._compView_0.create(this._OnPushComp_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._OnPushComp_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewOnPushComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.OnPushComp();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.OnPushComp> viewFactory_OnPushCompHost0() {
-  return _ViewOnPushCompHost0(null, null);
+import11.HostView<import1.OnPushComp> viewFactory_OnPushCompHost0(import12.Injector injector) {
+  return _ViewOnPushCompHost0(injector);
 }
 
 var _visited = false;

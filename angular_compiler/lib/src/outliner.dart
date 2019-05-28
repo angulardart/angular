@@ -15,8 +15,9 @@ const _angularImports = '''
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 ''';
 
 const _analyzerIgnores =
@@ -152,8 +153,8 @@ class TemplateOutliner implements Builder {
 // For @Component class $componentName.
 external List<dynamic> get styles\$$componentName;
 external _ng.ComponentFactory<$componentName> get ${componentName}NgFactory;
-class $viewName$typeParameters extends _ng.AppView<$componentType> {
-  external $viewName(_ng.RenderView parentView, int parentIndex);
+class $viewName$typeParameters extends _ng.ComponentView<$componentType> {
+  external $viewName(_ng.View parentView, int parentIndex);
 }
 ''');
       }

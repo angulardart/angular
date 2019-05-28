@@ -6,42 +6,42 @@ import 'dom_bindings.dart';
 export 'dom_bindings.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'dom_bindings.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/views/render_view.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/views/host_view.dart' as import9;
+import 'package:angular/src/di/injector/injector.dart' as import10;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
 // View for component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasHostAttributes0 extends AppView<import1.HasHostAttributes> {
+class ViewHasHostAttributes0 extends import0.ComponentView<import1.HasHostAttributes> {
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostAttributes0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-host-attributes');
+    this.rootElement = import5.document.createElement('has-host-attributes');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasHostAttributes> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
-      import9.updateAttribute(this.rootEl, 'title', currVal_0);
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
+      import7.updateAttribute(this.rootElement, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -64,72 +64,57 @@ ComponentFactory<import1.HasHostAttributes> get HasHostAttributesNgFactory {
 final List<dynamic> styles$HasHostAttributesHost = const [];
 
 // Host for component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasHostAttributesHost0 extends AppView<import1.HasHostAttributes> {
-  ViewHasHostAttributes0 _compView_0;
-  import1.HasHostAttributes _HasHostAttributes_0_5;
-  _ViewHasHostAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasHostAttributesHost0 extends import9.HostView<import1.HasHostAttributes> {
+  _ViewHasHostAttributesHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasHostAttributes> build() {
+  void build() {
     // Child component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasHostAttributes0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasHostAttributes_0_5 = import1.HasHostAttributes();
-    this._compView_0.create(this._HasHostAttributes_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasHostAttributes_0_5);
+    this.componentView = ViewHasHostAttributes0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasHostAttributes();
+    this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    this._compView_0.detectHostChanges(firstCheck);
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    bool firstCheck = this.firstCheck;
+    this.componentView.detectHostChanges(firstCheck);
+    this.componentView.detectChanges();
   }
 }
 
-AppView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0() {
-  return _ViewHasHostAttributesHost0(null, null);
+import9.HostView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0(import10.Injector injector) {
+  return _ViewHasHostAttributesHost0(injector);
 }
 
 final List<dynamic> styles$HasTemplateAttributes = const [];
 
 // View for component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasTemplateAttributes0 extends AppView<import1.HasTemplateAttributes> {
+class ViewHasTemplateAttributes0 extends import0.ComponentView<import1.HasTemplateAttributes> {
   var _expr_0;
-  import6.DivElement _el_0;
+  import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateAttributes0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateAttributes0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-template-attributes');
+    this.rootElement = import5.document.createElement('has-template-attributes');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasTemplateAttributes> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    this._el_0 = import9.appendDiv(doc, parentRenderNode);
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    this._el_0 = import7.appendDiv(doc, parentRenderNode);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
-      import9.updateAttribute(this._el_0, 'title', currVal_0);
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
+      import7.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -152,68 +137,48 @@ ComponentFactory<import1.HasTemplateAttributes> get HasTemplateAttributesNgFacto
 final List<dynamic> styles$HasTemplateAttributesHost = const [];
 
 // Host for component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasTemplateAttributesHost0 extends AppView<import1.HasTemplateAttributes> {
-  ViewHasTemplateAttributes0 _compView_0;
-  import1.HasTemplateAttributes _HasTemplateAttributes_0_5;
-  _ViewHasTemplateAttributesHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasTemplateAttributesHost0 extends import9.HostView<import1.HasTemplateAttributes> {
+  _ViewHasTemplateAttributesHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasTemplateAttributes> build() {
+  void build() {
     // Child component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasTemplateAttributes0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasTemplateAttributes_0_5 = import1.HasTemplateAttributes();
-    this._compView_0.create(this._HasTemplateAttributes_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasTemplateAttributes_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewHasTemplateAttributes0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasTemplateAttributes();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0() {
-  return _ViewHasTemplateAttributesHost0(null, null);
+import9.HostView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0(import10.Injector injector) {
+  return _ViewHasTemplateAttributesHost0(injector);
 }
 
 final List<dynamic> styles$HasStaticAttribute = const [];
 
 // View for component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasStaticAttribute0 extends AppView<import1.HasStaticAttribute> {
-  import6.DivElement _el_0;
+class ViewHasStaticAttribute0 extends import0.ComponentView<import1.HasStaticAttribute> {
+  import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasStaticAttribute0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasStaticAttribute0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-static-attribute');
+    this.rootElement = import5.document.createElement('has-static-attribute');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasStaticAttribute> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    this._el_0 = import9.appendDiv(doc, parentRenderNode);
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    this._el_0 = import7.appendDiv(doc, parentRenderNode);
   }
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
+    bool firstCheck = this.firstCheck;
     if (firstCheck) {
-      import9.setAttribute(this._el_0, 'title', 'title');
+      import7.setAttribute(this._el_0, 'title', 'title');
     }
   }
 
@@ -235,66 +200,46 @@ ComponentFactory<import1.HasStaticAttribute> get HasStaticAttributeNgFactory {
 final List<dynamic> styles$HasStaticAttributeHost = const [];
 
 // Host for component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasStaticAttributeHost0 extends AppView<import1.HasStaticAttribute> {
-  ViewHasStaticAttribute0 _compView_0;
-  import1.HasStaticAttribute _HasStaticAttribute_0_5;
-  _ViewHasStaticAttributeHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasStaticAttributeHost0 extends import9.HostView<import1.HasStaticAttribute> {
+  _ViewHasStaticAttributeHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasStaticAttribute> build() {
+  void build() {
     // Child component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasStaticAttribute0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasStaticAttribute_0_5 = import1.HasStaticAttribute();
-    this._compView_0.create(this._HasStaticAttribute_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasStaticAttribute_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewHasStaticAttribute0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasStaticAttribute();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0() {
-  return _ViewHasStaticAttributeHost0(null, null);
+import9.HostView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0(import10.Injector injector) {
+  return _ViewHasStaticAttributeHost0(injector);
 }
 
 final List<dynamic> styles$HasHostClass = const [];
 
 // View for component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasHostClass0 extends AppView<import1.HasHostClass> {
+class ViewHasHostClass0 extends import0.ComponentView<import1.HasHostClass> {
   bool _expr_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasHostClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasHostClass0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-host-class');
+    this.rootElement = import5.document.createElement('has-host-class');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasHostClass> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
-      import9.updateClassBindingNonHtml(this.rootEl, 'fancy', currVal_0);
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
+      import7.updateClassBindingNonHtml(this.rootElement, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -317,72 +262,57 @@ ComponentFactory<import1.HasHostClass> get HasHostClassNgFactory {
 final List<dynamic> styles$HasHostClassHost = const [];
 
 // Host for component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasHostClassHost0 extends AppView<import1.HasHostClass> {
-  ViewHasHostClass0 _compView_0;
-  import1.HasHostClass _HasHostClass_0_5;
-  _ViewHasHostClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasHostClassHost0 extends import9.HostView<import1.HasHostClass> {
+  _ViewHasHostClassHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasHostClass> build() {
+  void build() {
     // Child component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasHostClass0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasHostClass_0_5 = import1.HasHostClass();
-    this._compView_0.create(this._HasHostClass_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasHostClass_0_5);
+    this.componentView = ViewHasHostClass0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasHostClass();
+    this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
-    bool firstCheck = (this.cdState == 0);
-    this._compView_0.detectHostChanges(firstCheck);
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    bool firstCheck = this.firstCheck;
+    this.componentView.detectHostChanges(firstCheck);
+    this.componentView.detectChanges();
   }
 }
 
-AppView<import1.HasHostClass> viewFactory_HasHostClassHost0() {
-  return _ViewHasHostClassHost0(null, null);
+import9.HostView<import1.HasHostClass> viewFactory_HasHostClassHost0(import10.Injector injector) {
+  return _ViewHasHostClassHost0(injector);
 }
 
 final List<dynamic> styles$HasTemplateClass = const [];
 
 // View for component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasTemplateClass0 extends AppView<import1.HasTemplateClass> {
+class ViewHasTemplateClass0 extends import0.ComponentView<import1.HasTemplateClass> {
   bool _expr_0;
-  import6.DivElement _el_0;
+  import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasTemplateClass0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasTemplateClass0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-template-class');
+    this.rootElement = import5.document.createElement('has-template-class');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasTemplateClass> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    this._el_0 = import9.appendDiv(doc, parentRenderNode);
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    this._el_0 = import7.appendDiv(doc, parentRenderNode);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
-      import9.updateClassBinding(this._el_0, 'fancy', currVal_0);
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
+      import7.updateClassBinding(this._el_0, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -405,75 +335,55 @@ ComponentFactory<import1.HasTemplateClass> get HasTemplateClassNgFactory {
 final List<dynamic> styles$HasTemplateClassHost = const [];
 
 // Host for component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasTemplateClassHost0 extends AppView<import1.HasTemplateClass> {
-  ViewHasTemplateClass0 _compView_0;
-  import1.HasTemplateClass _HasTemplateClass_0_5;
-  _ViewHasTemplateClassHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasTemplateClassHost0 extends import9.HostView<import1.HasTemplateClass> {
+  _ViewHasTemplateClassHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasTemplateClass> build() {
+  void build() {
     // Child component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasTemplateClass0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasTemplateClass_0_5 = import1.HasTemplateClass();
-    this._compView_0.create(this._HasTemplateClass_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasTemplateClass_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewHasTemplateClass0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasTemplateClass();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0() {
-  return _ViewHasTemplateClassHost0(null, null);
+import9.HostView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0(import10.Injector injector) {
+  return _ViewHasTemplateClassHost0(injector);
 }
 
 final List<dynamic> styles$HasStyleProperty = const [];
 
 // View for component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class ViewHasStyleProperty0 extends AppView<import1.HasStyleProperty> {
+class ViewHasStyleProperty0 extends import0.ComponentView<import1.HasStyleProperty> {
   var _expr_0;
   var _expr_1;
-  import6.DivElement _el_0;
+  import5.DivElement _el_0;
   static import2.ComponentStyles _componentStyles;
-  ViewHasStyleProperty0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewHasStyleProperty0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('has-style-property');
+    this.rootElement = import5.document.createElement('has-style-property');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/templates/dom_bindings.dart' : null);
   }
 
   @override
-  ComponentRef<import1.HasStyleProperty> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    final doc = import6.document;
-    this._el_0 = import9.appendDiv(doc, parentRenderNode);
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    this._el_0 = import7.appendDiv(doc, parentRenderNode);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.width;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0)) {
       this._el_0.style.setProperty('width', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import7.checkBinding(this._expr_1, currVal_1)) {
+    if (import6.checkBinding(this._expr_1, currVal_1)) {
       this._el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       this._expr_1 = currVal_1;
     }
@@ -497,39 +407,20 @@ ComponentFactory<import1.HasStyleProperty> get HasStylePropertyNgFactory {
 final List<dynamic> styles$HasStylePropertyHost = const [];
 
 // Host for component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-class _ViewHasStylePropertyHost0 extends AppView<import1.HasStyleProperty> {
-  ViewHasStyleProperty0 _compView_0;
-  import1.HasStyleProperty _HasStyleProperty_0_5;
-  _ViewHasStylePropertyHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewHasStylePropertyHost0 extends import9.HostView<import1.HasStyleProperty> {
+  _ViewHasStylePropertyHost0(import10.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.HasStyleProperty> build() {
+  void build() {
     // Child component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
-    this._compView_0 = ViewHasStyleProperty0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._HasStyleProperty_0_5 = import1.HasStyleProperty();
-    this._compView_0.create(this._HasStyleProperty_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._HasStyleProperty_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewHasStyleProperty0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasStyleProperty();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0() {
-  return _ViewHasStylePropertyHost0(null, null);
+import9.HostView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0(import10.Injector injector) {
+  return _ViewHasStylePropertyHost0(injector);
 }
 
 var _visited = false;

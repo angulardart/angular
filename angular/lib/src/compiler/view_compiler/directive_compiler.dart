@@ -135,7 +135,7 @@ class DirectiveCompiler {
     return o.ClassMethod(
       'detectHostChanges',
       [
-        o.FnParam('view', o.importType(Identifiers.RenderView)),
+        o.FnParam('view', o.importType(Views.renderView)),
         o.FnParam('el', o.importType(Identifiers.HTML_ELEMENT)),
       ],
       statements,

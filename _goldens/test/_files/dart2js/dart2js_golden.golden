@@ -1517,7 +1517,7 @@
       _._self = t0;
       _._target = t1;
       _._receiver = t2;
-      _.__js_helper$_name = t3;
+      _._name = t3;
     },
     CastErrorImplementation: function CastErrorImplementation(t0) {
       this.message = t0;
@@ -3473,7 +3473,7 @@
     },
     appInjector: function(userProvidedInjector) {
       var ngZone, t3, userInjector, t1 = {},
-        t2 = Y.minimalApp$Injector($.$get$appGlobals()._app_host$_hostInjector);
+        t2 = Y.minimalApp$Injector($.$get$appGlobals()._hostInjector);
       t1.applicationRef = null;
       ngZone = G.createNgZone();
       t3 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], P.Object, {func: 1, ret: P.Object});
@@ -3502,6 +3502,14 @@
     _LazyInjector: function _LazyInjector(t0, t1) {
       this._providers = t0;
       this.parent = t1;
+    },
+    HostView: function HostView() {
+    },
+    _HostViewData: function _HostViewData() {
+      var _ = this;
+      _._onDestroyCallbacks = _.viewFragment = _.viewContainer = null;
+      _._host_view$_changeDetectorState = 0;
+      _._host_view$_shouldSkipChangeDetection = _._destroyed = false;
     },
     ElementInjector: function ElementInjector(t0, t1, t2) {
       this._view = t0;
@@ -3684,9 +3692,6 @@
     _DuplicateMap: function _DuplicateMap(t0) {
       this._default_iterable_differ$_map = t0;
     },
-    ViewType: function ViewType(t0) {
-      this._name = t0;
-    },
     EmptyInjector: function EmptyInjector(t0) {
       this.parent = t0;
     },
@@ -3698,7 +3703,7 @@
       this._viewContainer = t1;
       this._prevCondition = false;
     }, TransitionalAppHost: function TransitionalAppHost(t0) {
-      this._app_host$_hostInjector = t0;
+      this._hostInjector = t0;
     }, BrowserGetTestability: function BrowserGetTestability() {
     }, BrowserGetTestability_addToWindow_closure: function BrowserGetTestability_addToWindow_closure() {
     }, BrowserGetTestability_addToWindow_closure0: function BrowserGetTestability_addToWindow_closure0() {
@@ -3724,24 +3729,7 @@
     }, MultiToken: function MultiToken(t0, t1) {
       this._uniqueName = t0;
       this.$ti = t1;
-    },
-    AppViewData_AppViewData: function(cdMode, type, parentIndex) {
-      return new S.AppViewData(type, P.LinkedHashMap_LinkedHashMap$_empty(P.String, null), parentIndex, cdMode);
-    },
-    AppViewData: function AppViewData(t0, t1, t2, t3) {
-      var _ = this;
-      _.type = t0;
-      _.locals = t1;
-      _.destroyed = false;
-      _.rootFragment = _._onDestroyCallbacks = _.subscriptions = _._hostInjector = _.projectedNodes = _._viewContainerElement = null;
-      _.parentIndex = t2;
-      _._cdMode = t3;
-      _._skipChangeDetection = false;
-      _._cdState = 0;
-    },
-    AppView: function AppView() {
-    }
-  },
+    }},
   N = {DefaultKeyValueDiffer: function DefaultKeyValueDiffer(t0) {
       var _ = this;
       _._records = t0;
@@ -3763,221 +3751,182 @@
       this._currentValue = "";
       this.element = t0;
     },
-    viewFactory_RootComponentHost0: function() {
-      return new N._ViewRootComponentHost0(null, S.AppViewData_AppViewData(3, C.ViewType_0, null));
+    viewFactory_RootComponentHost0: function(injector) {
+      return new N._ViewRootComponentHost0(injector, new G._HostViewData());
     },
     viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
-      var t1 = new N._ViewInlinedNgIf1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewInlinedNgIf1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_EmbeddedNgIf1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgIf1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewEmbeddedNgIf1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_EmbeddedNgFor1: function(parentView, parentIndex) {
-      var t1 = new N._ViewEmbeddedNgFor1(N.TextBinding$(), parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewEmbeddedNgFor1(N.TextBinding$(), E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_ComponentConditionalFeatures1: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewComponentConditionalFeatures1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_ComponentConditionalFeatures2: function(parentView, parentIndex) {
-      var t1 = new N._ViewComponentConditionalFeatures2(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewComponentConditionalFeatures2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_HasNestedProviderLookups1: function(parentView, parentIndex) {
-      var t1 = new N._ViewHasNestedProviderLookups1(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewHasNestedProviderLookups1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
     viewFactory_HasNestedProviderLookups2: function(parentView, parentIndex) {
-      var t1 = new N._ViewHasNestedProviderLookups2(parentView, S.AppViewData_AppViewData(3, C.ViewType_2, parentIndex));
-      t1.componentStyles = parentView.componentStyles;
-      return t1;
+      return new N._ViewHasNestedProviderLookups2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
-    ViewRootComponent0: function ViewRootComponent0(t0, t1) {
+    ViewRootComponent0: function ViewRootComponent0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._HasHostListeners_13_5 = _._compView_13 = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._HasHostListeners_13_5 = _._compView_13 = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
+      _._component_view$_data = t0;
     },
     _ViewRootComponentHost0: function _ViewRootComponentHost0(t0, t1) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._RootComponent_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.componentView = _.component = null;
+      _._host_view$_injector = t0;
+      _._data = t1;
     },
-    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0, t1) {
+    ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._expr_1 = _._DefaultChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _._component_view$_data = t0;
     },
-    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2, t3) {
-      var _ = this;
-      _._textBinding_1 = t0;
-      _._textBinding_3 = t1;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t2;
-      _.viewData = t3;
-    },
-    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
-    },
-    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2, t3) {
+    ViewDefaultChangeDetectionAndInputs0: function ViewDefaultChangeDetectionAndInputs0(t0, t1, t2) {
       var _ = this;
       _._textBinding_1 = t0;
       _._textBinding_3 = t1;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t2;
-      _.viewData = t3;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t2;
     },
-    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0, t1) {
+    ViewUsesOnPushChangeDetectionAndInputs0: function ViewUsesOnPushChangeDetectionAndInputs0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._expr_1 = _._OnPushChangeDetectionAndInputs_0_5 = _._compView_0 = null;
+      _._component_view$_data = t0;
     },
-    _ViewInlinedNgIf1: function _ViewInlinedNgIf1(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
-    },
-    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
-    },
-    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NullComponent_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
-    },
-    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgFor_1_9 = _._appEl_1 = null;
-      _.parentView = t0;
-      _.viewData = t1;
-    },
-    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1, t2) {
+    ViewOnPushChangeDetectionAndInputs0: function ViewOnPushChangeDetectionAndInputs0(t0, t1, t2) {
       var _ = this;
       _._textBinding_1 = t0;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t1;
-      _.viewData = t2;
+      _._textBinding_3 = t1;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t2;
     },
-    ViewNullComponent0: function ViewNullComponent0(t0, t1) {
+    ViewInlinedNgIf0: function ViewInlinedNgIf0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._NgIf_0_9 = _._appEl_0 = null;
+      _._component_view$_data = t0;
     },
-    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+    _ViewInlinedNgIf1: function _ViewInlinedNgIf1(t0) {
+      this._embedded_view$_data = t0;
     },
-    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0, t1) {
+    ViewEmbeddedNgIf0: function ViewEmbeddedNgIf0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._NgIf_0_9 = _._appEl_0 = null;
+      _._component_view$_data = t0;
     },
-    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._FeatureA_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+    _ViewEmbeddedNgIf1: function _ViewEmbeddedNgIf1(t0) {
+      this._NullComponent_0_5 = this._compView_0 = null;
+      this._embedded_view$_data = t0;
     },
-    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0, t1) {
+    ViewEmbeddedNgFor0: function ViewEmbeddedNgFor0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._FeatureB_0_5 = _._compView_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._NgFor_1_9 = _._appEl_1 = null;
+      _._component_view$_data = t0;
     },
-    ViewFeatureA0: function ViewFeatureA0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+    _ViewEmbeddedNgFor1: function _ViewEmbeddedNgFor1(t0, t1) {
+      this._textBinding_1 = t0;
+      this._embedded_view$_data = t1;
     },
-    ViewFeatureB0: function ViewFeatureB0(t0, t1) {
+    ViewNullComponent0: function ViewNullComponent0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
     },
-    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0, t1) {
+    ViewInjectsFromArbitraryParent0: function ViewInjectsFromArbitraryParent0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
     },
-    ViewUsesNgDirectives0: function ViewUsesNgDirectives0(t0, t1) {
+    ViewComponentConditionalFeatures0: function ViewComponentConditionalFeatures0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _._NgStyle_6_5 = _._NgClass_4_5 = _._NgClass_2_5 = _._NgClass_0_5 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._NgIf_1_9 = _._appEl_1 = _._NgIf_0_9 = _._appEl_0 = null;
+      _._component_view$_data = t0;
     },
-    ViewHasNestedProviderLookups0: function ViewHasNestedProviderLookups0(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgIf_0_9 = _._appEl_0 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+    _ViewComponentConditionalFeatures1: function _ViewComponentConditionalFeatures1(t0) {
+      this._FeatureA_0_5 = this._compView_0 = null;
+      this._embedded_view$_data = t0;
     },
-    _ViewHasNestedProviderLookups1: function _ViewHasNestedProviderLookups1(t0, t1) {
-      var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._NgIf_1_9 = _._appEl_1 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+    _ViewComponentConditionalFeatures2: function _ViewComponentConditionalFeatures2(t0) {
+      this._FeatureB_0_5 = this._compView_0 = null;
+      this._embedded_view$_data = t0;
     },
-    _ViewHasNestedProviderLookups2: function _ViewHasNestedProviderLookups2(t0, t1) {
+    ViewFeatureA0: function ViewFeatureA0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = _._InjectsManyThingsDynamically_1_5 = _._compView_1 = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
     },
-    ViewInjectsManyThingsDynamically0: function ViewInjectsManyThingsDynamically0(t0, t1) {
+    ViewFeatureB0: function ViewFeatureB0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
     },
-    ViewHasHostListeners0: function ViewHasHostListeners0(t0, t1) {
+    ViewUsesDomBindings0: function ViewUsesDomBindings0(t0) {
       var _ = this;
-      _.componentStyles = _.ctx = _.rootEl = null;
-      _.parentView = t0;
-      _.viewData = t1;
+      _.rootElement = _.componentStyles = _.ctx = _._el_0 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = null;
+      _._component_view$_data = t0;
+    },
+    ViewUsesNgDirectives0: function ViewUsesNgDirectives0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _._NgStyle_6_5 = _._NgClass_4_5 = _._NgClass_2_5 = _._NgClass_0_5 = null;
+      _._component_view$_data = t0;
+    },
+    ViewHasNestedProviderLookups0: function ViewHasNestedProviderLookups0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = _._NgIf_0_9 = _._appEl_0 = null;
+      _._component_view$_data = t0;
+    },
+    _ViewHasNestedProviderLookups1: function _ViewHasNestedProviderLookups1(t0) {
+      this._NgIf_1_9 = this._appEl_1 = null;
+      this._embedded_view$_data = t0;
+    },
+    _ViewHasNestedProviderLookups2: function _ViewHasNestedProviderLookups2(t0) {
+      this._InjectsManyThingsDynamically_1_5 = this._compView_1 = null;
+      this._embedded_view$_data = t0;
+    },
+    ViewInjectsManyThingsDynamically0: function ViewInjectsManyThingsDynamically0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
+    },
+    ViewHasHostListeners0: function ViewHasHostListeners0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._component_view$_data = t0;
     }
   },
-  M = {ChangeDetectionHost: function ChangeDetectionHost() {
-    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
+  M = {
+    ChangeDetectionHost_checkForCrashes: function() {
+      var t1 = $.ChangeDetectionHost__current;
+      return (t1 == null ? null : t1._lastGuardedView) != null;
+    },
+    ChangeDetectionHost: function ChangeDetectionHost() {
+    },
+    ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
       var _ = this;
       _._box_0 = t0;
       _.$this = t1;
       _.callback = t2;
       _.completer = t3;
       _.R = t4;
-    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
+    },
+    ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
       this.completer = t0;
       this.R = t1;
-    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
+    },
+    ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
       this.$this = t0;
       this.completer = t1;
-    }, ComponentLoader: function ComponentLoader() {
+    },
+    ComponentLoader: function ComponentLoader() {
     },
     throwsNotFound: function(injector, token) {
       throw H.wrapException(A.noProviderError(token));
@@ -3990,7 +3939,7 @@
       this.sanitizer = t1;
     }},
   D = {ComponentRef: function ComponentRef(t0, t1) {
-      this._parentView = t0;
+      this._hostView = t0;
       this._nativeElement = t1;
     }, ComponentFactory: function ComponentFactory(t0, t1) {
       this.selector = t0;
@@ -4003,9 +3952,8 @@
       return new D.ViewFragment(nodesOrViewContainers);
     },
     ViewFragment__flattenDomNodes: function(target, nodes) {
-      var i,
-        $length = nodes.length;
-      for (i = 0; i < $length; ++i)
+      var i;
+      for (i = 0; i < 1; ++i)
         target.push(nodes[i]);
       return target;
     },
@@ -4151,6 +4099,43 @@
       _.nativeElement = t2;
       _.nestedViews = null;
     }},
+  E = {
+    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
+      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
+    },
+    ComponentView: function ComponentView() {
+    },
+    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
+      var _ = this;
+      _.parentView = t0;
+      _.parentIndex = t1;
+      _.projectedNodes = null;
+      _._changeDetectionMode = t2;
+      _._changeDetectorState = 0;
+      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
+    },
+    _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
+      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(P.String, null));
+    },
+    EmbeddedView: function EmbeddedView() {
+    },
+    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.ctx = t0;
+      _.componentStyles = t1;
+      _.parentView = t2;
+      _.parentIndex = t3;
+      _.projectedNodes = t4;
+      _.locals = t5;
+      _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewContainer = _.viewFragment = null;
+      _._embedded_view$_changeDetectorState = 0;
+      _._embedded_view$_shouldSkipChangeDetection = _._embedded_view$_destroyed = false;
+    },
+    SanitizationService: function SanitizationService() {
+    },
+    HierarchicalInjector: function HierarchicalInjector() {
+    }
+  },
   B = {DynamicView: function DynamicView() {
     }},
   A = {RenderView: function RenderView() {
@@ -4164,12 +4149,9 @@
       this.parent = t1;
     },
     noProviderError: function(token) {
-      return new P.ArgumentError(false, null, null, "No provider found for " + H.S(token));
+      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
     }
   },
-  E = {SanitizationService: function SanitizationService() {
-    }, HierarchicalInjector: function HierarchicalInjector() {
-    }},
   U = {ExceptionHandler: function ExceptionHandler() {
     }, JsTestability: function JsTestability() {
     }, JsTestabilityRegistry: function JsTestabilityRegistry() {
@@ -4249,7 +4231,7 @@
   },
   Z = {DomSanitizationService: function DomSanitizationService() {
     }};
-  var holders = [C, H, J, P, W, G, Y, R, K, X, S, N, M, Q, D, L, O, V, B, A, E, U, T, Z];
+  var holders = [C, H, J, P, W, G, Y, R, K, X, S, N, M, Q, D, L, O, V, E, B, A, U, T, Z];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -4817,11 +4799,11 @@
     get$positionalArguments: function() {
       var t1, argumentCount, list, index, _this = this;
       if (_this._kind === 1)
-        return C.List_empty0;
+        return C.List_empty;
       t1 = _this._arguments;
       argumentCount = t1.length - _this._namedArgumentNames.length - _this._typeArgumentCount;
       if (argumentCount === 0)
-        return C.List_empty0;
+        return C.List_empty;
       list = [];
       for (index = 0; index < argumentCount; ++index)
         list.push(t1[index]);
@@ -4971,7 +4953,7 @@
       var receiver = this._receiver;
       if (receiver == null)
         receiver = this._self;
-      return "Closure '" + H.S(this.__js_helper$_name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
+      return "Closure '" + H.S(this._name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
     }
   };
   H.CastErrorImplementation.prototype = {
@@ -9167,7 +9149,7 @@
         t1 = insertTuples[i];
         t2 = t1.record;
         t3 = t2.item;
-        t1 = t1.view.viewData.locals;
+        t1 = t1.view._embedded_view$_data.locals;
         t1.$indexSet(0, "$implicit", t3);
         t3 = t2.currentIndex;
         t3.toString;
@@ -9177,7 +9159,7 @@
         t1.$indexSet(0, "odd", (t2 & 1) === 1);
       }
       for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
-        t3 = t1.nestedViews[i].viewData.locals;
+        t3 = t1.nestedViews[i]._embedded_view$_data.locals;
         t3.$indexSet(0, "first", i === 0);
         t3.$indexSet(0, "last", i === t2);
         t3.$indexSet(0, "index", i);
@@ -9188,7 +9170,7 @@
   };
   R.NgFor__applyChanges_closure.prototype = {
     call$3: function(item, adjustedPreviousIndex, currentIndex) {
-      var t1, t2, viewRef, view, _this = this;
+      var t1, t2, viewRef, _this = this;
       if (item.previousIndex == null) {
         t1 = _this.$this;
         t2 = t1._ng_for$_viewContainer;
@@ -9201,19 +9183,20 @@
         if (currentIndex == null)
           t1.remove$1(0, adjustedPreviousIndex);
         else {
-          view = t1.nestedViews[adjustedPreviousIndex];
-          t1.move$2(view, currentIndex);
-          _this.insertTuples.push(new R._RecordViewTuple(view, item));
+          t2 = t1.nestedViews[adjustedPreviousIndex];
+          t1.move$2(t2, currentIndex);
+          _this.insertTuples.push(new R._RecordViewTuple(t2, item));
         }
       }
     }
   };
   R.NgFor__applyChanges_closure0.prototype = {
     call$1: function(record) {
-      var t1 = record.currentIndex,
-        viewRef = this.$this._ng_for$_viewContainer.nestedViews[t1];
-      t1 = record.item;
-      viewRef.viewData.locals.$indexSet(0, "$implicit", t1);
+      var t2,
+        t1 = record.currentIndex;
+      t1 = this.$this._ng_for$_viewContainer.nestedViews[t1];
+      t2 = record.item;
+      t1._embedded_view$_data.locals.$indexSet(0, "$implicit", t2);
     }
   };
   R._RecordViewTuple.prototype = {};
@@ -9272,8 +9255,8 @@
     _loadedRootComponent$2: function(component, node) {
       var t1, t2, t3, _this = this;
       _this._rootComponents.push(component);
-      t1 = component._parentView;
-      t2 = t1.viewData;
+      t1 = component._hostView;
+      t2 = t1._data;
       t3 = t2._onDestroyCallbacks;
       t2 = t3 == null ? t2._onDestroyCallbacks = H.setRuntimeTypeInfo([], [{func: 1, ret: -1}]) : t3;
       t2.push(new Y.ApplicationRef__loadedRootComponent_closure(_this, component, node));
@@ -9283,7 +9266,7 @@
     _destroyedRootComponent$1: function(component) {
       if (!C.JSArray_methods.remove$1(this._rootComponents, component))
         return;
-      C.JSArray_methods.remove$1(this._changeDetectors, component._parentView);
+      C.JSArray_methods.remove$1(this._changeDetectors, component._hostView);
     }
   };
   Y.ApplicationRef$__closure.prototype = {
@@ -9300,37 +9283,44 @@
   };
   Y.ApplicationRef_bootstrap_closure.prototype = {
     call$0: function() {
-      var component, existing, newElement, replacement, testability,
+      var t4, styles, t5, t6, replacement, component, existing, replacement0, testability,
         t1 = this.componentFactory,
         t2 = this.$this,
         t3 = t2._injector,
-        hostView = t1._viewFactory.call$0(),
-        t4 = hostView.viewData;
-      t4._hostInjector = t3;
-      t4.projectedNodes = C.List_empty;
-      component = hostView.build$0();
-      t4 = document;
-      existing = t4.querySelector(t1.selector);
-      if (existing != null) {
-        newElement = component._nativeElement;
-        t1 = newElement.id;
-        if (t1 == null || t1.length === 0)
-          newElement.id = existing.id;
-        J.replaceWith$1$x(existing, newElement);
-        t1 = newElement;
-        replacement = t1;
-      } else {
-        t1 = t4.body;
-        t4 = component._nativeElement;
-        t1.appendChild(t4);
-        t1 = t4;
-        replacement = null;
+        hostView = t1._viewFactory.call$1(t3);
+      hostView.toString;
+      t4 = new N.ViewRootComponent0(E._ComponentViewData__ComponentViewData(hostView, 0, 3));
+      styles = $.ViewRootComponent0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles._appendStyles$0();
+        $.ViewRootComponent0__componentStyles = styles;
       }
-      t4 = component._parentView;
-      testability = new G.ElementInjector(t4, 0, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, null);
+      t4.componentStyles = styles;
+      t5 = document;
+      t6 = t5.createElement("root-component");
+      t4.rootElement = t6;
+      hostView.componentView = t4;
+      hostView.component = new O.RootComponent();
+      hostView.initRootNode$1(t6);
+      hostView.componentView.createAndProject$2(hostView.component, C.List_empty0);
+      replacement = hostView.componentView.rootElement;
+      component = new D.ComponentRef(hostView, replacement);
+      existing = t5.querySelector(t1.selector);
+      if (existing != null) {
+        t1 = replacement.id;
+        if (t1 == null || t1.length === 0)
+          replacement.id = existing.id;
+        J.replaceWith$1$x(existing, replacement);
+        replacement0 = replacement;
+      } else {
+        t5.body.appendChild(replacement);
+        replacement0 = null;
+      }
+      testability = new G.ElementInjector(hostView, 0, C.EmptyInjector_null).$get$2(0, C.Type_Testability_h8g, null);
       if (testability != null)
-        t3.$get$1(0, C.Type_TestabilityRegistry_IMm)._applications.$indexSet(0, t1, testability);
-      t2._loadedRootComponent$2(component, replacement);
+        t3.$get$1(0, C.Type_TestabilityRegistry_IMm)._applications.$indexSet(0, replacement, testability);
+      t2._loadedRootComponent$2(component, replacement0);
       return component;
     }
   };
@@ -9430,7 +9420,7 @@
         if (!J.getInterceptor$(collection).$isIterable)
           throw H.wrapException(P.StateError$("Error trying to diff '" + H.S(collection) + "'"));
       } else
-        collection = C.List_empty;
+        collection = C.List_empty1;
       return this.check$1(0, collection) ? this : null;
     },
     check$1: function(_, collection) {
@@ -10031,7 +10021,7 @@
       this._lastGuardedView = this._lastCaughtException = this._lastCaughtTrace = null;
     },
     reportViewException$3: function(view, error, trace) {
-      view.viewData.set$cdState(2);
+      view.disableChangeDetection$0();
       this._exceptionHandler.call$3(error, trace, null);
     },
     run$1$1: function(callback, $R) {
@@ -10095,114 +10085,6 @@
       return [[P.List, $T]];
     }
   };
-  S.AppViewData.prototype = {
-    set$cdMode: function(value) {
-      if (this._cdMode !== value) {
-        this._cdMode = value;
-        this.updateSkipChangeDetectionFlag$0();
-      }
-    },
-    set$cdState: function(value) {
-      if (this._cdState !== value) {
-        this._cdState = value;
-        this.updateSkipChangeDetectionFlag$0();
-      }
-    },
-    updateSkipChangeDetectionFlag$0: function() {
-      var t1 = this._cdMode;
-      this._skipChangeDetection = t1 === 4 || t1 === 2 || this._cdState === 2;
-    },
-    destroy$0: function() {
-      var len, i,
-        t1 = this._onDestroyCallbacks;
-      if (t1 != null)
-        for (len = t1.length, i = 0; i < len; ++i)
-          this._onDestroyCallbacks[i].call$0();
-      return;
-    }
-  };
-  S.AppView.prototype = {
-    markForCheck$0: function() {
-      var t1 = this.viewData,
-        t2 = t1._cdMode;
-      if (t2 === 4)
-        return;
-      if (t1.type === C.ViewType_1) {
-        if (t2 === 2)
-          t1.set$cdMode(1);
-        this.parentView.markForCheck$0();
-      } else {
-        t1 = t1._viewContainerElement;
-        t1 = t1 == null ? null : t1.parentView;
-        if (t1 != null)
-          t1.markForCheck$0();
-      }
-    },
-    create$2: function(_, context, projectedNodes) {
-      this.ctx = context;
-      this.viewData.projectedNodes = projectedNodes;
-      return this.build$0();
-    },
-    create0$1: function(context) {
-      return this.create$2(0, context, C.List_empty);
-    },
-    build$0: function() {
-      return;
-    },
-    init0$0: function() {
-      this.init$2(C.List_empty, null);
-    },
-    init1$1: function(rootElement) {
-      this.init$2(H.setRuntimeTypeInfo([rootElement], [P.Object]), null);
-    },
-    init$2: function(rootNodesOrViewContainers, subscriptions) {
-      var t1 = this.viewData;
-      t1.rootFragment = D.ViewFragment_ViewFragment(rootNodesOrViewContainers);
-      t1.subscriptions = subscriptions;
-    },
-    injectFromAncestry$2: function(token, notFoundValue) {
-      var t1 = this.viewData,
-        injector = t1._hostInjector;
-      if (injector != null)
-        return injector.$get$2(0, token, notFoundValue);
-      return this.parentView.inject$3(token, t1.parentIndex, notFoundValue);
-    },
-    destroyInternalState$0: function() {
-      var t1 = this.viewData;
-      if (t1.destroyed)
-        return;
-      t1.destroyed = true;
-      t1.destroy$0();
-      this.destroyInternal$0();
-    },
-    get$flatRootNodes: function() {
-      return this.viewData.rootFragment.flattenDomNodes$0();
-    },
-    get$lastRootNode: function() {
-      return this.viewData.rootFragment.findLastDomNode$0();
-    },
-    detectChanges$0: function() {
-      var t2,
-        t1 = this.viewData;
-      if (t1._skipChangeDetection)
-        return;
-      t2 = $.ChangeDetectionHost__current;
-      if ((t2 == null ? null : t2._lastGuardedView) != null)
-        this.detectCrash$0();
-      else
-        this.detectChangesInternal$0();
-      if (t1._cdMode === 1) {
-        t1._cdMode = 2;
-        t1._skipChangeDetection = true;
-      }
-      t1.set$cdState(1);
-    },
-    initViewRoot$0: function() {
-      var hostElement = this.rootEl;
-      this.componentStyles.toString;
-      return hostElement;
-    }
-  };
   Q.AppViewUtils.prototype = {};
   D.ComponentRef.prototype = {};
   D.ComponentFactory.prototype = {};
@@ -10223,9 +10105,8 @@
   D.TemplateRef.prototype = {
     createEmbeddedView$0: function() {
       var t1 = this._template_ref$_viewContainer,
-        parentView = t1.parentView,
-        view = this._template_ref$_viewFactory.call$2(parentView, t1.index);
-      view.create$2(0, parentView.ctx, parentView.viewData.projectedNodes);
+        view = this._template_ref$_viewFactory.call$2(t1.parentView, t1.index);
+      view.build$0();
       return view;
     }
   };
@@ -10258,27 +10139,23 @@
       C.JSArray_methods.removeAt$1(views, (views && C.JSArray_methods).indexOf$1(views, viewRef));
       C.JSArray_methods.insert$2(views, currentIndex, viewRef);
       refRenderNode = this._findRenderNode$2(views, currentIndex);
-      if (refRenderNode != null) {
-        T.insertNodesAsSibling(viewRef.get$flatRootNodes(), refRenderNode);
-        $.domRootRendererIsDirty = true;
-      }
-      viewRef.toString;
+      if (refRenderNode != null)
+        viewRef.addRootNodesAfter$1(refRenderNode);
+      viewRef.wasMoved$0();
       return viewRef;
     },
     remove$1: function(_, index) {
-      var t1, nodes;
+      var t1;
       if (index === -1)
         index = this.get$length(this) - 1;
       t1 = this.nestedViews;
       t1 = (t1 && C.JSArray_methods).removeAt$1(t1, index);
-      nodes = t1.get$flatRootNodes();
-      T.removeNodes(nodes);
-      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
-      t1.viewData._viewContainerElement = null;
+      t1.removeRootNodes$0();
+      t1.wasRemoved$0();
       t1.destroyInternalState$0();
     },
     clear$0: function(_) {
-      var i, nested, index, t1, nodes, _this = this;
+      var i, nested, index, t1, _this = this;
       for (i = _this.get$length(_this) - 1; i >= 0; --i) {
         if (i === -1) {
           nested = _this.nestedViews;
@@ -10287,10 +10164,8 @@
           index = i;
         t1 = _this.nestedViews;
         t1 = (t1 && C.JSArray_methods).removeAt$1(t1, index);
-        nodes = t1.get$flatRootNodes();
-        T.removeNodes(nodes);
-        $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
-        t1.viewData._viewContainerElement = null;
+        t1.removeRootNodes$0();
+        t1.wasRemoved$0();
         t1.destroyInternalState$0();
       }
     },
@@ -10305,35 +10180,273 @@
       C.JSArray_methods.insert$2(views, viewIndex, view);
       refRenderNode = _this._findRenderNode$2(views, viewIndex);
       _this.nestedViews = views;
-      if (refRenderNode != null) {
-        T.insertNodesAsSibling(view.get$flatRootNodes(), refRenderNode);
-        $.domRootRendererIsDirty = true;
-      }
-      view.viewData._viewContainerElement = _this;
+      if (refRenderNode != null)
+        view.addRootNodesAfter$1(refRenderNode);
+      view.wasInserted$1(_this);
     }
   };
   D.ViewFragment.prototype = {
     findLastDomNode$0: function() {
-      var node,
-        nodes = this._nodesOrViewContainers,
-        i = nodes.length - 1;
-      if (i >= 0) {
-        node = nodes[i];
-        return node;
-      }
-      return;
+      var node = this._nodesOrViewContainers[0];
+      return node;
     },
     flattenDomNodes$0: function() {
       return D.ViewFragment__flattenDomNodes(H.setRuntimeTypeInfo([], [W.Node]), this._nodesOrViewContainers);
     }
   };
-  R.ViewType.prototype = {
-    toString$0: function(_) {
-      return this._name;
+  E.ComponentView.prototype = {
+    get$projectedNodes: function() {
+      return this._component_view$_data.projectedNodes;
+    },
+    get$parentView: function() {
+      return this._component_view$_data.parentView;
+    },
+    get$parentIndex: function() {
+      return this._component_view$_data.parentIndex;
+    },
+    build$0: function() {
+    },
+    create$1: function(_, component) {
+      this.createAndProject$2(component, C.List_empty1);
+    },
+    createAndProject$2: function(component, projectedNodes) {
+      this.ctx = component;
+      this._component_view$_data.projectedNodes = projectedNodes;
+      this.build$0();
+    },
+    initViewRoot$0: function() {
+      var hostElement = this.rootElement;
+      this.componentStyles.toString;
+      return hostElement;
+    },
+    destroyInternalState$0: function() {
+      var t1 = this._component_view$_data;
+      if (!t1._component_view$_destroyed) {
+        t1.destroy$0();
+        this.destroyInternal$0();
+      }
+    },
+    detectChanges$0: function() {
+      var t1 = this._component_view$_data;
+      if (t1._shouldSkipChangeDetection)
+        return;
+      if (M.ChangeDetectionHost_checkForCrashes())
+        this.detectCrash$0();
+      else
+        this.detectChangesInternal$0();
+      if (t1._changeDetectionMode === 1)
+        t1.set$changeDetectionMode(2);
+      t1.set$changeDetectorState(1);
+    },
+    disableChangeDetection$0: function() {
+      this._component_view$_data.set$changeDetectorState(2);
+    },
+    markForCheck$0: function() {
+      var t1 = this._component_view$_data,
+        changeDetectionMode = t1._changeDetectionMode;
+      if (changeDetectionMode === 4)
+        return;
+      if (changeDetectionMode === 2)
+        t1.set$changeDetectionMode(1);
+      t1.parentView.markForCheck$0();
+    },
+    get$ctx: function() {
+      return this.ctx;
+    },
+    get$componentStyles: function() {
+      return this.componentStyles;
+    }
+  };
+  E._ComponentViewData.prototype = {
+    set$changeDetectionMode: function(mode) {
+      if (this._changeDetectionMode !== mode) {
+        this._changeDetectionMode = mode;
+        this._updateShouldSkipChangeDetection$0();
+      }
+    },
+    set$changeDetectorState: function(state) {
+      if (this._changeDetectorState !== state) {
+        this._changeDetectorState = state;
+        this._updateShouldSkipChangeDetection$0();
+      }
+    },
+    destroy$0: function() {
+      this._component_view$_destroyed = true;
+    },
+    _updateShouldSkipChangeDetection$0: function() {
+      var t1 = this._changeDetectionMode;
+      this._shouldSkipChangeDetection = t1 === 2 || t1 === 4 || this._changeDetectorState === 2;
     }
   };
   B.DynamicView.prototype = {};
+  E.EmbeddedView.prototype = {
+    get$ctx: function() {
+      return this._embedded_view$_data.ctx;
+    },
+    get$componentStyles: function() {
+      return this._embedded_view$_data.componentStyles;
+    },
+    get$parentView: function() {
+      return this._embedded_view$_data.parentView;
+    },
+    get$parentIndex: function() {
+      return this._embedded_view$_data.parentIndex;
+    },
+    get$projectedNodes: function() {
+      return this._embedded_view$_data.projectedNodes;
+    },
+    get$flatRootNodes: function() {
+      return this._embedded_view$_data.viewFragment.flattenDomNodes$0();
+    },
+    get$lastRootNode: function() {
+      return this._embedded_view$_data.viewFragment.findLastDomNode$0();
+    },
+    initRootNode$1: function(rootNodeOrViewContainer) {
+      this.initRootNodesAndSubscriptions$2(H.setRuntimeTypeInfo([rootNodeOrViewContainer], [P.Object]), null);
+    },
+    initRootNodesAndSubscriptions$2: function(rootNodesOrViewContainers, subscriptions) {
+      var t1 = this._embedded_view$_data;
+      t1.viewFragment = D.ViewFragment_ViewFragment(rootNodesOrViewContainers);
+      t1.subscriptions = subscriptions;
+    },
+    destroyInternalState$0: function() {
+      var t1 = this._embedded_view$_data;
+      if (!t1._embedded_view$_destroyed) {
+        t1.destroy$0();
+        this.destroyInternal$0();
+      }
+    },
+    detectChanges$0: function() {
+      var t1 = this._embedded_view$_data;
+      if (t1._embedded_view$_shouldSkipChangeDetection)
+        return;
+      if (M.ChangeDetectionHost_checkForCrashes())
+        this.detectCrash$0();
+      else
+        this.detectChangesInternal$0();
+      t1.set$changeDetectorState(1);
+    },
+    disableChangeDetection$0: function() {
+      this._embedded_view$_data.set$changeDetectorState(2);
+    },
+    markForCheck$0: function() {
+      var t1 = this._embedded_view$_data.viewContainer;
+      t1 = t1 == null ? null : t1.parentView;
+      if (t1 != null)
+        t1.markForCheck$0();
+    },
+    addRootNodesAfter$1: function(node) {
+      T.insertNodesAsSibling(this.get$flatRootNodes(), node);
+      $.domRootRendererIsDirty = true;
+    },
+    removeRootNodes$0: function() {
+      var nodes = this.get$flatRootNodes();
+      T.removeNodes(nodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+    },
+    wasInserted$1: function(viewContainer) {
+      this._embedded_view$_data.viewContainer = viewContainer;
+    },
+    wasMoved$0: function() {
+    },
+    wasRemoved$0: function() {
+      this._embedded_view$_data.viewContainer = null;
+    }
+  };
+  E._EmbeddedViewData.prototype = {
+    set$changeDetectorState: function(state) {
+      if (this._embedded_view$_changeDetectorState !== state) {
+        this._embedded_view$_changeDetectorState = state;
+        this._embedded_view$_shouldSkipChangeDetection = state === 2;
+      }
+    },
+    destroy$0: function() {
+      var t1, $length, i;
+      this._embedded_view$_destroyed = true;
+      t1 = this._embedded_view$_onDestroyCallbacks;
+      if (t1 != null)
+        for ($length = t1.length, i = 0; i < $length; ++i)
+          this._embedded_view$_onDestroyCallbacks[i].call$0();
+    }
+  };
+  G.HostView.prototype = {
+    get$flatRootNodes: function() {
+      return this._data.viewFragment.flattenDomNodes$0();
+    },
+    get$lastRootNode: function() {
+      return this._data.viewFragment.findLastDomNode$0();
+    },
+    initRootNode$1: function(nodeOrViewContainer) {
+      this._data.viewFragment = D.ViewFragment_ViewFragment(H.setRuntimeTypeInfo([nodeOrViewContainer], [P.Object]));
+    },
+    destroyInternalState$0: function() {
+      var t1 = this._data;
+      if (!t1._destroyed) {
+        t1.destroy$0();
+        this.componentView.destroyInternalState$0();
+      }
+    },
+    detectChanges$0: function() {
+      var t1 = this._data;
+      if (t1._host_view$_shouldSkipChangeDetection)
+        return;
+      if (M.ChangeDetectionHost_checkForCrashes())
+        this.detectCrash$0();
+      else
+        this.componentView.detectChanges$0();
+      t1.set$changeDetectorState(1);
+    },
+    detectChangesInternal$0: function() {
+      this.componentView.detectChanges$0();
+    },
+    disableChangeDetection$0: function() {
+      this._data.set$changeDetectorState(2);
+    },
+    markForCheck$0: function() {
+      var t1 = this._data.viewContainer;
+      t1 = t1 == null ? null : t1.parentView;
+      if (t1 != null)
+        t1.markForCheck$0();
+    },
+    injectFromAncestry$2: function(token, notFoundValue) {
+      return this._host_view$_injector.$get$2(0, token, notFoundValue);
+    },
+    addRootNodesAfter$1: function(node) {
+      T.insertNodesAsSibling(this.get$flatRootNodes(), node);
+      $.domRootRendererIsDirty = true;
+    },
+    removeRootNodes$0: function() {
+      var nodes = this.get$flatRootNodes();
+      T.removeNodes(nodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+    },
+    wasInserted$1: function(viewContainer) {
+      this._data.viewContainer = viewContainer;
+    },
+    wasRemoved$0: function() {
+      this._data.viewContainer = null;
+    }
+  };
+  G._HostViewData.prototype = {
+    set$changeDetectorState: function(state) {
+      if (this._host_view$_changeDetectorState !== state) {
+        this._host_view$_changeDetectorState = state;
+        this._host_view$_shouldSkipChangeDetection = state === 2;
+      }
+    },
+    destroy$0: function() {
+      var t1, $length, i;
+      this._destroyed = true;
+      t1 = this._onDestroyCallbacks;
+      if (t1 != null)
+        for ($length = t1.length, i = 0; i < $length; ++i)
+          this._onDestroyCallbacks[i].call$0();
+    }
+  };
   A.RenderView.prototype = {
+    injectFromAncestry$2: function(token, notFoundValue) {
+      return this.get$parentView().inject$3(token, this.get$parentIndex(), notFoundValue);
+    },
     eventHandler0$1$1: function(handler, $E) {
       return new A.RenderView_eventHandler0_closure(this, handler, $E);
     }
@@ -10896,180 +11009,181 @@
       T.setAttribute(_el_0, "hasProviders", "");
       T.setAttribute(T.appendDiv(doc, _el_0), _s11_, "");
       T.setAttribute(T.appendDiv(doc, parentRenderNode), _s11_, "");
-      t1 = new N.ViewUsesDefaultChangeDetectionAndInputs0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 3));
+      t1 = new N.ViewUsesDefaultChangeDetectionAndInputs0(E._ComponentViewData__ComponentViewData(_this, 3, 3));
       styles = $.ViewUsesDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewUsesDefaultChangeDetectionAndInputs0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("uses-default-change-detection-and-inputs");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_3 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.UsesDefaultChangeDetectionAndInputs(self.defeatDart2JsOptimizations("title"), self.defeatDart2JsOptimizations("name"));
       _this._UsesDefaultChangeDetectionAndInputs_3_5 = t1;
-      _this._compView_3.create0$1(t1);
-      t1 = new N.ViewUsesOnPushChangeDetectionAndInputs0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 4));
+      _this._compView_3.create$1(0, t1);
+      t1 = new N.ViewUsesOnPushChangeDetectionAndInputs0(E._ComponentViewData__ComponentViewData(_this, 4, 3));
       styles = $.ViewUsesOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewUsesOnPushChangeDetectionAndInputs0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("uses-on-push-change-detection-and-inputs");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_4 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.UsesOnPushChangeDetectionAndInputs(self.defeatDart2JsOptimizations("title"), self.defeatDart2JsOptimizations("name"));
       _this._UsesOnPushChangeDetectionAndInputs_4_5 = t1;
-      _this._compView_4.create0$1(t1);
-      t1 = new N.ViewInlinedNgIf0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 5));
+      _this._compView_4.create$1(0, t1);
+      t1 = new N.ViewInlinedNgIf0(E._ComponentViewData__ComponentViewData(_this, 5, 3));
       styles = $.ViewInlinedNgIf0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewInlinedNgIf0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("inlined-ng-if");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_5 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.InlinedNgIf(self.defeatDart2JsOptimizations("showDiv"));
       _this._InlinedNgIf_5_5 = t1;
-      _this._compView_5.create0$1(t1);
-      t1 = new N.ViewEmbeddedNgIf0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 6));
+      _this._compView_5.create$1(0, t1);
+      t1 = new N.ViewEmbeddedNgIf0(E._ComponentViewData__ComponentViewData(_this, 6, 3));
       styles = $.ViewEmbeddedNgIf0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewEmbeddedNgIf0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("embedded-ng-if");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_6 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.EmbeddedNgIf(self.defeatDart2JsOptimizations("showNull"));
       _this._EmbeddedNgIf_6_5 = t1;
-      _this._compView_6.create0$1(t1);
-      t1 = new N.ViewEmbeddedNgFor0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 7));
+      _this._compView_6.create$1(0, t1);
+      t1 = new N.ViewEmbeddedNgFor0(E._ComponentViewData__ComponentViewData(_this, 7, 3));
       styles = $.ViewEmbeddedNgFor0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewEmbeddedNgFor0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("embedded-ng-for");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_7 = t1;
       parentRenderNode.appendChild(t2);
       t1 = P.String;
       t2 = [t1];
       t3 = new O.EmbeddedNgFor(H.setRuntimeTypeInfo(["foo", "bar", "baz"], t2));
       _this._EmbeddedNgFor_7_5 = t3;
-      _this._compView_7.create0$1(t3);
-      t3 = new N.ViewInjectsFromArbitraryParent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 8));
+      _this._compView_7.create$1(0, t3);
+      t3 = new N.ViewInjectsFromArbitraryParent0(E._ComponentViewData__ComponentViewData(_this, 8, 3));
       styles = $.ViewInjectsFromArbitraryParent0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewInjectsFromArbitraryParent0__componentStyles = styles;
       }
       t3.componentStyles = styles;
       t4 = doc.createElement("injects-from-arbitrary-parent");
-      t3.rootEl = t4;
+      t3.rootElement = t4;
       _this._compView_8 = t3;
       parentRenderNode.appendChild(t4);
-      t3 = _this.parentView;
-      t4 = _this.viewData.parentIndex;
-      t5 = t3.injectorGet$2(C.MultiToken_usPresidents, t4);
-      t6 = t3.injectorGet$2(C.MultiToken_whiteHouse, t4);
-      t4 = t3.injectorGet$2(C.Type_InjectableService_AmT, t4);
-      t3 = new O.InjectsFromArbitraryParent();
-      t4.printWashingtonDc$2(t6, t5);
+      t3 = _this._component_view$_data;
+      t4 = t3.parentView;
+      t3 = t3.parentIndex;
+      t5 = t4.injectorGet$2(C.MultiToken_usPresidents, t3);
+      t6 = t4.injectorGet$2(C.MultiToken_whiteHouse, t3);
+      t3 = t4.injectorGet$2(C.Type_InjectableService_AmT, t3);
+      t4 = new O.InjectsFromArbitraryParent();
+      t3.printWashingtonDc$2(t6, t5);
+      t3 = t4;
       _this._InjectsFromArbitraryParent_8_5 = t3;
-      _this._compView_8.create0$1(t3);
-      t3 = new N.ViewComponentConditionalFeatures0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 9));
+      _this._compView_8.create$1(0, t3);
+      t3 = new N.ViewComponentConditionalFeatures0(E._ComponentViewData__ComponentViewData(_this, 9, 3));
       styles = $.ViewComponentConditionalFeatures0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewComponentConditionalFeatures0__componentStyles = styles;
       }
       t3.componentStyles = styles;
       t4 = doc.createElement("component-conditional-features");
-      t3.rootEl = t4;
+      t3.rootElement = t4;
       _this._compView_9 = t3;
       parentRenderNode.appendChild(t4);
       t3 = new O.ComponentConditionalFeatures();
       _this._ComponentConditionalFeatures_9_5 = t3;
-      _this._compView_9.create0$1(t3);
-      t3 = new N.ViewUsesDomBindings0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 10));
+      _this._compView_9.create$1(0, t3);
+      t3 = new N.ViewUsesDomBindings0(E._ComponentViewData__ComponentViewData(_this, 10, 3));
       styles = $.ViewUsesDomBindings0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewUsesDomBindings0__componentStyles = styles;
       }
       t3.componentStyles = styles;
       t4 = doc.createElement("uses-dom-bindings");
-      t3.rootEl = t4;
+      t3.rootElement = t4;
       _this._compView_10 = t3;
       parentRenderNode.appendChild(t4);
       t3 = new O.UsesDomBindings();
       _this._UsesDomBindings_10_5 = t3;
-      _this._compView_10.create0$1(t3);
-      t3 = new N.ViewUsesNgDirectives0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 11));
+      _this._compView_10.create$1(0, t3);
+      t3 = new N.ViewUsesNgDirectives0(E._ComponentViewData__ComponentViewData(_this, 11, 3));
       styles = $.ViewUsesNgDirectives0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewUsesNgDirectives0__componentStyles = styles;
       }
       t3.componentStyles = styles;
       t4 = doc.createElement("uses-ng-directives");
-      t3.rootEl = t4;
+      t3.rootElement = t4;
       _this._compView_11 = t3;
       parentRenderNode.appendChild(t4);
       t1 = new O.UsesNgDirectives(P.LinkedHashMap_LinkedHashMap$_literal(["foo", true, "bar", false], t1, P.bool), H.setRuntimeTypeInfo(["foo", "bar"], t2), P.LinkedHashMap_LinkedHashMap$_literal(["height", "100px", "width", "50px"], t1, t1));
       _this._UsesNgDirectives_11_5 = t1;
-      _this._compView_11.create0$1(t1);
-      t1 = new N.ViewHasNestedProviderLookups0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 12));
+      _this._compView_11.create$1(0, t1);
+      t1 = new N.ViewHasNestedProviderLookups0(E._ComponentViewData__ComponentViewData(_this, 12, 3));
       styles = $.ViewHasNestedProviderLookups0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewHasNestedProviderLookups0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("has-nested-provider-lookups");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_12 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.HasNestedProviderLookups();
       _this._HasNestedProviderLookups_12_5 = t1;
-      _this._compView_12.create0$1(t1);
-      t1 = new N.ViewHasHostListeners0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 13));
+      _this._compView_12.create$1(0, t1);
+      t1 = new N.ViewHasHostListeners0(E._ComponentViewData__ComponentViewData(_this, 13, 3));
       styles = $.ViewHasHostListeners0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewHasHostListeners0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("has-host-listeners");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_13 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.HasHostListeners();
       _this._HasHostListeners_13_5 = t1;
-      _this._compView_13.create0$1(t1);
-      _this.init0$0();
+      _this._compView_13.create$1(0, t1);
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       var t1, _this = this;
@@ -11100,7 +11214,7 @@
     },
     detectChangesInternal$0: function() {
       var t1, t2, t3, _this = this;
-      if (_this.viewData._cdState === 0) {
+      if (_this._component_view$_data._changeDetectorState === 0) {
         t1 = _this._ComponentConditionalFeatures_9_5;
         t1.useFeatureA = true;
         t1.useFeatureB = false;
@@ -11110,13 +11224,13 @@
       t2 = self.defeatDart2JsOptimizations("title");
       t3 = t1._expr_2;
       if (t3 != t2) {
-        T.updateAttribute(t1.rootEl, "title", t2);
+        T.updateAttribute(t1.rootElement, "title", t2);
         t1._expr_2 = t2;
       }
       t2 = self.defeatDart2JsOptimizations("fancy");
       t3 = t1._expr_3;
       if (t3 != t2) {
-        T.updateClassBindingNonHtml(t1.rootEl, "fancy", t2);
+        T.updateClassBindingNonHtml(t1.rootElement, "fancy", t2);
         t1._expr_3 = t2;
       }
       _this._compView_3.detectChanges$0();
@@ -11146,58 +11260,31 @@
       _this._compView_13.destroyInternalState$0();
     }
   };
-  N._ViewRootComponentHost0.prototype = {
-    build$0: function() {
-      var t2, t3, _this = this,
-        t1 = new N.ViewRootComponent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
-        styles = $.ViewRootComponent0__componentStyles;
-      if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
-        styles._appendStyles$0();
-        $.ViewRootComponent0__componentStyles = styles;
-      }
-      t1.componentStyles = styles;
-      t2 = document.createElement("root-component");
-      t1.rootEl = t2;
-      _this._compView_0 = t1;
-      t3 = new O.RootComponent();
-      _this._RootComponent_0_5 = t3;
-      t1.create$2(0, t3, _this.viewData.projectedNodes);
-      _this.init1$1(t2);
-      return new D.ComponentRef(_this, t2);
-    },
-    detectChangesInternal$0: function() {
-      this._compView_0.detectChanges$0();
-    },
-    destroyInternal$0: function() {
-      this._compView_0.destroyInternalState$0();
-    }
-  };
+  N._ViewRootComponentHost0.prototype = {};
   N.ViewUsesDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewDefaultChangeDetectionAndInputs0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = document.createElement("default-change-detection-and-inputs");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_0 = t1;
       parentRenderNode.appendChild(t2);
       t1 = new O.DefaultChangeDetectionAndInputs();
       _this._DefaultChangeDetectionAndInputs_0_5 = t1;
-      _this._compView_0.create0$1(t1);
-      _this.init0$0();
+      _this._compView_0.create$1(0, t1);
     },
     detectChangesInternal$0: function() {
       var t1, currVal_1, _this = this,
         _ctx = _this.ctx;
-      if (_this.viewData._cdState === 0) {
+      if (_this._component_view$_data._changeDetectorState === 0) {
         t1 = _ctx.title;
         if (t1 != null)
           _this._DefaultChangeDetectionAndInputs_0_5.title = t1;
@@ -11214,17 +11301,15 @@
   };
   N.ViewDefaultChangeDetectionAndInputs0.prototype = {
     build$0: function() {
-      var _this = this,
-        parentRenderNode = _this.initViewRoot$0();
+      var parentRenderNode = this.initViewRoot$0();
       T.appendText(parentRenderNode, "Hello ");
-      parentRenderNode.appendChild(_this._textBinding_1.element);
+      parentRenderNode.appendChild(this._textBinding_1.element);
       T.appendText(parentRenderNode, " ");
-      parentRenderNode.appendChild(_this._textBinding_3.element);
+      parentRenderNode.appendChild(this._textBinding_3.element);
       T.appendText(parentRenderNode, " ");
       T.appendText(parentRenderNode, "3");
       T.appendText(parentRenderNode, " ");
       T.appendText(parentRenderNode, "");
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var _ctx = this.ctx,
@@ -11242,29 +11327,29 @@
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), _this, S.AppViewData_AppViewData(1, C.ViewType_1, 0)),
+        t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), E._ComponentViewData__ComponentViewData(_this, 0, 1)),
         styles = $.ViewOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewOnPushChangeDetectionAndInputs0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = document.createElement("on-push-change-detection-and-inputs");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_0 = t1;
       parentRenderNode.appendChild(t2);
       t1 = _this._compView_0;
-      t2 = _this.parentView.injectorGet$2(C.Type_Stream_qXA, _this.viewData.parentIndex);
+      t2 = _this._component_view$_data;
+      t2 = t2.parentView.injectorGet$2(C.Type_Stream_qXA, t2.parentIndex);
       t1 = new O.OnPushChangeDetectionAndInputs(t1, t2);
       _this._OnPushChangeDetectionAndInputs_0_5 = t1;
-      _this._compView_0.create0$1(t1);
-      _this.init0$0();
+      _this._compView_0.create$1(0, t1);
     },
     detectChangesInternal$0: function() {
       var t1, changed, currVal_1, _this = this,
         _ctx = _this.ctx,
-        firstCheck = _this.viewData._cdState === 0;
+        firstCheck = _this._component_view$_data._changeDetectorState === 0;
       if (firstCheck) {
         t1 = _ctx.title;
         if (t1 != null) {
@@ -11281,7 +11366,7 @@
         changed = true;
       }
       if (changed)
-        _this._compView_0.viewData.set$cdMode(1);
+        _this._compView_0._component_view$_data.set$changeDetectionMode(1);
       if (firstCheck)
         _this._OnPushChangeDetectionAndInputs_0_5.ngOnInit$0();
       _this._compView_0.detectChanges$0();
@@ -11293,13 +11378,11 @@
   };
   N.ViewOnPushChangeDetectionAndInputs0.prototype = {
     build$0: function() {
-      var _this = this,
-        parentRenderNode = _this.initViewRoot$0();
+      var parentRenderNode = this.initViewRoot$0();
       T.appendText(parentRenderNode, "Hello ");
-      parentRenderNode.appendChild(_this._textBinding_1.element);
+      parentRenderNode.appendChild(this._textBinding_1.element);
       T.appendText(parentRenderNode, " ");
-      parentRenderNode.appendChild(_this._textBinding_3.element);
-      _this.init0$0();
+      parentRenderNode.appendChild(this._textBinding_3.element);
     },
     detectChangesInternal$0: function() {
       var _ctx = this.ctx,
@@ -11318,7 +11401,6 @@
       var _this = this,
         t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_InlinedNgIf1$closure()), t1);
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var _ctx = this.ctx;
@@ -11333,7 +11415,7 @@
     build$0: function() {
       var _el_0 = document.createElement("div");
       T.appendText(_el_0, "Hello World");
-      this.init1$1(_el_0);
+      this.initRootNode$1(_el_0);
     }
   };
   N.ViewEmbeddedNgIf0.prototype = {
@@ -11341,7 +11423,6 @@
       var _this = this,
         t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure()), t1);
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var _ctx = this.ctx;
@@ -11355,21 +11436,21 @@
   N._ViewEmbeddedNgIf1.prototype = {
     build$0: function() {
       var t2, t3, _this = this,
-        t1 = new N.ViewNullComponent0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        t1 = new N.ViewNullComponent0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewNullComponent0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewNullComponent0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = document.createElement("null");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_0 = t1;
       t3 = new O.NullComponent();
       _this._NullComponent_0_5 = t3;
-      t1.create0$1(t3);
-      _this.init1$1(t2);
+      t1.create$1(0, t3);
+      _this.initRootNode$1(t2);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();
@@ -11384,12 +11465,11 @@
         parentRenderNode = _this.initViewRoot$0(),
         t1 = _this._appEl_1 = new V.ViewContainer(1, _this, T.appendAnchor(T.appendElement(document, parentRenderNode, "ul")));
       _this._NgFor_1_9 = new R.NgFor(t1, new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure()));
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var t1, t2, changes, _this = this,
         _ctx = _this.ctx;
-      if (_this.viewData._cdState === 0) {
+      if (_this._component_view$_data._changeDetectorState === 0) {
         t1 = _this._NgFor_1_9;
         t1._ngForOf = _ctx.items;
         if (t1._ng_for$_differ == null && true) {
@@ -11414,10 +11494,10 @@
     build$0: function() {
       var _el_0 = document.createElement("li");
       _el_0.appendChild(this._textBinding_1.element);
-      this.init1$1(_el_0);
+      this.initRootNode$1(_el_0);
     },
     detectChangesInternal$0: function() {
-      var local_item = this.viewData.locals.$index(0, "$implicit"),
+      var local_item = this._embedded_view$_data.locals.$index(0, "$implicit"),
         t1 = local_item == null ? "" : local_item;
       this._textBinding_1.updateText$1(t1);
     }
@@ -11425,13 +11505,11 @@
   N.ViewNullComponent0.prototype = {
     build$0: function() {
       this.initViewRoot$0();
-      this.init0$0();
     }
   };
   N.ViewInjectsFromArbitraryParent0.prototype = {
     build$0: function() {
       this.initViewRoot$0();
-      this.init0$0();
     }
   };
   N.ViewComponentConditionalFeatures0.prototype = {
@@ -11442,7 +11520,6 @@
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures1$closure()), t1);
       t1 = _this._appEl_1 = new V.ViewContainer(1, _this, T.appendAnchor(parentRenderNode));
       _this._NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure()), t1);
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var t1, _this = this,
@@ -11462,21 +11539,21 @@
   N._ViewComponentConditionalFeatures1.prototype = {
     build$0: function() {
       var t2, t3, _this = this,
-        t1 = new N.ViewFeatureA0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        t1 = new N.ViewFeatureA0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewFeatureA0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewFeatureA0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = document.createElement("feature-a");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_0 = t1;
       t3 = new O.FeatureA();
       _this._FeatureA_0_5 = t3;
-      t1.create0$1(t3);
-      _this.init1$1(t2);
+      t1.create$1(0, t3);
+      _this.initRootNode$1(t2);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();
@@ -11488,21 +11565,21 @@
   N._ViewComponentConditionalFeatures2.prototype = {
     build$0: function() {
       var t2, t3, _this = this,
-        t1 = new N.ViewFeatureB0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 0)),
+        t1 = new N.ViewFeatureB0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewFeatureB0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewFeatureB0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = document.createElement("feature-b");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_0 = t1;
       t3 = new O.FeatureB();
       _this._FeatureB_0_5 = t3;
-      t1.create0$1(t3);
-      _this.init1$1(t2);
+      t1.create$1(0, t3);
+      _this.initRootNode$1(t2);
     },
     detectChangesInternal$0: function() {
       this._compView_0.detectChanges$0();
@@ -11514,20 +11591,17 @@
   N.ViewFeatureA0.prototype = {
     build$0: function() {
       T.appendText(this.initViewRoot$0(), "I am Feature A");
-      this.init0$0();
     }
   };
   N.ViewFeatureB0.prototype = {
     build$0: function() {
       T.appendText(this.initViewRoot$0(), "I am Feature B");
-      this.init0$0();
     }
   };
   N.ViewUsesDomBindings0.prototype = {
     build$0: function() {
       var parentRenderNode = this.initViewRoot$0();
       this._el_0 = T.appendElement(document, parentRenderNode, "button");
-      this.init0$0();
     },
     detectChangesInternal$0: function() {
       var t1, t2, _this = this;
@@ -11564,7 +11638,6 @@
       _el_6 = T.appendDiv(doc, parentRenderNode);
       _this._NgStyle_6_5 = new X.NgStyle(_el_6);
       T.appendText(_el_6, "Styles");
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var currVal_1, currVal_3, _this = this,
@@ -11618,7 +11691,6 @@
       var _this = this,
         t1 = _this._appEl_0 = new V.ViewContainer(0, _this, T.appendAnchor(_this.initViewRoot$0()));
       _this._NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_HasNestedProviderLookups1$closure()), t1);
-      _this.init0$0();
     },
     detectChangesInternal$0: function() {
       var _ctx = this.ctx,
@@ -11637,12 +11709,11 @@
         _el_0 = document.createElement("div"),
         t1 = _this._appEl_1 = new V.ViewContainer(1, _this, T.appendAnchor(_el_0));
       _this._NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_HasNestedProviderLookups2$closure()), t1);
-      _this.init1$1(_el_0);
+      _this.initRootNode$1(_el_0);
     },
     detectChangesInternal$0: function() {
-      var _ctx = this.ctx,
-        t1 = this._NgIf_1_9;
-      _ctx.toString;
+      var t1 = this._NgIf_1_9;
+      this._embedded_view$_data.ctx.toString;
       t1.set$ngIf(true);
       this._appEl_1.detectChangesInNestedViews$0();
     },
@@ -11655,25 +11726,23 @@
       var t2, _this = this,
         doc = document,
         _el_0 = doc.createElement("div"),
-        t1 = new N.ViewInjectsManyThingsDynamically0(_this, S.AppViewData_AppViewData(3, C.ViewType_1, 1)),
+        t1 = new N.ViewInjectsManyThingsDynamically0(E._ComponentViewData__ComponentViewData(_this, 1, 3)),
         styles = $.ViewInjectsManyThingsDynamically0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty0, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
         styles._appendStyles$0();
         $.ViewInjectsManyThingsDynamically0__componentStyles = styles;
       }
       t1.componentStyles = styles;
       t2 = doc.createElement("injects-many-things-dynamically");
-      t1.rootEl = t2;
+      t1.rootElement = t2;
       _this._compView_1 = t1;
       _el_0.appendChild(t2);
-      t1 = _this.parentView;
-      t2 = t1.parentView;
-      t1 = t1.viewData.parentIndex;
-      t1 = O.InjectsManyThingsDynamically$(t2.injectorGet$2(C.Type_DepA_qtW, t1), t2.injectorGet$2(C.Type_DepB_sty, t1), t2.injectorGet$2(C.Type_DepC_ifL, t1), t2.injectorGetOptional$2(C.Type_DepD_3bx, t1), t2.injectorGetOptional$2(C.Type_DepE_ckK, t1), t2.injectorGetOptional$2(C.Type_DepF_7O8, t1));
+      t1 = _this._embedded_view$_data.parentView;
+      t1 = O.InjectsManyThingsDynamically$(t1.get$parentView().injectorGet$2(C.Type_DepA_qtW, t1.get$parentIndex()), t1.get$parentView().injectorGet$2(C.Type_DepB_sty, t1.get$parentIndex()), t1.get$parentView().injectorGet$2(C.Type_DepC_ifL, t1.get$parentIndex()), t1.get$parentView().injectorGetOptional$2(C.Type_DepD_3bx, t1.get$parentIndex()), t1.get$parentView().injectorGetOptional$2(C.Type_DepE_ckK, t1.get$parentIndex()), t1.get$parentView().injectorGetOptional$2(C.Type_DepF_7O8, t1.get$parentIndex()));
       _this._InjectsManyThingsDynamically_1_5 = t1;
-      _this._compView_1.create0$1(t1);
-      _this.init1$1(_el_0);
+      _this._compView_1.create$1(0, t1);
+      _this.initRootNode$1(_el_0);
     },
     detectChangesInternal$0: function() {
       this._compView_1.detectChanges$0();
@@ -11685,17 +11754,15 @@
   N.ViewInjectsManyThingsDynamically0.prototype = {
     build$0: function() {
       this.initViewRoot$0();
-      this.init0$0();
     }
   };
   N.ViewHasHostListeners0.prototype = {
     build$0: function() {
-      var t1, t2, _this = this,
+      var _this = this,
         _ctx = _this.ctx,
-        parentRenderNode = _this.initViewRoot$0();
-      _this.init0$0();
-      t1 = W.Event;
-      t2 = J.getInterceptor$x(parentRenderNode);
+        parentRenderNode = _this.initViewRoot$0(),
+        t1 = W.Event,
+        t2 = J.getInterceptor$x(parentRenderNode);
       t2.addEventListener$2(parentRenderNode, "click", _this.eventHandler0$1$1(_ctx.get$onClick(_ctx), t1));
       t2.addEventListener$2(parentRenderNode, "focus", _this.eventHandler0$1$1(_ctx.get$onFocus(_ctx), t1));
     }
@@ -11781,7 +11848,7 @@
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 8, 0);
     _instance_0_i(_ = O.HasHostListeners.prototype, "get$onClick", "onClick$0", 1);
     _instance_0_i(_, "get$onFocus", "onFocus$0", 1);
-    _static_0(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 32);
+    _static_1(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 32);
     _static_2(N, "dart2js_golden_template__viewFactory_InlinedNgIf1$closure", "viewFactory_InlinedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 0);
@@ -11795,7 +11862,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, S.AppViewData, A.View, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, R.ViewType, B.DynamicView, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, L.EventManager, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF, O.HasHostListeners]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, A.View, E._ComponentViewData, B.DynamicView, E._EmbeddedViewData, G._HostViewData, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, L.EventManager, N.TextBinding, Z.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF, O.HasHostListeners]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -11902,11 +11969,13 @@
     _inheritMany(E.HierarchicalInjector, [Y._Injector$minimalApp, G._LazyInjector, G.ElementInjector, R.EmptyInjector, A.MapInjector]);
     _inherit(Y.ApplicationRef, M.ChangeDetectionHost);
     _inherit(S.MultiToken, S.OpaqueToken);
-    _inherit(A.RenderView, A.View);
-    _inherit(S.AppView, A.RenderView);
     _inherit(O._UnscopedComponentStyles, O.ComponentStyles);
     _inherit(V.ViewContainer, M.ComponentLoader);
-    _inheritMany(S.AppView, [N.ViewRootComponent0, N._ViewRootComponentHost0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N._ViewInlinedNgIf1, N.ViewEmbeddedNgIf0, N._ViewEmbeddedNgIf1, N.ViewEmbeddedNgFor0, N._ViewEmbeddedNgFor1, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N.ViewInjectsManyThingsDynamically0, N.ViewHasHostListeners0]);
+    _inheritMany(A.View, [A.RenderView, G.HostView]);
+    _inheritMany(A.RenderView, [E.ComponentView, E.EmbeddedView]);
+    _inheritMany(E.ComponentView, [N.ViewRootComponent0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N.ViewEmbeddedNgFor0, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N.ViewInjectsManyThingsDynamically0, N.ViewHasHostListeners0]);
+    _inherit(N._ViewRootComponentHost0, G.HostView);
+    _inheritMany(E.EmbeddedView, [N._ViewInlinedNgIf1, N._ViewEmbeddedNgIf1, N._ViewEmbeddedNgFor1, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);
@@ -12102,10 +12171,11 @@
     C.ComponentFactory_2Vk = new D.ComponentFactory("root-component", N.dart2js_golden_template__viewFactory_RootComponentHost0$closure());
     C.Duration_0 = new P.Duration(0);
     C.EmptyInjector_null = new R.EmptyInjector(null);
-    C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), [P.Object]);
-    C.List_empty0 = makeConstList([]);
-    C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), [P.Symbol0]);
-    C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty1, [P.Symbol0, null]);
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), [[P.List, P.Object]]);
+    C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), [P.Object]);
+    C.List_empty = makeConstList([]);
+    C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), [P.Symbol0]);
+    C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty2, [P.Symbol0, null]);
     C.MultiToken_usPresidents = new S.MultiToken("usPresidents", [P.String]);
     C.MultiToken_whiteHouse = new S.MultiToken("whiteHouse", [P.String]);
     C.OpaqueToken_APP_ID = new S.OpaqueToken("APP_ID", [P.String]);
@@ -12132,9 +12202,6 @@
     C.Type_Stream_qXA = H.createRuntimeType([P.Stream,,]);
     C.Type_TestabilityRegistry_IMm = H.createRuntimeType(D.TestabilityRegistry);
     C.Type_Testability_h8g = H.createRuntimeType(D.Testability);
-    C.ViewType_0 = new R.ViewType("ViewType.host");
-    C.ViewType_1 = new R.ViewType("ViewType.component");
-    C.ViewType_2 = new R.ViewType("ViewType.embedded");
     C._ZoneFunction_3bB = new P._ZoneFunction(C.C__RootZone, P.async___rootCreatePeriodicTimer$closure());
     C._ZoneFunction_7G2 = new P._ZoneFunction(C.C__RootZone, P.async___rootRegisterBinaryCallback$closure());
     C._ZoneFunction_Eeh = new P._ZoneFunction(C.C__RootZone, P.async___rootRegisterUnaryCallback$closure());
@@ -12150,7 +12217,7 @@
     C._ZoneFunction__RootZone__rootScheduleMicrotask = new P._ZoneFunction(C.C__RootZone, P.async___rootScheduleMicrotask$closure());
     C._ZoneSpecification_ALf = new P._ZoneSpecification(null, null, null, null, null, null, null, null, null, null, null, null, null);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [S.AppView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [S.AppView, O.RootComponent]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [E.EmbeddedView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [G.HostView, O.RootComponent], args: [M.Injector]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
   (function staticFields() {
     $.Closure_functionCounter = 0;
     $.BoundClosure_selfFieldNameCache = null;

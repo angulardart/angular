@@ -6,8 +6,9 @@ export 'dynamic_expressions.dart';
 import 'dart:html' as _html;
 import 'package:angular/angular.dart' as _ng;
 import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
-import 'package:angular/src/core/linker/app_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
 import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 // Required for specifically referencing user code.
 import 'dynamic_expressions.dart';
@@ -18,44 +19,44 @@ import 'package:angular/angular.dart';
 // For @Component class Comp1.
 external List<dynamic> get styles$Comp1;
 external _ng.ComponentFactory<Comp1> get Comp1NgFactory;
-class ViewComp10 extends _ng.AppView<Comp1> {
-  external ViewComp10(_ng.RenderView parentView, int parentIndex);
+class ViewComp10 extends _ng.ComponentView<Comp1> {
+  external ViewComp10(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp1String.
 external List<dynamic> get styles$Comp1String;
 external _ng.ComponentFactory<Comp1String> get Comp1StringNgFactory;
-class ViewComp1String0 extends _ng.AppView<Comp1String> {
-  external ViewComp1String0(_ng.RenderView parentView, int parentIndex);
+class ViewComp1String0 extends _ng.ComponentView<Comp1String> {
+  external ViewComp1String0(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp2.
 external List<dynamic> get styles$Comp2;
 external _ng.ComponentFactory<Comp2> get Comp2NgFactory;
-class ViewComp20 extends _ng.AppView<Comp2> {
-  external ViewComp20(_ng.RenderView parentView, int parentIndex);
+class ViewComp20 extends _ng.ComponentView<Comp2> {
+  external ViewComp20(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp3.
 external List<dynamic> get styles$Comp3;
 external _ng.ComponentFactory<Comp3> get Comp3NgFactory;
-class ViewComp30 extends _ng.AppView<Comp3> {
-  external ViewComp30(_ng.RenderView parentView, int parentIndex);
+class ViewComp30 extends _ng.ComponentView<Comp3> {
+  external ViewComp30(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp4.
 external List<dynamic> get styles$Comp4;
 external _ng.ComponentFactory<Comp4> get Comp4NgFactory;
-class ViewComp40 extends _ng.AppView<Comp4> {
-  external ViewComp40(_ng.RenderView parentView, int parentIndex);
+class ViewComp40 extends _ng.ComponentView<Comp4> {
+  external ViewComp40(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp6.
 external List<dynamic> get styles$Comp6;
 external _ng.ComponentFactory<Comp6> get Comp6NgFactory;
-class ViewComp60 extends _ng.AppView<Comp6> {
-  external ViewComp60(_ng.RenderView parentView, int parentIndex);
+class ViewComp60 extends _ng.ComponentView<Comp6> {
+  external ViewComp60(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp7.
 external List<dynamic> get styles$Comp7;
 external _ng.ComponentFactory<Comp7> get Comp7NgFactory;
-class ViewComp70 extends _ng.AppView<Comp7> {
-  external ViewComp70(_ng.RenderView parentView, int parentIndex);
+class ViewComp70 extends _ng.ComponentView<Comp7> {
+  external ViewComp70(_ng.View parentView, int parentIndex);
 }
 
 external void initReflector();

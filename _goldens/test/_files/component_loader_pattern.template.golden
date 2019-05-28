@@ -8,33 +8,33 @@ import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'example_of_file_that_is_not_generated_yet.template.dart' as _ref0;
 import 'package:angular/angular.template.dart' as _ref1;
 import 'package:angular/di.template.dart' as _ref2;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'component_loader_pattern.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
-import 'package:angular/src/core/linker/views/render_view.dart' as import3;
-import 'package:angular/src/core/linker/view_type.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import6;
-import 'package:angular/src/runtime.dart' as import7;
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/di/injector/injector.dart' as import9;
 
 final List<dynamic> styles$TestComponent = const [];
 
 // View for component TestComponent in asset:_goldens/test/_files/component_loader_pattern.dart (changeDetection: Default)
-class ViewTestComponent0 extends AppView<import1.TestComponent> {
+class ViewTestComponent0 extends import0.ComponentView<import1.TestComponent> {
   static import2.ComponentStyles _componentStyles;
-  ViewTestComponent0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewTestComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import6.document.createElement('test');
+    this.rootElement = import5.document.createElement('test');
   }
   static String get _debugComponentUrl {
-    return (import7.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/component_loader_pattern.dart' : null);
   }
 
   @override
-  ComponentRef<import1.TestComponent> build() {
-    final import6.HtmlElement parentRenderNode = this.initViewRoot();
-    this.init0();
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
   @override
@@ -55,39 +55,20 @@ ComponentFactory<import1.TestComponent> get TestComponentNgFactory {
 final List<dynamic> styles$TestComponentHost = const [];
 
 // Host for component TestComponent in asset:_goldens/test/_files/component_loader_pattern.dart (changeDetection: Default)
-class _ViewTestComponentHost0 extends AppView<import1.TestComponent> {
-  ViewTestComponent0 _compView_0;
-  import1.TestComponent _TestComponent_0_5;
-  _ViewTestComponentHost0(import3.RenderView parentView, int parentIndex) : super(import4.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewTestComponentHost0 extends import8.HostView<import1.TestComponent> {
+  _ViewTestComponentHost0(import9.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.TestComponent> build() {
+  void build() {
     // Child component TestComponent in asset:_goldens/test/_files/component_loader_pattern.dart (changeDetection: Default)
-    this._compView_0 = ViewTestComponent0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._TestComponent_0_5 = import1.TestComponent();
-    this._compView_0.create(this._TestComponent_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._TestComponent_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewTestComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.TestComponent();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.TestComponent> viewFactory_TestComponentHost0() {
-  return _ViewTestComponentHost0(null, null);
+import8.HostView<import1.TestComponent> viewFactory_TestComponentHost0(import9.Injector injector) {
+  return _ViewTestComponentHost0(injector);
 }
 
 var _visited = false;

@@ -6,25 +6,26 @@ import 'pipes.dart';
 export 'pipes.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
-import 'package:angular/src/core/linker/app_view.dart';
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'pipes.dart' as import1;
 import 'package:angular/src/runtime/text_binding.dart' as import2;
 import 'dart:core';
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
-import 'package:angular/src/core/linker/views/render_view.dart' as import5;
-import 'package:angular/src/core/linker/view_type.dart' as import6;
+import 'package:angular/src/core/linker/views/view.dart' as import5;
 import 'package:angular/src/core/change_detection/change_detection.dart';
-import 'dart:html' as import8;
-import 'package:angular/src/runtime.dart' as import9;
+import 'dart:html' as import7;
+import 'package:angular/src/runtime.dart' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/runtime/proxies.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
-import 'package:angular/src/runtime/proxies.dart' as import12;
-import 'package:angular/src/runtime/interpolate.dart' as import13;
+import 'package:angular/src/core/linker/views/host_view.dart' as import13;
+import 'package:angular/src/di/injector/injector.dart' as import14;
 
 final List<dynamic> styles$Comp = const [];
 
 // View for component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
-class ViewComp0 extends AppView<import1.Comp> {
+class ViewComp0 extends import0.ComponentView<import1.Comp> {
   final import2.TextBinding _textBinding_0 = import2.TextBinding();
   final import2.TextBinding _textBinding_2 = import2.TextBinding();
   final import2.TextBinding _textBinding_4 = import2.TextBinding();
@@ -37,41 +38,40 @@ class ViewComp0 extends AppView<import1.Comp> {
   import1.TypesPipe _pipe_types_3;
   String Function(String, int, dynamic, import1.C, void Function(String)) _pipe_types_3_0;
   static import4.ComponentStyles _componentStyles;
-  ViewComp0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.component, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+  ViewComp0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootEl = import8.document.createElement('comp');
+    this.rootElement = import7.document.createElement('comp');
   }
   static String get _debugComponentUrl {
-    return (import9.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null);
+    return (import8.isDevMode ? 'asset:_goldens/test/_files/pipes.dart' : null);
   }
 
   @override
-  ComponentRef<import1.Comp> build() {
-    final import8.HtmlElement parentRenderNode = this.initViewRoot();
+  void build() {
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
     parentRenderNode.append(this._textBinding_0.element);
-    final _text_1 = import11.appendText(parentRenderNode, ' ');
+    final _text_1 = import9.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_2.element);
-    final _text_3 = import11.appendText(parentRenderNode, ' ');
+    final _text_3 = import9.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_4.element);
-    final _text_5 = import11.appendText(parentRenderNode, ' ');
+    final _text_5 = import9.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_6.element);
     this._pipe_pure_0 = import1.PurePipe();
-    this._pipe_pure_0_0 = import12.pureProxy1(this._pipe_pure_0.transform);
+    this._pipe_pure_0_0 = import10.pureProxy1(this._pipe_pure_0.transform);
     this._pipe_dirty_1 = import1.DirtyPipe();
     this._pipe_lifecycle_2 = import1.LifecyclePipe();
-    this._pipe_lifecycle_2_0 = import12.pureProxy1(this._pipe_lifecycle_2.transform);
+    this._pipe_lifecycle_2_0 = import10.pureProxy1(this._pipe_lifecycle_2.transform);
     this._pipe_types_3 = import1.TypesPipe();
-    this._pipe_types_3_0 = import12.pureProxy5(this._pipe_types_3.transform);
-    this.init0();
+    this._pipe_types_3_0 = import10.pureProxy5(this._pipe_types_3.transform);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import13.interpolate0(this._pipe_pure_0_0('foo')));
-    this._textBinding_2.updateText(import13.interpolate0(this._pipe_dirty_1.transform('bar')));
-    this._textBinding_4.updateText(import13.interpolate0(this._pipe_lifecycle_2_0('lifecycle')));
-    this._textBinding_6.updateText(import13.interpolate0(this._pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
+    this._textBinding_0.updateText(import11.interpolate0(this._pipe_pure_0_0('foo')));
+    this._textBinding_2.updateText(import11.interpolate0(this._pipe_dirty_1.transform('bar')));
+    this._textBinding_4.updateText(import11.interpolate0(this._pipe_lifecycle_2_0('lifecycle')));
+    this._textBinding_6.updateText(import11.interpolate0(this._pipe_types_3_0('types', 1, 2, _ctx.c, _ctx.d)));
   }
 
   @override
@@ -97,39 +97,20 @@ ComponentFactory<import1.Comp> get CompNgFactory {
 final List<dynamic> styles$CompHost = const [];
 
 // Host for component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
-class _ViewCompHost0 extends AppView<import1.Comp> {
-  ViewComp0 _compView_0;
-  import1.Comp _Comp_0_5;
-  _ViewCompHost0(import5.RenderView parentView, int parentIndex) : super(import6.ViewType.host, parentView, parentIndex, ChangeDetectionStrategy.CheckAlways);
+class _ViewCompHost0 extends import13.HostView<import1.Comp> {
+  _ViewCompHost0(import14.Injector injector) : super(injector);
   @override
-  AppView<void> get hostedComponentView {
-    return this._compView_0;
-  }
-
-  @override
-  ComponentRef<import1.Comp> build() {
+  void build() {
     // Child component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
-    this._compView_0 = ViewComp0(this, 0);
-    final _el_0 = this._compView_0.rootEl;
-    this._Comp_0_5 = import1.Comp();
-    this._compView_0.create(this._Comp_0_5, this.projectedNodes);
-    this.init1(_el_0);
-    return ComponentRef(this, _el_0, this._Comp_0_5);
-  }
-
-  @override
-  void detectChangesInternal() {
-    this._compView_0.detectChanges();
-  }
-
-  @override
-  void destroyInternal() {
-    this._compView_0.destroyInternalState();
+    this.componentView = ViewComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.Comp();
+    this.initRootNode(_el_0);
   }
 }
 
-AppView<import1.Comp> viewFactory_CompHost0() {
-  return _ViewCompHost0(null, null);
+import13.HostView<import1.Comp> viewFactory_CompHost0(import14.Injector injector) {
+  return _ViewCompHost0(injector);
 }
 
 var _visited = false;
