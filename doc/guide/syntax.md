@@ -419,16 +419,67 @@ It is also possible to use the `selector` property to project by CSS matching:
 ```
 
 > WARNING: The full set of CSS selection is not available.
-
-<!-- TODO: Expand what is available. -->
+>
+> See the [directive](#directives) section for supported selectors.
 
 ## Two-Way Bindings
 
-TBD
+Generalized "two-way" bindings are not available in AngularDart, as they break
+assumptions around unidirectional data flow and violate the requirement that the
+data model is "stable" (unchanged) during change detection - AngularDart will
+throw a runtime error in debug mode if your data changes.
+
+To simulate the ergonomics of a two-way binding, you can both listen to an
+[event](#events) and set a [property](#properties) using a single syntax, also
+known as "Banana in a Box" (a fun saying based on what the syntax looks like).
+For example:
+
+```html
+<profile-editor [(zipCode)]="zipCode"></profile-editor>
+```
+
+... is identical to writing:
+
+```html
+<profile-editor [zipCode]="zipCode"
+                (zipCodeChanged)="zipCode = $event">
+</profile-editor>
+```
+
+To support this syntax, you need an `@Input()` and `@Output()`, i.e.
+
+```dart
+class ProfileEditorComponent {
+  final _zipCodeChanged = StreamController<String>.broadcast();
+
+  @Input()
+  String zipCode;
+
+  @Output()
+  Stream<String> get zipCodeChanged => _zipCodeChanged.stream;
+
+  // Imagine this is called from the template when the <input> changes.
+  @visibleForTemplate
+  void userChangedZipCode(String zipCode) {
+    this.zipCode = zipCode;
+    _zipCodeChanged.add(zipCode);
+  }
+}
+```
 
 ## Text Interpolation
 
-TBD
+Within the HTML, you can use `{{expression}}` to add text bindings to the DOM:
+
+```html
+<button>Hello {{name}}</button>
+```
+
+Interpolations are also supported in attribute values:
+
+```html
+<img alt="A photo by {{photo.author}}" />
+```
 
 ## Expressions
 
