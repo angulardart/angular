@@ -281,6 +281,7 @@ class _ComponentVisitor
       originType: type,
       metadataType: CompileDirectiveMetadataType.FunctionalDirective,
       selector: selector,
+      analyzedClass: null,
       inputs: const {},
       inputTypes: const {},
       outputs: const {},

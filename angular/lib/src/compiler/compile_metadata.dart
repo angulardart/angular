@@ -597,6 +597,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 CompileDirectiveMetadata createHostComponentMeta(
     CompileTypeMetadata componentType,
     String componentSelector,
+    AnalyzedClass analyzedClass,
     bool preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
@@ -614,6 +615,7 @@ CompileDirectiveMetadata createHostComponentMeta(
         styleUrls: const [],
         ngContentSelectors: const []),
     changeDetection: ChangeDetectionStrategy.Default,
+    analyzedClass: analyzedClass,
     inputs: const {},
     inputTypes: const {},
     outputs: const {},
