@@ -336,6 +336,8 @@ When you see a `*`, it is syntactic sugar for an [embedded template](#embedded-t
 </template>
 ```
 
+### Ng-Container
+
 You can also use `<ng-container>` to host a structural directive, without
 introducing a superfluous DOM node (identical to the above):
 
@@ -480,6 +482,123 @@ Interpolations are also supported in attribute values:
 ```html
 <img alt="A photo by {{photo.author}}" />
 ```
+
+## Internationalization
+
+Using [`package:intl`][pkg_intl], AngularDart supports template-based
+internationalization ("i18n"). A document fragment can be marked for i18n by
+applying an `@i18n` annotation to its parent element:
+
+```html
+<div @i18n="A description of the message for translators.">
+  The message to be translated, potentially containing <b>nested</b> markup.
+</div>
+```
+
+[pkg_intl]: https://pub.dev/packages/intl
+
+> NOTE: You can use [`<ng-container>`](#ng-container) to host an `@i18n`
+> annotation without introducing a new element just to internationalize a
+> message:
+>
+> ```html
+> <ng-container @i18n="A description of the message for translators.">
+>   A message to be translated, potentially containing <b>nested</b> markup.
+> </ng-container>
+> ```
+
+An [attribute](#attributes) or [property](#properties) can be marked for i18n by
+applying an `@i18n:<name>` annotation to the same host element. For example,
+internationalizing the `placeholder` attribute for an `<input>`:
+
+```html
+<input
+    type="text"
+    placeholder="The message to be translated."
+    @i18n:placeholder="A description of the message for translators.">
+```
+
+### `@i18n.meaning`
+
+Sets the `meaning` parameter of [`Intl.message(...)`][pkg_intl_message], which
+is used to disambiguate identical messages with different meanings:
+
+[pkg_intl_message]: https://pub.dev/documentation/intl/latest/intl/Intl/message.html
+
+```html
+<div
+    @i18n="A description of the message for translators."
+    @i18n.meaning="A machine used to lift things.">
+  Crane
+</div>
+
+<div
+    @i18n="A description of the message for translators."
+    @i18n.meaning="A large, long-legged and long-necked bird.">
+  Crane
+</div>
+```
+
+> WARNING: A different description is not sufficient to differentiate two
+> identical messages. Without unique meanings, two identical messages will be
+> treated as the same, likely resulting in an incorrect translation for one.
+
+### `@i18n.skip`
+
+The presence of this annotation sets the `skip` parameter of
+`Intl.message(...)`[pkg_intl_message] to `true`, which is used to skip messages
+during extraction. THis is useful to avoid translating a message that has not
+been finalized yet:
+
+```html
+<img
+    src="placeholder.png"
+    alt="This message is a draft that shouldn't be translated yet."
+    @i18n:alt="A description of the message for translators."
+    @i18n.skip:alt>
+```
+
+### Limitations
+
+Use `Intl.message` imperatively in your Dart code instead for these cases.
+
+#### Static DOM Only
+
+AngularDart's `@i18n`-annotated messages must consist of static text and HTML
+only. [Interpolations](#text-interpolation), [references](#references),
+directives, and bindings of any kind are not yet supported in an i18n context
+(note this limitation _excludes_ the `@i18n`-annotated element itself).
+
+#### No support for `Intl.gender` or `Intl.plural()`
+
+There’s no dedicated template syntax for handling these methods yet.
+
+#### Locale must be initialized before component
+
+The locale of an `@i18n`-annotated message is finalized once it’s rendered.
+Thus it’s important to `await` locale initialization before creating your
+internationalized components:
+
+```dart
+import 'dart:async';
+
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/number_symbols_data_local.dart';
+
+import 'messages_all.dart';
+
+void main() async {
+  await Future.wait([
+    initializeDateFormatting('de_DE'),
+    initializeMessages('de_DE'),
+  ]);
+
+  // Now run your AngularDart application.
+}
+```
+
+> NOTE: Changing the locale of an `@i18n`-annotated message will require a full
+> application reload.
 
 ## Expressions
 
