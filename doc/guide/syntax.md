@@ -6,7 +6,7 @@ go/angular-dart/guide/syntax
 
 <!--*
 # Document freshness: For more information, see go/fresh-source.
-freshness: { owner: 'matanl' reviewed: '2019-05-20' }
+freshness: { owner: 'matanl' reviewed: '2019-05-29' }
 *-->
 
 AngularDart templates are written in a _variant_ of HTML. Most HTML is valid
