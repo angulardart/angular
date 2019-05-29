@@ -4270,7 +4270,10 @@ class ComponentA {
       expect(export.prefix, equals(''));
       expect(export.range.offset, equals(code.indexOf('foo,')));
       expect(export.range.length, equals('foo'.length));
-      expect(export.element.toString(), equals('get foo → String'));
+      final element = export.element as PropertyAccessorElement;
+      expect(element.isGetter, isTrue);
+      expect(element.name, equals('foo'));
+      expect(element.returnType.toString(), equals('String'));
     }
     {
       final export = component.exports[1];
@@ -4278,7 +4281,10 @@ class ComponentA {
       expect(export.prefix, equals(''));
       expect(export.range.offset, equals(code.indexOf('bar,')));
       expect(export.range.length, equals('bar'.length));
-      expect(export.element.toString(), equals('bar() → int'));
+      final element = export.element as FunctionElement;
+      expect(element.name, equals('bar'));
+      expect(element.parameters, isEmpty);
+      expect(element.returnType.toString(), equals('int'));
     }
     {
       final export = component.exports[2];
@@ -4568,7 +4574,10 @@ class ComponentA {
       expect(export.prefix, equals('prefixed'));
       expect(export.range.offset, equals(code.indexOf('prefixed.foo')));
       expect(export.range.length, equals('prefixed.foo'.length));
-      expect(export.element.toString(), equals('get foo → double'));
+      final element = export.element as PropertyAccessorElement;
+      expect(element.isGetter, isTrue);
+      expect(element.name, equals('foo'));
+      expect(element.returnType.toString(), equals('double'));
     }
     {
       final export = component.exports[1];
@@ -4576,7 +4585,10 @@ class ComponentA {
       expect(export.prefix, equals(''));
       expect(export.range.offset, equals(code.indexOf('foo]')));
       expect(export.range.length, equals('foo'.length));
-      expect(export.element.toString(), equals('get foo → int'));
+      final element = export.element as PropertyAccessorElement;
+      expect(element.isGetter, isTrue);
+      expect(element.name, equals('foo'));
+      expect(element.returnType.toString(), equals('int'));
     }
 
     // validate
