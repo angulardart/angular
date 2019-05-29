@@ -10,17 +10,20 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   List<dynamic> result = [];
   TemplateHumanizer(this.includeSourceSpan);
 
+  @override
   void visitNgContainer(NgContainerAst ast, _) {
     var res = <dynamic>[NgContainerAst];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitNgContent(NgContentAst ast, _) {
     var res = <dynamic>[NgContentAst];
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var res = <dynamic>[EmbeddedTemplateAst];
     result.add(_appendContext(ast, res));
@@ -32,6 +35,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitElement(ElementAst ast, _) {
     var res = [ElementAst, ast.name];
     result.add(_appendContext(ast, res));
@@ -43,11 +47,13 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitReference(ReferenceAst ast, _) {
     var res = [ReferenceAst, ast.name, ast.value];
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitVariable(VariableAst ast, _) {
     var res = [VariableAst, ast.name, ast.value];
     if (ast.type != null) {
@@ -56,6 +62,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitEvent(BoundEventAst ast, _) {
     var res = [
       BoundEventAst,
@@ -66,6 +73,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitElementProperty(BoundElementPropertyAst ast, _) {
     var res = [BoundElementPropertyAst, ast.type, ast.name]
       ..addAll(_humanizeBoundValue(ast.value))
@@ -73,6 +81,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitAttr(AttrAst ast, _) {
     var res = [AttrAst, ast.name];
     var attributeValue = ast.value;
@@ -93,16 +102,19 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitBoundText(BoundTextAst ast, _) {
     var res = [BoundTextAst, expressionUnparser.unparse(ast.value)];
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitText(TextAst ast, _) {
     var res = [TextAst, ast.value];
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitDirective(DirectiveAst ast, _) {
     var res = [DirectiveAst, ast.directive];
     result.add(_appendContext(ast, res));
@@ -110,14 +122,17 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     templateVisitAll(this, ast.hostEvents);
   }
 
+  @override
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
     final res = [BoundDirectivePropertyAst, ast.directiveName]
       ..addAll(_humanizeBoundValue(ast.value));
     result.add(_appendContext(ast, res));
   }
 
+  @override
   void visitProvider(ProviderAst ast, _) {}
 
+  @override
   void visitI18nText(I18nTextAst ast, _) {
     var res = [I18nTextAst, ast.value.text, ast.value.metadata.description];
     if (ast.value.metadata.meaning != null) {
@@ -167,34 +182,44 @@ class TemplateContentProjectionHumanizer
     implements TemplateAstVisitor<void, Null> {
   List<dynamic> result = [];
 
+  @override
   void visitNgContainer(NgContainerAst ast, _) {
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitNgContent(NgContentAst ast, _) {
     result.add(["ng-content", ast.ngContentIndex]);
   }
 
+  @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     result.add(["template", ast.ngContentIndex]);
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitElement(ElementAst ast, _) {
     result.add([ast.name, ast.ngContentIndex]);
     templateVisitAll(this, ast.children);
   }
 
+  @override
   void visitReference(ReferenceAst ast, _) {}
 
+  @override
   void visitVariable(VariableAst ast, _) {}
 
+  @override
   void visitEvent(BoundEventAst ast, _) {}
 
+  @override
   void visitElementProperty(BoundElementPropertyAst ast, _) {}
 
+  @override
   void visitAttr(AttrAst ast, _) {}
 
+  @override
   void visitBoundText(BoundTextAst ast, _) {
     result.add([
       '''#text(${expressionUnparser.unparse(ast.value)})''',
@@ -202,16 +227,21 @@ class TemplateContentProjectionHumanizer
     ]);
   }
 
+  @override
   void visitText(TextAst ast, _) {
     result.add(['#text(${ast.value})', ast.ngContentIndex]);
   }
 
+  @override
   void visitDirective(DirectiveAst ast, _) {}
 
+  @override
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
 
+  @override
   void visitProvider(ProviderAst ast, _) {}
 
+  @override
   void visitI18nText(I18nTextAst ast, _) {}
 }
 
