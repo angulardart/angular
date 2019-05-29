@@ -120,8 +120,12 @@ class AngularCompiler {
   }
 
   ir.View _hostView(CompileDirectiveMetadata component) {
-    var hostMeta = createHostComponentMeta(component.type, component.selector,
-        component.template.preserveWhitespace);
+    var hostMeta = createHostComponentMeta(
+      component.type,
+      component.selector,
+      component.analyzedClass,
+      component.template.preserveWhitespace,
+    );
     var parsedTemplate = _templateParser.parse(
       hostMeta,
       hostMeta.template.template,
