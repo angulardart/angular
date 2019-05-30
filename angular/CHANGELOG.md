@@ -1,3 +1,7 @@
+## 5.3.1
+
+*   Maintence release to bump the constraints on `build_config`.
+
 ## 5.3.0
 
 ### New features
