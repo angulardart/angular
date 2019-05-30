@@ -523,7 +523,7 @@ class CustomMultiToken extends MultiToken<String> {
 class SupportsCustomMultiToken {
   final List<String> values;
 
-  SupportsCustomMultiToken(@Inject(const CustomMultiToken()) this.values);
+  SupportsCustomMultiToken(@Inject(CustomMultiToken()) this.values);
 }
 
 const fooOpaqueToken = OpaqueToken<String>('fooToken');

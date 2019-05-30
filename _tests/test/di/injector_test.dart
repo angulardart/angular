@@ -805,8 +805,8 @@ const topLevelProvider = ValueProvider(TestConstNamedArgs2, topLevelValue);
 ])
 final InjectorFactory valueProviderExamples = ng.valueProviderExamples$Injector;
 
-const duplicateToken = const OpaqueToken<String>('duplicateToken');
-const duplicateMulti = const MultiToken<String>('duplicateMulti');
+const duplicateToken = OpaqueToken<String>('duplicateToken');
+const duplicateMulti = MultiToken<String>('duplicateMulti');
 
 @GenerateInjector([
   ValueProvider.forToken(duplicateToken, 'A'),
