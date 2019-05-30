@@ -51,12 +51,11 @@ class AstExceptionHandler extends RecoveringExceptionHandler {
 
   void _reportExceptions() {
     final sourceFile = SourceFile.fromString(template, url: sourceUrl);
-    final errorString = exceptions
-        .map((exception) => sourceFile
-            .span(exception.offset, exception.offset + exception.length)
-            .message(exception.errorCode.message))
-        .join('\n');
-    throw BuildError('Template parse errors:\n$errorString');
+    final buildErrors = exceptions.map((exception) => BuildError.forSourceSpan(
+        sourceFile.span(exception.offset, exception.offset + exception.length),
+        exception.errorCode.message));
+
+    throw BuildError.multiple(buildErrors, 'Template parse errors');
   }
 }
 
@@ -74,6 +73,6 @@ void _handleParseErrors(List<ParseError> parseErrors) {
     logWarning('Template parse warnings:\n${warnings.join('\n')}');
   }
   if (errors.isNotEmpty) {
-    throw BuildError('Template parse errors:\n${errors.join('\n')}');
+    throw BuildError.multiple(errors, 'Template parse errors');
   }
 }
