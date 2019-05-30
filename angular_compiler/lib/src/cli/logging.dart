@@ -117,13 +117,23 @@ class BuildError extends Error {
   BuildError([this.message, Trace trace])
       : stackTrace = trace ?? Trace.current();
 
+  factory BuildError.multiple(Iterable<BuildError> errors, String message) {
+    return BuildError(
+        '$message:\n${errors.map((be) => be.toString()).join('\n')}');
+  }
+
+  factory BuildError.forSourceSpan(SourceSpan sourceSpan, String message,
+      [Trace trace]) {
+    return BuildError(sourceSpan.message(message), trace);
+  }
+
   factory BuildError.forAnnotation(
     ElementAnnotation annotation,
     String message, [
     Trace trace,
   ]) {
-    final sourceSpan = _getSourceSpanFrom(annotation);
-    return BuildError(sourceSpan.message(message), trace);
+    return BuildError.forSourceSpan(
+        _getSourceSpanFrom(annotation), message, trace);
   }
 
   factory BuildError.forElement(
@@ -151,7 +161,7 @@ class BuildError extends Error {
       element.nameOffset,
       element.nameLength + element.nameOffset,
     );
-    return BuildError(sourceSpan.message(message), trace);
+    return BuildError.forSourceSpan(sourceSpan, message, trace);
   }
 
   // TODO: Remove internal API once ElementAnnotation has source information.
