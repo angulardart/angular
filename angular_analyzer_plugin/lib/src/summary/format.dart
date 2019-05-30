@@ -164,7 +164,7 @@ class _LinkedDartSummaryImpl extends Object
   @override
   List<idl.SummarizedAnalysisError> get errors {
     _errors ??= const fb.ListReader<idl.SummarizedAnalysisError>(
-            const _SummarizedAnalysisErrorReader())
+            _SummarizedAnalysisErrorReader())
         .vTableGet(_bc, _bcOffset, 0, const <idl.SummarizedAnalysisError>[]);
     return _errors;
   }
@@ -178,17 +178,15 @@ class _LinkedDartSummaryImpl extends Object
 
   @override
   List<String> get referencedDartFiles {
-    _referencedDartFiles ??=
-        const fb.ListReader<String>(const fb.StringReader())
-            .vTableGet(_bc, _bcOffset, 2, const <String>[]);
+    _referencedDartFiles ??= const fb.ListReader<String>(fb.StringReader())
+        .vTableGet(_bc, _bcOffset, 2, const <String>[]);
     return _referencedDartFiles;
   }
 
   @override
   List<String> get referencedHtmlFiles {
-    _referencedHtmlFiles ??=
-        const fb.ListReader<String>(const fb.StringReader())
-            .vTableGet(_bc, _bcOffset, 1, const <String>[]);
+    _referencedHtmlFiles ??= const fb.ListReader<String>(fb.StringReader())
+        .vTableGet(_bc, _bcOffset, 1, const <String>[]);
     return _referencedHtmlFiles;
   }
 }
@@ -332,7 +330,7 @@ class _LinkedHtmlSummaryImpl extends Object
   @override
   List<idl.SummarizedAnalysisError> get errors {
     _errors ??= const fb.ListReader<idl.SummarizedAnalysisError>(
-            const _SummarizedAnalysisErrorReader())
+            _SummarizedAnalysisErrorReader())
         .vTableGet(_bc, _bcOffset, 0, const <idl.SummarizedAnalysisError>[]);
     return _errors;
   }
@@ -341,7 +339,7 @@ class _LinkedHtmlSummaryImpl extends Object
   List<idl.SummarizedAnalysisErrorFromPath> get errorsFromPath {
     _errorsFromPath ??=
         const fb.ListReader<idl.SummarizedAnalysisErrorFromPath>(
-                const _SummarizedAnalysisErrorFromPathReader())
+                _SummarizedAnalysisErrorFromPathReader())
             .vTableGet(_bc, _bcOffset, 1,
                 const <idl.SummarizedAnalysisErrorFromPath>[]);
     return _errorsFromPath;
@@ -450,7 +448,7 @@ class _PackageBundleImpl extends Object
   @override
   List<idl.UnlinkedDartSummary> get unlinkedDartSummary {
     _unlinkedDartSummary ??= const fb.ListReader<idl.UnlinkedDartSummary>(
-            const _UnlinkedDartSummaryReader())
+            _UnlinkedDartSummaryReader())
         .vTableGet(_bc, _bcOffset, 0, const <idl.UnlinkedDartSummary>[]);
     return _unlinkedDartSummary;
   }
@@ -1137,7 +1135,7 @@ class _SummarizedClassAnnotationsImpl extends Object
   List<idl.SummarizedContentChildField> get contentChildFields {
     _contentChildFields ??=
         const fb.ListReader<idl.SummarizedContentChildField>(
-                const _SummarizedContentChildFieldReader())
+                _SummarizedContentChildFieldReader())
             .vTableGet(
                 _bc, _bcOffset, 3, const <idl.SummarizedContentChildField>[]);
     return _contentChildFields;
@@ -1147,7 +1145,7 @@ class _SummarizedClassAnnotationsImpl extends Object
   List<idl.SummarizedContentChildField> get contentChildrenFields {
     _contentChildrenFields ??=
         const fb.ListReader<idl.SummarizedContentChildField>(
-                const _SummarizedContentChildFieldReader())
+                _SummarizedContentChildFieldReader())
             .vTableGet(
                 _bc, _bcOffset, 4, const <idl.SummarizedContentChildField>[]);
     return _contentChildrenFields;
@@ -1155,17 +1153,17 @@ class _SummarizedClassAnnotationsImpl extends Object
 
   @override
   List<idl.SummarizedBindable> get inputs {
-    _inputs ??= const fb.ListReader<idl.SummarizedBindable>(
-            const _SummarizedBindableReader())
-        .vTableGet(_bc, _bcOffset, 1, const <idl.SummarizedBindable>[]);
+    _inputs ??=
+        const fb.ListReader<idl.SummarizedBindable>(_SummarizedBindableReader())
+            .vTableGet(_bc, _bcOffset, 1, const <idl.SummarizedBindable>[]);
     return _inputs;
   }
 
   @override
   List<idl.SummarizedBindable> get outputs {
-    _outputs ??= const fb.ListReader<idl.SummarizedBindable>(
-            const _SummarizedBindableReader())
-        .vTableGet(_bc, _bcOffset, 2, const <idl.SummarizedBindable>[]);
+    _outputs ??=
+        const fb.ListReader<idl.SummarizedBindable>(_SummarizedBindableReader())
+            .vTableGet(_bc, _bcOffset, 2, const <idl.SummarizedBindable>[]);
     return _outputs;
   }
 }
@@ -1836,7 +1834,7 @@ class _SummarizedDirectiveImpl extends Object
   @override
   List<idl.SummarizedExportedIdentifier> get exports {
     _exports ??= const fb.ListReader<idl.SummarizedExportedIdentifier>(
-            const _SummarizedExportedIdentifierReader())
+            _SummarizedExportedIdentifierReader())
         .vTableGet(
             _bc, _bcOffset, 15, const <idl.SummarizedExportedIdentifier>[]);
     return _exports;
@@ -1857,16 +1855,16 @@ class _SummarizedDirectiveImpl extends Object
   @override
   List<idl.SummarizedNgContent> get ngContents {
     _ngContents ??= const fb.ListReader<idl.SummarizedNgContent>(
-            const _SummarizedNgContentReader())
+            _SummarizedNgContentReader())
         .vTableGet(_bc, _bcOffset, 12, const <idl.SummarizedNgContent>[]);
     return _ngContents;
   }
 
   @override
   List<idl.SummarizedPipesUse> get pipesUse {
-    _pipesUse ??= const fb.ListReader<idl.SummarizedPipesUse>(
-            const _SummarizedPipesUseReader())
-        .vTableGet(_bc, _bcOffset, 16, const <idl.SummarizedPipesUse>[]);
+    _pipesUse ??=
+        const fb.ListReader<idl.SummarizedPipesUse>(_SummarizedPipesUseReader())
+            .vTableGet(_bc, _bcOffset, 16, const <idl.SummarizedPipesUse>[]);
     return _pipesUse;
   }
 
@@ -1885,7 +1883,7 @@ class _SummarizedDirectiveImpl extends Object
   @override
   List<idl.SummarizedDirectiveUse> get subdirectives {
     _subdirectives ??= const fb.ListReader<idl.SummarizedDirectiveUse>(
-            const _SummarizedDirectiveUseReader())
+            _SummarizedDirectiveUseReader())
         .vTableGet(_bc, _bcOffset, 14, const <idl.SummarizedDirectiveUse>[]);
     return _subdirectives;
   }
@@ -2939,7 +2937,7 @@ class _UnlinkedDartSummaryImpl extends Object
   @override
   List<idl.SummarizedClassAnnotations> get annotatedClasses {
     _annotatedClasses ??= const fb.ListReader<idl.SummarizedClassAnnotations>(
-            const _SummarizedClassAnnotationsReader())
+            _SummarizedClassAnnotationsReader())
         .vTableGet(_bc, _bcOffset, 1, const <idl.SummarizedClassAnnotations>[]);
     return _annotatedClasses;
   }
@@ -2947,7 +2945,7 @@ class _UnlinkedDartSummaryImpl extends Object
   @override
   List<idl.SummarizedDirective> get directiveSummaries {
     _directiveSummaries ??= const fb.ListReader<idl.SummarizedDirective>(
-            const _SummarizedDirectiveReader())
+            _SummarizedDirectiveReader())
         .vTableGet(_bc, _bcOffset, 0, const <idl.SummarizedDirective>[]);
     return _directiveSummaries;
   }
@@ -2955,7 +2953,7 @@ class _UnlinkedDartSummaryImpl extends Object
   @override
   List<idl.SummarizedAnalysisError> get errors {
     _errors ??= const fb.ListReader<idl.SummarizedAnalysisError>(
-            const _SummarizedAnalysisErrorReader())
+            _SummarizedAnalysisErrorReader())
         .vTableGet(_bc, _bcOffset, 2, const <idl.SummarizedAnalysisError>[]);
     return _errors;
   }
@@ -2963,7 +2961,7 @@ class _UnlinkedDartSummaryImpl extends Object
   @override
   List<idl.SummarizedPipe> get pipeSummaries {
     _pipeSummaries ??=
-        const fb.ListReader<idl.SummarizedPipe>(const _SummarizedPipeReader())
+        const fb.ListReader<idl.SummarizedPipe>(_SummarizedPipeReader())
             .vTableGet(_bc, _bcOffset, 3, const <idl.SummarizedPipe>[]);
     return _pipeSummaries;
   }
@@ -3082,7 +3080,7 @@ class _UnlinkedHtmlSummaryImpl extends Object
   @override
   List<idl.SummarizedNgContent> get ngContents {
     _ngContents ??= const fb.ListReader<idl.SummarizedNgContent>(
-            const _SummarizedNgContentReader())
+            _SummarizedNgContentReader())
         .vTableGet(_bc, _bcOffset, 0, const <idl.SummarizedNgContent>[]);
     return _ngContents;
   }

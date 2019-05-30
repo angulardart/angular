@@ -36,7 +36,7 @@ class MockPlatformLocation extends Mock implements BrowserPlatformLocation {}
 
 @GenerateInjector([
   routerProvidersHash,
-  const FactoryProvider(PlatformLocation, platformLocationFactory),
+  FactoryProvider(PlatformLocation, platformLocationFactory),
 ])
 InjectorFactory injectorFactory = ng.injectorFactory$Injector;
 
