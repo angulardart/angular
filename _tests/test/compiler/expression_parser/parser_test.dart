@@ -3,8 +3,7 @@ import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import 'package:angular/src/compiler/expression_parser/ast.dart'
-    show BindingPipe, AST;
+import 'package:angular/src/compiler/expression_parser/ast.dart' show AST;
 import 'package:angular/src/compiler/expression_parser/lexer.dart' show Lexer;
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 
@@ -26,17 +25,8 @@ void main() {
     return createParser().parseBinding(text, location, []);
   }
 
-  dynamic parseTemplateBindings(text, [location]) {
-    return createParser()
-        .parseTemplateBindings(text, location, []).templateBindings;
-  }
-
   dynamic parseInterpolation(text, [location]) {
     return createParser().parseInterpolation(text, location, []);
-  }
-
-  dynamic parseSimpleBinding(text, [location]) {
-    return createParser().parseSimpleBinding(text, location, []);
   }
 
   String unparse(AST ast) {
@@ -323,131 +313,6 @@ void main() {
             '''"http://www.google.com"''', '''"http://www.google.com"''');
       });
     });
-    group("parseTemplateBindings", () {
-      List keys(List<dynamic> templateBindings) {
-        return templateBindings.map((binding) => binding.key).toList();
-      }
-
-      List keyValues(List<dynamic> templateBindings) {
-        return templateBindings.map((binding) {
-          if (binding.keyIsVar) {
-            return "let " +
-                binding.key +
-                (binding.name == null ? "" : "=" + binding.name);
-          } else {
-            return binding.key +
-                (binding.expression == null ? "" : '=${binding.expression}');
-          }
-        }).toList();
-      }
-
-      List exprSources(List<dynamic> templateBindings) {
-        return templateBindings
-            .map((binding) =>
-                binding.expression != null ? binding.expression.source : null)
-            .toList();
-      }
-
-      test("should parse an empty string", () {
-        expect(parseTemplateBindings(""), []);
-      });
-      test("should parse a string without a value", () {
-        expect(keys(parseTemplateBindings("a")), ["a"]);
-      });
-      test(
-          "should only allow identifier, string, or keyword including dashes as keys",
-          () {
-        var bindings = parseTemplateBindings("a:'b'");
-        expect(keys(bindings), ["a"]);
-        bindings = parseTemplateBindings("'a':'b'");
-        expect(keys(bindings), ["a"]);
-        bindings = parseTemplateBindings("\"a\":'b'");
-        expect(keys(bindings), ["a"]);
-        bindings = parseTemplateBindings("a-b:'c'");
-        expect(keys(bindings), ["a-b"]);
-        expect(() {
-          parseTemplateBindings("(:0");
-        }, throwsWith("expected identifier, keyword, or string"));
-        expect(() {
-          parseTemplateBindings("1234:0");
-        }, throwsWith("expected identifier, keyword, or string"));
-      });
-      test("should detect expressions as value", () {
-        var bindings = parseTemplateBindings("a:b");
-        expect(exprSources(bindings), ["b"]);
-        bindings = parseTemplateBindings("a:1+1");
-        expect(exprSources(bindings), ["1+1"]);
-      });
-      test("should detect names as value", () {
-        var bindings = parseTemplateBindings("a:let b");
-        expect(keyValues(bindings), ["a", "let b"]);
-      });
-      test("should allow space and colon as separators", () {
-        var bindings = parseTemplateBindings("a:b");
-        expect(keys(bindings), ["a"]);
-        expect(exprSources(bindings), ["b"]);
-        bindings = parseTemplateBindings("a b");
-        expect(keys(bindings), ["a"]);
-        expect(exprSources(bindings), ["b"]);
-      });
-      test("should allow multiple pairs", () {
-        var bindings = parseTemplateBindings("a 1 b 2");
-        expect(keys(bindings), ["a", "aB"]);
-        expect(exprSources(bindings), ["1 ", "2"]);
-      });
-      test("should store the sources in the result", () {
-        var bindings = parseTemplateBindings("a 1,b 2");
-        expect(bindings[0].expression.source, "1");
-        expect(bindings[1].expression.source, "2");
-      });
-      test("should store the passed-in location", () {
-        var bindings = parseTemplateBindings("a 1,b 2", "location");
-        expect(bindings[0].expression.location, "location");
-      });
-      test("should support var notation with a deprecation warning", () {
-        var bindings = createParser().parseTemplateBindings("var i", null, []);
-        expect(keyValues(bindings.templateBindings), ["let i"]);
-        expect(bindings.warnings, [
-          "\"var\" inside of expressions is deprecated. Use \"let\" instead!"
-        ]);
-      });
-      test("should support # notation with a deprecation warning", () {
-        var bindings = createParser().parseTemplateBindings("#i", null, []);
-        expect(keyValues(bindings.templateBindings), ["let i"]);
-        expect(bindings.warnings, [
-          "\"#\" inside of expressions is deprecated. Use \"let\" instead!"
-        ]);
-      });
-      test("should support let notation", () {
-        var bindings = parseTemplateBindings("let i");
-        expect(keyValues(bindings), ["let i"]);
-        bindings = parseTemplateBindings("let i");
-        expect(keyValues(bindings), ["let i"]);
-        bindings = parseTemplateBindings("let a; let b");
-        expect(keyValues(bindings), ["let a", "let b"]);
-        bindings = parseTemplateBindings("let a; let b;");
-        expect(keyValues(bindings), ["let a", "let b"]);
-        bindings = parseTemplateBindings("let i-a = k-a");
-        expect(keyValues(bindings), ["let i-a=k-a"]);
-        bindings = parseTemplateBindings("keyword let item; let i = k");
-        expect(keyValues(bindings), ["keyword", "let item", "let i=k"]);
-        bindings = parseTemplateBindings("keyword: let item; let i = k");
-        expect(keyValues(bindings), ["keyword", "let item", "let i=k"]);
-        bindings = parseTemplateBindings(
-            "directive: let item in expr; let a = b", "location");
-        expect(keyValues(bindings), [
-          "directive",
-          "let item",
-          "directiveIn=expr in location",
-          "let a=b"
-        ]);
-      });
-      test("should parse pipes", () {
-        var bindings = parseTemplateBindings("key value|pipe");
-        var ast = bindings[0].expression.ast;
-        expect(ast, TypeMatcher<BindingPipe>());
-      });
-    });
     group("parseInterpolation", () {
       test("should return null if no interpolation", () {
         expect(parseInterpolation("nothing"), isNull);
@@ -503,29 +368,6 @@ void main() {
         test("should retain // in nested, unterminated strings", () {
           checkInterpolation('''{{ "a\'b`" //comment}}''', '''{{ "a\'b`" }}''');
         });
-      });
-    });
-    group("parseSimpleBinding", () {
-      test("should parse a field access", () {
-        var p = parseSimpleBinding("name");
-        expect(unparse(p), "name");
-      });
-      test("should parse a constant", () {
-        var p = parseSimpleBinding("[1, 2]");
-        expect(unparse(p), "[1, 2]");
-      });
-      test("should throw when the given expression is not just a field name",
-          () {
-        expect(
-            () => parseSimpleBinding("name + 1"),
-            throwsWith(
-                "Host binding expression can only contain field access and constants"));
-      });
-      test("should throw when encountering interpolation", () {
-        expect(
-            () => parseSimpleBinding("{{exp}}"),
-            throwsWith(
-                "Got interpolation ({{}}) where expression was expected"));
       });
     });
     group("wrapLiteralPrimitive", () {
