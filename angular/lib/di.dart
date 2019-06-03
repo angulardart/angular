@@ -7,4 +7,4 @@ export 'src/core/di.dart';
 export 'src/core/metadata.dart' show Component, Directive, Input, Output;
 // TODO: move pipes into separate library target.
 export 'src/core/metadata.dart' show Pipe;
-export 'src/core/zone/ng_zone.dart';
+export 'src/core/zone/ng_zone.dart' show NgZone, NgZoneError;
