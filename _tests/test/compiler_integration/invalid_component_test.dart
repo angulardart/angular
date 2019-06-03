@@ -35,6 +35,30 @@ void main() {
     ]);
   });
 
+  test('should error on invalid use of const', () async {
+    await compilesExpecting('''
+      import '$ngImport';
+
+      @Component(
+        selector: 'bad-comp',
+        directives:  [
+          const UndeclaredIdentifier,
+        ],
+        template: '',
+      )
+      class BadComp {}
+    ''', errors: [
+      allOf([
+        // This is an UnresolvedExpressionException, but it should
+        // be an AnalysisError, reading "@Component-annotated" instead.
+        contains('Compiling @Component annotated class "BadComp" failed'),
+        // Once b/134096969 is fixed, these expectations should be true:
+        // contains('Compiling @Component-annotated class "BadComp" failed'),
+        // containsSourceLocation(6, 11), // points to 'const Undeclared..'
+      ]),
+    ]);
+  });
+
   test('should error on an incorrect member annotation', () async {
     // NOTE: @Input on BadComp.inValue is invalid.
     await compilesExpecting('''
