@@ -36,7 +36,7 @@ class TestZone extends NgZone {
     return _onStableStream.stream;
   }
 
-  TestZone() : super(enableLongStackTrace: false) {
+  TestZone() : super() {
     _onUnstableStream = StreamController.broadcast(sync: true);
     _onStableStream = StreamController.broadcast(sync: true);
   }

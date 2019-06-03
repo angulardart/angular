@@ -323,7 +323,7 @@ class NgTestBed<T> {
       NgZone ngZoneInstance;
       NgZone ngZoneFactory() {
         return timerHookZone.run(() {
-          return ngZoneInstance = NgZone(enableLongStackTrace: true);
+          return ngZoneInstance = NgZone();
         });
       }
 
