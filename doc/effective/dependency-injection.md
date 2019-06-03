@@ -163,7 +163,7 @@ future:
 ```dart
 void main() {
   var injector = ReflectiveInjector.resolveAndCreate([
-    const ClassProvider(HeroService),
+    ClassProvider(HeroService),
   ]);
 }
 ```
@@ -177,7 +177,7 @@ inference to determine the type of the provider.
 **BAD**:
 
 ```dart
-const appBaseHref = const OpaqueToken<String>('appBaseHref');
+const appBaseHref = OpaqueToken<String>('appBaseHref');
 
 // This is created as `Provider<dynamic>`.
 const Provider(appBaseHref, useValue: '1234');
@@ -186,7 +186,7 @@ const Provider(appBaseHref, useValue: '1234');
 **GOOD**:
 
 ```dart
-const appBaseHref = const OpaqueToken<String>('appBaseHref');
+const appBaseHref = OpaqueToken<String>('appBaseHref');
 
 // This is created as `Provider<String>`.
 const ValueProvider.forToken(appBaseHref, '1234');
@@ -199,7 +199,7 @@ While slightly more terse, the following pattern is not recommended:
 ```dart
 class HeroService {}
 
-const someProviders = const [
+const someProviders = [
   HeroService,
 ];
 ```
@@ -214,8 +214,8 @@ const someProviders = const [
 ```dart
 class HeroService {}
 
-const someProviders = const [
-  const ClassProvider(HeroService),
+const someProviders = [
+  ClassProvider(HeroService),
 ];
 ```
 
@@ -229,7 +229,7 @@ example, you wouldn't want to bind something to `String` (too common), so you'd
 create an `OpaqueToken`:
 
 ```dart
-const appBaseHref = const OpaqueToken('appBaseHref');
+const appBaseHref = OpaqueToken('appBaseHref');
 ```
 
 However, this also meant that it was undocumented (unless manually added with
@@ -240,14 +240,14 @@ know what to expect, so we typed it as `dynamic` always).
 **BAD**: Using `OpaqueToken<dynamic>` implicity or explicitly.
 
 ```dart
-// If not defined, const OpaqueToken(...) is of type <dynamic>.
-const appBaseHref = const OpaqueToken('appBaseHref');
+// If not defined, OpaqueToken(...) is of type <dynamic>.
+const appBaseHref = OpaqueToken('appBaseHref');
 ```
 
 **GOOD**: Using `OpaqueToken<T>` where `T` is not `dynamic`:
 
 ```dart
-const appBaseHref = const OpaqueToken<String>('appBaseHref');
+const appBaseHref = OpaqueToken<String>('appBaseHref');
 ```
 
 **GOOD**: Use your own `class` that extends `OpaqueToken<T>`.
@@ -262,7 +262,7 @@ class AppBaseHref extends OpaqueToken<String> {
 }
 
 // Optional.
-const appBaseHref = const AppBaseHref();
+const appBaseHref = AppBaseHref();
 
 // Can be used with .forToken now, for example:
 const ValueProvider.forToken(appBaseHref, '/');
@@ -295,13 +295,13 @@ class HelloMessage {
 }
 
 // In later configuration.
-const Provider(const HelloMessage(), useValue: 'Hello World');
+const Provider(HelloMessage(), useValue: 'Hello World');
 ```
 
 **GOOD**: Use a `Type` or `OpaqueToken<T>` instead.
 
 ```dart
-const helloMessage = const OpaqueToken<String>('Hello');
+const helloMessage = OpaqueToken<String>('Hello');
 
 // In later configuration.
 const ValueProvider.forToken(helloMessage, 'Hello World');
@@ -313,7 +313,7 @@ _or_
 class HelloMessage extends OpaqueToken<String> {
   const HelloMessage();
 }
-const helloMessage = const HelloMessage();
+const helloMessage = HelloMessage();
 
 // In later configuration.
 const ValueProvider.forToken(helloMessage, 'Hello World');
@@ -328,11 +328,11 @@ that are configured for that token/type.
 **BAD**: Using `multi: true` for this configuration.
 
 ```dart
-const usPresident = const OpaqueToken<List<String>>('usPresident');
+const usPresident = OpaqueToken<List<String>>('usPresident');
 
-const usPresidentProviders = const [
-  const Provider(usPresident, useValue: 'George', multi: true),
-  const Provider(usPresident, useValue: 'Abe', multi: true),
+const usPresidentProviders = [
+  Provider(usPresident, useValue: 'George', multi: true),
+  Provider(usPresident, useValue: 'Abe', multi: true),
 ];
 ```
 
@@ -343,11 +343,11 @@ users. You could forget `multi: true`, clients would not know that injecting
 **GOOD**: Using `MultiToken` for this configuration instead.
 
 ```dart
-const usPresidents = const MultiToken<String>('usPresidents');
+const usPresidents = MultiToken<String>('usPresidents');
 
-const usPresidentsProviders = const [
-  const ValueProvider.forToken(usPresidents, 'George'),
-  const ValueProvider.forToken(usPresidents, 'Abe'),
+const usPresidentsProviders = [
+  ValueProvider.forToken(usPresidents, 'George'),
+  ValueProvider.forToken(usPresidents, 'Abe'),
 ];
 ```
 
@@ -369,7 +369,7 @@ regardless of use.
 ```dart
 void main() {
   var injector = ReflectiveInjector.resolveAndCreate([
-    const ClassProvider(HeroService),
+    ClassProvider(HeroService),
   ]);
 }
 ```
@@ -387,13 +387,13 @@ void main() {
 }
 ```
 
-**GOOD**: Use `providers: const [ ... ]` in `@Component` or `@Directive`.
+**GOOD**: Use `providers: [ ... ]` in `@Component` or `@Directive`.
 
 ```dart
 @Component(
   selector: 'comp',
-  providers: const [
-    const ClassProvider(HeroService),
+  providers: [
+    ClassProvider(HeroService),
   ],
 )
 class Comp {}
@@ -405,8 +405,8 @@ class Comp {}
 // assume you are currently in file.dart
 import 'file.template.dart' as ng;
 
-@GenerateInjector(const [
-  const ClassProvider(HeroService),
+@GenerateInjector([
+  ClassProvider(HeroService),
 ])
 final InjectorFactory heroInjector = ng.heroInjector$Injector;
 ```
@@ -595,8 +595,8 @@ class NumberInputComponent {
 
 @Directive(
   selector: '[currencyFormat]',
-  providers: const [
-    const FactoryProvider<NumberFormat>(
+  providers: [
+    FactoryProvider<NumberFormat>(
       NumberFormat,
       CurrencyFormatDirective.currencyFormat,
     ),
@@ -625,8 +625,8 @@ instance of the `Cache` class for a component:
 ```dart
 @Component(
   selector: 'user-list',
-  providers: const [
-    const ClassProvider(Cache),
+  providers: [
+    ClassProvider(Cache),
   ],
   template: '...'
 )
@@ -642,8 +642,8 @@ class UserListComponent {
 ```dart
 @Component(
   selector: 'root',
-  providers: const [
-    const ClassProvider(CacheFactory),
+  providers: [
+    ClassProvider(CacheFactory),
   ],
   template: '...',
 )
