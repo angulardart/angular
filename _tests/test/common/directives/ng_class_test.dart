@@ -420,16 +420,35 @@ class DestroyClassTest {
 @Component(
   selector: 'class-with-names',
   directives: [NgClass],
-  template: '<div [ngClass]="{\'foo-bar\': true, \'fooBar\': true}"></div>',
+  template: '<div [ngClass]="classes"></div>',
 )
-class ClassWithNames {}
+class ClassWithNames {
+  static const classes = {
+    'foo-bar': true,
+    'fooBar': true,
+  };
+}
 
 @Component(
   selector: 'condition-map-test',
   directives: [NgClass],
-  template: '<div [ngClass]="{foo: condition, bar: !condition}"></div>',
+  template: '<div [ngClass]="conditionMap"></div>',
 )
-class ConditionMapTest extends Base {}
+class ConditionMapTest extends Base {
+  Map<String, bool> _conditionMap;
+  bool _prevCondition;
+
+  Map<String, bool> get conditionMap {
+    if (_prevCondition != condition) {
+      _conditionMap = {
+        'foo': condition,
+        'bar': !condition,
+      };
+      _prevCondition = condition;
+    }
+    return _conditionMap;
+  }
+}
 
 @Component(
   selector: 'map-update-test',
