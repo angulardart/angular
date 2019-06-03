@@ -199,12 +199,14 @@ class TestContextChangeComponent {
     <template #farewell let-text>Goodbye {{text}}!</template>
     <template
         [ngTemplateOutlet]="isGreeting ? greet : farewell"
-        [ngTemplateOutletContext]="{'\$implicit': 'world'}">
+        [ngTemplateOutletContext]="context">
     </template>
   ''',
   directives: [NgTemplateOutlet],
 )
 class TestContextTemplateRefChangeComponent {
+  static const context = {r'$implicit': 'world'};
+
   bool isGreeting = true;
 }
 
