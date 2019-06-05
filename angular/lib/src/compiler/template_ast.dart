@@ -1,8 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/convert.dart';
-import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
-    show handlerTypeFromExpression, HandlerType;
 
 import '../core/security.dart';
 import 'compile_metadata.dart'
@@ -125,7 +123,7 @@ abstract class ElementProviderUsage {
 /// A binding for an element event (e.g. (event)='handler()').
 class BoundEventAst implements TemplateAst {
   final String name;
-  final AST handler;
+  final EventHandler handler;
   final SourceSpan sourceSpan;
 
   BoundEventAst(this.name, this.handler, this.sourceSpan);
@@ -133,8 +131,22 @@ class BoundEventAst implements TemplateAst {
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>
       visitor.visitEvent(this, context);
+}
 
-  HandlerType get handlerType => handlerTypeFromExpression(handler);
+/// An event handler expression, with addition metadata.
+class EventHandler {
+  final AST expression;
+
+  /// An optional directive class.
+  ///
+  /// This is only set with this EventHandler corresponds to a "HostListener" on
+  /// the specified Directive.
+  ///
+  /// Otherwise, it is assumed that the context of the event handler is the
+  /// default Component currently being compiled.
+  final CompileDirectiveMetadata hostDirective;
+
+  EventHandler(this.expression, [this.hostDirective]);
 }
 
 /// A reference declaration on an element (e.g. #someName='expression').
@@ -322,14 +334,53 @@ class BoundDirectivePropertyAst implements TemplateAst {
       visitor.visitDirectiveProperty(this, context);
 }
 
+/// An event binding that matches an @Output declared on the directive.
+///
+/// These can be either event handlers defined in the template, or a
+/// @HostListener defined in a *different* Directive.
+class BoundDirectiveEventAst implements TemplateAst {
+  /// The name of the output declared on the directive class.
+  ///
+  /// For example, "onChange" in
+  ///
+  /// ```
+  /// class User {
+  ///   @Input('change')
+  ///   Stream get onChange;
+  /// }
+  /// ```
+  final String directiveName;
+
+  /// The name of the output, optionally declared by an output annotation.
+  ///
+  /// For example, "change" in
+  ///
+  /// class User {
+  ///   @Input('change')
+  ///   Stream get onChange;
+  /// }
+  ///
+  /// If no binding name is specified, this defaults to [directiveName].
+  final String templateName;
+  final EventHandler handler;
+  final SourceSpan sourceSpan;
+
+  BoundDirectiveEventAst(
+      this.directiveName, this.templateName, this.handler, this.sourceSpan);
+
+  @override
+  R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>
+      visitor.visitDirectiveEvent(this, context);
+}
+
 /// A directive declared on an element.
 class DirectiveAst implements TemplateAst {
   final CompileDirectiveMetadata directive;
   final List<BoundDirectivePropertyAst> inputs;
-  final List<BoundEventAst> hostEvents;
+  final List<BoundDirectiveEventAst> outputs;
   final SourceSpan sourceSpan;
 
-  DirectiveAst(this.directive, this.inputs, this.hostEvents, this.sourceSpan);
+  DirectiveAst(this.directive, {this.inputs, this.outputs, this.sourceSpan});
 
   bool get hasHostProperties => directive.hostProperties.isNotEmpty;
 
@@ -466,6 +517,7 @@ abstract class TemplateAstVisitor<R, C> {
   R visitText(TextAst ast, C context);
   R visitDirective(DirectiveAst ast, C context);
   R visitDirectiveProperty(BoundDirectivePropertyAst ast, C context);
+  R visitDirectiveEvent(BoundDirectiveEventAst ast, C context);
   R visitProvider(ProviderAst providerAst, C context);
   R visitI18nText(I18nTextAst ast, C context);
 }

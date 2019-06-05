@@ -392,8 +392,8 @@ void main() {
           expect(
               humanizeTplAst(parse('<template (e)="f"></template>', [dirA])), [
             [EmbeddedTemplateAst],
-            [BoundEventAst, 'e', null, 'f'],
-            [DirectiveAst, dirA]
+            [DirectiveAst, dirA],
+            [BoundDirectiveEventAst, 'e', 'f'],
           ]);
         });
       });

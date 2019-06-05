@@ -401,7 +401,7 @@ class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike
     final doc = import5.document;
     final _el_0 = import11.appendElement(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
-    final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handle_ngModelChange_0_0));
+    final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handleEvent_0));
     this.initSubscriptions([subscription_0]);
   }
 
@@ -425,7 +425,7 @@ class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike
     }
   }
 
-  void _handle_ngModelChange_0_0($event) {
+  void _handleEvent_0($event) {
     final _ctx = this.ctx;
     _ctx.value = $event;
   }

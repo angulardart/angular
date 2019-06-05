@@ -173,11 +173,11 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
     final _ctx = this.ctx;
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     parentRenderNode.addEventListener('click', this.eventHandler1(_ctx.onClick));
-    import11.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', this.eventHandler1(this._handle_tripleclick__));
+    import11.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', this.eventHandler1(this._handleEvent_0));
     parentRenderNode.addEventListener('keydown', this.eventHandler0(_ctx.onKeyDown));
   }
 
-  void _handle_tripleclick__($event) {
+  void _handleEvent_0($event) {
     final _ctx = this.ctx;
     _ctx.onClickNotSimple($event, _ctx.title);
   }

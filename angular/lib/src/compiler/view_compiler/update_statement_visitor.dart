@@ -212,10 +212,11 @@ class _UpdateStatementsVisitor
 
   @override
   o.Statement visitDirectiveOutput(ir.DirectiveOutput directiveOutput,
-      [o.Expression context]) {
-    // TODO: implement visitDirectiveOutput
-    return null;
-  }
+          [o.Expression renderValue]) =>
+      renderNode.toWriteStmt(appViewInstance
+          .prop(directiveOutput.name)
+          .callMethod(o.BuiltinMethod.SubscribeObservable, [renderValue],
+              checked: directiveOutput.isMockLike));
 
   @override
   o.Statement visitNativeEvent(ir.NativeEvent nativeEvent,

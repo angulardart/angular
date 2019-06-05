@@ -4,6 +4,7 @@ import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
     show namespaceUris;
 import 'package:angular/src/core/security.dart';
@@ -464,6 +465,12 @@ class BoundExpression implements BindingSource {
 }
 
 abstract class EventHandler implements BindingSource {
+  /// Returns an [EventHandler] that merges this and [handler] together.
+  ///
+  /// The returned [EventHandler] may or may not be a new instance, based on the
+  /// implementation of subclasses.
+  EventHandler merge(EventHandler handler);
+
   @override
   final bool isImmutable = false;
   @override
@@ -472,13 +479,24 @@ abstract class EventHandler implements BindingSource {
   final bool isString = false;
 }
 
+/// An [EventHandler] that is a single method call with 0 or 1 arguments.
+///
+/// The single argument is the `$event` emitted by the event source.
+///
+/// In generated code, this can be expressed as a "tear-off" expression.
 class SimpleEventHandler extends EventHandler {
   final ast.AST handler;
   final SourceSpan sourceSpan;
+  final ProviderSource directiveInstance;
 
   final int numArgs;
 
-  SimpleEventHandler(this.handler, this.sourceSpan, {this.numArgs});
+  SimpleEventHandler(this.handler, this.sourceSpan,
+      {this.directiveInstance, this.numArgs});
+
+  @override
+  EventHandler merge(EventHandler handler) =>
+      ComplexEventHandler._([this, handler]);
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
@@ -486,16 +504,35 @@ class SimpleEventHandler extends EventHandler {
       visitor.visitSimpleEventHandler(this, context);
 }
 
+/// An [EventHandler] that cannot be expressed as a [SimpleEventHandler].
+///
+/// This might be a be a single method call with multiple arguments, or an
+/// argument other than the $event parameter. It may be an expression other than
+/// a method call. It may also be multiple statements that have been merged
+/// together.
+///
+/// In generated code, this requires a generated method to wrap the event
+/// handlers.
 class ComplexEventHandler extends EventHandler {
   final List<EventHandler> handlers;
 
-  String methodName;
+  ComplexEventHandler._(this.handlers);
 
-  ComplexEventHandler(this.handlers, this.methodName);
+  ComplexEventHandler.forAst(ast.AST handler, SourceSpan sourceSpan,
+      {ProviderSource directiveInstance})
+      : this._([
+          SimpleEventHandler(
+            handler,
+            sourceSpan,
+            directiveInstance: directiveInstance,
+          )
+        ]);
 
-  ComplexEventHandler.forAst(
-      ast.AST handler, SourceSpan sourceSpan, String methodName)
-      : this([SimpleEventHandler(handler, sourceSpan)], methodName);
+  @override
+  EventHandler merge(EventHandler handler) {
+    handlers.add(handler);
+    return this;
+  }
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
