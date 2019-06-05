@@ -1460,7 +1460,7 @@ class _SortInputsVisitor extends RecursiveTemplateVisitor<Null> {
       Map<String, String> inputs) {
     final keys = inputs.keys.toList(growable: false);
     int _indexOf(ng.BoundDirectivePropertyAst input) {
-      return keys.indexOf(input.directiveName);
+      return keys.indexOf(input.memberName);
     }
 
     return (ng.BoundDirectivePropertyAst a, ng.BoundDirectivePropertyAst b) =>

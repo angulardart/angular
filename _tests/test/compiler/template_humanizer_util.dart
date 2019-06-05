@@ -124,7 +124,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
 
   @override
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
-    final res = [BoundDirectivePropertyAst, ast.directiveName]
+    final res = [BoundDirectivePropertyAst, ast.memberName]
       ..addAll(_humanizeBoundValue(ast.value));
     result.add(_appendContext(ast, res));
   }
@@ -133,7 +133,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
   void visitDirectiveEvent(BoundDirectiveEventAst ast, _) {
     final res = [
       BoundDirectiveEventAst,
-      ast.directiveName,
+      ast.memberName,
       expressionUnparser.unparse(ast.handler.expression),
     ];
     result.add(_appendContext(ast, res));
