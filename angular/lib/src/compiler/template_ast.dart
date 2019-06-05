@@ -296,7 +296,8 @@ class BoundI18nMessage implements BoundValue {
 
 /// A directive property binding.
 class BoundDirectivePropertyAst implements TemplateAst {
-  /// The name of the property declared on the directive class.
+  /// The name of the property member (field or setter) declared on the
+  /// directive class.
   ///
   /// For example, "name" in
   ///
@@ -306,7 +307,7 @@ class BoundDirectivePropertyAst implements TemplateAst {
   ///   String name;
   /// }
   /// ```
-  final String directiveName;
+  final String memberName;
 
   /// The name of the input, optionally declared by an input annotation.
   ///
@@ -317,13 +318,13 @@ class BoundDirectivePropertyAst implements TemplateAst {
   ///   String name;
   /// }
   ///
-  /// If no binding name is specified, this defaults to [directiveName].
+  /// If no binding name is specified, this defaults to [memberName].
   final String templateName;
   final BoundValue value;
   final SourceSpan sourceSpan;
 
   BoundDirectivePropertyAst(
-    this.directiveName,
+    this.memberName,
     this.templateName,
     this.value,
     this.sourceSpan,
@@ -339,7 +340,8 @@ class BoundDirectivePropertyAst implements TemplateAst {
 /// These can be either event handlers defined in the template, or a
 /// @HostListener defined in a *different* Directive.
 class BoundDirectiveEventAst implements TemplateAst {
-  /// The name of the output declared on the directive class.
+  /// The name of the output member (field or getter) declared on the directive
+  /// class.
   ///
   /// For example, "onChange" in
   ///
@@ -349,7 +351,7 @@ class BoundDirectiveEventAst implements TemplateAst {
   ///   Stream get onChange;
   /// }
   /// ```
-  final String directiveName;
+  final String memberName;
 
   /// The name of the output, optionally declared by an output annotation.
   ///
@@ -360,13 +362,13 @@ class BoundDirectiveEventAst implements TemplateAst {
   ///   Stream get onChange;
   /// }
   ///
-  /// If no binding name is specified, this defaults to [directiveName].
+  /// If no binding name is specified, this defaults to [memberName].
   final String templateName;
   final EventHandler handler;
   final SourceSpan sourceSpan;
 
   BoundDirectiveEventAst(
-      this.directiveName, this.templateName, this.handler, this.sourceSpan);
+      this.memberName, this.templateName, this.handler, this.sourceSpan);
 
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>

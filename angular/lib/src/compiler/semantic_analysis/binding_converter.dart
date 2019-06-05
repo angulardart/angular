@@ -147,17 +147,17 @@ class _ToBindingVisitor
         source: _boundValueToIr(
             input.value, input.sourceSpan, context.analyzedClass),
         target: ir.InputBinding(
-            input.directiveName, _inputType(context.directive, input)),
-        isDirect: _isDirectBinding(context.directive, input.directiveName),
+            input.memberName, _inputType(context.directive, input)),
+        isDirect: _isDirectBinding(context.directive, input.memberName),
       );
 
   o.OutputType _inputType(
       CompileDirectiveMetadata directive, ast.BoundDirectivePropertyAst input) {
     // TODO(alorenzen): Determine if we actually need this special case.
-    if (directive.identifier.name == 'NgIf' && input.directiveName == 'ngIf') {
+    if (directive.identifier.name == 'NgIf' && input.memberName == 'ngIf') {
       return o.BOOL_TYPE;
     }
-    var inputTypeMeta = directive.inputTypes[input.directiveName];
+    var inputTypeMeta = directive.inputTypes[input.memberName];
     return inputTypeMeta != null
         ? o.importType(inputTypeMeta, inputTypeMeta.typeArguments)
         : null;
@@ -199,7 +199,7 @@ class _ToBindingVisitor
         source:
             _handlerFor(ast.templateName, ast.handler, ast.sourceSpan, context),
         target: ir.DirectiveOutput(
-            ast.directiveName, context.directive.analyzedClass.isMockLike),
+            ast.memberName, context.directive.analyzedClass.isMockLike),
       );
 
   @override
