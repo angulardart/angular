@@ -439,6 +439,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       BoundDirectivePropertyAst ast, CompileElement parent) {}
 
   @override
+  void visitDirectiveEvent(BoundDirectiveEventAst ast, CompileElement parent) {}
+
+  @override
   void visitElementProperty(
       BoundElementPropertyAst ast, CompileElement parent) {}
 
@@ -919,8 +922,8 @@ void _writeComponentHostEventListeners(
   for (String eventName in component.hostListeners.keys) {
     var boundEvent = _parseEvent(component, eventName, parser);
 
-    o.Expression handlerExpr =
-        converter.convertSourceToExpression(boundEvent.source, null);
+    o.Expression handlerExpr = converter.convertSourceToExpression(
+        boundEvent.source, boundEvent.target.type);
 
     statements.add(bindingToUpdateStatement(
       boundEvent,

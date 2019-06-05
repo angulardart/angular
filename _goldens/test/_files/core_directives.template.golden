@@ -125,7 +125,7 @@ class _ViewTestFooComponent2 extends import13.EmbeddedView<import1.TestFooCompon
     _el_1.append(this._textBinding_4.element);
     final _text_5 = import10.appendText(_el_1, ' odd?');
     _el_1.append(this._textBinding_6.element);
-    _el_1.addEventListener('click', this.eventHandler1(this._handle_click_1_0));
+    _el_1.addEventListener('click', this.eventHandler1(this._handleEvent_0));
     this.initRootNode(_el_0);
   }
 
@@ -139,7 +139,7 @@ class _ViewTestFooComponent2 extends import13.EmbeddedView<import1.TestFooCompon
     this._textBinding_6.updateText(import17.interpolate0(local_odd));
   }
 
-  void _handle_click_1_0($event) {
+  void _handleEvent_0($event) {
     final local_bar = import9.unsafeCast<String>(this.locals['\$implicit']);
     final _ctx = this.ctx;
     _ctx.onClick(local_bar);

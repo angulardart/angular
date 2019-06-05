@@ -57,10 +57,11 @@ abstract class RecursiveTemplateVisitor<C>
   @override
   @mustCallSuper
   TemplateAst visitDirective(DirectiveAst ast, C context) => DirectiveAst(
-      ast.directive,
-      visitAll(ast.inputs, context),
-      visitAll(ast.hostEvents, context),
-      ast.sourceSpan);
+        ast.directive,
+        inputs: visitAll(ast.inputs, context),
+        outputs: visitAll(ast.outputs, context),
+        sourceSpan: ast.sourceSpan,
+      );
 
   @override
   @mustCallSuper
@@ -93,6 +94,9 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   TemplateAst visitDirectiveProperty(BoundDirectivePropertyAst ast, _) => ast;
+
+  @override
+  TemplateAst visitDirectiveEvent(BoundDirectiveEventAst ast, _) => ast;
 
   @override
   TemplateAst visitProvider(ProviderAst ast, _) => ast;

@@ -228,7 +228,11 @@ class _BindDirectivesVisitor
         _visitAll(astNode.attributes, elementContext),
         _visitProperties(
             astNode.properties, astNode.attributes, elementContext),
-        _visitAll(astNode.events, elementContext),
+        _visitEvents(
+          astNode.events,
+          elementContext.boundHostListeners,
+          elementContext,
+        ),
         _visitAll(astNode.references, elementContext),
         elementContext.boundDirectives,
         [] /* providers */,
@@ -281,6 +285,25 @@ class _BindDirectivesVisitor
     }
   }
 
+  /// Visit all events on an element.
+  ///
+  /// This includes both [events] bound in the template and
+  /// [boundHostListerners] that bubble up from Directives that match the
+  /// element.
+  ///
+  /// Any events that match a directive @Output are filtered out of the list,
+  /// so only "DOM" events are returned. The matched events are "bound" to the
+  /// [ng.DirectiveAst] as [ng.BoundDirectiveEventAst]s.
+  List<ng.BoundEventAst> _visitEvents(
+    List<ast.EventAst> events,
+    List<_BoundHostListener> boundHostListeners,
+    _ParseContext elementContext,
+  ) =>
+      [
+        ..._visitAll(events, elementContext),
+        ..._visitHostListeners(boundHostListeners, elementContext),
+      ];
+
   static int _findNgContentIndexForElement(
     ast.ElementAst astNode,
     _ParseContext context,
@@ -305,7 +328,11 @@ class _BindDirectivesVisitor
     _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
     return ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
-        _visitAll(astNode.events, embeddedContext),
+        _visitEvents(
+          astNode.events,
+          embeddedContext.boundHostListeners,
+          embeddedContext,
+        ),
         _visitAll(astNode.references, embeddedContext),
         _visitAll(astNode.letBindings, embeddedContext),
         embeddedContext.boundDirectives,
@@ -367,12 +394,53 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
     try {
-      var value = context.templateContext.parser.parseAction(
+      AST value = context.templateContext.parser.parseAction(
           astNode.value, _location(astNode), context.templateContext.exports);
+      var handler = ng.EventHandler(value);
+      if (context.bindEventToDirective(
+        astNode.name,
+        astNode.sourceSpan,
+        handler,
+      )) {
+        return null;
+      }
       return ng.BoundEventAst(
-          _getEventName(astNode), value, astNode.sourceSpan);
+          _getEventName(astNode), handler, astNode.sourceSpan);
     } on ParseException catch (e) {
       context.templateContext.reportError(e.message, astNode.sourceSpan);
+      return null;
+    }
+  }
+
+  List<ng.BoundEventAst> _visitHostListeners(
+      List<_BoundHostListener> hostListeners, _ParseContext context) {
+    var events = <ng.BoundEventAst>[];
+    for (var hostListener in hostListeners) {
+      var event = _visitHostListener(hostListener, context);
+      if (event != null) {
+        events.add(event);
+      }
+    }
+    return events;
+  }
+
+  ng.BoundEventAst _visitHostListener(
+      _BoundHostListener hostListener, _ParseContext context) {
+    try {
+      AST value = context.templateContext.parser
+          .parseAction(hostListener.value, '', context.templateContext.exports);
+      var handler = ng.EventHandler(value, hostListener.directive);
+      if (context.bindEventToDirective(
+          hostListener.eventName, hostListener.sourceSpan, handler)) {
+        return null;
+      }
+      return ng.BoundEventAst(
+        hostListener.eventName,
+        handler,
+        hostListener.sourceSpan,
+      );
+    } on ParseException catch (e) {
+      context.templateContext.reportError(e.message, hostListener.sourceSpan);
       return null;
     }
   }
@@ -536,6 +604,7 @@ class _ParseContext {
   final TemplateContext templateContext;
   final String elementName;
   final List<ng.DirectiveAst> boundDirectives;
+  final List<_BoundHostListener> boundHostListeners;
   final I18nMetadataBundle i18nMetadata;
   final bool isTemplate;
   final SelectorMatcher _ngContentIndexMatcher;
@@ -545,6 +614,7 @@ class _ParseContext {
       this.templateContext,
       this.elementName,
       this.boundDirectives,
+      this.boundHostListeners,
       this.i18nMetadata,
       this.isTemplate,
       this._ngContentIndexMatcher,
@@ -553,6 +623,7 @@ class _ParseContext {
   _ParseContext.forRoot(this.templateContext)
       : elementName = '',
         boundDirectives = const [],
+        boundHostListeners = const [],
         i18nMetadata = null,
         isTemplate = false,
         _ngContentIndexMatcher = null,
@@ -566,6 +637,7 @@ class _ParseContext {
     return _ParseContext._(
       templateContext,
       '',
+      const [],
       const [],
       i18nMetadata,
       false,
@@ -591,10 +663,18 @@ class _ParseContext {
       attributes: element.attributes,
       properties: element.properties,
     );
+    var hostListeners = _collectHostListeners(
+      boundDirectives,
+      element.sourceSpan,
+      element.name,
+      _location(element),
+      templateContext,
+    );
     return _ParseContext._(
         templateContext,
         element.name,
         boundDirectives,
+        hostListeners,
         i18nMetadata,
         false,
         _createSelector(firstComponent),
@@ -618,10 +698,19 @@ class _ParseContext {
       attributes: template.attributes,
       properties: template.properties,
     );
+
+    var hostListeners = _collectHostListeners(
+      boundDirectives,
+      template.sourceSpan,
+      _templateElement,
+      _location(template),
+      templateContext,
+    );
     return _ParseContext._(
         templateContext,
         _templateElement,
         boundDirectives,
+        hostListeners,
         i18nMetadata,
         true,
         _createSelector(firstComponent),
@@ -677,6 +766,35 @@ class _ParseContext {
     return foundMatch;
   }
 
+  /// Binds an event handler to all Directives that have a corresponding
+  /// @Output.
+  ///
+  /// As such, we must visit every single Directive, even if we have already
+  /// found a match.
+  ///
+  /// Returns [true] if one or more matches are found.
+  bool bindEventToDirective(
+      String name, SourceSpan sourceSpan, ng.EventHandler handler) {
+    bool foundMatch = false;
+    directive:
+    for (var directive in boundDirectives) {
+      for (var directiveName in directive.directive.outputs.keys) {
+        var templateName = directive.directive.outputs[directiveName];
+        if (templateName == name) {
+          directive.outputs.add(ng.BoundDirectiveEventAst(
+            directiveName,
+            templateName,
+            handler,
+            sourceSpan,
+          ));
+          foundMatch = true;
+          continue directive;
+        }
+      }
+    }
+    return foundMatch;
+  }
+
   ng.BoundValue createBoundValue(
     String name,
     AST value,
@@ -724,11 +842,11 @@ class _ParseContext {
           TemplateContext templateContext) =>
       directiveMetas
           .map((directive) => ng.DirectiveAst(
-              directive,
-              [] /* inputs */,
-              _bindEvents(directive, sourceSpan, elementName, location,
-                  templateContext),
-              sourceSpan))
+                directive,
+                inputs: [],
+                outputs: [],
+                sourceSpan: sourceSpan,
+              ))
           .toList();
 
   static List<CompileDirectiveMetadata> _matchElementDirectives(
@@ -763,22 +881,35 @@ class _ParseContext {
     return selectorMatcher;
   }
 
-  static List<ng.BoundEventAst> _bindEvents(
-      CompileDirectiveMetadata directive,
-      SourceSpan sourceSpan,
-      String elementName,
-      String location,
-      TemplateContext templateContext) {
-    var result = <ng.BoundEventAst>[];
-    for (var eventName in directive.hostListeners.keys) {
-      try {
-        var expression = directive.hostListeners[eventName];
-        var value = templateContext.parser
-            .parseAction(expression, location, templateContext.exports);
-        result.add(ng.BoundEventAst(eventName, value, sourceSpan));
-      } on ParseException catch (e) {
-        templateContext.reportError(e.message, sourceSpan);
+  /// Extracts all of the HostListeners from the bound directives for an
+  /// element.
+  ///
+  /// These [_BoundHostListeners] will later be merged with any event handlers
+  /// defined on the element in the template to create a full view of all
+  /// handlers for an element's events.
+  static List<_BoundHostListener> _collectHostListeners(
+    List<ng.DirectiveAst> boundDirectives,
+    SourceSpan sourceSpan,
+    String elementName,
+    String location,
+    TemplateContext templateContext,
+  ) {
+    var result = <_BoundHostListener>[];
+    for (var boundDirective in boundDirectives) {
+      final directive = boundDirective.directive;
+      // Don't collect component host event listeners because they're registered
+      // by the component implementation.
+      if (directive.isComponent) {
         continue;
+      }
+      for (var eventName in directive.hostListeners.keys) {
+        var expression = directive.hostListeners[eventName];
+        result.add(_BoundHostListener(
+          eventName,
+          expression,
+          directive,
+          null, // TODO(alorenzen): Add sourceSpan to CompileDirectiveMetadata.
+        ));
       }
     }
     return result;
@@ -1250,7 +1381,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
 
   @override
   ng.TemplateAst visitEvent(ng.BoundEventAst ast, _) {
-    _validatePipes(ast.handler, ast.sourceSpan);
+    _validatePipes(ast.handler.expression, ast.sourceSpan);
     return super.visitEvent(ast, null);
   }
 }
@@ -1335,4 +1466,20 @@ class _SortInputsVisitor extends RecursiveTemplateVisitor<Null> {
     return (ng.BoundDirectivePropertyAst a, ng.BoundDirectivePropertyAst b) =>
         Comparable.compare(_indexOf(a), _indexOf(b));
   }
+}
+
+/// A simple wrapper on a HostListener from a Directive that was bound to an
+/// element in the template.
+class _BoundHostListener {
+  final String eventName;
+  final String value;
+  final CompileDirectiveMetadata directive;
+  final SourceSpan sourceSpan;
+
+  _BoundHostListener(
+    this.eventName,
+    this.value,
+    this.directive,
+    this.sourceSpan,
+  );
 }

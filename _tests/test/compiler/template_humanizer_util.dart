@@ -68,7 +68,7 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
       BoundEventAst,
       ast.name,
       null, // TODO: remove
-      expressionUnparser.unparse(ast.handler)
+      expressionUnparser.unparse(ast.handler.expression)
     ];
     result.add(_appendContext(ast, res));
   }
@@ -119,13 +119,23 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     var res = [DirectiveAst, ast.directive];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.inputs);
-    templateVisitAll(this, ast.hostEvents);
+    templateVisitAll(this, ast.outputs);
   }
 
   @override
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {
     final res = [BoundDirectivePropertyAst, ast.directiveName]
       ..addAll(_humanizeBoundValue(ast.value));
+    result.add(_appendContext(ast, res));
+  }
+
+  @override
+  void visitDirectiveEvent(BoundDirectiveEventAst ast, _) {
+    final res = [
+      BoundDirectiveEventAst,
+      ast.directiveName,
+      expressionUnparser.unparse(ast.handler.expression),
+    ];
     result.add(_appendContext(ast, res));
   }
 
@@ -237,6 +247,9 @@ class TemplateContentProjectionHumanizer
 
   @override
   void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
+
+  @override
+  void visitDirectiveEvent(BoundDirectiveEventAst ast, _) {}
 
   @override
   void visitProvider(ProviderAst ast, _) {}

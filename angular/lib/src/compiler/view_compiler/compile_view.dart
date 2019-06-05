@@ -137,6 +137,11 @@ class NodeReference {
   NodeReference._parameter(this._storage, this._type, this._name)
       : _initialValue = null;
 
+  NodeReference._subscription(this._name)
+      : _storage = null,
+        _type = null,
+        _initialValue = null;
+
   /// Returns an expression that reads from this variable or field.
   o.Expression toReadExpr() => ReadNodeReferenceExpr(this);
 
@@ -689,9 +694,12 @@ class CompileView {
     }
   }
 
+  int _eventHandlerCount = 0;
+
   // TODO(alorenzen): Convert to NodeReference.
-  o.Expression createEventHandler(String methodName, List<o.Statement> stmts,
+  o.Expression createEventHandler(List<o.Statement> stmts,
       {List<o.Statement> localDeclarations = const []}) {
+    var methodName = '_handleEvent_${_eventHandlerCount++}';
     methods.add(_createEventHandlerMethod(
       methodName,
       stmts,
@@ -987,43 +995,24 @@ class CompileView {
     }
   }
 
-  void createSubscription(o.Expression streamReference, o.Expression handler,
-      {bool isMockLike = false}) {
-    final subscription = o.variable('subscription_${subscriptions.length}');
-    subscriptions.add(subscription);
-    _createMethod.addStmt(subscription
-        .set(streamReference.callMethod(
-            o.BuiltinMethod.SubscribeObservable, [handler],
-            checked: isMockLike))
-        .toDeclStmt(null, [o.StmtModifier.Final]));
+  NodeReference createSubscription({bool isMockLike = false}) {
+    final subscription =
+        NodeReference._subscription('subscription_${subscriptions.length}');
+    subscriptions.add(subscription.toReadExpr());
     if (isMockLike) {
       subscribesToMockLike = true;
     }
+    return subscription;
   }
 
   void addEventListener(
-      NodeReference node, ir.Binding binding, o.Expression handler) {
-    _createMethod
-        .addStmt(bindingToUpdateStatement(binding, null, node, false, handler));
-  }
-
-  // TODO(alorenzen): Remove in favor of addEventListener().
-  void addDomEventListener(
-      NodeReference node, String eventName, o.Expression handler) {
-    var listenExpr = node
-        .toReadExpr()
-        .callMethod('addEventListener', [o.literal(eventName), handler]);
-    _createMethod.addStmt(listenExpr.toStmt());
-  }
-
-  // TODO(alorenzen): Remove in favor of addEventListener().
-  void addCustomEventListener(
-      NodeReference node, String eventName, o.Expression handler) {
-    final appViewUtilsExpr = o.importExpr(Identifiers.appViewUtils);
-    final eventManagerExpr = appViewUtilsExpr.prop('eventManager');
-    var listenExpr = eventManagerExpr.callMethod(
-        'addEventListener', [node.toReadExpr(), o.literal(eventName), handler]);
-    _createMethod.addStmt(listenExpr.toStmt());
+    NodeReference node,
+    ir.Binding binding,
+    o.Expression handler, [
+    o.Expression directiveInstance,
+  ]) {
+    _createMethod.addStmt(bindingToUpdateStatement(
+        binding, directiveInstance, node, false, handler));
   }
 
   void updateQueryAtStartup(CompileQuery query) {

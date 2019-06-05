@@ -233,7 +233,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
 
     directiveInstances = <ProviderSource>[];
     for (var directive in _directives) {
-      var directiveInstance = _providers.get(identifierToken(directive.type));
+      var directiveInstance = getDirectiveSource(directive);
       directiveInstances.add(directiveInstance);
       for (var queryMeta in directive.queries) {
         _addQuery(queryMeta, directiveInstance);
@@ -435,9 +435,12 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     contentNodesByNgContentIndex[ngContentIndex].add(nodeExpr);
   }
 
-  o.Expression getComponent() => component != null
-      ? _providers.get(identifierToken(component.type)).build()
-      : null;
+  o.Expression getComponent() => getDirectiveSource(component)?.build();
+
+  ProviderSource getDirectiveSource(CompileDirectiveMetadata directive) =>
+      directive != null
+          ? _providers.get(identifierToken(directive.type))
+          : null;
 
   // NodeProvidersHost implementation.
   @override

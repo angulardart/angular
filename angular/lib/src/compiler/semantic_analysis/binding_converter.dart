@@ -3,12 +3,15 @@ import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart'
     as expression_ast;
+import 'package:angular/src/compiler/expression_parser/ast.dart';
 import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' as ast;
+import 'package:angular/src/compiler/view_compiler/compile_element.dart';
+import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
-    show HandlerType, handlerTypeFromExpression, sanitizeEventName;
+    show HandlerType, handlerTypeFromExpression;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
@@ -24,14 +27,21 @@ List<ir.Binding> convertAllToBinding(
   List<ast.TemplateAst> nodes, {
   AnalyzedClass analyzedClass,
   CompileDirectiveMetadata directive,
+  CompileElement compileElement,
 }) =>
-    ast.templateVisitAll(_ToBindingVisitor(), nodes,
-        _IrBindingContext(analyzedClass, directive));
+    ast.templateVisitAll(
+      _ToBindingVisitor(),
+      nodes,
+      _IrBindingContext(analyzedClass, directive, compileElement),
+    );
 
 /// Converts a single [ast.TemplateAst] node into an [ir.Binding] instance.
 ir.Binding convertToBinding(
         ast.TemplateAst node, AnalyzedClass analyzedClass) =>
-    node.visit(_ToBindingVisitor(), _IrBindingContext(analyzedClass, null));
+    node.visit(
+      _ToBindingVisitor(),
+      _IrBindingContext(analyzedClass, null, null),
+    );
 
 /// Converts a host attribute to an [ir.Binding] instance.
 ///
@@ -50,22 +60,16 @@ ir.Binding convertHostAttributeToBinding(
 ir.Binding convertHostListenerToBinding(
         String eventName, expression_ast.AST handlerAst) =>
     ir.Binding(
-      source: _handlerFor(eventName, handlerAst),
+      source: _handlerFor(
+        eventName,
+        ast.EventHandler(handlerAst),
+        null, // TODO(alorenzen): Add SourceSpan to HostListeners.
+        _IrBindingContext(null, null, null),
+      ),
       target: isNativeHtmlEvent(eventName)
           ? ir.NativeEvent(eventName)
           : ir.CustomEvent(eventName),
     );
-
-ir.EventHandler _handlerFor(String eventName, expression_ast.AST handlerAst) {
-  HandlerType handlerType = handlerTypeFromExpression(handlerAst);
-  if (handlerType == HandlerType.notSimple) {
-    String methodName = '_handle_${sanitizeEventName(eventName)}__';
-    return ir.ComplexEventHandler.forAst(handlerAst, null, methodName);
-  } else {
-    return ir.SimpleEventHandler(handlerAst, null,
-        numArgs: handlerType == HandlerType.simpleNoArgs ? 0 : 1);
-  }
-}
 
 class _ToBindingVisitor
     implements ast.TemplateAstVisitor<ir.Binding, _IrBindingContext> {
@@ -189,6 +193,16 @@ class _ToBindingVisitor
   }
 
   @override
+  ir.Binding visitDirectiveEvent(
+          ast.BoundDirectiveEventAst ast, _IrBindingContext context) =>
+      ir.Binding(
+        source:
+            _handlerFor(ast.templateName, ast.handler, ast.sourceSpan, context),
+        target: ir.DirectiveOutput(
+            ast.directiveName, context.directive.analyzedClass.isMockLike),
+      );
+
+  @override
   ir.Binding visitDirective(ast.DirectiveAst ast, _IrBindingContext context) =>
       throw UnimplementedError();
 
@@ -203,7 +217,12 @@ class _ToBindingVisitor
 
   @override
   ir.Binding visitEvent(ast.BoundEventAst ast, _IrBindingContext context) =>
-      throw UnimplementedError();
+      ir.Binding(
+        source: _handlerFor(ast.name, ast.handler, ast.sourceSpan, context),
+        target: isNativeHtmlEvent(ast.name)
+            ? ir.NativeEvent(ast.name)
+            : ir.CustomEvent(ast.name),
+      );
 
   @override
   ir.Binding visitNgContainer(
@@ -230,9 +249,21 @@ class _ToBindingVisitor
 
 class _IrBindingContext {
   final AnalyzedClass analyzedClass;
-  final CompileDirectiveMetadata directive;
 
-  _IrBindingContext(this.analyzedClass, this.directive);
+  /// The target directive for any Input/Output bindings.
+  final CompileDirectiveMetadata directive;
+  final CompileElement compileElement;
+
+  _IrBindingContext(this.analyzedClass, this.directive, this.compileElement);
+
+  /// Lookup the [ProviderSource] for a [directive] matched on the element in
+  /// context.
+  ///
+  /// This is mainly used for looking up the directive context for a
+  /// HostListener.
+  ProviderSource directiveInstance(CompileDirectiveMetadata directive) {
+    return compileElement?.getDirectiveSource(directive);
+  }
 }
 
 ir.BindingTarget _attributeName(String name) {
@@ -266,4 +297,44 @@ void _throwIfConditional(bool isConditional, String name) {
     // TODO(b/128689252): Move to validation phase.
     throw BuildError('$name.if is not supported');
   }
+}
+
+ir.EventHandler _handlerFor(
+  String eventName,
+  ast.EventHandler handler,
+  SourceSpan sourceSpan,
+  _IrBindingContext context,
+) {
+  var handlerAst = _handlerExpression(handler, context);
+  var handlerType = handlerTypeFromExpression(handlerAst);
+  var directiveInstance = context.directiveInstance(handler.hostDirective);
+  if (handlerType == HandlerType.notSimple) {
+    return ir.ComplexEventHandler.forAst(
+      handlerAst,
+      sourceSpan,
+      directiveInstance: directiveInstance,
+    );
+  } else {
+    return ir.SimpleEventHandler(handlerAst, sourceSpan,
+        directiveInstance: directiveInstance,
+        numArgs: handlerType == HandlerType.simpleNoArgs ? 0 : 1);
+  }
+}
+
+expression_ast.AST _handlerExpression(
+    ast.EventHandler handler, _IrBindingContext context) {
+  var handlerAst = handler.expression;
+  if (!_isTearOff(handlerAst)) {
+    return handlerAst;
+  }
+  return rewriteTearOff(
+    handlerAst,
+    handler.hostDirective?.analyzedClass ?? context.analyzedClass,
+  );
+}
+
+bool _isTearOff(AST handler) => _handler(handler) is PropertyRead;
+
+AST _handler(AST handler) {
+  return handler is ASTWithSource ? handler.ast : handler;
 }
