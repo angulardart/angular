@@ -19,11 +19,9 @@ import 'event_binder.dart' show bindRenderOutputs, bindDirectiveOutputs;
 import 'ir/provider_source.dart';
 import 'lifecycle_binder.dart'
     show
-        bindDirectiveAfterContentLifecycleCallbacks,
-        bindDirectiveAfterViewLifecycleCallbacks,
-        bindDirectiveDestroyLifecycleCallbacks,
-        bindPipeDestroyLifecycleCallbacks,
-        bindDirectiveDetectChangesLifecycleCallbacks;
+        bindDirectiveAfterChildrenCallbacks,
+        bindDirectiveDetectChangesLifecycleCallbacks,
+        bindPipeDestroyLifecycleCallbacks;
 import 'property_binder.dart'
     show
         bindAndWriteToRenderer,
@@ -105,10 +103,10 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
     var index = -1;
     for (var directiveAst in ast.directives) {
       index++;
-      ProviderSource s = compileElement.directiveInstances[index];
+      ProviderSource providerSource = compileElement.directiveInstances[index];
       // Skip functional directives.
-      if (s == null) continue;
-      var directiveInstance = s.build();
+      if (providerSource == null) continue;
+      var directiveInstance = providerSource.build();
       if (directiveInstance == null) continue;
       var inputs = convertAllToBinding(
         directiveAst.inputs,
@@ -120,7 +118,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
           inputs, directiveAst.directive, directiveInstance, compileElement,
           isHostComponent: compileElement.view.viewType == ViewType.host);
       bindDirectiveDetectChangesLifecycleCallbacks(
-          directiveAst, directiveInstance, compileElement);
+          directiveAst, providerSource, compileElement);
       bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
       var outputs = convertAllToBinding(
         directiveAst.outputs,
@@ -137,17 +135,13 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
     index = -1;
     for (var directiveAst in ast.directives) {
       index++;
-      ProviderSource s = compileElement.directiveInstances[index];
+      ProviderSource providerSource = compileElement.directiveInstances[index];
       // Skip functional directives.
-      if (s == null) continue;
-      var directiveInstance = s.build();
+      if (providerSource == null) continue;
+      var directiveInstance = providerSource.build();
       if (directiveInstance == null) continue;
-      bindDirectiveAfterContentLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
-      bindDirectiveAfterViewLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
-      bindDirectiveDestroyLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
+      bindDirectiveAfterChildrenCallbacks(
+          directiveAst.directive, providerSource, compileElement);
     }
   }
 
@@ -157,10 +151,10 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
     var index = -1;
     for (var directiveAst in ast.directives) {
       index++;
-      ProviderSource s = compileElement.directiveInstances[index];
+      ProviderSource providerSource = compileElement.directiveInstances[index];
       // Skip functional directives.
-      if (s == null) continue;
-      var directiveInstance = s.build();
+      if (providerSource == null) continue;
+      var directiveInstance = providerSource.build();
       if (directiveInstance == null) continue;
       var inputs = convertAllToBinding(
         directiveAst.inputs,
@@ -171,7 +165,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       bindDirectiveInputs(
           inputs, directiveAst.directive, directiveInstance, compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(
-          directiveAst, directiveInstance, compileElement);
+          directiveAst, providerSource, compileElement);
       var outputs = convertAllToBinding(
         directiveAst.outputs,
         directive: directiveAst.directive,
@@ -180,12 +174,9 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       );
       outputs = mergeEvents(outputs);
       bindDirectiveOutputs(outputs, directiveInstance, compileElement);
-      bindDirectiveAfterContentLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
-      bindDirectiveAfterViewLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
-      bindDirectiveDestroyLifecycleCallbacks(
-          directiveAst.directive, directiveInstance, compileElement);
+
+      bindDirectiveAfterChildrenCallbacks(
+          directiveAst.directive, providerSource, compileElement);
     }
     bindView(compileElement.embeddedView, ast.children, null,
         bindHostProperties: false);

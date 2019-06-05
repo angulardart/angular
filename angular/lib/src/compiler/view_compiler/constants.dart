@@ -69,3 +69,14 @@ class DetectChangesVars {
             'change_detection/component_state.dart'),
   );
 }
+
+class Lifecycles {
+  static final afterChanges = 'ngAfterChanges';
+  static final onInit = 'ngOnInit';
+  static final doCheck = 'ngDoCheck';
+  static final afterContentInit = 'ngAfterContentInit';
+  static final afterContentChecked = 'ngAfterContentChecked';
+  static final afterViewInit = 'ngAfterViewInit';
+  static final afterViewChecked = 'ngAfterViewChecked';
+  static final onDestroy = 'ngOnDestroy';
+}
