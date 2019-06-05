@@ -1,61 +1,87 @@
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
-    show LifecycleHooks;
+import 'package:angular/src/compiler/compile_metadata.dart'
+    show CompileDirectiveMetadata, CompilePipeMetadata;
+import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
+import 'package:angular/src/compiler/view_compiler/compile_method.dart';
+import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import '../compile_metadata.dart'
-    show CompileDirectiveMetadata, CompilePipeMetadata;
-import '../output/output_ast.dart' as o;
-import '../template_ast.dart' show DirectiveAst;
+import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
+    show LifecycleHooks;
+
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView, notThrowOnChanges;
-import 'constants.dart' show DetectChangesVars;
+import 'constants.dart' show DetectChangesVars, Lifecycles;
 
 void bindDirectiveDetectChangesLifecycleCallbacks(
   DirectiveAst directiveAst,
-  o.Expression directiveInstance,
+  ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
-  final view = compileElement.view;
-  final detectChangesInInputsMethod = view.detectChangesInInputsMethod;
+  final detectChangesInInputsMethod =
+      compileElement.view.detectChangesInInputsMethod;
   final directive = directiveAst.directive;
   final lifecycleHooks = directive.lifecycleHooks;
+  _bindAfterChanges(lifecycleHooks, directiveAst, detectChangesInInputsMethod,
+      directiveInstance);
+  _bindOnInit(lifecycleHooks, detectChangesInInputsMethod, directiveInstance);
+  _bindDoCheck(lifecycleHooks, detectChangesInInputsMethod, directiveInstance);
+}
+
+void _bindAfterChanges(
+    List<LifecycleHooks> lifecycleHooks,
+    DirectiveAst directiveAst,
+    CompileMethod method,
+    ProviderSource directiveInstance) {
   if (lifecycleHooks.contains(LifecycleHooks.afterChanges) &&
       directiveAst.inputs.isNotEmpty) {
     if (directiveAst.directive.changeDetection ==
         ChangeDetectionStrategy.Stateful) {
-      detectChangesInInputsMethod.addStmt(
-        directiveInstance.callMethod('ngAfterChanges', const []).toStmt(),
+      method.addStmt(
+        _lifecycleMethod(directiveInstance, Lifecycles.afterChanges),
       );
     } else {
-      detectChangesInInputsMethod.addStmt(o.IfStmt(
+      method.addStmt(o.IfStmt(
         DetectChangesVars.changed,
-        [directiveInstance.callMethod('ngAfterChanges', const []).toStmt()],
+        [_lifecycleMethod(directiveInstance, Lifecycles.afterChanges)],
       ));
     }
   }
+}
+
+void _bindOnInit(List<LifecycleHooks> lifecycleHooks, CompileMethod method,
+    ProviderSource directiveInstance) {
   if (lifecycleHooks.contains(LifecycleHooks.onInit)) {
     // We don't re-use the existing IfStmt (.addStmtsIfFirstCheck), because we
     // require an additional condition (`notThrowOnChanges`).
-    detectChangesInInputsMethod.addStmt(o.IfStmt(
+    method.addStmt(o.IfStmt(
       notThrowOnChanges.and(DetectChangesVars.firstCheck),
       [
-        directiveInstance.callMethod(
-          'ngOnInit',
-          [],
-        ).toStmt(),
+        _lifecycleMethod(directiveInstance, Lifecycles.onInit),
       ],
     ));
   }
+}
+
+void _bindDoCheck(List<LifecycleHooks> lifecycleHooks, CompileMethod method,
+    ProviderSource directiveInstance) {
   if (lifecycleHooks.contains(LifecycleHooks.doCheck)) {
-    detectChangesInInputsMethod.addStmt(o.IfStmt(notThrowOnChanges, [
-      directiveInstance.callMethod('ngDoCheck', []).toStmt(),
+    method.addStmt(o.IfStmt(notThrowOnChanges, [
+      _lifecycleMethod(directiveInstance, Lifecycles.doCheck),
     ]));
   }
 }
 
-void bindDirectiveAfterContentLifecycleCallbacks(
+void bindDirectiveAfterChildrenCallbacks(CompileDirectiveMetadata directive,
+    ProviderSource directiveInstance, CompileElement compileElement) {
+  _bindAfterContentCallbacks(directive, directiveInstance, compileElement);
+  _bindAfterViewCallbacks(directive, directiveInstance, compileElement);
+  _bindDestroyCallbacks(directive, directiveInstance, compileElement);
+}
+
+void _bindAfterContentCallbacks(
   CompileDirectiveMetadata directiveMeta,
-  o.Expression directiveInstance,
+  ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
   final view = compileElement.view;
@@ -63,22 +89,19 @@ void bindDirectiveAfterContentLifecycleCallbacks(
   final lifecycleCallbacks = view.afterContentLifecycleCallbacksMethod;
   if (lifecycleHooks.contains(LifecycleHooks.afterContentInit)) {
     lifecycleCallbacks.addStmtsIfFirstCheck([
-      directiveInstance.callMethod(
-        'ngAfterContentInit',
-        [],
-      ).toStmt(),
+      _lifecycleMethod(directiveInstance, Lifecycles.afterContentInit),
     ]);
   }
   if (lifecycleHooks.contains(LifecycleHooks.afterContentChecked)) {
     lifecycleCallbacks.addStmt(
-      directiveInstance.callMethod('ngAfterContentChecked', []).toStmt(),
+      _lifecycleMethod(directiveInstance, Lifecycles.afterContentChecked),
     );
   }
 }
 
-void bindDirectiveAfterViewLifecycleCallbacks(
+void _bindAfterViewCallbacks(
   CompileDirectiveMetadata directiveMeta,
-  o.Expression directiveInstance,
+  ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
   final view = compileElement.view;
@@ -86,31 +109,24 @@ void bindDirectiveAfterViewLifecycleCallbacks(
   final lifecycleCallbacks = view.afterViewLifecycleCallbacksMethod;
   if (lifecycleHooks.contains(LifecycleHooks.afterViewInit)) {
     lifecycleCallbacks.addStmtsIfFirstCheck([
-      directiveInstance.callMethod(
-        'ngAfterViewInit',
-        [],
-      ).toStmt(),
+      _lifecycleMethod(directiveInstance, Lifecycles.afterViewInit),
     ]);
   }
   if (lifecycleHooks.contains(LifecycleHooks.afterViewChecked)) {
-    lifecycleCallbacks.addStmt(directiveInstance.callMethod(
-      'ngAfterViewChecked',
-      [],
-    ).toStmt());
+    lifecycleCallbacks.addStmt(
+        _lifecycleMethod(directiveInstance, Lifecycles.afterViewChecked));
   }
 }
 
 /// Call ngOnDestroy for each directive that implements `OnDestroy`.
-void bindDirectiveDestroyLifecycleCallbacks(
+void _bindDestroyCallbacks(
   CompileDirectiveMetadata directiveMeta,
-  o.Expression directiveInstance,
+  ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
   if (directiveMeta.lifecycleHooks.contains(LifecycleHooks.onDestroy)) {
-    compileElement.view.destroyMethod.addStmt(directiveInstance.callMethod(
-      'ngOnDestroy',
-      [],
-    ).toStmt());
+    compileElement.view.destroyMethod
+        .addStmt(_lifecycleMethod(directiveInstance, Lifecycles.onDestroy));
   }
 }
 
@@ -122,8 +138,15 @@ void bindPipeDestroyLifecycleCallbacks(
 ) {
   if (pipeMeta.lifecycleHooks.contains(LifecycleHooks.onDestroy)) {
     view.destroyMethod.addStmt(pipeInstance.callMethod(
-      'ngOnDestroy',
+      Lifecycles.onDestroy,
       [],
     ).toStmt());
   }
+}
+
+o.Statement _lifecycleMethod(ProviderSource directiveInstance, String name) {
+  return directiveInstance.build().callMethod(
+    name,
+    [],
+  ).toStmt();
 }
