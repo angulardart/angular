@@ -3459,9 +3459,6 @@
     }
   },
   G = {
-    createNgZone: function() {
-      return Y.NgZone$(false);
-    },
     createRandomAppId: function() {
       var t1 = new G.createRandomAppId_char(C.C__JSRandom);
       return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
@@ -3471,11 +3468,20 @@
     createRandomAppId_char: function createRandomAppId_char(t0) {
       this.random = t0;
     },
+    _createNgZone: function() {
+      var t2,
+        t1 = -1;
+      t1 = new Y.NgZone(new P.Object(), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, Y.NgZoneError), H.setRuntimeTypeInfo([], [Y._WrappedTimer]));
+      t2 = $.Zone__current;
+      t1._outerZone = t2;
+      t1._innerZone = t1._createInnerZone$2$handleUncaughtError(t2, t1.get$_onErrorWithoutLongStackTrace());
+      return t1;
+    },
     appInjector: function(userProvidedInjector) {
       var ngZone, t3, userInjector, t1 = {},
         t2 = Y.minimalApp$Injector($.$get$appGlobals()._hostInjector);
       t1.applicationRef = null;
-      ngZone = G.createNgZone();
+      ngZone = G._createNgZone();
       t3 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(t1), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], P.Object, {func: 1, ret: P.Object});
       userInjector = userProvidedInjector.call$1(new G._LazyInjector(t3, t2 == null ? C.EmptyInjector_null : t2));
       return ngZone._innerZone.run$1$1(new G.appInjector_closure3(t1, ngZone, userInjector), M.Injector);
@@ -3582,12 +3588,6 @@
       this.$this = t0;
       this.component = t1;
       this.node = t2;
-    },
-    NgZone$: function(enableLongStackTrace) {
-      var t1 = -1;
-      t1 = new Y.NgZone(new P.Object(), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, t1), P.StreamController_StreamController$broadcast(true, Y.NgZoneError), H.setRuntimeTypeInfo([], [Y._WrappedTimer]));
-      t1.NgZone$1$enableLongStackTrace(false);
-      return t1;
     },
     NgZone: function NgZone(t0, t1, t2, t3, t4, t5) {
       var _ = this;
@@ -10574,12 +10574,6 @@
     }
   };
   Y.NgZone.prototype = {
-    NgZone$1$enableLongStackTrace: function(enableLongStackTrace) {
-      var _this = this,
-        t1 = $.Zone__current;
-      _this._outerZone = t1;
-      _this._innerZone = _this._createInnerZone$2$handleUncaughtError(t1, _this.get$_onErrorWithoutLongStackTrace());
-    },
     _createInnerZone$2$handleUncaughtError: function(zone, handleUncaughtError) {
       var _this = this, _null = null;
       return zone.fork$2$specification$zoneValues(P._ZoneSpecification$(_null, _this.get$_createTimer(), _null, _null, handleUncaughtError, _null, _null, _null, _null, _this.get$_run(), _this.get$_runBinary(), _this.get$_runUnary(), _this.get$_ng_zone$_scheduleMicrotask()), P.LinkedHashMap__makeLiteral([_this._thisZoneKey, true, $.$get$NgZone__anyZoneKey(), true]));
@@ -11830,7 +11824,7 @@
       return [null];
     }, ["call$2", "call$1"], ["_completeError$2", "_completeError$1"], 5, 0);
     _instance_0_u(P._DoneStreamSubscription.prototype, "get$_sendDone", "_sendDone$0", 1);
-    _static_0(G, "modules__createNgZone$closure", "createNgZone", 29);
+    _static_0(G, "run___createNgZone$closure", "_createNgZone", 29);
     _static(G, "run___identityInjector$closure", 0, null, ["call$1", "call$0"], ["_identityInjector", function() {
       return G._identityInjector(null);
     }], 30, 0);

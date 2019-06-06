@@ -19,7 +19,8 @@ void main() {
     List<StreamSubscription> subs;
 
     void createNgZone({@required bool enableLongStackTrace}) {
-      zone = NgZone(enableLongStackTrace: enableLongStackTrace);
+      ExceptionHandler.debugAsyncStackTraces(enableLongStackTrace);
+      zone = NgZone();
       subs = <StreamSubscription>[
         zone.onError.listen((e) {
           errors.add(e.error);
@@ -292,12 +293,15 @@ void main() {
       var sub = zone.onMicrotaskEmpty.listen((_) {
         onMicrotaskEmptyTriggered++;
       });
-      await zone.run(() {
+      final completer = Completer<void>();
+      zone.run(() {
         zone.runAfterChangesObserved(() {
           expect(onMicrotaskEmptyTriggered, 1);
           counter++;
+          completer.complete();
         });
       });
+      await completer.future;
       expect(counter, 1);
       expect(onMicrotaskEmptyTriggered, 2); // onMicrotaskEmpty ran again.
       await sub.cancel();

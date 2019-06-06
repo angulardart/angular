@@ -27,6 +27,23 @@
     instances inside of your `@Component`-annotated Dart class, or prefer syntax
     such as `[class.active]="isActive"` over `[ngClass]="{'active': isActive}"`.
 
+*   Asynchronous (i.e. "long") stack traces are now disabled by default, even in
+    debug mode. To enable them for your app or tests, add the following line to
+    your `main()` function before starting an app:
+
+    ```dart
+    import 'package:angular/angular.dart';
+
+    void main() {
+      ExceptionHandler.debugAsyncStackTraces();
+      // Now run your app/tests.
+    }
+    ```
+
+    We would like feedback if this feature is required for your team, otherwise
+    we are considering removing it all together in a future release of
+    AngularDart.
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.
