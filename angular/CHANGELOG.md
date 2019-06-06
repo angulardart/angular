@@ -22,6 +22,11 @@
     for end-users to interact with this object (it is now private to the
     framework).
 
+*   Map literals (i.e. `{foo: bar}`) are no longer supported within the template
+    and throw a compile-time error. Move code that constructs or maintains Map
+    instances inside of your `@Component`-annotated Dart class, or prefer syntax
+    such as `[class.active]="isActive"` over `[ngClass]="{'active': isActive}"`.
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.
