@@ -10,11 +10,9 @@ import 'package:angular/src/core/application_tokens.dart';
 import 'package:angular/src/core/di.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/core/zone.dart';
 import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
-import 'package:angular/src/runtime.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 
@@ -67,9 +65,6 @@ final InjectorFactory minimalApp =
 
 /// Returns the current [Document] of the browser.
 HtmlDocument getDocument() => document;
-
-/// Creates an AngularDart zone, enabling async stack traces in developer mode.
-NgZone createNgZone() => NgZone(enableLongStackTrace: isDevMode);
 
 /// Creates a random [APP_ID] for use in CSS encapsulation.
 String createRandomAppId() {

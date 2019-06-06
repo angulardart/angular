@@ -1,5 +1,9 @@
 import 'package:logging/logging.dart';
 
+/// Whether [ExceptionHandler.debugAsyncStackTraces] was invoked.
+bool get debugAsyncStackTraces => _debugAsyncStackTraces;
+var _debugAsyncStackTraces = false;
+
 /// Provides a hook for centralized exception handling.
 ///
 /// The default implementation of `ExceptionHandler` when use AngularDart is
@@ -25,6 +29,22 @@ import 'package:logging/logging.dart';
 /// }
 /// ```
 class ExceptionHandler {
+  /// In debug/development mode, log "long" (asynchronous) stack traces.
+  ///
+  /// By default, this feature is disabled. By calling this method (i.e. in
+  /// `main()`) before initializing your app (or tests), stack traces will
+  /// contain previous frames of async work, not just the single frame that
+  /// threw an unhandled error/exception.
+  ///
+  /// In production mode, this method is ignored.
+  ///
+  /// **NOTE**: We are considering removing this feature. Please file feedback
+  /// to our team if you find yourself needing to opt-in with this method as
+  /// part of your workflow.
+  static void debugAsyncStackTraces([bool enabled = true]) {
+    _debugAsyncStackTraces = enabled;
+  }
+
   static String _longStackTrace(stackTrace) => stackTrace is Iterable<Object>
       ? stackTrace.join('\n\n-----async gap-----\n')
       : stackTrace.toString();

@@ -36,10 +36,11 @@ class TestZone extends NgZone {
     return _onStableStream.stream;
   }
 
-  TestZone() : super() {
+  TestZone() : super.debugOverrideDoNotUse() {
     _onUnstableStream = StreamController.broadcast(sync: true);
     _onStableStream = StreamController.broadcast(sync: true);
   }
+
   void unstable() {
     this._onUnstableStream.add(null);
   }

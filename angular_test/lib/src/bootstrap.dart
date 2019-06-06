@@ -6,7 +6,6 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/bootstrap/modules.dart';
 import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 
@@ -23,6 +22,9 @@ InjectorFactory testInjectorFactory(List<dynamic> providers) {
   };
 }
 
+/// Used as a "tear-off" of [NgZone].
+NgZone _createNgZone() => NgZone();
+
 /// Returns a future that completes with a new instantiated component.
 ///
 /// It is treated as the root component of a temporary application for testing
@@ -37,7 +39,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   InjectorFactory userInjector, {
   FutureOr<void> Function(Injector) beforeComponentCreated,
   FutureOr<void> Function(E) beforeChangeDetection,
-  NgZone Function() createNgZone = createNgZone,
+  NgZone Function() createNgZone = _createNgZone,
 }) async {
   if (componentFactory == null) {
     throw ArgumentError.notNull('componentFactory');
