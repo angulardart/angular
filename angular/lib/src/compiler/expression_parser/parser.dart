@@ -42,7 +42,6 @@ import 'lexer.dart'
         $RBRACKET,
         $COMMA,
         $LBRACE,
-        $RBRACE,
         $LPAREN,
         $RPAREN,
         $SLASH;
@@ -541,20 +540,16 @@ class _ParseAST {
     return result;
   }
 
+  // Despite no longer being supported, we want an actionable error message.
   LiteralMap parseLiteralMap() {
-    var keys = <String>[];
-    var values = <AST>[];
-    expectCharacter($LBRACE);
-    if (!optionalCharacter($RBRACE)) {
-      do {
-        var key = expectIdentifierOrKeywordOrString();
-        keys.add(key);
-        expectCharacter($COLON);
-        values.add(parsePipe());
-      } while (optionalCharacter($COMMA));
-      expectCharacter($RBRACE);
-    }
-    return LiteralMap(keys, values);
+    throw ParseException(
+      'UNSUPPORTED: Map literals are no longer supported in the template.\n'
+      'Move code that constructs or maintains Map instances inside of your '
+      '@Component-annotated Dart class, or prefer syntax such as '
+      '[class.active]="isActive" over [ngClass]="{\'active\': isActive}".',
+      input,
+      location,
+    );
   }
 
   AST parseAccessMemberOrMethodCall(AST receiver, [bool isSafe = false]) {

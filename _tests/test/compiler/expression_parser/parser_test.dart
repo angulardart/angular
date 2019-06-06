@@ -125,17 +125,6 @@ void main() {
           checkAction("[].length");
           checkAction("[1, 2].length");
         });
-        test("should parse map", () {
-          checkAction("{}");
-          checkAction("{a: 1}[2]");
-          checkAction("{}[\"a\"]");
-        });
-        test("should only allow identifier, string, or keyword as map key", () {
-          expectActionError(
-              "{(:0}", throwsWith("expected identifier, keyword, or string"));
-          expectActionError("{1234:0}",
-              throwsWith("expected identifier, keyword, or string"));
-        });
       });
       group("member access", () {
         test("should parse field access", () {
@@ -260,7 +249,6 @@ void main() {
           checkBinding("a(b | c)", "a((b | c))");
           checkBinding("a.b(c.d(e) | f)", "a.b((c.d(e) | f))");
           checkBinding("[1, 2, 3] | a", "([1, 2, 3] | a)");
-          checkBinding("{a: 1} | b", "({a: 1} | b)");
           checkBinding("a[b] | c", "(a[b] | c)");
           checkBinding("a?.b | c", "(a?.b | c)");
           checkBinding("true | a", "(true | a)");
