@@ -1,3 +1,10 @@
+*   The InjectorReader now fails with an explicit error if types are used inside
+    a ValueProvider object. Previously, using types in ValueProviders would
+    crash the AngularDart compiler.
+
+    Instead of a ValueProvider, use a FactoryProvider for complicated objects,
+    such as those that contain types.
+
 ## 0.4.4
 
 *   Maintenance release to support the newest version of `analyzer`.
