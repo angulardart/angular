@@ -2,6 +2,7 @@ import 'package:angular_compiler/angular_compiler.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/cli.dart';
 
 import '../src/resolve.dart';
 
@@ -58,6 +59,45 @@ void main() {
           }
         '''),
       );
+    });
+  });
+
+  group('exceptions', () {
+    InjectorEmitter emitter;
+    InjectorReader injector;
+
+    setUp(() {
+      emitter = InjectorEmitter();
+    });
+
+    setUpAll(() async {
+      final library = await resolveLibrary(r'''
+        @GenerateInjector([
+          ValueProvider(Foo, Foo(Foo)),
+        ])
+        InjectorFactory injectorFactory;
+
+        class Foo {
+          const Foo(Type t);
+        }
+      ''');
+      injector = InjectorReader.findInjectors(library).first;
+    });
+
+    test('should throw on a type in a ValueProvider', () {
+      expect(() {
+        try {
+          injector.accept(emitter);
+        } on BuildError catch (e) {
+          expect(
+              e.toString(),
+              allOf([
+                contains('Reviving Types is not supported'),
+                contains('line 7, column 25 of')
+              ]));
+          rethrow;
+        }
+      }, throwsA(const TypeMatcher<BuildError>()));
     });
   });
 }
