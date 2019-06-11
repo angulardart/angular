@@ -30,11 +30,9 @@ class Pipe extends syntactic.Pipe {
   /// Pipes may have additional optional arguments. Store their [DartType]s.
   List<dart.DartType> optionalArgumentTypes = <dart.DartType>[];
 
-  Pipe(String pipeName, SourceRange pipeNameRange,
-      dart.ClassElement classElement,
+  Pipe(String pipeName, SourceRange pipeNameRange, this.classElement,
       {@required this.requiredArgumentType,
       @required this.transformReturnType,
       @required this.optionalArgumentTypes})
-      : classElement = classElement,
-        super(pipeName, pipeNameRange, classElement.name, classElement.source);
+      : super(pipeName, pipeNameRange, classElement.name, classElement.source);
 }

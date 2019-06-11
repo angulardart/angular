@@ -113,9 +113,8 @@ class _OptionsBuilder {
   Map<String, CustomEvent> customEvents = {};
   final Source source;
 
-  _OptionsBuilder(String content, Source source)
-      : source = source,
-        analysisOptions = loadYaml(content ?? source.contents.data) {
+  _OptionsBuilder(String content, this.source)
+      : analysisOptions = loadYaml(content ?? source.contents.data) {
     load();
   }
   _OptionsBuilder.empty() : source = null;

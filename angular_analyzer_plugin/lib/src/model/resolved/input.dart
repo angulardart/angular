@@ -47,12 +47,11 @@ class Input extends syntactic.Input implements Navigable {
   Input(
       {@required String name,
       @required SourceRange nameRange,
-      @required dart.PropertyAccessorElement setter,
+      @required this.setter,
       @required this.setterType,
       this.originalName,
       this.securityContext})
-      : setter = setter,
-        super(
+      : super(
             name: name,
             nameRange: nameRange,
             setterName: setter?.name,

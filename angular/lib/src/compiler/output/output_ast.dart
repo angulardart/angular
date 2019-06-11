@@ -331,9 +331,8 @@ class WriteClassMemberExpr extends Expression {
 class WriteVarExpr extends Expression {
   final String name;
   final Expression value;
-  WriteVarExpr(this.name, Expression value, [OutputType type])
-      : this.value = value,
-        super(type ?? value.type);
+  WriteVarExpr(this.name, this.value, [OutputType type])
+      : super(type ?? value.type);
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
     return visitor.visitWriteVarExpr(this, context);
@@ -358,10 +357,9 @@ class WriteStaticMemberExpr extends Expression {
   final Expression value;
   final bool checkIfNull;
 
-  WriteStaticMemberExpr(this.name, Expression value,
+  WriteStaticMemberExpr(this.name, this.value,
       {OutputType type, this.checkIfNull = false})
-      : this.value = value,
-        super(type ?? value.type);
+      : super(type ?? value.type);
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -373,9 +371,8 @@ class WriteKeyExpr extends Expression {
   final Expression receiver;
   final Expression index;
   final Expression value;
-  WriteKeyExpr(this.receiver, this.index, Expression value, [OutputType type])
-      : this.value = value,
-        super(type ?? value.type);
+  WriteKeyExpr(this.receiver, this.index, this.value, [OutputType type])
+      : super(type ?? value.type);
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
     return visitor.visitWriteKeyExpr(this, context);
@@ -386,9 +383,8 @@ class WritePropExpr extends Expression {
   final Expression receiver;
   final String name;
   final Expression value;
-  WritePropExpr(this.receiver, this.name, Expression value, [OutputType type])
-      : this.value = value,
-        super(type ?? value.type);
+  WritePropExpr(this.receiver, this.name, this.value, [OutputType type])
+      : super(type ?? value.type);
 
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
@@ -550,10 +546,9 @@ class ConditionalExpr extends Expression {
   final Expression condition;
   final Expression falseCase;
   final Expression trueCase;
-  ConditionalExpr(this.condition, Expression trueCase,
+  ConditionalExpr(this.condition, this.trueCase,
       [this.falseCase, OutputType type])
-      : this.trueCase = trueCase,
-        super(type ?? trueCase.type);
+      : super(type ?? trueCase.type);
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
     return visitor.visitConditionalExpr(this, context);
@@ -568,9 +563,8 @@ class IfNullExpr extends Expression {
   /// Result if the `condition` operand is null.
   final Expression nullCase;
 
-  IfNullExpr(this.condition, Expression nullCase, [OutputType type])
-      : nullCase = nullCase,
-        super(type ?? nullCase.type);
+  IfNullExpr(this.condition, this.nullCase, [OutputType type])
+      : super(type ?? nullCase.type);
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
     return visitor.visitIfNullExpr(this, context);
@@ -642,9 +636,8 @@ class BinaryOperatorExpr extends Expression {
   final BinaryOperator operator;
   final Expression rhs;
   final Expression lhs;
-  BinaryOperatorExpr(this.operator, Expression lhs, this.rhs, [OutputType type])
-      : this.lhs = lhs,
-        super(type ?? lhs.type);
+  BinaryOperatorExpr(this.operator, this.lhs, this.rhs, [OutputType type])
+      : super(type ?? lhs.type);
   @override
   R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
     return visitor.visitBinaryOperatorExpr(this, context);
@@ -776,10 +769,9 @@ class DeclareVarStmt extends Statement {
   final String name;
   final Expression value;
   final OutputType type;
-  DeclareVarStmt(this.name, Expression value,
+  DeclareVarStmt(this.name, this.value,
       [OutputType type, List<StmtModifier> modifiers])
       : this.type = type ?? value.type,
-        this.value = value,
         super(modifiers);
   @override
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context) {
