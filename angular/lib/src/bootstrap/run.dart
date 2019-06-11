@@ -342,8 +342,8 @@ Future<ComponentRef<T>> bootstrapStatic<T>(
 ]) =>
     Future.microtask(
       () => runAppLegacy(
-            componentType,
-            createInjectorFromProviders: providers,
-            initReflector: initReflector,
-          ),
+        componentType,
+        createInjectorFromProviders: providers,
+        initReflector: initReflector,
+      ),
     );

@@ -395,7 +395,6 @@ class CompileView {
   o.OutputType classType;
   o.Expression viewFactory;
   String viewFactoryName;
-  bool requiresAfterChangesCall = false;
   var pipeCount = 0;
   ViewNameResolver nameResolver;
   static final defaultDocVarName = 'doc';
