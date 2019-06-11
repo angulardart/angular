@@ -15,6 +15,8 @@ analyzer:
     - build/**
     # TODO(https://github.com/dart-lang/angular/issues/1508)
     - examples/hacker_news_pwa/test/**
+  plugins:
+    - angular
 
 linter:
   rules:
