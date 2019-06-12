@@ -5,6 +5,7 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
@@ -688,6 +689,17 @@ class _ComponentVisitor
             '@Component.templateUrl is not a valid URI. '
             'Parsing produced an error: ${formatException.message}'));
         return null;
+      }
+    }
+    final styleUrls = coerceStringList(template, 'styleUrls');
+    for (final styleUrl in styleUrls) {
+      if (!p.extension(styleUrl).endsWith('.css')) {
+        _exceptionHandler.handle(
+          ErrorMessageForAnnotation(
+            annotationInfo,
+            'Unsupported extension in styleUrls: "$styleUrl". Only ".css" is supported',
+          ),
+        );
       }
     }
     return CompileTemplateMetadata(

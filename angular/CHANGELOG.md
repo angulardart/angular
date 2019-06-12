@@ -1,6 +1,12 @@
 ## 6.0.0-alpha
 
-## Breaking changes
+### New features
+
+*   An eager error is emitted when a non-`.css` file extension is used within
+    a `@Component(styleUrls: [ ... ])`. This used to fail later in the compile
+    process with a confusing error (cannot find asset).
+
+### Breaking changes
 
 *   The `OnChanges` lifecycle has been completely removed. Use `AfterChanges`
     instead.
