@@ -8,7 +8,6 @@ const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
-const _argI18nEnabled = 'i18n';
 const _argNoEmitComponentFactories = 'no-emit-component-factories';
 const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 
@@ -38,11 +37,6 @@ class CompilerFlags {
     )
     ..addFlag(
       _argForceMinifyWhitespace,
-      defaultsTo: null,
-      hide: true,
-    )
-    ..addFlag(
-      _argI18nEnabled,
       defaultsTo: null,
       hide: true,
     )
@@ -140,7 +134,6 @@ class CompilerFlags {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map<Object, Object>) {
       final knownArgs = const [
-        _argI18nEnabled,
         _argProfileFor,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
@@ -156,11 +149,6 @@ class CompilerFlags {
             'repository for a list of supported flags.';
         throw ArgumentError(message);
       }
-    }
-
-    if (options[_argI18nEnabled] != null) {
-      log('The "i18n" flag is no longer necessary as internationalization in '
-          'templates is enabled by default.');
     }
 
     final profileFor = options[_argProfileFor];

@@ -5,6 +5,9 @@
     Instead of a ValueProvider, use a FactoryProvider for complicated objects,
     such as those that contain types.
 
+*   Removed the `i18n` compiler flag that was previously used to opt-in to
+    internationalization in templates before the feature had stabilized.
+
 ## 0.4.4
 
 *   Maintenance release to support the newest version of `analyzer`.
