@@ -8,6 +8,9 @@
 *   Removed the `i18n` compiler flag that was previously used to opt-in to
     internationalization in templates before the feature had stabilized.
 
+*   Added support for a command-line flag, `allowed_typedefs_as_di_token`. This
+    is intended to be used as a transitional flag to ban using a `typedef` as a
+    DI token (which has non-predictable properties in Dart 2).
 ## 0.4.4
 
 *   Maintenance release to support the newest version of `analyzer`.
