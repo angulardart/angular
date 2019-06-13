@@ -71,12 +71,9 @@ class NgZone {
   int _pendingMicrotasks = 0;
   final _pendingTimers = <_WrappedTimer>[];
 
-  factory NgZone({
-    @Deprecated('Remove: Has no effect') bool enableLongStackTrace,
-  }) =>
-      isDevMode && debugAsyncStackTraces
-          ? NgZone._debugAsyncStackTraces()
-          : NgZone._();
+  factory NgZone() => isDevMode && debugAsyncStackTraces
+      ? NgZone._debugAsyncStackTraces()
+      : NgZone._();
 
   // TODO(b/134693667): Remove this once a test no longer uses it.
   NgZone.debugOverrideDoNotUse() {
