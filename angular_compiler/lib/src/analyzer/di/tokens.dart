@@ -12,7 +12,35 @@ import '../types.dart';
 ///
 /// In AngularDart this is either an `OpaqueToken` or a `Type`.
 class TokenReader {
-  const TokenReader();
+  /// The set of `typedef`s that are allowed to be used as tokens.
+  final Set<TypeLink> allowedTypeDefs;
+
+  const TokenReader({this.allowedTypeDefs = const <TypeLink>{}});
+
+  /// Throws an error if [dartType] is a function-type not in [allowed].
+  static void assertNotFunctionType(
+    DartType dartType, {
+    @required Element on,
+    @required Set<TypeLink> allowed,
+  }) {
+    assert(on != null);
+    assert(allowed != null);
+    if (dartType is FunctionType) {
+      final toLink = linkTypeOf(dartType);
+      if (!allowed.contains(toLink)) {
+        final name = toLink.symbol;
+        final error = 'Unsupported token for injection: $name.\n\n'
+            'In previous versions of AngularDart it was valid to inject '
+            'based on a typedef or function type directly. However, in Dart '
+            '2.x+ typedefs and function types are canonicalized, and not '
+            'unique enough, making it easy to misuse.\n\n'
+            'Consider using an OpaqueToken with a description instead:\n'
+            '  typedef $name = Function(...);\n'
+            '  const ${name}Token = OpaqueToken<$name>(\'uniqueName\');';
+        BuildError.throwForElement(on, error);
+      }
+    }
+  }
 
   /// Returns [object] parsed into a [TokenElement].
   ///
@@ -27,10 +55,12 @@ class TokenReader {
       throw FormatException(errorMsg);
     }
     if (constant.isType) {
-      return TypeTokenElement(linkTypeOf(constant.typeValue));
+      final typeValue = constant.typeValue;
+      // TODO: assertNotFunctionType.
+      return TypeTokenElement(linkTypeOf(typeValue));
     }
     if (constant.instanceOf($OpaqueToken)) {
-      return _parseOpaqueToken(constant);
+      return _parseOpaqueToken(constant, element);
     }
     final error =
         'Not a valid token for injection: $object. In previous versions of '
@@ -45,8 +75,8 @@ class TokenReader {
     throw BuildError(error);
   }
 
-  /// Returns [object] parsed into an [OpaqueTokenElement].
-  OpaqueTokenElement _parseOpaqueToken(ConstantReader constant) {
+  /// Returns [constant] parsed into an [OpaqueTokenElement].
+  OpaqueTokenElement _parseOpaqueToken(ConstantReader constant, [Element on]) {
     final value = constant.objectValue;
     final valueType = value.type;
     List<DartType> typeArgs;
@@ -59,8 +89,10 @@ class TokenReader {
     } else {
       typeArgs = valueType.typeArguments;
     }
+    final uniqueName = constant.read('_uniqueName').stringValue;
+
     return OpaqueTokenElement(
-      constant.read('_uniqueName').stringValue,
+      uniqueName,
       isMultiToken: constant.instanceOf($MultiToken),
       classUrl: linkToOpaqueToken(constant.objectValue.type),
       typeUrl: typeArgs.isNotEmpty ? linkTypeOf(typeArgs.first) : null,
