@@ -28,6 +28,7 @@ export 'src/analyzer.dart'
         UseFactoryProviderElement,
         UseValueProviderElement,
         $Component,
+        $ComponentState,
         $Directive,
         $Host,
         $Inject,

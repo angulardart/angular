@@ -12,7 +12,6 @@ import 'package:angular/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
     show HandlerType, handlerTypeFromExpression;
-import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
@@ -165,10 +164,6 @@ class _ToBindingVisitor
 
   bool _isDirectBinding(
       CompileDirectiveMetadata directive, String directiveName) {
-    // All ComponentState bindings are set directly.
-    if (directive.changeDetection == ChangeDetectionStrategy.Stateful) {
-      return true;
-    }
     // Optimization specifically for NgIf. Since the directive already performs
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.

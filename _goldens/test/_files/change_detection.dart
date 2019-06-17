@@ -31,13 +31,13 @@ class OnPushChildComponent {
 }
 
 @Component(
-  selector: 'Stateful',
+  selector: 'component-state',
   template: '<div>Stateful</div>',
 )
-class StatefulComponent extends ComponentState {}
+class LegacyComponentState extends ComponentState {}
 
 @Component(
-  selector: 'Default',
+  selector: 'default',
   template: '<div>Default</div>',
 )
 class DefaultComponent {}

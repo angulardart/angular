@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/source_gen/common/url_resolver.dart'
@@ -1098,13 +1096,7 @@ class CompileView {
 
     List<o.Expression> changeDetectorParams;
     if (providerHasChangeDetector) {
-      // ignore: list_element_type_not_assignable
       changeDetectorParams = [resolvedProviderValueExpr];
-      if (directiveMetadata.changeDetection ==
-          ChangeDetectionStrategy.Stateful) {
-        changeDetectorParams.add(o.THIS_EXPR);
-        changeDetectorParams.add(compileElement.renderNode.toReadExpr());
-      }
     }
 
     if (isEager) {

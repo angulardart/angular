@@ -268,14 +268,14 @@ import8.HostView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentH
   return _ViewOnPushChildComponentHost0(injector);
 }
 
-final List<dynamic> styles$StatefulComponent = const [];
+final List<dynamic> styles$LegacyComponentState = const [];
 
-// View for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
-class ViewStatefulComponent0 extends import0.ComponentView<import1.StatefulComponent> {
+// View for component LegacyComponentState in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
+class ViewLegacyComponentState0 extends import0.ComponentView<import1.LegacyComponentState> {
   static import2.ComponentStyles _componentStyles;
-  ViewStatefulComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+  ViewLegacyComponentState0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
-    this.rootElement = import5.document.createElement('Stateful');
+    this.rootElement = import5.document.createElement('component-state');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -295,34 +295,34 @@ class ViewStatefulComponent0 extends import0.ComponentView<import1.StatefulCompo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$StatefulComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$LegacyComponentState, _debugComponentUrl))));
     }
     this.componentStyles = styles;
   }
 }
 
-const ComponentFactory<import1.StatefulComponent> _StatefulComponentNgFactory = const ComponentFactory('Stateful', viewFactory_StatefulComponentHost0);
-ComponentFactory<import1.StatefulComponent> get StatefulComponentNgFactory {
-  return _StatefulComponentNgFactory;
+const ComponentFactory<import1.LegacyComponentState> _LegacyComponentStateNgFactory = const ComponentFactory('component-state', viewFactory_LegacyComponentStateHost0);
+ComponentFactory<import1.LegacyComponentState> get LegacyComponentStateNgFactory {
+  return _LegacyComponentStateNgFactory;
 }
 
-final List<dynamic> styles$StatefulComponentHost = const [];
+final List<dynamic> styles$LegacyComponentStateHost = const [];
 
-// Host for component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
-class _ViewStatefulComponentHost0 extends import8.HostView<import1.StatefulComponent> {
-  _ViewStatefulComponentHost0(import9.Injector injector) : super(injector);
+// Host for component LegacyComponentState in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
+class _ViewLegacyComponentStateHost0 extends import8.HostView<import1.LegacyComponentState> {
+  _ViewLegacyComponentStateHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
-    // Child component StatefulComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Stateful)
-    this.componentView = ViewStatefulComponent0(this, 0);
+    // Child component LegacyComponentState in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
+    this.componentView = ViewLegacyComponentState0(this, 0);
     final _el_0 = this.componentView.rootElement;
-    this.component = import1.StatefulComponent();
+    this.component = import1.LegacyComponentState();
     this.initRootNode(_el_0);
   }
 }
 
-import8.HostView<import1.StatefulComponent> viewFactory_StatefulComponentHost0(import9.Injector injector) {
-  return _ViewStatefulComponentHost0(injector);
+import8.HostView<import1.LegacyComponentState> viewFactory_LegacyComponentStateHost0(import9.Injector injector) {
+  return _ViewLegacyComponentStateHost0(injector);
 }
 
 final List<dynamic> styles$DefaultComponent = const [];
@@ -332,7 +332,7 @@ class ViewDefaultComponent0 extends import0.ComponentView<import1.DefaultCompone
   static import2.ComponentStyles _componentStyles;
   ViewDefaultComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
-    this.rootElement = import5.document.createElement('Default');
+    this.rootElement = import5.document.createElement('default');
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/change_detection.dart' : null);
@@ -356,7 +356,7 @@ class ViewDefaultComponent0 extends import0.ComponentView<import1.DefaultCompone
   }
 }
 
-const ComponentFactory<import1.DefaultComponent> _DefaultComponentNgFactory = const ComponentFactory('Default', viewFactory_DefaultComponentHost0);
+const ComponentFactory<import1.DefaultComponent> _DefaultComponentNgFactory = const ComponentFactory('default', viewFactory_DefaultComponentHost0);
 ComponentFactory<import1.DefaultComponent> get DefaultComponentNgFactory {
   return _DefaultComponentNgFactory;
 }
@@ -633,7 +633,7 @@ void initReflector() {
   _ngRef.registerComponent(UsesOnPushComponent, UsesOnPushComponentNgFactory);
   _ngRef.registerComponent(OnPushComponent, OnPushComponentNgFactory);
   _ngRef.registerComponent(OnPushChildComponent, OnPushChildComponentNgFactory);
-  _ngRef.registerComponent(StatefulComponent, StatefulComponentNgFactory);
+  _ngRef.registerComponent(LegacyComponentState, LegacyComponentStateNgFactory);
   _ngRef.registerComponent(DefaultComponent, DefaultComponentNgFactory);
   _ngRef.registerComponent(UsesNgModelLike, UsesNgModelLikeNgFactory);
   _ngRef.registerComponent(UsesDoCheckOnPushComponent, UsesDoCheckOnPushComponentNgFactory);

@@ -4,8 +4,6 @@ import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
 import 'package:angular/src/compiler/view_compiler/compile_method.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
 import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
     show LifecycleHooks;
 
@@ -35,17 +33,10 @@ void _bindAfterChanges(
     ProviderSource directiveInstance) {
   if (lifecycleHooks.contains(LifecycleHooks.afterChanges) &&
       directiveAst.inputs.isNotEmpty) {
-    if (directiveAst.directive.changeDetection ==
-        ChangeDetectionStrategy.Stateful) {
-      method.addStmt(
-        _lifecycleMethod(directiveInstance, Lifecycles.afterChanges),
-      );
-    } else {
-      method.addStmt(o.IfStmt(
-        DetectChangesVars.changed,
-        [_lifecycleMethod(directiveInstance, Lifecycles.afterChanges)],
-      ));
-    }
+    method.addStmt(o.IfStmt(
+      DetectChangesVars.changed,
+      [_lifecycleMethod(directiveInstance, Lifecycles.afterChanges)],
+    ));
   }
 }
 

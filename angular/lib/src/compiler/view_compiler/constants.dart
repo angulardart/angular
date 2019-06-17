@@ -19,7 +19,6 @@ const List<String> _changeDetectionStrategies = [
   'CheckAlways',
   'Detached',
   'OnPush',
-  'Stateful'
 ];
 
 /// Converts value of a `ChangeDetectionStrategy` to refer to the static field.
