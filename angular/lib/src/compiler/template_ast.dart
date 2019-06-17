@@ -238,7 +238,6 @@ class NgContainerAst implements TemplateAst {
 /// A <template> element included in an Angular template.
 class EmbeddedTemplateAst implements TemplateAst {
   final List<AttrAst> attrs;
-  final List<BoundEventAst> outputs;
   final List<ReferenceAst> references;
   final List<VariableAst> variables;
   final List<DirectiveAst> directives;
@@ -251,7 +250,6 @@ class EmbeddedTemplateAst implements TemplateAst {
 
   EmbeddedTemplateAst(
       this.attrs,
-      this.outputs,
       this.references,
       this.variables,
       this.directives,

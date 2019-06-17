@@ -28,7 +28,6 @@ class TemplateHumanizer implements TemplateAstVisitor<void, Null> {
     var res = <dynamic>[EmbeddedTemplateAst];
     result.add(_appendContext(ast, res));
     templateVisitAll(this, ast.attrs);
-    templateVisitAll(this, ast.outputs);
     templateVisitAll(this, ast.references);
     templateVisitAll(this, ast.variables);
     templateVisitAll(this, ast.directives);
