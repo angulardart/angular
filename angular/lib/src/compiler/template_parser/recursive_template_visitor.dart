@@ -28,7 +28,6 @@ abstract class RecursiveTemplateVisitor<C>
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) =>
       EmbeddedTemplateAst(
           visitAll(ast.attrs, context),
-          visitAll(ast.outputs, context),
           visitAll(ast.references, context),
           visitAll(ast.variables, context),
           visitAll(ast.directives, context),

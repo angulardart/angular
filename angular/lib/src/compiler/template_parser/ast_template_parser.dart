@@ -326,13 +326,15 @@ class _BindDirectivesVisitor
       [_ParseContext parentContext]) {
     final embeddedContext = _ParseContext.forTemplate(astNode, parentContext);
     _visitProperties(astNode.properties, astNode.attributes, embeddedContext);
+    // <template> elements don't emit DOM events, so the return value can be
+    // ignored.
+    _visitEvents(
+      astNode.events,
+      embeddedContext.boundHostListeners,
+      embeddedContext,
+    );
     return ng.EmbeddedTemplateAst(
         _visitAll(astNode.attributes, embeddedContext),
-        _visitEvents(
-          astNode.events,
-          embeddedContext.boundHostListeners,
-          embeddedContext,
-        ),
         _visitAll(astNode.references, embeddedContext),
         _visitAll(astNode.letBindings, embeddedContext),
         embeddedContext.boundDirectives,
@@ -1098,7 +1100,6 @@ class _ProviderVisitor
     ast.providers.addAll(elementContext.transformProviders);
     return ng.EmbeddedTemplateAst(
         ast.attrs,
-        ast.outputs,
         ast.references,
         ast.variables,
         elementContext.transformedDirectiveAsts,
