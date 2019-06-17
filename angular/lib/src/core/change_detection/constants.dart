@@ -55,13 +55,9 @@ class ChangeDetectionStrategy {
   /// using [OnPush]. We hope to introduce more guidance here in the future.
   static const OnPush = 5;
 
-  @Deprecated('Not intended to be a public API. Extend/Mixin "ComponentState".')
-  static const Stateful = 6;
-
   static const _prettyStrings = <int, String>{
     Default: 'Default',
     OnPush: 'OnPush',
-    Stateful: 'Stateful'
   };
 
   static toPrettyString(int strategy) {

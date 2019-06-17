@@ -808,7 +808,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
       rootEl: parentRenderNodeVar,
     );
 
-    if (view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+    if (view.component.isLegacyComponentState) {
       // Connect ComponentState callback to view.
       final setCallback = DetectChangesVars.internalSetStateChanged.callFn([
         DetectChangesVars.cachedCtx,

@@ -439,6 +439,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
   final CompileTypeMetadata type;
 
+  /// Directive extends or mixes-in `ComponentState`.
+  final bool isLegacyComponentState;
+
   /// User-land class where the component annotation originated.
   final CompileTypeMetadata originType;
 
@@ -465,6 +468,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   CompileDirectiveMetadata({
     this.type,
+    this.isLegacyComponentState = false,
     this.originType,
     this.metadataType,
     this.selector,
@@ -489,6 +493,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
       {AnalyzedClass analyzedClass})
       : this.type = other.type,
+        this.isLegacyComponentState = other.isLegacyComponentState,
         this.originType = other.originType,
         this.metadataType = other.metadataType,
         this.selector = other.selector,

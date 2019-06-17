@@ -8,7 +8,7 @@ import 'package:angular/src/core/linker/views/view.dart';
 
 import 'change_detection.dart';
 
-/// A host for tracking the current application and stateful components.
+/// A host for tracking the current application.
 ///
 /// This is expected to the base class for an `ApplicationRef`, and eventually
 /// could be merged in directly to avoid having inheritance if necessary. For

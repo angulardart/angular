@@ -50,11 +50,19 @@
     we are considering removing it all together in a future release of
     AngularDart.
 
+*   `ChangeDetectionStrategy.Stateful` was removed. It always served as an alias
+    for extending or mixing-in `ComponentState`, and was found to be confusing.
+
 ### Deprecations
 
 *   Deprecated `ChangeDetectorRef.detach()` and `ChangeDetectorRef.reattach()`.
     Components that rely on these methods should use `changeDetection:
     ChangeDetectionStrategy.OnPush` instead.
+
+*   Deprecated `ComponentState`. Under the hood, it now delegates and uses the
+    same mechanisms as `ChangeDetectionStrategy.OnPush`, and it is now
+    recommended to use `ChangeDetectionStrategy.OnPush` over extending or
+    mixing-in the `ComponentState` class.
 
 ## 5.3.0
 
