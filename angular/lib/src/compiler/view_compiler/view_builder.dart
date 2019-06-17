@@ -114,7 +114,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
   }
 
-  bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
+  bool _maybeSkipNode(CompileElement parent, int ngContentIndex) {
     if (!_isRootNode(parent) &&
         parent.component != null &&
         ngContentIndex == null) {
