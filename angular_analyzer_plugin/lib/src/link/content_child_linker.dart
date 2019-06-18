@@ -276,7 +276,8 @@ class ContentChildLinker {
 
     // get T for setterTypes that extend Iterable<T>
     return context.typeSystem
-        .mostSpecificTypeArgument(setterType, iterableType);
+            .mostSpecificTypeArgument(setterType, iterableType) ??
+        typeProvider.dynamicType;
   }
 
   DartType _transformSetterTypeSingular(
