@@ -29,7 +29,7 @@ class CompileContext {
         final symbol = parts.last;
         final import = parts.first;
         return TypeLink(symbol, import);
-      }),
+      }).toSet(),
     );
   }
 

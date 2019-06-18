@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:glob/glob.dart';
 import 'package:angular/src/build.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:logging/logging.dart';
 import 'package:build/build.dart';
@@ -90,16 +91,21 @@ Future<Null> _testBuilder(
 
   final logger = Logger('_testBuilder');
   final logSub = logger.onRecord.listen(onLog);
-  await runBuildZoned(() {
-    return runBuilder(
-      builder,
-      inputIds,
-      reader,
-      writer,
-      AnalyzerResolvers(),
-      logger: logger,
-    );
-  });
+  await runBuildZoned(
+    () {
+      return runBuilder(
+        builder,
+        inputIds,
+        reader,
+        writer,
+        AnalyzerResolvers(),
+        logger: logger,
+      );
+    },
+    zoneValues: {
+      CompileContext: CompileContext(),
+    },
+  );
   await logSub.cancel();
 }
 
