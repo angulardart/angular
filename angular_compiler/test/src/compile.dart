@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:build_test/build_test.dart';
 import 'package:logging/logging.dart';
@@ -41,7 +42,12 @@ Future<T> _recordLogs<T>(
   final records = <LogRecord>[];
   final subscription = logger.onRecord.listen(records.add);
   return scopeLogAsync(() async {
-    return runBuildZoned(run).then((result) {
+    return runBuildZoned(
+      run,
+      zoneValues: {
+        CompileContext: CompileContext(),
+      },
+    ).then((result) {
       subscription.cancel();
       onLog(records);
       return result;

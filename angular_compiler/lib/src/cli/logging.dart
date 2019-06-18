@@ -20,6 +20,7 @@ import 'messages.dart';
 Future<T> runBuildZoned<T>(
   Future<T> Function() fn, {
   bool showInternalTraces = false,
+  Map<Object, Object> zoneValues = const {},
 }) {
   final completer = Completer<T>.sync();
   runZoned(
@@ -59,6 +60,7 @@ Future<T> runBuildZoned<T>(
     zoneSpecification: ZoneSpecification(
       print: (_, __, ___, line) => build.log.info(line),
     ),
+    zoneValues: zoneValues,
   );
   return completer.future;
 }
