@@ -64,6 +64,12 @@
     recommended to use `ChangeDetectionStrategy.OnPush` over extending or
     mixing-in the `ComponentState` class.
 
+### Bug fixes
+
+*   Issue a compile-time error on an invalid `styleUrl`. Previously some URLs
+    that were invalid (i.e. an unsupported schema) were skipped, leading to
+    confusing behavior for users.
+
 ## 5.3.0
 
 ### New features

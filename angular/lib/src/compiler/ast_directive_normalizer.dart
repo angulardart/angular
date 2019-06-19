@@ -191,6 +191,8 @@ class AstDirectiveNormalizer {
     for (final url in templateMeta.styleUrls) {
       if (isStyleUrlResolvable(url)) {
         allExternalStyles.add(_reader.resolveUrl(moduleUrl, url));
+      } else {
+        throwFailure('Invalid Style URL: "$url" (from "$moduleUrl").');
       }
     }
     return allExternalStyles;
