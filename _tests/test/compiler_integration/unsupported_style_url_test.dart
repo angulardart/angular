@@ -19,4 +19,22 @@ void main() {
       contains('Unsupported extension in styleUrls: "example.scss"'),
     ]);
   });
+
+  test('should fail on an invalid URI', () async {
+    await compilesExpecting("""
+      import '$ngImport';
+
+      @Component(
+        selector: 'example',
+        template: '',
+        styleUrls: [
+           // Intentionally mis-spell package as packages.
+          'packages:foo/foo.css',
+        ],
+      )
+      class Example {}
+    """, errors: [
+      contains('Invalid Style URL: "packages:foo/foo.css"'),
+    ]);
+  });
 }
