@@ -144,7 +144,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   NodeReference _nodeReference(
       ir.Binding binding, CompileElement parent, int nodeIndex) {
-    int nodeIndex = _view.nodes.length;
     if (binding.target is ir.TextBinding) {
       return _view.createTextBinding(binding.source, parent, nodeIndex);
     } else if (binding.target is ir.HtmlBinding) {
@@ -162,7 +161,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   @override
   void visitNgContent(NgContentAst ast, CompileElement parent) {
-    _view.projectNodesIntoElement(parent, ast.index, ast);
+    _view.projectNodesIntoElement(parent, ast.index, ast.ngContentIndex);
   }
 
   @override
