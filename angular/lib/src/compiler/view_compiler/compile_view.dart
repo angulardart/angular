@@ -25,7 +25,6 @@ import '../template_ast.dart'
     show
         ElementAst,
         EmbeddedTemplateAst,
-        NgContentAst,
         ProviderAst,
         ProviderAstType,
         ReferenceAst,
@@ -953,7 +952,7 @@ class CompileView {
       nodeIndex == 0 && viewType == ViewType.host;
 
   void projectNodesIntoElement(
-      CompileElement target, int sourceAstIndex, NgContentAst ast) {
+      CompileElement target, int sourceAstIndex, int ngContentIndex) {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     var parentRenderNode = _getParentRenderNode(target);
@@ -966,15 +965,15 @@ class CompileView {
     bool isRootNode = !identical(target.view, this);
     if (!identical(parentRenderNode, o.NULL_EXPR)) {
       _createMethod.addStmt(o.InvokeMemberMethodExpr(
-          'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
+          'project', [parentRenderNode, o.literal(sourceAstIndex)]).toStmt());
     } else if (isRootNode) {
       if (!identical(viewType, ViewType.component)) {
         // store root nodes only for embedded/host views
         rootNodesOrViewContainers.add(nodesExpression);
       }
     } else {
-      if (target.component != null && ast.ngContentIndex != null) {
-        target.addContentNode(ast.ngContentIndex, nodesExpression);
+      if (target.component != null && ngContentIndex != null) {
+        target.addContentNode(ngContentIndex, nodesExpression);
       }
     }
   }
