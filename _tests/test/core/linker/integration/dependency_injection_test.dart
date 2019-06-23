@@ -285,9 +285,7 @@ class SomeDirective {}
 class CompWithHost {
   SomeDirective myHost;
 
-  CompWithHost(@Host() SomeDirective someComp) {
-    this.myHost = someComp;
-  }
+  CompWithHost(@Host() this.myHost);
 }
 
 @Component(

@@ -127,10 +127,6 @@ void bindDirectiveInputs(
       directive.changeDetection == ChangeDetectionStrategy.OnPush;
   var calcChanged = isOnPushComp || afterChanges;
 
-  if (afterChanges) {
-    view.requiresAfterChangesCall = true;
-  }
-
   // We want to call AfterChanges lifecycle only if we detect a change,
   // unlike OnChanges, we don't need to collect a map of SimpleChange(s)
   // therefore we keep track of changes using bool changed variable.

@@ -1,3 +1,16 @@
+*   The InjectorReader now fails with an explicit error if types are used inside
+    a ValueProvider object. Previously, using types in ValueProviders would
+    crash the AngularDart compiler.
+
+    Instead of a ValueProvider, use a FactoryProvider for complicated objects,
+    such as those that contain types.
+
+*   Removed the `i18n` compiler flag that was previously used to opt-in to
+    internationalization in templates before the feature had stabilized.
+
+*   Added support for a command-line flag, `allowed_typedefs_as_di_token`. This
+    is intended to be used as a transitional flag to ban using a `typedef` as a
+    DI token (which has non-predictable properties in Dart 2).
 ## 0.4.4
 
 *   Maintenance release to support the newest version of `analyzer`.

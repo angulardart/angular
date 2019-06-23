@@ -468,8 +468,8 @@ class NgToken implements NgBaseToken<NgTokenType> {
   const NgToken._(
     this.type,
     this.offset, {
-    bool errorSynthetic = false,
-  }) : errorSynthetic = errorSynthetic;
+    this.errorSynthetic = false,
+  });
 
   @override
   bool operator ==(Object o) {

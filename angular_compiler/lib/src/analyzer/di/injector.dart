@@ -234,7 +234,16 @@ class InjectorReader {
     var index = 0;
     for (final provider in providers) {
       if (provider is UseValueProviderElement) {
-        final actualValue = _reviveAny(provider, provider.useValue);
+        Expression actualValue;
+        try {
+          actualValue = _reviveAny(provider, provider.useValue);
+        } on ReviveError catch (e) {
+          throw BuildError.forElement(
+              field,
+              'While reviving providers for Injector: $e\n'
+              'For complicated objects, use a FactoryProvider instead of '
+              'a ValueProvider');
+        }
         visitor.visitProvideValue(
           index,
           provider.token,
@@ -351,13 +360,17 @@ class InjectorReader {
       }
       return literal(reader.literalValue);
     }
+    if (reader.isType) {
+      throw ReviveError(
+          'Reviving Types is not supported but tried to revive $object');
+    }
     final revive = reader.revive();
     if (revive != null) {
       return _revive(provider, revive);
     }
     // TODO(matanl): Make the error actionable after source_gen#374.
     // https://github.com/dart-lang/source_gen/issues/374
-    throw BuildError('Could not reference const object ($object)');
+    throw ReviveError('Could not reference const object ($object)');
   }
 
   Expression _reviveList(
@@ -430,4 +443,14 @@ abstract class InjectorVisitor {
     Expression value,
     bool isMulti,
   );
+}
+
+class ReviveError implements Exception {
+  final String message;
+  ReviveError(this.message);
+
+  @override
+  String toString() {
+    return message;
+  }
 }

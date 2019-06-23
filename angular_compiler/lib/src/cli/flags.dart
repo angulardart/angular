@@ -3,12 +3,12 @@ import 'package:build/build.dart' as build;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
+const _argAllowedTypedefs = 'allowed_typedefs_as_di_token';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
-const _argI18nEnabled = 'i18n';
 const _argNoEmitComponentFactories = 'no-emit-component-factories';
 const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 
@@ -36,13 +36,17 @@ class CompilerFlags {
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
     )
-    ..addFlag(
-      _argForceMinifyWhitespace,
-      defaultsTo: null,
-      hide: true,
+    ..addMultiOption(
+      _argAllowedTypedefs,
+      defaultsTo: const [],
+      help: ''
+          'Specify what named function types (typedefs) can be temporarily '
+          'used as dependency injection tokens without the compiler throwing '
+          'an error.',
+      valueHelp: '<PACAKGE NAME>#<TYPEDEF>, i.e. package:foo/foo.dart#SomeFunc',
     )
     ..addFlag(
-      _argI18nEnabled,
+      _argForceMinifyWhitespace,
       defaultsTo: null,
       hide: true,
     )
@@ -54,6 +58,9 @@ class CompilerFlags {
       _argNoEmitInjectableFactories,
       hide: true,
     );
+
+  /// What (named) function types (typedefs) can be used as DI tokens.
+  final List<String> allowedTypeDefs;
 
   /// May emit extra code suitable for profiling or tooling.
   final Profile profileFor;
@@ -92,7 +99,9 @@ class CompilerFlags {
   /// Whether to emit `export {{file.dart}}` in `file.template.dart`.
   @experimental
   final bool exportUserCodeFromTemplate;
+
   const CompilerFlags({
+    this.allowedTypeDefs = const [],
     this.ignoreNgPlaceholderForGoldens = false,
     this.profileFor = Profile.none,
     this.useLegacyStyleEncapsulation = false,
@@ -140,7 +149,7 @@ class CompilerFlags {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map<Object, Object>) {
       final knownArgs = const [
-        _argI18nEnabled,
+        _argAllowedTypedefs,
         _argProfileFor,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
@@ -149,20 +158,14 @@ class CompilerFlags {
       ].toSet();
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
-        final message = 'Invalid arguments passed to the transformer: \n'
-            '  - ${unknownArgs.join('\n  - ')}\n\n'
-            'You may be providing flags that are no longer valid or supported '
-            'for AngularDart 5.x. See "compiler_flags.md" in the AngularDart '
-            'repository for a list of supported flags.';
+        final message = ''
+            'Invalid compiler arguments: \n'
+            '  - ${unknownArgs.join('\n  - ')}\n\n';
         throw ArgumentError(message);
       }
     }
 
-    if (options[_argI18nEnabled] != null) {
-      log('The "i18n" flag is no longer necessary as internationalization in '
-          'templates is enabled by default.');
-    }
-
+    final allowedTypeDefs = options[_argAllowedTypedefs] as List<String>;
     final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
@@ -170,6 +173,7 @@ class CompilerFlags {
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
     return CompilerFlags(
+      allowedTypeDefs: allowedTypeDefs ?? defaultTo.allowedTypeDefs,
       profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
