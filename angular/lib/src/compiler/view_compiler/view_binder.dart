@@ -1,13 +1,11 @@
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
-import 'package:angular/src/compiler/optimize_ir/merge_events.dart';
-import 'package:angular/src/compiler/optimize_ir/optimize_lifecycles.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/parse_util.dart' show ParseErrorLevel;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
-import 'package:angular/src/compiler/semantic_analysis/matched_directive_converter.dart';
+import 'package:angular/src/compiler/semantic_analysis/element_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/core/linker/view_type.dart';
@@ -85,59 +83,47 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitElement(ElementAst ast, _) {
     var compileElement = view.nodes[_nodeIndex++] as CompileElement;
+    var element =
+        convertElement(ast, compileElement, view.component.analyzedClass);
 
-    bindRenderInputs(
-      convertAllToBinding(
-        ast.inputs,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
-      ),
-      compileElement,
-    );
-    var outputs = convertAllToBinding(
-      ast.outputs,
-      analyzedClass: view.component.analyzedClass,
-      compileElement: compileElement,
-    );
-    outputs = mergeEvents(outputs);
-    bindRenderOutputs(outputs, compileElement);
-    var directives = convertMatchedDirectives(
-        ast.directives, compileElement, view.component.analyzedClass);
-    directives = directives.map(optimizeLifecycles).toList();
-    for (var directive in directives) {
+    bindRenderInputs(element.inputs, element.compileElement);
+    bindRenderOutputs(element.outputs, element.compileElement);
+
+    for (var directive in element.matchedDirectives) {
       bindDirectiveInputs(
         directive.inputs,
         directive,
-        compileElement,
-        isHostComponent: compileElement.view.viewType == ViewType.host,
+        element.compileElement,
+        isHostComponent: element.compileElement.view.viewType == ViewType.host,
       );
-      bindDirectiveDetectChangesLifecycleCallbacks(directive, compileElement);
-      bindDirectiveHostProps(directive, compileElement);
+      bindDirectiveDetectChangesLifecycleCallbacks(
+          directive, element.compileElement);
+      bindDirectiveHostProps(directive, element.compileElement);
       bindDirectiveOutputs(
-          directive.outputs, directive.providerSource, compileElement);
+          directive.outputs, directive.providerSource, element.compileElement);
     }
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, element.children);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
-    for (var directive in directives) {
-      bindDirectiveAfterChildrenCallbacks(directive, compileElement);
+    for (var directive in element.matchedDirectives) {
+      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
     }
   }
 
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var compileElement = view.nodes[_nodeIndex++] as CompileElement;
-    var directives = convertMatchedDirectives(
-        ast.directives, compileElement, view.component.analyzedClass);
-    directives = directives.map(optimizeLifecycles).toList();
-    for (var directive in directives) {
-      bindDirectiveInputs(directive.inputs, directive, compileElement);
-      bindDirectiveDetectChangesLifecycleCallbacks(directive, compileElement);
+    var element = convertEmbeddedTemplate(
+        ast, compileElement, view.component.analyzedClass);
+    for (var directive in element.matchedDirectives) {
+      bindDirectiveInputs(directive.inputs, directive, element.compileElement);
+      bindDirectiveDetectChangesLifecycleCallbacks(
+          directive, element.compileElement);
       bindDirectiveOutputs(
-          directive.outputs, directive.providerSource, compileElement);
-      bindDirectiveAfterChildrenCallbacks(directive, compileElement);
+          directive.outputs, directive.providerSource, element.compileElement);
+      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
     }
-    bindView(compileElement.embeddedView, ast.children, null,
+    bindView(element.compileElement.embeddedView, element.children, null,
         bindHostProperties: false);
   }
 

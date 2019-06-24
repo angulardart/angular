@@ -4,6 +4,7 @@ import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
     show namespaceUris;
@@ -155,6 +156,32 @@ class HostView implements View {
 
   @override
   List<IRNode> get children => [componentView];
+}
+
+/// An element node in the template.
+///
+/// This may represent an HTML element, such as `<div>`, or a Component
+/// instance.
+class Element implements IRNode {
+  final CompileElement compileElement;
+  final List<Binding> inputs;
+  final List<Binding> outputs;
+  final List<MatchedDirective> matchedDirectives;
+
+  // TODO(b/120624750): Replace with IR model classes.
+  final List<TemplateAst> children;
+
+  Element(
+    this.compileElement,
+    this.inputs,
+    this.outputs,
+    this.matchedDirectives,
+    this.children,
+  );
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitElement(this, context);
 }
 
 /// A directive which has been matched to an element in the template.
@@ -623,6 +650,7 @@ abstract class IRVisitor<R, C> extends Object
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);
 
+  R visitElement(Element element, [C context]);
   R visitMatchedDirective(MatchedDirective matchedDirective, [C context]);
 
   R visitBinding(Binding binding, [C context]);
