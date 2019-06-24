@@ -1,6 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/parse_util.dart' show ParseErrorLevel;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
@@ -37,19 +38,18 @@ import 'property_binder.dart'
 /// HostProperties are bound for Component and Host views, but not embedded
 /// views.
 void bindView(
-  CompileView view,
-  List<TemplateAst> parsedTemplate,
+  ir.View view,
   ElementSchemaRegistry schemaRegistry, {
   @required bool bindHostProperties,
 }) {
-  var visitor = _ViewBinderVisitor(view);
-  templateVisitAll(visitor, parsedTemplate);
-  for (var pipe in view.pipes) {
+  var visitor = _ViewBinderVisitor(view.compileView);
+  templateVisitAll(visitor, view.parsedTemplate);
+  for (var pipe in view.compileView.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
 
   if (bindHostProperties) {
-    _bindViewHostProperties(view, schemaRegistry);
+    _bindViewHostProperties(view.compileView, schemaRegistry);
   }
 }
 
@@ -102,7 +102,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       bindDirectiveOutputs(
           directive.outputs, directive.providerSource, element.compileElement);
     }
-    templateVisitAll(this, element.children);
+    templateVisitAll(this, element.parsedTemplate);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
     for (var directive in element.matchedDirectives) {
@@ -123,8 +123,8 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
           directive.outputs, directive.providerSource, element.compileElement);
       bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
     }
-    bindView(element.compileElement.embeddedView, element.children, null,
-        bindHostProperties: false);
+    var embeddedView = element.children.first as ir.EmbeddedView;
+    bindView(embeddedView, null, bindHostProperties: false);
   }
 
   @override

@@ -34,7 +34,7 @@ ir.Element convertElement(
   directives = directives.map(optimizeLifecycles).toList();
 
   return ir.Element(
-      compileElement, inputs, outputs, directives, elementAst.children);
+      compileElement, inputs, outputs, directives, elementAst.children, []);
 }
 
 ir.Element convertEmbeddedTemplate(
@@ -46,6 +46,11 @@ ir.Element convertEmbeddedTemplate(
       embeddedTemplate.directives, compileElement, analyzedClass);
   directives = directives.map(optimizeLifecycles).toList();
 
-  return ir.Element(
-      compileElement, [], [], directives, embeddedTemplate.children);
+  var embeddedView = ir.EmbeddedView(
+    embeddedTemplate.children,
+  );
+
+  embeddedView.compileView = compileElement.embeddedView;
+
+  return ir.Element(compileElement, [], [], directives, [], [embeddedView]);
 }
