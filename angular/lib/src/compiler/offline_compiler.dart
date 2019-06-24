@@ -99,13 +99,11 @@ class OfflineCompiler {
         ? _styleCompiler.compileHostComponent(component)
         : _styleCompiler.compileComponent(component);
     final viewResult = _viewCompiler.compileComponent(
-        view.cmpMetadata,
-        view.parsedTemplate,
-        o.variable(styleResult.stylesVar),
-        view.directiveTypes,
-        view.pipes,
-        _deferredModules,
-        registerComponentFactory: view is ir.ComponentView);
+      view,
+      o.variable(styleResult.stylesVar),
+      _deferredModules,
+      registerComponentFactory: view is ir.ComponentView,
+    );
     statements.addAll(styleResult.statements);
     statements.addAll(viewResult.statements);
   }

@@ -5,6 +5,7 @@ import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/view_compiler/compile_element.dart';
+import 'package:angular/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
     show namespaceUris;
@@ -100,6 +101,8 @@ enum ViewEncapsulation {
 abstract class View extends IRNode {
   List<IRNode> get children;
 
+  CompileView compileView;
+
   // TODO(alorenzen): Replace with IR model classes.
   CompileDirectiveMetadata get cmpMetadata;
   List<TemplateAst> get parsedTemplate;
@@ -118,6 +121,9 @@ class ComponentView implements View {
   final List<CompileTypedMetadata> directiveTypes;
   @override
   final List<CompilePipeMetadata> pipes;
+
+  @override
+  CompileView compileView;
 
   ComponentView(
       {this.children = const [],
@@ -143,6 +149,9 @@ class HostView implements View {
   @override
   final List<CompilePipeMetadata> pipes = const [];
 
+  @override
+  CompileView compileView;
+
   HostView(
     this.componentView, {
     @required this.cmpMetadata,
@@ -158,6 +167,29 @@ class HostView implements View {
   List<IRNode> get children => [componentView];
 }
 
+class EmbeddedView implements View {
+  @override
+  final List<IRNode> children;
+  @override
+  final List<TemplateAst> parsedTemplate;
+
+  @override
+  final CompileDirectiveMetadata cmpMetadata = null;
+  @override
+  final List<CompileTypedMetadata> directiveTypes = const [];
+  @override
+  final List<CompilePipeMetadata> pipes = const [];
+
+  @override
+  CompileView compileView;
+
+  EmbeddedView(this.parsedTemplate) : children = const [];
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitEmbeddedView(this, context);
+}
+
 /// An element node in the template.
 ///
 /// This may represent an HTML element, such as `<div>`, or a Component
@@ -169,13 +201,16 @@ class Element implements IRNode {
   final List<MatchedDirective> matchedDirectives;
 
   // TODO(b/120624750): Replace with IR model classes.
-  final List<TemplateAst> children;
+  final List<TemplateAst> parsedTemplate;
+
+  final List<IRNode> children;
 
   Element(
     this.compileElement,
     this.inputs,
     this.outputs,
     this.matchedDirectives,
+    this.parsedTemplate,
     this.children,
   );
 
@@ -649,6 +684,7 @@ abstract class IRVisitor<R, C> extends Object
 
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);
+  R visitEmbeddedView(EmbeddedView embeddedView, [C context]);
 
   R visitElement(Element element, [C context]);
   R visitMatchedDirective(MatchedDirective matchedDirective, [C context]);
