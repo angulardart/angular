@@ -157,6 +157,56 @@ class HostView implements View {
   List<IRNode> get children => [componentView];
 }
 
+/// A directive which has been matched to an element in the template.
+///
+/// An instance of this class represents the actual binding in the template,
+/// not just the properties declared by the underlying directive.
+class MatchedDirective implements IRNode {
+  /// Source of the directive in the compiled output.
+  ///
+  /// Necessary to bind calls to the correct class instance.
+  final ProviderSource providerSource;
+  final List<Binding> inputs;
+  final List<Binding> outputs;
+  final Set<Lifecycle> lifecycles;
+
+  /// Whether the underlying directive declares any inputs.
+  ///
+  /// This will be true even if there are no inputs matched in the template.
+  final bool hasInputs;
+  final bool hasHostProperties;
+  final bool isComponent;
+  final bool isOnPush;
+
+  MatchedDirective({
+    @required this.providerSource,
+    @required this.inputs,
+    @required this.outputs,
+    @required Set<Lifecycle> lifecycles,
+    @required this.hasInputs,
+    @required this.hasHostProperties,
+    @required this.isComponent,
+    @required this.isOnPush,
+  }) : lifecycles = lifecycles;
+
+  bool hasLifecycle(Lifecycle lifecycle) => lifecycles.contains(lifecycle);
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitMatchedDirective(this, context);
+}
+
+enum Lifecycle {
+  afterChanges,
+  onInit,
+  doCheck,
+  afterContentInit,
+  afterContentChecked,
+  afterViewInit,
+  afterViewChecked,
+  onDestroy,
+}
+
 /// A generic representation of a value binding.
 ///
 /// This is represented as a pairing between the [source], or value being bound,
@@ -572,6 +622,8 @@ abstract class IRVisitor<R, C> extends Object
 
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);
+
+  R visitMatchedDirective(MatchedDirective matchedDirective, [C context]);
 
   R visitBinding(Binding binding, [C context]);
 }
