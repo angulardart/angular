@@ -1,13 +1,13 @@
 import 'package:angular/src/compiler/ir/model.dart' as ir;
-import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/view_compiler/bound_value_converter.dart'
     show BoundValueConverter;
+import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 
 import 'compile_element.dart' show CompileElement;
 
 void bindDirectiveOutputs(
   List<ir.Binding> outputs,
-  o.Expression directiveInstance,
+  ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
   var view = compileElement.view;
@@ -20,7 +20,7 @@ void bindDirectiveOutputs(
       isMockLike: (output.target as ir.DirectiveOutput).isMockLike,
     );
     view.addEventListener(
-        nodeReference, output, handlerExpr, directiveInstance);
+        nodeReference, output, handlerExpr, directiveInstance.build());
   }
 }
 
