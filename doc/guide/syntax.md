@@ -80,7 +80,7 @@ class ExampleApp {}
 )
 class AutoIdDirective {
   static var _nextId = 0;
-  
+
   // Sets the attribute "auto-id" to the next auto-incrementing number.
   //
   // (Note this is a sample only and not a best practice)
@@ -547,7 +547,7 @@ is used to disambiguate identical messages with different meanings:
 
 The presence of this annotation sets the `skip` parameter of
 `Intl.message(...)`[pkg_intl_message] to `true`, which is used to skip messages
-during extraction. THis is useful to avoid translating a message that has not
+during extraction. This is useful to avoid translating a message that has not
 been finalized yet:
 
 ```html
