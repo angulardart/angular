@@ -1,11 +1,9 @@
 import 'package:angular/src/compiler/compile_metadata.dart'
-    show CompilePipeMetadata;
+    show CompilePipeMetadata, LifecycleHooks;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/view_compiler/compile_method.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
-    show LifecycleHooks;
 
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView, notThrowOnChanges;

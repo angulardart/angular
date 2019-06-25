@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/core/metadata.dart';
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 
 List<LifecycleHooks> extractLifecycleHooks(ClassElement clazz) {
   const hooks = <TypeChecker, LifecycleHooks>{

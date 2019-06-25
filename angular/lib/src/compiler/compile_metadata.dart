@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 
 import '../core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
@@ -668,4 +667,24 @@ class CompilePipeMetadata implements CompileMetadataWithType {
 
   @override
   CompileIdentifierMetadata get identifier => type;
+}
+
+/// Lifecycle hooks are guaranteed to be called in the following order:
+/// - `afterChanges` (if any bindings have been changed by the Angular framework),
+/// - `onInit` (after the first check only),
+/// - `doCheck`,
+/// - `afterContentInit`,
+/// - `afterContentChecked`,
+/// - `afterViewInit`,
+/// - `afterViewChecked`,
+/// - `onDestroy` (at the very end before destruction)
+enum LifecycleHooks {
+  onInit,
+  onDestroy,
+  doCheck,
+  afterChanges,
+  afterContentInit,
+  afterContentChecked,
+  afterViewInit,
+  afterViewChecked
 }
