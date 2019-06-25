@@ -1,5 +1,5 @@
 import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/compiler/compile_metadata.dart';
+import 'package:angular/src/compiler/compile_metadata.dart' as core;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/optimize_ir/merge_events.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
@@ -7,7 +7,6 @@ import 'package:angular/src/compiler/template_ast.dart' as ast;
 import 'package:angular/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/core/change_detection.dart';
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart' as core;
 
 /// Converts a list of [ast.DirectiveAst] nodes into [ir.MatchedDirective]
 /// instances.
@@ -80,7 +79,7 @@ ir.MatchedDirective convertMatchedDirective(
   );
 }
 
-Set<ir.Lifecycle> _lifecycles(CompileDirectiveMetadata directive) =>
+Set<ir.Lifecycle> _lifecycles(core.CompileDirectiveMetadata directive) =>
     ir.Lifecycle.values
         .where((lifecycle) =>
             directive.lifecycleHooks.contains(_lifecyclesAsIr[lifecycle]))
