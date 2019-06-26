@@ -1,5 +1,5 @@
 import '../expression_parser/ast.dart'
-    show AST, ASTWithSource, ImplicitReceiver, MethodCall, PropertyRead;
+    show AST, ImplicitReceiver, MethodCall, PropertyRead;
 import 'constants.dart';
 
 enum HandlerType { simpleNoArgs, simpleOneArg, notSimple }
@@ -18,9 +18,6 @@ enum HandlerType { simpleNoArgs, simpleOneArg, notSimple }
 /// generated for them.
 HandlerType handlerTypeFromExpression(AST handler) {
   var eventHandler = handler;
-  if (eventHandler is ASTWithSource) {
-    eventHandler = (eventHandler as ASTWithSource).ast;
-  }
   if (eventHandler is! MethodCall) {
     return HandlerType.notSimple;
   }

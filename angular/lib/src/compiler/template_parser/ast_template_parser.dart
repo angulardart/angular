@@ -396,7 +396,7 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitEvent(ast.EventAst astNode, [_ParseContext context]) {
     try {
-      AST value = context.templateContext.parser.parseAction(
+      var value = context.templateContext.parser.parseAction(
           astNode.value, _location(astNode), context.templateContext.exports);
       var handler = ng.EventHandler(value);
       if (context.bindEventToDirective(
@@ -429,7 +429,7 @@ class _BindDirectivesVisitor
   ng.BoundEventAst _visitHostListener(
       _BoundHostListener hostListener, _ParseContext context) {
     try {
-      AST value = context.templateContext.parser
+      var value = context.templateContext.parser
           .parseAction(hostListener.value, '', context.templateContext.exports);
       var handler = ng.EventHandler(value, hostListener.directive);
       if (context.bindEventToDirective(
@@ -731,7 +731,7 @@ class _ParseContext {
 
   void bindLiteralToDirective(ast.AttributeAst astNode) {
     final parsedValue = astNode.value == null
-        ? EmptyExpr()
+        ? ASTWithSource.missingSource(EmptyExpr())
         : templateContext.parser
             .wrapLiteralPrimitive(astNode.value, _location(astNode));
     final boundValue =
@@ -799,7 +799,7 @@ class _ParseContext {
 
   ng.BoundValue createBoundValue(
     String name,
-    AST value,
+    ASTWithSource value,
     SourceSpan sourceSpan,
   ) {
     if (i18nMetadata.forAttributes.containsKey(name)) {
@@ -1329,10 +1329,10 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
 
   _PipeValidator._(this._pipesByName, this._exceptionHandler);
 
-  void _validatePipes(AST ast, SourceSpan sourceSpan) {
+  void _validatePipes(ASTWithSource ast, SourceSpan sourceSpan) {
     if (ast == null) return;
     var collector = _PipeCollector();
-    ast.visit(collector);
+    ast.ast.visit(collector);
     for (var pipeName in collector.pipeInvocations.keys) {
       final pipe = _pipesByName[pipeName];
       if (pipe == null) {

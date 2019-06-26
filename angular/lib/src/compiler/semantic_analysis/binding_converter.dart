@@ -46,8 +46,8 @@ ir.Binding convertToBinding(
 ///
 /// Currently host attributes are represented as a map from [name] to [value].
 // TODO(b/130184376): Create a better HostAttribute representation.
-ir.Binding convertHostAttributeToBinding(
-        String name, expression_ast.AST value, AnalyzedClass analyzedClass) =>
+ir.Binding convertHostAttributeToBinding(String name,
+        expression_ast.ASTWithSource value, AnalyzedClass analyzedClass) =>
     ir.Binding(
         source: ir.BoundExpression(value, null, analyzedClass),
         target: _attributeName(name));
@@ -57,7 +57,7 @@ ir.Binding convertHostAttributeToBinding(
 /// Current host listeners are represented as a map from [name] to [value].
 // TODO(b/130184376): Create a better HostListener representation.
 ir.Binding convertHostListenerToBinding(
-        String eventName, expression_ast.AST handlerAst) =>
+        String eventName, expression_ast.ASTWithSource handlerAst) =>
     ir.Binding(
       source: _handlerFor(
         eventName,
@@ -301,7 +301,7 @@ ir.EventHandler _handlerFor(
   _IrBindingContext context,
 ) {
   var handlerAst = _handlerExpression(handler, context);
-  var handlerType = handlerTypeFromExpression(handlerAst);
+  var handlerType = handlerTypeFromExpression(handlerAst.ast);
   var directiveInstance = context.directiveInstance(handler.hostDirective);
   if (handlerType == HandlerType.notSimple) {
     return ir.ComplexEventHandler.forAst(
@@ -316,7 +316,7 @@ ir.EventHandler _handlerFor(
   }
 }
 
-expression_ast.AST _handlerExpression(
+expression_ast.ASTWithSource _handlerExpression(
     ast.EventHandler handler, _IrBindingContext context) {
   var handlerAst = handler.expression;
   if (!_isTearOff(handlerAst)) {
@@ -328,8 +328,4 @@ expression_ast.AST _handlerExpression(
   );
 }
 
-bool _isTearOff(AST handler) => _handler(handler) is PropertyRead;
-
-AST _handler(AST handler) {
-  return handler is ASTWithSource ? handler.ast : handler;
-}
+bool _isTearOff(ASTWithSource handler) => handler.ast is PropertyRead;

@@ -174,8 +174,14 @@ void _bindViewHostProperties(
   var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
   hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
-    hostProperties.add(createElementPropertyAst(elementName, propName,
-        BoundExpression(expression), span, schemaRegistry, _handleError));
+    hostProperties.add(createElementPropertyAst(
+      elementName,
+      propName,
+      BoundExpression(ast.ASTWithSource.missingSource(expression)),
+      span,
+      schemaRegistry,
+      _handleError,
+    ));
   });
 
   final method = CompileMethod();
