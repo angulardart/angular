@@ -61,7 +61,7 @@ abstract class BoundValueConverter
       convertCdExpressionToIr(
         _nameResolver,
         _implicitReceiver,
-        boundExpression.expression,
+        boundExpression.expression.ast,
         boundExpression.sourceSpan,
         _metadata,
         type,
@@ -117,7 +117,7 @@ abstract class BoundValueConverter
         // the implicit receiver for the handler expression. Otherwise, we
         // assume the default receiver for the view.
         handler.directiveInstance?.build() ?? _implicitReceiver,
-        handler.handler,
+        handler.handler.ast,
         handler.sourceSpan,
         _metadata,
       );

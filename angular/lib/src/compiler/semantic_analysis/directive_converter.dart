@@ -38,7 +38,7 @@ class DirectiveConverter {
       return createElementPropertyAst(
         _securityContextElementName,
         property,
-        ast.BoundExpression(expression),
+        ast.BoundExpression(ast.ASTWithSource.missingSource(expression)),
         _emptySpan,
         _schemaRegistry,
         _reportError,

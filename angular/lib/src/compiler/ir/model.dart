@@ -541,7 +541,7 @@ class StringLiteral extends BoundLiteral {
 
 /// A [BindingSource] which represents a general-purpose expression.
 class BoundExpression implements BindingSource {
-  final ast.AST expression;
+  final ast.ASTWithSource expression;
   final SourceSpan sourceSpan;
   final analyzed.AnalyzedClass _analyzedClass;
 
@@ -551,24 +551,26 @@ class BoundExpression implements BindingSource {
   /// values.
   ///
   /// This hack is to allow legacy NgIf behavior on null inputs
-  BoundExpression.falseIfNull(ast.AST parsedExpression, SourceSpan sourceSpan,
-      analyzed.AnalyzedClass scope)
+  BoundExpression.falseIfNull(ast.ASTWithSource parsedExpression,
+      SourceSpan sourceSpan, analyzed.AnalyzedClass scope)
       : this(
-            analyzed.isImmutable(parsedExpression, scope)
+            analyzed.isImmutable(parsedExpression.ast, scope)
                 ? parsedExpression
-                : ast.Binary(
-                    '==', parsedExpression, ast.LiteralPrimitive(true)),
+                : ast.ASTWithSource.from(
+                    parsedExpression,
+                    ast.Binary('==', parsedExpression.ast,
+                        ast.LiteralPrimitive(true))),
             sourceSpan,
             scope);
 
   @override
-  bool get isImmutable => analyzed.isImmutable(expression, _analyzedClass);
+  bool get isImmutable => analyzed.isImmutable(expression.ast, _analyzedClass);
 
   @override
-  bool get isNullable => analyzed.canBeNull(expression);
+  bool get isNullable => analyzed.canBeNull(expression.ast);
 
   @override
-  bool get isString => analyzed.isString(expression, _analyzedClass);
+  bool get isString => analyzed.isString(expression.ast, _analyzedClass);
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
@@ -597,7 +599,7 @@ abstract class EventHandler implements BindingSource {
 ///
 /// In generated code, this can be expressed as a "tear-off" expression.
 class SimpleEventHandler extends EventHandler {
-  final ast.AST handler;
+  final ast.ASTWithSource handler;
   final SourceSpan sourceSpan;
   final ProviderSource directiveInstance;
 
@@ -630,7 +632,7 @@ class ComplexEventHandler extends EventHandler {
 
   ComplexEventHandler._(this.handlers);
 
-  ComplexEventHandler.forAst(ast.AST handler, SourceSpan sourceSpan,
+  ComplexEventHandler.forAst(ast.ASTWithSource handler, SourceSpan sourceSpan,
       {ProviderSource directiveInstance})
       : this._([
           SimpleEventHandler(

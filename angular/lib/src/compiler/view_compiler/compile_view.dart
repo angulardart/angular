@@ -680,7 +680,7 @@ class CompileView {
       return convertCdExpressionToIr(
         nameResolver,
         implicitReceiver,
-        source.expression,
+        source.expression.ast,
         source.sourceSpan,
         component,
         o.STRING_TYPE,

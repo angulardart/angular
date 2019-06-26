@@ -64,7 +64,7 @@ void _typeNgForLocals(
     return;
   }
   final ngForOfType =
-      getExpressionType(ngForOfValue.expression, component.analyzedClass);
+      getExpressionType(ngForOfValue.expression.ast, component.analyzedClass);
   // Augment locals set by `NgFor` with type information.
   for (var variable in variables) {
     switch (variable.value) {

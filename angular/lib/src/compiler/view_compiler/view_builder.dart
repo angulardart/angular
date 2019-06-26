@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata;
+import 'package:angular/src/compiler/expression_parser/ast.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 import 'package:angular/src/compiler/identifiers.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
@@ -562,7 +563,7 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
   // Write literal attribute values on element.
   view.component.hostAttributes.forEach((name, value) {
     var binding = convertHostAttributeToBinding(
-        name, value, view.component.analyzedClass);
+        name, ASTWithSource.missingSource(value), view.component.analyzedClass);
     var statement = view.createAttributeStatement(
       binding,
       tagName,

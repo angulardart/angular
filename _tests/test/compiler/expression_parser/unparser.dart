@@ -4,9 +4,9 @@ class Unparser implements AstVisitor {
   static final _quoteRegExp = RegExp(r'"');
   StringBuffer sb;
 
-  String unparse(AST ast) {
+  String unparse(ASTWithSource ast) {
     sb = StringBuffer();
-    _visit(ast);
+    _visit(ast.ast);
     return sb.toString();
   }
 

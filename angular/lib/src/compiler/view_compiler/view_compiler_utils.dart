@@ -367,8 +367,10 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
       // binding that came earlier takes priority.
       if (isComponent && !shouldMerge) continue;
 
-      var value = convertHostAttributeToBinding(name,
-          directiveMeta.hostAttributes[name], directiveMeta.analyzedClass);
+      var value = convertHostAttributeToBinding(
+          name,
+          ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]),
+          directiveMeta.analyzedClass);
       var prevValue = result[name];
       result[name] = prevValue != null
           ? _mergeAttributeValue(
@@ -431,8 +433,8 @@ ir.Binding _mergeAttributeValue(
     return ir.Binding(
         target: attr1.target,
         source: ir.BoundExpression(
-            ast.Interpolation(
-                ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)]),
+            ast.ASTWithSource.missingSource(ast.Interpolation(
+                ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)])),
             null,
             analyzedClass));
   }
@@ -440,7 +442,7 @@ ir.Binding _mergeAttributeValue(
 
 ast.AST _asAst(ir.BindingSource bindingSource) {
   if (bindingSource is ir.BoundExpression) {
-    return bindingSource.expression;
+    return bindingSource.expression.ast;
   } else if (bindingSource is ir.StringLiteral) {
     return ast.LiteralPrimitive(bindingSource.value);
   }
