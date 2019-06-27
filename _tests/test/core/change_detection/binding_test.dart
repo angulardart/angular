@@ -187,7 +187,7 @@ class TestStripQuotes implements ValueTest {
 @Component(
   selector: 'test',
   directives: [ChildComponent],
-  template: '<child [value]="\'a\n\nb\'"></child>',
+  template: '''<child [value]="value"></child>''',
 )
 class TestNewLines implements ValueTest {
   @ViewChild(ChildComponent)
@@ -196,6 +196,9 @@ class TestNewLines implements ValueTest {
 
   @override
   get expected => 'a\n\nb';
+
+  // TODO(b/136199519): Move the value back inline in the template.
+  var value = 'a\n\nb';
 }
 
 @Component(
