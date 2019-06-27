@@ -28,6 +28,12 @@ external _ng.ComponentFactory<MaterialAutoSuggestInputComponent> get MaterialAut
 class ViewMaterialAutoSuggestInputComponent0 extends _ng.ComponentView<MaterialAutoSuggestInputComponent> {
   external ViewMaterialAutoSuggestInputComponent0(_ng.View parentView, int parentIndex);
 }
+// For @Component class MaterialIcon.
+external List<dynamic> get styles$MaterialIcon;
+external _ng.ComponentFactory<MaterialIcon> get MaterialIconNgFactory;
+class ViewMaterialIcon0 extends _ng.ComponentView<MaterialIcon> {
+  external ViewMaterialIcon0(_ng.View parentView, int parentIndex);
+}
 // For @Component class MaterialInputComponent.
 external List<dynamic> get styles$MaterialInputComponent;
 external _ng.ComponentFactory<MaterialInputComponent> get MaterialInputComponentNgFactory;

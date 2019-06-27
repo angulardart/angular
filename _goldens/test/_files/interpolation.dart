@@ -71,6 +71,11 @@ class InterpolationLiterals {}
   ''',
 )
 class InterpolationLocals {
+  final bars = [
+    [1],
+    [2],
+    [3, 4]
+  ];
   String callMethod(Object input) => input.toString();
 }
 

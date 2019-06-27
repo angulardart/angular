@@ -22,7 +22,7 @@ class ChildDirective implements OnInit, OnDestroy, AfterChanges {
   set inputWithIterable(Iterable<int> intList) {}
 
   @Input('row')
-  set gridRow(String value) {
+  set gridRow(int value) {
     print(value);
   }
 
@@ -84,7 +84,10 @@ class DirectiveWithOutput {
 @Component(
   selector: 'test-foo',
   template: r'''
-    <div some-child-directive directive-with-output [row]="rowIndex" (trigger)="onTrigger">
+    <div some-child-directive
+         directive-with-output
+         [row]="rowIndex"
+         (trigger)="onTrigger">
       Foo
     </div>
   ''',
