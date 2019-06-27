@@ -243,7 +243,7 @@ class ContentChildrenComponent extends TextDirectivesRenderer {
 
 @Component(
   selector: 'content-child',
-  template: '<div>{{textDirective?.text}}</div>',
+  template: '<div>{{textDirective?.text}}</div><ng-content></ng-content>',
 )
 class ContentChildComponent {
   @ContentChild(TextDirective)
@@ -275,7 +275,8 @@ class TestsContentChildComponent {}
   <div text="b"></div>
 </div>
 <div>{{text}}</div>
-<div text="c"></div>''',
+<div text="c"></div>
+<ng-content></ng-content>''',
   directives: [
     TextDirective,
   ],
@@ -307,7 +308,8 @@ class TestsViewChildrenComponent {}
   <div text="b"></div>
 </div>
 <div>{{textDirective.text}}</div>
-<div text="c"></div>''',
+<div text="c"></div>
+<ng-content></ng-content>''',
   directives: [
     TextDirective,
   ],
@@ -591,7 +593,7 @@ class TestsNamedTemplateRefComponent {}
 
 @Component(
   selector: 'reads-content-children',
-  template: '<div>{{text}}</div>',
+  template: '<div>{{text}}</div><ng-content></ng-content>',
 )
 class ReadsContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren('hasText', read: TextDirective)
@@ -614,7 +616,7 @@ class TestsReadsContentChildrenComponent {}
 
 @Component(
   selector: 'reads-content-child',
-  template: '<div>{{textDirective.text}}</div>',
+  template: '<div>{{textDirective.text}}</div><ng-content></ng-content>',
 )
 class ReadsContentChildComponent {
   @ContentChild('hasText', read: TextDirective)

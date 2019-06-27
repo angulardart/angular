@@ -121,11 +121,24 @@ void main() {
 
 const isExpressionChanged = TypeMatcher<UnstableExpressionError>();
 
+@Directive(
+  selector: 'copy-me',
+)
+class CopyMe {}
+
 @Component(
   selector: 'ngif-intemplate-test',
-  template: '<div><template [ngIf]="booleanCondition">'
-      '<copy-me>hello2</copy-me></template></div>',
-  directives: [NgIf],
+  template: '''
+    <div>
+      <template [ngIf]="booleanCondition">
+        <copy-me>hello2</copy-me>
+      </template>
+    </div>
+  ''',
+  directives: [
+    CopyMe,
+    NgIf,
+  ],
 )
 class NgIfInTemplateComponent {
   bool booleanCondition = true;
@@ -133,9 +146,15 @@ class NgIfInTemplateComponent {
 
 @Component(
   selector: 'ngif-toggle-test',
-  template: '<div><copy-me *ngIf="booleanCondition">hello</copy-me>'
-      '</div>',
-  directives: [NgIf],
+  template: '''
+    <div>
+      <copy-me *ngIf="booleanCondition">hello</copy-me>
+    </div>
+  ''',
+  directives: [
+    CopyMe,
+    NgIf,
+  ],
 )
 class NgIfToggleTestComponent {
   bool booleanCondition = true;
@@ -143,10 +162,17 @@ class NgIfToggleTestComponent {
 
 @Component(
   selector: 'ngif-nested-test',
-  template: '<div><template [ngIf]="booleanCondition">'
-      '<copy-me *ngIf="nestedBooleanCondition">hello</copy-me>'
-      '</template></div>',
-  directives: [NgIf],
+  template: '''
+    <div>
+      <template [ngIf]="booleanCondition">
+        <copy-me *ngIf="nestedBooleanCondition">hello</copy-me>
+      </template>
+    </div>
+  ''',
+  directives: [
+    CopyMe,
+    NgIf,
+  ],
 )
 class NgIfNestedTestComponent {
   bool booleanCondition = true;
@@ -160,7 +186,10 @@ class NgIfNestedTestComponent {
       '<copy-me *ngIf="stringCondition == \'foo\'">helloString</copy-me>'
       '<copy-me *ngIf="functionCondition(stringCondition, numberCondition)">helloFunction</copy-me>'
       '</div>',
-  directives: [NgIf],
+  directives: [
+    CopyMe,
+    NgIf,
+  ],
 )
 class NgIfMultiUpdateTestComponent {
   bool booleanCondition = true;
@@ -177,7 +206,10 @@ class NgIfMultiUpdateTestComponent {
       <div *ngIf="value">Hello</div>
     </template>
   ''',
-  directives: [NgIf],
+  directives: [
+    CopyMe,
+    NgIf,
+  ],
 )
 class NgIfThrowsDuringChangeDetection {
   bool _value = false;

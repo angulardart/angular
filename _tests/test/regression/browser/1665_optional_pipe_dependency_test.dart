@@ -17,7 +17,7 @@ void main() {
 abstract class TestService {}
 
 @Pipe('test')
-class TestPipe {
+class TestPipe extends PipeTransform {
   TestPipe(@Optional() TestService _);
 
   dynamic transform(dynamic value) => value;

@@ -148,7 +148,7 @@ class DirectiveWithTwoWayBinding {
   var control;
 
   @Output()
-  get controlChange => _streamController.stream;
+  Stream<String> get controlChange => _streamController.stream;
 
   triggerChange(String value) {
     _streamController.add(value);
