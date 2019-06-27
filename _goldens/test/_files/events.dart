@@ -24,7 +24,9 @@ class UsesNativeEvents {
     <has-angular-events (foo)="onFoo()"></has-angular-events>
   ''',
 )
-class UsesAngularEvents {}
+class UsesAngularEvents {
+  void onFoo() {}
+}
 
 @Component(
   selector: 'has-angular-events',

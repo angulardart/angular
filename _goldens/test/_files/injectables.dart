@@ -24,7 +24,7 @@ import 'package:angular/angular.dart';
   ],
 )
 class InjectableComponent {
-  final BaseService service;
+  final String service;
   final InjectableService _injectableService;
   final bool isTest;
 

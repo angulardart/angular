@@ -36,7 +36,7 @@ class DependencyWithContent implements Dependency {}
       <dependent></dependent>
     </dependency>
   ''',
-  directives: [Dependency, Dependent],
+  directives: [Dependent],
 )
 class DependencyAndDependentInView {}
 

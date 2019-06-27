@@ -14,7 +14,6 @@ import 'deferred_component.dart';
       <deferred-child-3 @deferred #queryMe></deferred-child-3>
     </div>
     <deferred-child-without-ng-content @deferred>
-      Hello World
     </deferred-child-without-ng-content>
     <deferred-child-with-ng-content @deferred>
       Hello World

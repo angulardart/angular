@@ -230,7 +230,7 @@ class ViewComp30 extends import0.ComponentView<import1.Comp3> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import8.interpolate0(import1.Comp3.max(_ctx.a, _ctx.b).isEven));
+    this._textBinding_0.updateText(import8.interpolate0(import1.Comp3.max(_ctx.a, _ctx.b).toInt().isEven));
   }
 
   @override

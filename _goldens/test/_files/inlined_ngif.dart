@@ -4,19 +4,19 @@ import 'package:angular/angular.dart';
 @Component(
   selector: 'inlined-ngif',
   template: '''
-    <div *ngIf="foo">Hello World!</div>
+    <div *ngIf="maybeTrue">Hello World!</div>
     ''',
   directives: [NgIf],
 )
 class InlinedNgIfComponent {
-  var foo = true;
+  var maybeTrue = true;
 }
 
 /// Tests that this simple NgIf is *not* inlined.
 @Component(
   selector: 'inlined-ngif',
   template: '''
-    <div *ngIf="foo">Hello {{name}}!</div>
+    <div *ngIf="name == 'World'">Hello {{name}}!</div>
     ''',
   directives: [NgIf],
 )
@@ -28,10 +28,10 @@ class IgnoredNgIfComponent {
 @Component(
   selector: 'inlined-ngif-with-immutable-condition',
   template: '''
-    <div *ngIf="foo">Hello World!</div>
+    <div *ngIf="alwaysTrue">Hello World!</div>
     ''',
   directives: [NgIf],
 )
 class InlinedNgIfWithImmutableConditionComponent {
-  final foo = true;
+  final alwaysTrue = true;
 }

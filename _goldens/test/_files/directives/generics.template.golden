@@ -1021,8 +1021,8 @@ final List<dynamic> styles$UsesRecursiveComp = const [];
 
 // View for component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class ViewUsesRecursiveComp0 extends import0.ComponentView<import1.UsesRecursiveComp> {
-  ViewRecursiveComp0 _compView_0;
-  import1.RecursiveComp _RecursiveComp_0_5;
+  ViewRecursiveComp0<num> _compView_0;
+  import1.RecursiveComp<num> _RecursiveComp_0_5;
   var _expr_0;
   static import2.ComponentStyles _componentStyles;
   ViewUsesRecursiveComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {

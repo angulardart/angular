@@ -24,6 +24,7 @@ import 'package:angular/src/common/directives/ng_for.dart' as import14;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
 import 'package:angular/src/core/linker/views/render_view.dart' as import17;
+import 'dart:core';
 
 final List<dynamic> styles$InterpolationComponent = const [];
 
@@ -356,7 +357,6 @@ final List<dynamic> styles$InterpolationLocals = const [];
 class ViewInterpolationLocals0 extends import0.ComponentView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
   import14.NgFor _NgFor_0_9;
-  var _expr_0;
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLocals0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -378,10 +378,11 @@ class ViewInterpolationLocals0 extends import0.ComponentView<import1.Interpolati
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.bars;
-    if (import7.checkBinding(this._expr_0, currVal_0)) {
-      this._NgFor_0_9.ngForOf = currVal_0;
-      this._expr_0 = currVal_0;
+    bool firstCheck = this.firstCheck;
+    if (firstCheck) {
+      if (!identical(_ctx.bars, null)) {
+        (this._NgFor_0_9.ngForOf = _ctx.bars);
+      }
     }
     if ((!import7.debugThrowIfChanged)) {
       this._NgFor_0_9.ngDoCheck();
@@ -425,7 +426,7 @@ class _ViewInterpolationLocals1 extends import16.EmbeddedView<import1.Interpolat
 
   @override
   void detectChangesInternal() {
-    final local_bar = this.locals['\$implicit'];
+    final local_bar = import7.unsafeCast<List<int>>(this.locals['\$implicit']);
     final currVal_0 = local_bar;
     if (import7.checkBinding(this._expr_0, currVal_0)) {
       this._NgFor_0_9.ngForOf = currVal_0;
@@ -462,8 +463,8 @@ class _ViewInterpolationLocals2 extends import16.EmbeddedView<import1.Interpolat
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final local_bar = import7.unsafeCast<_ViewInterpolationLocals1>(this.parentView).locals['\$implicit'];
-    final local_foo = this.locals['\$implicit'];
+    final local_bar = import7.unsafeCast<List<int>>(import7.unsafeCast<_ViewInterpolationLocals1>(this.parentView).locals['\$implicit']);
+    final local_foo = import7.unsafeCast<int>(this.locals['\$implicit']);
     this._textBinding_1.updateText(import9.interpolateString0(_ctx.callMethod(local_bar)));
     this._textBinding_3.updateText(import9.interpolate0(local_foo));
   }

@@ -27,7 +27,7 @@ final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10
 class ViewTestFooComponent0 extends import0.ComponentView<import1.TestFooComponent> {
   ChildDirectiveNgCd _ChildDirective_0_5;
   import1.DirectiveWithOutput _DirectiveWithOutput_0_6;
-  String _expr_0;
+  int _expr_0;
   import2.DivElement _el_0;
   static import3.ComponentStyles _componentStyles;
   ViewTestFooComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {

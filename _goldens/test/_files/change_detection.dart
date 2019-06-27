@@ -58,7 +58,7 @@ class UsesNgModelLike {
 )
 class NgModelLike implements AfterChanges, OnInit {
   @Output('ngModelChange')
-  get modelChange => null;
+  Stream<void> get modelChange => const Stream.empty();
 
   @Input('ngModel')
   set model(Object ngModel) {}
