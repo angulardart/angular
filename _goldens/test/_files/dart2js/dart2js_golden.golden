@@ -3996,17 +3996,14 @@
       this.zone = t0;
     }},
   O = {
-    _flattenStyles: function(styles, target, componentIdOrNull) {
+    _flattenStyles: function(styles, target, componentId) {
       return target;
     },
     ComponentStyles: function ComponentStyles() {
     },
-    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1, t2, t3) {
-      var _ = this;
-      _._componentUrl = t0;
-      _._styles = t1;
-      _._componentId = t2;
-      _.hostPrefix = t3;
+    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
+      this._componentUrl = t0;
+      this._styles = t1;
     },
     main: function() {
       G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(C.ComponentFactory_2Vk, O.RootComponent);
@@ -9334,7 +9331,7 @@
       t4 = new N.ViewRootComponent0(E._ComponentViewData__ComponentViewData(hostView, 0, 3));
       styles = $.ViewRootComponent0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewRootComponent0__componentStyles = styles;
       }
@@ -10154,7 +10151,7 @@
   O.ComponentStyles.prototype = {
     _appendStyles$0: function() {
       var target = H.setRuntimeTypeInfo([], [P.String]),
-        styles = C.JSArray_methods.join$1(O._flattenStyles(this._styles, target, this._componentId), "\n"),
+        styles = C.JSArray_methods.join$1(O._flattenStyles(this._styles, target, ""), "\n"),
         t1 = document,
         t2 = t1.head;
       t1 = t1.createElement("style");
@@ -11067,7 +11064,7 @@
       t1 = new N.ViewUsesDefaultChangeDetectionAndInputs0(E._ComponentViewData__ComponentViewData(_this, 3, 3));
       styles = $.ViewUsesDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewUsesDefaultChangeDetectionAndInputs0__componentStyles = styles;
       }
@@ -11082,7 +11079,7 @@
       t1 = new N.ViewUsesOnPushChangeDetectionAndInputs0(E._ComponentViewData__ComponentViewData(_this, 4, 3));
       styles = $.ViewUsesOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewUsesOnPushChangeDetectionAndInputs0__componentStyles = styles;
       }
@@ -11097,7 +11094,7 @@
       t1 = new N.ViewInlinedNgIf0(E._ComponentViewData__ComponentViewData(_this, 5, 3));
       styles = $.ViewInlinedNgIf0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewInlinedNgIf0__componentStyles = styles;
       }
@@ -11112,7 +11109,7 @@
       t1 = new N.ViewEmbeddedNgIf0(E._ComponentViewData__ComponentViewData(_this, 6, 3));
       styles = $.ViewEmbeddedNgIf0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewEmbeddedNgIf0__componentStyles = styles;
       }
@@ -11127,7 +11124,7 @@
       t1 = new N.ViewEmbeddedNgFor0(E._ComponentViewData__ComponentViewData(_this, 7, 3));
       styles = $.ViewEmbeddedNgFor0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewEmbeddedNgFor0__componentStyles = styles;
       }
@@ -11144,7 +11141,7 @@
       t3 = new N.ViewInjectsFromArbitraryParent0(E._ComponentViewData__ComponentViewData(_this, 8, 3));
       styles = $.ViewInjectsFromArbitraryParent0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewInjectsFromArbitraryParent0__componentStyles = styles;
       }
@@ -11167,7 +11164,7 @@
       t3 = new N.ViewComponentConditionalFeatures0(E._ComponentViewData__ComponentViewData(_this, 9, 3));
       styles = $.ViewComponentConditionalFeatures0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewComponentConditionalFeatures0__componentStyles = styles;
       }
@@ -11182,7 +11179,7 @@
       t3 = new N.ViewUsesDomBindings0(E._ComponentViewData__ComponentViewData(_this, 10, 3));
       styles = $.ViewUsesDomBindings0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewUsesDomBindings0__componentStyles = styles;
       }
@@ -11197,7 +11194,7 @@
       t3 = new N.ViewUsesNgDirectives0(E._ComponentViewData__ComponentViewData(_this, 11, 3));
       styles = $.ViewUsesNgDirectives0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewUsesNgDirectives0__componentStyles = styles;
       }
@@ -11212,7 +11209,7 @@
       t1 = new N.ViewHasNestedProviderLookups0(E._ComponentViewData__ComponentViewData(_this, 12, 3));
       styles = $.ViewHasNestedProviderLookups0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewHasNestedProviderLookups0__componentStyles = styles;
       }
@@ -11227,7 +11224,7 @@
       t1 = new N.ViewHasHostListeners0(E._ComponentViewData__ComponentViewData(_this, 13, 3));
       styles = $.ViewHasHostListeners0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(_null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
         styles._appendStyles$0();
         $.ViewHasHostListeners0__componentStyles = styles;
       }
@@ -11323,7 +11320,7 @@
         t1 = new N.ViewDefaultChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewDefaultChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewDefaultChangeDetectionAndInputs0__componentStyles = styles;
       }
@@ -11385,7 +11382,7 @@
         t1 = new N.ViewOnPushChangeDetectionAndInputs0(N.TextBinding$(), N.TextBinding$(), E._ComponentViewData__ComponentViewData(_this, 0, 1)),
         styles = $.ViewOnPushChangeDetectionAndInputs0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewOnPushChangeDetectionAndInputs0__componentStyles = styles;
       }
@@ -11494,7 +11491,7 @@
         t1 = new N.ViewNullComponent0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewNullComponent0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewNullComponent0__componentStyles = styles;
       }
@@ -11597,7 +11594,7 @@
         t1 = new N.ViewFeatureA0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewFeatureA0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewFeatureA0__componentStyles = styles;
       }
@@ -11623,7 +11620,7 @@
         t1 = new N.ViewFeatureB0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewFeatureB0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewFeatureB0__componentStyles = styles;
       }
@@ -11784,7 +11781,7 @@
         t1 = new N.ViewInjectsManyThingsDynamically0(E._ComponentViewData__ComponentViewData(_this, 1, 3)),
         styles = $.ViewInjectsManyThingsDynamically0__componentStyles;
       if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty, "", "");
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
         styles._appendStyles$0();
         $.ViewInjectsManyThingsDynamically0__componentStyles = styles;
       }
