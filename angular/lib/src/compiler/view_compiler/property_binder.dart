@@ -208,11 +208,14 @@ void _checkBinding(
 
   final checkExpression =
       converter.convertSourceToExpression(binding.source, binding.target.type);
+
+  final checkBindingExpr = _checkBindingExpr(binding, fieldExpr, currValExpr);
   _bind(
     storage,
     currValExpr,
     fieldExpr,
     checkExpression,
+    checkBindingExpr,
     binding.source.isImmutable,
     binding.source.isNullable,
     updateStmts,
@@ -221,6 +224,63 @@ void _checkBinding(
     fieldType: binding.target.type,
     isHostComponent: isHostComponent,
   );
+}
+
+o.Expression _checkBindingExpr(ir.Binding binding,
+    o.ReadClassMemberExpr fieldExpr, o.ReadVarExpr currValExpr) {
+  return binding.source.accept(_CheckBindingVisitor(fieldExpr, currValExpr));
+}
+
+class _CheckBindingVisitor
+    implements ir.BindingSourceVisitor<o.Expression, Null> {
+  final o.ReadClassMemberExpr fieldExpr;
+  final o.ReadVarExpr currValExpr;
+
+  _CheckBindingVisitor(this.fieldExpr, this.currValExpr);
+
+  @override
+  o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
+      [Null context]) {
+    return o.importExpr(Identifiers.checkBinding).callFn([
+      fieldExpr,
+      currValExpr,
+      o.literal(boundExpression.expression.source),
+      o.literal(boundExpression.expression.location),
+    ]);
+  }
+
+  @override
+  o.Expression visitBoundI18nMessage(ir.BoundI18nMessage boundI18nMessage,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitComplexEventHandler(
+      ir.ComplexEventHandler complexEventHandler,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitSimpleEventHandler(ir.SimpleEventHandler simpleEventHandler,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitStringLiteral(ir.StringLiteral stringLiteral,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
 }
 
 o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
@@ -239,6 +299,7 @@ void _bind(
   o.ReadVarExpr currValExpr,
   o.ReadClassMemberExpr fieldExpr,
   o.Expression checkExpression,
+  o.Expression checkBindingExpr,
   bool isImmutable,
   bool isNullable,
   List<o.Statement> actions,
@@ -270,7 +331,7 @@ void _bind(
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
   method.addStmt(o.IfStmt(
-      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
+      checkBindingExpr,
       List.from(actions)
         ..addAll([
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
