@@ -353,7 +353,7 @@ class CompileView {
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
-  final List<o.Expression> _viewChildren = [];
+  final List<CompileElement> _viewChildren = [];
 
   /// Flat list of all nodes inside the template including text nodes.
   List<CompileNode> nodes = [];
@@ -462,12 +462,12 @@ class CompileView {
   }
 
   // Adds reference to a child view.
-  void addViewChild(o.Expression componentViewExpr) {
-    _viewChildren.add(componentViewExpr);
+  void addViewChild(CompileElement viewChild) {
+    _viewChildren.add(viewChild);
   }
 
   // Returns list of references to view children.
-  List<o.Expression> get viewChildren => _viewChildren;
+  List<CompileElement> get viewChildren => _viewChildren;
 
   void afterNodes() {
     for (var pipe in pipes) {
@@ -1339,8 +1339,9 @@ class CompileView {
     statements.addAll(detectChangesRenderPropertiesMethod.finish());
 
     // Add view child change detection calls.
-    for (o.Expression viewChild in viewChildren) {
-      statements.add(viewChild.callMethod('detectChanges', []).toStmt());
+    for (var viewChild in viewChildren) {
+      statements.add(
+          viewChild.componentView.callMethod('detectChanges', []).toStmt());
     }
 
     List<o.Statement> afterViewStmts =
