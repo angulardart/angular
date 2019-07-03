@@ -178,6 +178,59 @@ import9.HostView<import1.DeferredChild3Component> viewFactory_DeferredChild3Comp
   return _ViewDeferredChild3ComponentHost0(injector);
 }
 
+final List<dynamic> styles$DeferredChildOnPush = const [];
+
+// View for component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: OnPush)
+class ViewDeferredChildOnPush0 extends import0.ComponentView<import1.DeferredChildOnPush> {
+  static import2.ComponentStyles _componentStyles;
+  ViewDeferredChildOnPush0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('deferred-child-on-push');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/_files/deferred/deferred_component.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import7.appendText(parentRenderNode, 'Deferred Child On Push');
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildOnPush, _debugComponentUrl))));
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.DeferredChildOnPush> _DeferredChildOnPushNgFactory = const ComponentFactory('deferred-child-on-push', viewFactory_DeferredChildOnPushHost0);
+ComponentFactory<import1.DeferredChildOnPush> get DeferredChildOnPushNgFactory {
+  return _DeferredChildOnPushNgFactory;
+}
+
+final List<dynamic> styles$DeferredChildOnPushHost = const [];
+
+// Host for component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
+class _ViewDeferredChildOnPushHost0 extends import9.HostView<import1.DeferredChildOnPush> {
+  _ViewDeferredChildOnPushHost0(import10.Injector injector) : super(injector);
+  @override
+  void build() {
+    // Child component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: OnPush)
+    this.componentView = ViewDeferredChildOnPush0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.DeferredChildOnPush();
+    this.initRootNode(_el_0);
+  }
+}
+
+import9.HostView<import1.DeferredChildOnPush> viewFactory_DeferredChildOnPushHost0(import10.Injector injector) {
+  return _ViewDeferredChildOnPushHost0(injector);
+}
+
 final List<dynamic> styles$NotDeferredChildComponent = const [];
 
 // View for component NotDeferredChildComponent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -425,6 +478,7 @@ void initReflector() {
   _ngRef.registerComponent(DeferredChild1Component, DeferredChild1ComponentNgFactory);
   _ngRef.registerComponent(DeferredChild2Component, DeferredChild2ComponentNgFactory);
   _ngRef.registerComponent(DeferredChild3Component, DeferredChild3ComponentNgFactory);
+  _ngRef.registerComponent(DeferredChildOnPush, DeferredChildOnPushNgFactory);
   _ngRef.registerComponent(NotDeferredChildComponent, NotDeferredChildComponentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithoutNgContent, DeferredChildComponentWithoutNgContentNgFactory);
   _ngRef.registerComponent(DeferredChildComponentWithNgContent, DeferredChildComponentWithNgContentNgFactory);

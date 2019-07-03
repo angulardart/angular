@@ -45,10 +45,12 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
   void Function() _cancelDeferredLoad3;
   ViewContainer _appEl_4;
   void Function() _cancelDeferredLoad4;
-  import4.ViewNotDeferredChildComponent0 _compView_5;
-  import5.NotDeferredChildComponent _NotDeferredChildComponent_5_5;
-  ViewContainer _appEl_6;
-  void Function() _cancelDeferredLoad6;
+  ViewContainer _appEl_5;
+  void Function() _cancelDeferredLoad5;
+  import4.ViewNotDeferredChildComponent0 _compView_6;
+  import5.NotDeferredChildComponent _NotDeferredChildComponent_6_5;
+  ViewContainer _appEl_7;
+  void Function() _cancelDeferredLoad7;
   static import6.ComponentStyles _componentStyles;
   ViewTestContainerComponent0(import7.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -81,16 +83,20 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
     this._appEl_4 = ViewContainer(4, null, this, _anchor_4);
     TemplateRef _TemplateRef_4_8 = TemplateRef(this._appEl_4, viewFactory_TestContainerComponent7);
     this._cancelDeferredLoad4 = import13.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, this._appEl_4, _TemplateRef_4_8);
+    final _anchor_5 = import11.appendAnchor(parentRenderNode);
+    this._appEl_5 = ViewContainer(5, null, this, _anchor_5);
+    TemplateRef _TemplateRef_5_8 = TemplateRef(this._appEl_5, viewFactory_TestContainerComponent8);
+    this._cancelDeferredLoad5 = import13.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, this._appEl_5, _TemplateRef_5_8);
     // Child component NotDeferredChildComponent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
-    this._compView_5 = deflib1.ViewNotDeferredChildComponent0(this, 5);
-    final _el_5 = this._compView_5.rootElement;
-    parentRenderNode.append(_el_5);
-    this._NotDeferredChildComponent_5_5 = deflib0.NotDeferredChildComponent();
-    this._compView_5.create(this._NotDeferredChildComponent_5_5);
-    final _anchor_6 = import11.appendAnchor(parentRenderNode);
-    this._appEl_6 = ViewContainer(6, null, this, _anchor_6);
-    TemplateRef _TemplateRef_6_8 = TemplateRef(this._appEl_6, viewFactory_TestContainerComponent8);
-    this._cancelDeferredLoad6 = import13.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, this._appEl_6, _TemplateRef_6_8);
+    this._compView_6 = deflib1.ViewNotDeferredChildComponent0(this, 6);
+    final _el_6 = this._compView_6.rootElement;
+    parentRenderNode.append(_el_6);
+    this._NotDeferredChildComponent_6_5 = deflib0.NotDeferredChildComponent();
+    this._compView_6.create(this._NotDeferredChildComponent_6_5);
+    final _anchor_7 = import11.appendAnchor(parentRenderNode);
+    this._appEl_7 = ViewContainer(7, null, this, _anchor_7);
+    TemplateRef _TemplateRef_7_8 = TemplateRef(this._appEl_7, viewFactory_TestContainerComponent9);
+    this._cancelDeferredLoad7 = import13.loadDeferred(deflib0.loadLibrary, deflib1.loadLibrary, this._appEl_7, _TemplateRef_7_8);
   }
 
   @override
@@ -103,7 +109,8 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
     this._appEl_2.detectChangesInNestedViews();
     this._appEl_3.detectChangesInNestedViews();
     this._appEl_4.detectChangesInNestedViews();
-    this._appEl_6.detectChangesInNestedViews();
+    this._appEl_5.detectChangesInNestedViews();
+    this._appEl_7.detectChangesInNestedViews();
     if ((!import10.debugThrowIfChanged)) {
       if (this._query_queryMe_1_0_isDirty) {
         _ctx.queryDeferredChild = import14.firstOrNull(this._appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
@@ -114,7 +121,7 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
         this._query_queryMe_1_0_isDirty = false;
       }
     }
-    this._compView_5.detectChanges();
+    this._compView_6.detectChanges();
   }
 
   @override
@@ -124,12 +131,14 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
     this._appEl_2.destroyNestedViews();
     this._appEl_3.destroyNestedViews();
     this._appEl_4.destroyNestedViews();
-    this._appEl_6.destroyNestedViews();
-    this._compView_5.destroyInternalState();
+    this._appEl_5.destroyNestedViews();
+    this._appEl_7.destroyNestedViews();
+    this._compView_6.destroyInternalState();
     this._cancelDeferredLoad0();
     this._cancelDeferredLoad3();
     this._cancelDeferredLoad4();
-    this._cancelDeferredLoad6();
+    this._cancelDeferredLoad5();
+    this._cancelDeferredLoad7();
   }
 
   @override
@@ -301,8 +310,37 @@ import16.EmbeddedView<void> viewFactory_TestContainerComponent5(import17.RenderV
 
 class _ViewTestContainerComponent6 extends import16.EmbeddedView<import1.TestContainerComponent> {
   import0.ComponentView _compView_0;
-  dynamic _DeferredChildComponentWithoutNgContent_0_5;
+  dynamic _DeferredChildOnPush_0_5;
   _ViewTestContainerComponent6(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    // Child component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: OnPush)
+    this._compView_0 = deflib1.ViewDeferredChildOnPush0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    this._DeferredChildOnPush_0_5 = deflib0.DeferredChildOnPush();
+    this._compView_0.create(this._DeferredChildOnPush_0_5);
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+}
+
+import16.EmbeddedView<void> viewFactory_TestContainerComponent6(import17.RenderView parentView, int parentIndex) {
+  return _ViewTestContainerComponent6(parentView, parentIndex);
+}
+
+class _ViewTestContainerComponent7 extends import16.EmbeddedView<import1.TestContainerComponent> {
+  import0.ComponentView _compView_0;
+  dynamic _DeferredChildComponentWithoutNgContent_0_5;
+  _ViewTestContainerComponent7(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     // Child component DeferredChildComponentWithoutNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -324,14 +362,14 @@ class _ViewTestContainerComponent6 extends import16.EmbeddedView<import1.TestCon
   }
 }
 
-import16.EmbeddedView<void> viewFactory_TestContainerComponent6(import17.RenderView parentView, int parentIndex) {
-  return _ViewTestContainerComponent6(parentView, parentIndex);
+import16.EmbeddedView<void> viewFactory_TestContainerComponent7(import17.RenderView parentView, int parentIndex) {
+  return _ViewTestContainerComponent7(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent7 extends import16.EmbeddedView<import1.TestContainerComponent> {
+class _ViewTestContainerComponent8 extends import16.EmbeddedView<import1.TestContainerComponent> {
   import0.ComponentView _compView_0;
   dynamic _DeferredChildComponentWithNgContent_0_5;
-  _ViewTestContainerComponent7(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewTestContainerComponent8(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     // Child component DeferredChildComponentWithNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -356,16 +394,16 @@ class _ViewTestContainerComponent7 extends import16.EmbeddedView<import1.TestCon
   }
 }
 
-import16.EmbeddedView<void> viewFactory_TestContainerComponent7(import17.RenderView parentView, int parentIndex) {
-  return _ViewTestContainerComponent7(parentView, parentIndex);
+import16.EmbeddedView<void> viewFactory_TestContainerComponent8(import17.RenderView parentView, int parentIndex) {
+  return _ViewTestContainerComponent8(parentView, parentIndex);
 }
 
-class _ViewTestContainerComponent8 extends import16.EmbeddedView<import1.TestContainerComponent> {
+class _ViewTestContainerComponent9 extends import16.EmbeddedView<import1.TestContainerComponent> {
   import0.ComponentView _compView_0;
   import18.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
   dynamic _DeferredChildComponentWithServices_0_6;
   import18.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewTestContainerComponent8(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewTestContainerComponent9(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   import18.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((this.__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
       (this.__ExternalServiceLazilyCreatedMaybe_0_7 = import18.ExternalServiceLazilyCreatedMaybe());
@@ -408,8 +446,8 @@ class _ViewTestContainerComponent8 extends import16.EmbeddedView<import1.TestCon
   }
 }
 
-import16.EmbeddedView<void> viewFactory_TestContainerComponent8(import17.RenderView parentView, int parentIndex) {
-  return _ViewTestContainerComponent8(parentView, parentIndex);
+import16.EmbeddedView<void> viewFactory_TestContainerComponent9(import17.RenderView parentView, int parentIndex) {
+  return _ViewTestContainerComponent9(parentView, parentIndex);
 }
 
 final List<dynamic> styles$TestContainerComponentHost = const [];
