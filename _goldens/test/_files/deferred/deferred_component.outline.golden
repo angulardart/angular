@@ -35,6 +35,12 @@ external _ng.ComponentFactory<DeferredChild3Component> get DeferredChild3Compone
 class ViewDeferredChild3Component0 extends _ng.ComponentView<DeferredChild3Component> {
   external ViewDeferredChild3Component0(_ng.View parentView, int parentIndex);
 }
+// For @Component class DeferredChildOnPush.
+external List<dynamic> get styles$DeferredChildOnPush;
+external _ng.ComponentFactory<DeferredChildOnPush> get DeferredChildOnPushNgFactory;
+class ViewDeferredChildOnPush0 extends _ng.ComponentView<DeferredChildOnPush> {
+  external ViewDeferredChildOnPush0(_ng.View parentView, int parentIndex);
+}
 // For @Component class NotDeferredChildComponent.
 external List<dynamic> get styles$NotDeferredChildComponent;
 external _ng.ComponentFactory<NotDeferredChildComponent> get NotDeferredChildComponentNgFactory;

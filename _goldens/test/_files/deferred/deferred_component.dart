@@ -21,6 +21,13 @@ class DeferredChild2Component {}
 class DeferredChild3Component {}
 
 @Component(
+  selector: 'deferred-child-on-push',
+  template: 'Deferred Child On Push',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class DeferredChildOnPush {}
+
+@Component(
   selector: 'not-deferred-child',
   template: '',
 )
