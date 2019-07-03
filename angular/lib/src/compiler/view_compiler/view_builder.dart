@@ -267,7 +267,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       isDeferredComponent: isDeferred,
     );
 
-    _view.addViewChild(componentViewExpr);
+    _view.addViewChild(compileElement);
     _view.nodes.add(compileElement);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
@@ -670,8 +670,8 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
   return [
     for (var viewContainer in view.viewContainers)
       viewContainer.callMethod('destroyNestedViews', []).toStmt(),
-    for (var componentView in view.viewChildren)
-      componentView.callMethod('destroyInternalState', []).toStmt(),
+    for (var viewChild in view.viewChildren)
+      viewChild.componentView.callMethod('destroyInternalState', []).toStmt(),
     ...view.destroyMethod.finish(),
   ];
 }
