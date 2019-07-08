@@ -53,9 +53,9 @@ constant. Use `FactoryProvider` instead.
 ```dart
 Provider bindUser(Flags flags) {
   if (flags.isAdminUser) {
-    return new ClassProvider(User, useClass: AdminUser);
+    return ClassProvider(User, useClass: AdminUser);
   }
-  return new ClassProvider(User, useClass: RegularUser);
+  return ClassProvider(User, useClass: RegularUser);
 }
 ```
 
@@ -65,7 +65,7 @@ Provider bindUser(Flags flags) {
 const provideUser = FactoryProvider(User, createUserFromFlags);
 
 User createUserFromFlags(Flags flags) {
-  return flags.isAdminUser ? new AdminUser() : new RegularUser();
+  return flags.isAdminUser ? AdminUser() : RegularUser();
 }
 ```
 
@@ -149,7 +149,7 @@ be avoided](#avoid-using-reflectiveinjector).
 ```dart
 void main() {
   var injector = ReflectiveInjector.resolveAndCreate([
-    new ClassProvider(HeroService),
+    ClassProvider(HeroService),
   ]);
 }
 ```
@@ -380,8 +380,8 @@ AngularDart gives a few alternative options when creating injectors.
 
 ```dart
 void main() {
-  var injector = new Injector.map({
-    HeroService: new HeroService(),
+  var injector = Injector.map({
+    HeroService: HeroService(),
   });
   // ...
 }
@@ -550,7 +550,7 @@ class HeroComponent {
   @Input()
   set name(String name) {
     if (_auth != null && !_auth.isLoggedInAsHero(name)) {
-      throw new ArgumentError('Not logged in!');
+      throw ArgumentError('Not logged in!');
     }
     // ...
   }
