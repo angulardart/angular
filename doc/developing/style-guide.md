@@ -144,7 +144,7 @@ if (!identical(previousValue, newValue)) {
 **OK**:
 
 ```dart
-final visited = new Set.identity();
+final visited = Set.identity();
 
 void visit(element) {
   if (visited.add(element)) { /* ... */ }
@@ -303,7 +303,7 @@ class Container<T> {
 }
 
 void main() {
-  var a = new Container<String>();
+  var a = Container<String>();
   print(a.type);
 }
 ```
