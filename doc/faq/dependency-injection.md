@@ -24,11 +24,11 @@ class Service {}
 
 // This API doesn't exist as-is, it's just an example.
 createInjector({
-  Service: new Service(),
+  Service: Service(),
 });
 ```
 
-So, calling `Injector.get(Service)` is sort of like `hashMap[Service]` (with the
+So, calling `injector.get(Service)` is sort of like `hashMap[Service]` (with the
 main difference that a runtime error is thrown if `Service` is missing, instead
 of `null` being returned).
 
@@ -52,9 +52,9 @@ class Electricity {}
 
 createInjector({
   CoffeeMachine: (key, injector) {
-    return new CoffeeMachine(injector.get(Electricity));
+    return CoffeeMachine(injector.get(Electricity));
   },
-  Electricity: (key, injector) => new Electricity(),
+  Electricity: (key, injector) => Electricity(),
 });
 ```
 
@@ -80,7 +80,7 @@ class CoffeeMachine {
 createInjector({
   CoffeeMachine: (key, injector, parent) {
     // We don't provide 'Electricity', so we assume it comes from a parent.
-    return new CoffeeMachine(parent.get(Electricity));
+    return CoffeeMachine(parent.get(Electricity));
   },
 }, someParentInjector);
 ```
@@ -170,9 +170,9 @@ class Service {
 }
 
 @Component(
-  providers: const [
+  providers: [
     // Implicitly, this is declaring 'HttpClient' is now required.
-    const ClassProvider(Service),
+    ClassProvider(Service),
   ],
 )
 ```
@@ -199,8 +199,8 @@ class CoffeeMachine {
 }
 
 void main() {
-  var workingMachine = new CoffeeMachine(new Electricity());
-  var unpluggedMachine = new CoffeeMachine(new NoopElectricity());
+  var workingMachine = CoffeeMachine(Electricity());
+  var unpluggedMachine = CoffeeMachine(NoopElectricity());
 }
 ```
 
@@ -210,11 +210,11 @@ case you would simply remove it as a parameter to `CoffeeMachine` and use `new`
 
 ```dart
 class CoffeeMachine {
-  final _electricity = new Electricity();
+  final _electricity = Electricity();
 }
 
 void main() {
-  var workingMachine = new CoffeeMachine();
+  var workingMachine = CoffeeMachine();
 }
 ```
 
@@ -246,7 +246,7 @@ for checking out with a credit card):
 // shopping.dart
 @Component(
   selector: 'shopping-view',
-  providers: const [ shoppingModule ] ,
+  providers: [ shoppingModule ] ,
   template: '...',
 )
 class ShoppingView {}
@@ -256,8 +256,8 @@ class ShoppingView {}
 // checkout.dart
 @Component(
   selector: 'checkout-view',
-  providers: const [
-    const ClassProvider(CreditCardProcessor, useClass: GoogleWallet),
+  providers: [
+    ClassProvider(CreditCardProcessor, useClass: GoogleWallet),
   ],
   template: '...',
 )
@@ -289,15 +289,15 @@ Now lets wire it up:
 ```dart
 @Directive(
   selector: '[override]',
-  providers: const [
-    const ClassProvider(CreditCardProcessor, useClass: StubCreditCardProcessor),
+  providers: [
+    ClassProvider(CreditCardProcessor, useClass: StubCreditCardProcessor),
   ],
 )
 class OverrideDirective {}
 
 @Component(
   selector: 'test-checkout-view',
-  directives: const [
+  directives: [
     CheckoutView,
     OverrideDirective,
   ],
