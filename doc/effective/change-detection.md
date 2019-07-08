@@ -423,11 +423,13 @@ bool getBool(dynamic x) {
   if (x is bool) return x;
   throw 'not a bool or empty string!';
 }
+
 @Component(
   selector: 'my-component',
 )
 class MyComponent {
   bool _useCoolFlag = false;
+
   @Input()
   set useCoolFlag(x) {
     _useCoolFlag = getBool(x);
