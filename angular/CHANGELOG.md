@@ -1,9 +1,24 @@
+### New features
+
+*   Added `ComponentRef.update()`. This method should be used to apply changes
+    to a component and then trigger change detection. Before this, change
+    detection and lifecycles would not always follow Angular's specifications
+    when imperatively loading a component, especialy for those using the OnPush
+    change detection strategy.
+
+    ```dart
+    final componentRef = componentFactory();
+    componentRef.update((component) {
+      component.input = newValue;
+    });
+    ```
+
 ## 6.0.0-alpha
 
 ### New features
 
-*   An eager error is emitted when a non-`.css` file extension is used within
-    a `@Component(styleUrls: [ ... ])`. This used to fail later in the compile
+*   An eager error is emitted when a non-`.css` file extension is used within a
+    `@Component(styleUrls: [ ... ])`. This used to fail later in the compile
     process with a confusing error (cannot find asset).
 
 ### Breaking changes
@@ -166,8 +181,8 @@
     own infra.
 
 *   Using anything but `ChangeDetectionStrategy.{Default|OnPush}` is considered
-    deprecated, as they were not intended to be publicly accessible states.
-    See the deprecation messages for details.
+    deprecated, as they were not intended to be publicly accessible states. See
+    the deprecation messages for details.
 
 *   `ViewContainerRef.get()` now returns a `ViewRef` instead of an
     `EmbeddedViewRef`.
@@ -187,13 +202,13 @@
 
 *   `OnChanges` is now officially deprecated. Please use `AfterChanges` instead.
 
-    * If you don't use the `changes` map at all, just remove the parameter and
-    you're good to go.
-    * If you are only tracking the change of one or two fields, consider using a
-    boolean, i.e. `valueChanged`, which can be set in the `value` setter and
-    then checked in `ngAfterChanges`.
-    * If you are making extensive use of the `changes` map, then consider
-    recreating the map manually.
+    *   If you don't use the `changes` map at all, just remove the parameter and
+        you're good to go.
+    *   If you are only tracking the change of one or two fields, consider using
+        a boolean, i.e. `valueChanged`, which can be set in the `value` setter
+        and then checked in `ngAfterChanges`.
+    *   If you are making extensive use of the `changes` map, then consider
+        recreating the map manually.
 
 ## 5.2.0
 
