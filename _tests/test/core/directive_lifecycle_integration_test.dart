@@ -5,11 +5,9 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'directive_lifecycle_integration_test.template.dart' as ng_generated;
+import 'directive_lifecycle_integration_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group("directive lifecycle integration spec", () {
     Log log;
     var fixture;
@@ -17,8 +15,8 @@ void main() {
     setUp(() async {
       log = Log();
 
-      var testBed = NgTestBed<MyComp>();
-      testBed = testBed.addProviders([Provider(Log, useValue: log)]);
+      var testBed = NgTestBed.forComponent(ng.MyCompNgFactory,
+          rootInjector: ([parent]) => Injector.map({Log: log}, parent));
       fixture = await testBed.create();
     });
 
@@ -46,9 +44,9 @@ void main() {
 
 @Injectable()
 class Log {
-  final List logItems = List();
+  final logItems = <String>[];
 
-  void add(value) {
+  void add(String value) {
     logItems.add(value);
   }
 

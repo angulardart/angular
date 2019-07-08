@@ -4,6 +4,9 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorRef;
 import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
+    show AfterChanges;
+import 'package:angular/src/core/zone/ng_zone.dart';
 import 'package:angular/src/runtime.dart' show isDevMode;
 
 import 'view_ref.dart' show ViewRef;
@@ -66,6 +69,26 @@ class ComponentRef<C> {
 
   /// The [ChangeDetectorRef] of the Component instance.
   ChangeDetectorRef get changeDetectorRef => _hostView;
+
+  /// Runs [run] to apply changes to the component instance.
+  ///
+  /// After the callback runs, it will trigger change detection and any
+  /// corresponding lifecycle events.
+  ///
+  /// Note that if [instance] implements [AfterChanges], the lifecycle event
+  /// will be triggered regardless of whether any inputs actually changed or
+  /// not.
+  void update(void Function(C instance) run) {
+    final ngZone = injector.provideType<NgZone>(NgZone);
+    ngZone.runGuarded(() {
+      final component = _component;
+      run(component);
+      if (component is AfterChanges) {
+        component.ngAfterChanges();
+      }
+      _hostView.componentView.markForCheck();
+    });
+  }
 
   /// Destroys the component instance and all of the data structures associated
   /// with it.
