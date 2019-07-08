@@ -122,7 +122,7 @@ class MyComponent {
   // ...
 
   void foo() {
-    immutableList = new ImmutableList();
+    immutableList = ImmutableList();
   }
 }
 ```
