@@ -15,7 +15,7 @@ throwsWithMatch(RegExp regExp) =>
 
 void main() {
   Parser createParser() {
-    return Parser(Lexer());
+    return Parser(Lexer(), supportNewPipeSyntax: true);
   }
 
   ASTWithSource parseAction(text, [location]) {
@@ -259,6 +259,20 @@ void main() {
           checkBinding("a(n: (a | b:c | d))", "a(n: ((a | b:c) | d))");
           checkBinding("f(value | pipe:x:y)", "f((value | pipe:x:y))");
         });
+
+        // TODO(b/133512917): Change un-parser when old syntax is removed.
+        test("should parse pipes with the new function call syntax", () {
+          final pipe = r'$pipe';
+          checkBinding("a($pipe.c(b))", "a((b | c))");
+          checkBinding("$pipe.f(a.b(c.d(e)))", "(a.b(c.d(e)) | f)");
+          checkBinding("$pipe.a([1, 2, 3])", "([1, 2, 3] | a)");
+          checkBinding("$pipe.c(a[b])", "(a[b] | c)");
+          checkBinding("$pipe.c(a?.b)", "(a?.b | c)");
+          checkBinding("$pipe.a(true)", "(true | a)");
+          checkBinding("$pipe.d($pipe.b(a, c))", "((a | b:c) | d)");
+          checkBinding("$pipe.b(a, $pipe.d(c))", "(a | b:(c | d))");
+        });
+
         test("should only allow identifier or keyword as formatter names", () {
           expectBindingError("\"Foo\"|(", throwsWith("identifier or keyword"));
           expectBindingError(
