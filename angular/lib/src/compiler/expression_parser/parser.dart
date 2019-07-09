@@ -47,6 +47,7 @@ import 'lexer.dart'
         $SLASH;
 
 final _implicitReceiver = ImplicitReceiver();
+final _pipeOperator = PropertyRead(_implicitReceiver, r'$pipe');
 final INTERPOLATION_REGEXP = RegExp(r'{{([\s\S]*?)}}');
 
 class ParseException extends BuildError {
@@ -66,8 +67,9 @@ class SplitInterpolation {
 
 class Parser {
   final Lexer _lexer;
+  final bool supportNewPipeSyntax;
 
-  Parser(this._lexer);
+  Parser(this._lexer, {this.supportNewPipeSyntax = false});
 
   ASTWithSource parseAction(
       String input, String location, List<CompileIdentifierMetadata> exports) {
@@ -80,7 +82,14 @@ class Parser {
     }
     this._checkNoInterpolation(input, location);
     var tokens = _tokenizeOrThrow(this._stripComments(input), input, location);
-    var ast = _ParseAST(input, location, tokens, true, exports).parseChain();
+    var ast = _ParseAST(
+      input,
+      location,
+      tokens,
+      true,
+      exports,
+      supportNewPipeSyntax,
+    ).parseChain();
     return ASTWithSource(ast, input, location);
   }
 
@@ -102,7 +111,14 @@ class Parser {
       String input, String location, List<CompileIdentifierMetadata> exports) {
     this._checkNoInterpolation(input, location);
     var tokens = _tokenizeOrThrow(this._stripComments(input), input, location);
-    return _ParseAST(input, location, tokens, false, exports).parseChain();
+    return _ParseAST(
+      input,
+      location,
+      tokens,
+      false,
+      exports,
+      supportNewPipeSyntax,
+    ).parseChain();
   }
 
   ASTWithSource parseInterpolation(
@@ -113,7 +129,14 @@ class Parser {
     for (var i = 0; i < split.expressions.length; ++i) {
       var tokens = _tokenizeOrThrow(
           _stripComments(split.expressions[i]), input, location);
-      var ast = _ParseAST(input, location, tokens, false, exports).parseChain();
+      var ast = _ParseAST(
+        input,
+        location,
+        tokens,
+        false,
+        exports,
+        supportNewPipeSyntax,
+      ).parseChain();
       expressions.add(ast);
     }
     return ASTWithSource(
@@ -199,14 +222,21 @@ class _ParseAST {
   final String location;
   final List<Token> tokens;
   final bool parseAction;
+  final bool supportNewPipeSyntax;
 
   Map<String, CompileIdentifierMetadata> exports;
   Map<String, Map<String, CompileIdentifierMetadata>> prefixes;
   int index = 0;
   bool _parseCall = false;
 
-  _ParseAST(this.input, this.location, this.tokens, this.parseAction,
-      List<CompileIdentifierMetadata> exports) {
+  _ParseAST(
+    this.input,
+    this.location,
+    this.tokens,
+    this.parseAction,
+    List<CompileIdentifierMetadata> exports,
+    this.supportNewPipeSyntax,
+  ) {
     this.exports = <String, CompileIdentifierMetadata>{};
     this.prefixes = <String, Map<String, CompileIdentifierMetadata>>{};
     for (var export in exports) {
@@ -554,6 +584,11 @@ class _ParseAST {
 
   AST parseAccessMemberOrMethodCall(AST receiver, [bool isSafe = false]) {
     var id = expectIdentifierOrKeyword();
+    if (supportNewPipeSyntax &&
+        id == r'$pipe' &&
+        receiver == _implicitReceiver) {
+      return _parsePipeNewSyntax();
+    }
     if (optionalCharacter($LPAREN)) {
       var args = parseCallArguments();
       expectCharacter($RPAREN);
@@ -580,6 +615,26 @@ class _ParseAST {
       }
     }
     return null;
+  }
+
+  AST _parsePipeNewSyntax() {
+    expectCharacter($PERIOD);
+    final pipeCall = parseAccessMemberOrMethodCall(_pipeOperator);
+    if (pipeCall is MethodCall) {
+      final name = pipeCall.name;
+      if (pipeCall.namedArgs.isNotEmpty) {
+        error('Pipes may only contain positional, not named, arguments');
+        return null;
+      }
+      if (pipeCall.args.isEmpty) {
+        error('Pipes must contain at least one positional argument');
+        return null;
+      }
+      return BindingPipe(pipeCall.args.first, name, pipeCall.args.sublist(1));
+    } else {
+      error(r'Pipes must be defined as "$pipe.nameOfPipe(target, argsIfany)');
+      return null;
+    }
   }
 
   _CallArguments parseCallArguments() {
