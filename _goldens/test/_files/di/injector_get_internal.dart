@@ -6,6 +6,7 @@ import 'package:angular/angular.dart';
   selector: 'app',
   directives: [
     MaterialAutoSuggestInputComponent,
+    MaterialIcon,
     MaterialInputComponent,
     MaterialInputValueAccessor,
     NgControlName,
@@ -90,6 +91,12 @@ abstract class SelectionContainer {}
   template: '',
 )
 class MaterialAutoSuggestInputComponent {}
+
+@Component(
+  selector: 'material-icon',
+  template: '',
+)
+class MaterialIcon {}
 
 abstract class MaterialInputBase {}
 

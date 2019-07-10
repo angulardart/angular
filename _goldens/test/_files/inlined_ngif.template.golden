@@ -51,7 +51,7 @@ class ViewInlinedNgIfComponent0 extends import0.ComponentView<import1.InlinedNgI
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._NgIf_0_9.ngIf = _ctx.foo;
+    this._NgIf_0_9.ngIf = _ctx.maybeTrue;
     this._appEl_0.detectChangesInNestedViews();
   }
 
@@ -136,7 +136,10 @@ class ViewIgnoredNgIfComponent0 extends import0.ComponentView<import1.IgnoredNgI
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._NgIf_0_9.ngIf = _ctx.foo;
+    bool firstCheck = this.firstCheck;
+    if (firstCheck) {
+      (this._NgIf_0_9.ngIf = (_ctx.name == 'World'));
+    }
     this._appEl_0.detectChangesInNestedViews();
   }
 
@@ -226,7 +229,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends import0.ComponentV
     final _ctx = this.ctx;
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
-      (this._NgIf_0_9.ngIf = _ctx.foo);
+      (this._NgIf_0_9.ngIf = _ctx.alwaysTrue);
     }
     this._appEl_0.detectChangesInNestedViews();
   }

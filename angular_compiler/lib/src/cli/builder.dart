@@ -24,13 +24,17 @@ class Compiler implements Generator {
   // Once we're able to remove this parameter, we should.
   final Future<String> Function(LibraryReader, BuildStep, CompilerFlags) _build;
   final CompilerFlags _flags;
+  final Map<Object, Object> _context;
 
   /// Create a new [Compiler] instance that uses the provided flag and builder.
-  const Compiler(this._flags, this._build);
+  const Compiler(this._flags, this._build, [this._context = const {}]);
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) {
-    return runBuildZoned(() => _build(library, buildStep, _flags));
+    return runBuildZoned(
+      () => _build(library, buildStep, _flags),
+      zoneValues: _context,
+    );
   }
 
   /// Returns the compiler wrapped as a [Builder].

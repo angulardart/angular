@@ -214,9 +214,11 @@ abstract class SomeService {
 
 @Component(
   selector: 'my-component-with-service-test',
-  template: '<child-component-provides-service>'
-      '<div *dirNeedsService></div>'
-      '</child-component-provides-service>',
+  template: '''
+    <child-component-provides-service>
+      <div *dirNeedsService></div>
+    </child-component-provides-service>
+  ''',
   directives: [MyChildComponentProvidesService, MyDirectiveNeedsService],
 )
 class MyComponentWithServiceTest {}
@@ -224,7 +226,7 @@ class MyComponentWithServiceTest {}
 @Component(
   selector: 'child-component-provides-service',
   providers: [ExistingProvider(SomeService, MyChildComponentProvidesService)],
-  template: '<div></div>',
+  template: '<div><ng-content></ng-content></div>',
 )
 class MyChildComponentProvidesService implements SomeService {
   @override

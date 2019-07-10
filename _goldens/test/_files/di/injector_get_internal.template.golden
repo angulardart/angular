@@ -35,6 +35,8 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
   import1.DeferredValidator __DeferredValidator_1_10;
   List<import1.Validator> __MultiToken_1_11;
   int __luckyNumber_1_15;
+  ViewMaterialIcon0 _compView_2;
+  import1.MaterialIcon _MaterialIcon_2_5;
   import1.NgControlGroup _NgControlGroup_3_5;
   ViewMaterialInputComponent0 _compView_4;
   import1.MaterialInputComponent _MaterialInputComponent_4_5;
@@ -247,9 +249,13 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
     this._MaterialInputValueAccessor_1_6 = import1.MaterialInputValueAccessor();
     this._NgControlName_1_7 = import1.NgControlName();
     this._RequiredValidator_1_8 = import1.RequiredValidator();
-    final _el_2 = doc.createElement('material-icon');
+    // Child component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
+    this._compView_2 = ViewMaterialIcon0(this, 2);
+    final _el_2 = this._compView_2.rootElement;
     import8.setAttribute(_el_2, 'tooltipTarget', '');
     import8.setAttribute(_el_2, 'trailing', '');
+    this._MaterialIcon_2_5 = import1.MaterialIcon();
+    this._compView_2.create(this._MaterialIcon_2_5);
     this._compView_1.createAndProject(this._MaterialInputComponent_1_5, [
       [_el_2]
     ]);
@@ -452,6 +458,7 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
   @override
   void detectChangesInternal() {
     this._compView_1.detectChanges();
+    this._compView_2.detectChanges();
     this._compView_4.detectChanges();
     this._compView_5.detectChanges();
     this._compView_6.detectChanges();
@@ -462,6 +469,7 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
   @override
   void destroyInternal() {
     this._compView_1.destroyInternalState();
+    this._compView_2.destroyInternalState();
     this._compView_4.destroyInternalState();
     this._compView_5.destroyInternalState();
     this._compView_6.destroyInternalState();
@@ -561,6 +569,58 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends import12.HostView<impo
 
 import12.HostView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponentHost0(import13.Injector injector) {
   return _ViewMaterialAutoSuggestInputComponentHost0(injector);
+}
+
+final List<dynamic> styles$MaterialIcon = const [];
+
+// View for component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
+class ViewMaterialIcon0 extends import0.ComponentView<import1.MaterialIcon> {
+  static import3.ComponentStyles _componentStyles;
+  ViewMaterialIcon0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.document.createElement('material-icon');
+  }
+  static String get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:_goldens/test/_files/di/injector_get_internal.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import6.HtmlElement parentRenderNode = this.initViewRoot();
+  }
+
+  @override
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialIcon, _debugComponentUrl))));
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const ComponentFactory<import1.MaterialIcon> _MaterialIconNgFactory = const ComponentFactory('material-icon', viewFactory_MaterialIconHost0);
+ComponentFactory<import1.MaterialIcon> get MaterialIconNgFactory {
+  return _MaterialIconNgFactory;
+}
+
+final List<dynamic> styles$MaterialIconHost = const [];
+
+// Host for component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
+class _ViewMaterialIconHost0 extends import12.HostView<import1.MaterialIcon> {
+  _ViewMaterialIconHost0(import13.Injector injector) : super(injector);
+  @override
+  void build() {
+    // Child component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
+    this.componentView = ViewMaterialIcon0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.MaterialIcon();
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.HostView<import1.MaterialIcon> viewFactory_MaterialIconHost0(import13.Injector injector) {
+  return _ViewMaterialIconHost0(injector);
 }
 
 final List<dynamic> styles$MaterialInputComponent = const [];
@@ -679,6 +739,7 @@ void initReflector() {
 
   _ngRef.registerComponent(AppComponent, AppComponentNgFactory);
   _ngRef.registerComponent(MaterialAutoSuggestInputComponent, MaterialAutoSuggestInputComponentNgFactory);
+  _ngRef.registerComponent(MaterialIcon, MaterialIconNgFactory);
   _ngRef.registerComponent(MaterialInputComponent, MaterialInputComponentNgFactory);
   _ref0.initReflector();
 }

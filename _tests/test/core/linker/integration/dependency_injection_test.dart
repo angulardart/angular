@@ -244,7 +244,7 @@ InjectableService createInjectableWithLogging(Injector injector) {
     Provider(InjectableService,
         useFactory: createInjectableWithLogging, deps: [Injector])
   ],
-  template: '',
+  template: '<ng-content></ng-content>',
   visibility: Visibility.all,
 )
 class ComponentProvidingLoggingInjectable {

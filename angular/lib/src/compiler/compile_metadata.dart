@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 
 import '../core/change_detection/change_detection.dart'
     show ChangeDetectionStrategy;
-import '../core/metadata/lifecycle_hooks.dart' show LifecycleHooks;
 import '../core/metadata/view.dart';
 import '../core/metadata/visibility.dart';
 import 'analyzed_class.dart';
@@ -439,6 +438,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
   final CompileTypeMetadata type;
 
+  /// Directive extends or mixes-in `ComponentState`.
+  final bool isLegacyComponentState;
+
   /// User-land class where the component annotation originated.
   final CompileTypeMetadata originType;
 
@@ -465,6 +467,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   CompileDirectiveMetadata({
     this.type,
+    this.isLegacyComponentState = false,
     this.originType,
     this.metadataType,
     this.selector,
@@ -489,6 +492,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
       {AnalyzedClass analyzedClass})
       : this.type = other.type,
+        this.isLegacyComponentState = other.isLegacyComponentState,
         this.originType = other.originType,
         this.metadataType = other.metadataType,
         this.selector = other.selector,
@@ -663,4 +667,24 @@ class CompilePipeMetadata implements CompileMetadataWithType {
 
   @override
   CompileIdentifierMetadata get identifier => type;
+}
+
+/// Lifecycle hooks are guaranteed to be called in the following order:
+/// - `afterChanges` (if any bindings have been changed by the Angular framework),
+/// - `onInit` (after the first check only),
+/// - `doCheck`,
+/// - `afterContentInit`,
+/// - `afterContentChecked`,
+/// - `afterViewInit`,
+/// - `afterViewChecked`,
+/// - `onDestroy` (at the very end before destruction)
+enum LifecycleHooks {
+  onInit,
+  onDestroy,
+  doCheck,
+  afterChanges,
+  afterContentInit,
+  afterContentChecked,
+  afterViewInit,
+  afterViewChecked
 }

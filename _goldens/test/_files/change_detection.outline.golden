@@ -34,11 +34,11 @@ external _ng.ComponentFactory<OnPushChildComponent> get OnPushChildComponentNgFa
 class ViewOnPushChildComponent0 extends _ng.ComponentView<OnPushChildComponent> {
   external ViewOnPushChildComponent0(_ng.View parentView, int parentIndex);
 }
-// For @Component class StatefulComponent.
-external List<dynamic> get styles$StatefulComponent;
-external _ng.ComponentFactory<StatefulComponent> get StatefulComponentNgFactory;
-class ViewStatefulComponent0 extends _ng.ComponentView<StatefulComponent> {
-  external ViewStatefulComponent0(_ng.View parentView, int parentIndex);
+// For @Component class LegacyComponentState.
+external List<dynamic> get styles$LegacyComponentState;
+external _ng.ComponentFactory<LegacyComponentState> get LegacyComponentStateNgFactory;
+class ViewLegacyComponentState0 extends _ng.ComponentView<LegacyComponentState> {
+  external ViewLegacyComponentState0(_ng.View parentView, int parentIndex);
 }
 // For @Component class DefaultComponent.
 external List<dynamic> get styles$DefaultComponent;

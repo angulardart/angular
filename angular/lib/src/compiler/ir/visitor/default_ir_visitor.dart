@@ -21,6 +21,16 @@ class DefaultIRVisitor<R, C> implements IRVisitor<R, C> {
   R visitHostView(HostView hostView, [C context]) => null;
 
   @override
+  R visitEmbeddedView(EmbeddedView embeddedView, [C context]) => null;
+
+  @override
+  R visitElement(Element element, [C context]) => null;
+
+  @override
+  R visitMatchedDirective(MatchedDirective matchedDirective, [C context]) =>
+      null;
+
+  @override
   R visitBinding(Binding binding, [C context]) => null;
 
   @override

@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
-import 'package:angular/src/core/change_detection/change_detection.dart'
-    show ChangeDetectionStrategy;
 import 'package:angular/src/core/linker/view_type.dart' show ViewType;
 import "package:angular/src/core/metadata/view.dart" show ViewEncapsulation;
 import 'package:angular/src/source_gen/common/url_resolver.dart'
@@ -27,7 +25,6 @@ import '../template_ast.dart'
     show
         ElementAst,
         EmbeddedTemplateAst,
-        NgContentAst,
         ProviderAst,
         ProviderAstType,
         ReferenceAst,
@@ -356,7 +353,7 @@ class CompileView {
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
-  final List<o.Expression> _viewChildren = [];
+  final List<CompileElement> _viewChildren = [];
 
   /// Flat list of all nodes inside the template including text nodes.
   List<CompileNode> nodes = [];
@@ -465,12 +462,12 @@ class CompileView {
   }
 
   // Adds reference to a child view.
-  void addViewChild(o.Expression componentViewExpr) {
-    _viewChildren.add(componentViewExpr);
+  void addViewChild(CompileElement viewChild) {
+    _viewChildren.add(viewChild);
   }
 
   // Returns list of references to view children.
-  List<o.Expression> get viewChildren => _viewChildren;
+  List<CompileElement> get viewChildren => _viewChildren;
 
   void afterNodes() {
     for (var pipe in pipes) {
@@ -683,7 +680,7 @@ class CompileView {
       return convertCdExpressionToIr(
         nameResolver,
         implicitReceiver,
-        source.expression,
+        source.expression.ast,
         source.sourceSpan,
         component,
         o.STRING_TYPE,
@@ -955,7 +952,7 @@ class CompileView {
       nodeIndex == 0 && viewType == ViewType.host;
 
   void projectNodesIntoElement(
-      CompileElement target, int sourceAstIndex, NgContentAst ast) {
+      CompileElement target, int sourceAstIndex, int ngContentIndex) {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     var parentRenderNode = _getParentRenderNode(target);
@@ -968,15 +965,15 @@ class CompileView {
     bool isRootNode = !identical(target.view, this);
     if (!identical(parentRenderNode, o.NULL_EXPR)) {
       _createMethod.addStmt(o.InvokeMemberMethodExpr(
-          'project', [parentRenderNode, o.literal(ast.index)]).toStmt());
+          'project', [parentRenderNode, o.literal(sourceAstIndex)]).toStmt());
     } else if (isRootNode) {
       if (!identical(viewType, ViewType.component)) {
         // store root nodes only for embedded/host views
         rootNodesOrViewContainers.add(nodesExpression);
       }
     } else {
-      if (target.component != null && ast.ngContentIndex != null) {
-        target.addContentNode(ast.ngContentIndex, nodesExpression);
+      if (target.component != null && ngContentIndex != null) {
+        target.addContentNode(ngContentIndex, nodesExpression);
       }
     }
   }
@@ -1098,13 +1095,7 @@ class CompileView {
 
     List<o.Expression> changeDetectorParams;
     if (providerHasChangeDetector) {
-      // ignore: list_element_type_not_assignable
       changeDetectorParams = [resolvedProviderValueExpr];
-      if (directiveMetadata.changeDetection ==
-          ChangeDetectionStrategy.Stateful) {
-        changeDetectorParams.add(o.THIS_EXPR);
-        changeDetectorParams.add(compileElement.renderNode.toReadExpr());
-      }
     }
 
     if (isEager) {
@@ -1348,8 +1339,9 @@ class CompileView {
     statements.addAll(detectChangesRenderPropertiesMethod.finish());
 
     // Add view child change detection calls.
-    for (o.Expression viewChild in viewChildren) {
-      statements.add(viewChild.callMethod('detectChanges', []).toStmt());
+    for (var viewChild in viewChildren) {
+      statements.add(
+          viewChild.componentView.callMethod('detectChanges', []).toStmt());
     }
 
     List<o.Statement> afterViewStmts =

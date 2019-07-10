@@ -1,13 +1,7 @@
-import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
-import 'package:angular/src/compiler/template_ast.dart' show DirectiveAst;
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
-import 'package:angular/src/core/change_detection/constants.dart'
-    show ChangeDetectionStrategy;
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
-    show LifecycleHooks;
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement, CompileNode;
@@ -110,26 +104,20 @@ void bindRenderInputs(
 }
 
 void bindDirectiveInputs(
-    List<ir.Binding> inputs,
-    CompileDirectiveMetadata directive,
-    o.Expression directiveInstance,
-    CompileElement compileElement,
-    {bool isHostComponent = false}) {
-  if (directive.inputs.isEmpty) {
-    return;
-  }
-
+  List<ir.Binding> inputs,
+  ir.MatchedDirective directive,
+  CompileElement compileElement, {
+  bool isHostComponent = false,
+}) {
+  if (!directive.hasInputs) return;
   var view = compileElement.view;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
-  var lifecycleHooks = directive.lifecycleHooks;
-  bool afterChanges = lifecycleHooks.contains(LifecycleHooks.afterChanges);
-  var isOnPushComp = directive.isComponent &&
-      directive.changeDetection == ChangeDetectionStrategy.OnPush;
+  bool afterChanges = directive.hasLifecycle(ir.Lifecycle.afterChanges);
+  var isOnPushComp = directive.isComponent && directive.isOnPush;
   var calcChanged = isOnPushComp || afterChanges;
 
-  // We want to call AfterChanges lifecycle only if we detect a change,
-  // unlike OnChanges, we don't need to collect a map of SimpleChange(s)
-  // therefore we keep track of changes using bool changed variable.
+  // We want to call AfterChanges lifecycle only if we detect a change.
+  // Therefore we keep track of changes using bool changed variable.
   // At the beginning of change detecting inputs we reset this flag to false,
   // and then set it to true if any of it's inputs change.
   if (calcChanged && !isHostComponent) {
@@ -139,7 +127,7 @@ void bindDirectiveInputs(
   bindAndWriteToRenderer(
     inputs,
     BoundValueConverter.forView(view),
-    directiveInstance,
+    directive.providerSource.build(),
     null,
     false,
     view.nameResolver,
@@ -220,11 +208,14 @@ void _checkBinding(
 
   final checkExpression =
       converter.convertSourceToExpression(binding.source, binding.target.type);
+
+  final checkBindingExpr = _checkBindingExpr(binding, fieldExpr, currValExpr);
   _bind(
     storage,
     currValExpr,
     fieldExpr,
     checkExpression,
+    checkBindingExpr,
     binding.source.isImmutable,
     binding.source.isNullable,
     updateStmts,
@@ -233,6 +224,63 @@ void _checkBinding(
     fieldType: binding.target.type,
     isHostComponent: isHostComponent,
   );
+}
+
+o.Expression _checkBindingExpr(ir.Binding binding,
+    o.ReadClassMemberExpr fieldExpr, o.ReadVarExpr currValExpr) {
+  return binding.source.accept(_CheckBindingVisitor(fieldExpr, currValExpr));
+}
+
+class _CheckBindingVisitor
+    implements ir.BindingSourceVisitor<o.Expression, Null> {
+  final o.ReadClassMemberExpr fieldExpr;
+  final o.ReadVarExpr currValExpr;
+
+  _CheckBindingVisitor(this.fieldExpr, this.currValExpr);
+
+  @override
+  o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
+      [Null context]) {
+    return o.importExpr(Identifiers.checkBinding).callFn([
+      fieldExpr,
+      currValExpr,
+      o.literal(boundExpression.expression.source),
+      o.literal(boundExpression.expression.location),
+    ]);
+  }
+
+  @override
+  o.Expression visitBoundI18nMessage(ir.BoundI18nMessage boundI18nMessage,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitComplexEventHandler(
+      ir.ComplexEventHandler complexEventHandler,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitSimpleEventHandler(ir.SimpleEventHandler simpleEventHandler,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
+
+  @override
+  o.Expression visitStringLiteral(ir.StringLiteral stringLiteral,
+      [Null context]) {
+    return o
+        .importExpr(Identifiers.checkBinding)
+        .callFn([fieldExpr, currValExpr]);
+  }
 }
 
 o.ReadClassMemberExpr _createBindFieldExpr(num exprIndex) =>
@@ -251,6 +299,7 @@ void _bind(
   o.ReadVarExpr currValExpr,
   o.ReadClassMemberExpr fieldExpr,
   o.Expression checkExpression,
+  o.Expression checkBindingExpr,
   bool isImmutable,
   bool isNullable,
   List<o.Statement> actions,
@@ -282,7 +331,7 @@ void _bind(
       .set(checkExpression)
       .toDeclStmt(null, [o.StmtModifier.Final]));
   method.addStmt(o.IfStmt(
-      o.importExpr(Identifiers.checkBinding).callFn([fieldExpr, currValExpr]),
+      checkBindingExpr,
       List.from(actions)
         ..addAll([
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
@@ -328,21 +377,21 @@ void _bindLiteral(
 // the component itself inside detectHostChanges method, no need to
 // generate code at call-site.
 void bindDirectiveHostProps(
-  DirectiveAst directiveAst,
-  o.Expression directiveInstance,
+  ir.MatchedDirective directive,
   CompileElement compileElement,
 ) {
-  if (!directiveAst.hasHostProperties) {
+  if (!directive.hasHostProperties) {
     return;
   }
   o.Expression detectHostChanges;
-  if (directiveAst.directive.isComponent) {
+  if (directive.isComponent) {
     detectHostChanges = compileElement.componentView.callMethod(
       'detectHostChanges',
       [DetectChangesVars.firstCheck],
     );
   } else {
-    final directive = unwrapDirectiveInstance(directiveInstance);
+    final directiveInstance =
+        unwrapDirectiveInstance(directive.providerSource.build());
     // For @Component-annotated classes that extend @Directive classes, i.e.:
     //
     // @Directive(...)
@@ -357,10 +406,10 @@ void bindDirectiveHostProps(
     // In this case, `directiveInstance` is `Instance of C`, which in case will
     // not have a  `detectHostChanges()` (if it did, it would have returned true
     // for `.directive.isComponent` above).
-    if (directive == null) {
+    if (directiveInstance == null) {
       return;
     }
-    detectHostChanges = directive.callMethod(
+    detectHostChanges = directiveInstance.callMethod(
       'detectHostChanges',
       [
         compileElement.component != null

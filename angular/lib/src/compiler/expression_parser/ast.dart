@@ -244,16 +244,16 @@ class FunctionCall extends AST {
       visitor.visitFunctionCall(this, context);
 }
 
-class ASTWithSource extends AST {
+class ASTWithSource {
   AST ast;
   String source;
   String location;
   ASTWithSource(this.ast, this.source, this.location);
 
-  @override
-  R visit<R, C, CO extends C>(AstVisitor<R, C> visitor, [CO context]) {
-    return this.ast.visit(visitor, context);
-  }
+  ASTWithSource.from(ASTWithSource original, AST transformed)
+      : this(transformed, original.source, original.location);
+
+  ASTWithSource.missingSource(AST ast) : this(ast, null, null);
 
   @override
   String toString() => '$source in $location';

@@ -463,11 +463,19 @@ class BaseTestComponent {
   }
 }
 
+@Directive(
+  selector: 'copy-me',
+)
+class CopyMe {}
+
 @Component(
   selector: 'ngfor-items-test',
   template: '<div><copy-me *ngFor="let item of items">'
       '{{item.toString()}};</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForItemsTest extends BaseTestComponent {
   @ContentChild(TemplateRef)
@@ -508,7 +516,10 @@ class NgForNullTest extends NgForOptionsTest {}
   selector: 'ngfor-object-test',
   template: '<div><copy-me *ngFor="let item of items">'
       '{{item.toString()}};</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForObjectItemInstanceTest {
   List items;
@@ -564,7 +575,10 @@ class NgForNestedLastIfTest {
   selector: 'ng-for-index-test',
   template: '<div><copy-me *ngFor="let item of items; let i=index">'
       '{{i.toString()}}</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForIndexTest {
   List items;
@@ -574,7 +588,10 @@ class NgForIndexTest {
   selector: 'ng-for-first-test',
   template: '<div><copy-me *ngFor="let item of items; '
       'let isFirst=first">{{isFirst.toString()}}</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForFirstTest {
   List items;
@@ -584,7 +601,10 @@ class NgForFirstTest {
   selector: 'ng-for-last-test',
   template: '<div><copy-me *ngFor="let item of items; '
       'let isLast=last\">{{isLast.toString()}}</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForLastTest {
   List items;
@@ -594,7 +614,10 @@ class NgForLastTest {
   selector: 'ng-for-even-test',
   template: '<div><copy-me *ngFor="let item of items; '
       'let isEven=even\">{{isEven.toString()}}</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForEvenTest {
   List items;
@@ -604,7 +627,10 @@ class NgForEvenTest {
   selector: 'ng-for-odd-test',
   template: '<div><copy-me *ngFor="let item of items; '
       'let isOdd=odd">{{isOdd.toString()}}</copy-me></div>',
-  directives: [NgFor],
+  directives: [
+    CopyMe,
+    NgFor,
+  ],
 )
 class NgForOddTest {
   List items;

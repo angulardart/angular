@@ -1,11 +1,12 @@
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
-import 'package:angular/src/compiler/optimize_ir/merge_events.dart';
+import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/parse_util.dart' show ParseErrorLevel;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
+import 'package:angular/src/compiler/semantic_analysis/element_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/core/linker/view_type.dart';
@@ -16,7 +17,6 @@ import 'compile_element.dart' show CompileElement;
 import 'compile_method.dart' show CompileMethod;
 import 'compile_view.dart' show CompileView;
 import 'event_binder.dart' show bindRenderOutputs, bindDirectiveOutputs;
-import 'ir/provider_source.dart';
 import 'lifecycle_binder.dart'
     show
         bindDirectiveAfterChildrenCallbacks,
@@ -38,19 +38,18 @@ import 'property_binder.dart'
 /// HostProperties are bound for Component and Host views, but not embedded
 /// views.
 void bindView(
-  CompileView view,
-  List<TemplateAst> parsedTemplate,
+  ir.View view,
   ElementSchemaRegistry schemaRegistry, {
   @required bool bindHostProperties,
 }) {
-  var visitor = _ViewBinderVisitor(view);
-  templateVisitAll(visitor, parsedTemplate);
-  for (var pipe in view.pipes) {
+  var visitor = _ViewBinderVisitor(view.compileView);
+  templateVisitAll(visitor, view.parsedTemplate);
+  for (var pipe in view.compileView.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
 
   if (bindHostProperties) {
-    _bindViewHostProperties(view, schemaRegistry);
+    _bindViewHostProperties(view.compileView, schemaRegistry);
   }
 }
 
@@ -84,102 +83,48 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitElement(ElementAst ast, _) {
     var compileElement = view.nodes[_nodeIndex++] as CompileElement;
+    var element =
+        convertElement(ast, compileElement, view.component.analyzedClass);
 
-    bindRenderInputs(
-      convertAllToBinding(
-        ast.inputs,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
-      ),
-      compileElement,
-    );
-    var outputs = convertAllToBinding(
-      ast.outputs,
-      analyzedClass: view.component.analyzedClass,
-      compileElement: compileElement,
-    );
-    outputs = mergeEvents(outputs);
-    bindRenderOutputs(outputs, compileElement);
-    var index = -1;
-    for (var directiveAst in ast.directives) {
-      index++;
-      ProviderSource providerSource = compileElement.directiveInstances[index];
-      // Skip functional directives.
-      if (providerSource == null) continue;
-      var directiveInstance = providerSource.build();
-      if (directiveInstance == null) continue;
-      var inputs = convertAllToBinding(
-        directiveAst.inputs,
-        directive: directiveAst.directive,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
-      );
+    bindRenderInputs(element.inputs, element.compileElement);
+    bindRenderOutputs(element.outputs, element.compileElement);
+
+    for (var directive in element.matchedDirectives) {
       bindDirectiveInputs(
-          inputs, directiveAst.directive, directiveInstance, compileElement,
-          isHostComponent: compileElement.view.viewType == ViewType.host);
-      bindDirectiveDetectChangesLifecycleCallbacks(
-          directiveAst, providerSource, compileElement);
-      bindDirectiveHostProps(directiveAst, directiveInstance, compileElement);
-      var outputs = convertAllToBinding(
-        directiveAst.outputs,
-        directive: directiveAst.directive,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
+        directive.inputs,
+        directive,
+        element.compileElement,
+        isHostComponent: element.compileElement.view.viewType == ViewType.host,
       );
-      outputs = mergeEvents(outputs);
-      bindDirectiveOutputs(outputs, directiveInstance, compileElement);
+      bindDirectiveDetectChangesLifecycleCallbacks(
+          directive, element.compileElement);
+      bindDirectiveHostProps(directive, element.compileElement);
+      bindDirectiveOutputs(
+          directive.outputs, directive.providerSource, element.compileElement);
     }
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, element.parsedTemplate);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
-    index = -1;
-    for (var directiveAst in ast.directives) {
-      index++;
-      ProviderSource providerSource = compileElement.directiveInstances[index];
-      // Skip functional directives.
-      if (providerSource == null) continue;
-      var directiveInstance = providerSource.build();
-      if (directiveInstance == null) continue;
-      bindDirectiveAfterChildrenCallbacks(
-          directiveAst.directive, providerSource, compileElement);
+    for (var directive in element.matchedDirectives) {
+      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
     }
   }
 
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var compileElement = view.nodes[_nodeIndex++] as CompileElement;
-    var index = -1;
-    for (var directiveAst in ast.directives) {
-      index++;
-      ProviderSource providerSource = compileElement.directiveInstances[index];
-      // Skip functional directives.
-      if (providerSource == null) continue;
-      var directiveInstance = providerSource.build();
-      if (directiveInstance == null) continue;
-      var inputs = convertAllToBinding(
-        directiveAst.inputs,
-        directive: directiveAst.directive,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
-      );
-      bindDirectiveInputs(
-          inputs, directiveAst.directive, directiveInstance, compileElement);
+    var element = convertEmbeddedTemplate(
+        ast, compileElement, view.component.analyzedClass);
+    for (var directive in element.matchedDirectives) {
+      bindDirectiveInputs(directive.inputs, directive, element.compileElement);
       bindDirectiveDetectChangesLifecycleCallbacks(
-          directiveAst, providerSource, compileElement);
-      var outputs = convertAllToBinding(
-        directiveAst.outputs,
-        directive: directiveAst.directive,
-        analyzedClass: view.component.analyzedClass,
-        compileElement: compileElement,
-      );
-      outputs = mergeEvents(outputs);
-      bindDirectiveOutputs(outputs, directiveInstance, compileElement);
-
-      bindDirectiveAfterChildrenCallbacks(
-          directiveAst.directive, providerSource, compileElement);
+          directive, element.compileElement);
+      bindDirectiveOutputs(
+          directive.outputs, directive.providerSource, element.compileElement);
+      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
     }
-    bindView(compileElement.embeddedView, ast.children, null,
-        bindHostProperties: false);
+    var embeddedView = element.children.first as ir.EmbeddedView;
+    bindView(embeddedView, null, bindHostProperties: false);
   }
 
   @override
@@ -229,8 +174,14 @@ void _bindViewHostProperties(
   var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
   hostProps.forEach((String propName, ast.AST expression) {
     var elementName = view.component.selector;
-    hostProperties.add(createElementPropertyAst(elementName, propName,
-        BoundExpression(expression), span, schemaRegistry, _handleError));
+    hostProperties.add(createElementPropertyAst(
+      elementName,
+      propName,
+      BoundExpression(ast.ASTWithSource.missingSource(expression)),
+      span,
+      schemaRegistry,
+      _handleError,
+    ));
   });
 
   final method = CompileMethod();

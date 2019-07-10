@@ -94,21 +94,14 @@ void main() {
       '</thead>'
       '<tbody>'
       '  <template ngFor let-repair [ngForOf]="repairs">'
-      '    <tr repaired-part>{{repair["id"]}}</tr>'
+      '    <tr repaired-part></tr>'
       '  </template>'
       '</tbody>'
       '</table>',
   directives: [NgFor, RepairedPartComponent],
 )
 class TrTagTest {
-  List<Map<String, String>> repairs;
-  TrTagTest() {
-    repairs = [
-      {'id': '34534'},
-      {'id': '7'},
-      {'id': '5'}
-    ];
-  }
+  final repairs = List.filled(3, null);
 }
 
 @Component(

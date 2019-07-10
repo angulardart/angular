@@ -33,8 +33,13 @@ TypeLink linkTypeOf(DartType type) {
   if (type.isDartCoreNull) {
     return TypeLink.$null;
   }
-  // Return dynamic type (no type found).
-  if (type.isDynamic || type.element.library == null) {
+  // Return dynamic type (no type found or type is unusable/inaccessible).
+  //
+  // For example, there are missing imports, we are referring to a FunctionType
+  // that does not come from a typedef, it is the type of a top-level function
+  // and that type was not inferred previously by the analyzer. A more proper
+  // fix from Angular would be to support function types (for now dynamic only).
+  if (type.isDynamic || type.element?.library == null) {
     return TypeLink.$dynamic;
   }
   type = _resolveBounds(type);

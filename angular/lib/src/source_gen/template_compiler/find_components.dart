@@ -17,7 +17,6 @@ import 'package:angular/src/compiler/view_compiler/property_binder.dart'
     show isPrimitiveTypeName;
 import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/metadata.dart';
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
@@ -583,7 +582,7 @@ class _ComponentVisitor
       onHostListener: _addHostListener,
     ).visitDirective(element);
     _collectInheritableMetadata(element);
-    final isComp = annotationInfo.isComponent;
+    final isComponent = annotationInfo.isComponent;
     final annotationValue = annotationInfo.constantValue;
 
     if (annotationInfo.hasErrors) {
@@ -598,7 +597,7 @@ class _ComponentVisitor
         CompileTypeMetadataVisitor(
             _library, _exceptionHandler, annotationInfo));
 
-    final template = isComp
+    final template = isComponent
         ? _createTemplateMetadata(annotationInfo, componentType)
         : CompileTemplateMetadata();
 
@@ -608,7 +607,7 @@ class _ComponentVisitor
     final analyzedClass =
         AnalyzedClass(element, isMockLike: _implementsNoSuchMethod);
     final lifecycleHooks = extractLifecycleHooks(element);
-    _validateLifecycleHooks(lifecycleHooks, element, isComp);
+    _validateLifecycleHooks(lifecycleHooks, element, isComponent);
 
     final selector = coerceString(annotationValue, 'selector');
     if (selector == null || selector.isEmpty) {
@@ -618,16 +617,27 @@ class _ComponentVisitor
       ));
     }
 
+    var changeDetection = _changeDetection(element, annotationValue);
+
+    final isComponentState = $ComponentState.isAssignableFrom(element);
+    if (isComponentState) {
+      if (!isComponent) {
+        _exceptionHandler.handle(ErrorMessageForElement(
+            element, 'Directives cannot implement or use ComponentState'));
+      }
+      changeDetection = ChangeDetectionStrategy.OnPush;
+    }
+
     return CompileDirectiveMetadata(
       type: componentType,
+      isLegacyComponentState: isComponentState,
       originType: componentType,
-      metadataType: isComp
+      metadataType: isComponent
           ? CompileDirectiveMetadataType.Component
           : CompileDirectiveMetadataType.Directive,
       selector: coerceString(annotationValue, 'selector'),
       exportAs: coerceString(annotationValue, 'exportAs'),
-      // Even for directives, we want change detection set to the default.
-      changeDetection: _changeDetection(element, annotationValue, isComp),
+      changeDetection: changeDetection,
       inputs: _inputs,
       inputTypes: _inputTypes,
       outputs: _outputs,
@@ -723,18 +733,7 @@ class _ComponentVisitor
         defaultTo: ViewEncapsulation.Emulated,
       );
 
-  int _changeDetection(ClassElement clazz, DartObject value, bool isComponent) {
-    // TODO: Use angular2/src/meta instead of this error-prone check.
-    if (clazz.allSupertypes.any((t) => t.name == 'ComponentState')) {
-      if (isComponent) {
-        // TODO: Warn/fail if changeDetection: ... is set to anything else.
-        return ChangeDetectionStrategy.Stateful;
-      }
-      _exceptionHandler.handle(ErrorMessageForElement(
-        clazz,
-        'Directives should not implement "ComponentState"',
-      ));
-    }
+  int _changeDetection(ClassElement clazz, DartObject value) {
     return coerceInt(
       value,
       'changeDetection',

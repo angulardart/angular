@@ -4,6 +4,8 @@ import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
 import 'package:angular/src/compiler/template_ast.dart';
+import 'package:angular/src/compiler/view_compiler/compile_element.dart';
+import 'package:angular/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
     show namespaceUris;
@@ -99,6 +101,8 @@ enum ViewEncapsulation {
 abstract class View extends IRNode {
   List<IRNode> get children;
 
+  CompileView compileView;
+
   // TODO(alorenzen): Replace with IR model classes.
   CompileDirectiveMetadata get cmpMetadata;
   List<TemplateAst> get parsedTemplate;
@@ -117,6 +121,9 @@ class ComponentView implements View {
   final List<CompileTypedMetadata> directiveTypes;
   @override
   final List<CompilePipeMetadata> pipes;
+
+  @override
+  CompileView compileView;
 
   ComponentView(
       {this.children = const [],
@@ -142,6 +149,9 @@ class HostView implements View {
   @override
   final List<CompilePipeMetadata> pipes = const [];
 
+  @override
+  CompileView compileView;
+
   HostView(
     this.componentView, {
     @required this.cmpMetadata,
@@ -155,6 +165,108 @@ class HostView implements View {
 
   @override
   List<IRNode> get children => [componentView];
+}
+
+class EmbeddedView implements View {
+  @override
+  final List<IRNode> children;
+  @override
+  final List<TemplateAst> parsedTemplate;
+
+  @override
+  final CompileDirectiveMetadata cmpMetadata = null;
+  @override
+  final List<CompileTypedMetadata> directiveTypes = const [];
+  @override
+  final List<CompilePipeMetadata> pipes = const [];
+
+  @override
+  CompileView compileView;
+
+  EmbeddedView(this.parsedTemplate) : children = const [];
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitEmbeddedView(this, context);
+}
+
+/// An element node in the template.
+///
+/// This may represent an HTML element, such as `<div>`, or a Component
+/// instance.
+class Element implements IRNode {
+  final CompileElement compileElement;
+  final List<Binding> inputs;
+  final List<Binding> outputs;
+  final List<MatchedDirective> matchedDirectives;
+
+  // TODO(b/120624750): Replace with IR model classes.
+  final List<TemplateAst> parsedTemplate;
+
+  final List<IRNode> children;
+
+  Element(
+    this.compileElement,
+    this.inputs,
+    this.outputs,
+    this.matchedDirectives,
+    this.parsedTemplate,
+    this.children,
+  );
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitElement(this, context);
+}
+
+/// A directive which has been matched to an element in the template.
+///
+/// An instance of this class represents the actual binding in the template,
+/// not just the properties declared by the underlying directive.
+class MatchedDirective implements IRNode {
+  /// Source of the directive in the compiled output.
+  ///
+  /// Necessary to bind calls to the correct class instance.
+  final ProviderSource providerSource;
+  final List<Binding> inputs;
+  final List<Binding> outputs;
+  final Set<Lifecycle> lifecycles;
+
+  /// Whether the underlying directive declares any inputs.
+  ///
+  /// This will be true even if there are no inputs matched in the template.
+  final bool hasInputs;
+  final bool hasHostProperties;
+  final bool isComponent;
+  final bool isOnPush;
+
+  MatchedDirective({
+    @required this.providerSource,
+    @required this.inputs,
+    @required this.outputs,
+    @required Set<Lifecycle> lifecycles,
+    @required this.hasInputs,
+    @required this.hasHostProperties,
+    @required this.isComponent,
+    @required this.isOnPush,
+  }) : lifecycles = lifecycles;
+
+  bool hasLifecycle(Lifecycle lifecycle) => lifecycles.contains(lifecycle);
+
+  @override
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+      visitor.visitMatchedDirective(this, context);
+}
+
+enum Lifecycle {
+  afterChanges,
+  onInit,
+  doCheck,
+  afterContentInit,
+  afterContentChecked,
+  afterViewInit,
+  afterViewChecked,
+  onDestroy,
 }
 
 /// A generic representation of a value binding.
@@ -429,7 +541,7 @@ class StringLiteral extends BoundLiteral {
 
 /// A [BindingSource] which represents a general-purpose expression.
 class BoundExpression implements BindingSource {
-  final ast.AST expression;
+  final ast.ASTWithSource expression;
   final SourceSpan sourceSpan;
   final analyzed.AnalyzedClass _analyzedClass;
 
@@ -439,24 +551,26 @@ class BoundExpression implements BindingSource {
   /// values.
   ///
   /// This hack is to allow legacy NgIf behavior on null inputs
-  BoundExpression.falseIfNull(ast.AST parsedExpression, SourceSpan sourceSpan,
-      analyzed.AnalyzedClass scope)
+  BoundExpression.falseIfNull(ast.ASTWithSource parsedExpression,
+      SourceSpan sourceSpan, analyzed.AnalyzedClass scope)
       : this(
-            analyzed.isImmutable(parsedExpression, scope)
+            analyzed.isImmutable(parsedExpression.ast, scope)
                 ? parsedExpression
-                : ast.Binary(
-                    '==', parsedExpression, ast.LiteralPrimitive(true)),
+                : ast.ASTWithSource.from(
+                    parsedExpression,
+                    ast.Binary('==', parsedExpression.ast,
+                        ast.LiteralPrimitive(true))),
             sourceSpan,
             scope);
 
   @override
-  bool get isImmutable => analyzed.isImmutable(expression, _analyzedClass);
+  bool get isImmutable => analyzed.isImmutable(expression.ast, _analyzedClass);
 
   @override
-  bool get isNullable => analyzed.canBeNull(expression);
+  bool get isNullable => analyzed.canBeNull(expression.ast);
 
   @override
-  bool get isString => analyzed.isString(expression, _analyzedClass);
+  bool get isString => analyzed.isString(expression.ast, _analyzedClass);
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
@@ -485,7 +599,7 @@ abstract class EventHandler implements BindingSource {
 ///
 /// In generated code, this can be expressed as a "tear-off" expression.
 class SimpleEventHandler extends EventHandler {
-  final ast.AST handler;
+  final ast.ASTWithSource handler;
   final SourceSpan sourceSpan;
   final ProviderSource directiveInstance;
 
@@ -518,7 +632,7 @@ class ComplexEventHandler extends EventHandler {
 
   ComplexEventHandler._(this.handlers);
 
-  ComplexEventHandler.forAst(ast.AST handler, SourceSpan sourceSpan,
+  ComplexEventHandler.forAst(ast.ASTWithSource handler, SourceSpan sourceSpan,
       {ProviderSource directiveInstance})
       : this._([
           SimpleEventHandler(
@@ -572,6 +686,10 @@ abstract class IRVisitor<R, C> extends Object
 
   R visitComponentView(ComponentView componentView, [C context]);
   R visitHostView(HostView hostView, [C context]);
+  R visitEmbeddedView(EmbeddedView embeddedView, [C context]);
+
+  R visitElement(Element element, [C context]);
+  R visitMatchedDirective(MatchedDirective matchedDirective, [C context]);
 
   R visitBinding(Binding binding, [C context]);
 }

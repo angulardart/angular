@@ -66,7 +66,15 @@ Builder templateCompiler(
       exportUserCodeFromTemplate: flags.exportUserCodeFromTemplate,
     );
   }
-  return Compiler(flags, generate).asBuilder(extension: templateExtension);
+  return Compiler(
+    flags,
+    generate,
+    {
+      CompileContext: CompileContext(
+        allowedTypeDefs: flags.allowedTypeDefs,
+      ),
+    },
+  ).asBuilder(extension: templateExtension);
 }
 
 /// Generates an outline (API skeleton) instead of fully-generated code.

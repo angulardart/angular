@@ -367,8 +367,10 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
       // binding that came earlier takes priority.
       if (isComponent && !shouldMerge) continue;
 
-      var value = convertHostAttributeToBinding(name,
-          directiveMeta.hostAttributes[name], directiveMeta.analyzedClass);
+      var value = convertHostAttributeToBinding(
+          name,
+          ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]),
+          directiveMeta.analyzedClass);
       var prevValue = result[name];
       result[name] = prevValue != null
           ? _mergeAttributeValue(
@@ -431,8 +433,8 @@ ir.Binding _mergeAttributeValue(
     return ir.Binding(
         target: attr1.target,
         source: ir.BoundExpression(
-            ast.Interpolation(
-                ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)]),
+            ast.ASTWithSource.missingSource(ast.Interpolation(
+                ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)])),
             null,
             analyzedClass));
   }
@@ -440,7 +442,7 @@ ir.Binding _mergeAttributeValue(
 
 ast.AST _asAst(ir.BindingSource bindingSource) {
   if (bindingSource is ir.BoundExpression) {
-    return bindingSource.expression;
+    return bindingSource.expression.ast;
   } else if (bindingSource is ir.StringLiteral) {
     return ast.LiteralPrimitive(bindingSource.value);
   }
@@ -456,40 +458,34 @@ List<ir.Binding> _toSortedBindings(Map<String, ir.Binding> attributes) =>
 
 Map<K, V> _toSortedMap<K, V>(Map<K, V> data) => SplayTreeMap.from(data);
 
-Map<String, CompileIdentifierMetadata> _tagNameToIdentifier;
+final Map<String, CompileIdentifierMetadata> _tagNameToIdentifier = {
+  'a': Identifiers.HTML_ANCHOR_ELEMENT,
+  'area': Identifiers.HTML_AREA_ELEMENT,
+  'audio': Identifiers.HTML_AUDIO_ELEMENT,
+  'button': Identifiers.HTML_BUTTON_ELEMENT,
+  'canvas': Identifiers.HTML_CANVAS_ELEMENT,
+  'div': Identifiers.HTML_DIV_ELEMENT,
+  'form': Identifiers.HTML_FORM_ELEMENT,
+  'iframe': Identifiers.HTML_IFRAME_ELEMENT,
+  'input': Identifiers.HTML_INPUT_ELEMENT,
+  'image': Identifiers.HTML_IMAGE_ELEMENT,
+  'media': Identifiers.HTML_MEDIA_ELEMENT,
+  'menu': Identifiers.HTML_MENU_ELEMENT,
+  'ol': Identifiers.HTML_OLIST_ELEMENT,
+  'option': Identifiers.HTML_OPTION_ELEMENT,
+  'col': Identifiers.HTML_TABLE_COL_ELEMENT,
+  'row': Identifiers.HTML_TABLE_ROW_ELEMENT,
+  'select': Identifiers.HTML_SELECT_ELEMENT,
+  'table': Identifiers.HTML_TABLE_ELEMENT,
+  'text': Identifiers.HTML_TEXT_NODE,
+  'textarea': Identifiers.HTML_TEXTAREA_ELEMENT,
+  'ul': Identifiers.HTML_ULIST_ELEMENT,
+  'svg': Identifiers.SVG_SVG_ELEMENT,
+};
 
 /// Returns strongly typed html elements to improve code generation.
-CompileIdentifierMetadata identifierFromTagName(String name) {
-  _tagNameToIdentifier ??= {
-    'a': Identifiers.HTML_ANCHOR_ELEMENT,
-    'area': Identifiers.HTML_AREA_ELEMENT,
-    'audio': Identifiers.HTML_AUDIO_ELEMENT,
-    'button': Identifiers.HTML_BUTTON_ELEMENT,
-    'canvas': Identifiers.HTML_CANVAS_ELEMENT,
-    'div': Identifiers.HTML_DIV_ELEMENT,
-    'form': Identifiers.HTML_FORM_ELEMENT,
-    'iframe': Identifiers.HTML_IFRAME_ELEMENT,
-    'input': Identifiers.HTML_INPUT_ELEMENT,
-    'image': Identifiers.HTML_IMAGE_ELEMENT,
-    'media': Identifiers.HTML_MEDIA_ELEMENT,
-    'menu': Identifiers.HTML_MENU_ELEMENT,
-    'ol': Identifiers.HTML_OLIST_ELEMENT,
-    'option': Identifiers.HTML_OPTION_ELEMENT,
-    'col': Identifiers.HTML_TABLE_COL_ELEMENT,
-    'row': Identifiers.HTML_TABLE_ROW_ELEMENT,
-    'select': Identifiers.HTML_SELECT_ELEMENT,
-    'table': Identifiers.HTML_TABLE_ELEMENT,
-    'text': Identifiers.HTML_TEXT_NODE,
-    'textarea': Identifiers.HTML_TEXTAREA_ELEMENT,
-    'ul': Identifiers.HTML_ULIST_ELEMENT,
-    'svg': Identifiers.SVG_SVG_ELEMENT,
-  };
-  String tagName = name.toLowerCase();
-  var elementType = _tagNameToIdentifier[tagName];
-  elementType ??= Identifiers.HTML_ELEMENT;
-  // TODO: classify as HtmlElement or SvgElement to improve further.
-  return elementType;
-}
+CompileIdentifierMetadata identifierFromTagName(String name) =>
+    _tagNameToIdentifier[name.toLowerCase()] ?? Identifiers.HTML_ELEMENT;
 
 const _htmlTagNames = <String>{
   'a',

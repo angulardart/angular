@@ -193,27 +193,27 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
       }
     }
     final currVal_0 = import1.HostComponent.hasTerrible;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, null, null)) {
       import10.updateAttribute(this.rootElement, 'has-terrible', (currVal_0 ? '' : null));
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.title;
-    if (import6.checkBinding(this._expr_1, currVal_1)) {
+    if (import6.checkBinding(this._expr_1, currVal_1, null, null)) {
       import10.setProperty(this.rootElement, 'title', currVal_1);
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.title;
-    if (import6.checkBinding(this._expr_2, currVal_2)) {
+    if (import6.checkBinding(this._expr_2, currVal_2, null, null)) {
       import10.updateAttribute(this.rootElement, 'aria-title', currVal_2);
       this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.isDisabled;
-    if (import6.checkBinding(this._expr_3, currVal_3)) {
+    if (import6.checkBinding(this._expr_3, currVal_3, null, null)) {
       import10.updateAttribute(this.rootElement, 'aria-disabled', (currVal_3 ? '' : null));
       this._expr_3 = currVal_3;
     }
     final currVal_4 = _ctx.isDisabled;
-    if (import6.checkBinding(this._expr_4, currVal_4)) {
+    if (import6.checkBinding(this._expr_4, currVal_4, null, null)) {
       import10.updateClassBindingNonHtml(this.rootElement, 'is-disabled', currVal_4);
       this._expr_4 = currVal_4;
     }

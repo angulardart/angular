@@ -3,7 +3,8 @@ import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import 'package:angular/src/compiler/expression_parser/ast.dart' show AST;
+import 'package:angular/src/compiler/expression_parser/ast.dart'
+    show ASTWithSource, Interpolation, PropertyRead;
 import 'package:angular/src/compiler/expression_parser/lexer.dart' show Lexer;
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 
@@ -17,19 +18,19 @@ void main() {
     return Parser(Lexer());
   }
 
-  dynamic parseAction(text, [location]) {
+  ASTWithSource parseAction(text, [location]) {
     return createParser().parseAction(text, location, []);
   }
 
-  dynamic parseBinding(text, [location]) {
+  ASTWithSource parseBinding(text, [location]) {
     return createParser().parseBinding(text, location, []);
   }
 
-  dynamic parseInterpolation(text, [location]) {
+  ASTWithSource parseInterpolation(text, [location]) {
     return createParser().parseInterpolation(text, location, []);
   }
 
-  String unparse(AST ast) {
+  String unparse(ASTWithSource ast) {
     return Unparser().unparse(ast);
   }
 
@@ -306,14 +307,14 @@ void main() {
         expect(parseInterpolation("nothing"), isNull);
       });
       test("should parse no prefix/suffix interpolation", () {
-        var ast = parseInterpolation("{{a}}").ast;
+        var ast = parseInterpolation("{{a}}").ast as Interpolation;
         expect(ast.strings, ["", ""]);
         expect(ast.expressions.length, 1);
-        expect(ast.expressions[0].name, "a");
+        expect((ast.expressions[0] as PropertyRead).name, "a");
       });
       test("should parse prefix/suffix with multiple interpolation", () {
         var originalExp = "before {{ a }} middle {{ b }} after";
-        var ast = parseInterpolation(originalExp).ast;
+        var ast = parseInterpolation(originalExp);
         expect(Unparser().unparse(ast), originalExp);
       });
       test("should throw on empty interpolation expressions", () {

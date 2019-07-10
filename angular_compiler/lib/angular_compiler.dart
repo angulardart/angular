@@ -28,6 +28,7 @@ export 'src/analyzer.dart'
         UseFactoryProviderElement,
         UseValueProviderElement,
         $Component,
+        $ComponentState,
         $Directive,
         $Host,
         $Inject,
@@ -40,6 +41,7 @@ export 'src/analyzer.dart'
         $SkipSelf,
         $Typed;
 export 'src/asset.dart' show NgAssetReader;
+export 'src/context.dart' show CompileContext;
 export 'src/emitter/injector.dart' show InjectorEmitter;
 export 'src/emitter/reflector.dart' show ReflectableEmitter, SplitDartEmitter;
 export 'src/outliner.dart' show TemplateOutliner;

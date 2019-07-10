@@ -3095,6 +3095,34 @@ class ContentChildComp {}
   }
 
   // ignore: non_constant_identifier_names
+  Future test_hasContentChildrenLetBound_dynamic() async {
+    final code = r'''
+import 'package:angular/angular.dart';
+
+@Component(selector: 'my-component', template: '')
+class ComponentA {
+  @ContentChildren('foo')
+  dynamic contentChild;
+}
+
+@Component(selector: 'foo', template: '')
+class ContentChildComp {}
+''';
+    final source = newSource('/test.dart', code);
+    await getTemplates(source);
+    final component = directives.first;
+    final childrens = component.contentChildrenFields;
+    expect(childrens, hasLength(1));
+    expect(childrens.first.query, isA<LetBoundQueriedChildType>());
+    final children = childrens.first.query as LetBoundQueriedChildType;
+    expect(children.containerType, isNotNull);
+    expect(children.containerType.toString(), 'dynamic');
+
+    // validate
+    errorListener.assertNoErrors();
+  }
+
+  // ignore: non_constant_identifier_names
   Future test_hasContentChildrenDirective_subtypingListNotOk() async {
     final code = r'''
 import 'package:angular/angular.dart';

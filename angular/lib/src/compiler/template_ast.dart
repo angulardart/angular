@@ -9,7 +9,7 @@ import 'compile_metadata.dart'
         CompileProviderMetadata,
         CompileTokenMetadata,
         CompileTypeMetadata;
-import 'expression_parser/ast.dart' show AST;
+import 'expression_parser/ast.dart' show ASTWithSource;
 import 'i18n/message.dart';
 import 'output/output_ast.dart' show OutputType;
 
@@ -37,7 +37,7 @@ class TextAst implements TemplateAst {
 
 /// A bound expression within the text of a template.
 class BoundTextAst implements TemplateAst {
-  final AST value;
+  final ASTWithSource value;
   final int ngContentIndex;
   final SourceSpan sourceSpan;
 
@@ -135,7 +135,7 @@ class BoundEventAst implements TemplateAst {
 
 /// An event handler expression, with addition metadata.
 class EventHandler {
-  final AST expression;
+  final ASTWithSource expression;
 
   /// An optional directive class.
   ///
@@ -238,7 +238,6 @@ class NgContainerAst implements TemplateAst {
 /// A <template> element included in an Angular template.
 class EmbeddedTemplateAst implements TemplateAst {
   final List<AttrAst> attrs;
-  final List<BoundEventAst> outputs;
   final List<ReferenceAst> references;
   final List<VariableAst> variables;
   final List<DirectiveAst> directives;
@@ -251,7 +250,6 @@ class EmbeddedTemplateAst implements TemplateAst {
 
   EmbeddedTemplateAst(
       this.attrs,
-      this.outputs,
       this.references,
       this.variables,
       this.directives,
@@ -282,7 +280,7 @@ abstract class BoundValue {}
 
 /// A bound expression.
 class BoundExpression implements BoundValue {
-  final AST expression;
+  final ASTWithSource expression;
 
   BoundExpression(this.expression);
 }

@@ -2,6 +2,8 @@ import 'package:source_gen/source_gen.dart';
 
 // Where to find types provided by AngularDart.
 const _angular = 'package:angular';
+const _componentState =
+    '$_angular/src/core/change_detection/component_state.dart';
 const _meta = '$_angular/src/core/metadata.dart';
 const _di = '$_angular/src/core/di/decorators.dart';
 const _injector = '$_angular/src/di/injector/injector.dart';
@@ -14,6 +16,7 @@ const _typed = '$_angular/src/core/metadata/typed.dart';
 const $Directive = TypeChecker.fromUrl('$_meta#Directive');
 const $Component = TypeChecker.fromUrl('$_meta#Component');
 const $Injectable = TypeChecker.fromUrl('$_di#Injectable');
+const $ComponentState = TypeChecker.fromUrl('$_componentState#ComponentState');
 
 // Parameter metadata.
 const $Inject = TypeChecker.fromUrl('$_di#Inject');

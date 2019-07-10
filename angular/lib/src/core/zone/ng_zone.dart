@@ -75,18 +75,6 @@ class NgZone {
       ? NgZone._debugAsyncStackTraces()
       : NgZone._();
 
-  // TODO(b/134693667): Remove this once a test no longer uses it.
-  NgZone.debugOverrideDoNotUse() {
-    if (!isDevMode) {
-      throw UnsupportedError('Do not use this constructor');
-    }
-    _outerZone = Zone.current;
-    _innerZone = _createInnerZone(
-      Zone.current,
-      handleUncaughtError: _onErrorWithoutLongStackTrace,
-    );
-  }
-
   NgZone._() {
     _outerZone = Zone.current;
     _innerZone = _createInnerZone(

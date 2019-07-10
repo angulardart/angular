@@ -128,7 +128,7 @@ class MultipleGenericComponent<K, V> extends IO<Map<K, V>> {}
 
 @Component(
   selector: 'test',
-  template: '<generic [input]="value" (output2)="handle"></generic>',
+  template: '<generic [input]="value" (output)="handle"></generic>',
   directives: [SingleGenericComponent],
   directiveTypes: [Typed<SingleGenericComponent<String>>()],
 )
@@ -138,7 +138,7 @@ class TestSingleConcreteTypeArgument {
 
   var value = 'a';
 
-  void handle(int output) {}
+  void handle(String output) {}
 }
 
 @Component(

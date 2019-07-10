@@ -47,7 +47,7 @@ class MockNotifierComponent implements NotifierComponent {
 @Component(
   selector: 'test-mock-notifier',
   template: '''
-    <notifier (notifications)="notify(\$event)">'
+    <notifier (notifications)="notify(\$event)">
     </notifier>''',
   directives: [MockNotifierComponent],
 )
@@ -66,7 +66,7 @@ class FakeNotifierComponent extends NotifierComponent {
 @Component(
   selector: 'test-fake-notifier',
   template: '''
-    <notifier (notifications)="notify(\$event)">'
+    <notifier (notifications)="notify(\$event)">
     </notifier>''',
   directives: [FakeNotifierComponent],
 )

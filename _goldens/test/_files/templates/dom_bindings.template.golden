@@ -40,7 +40,7 @@ class ViewHasHostAttributes0 extends import0.ComponentView<import1.HasHostAttrib
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, null, null)) {
       import7.updateAttribute(this.rootElement, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -113,7 +113,7 @@ class ViewHasTemplateAttributes0 extends import0.ComponentView<import1.HasTempla
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'title', '')) {
       import7.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -238,7 +238,7 @@ class ViewHasHostClass0 extends import0.ComponentView<import1.HasHostClass> {
   void detectHostChanges(bool firstCheck) {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, null, null)) {
       import7.updateClassBindingNonHtml(this.rootElement, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -311,7 +311,7 @@ class ViewHasTemplateClass0 extends import0.ComponentView<import1.HasTemplateCla
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'fancy', '')) {
       import7.updateClassBinding(this._el_0, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -378,12 +378,12 @@ class ViewHasStyleProperty0 extends import0.ComponentView<import1.HasStyleProper
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.width;
-    if (import6.checkBinding(this._expr_0, currVal_0)) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'width', '')) {
       this._el_0.style.setProperty('width', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import6.checkBinding(this._expr_1, currVal_1)) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'height', '')) {
       this._el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       this._expr_1 = currVal_1;
     }

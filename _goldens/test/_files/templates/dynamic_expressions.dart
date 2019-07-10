@@ -27,24 +27,25 @@ class Comp1String {
 )
 class Comp2 {
   var a = Comp2Model();
+  var c = 'Hello World';
 }
 
 class Comp2Model {
   String b(String c) => c;
 }
 
-// OK: Compiles to "import1.Comp3.max(_ctx.a, _ctx.b).isEven"
+// OK: Compiles to "import1.Comp3.max(_ctx.a, _ctx.b).toInt().isEven"
 @Component(
   selector: 'comp-3',
-  template: '{{max(a, b).isEven}}',
+  template: '{{max(a, b).toInt().isEven}}',
 )
 class Comp3 {
   static T max<T extends Comparable<T>>(T a, T b) {
     return a.compareTo(b) < 0 ? b : a;
   }
 
-  var a = 0;
-  var b = 1;
+  num a = 0;
+  num b = 1;
 }
 
 // Dynamic :(

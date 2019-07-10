@@ -2,6 +2,7 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata;
+import 'package:angular/src/compiler/expression_parser/ast.dart';
 import 'package:angular/src/compiler/expression_parser/parser.dart' show Parser;
 import 'package:angular/src/compiler/identifiers.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
@@ -114,7 +115,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
   }
 
-  bool _maybeSkipNode(CompileElement parent, ngContentIndex) {
+  bool _maybeSkipNode(CompileElement parent, int ngContentIndex) {
     if (!_isRootNode(parent) &&
         parent.component != null &&
         ngContentIndex == null) {
@@ -144,7 +145,6 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   NodeReference _nodeReference(
       ir.Binding binding, CompileElement parent, int nodeIndex) {
-    int nodeIndex = _view.nodes.length;
     if (binding.target is ir.TextBinding) {
       return _view.createTextBinding(binding.source, parent, nodeIndex);
     } else if (binding.target is ir.HtmlBinding) {
@@ -162,7 +162,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   @override
   void visitNgContent(NgContentAst ast, CompileElement parent) {
-    _view.projectNodesIntoElement(parent, ast.index, ast);
+    _view.projectNodesIntoElement(parent, ast.index, ast.ngContentIndex);
   }
 
   @override
@@ -267,7 +267,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       isDeferredComponent: isDeferred,
     );
 
-    _view.addViewChild(componentViewExpr);
+    _view.addViewChild(compileElement);
     _view.nodes.add(compileElement);
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
@@ -563,7 +563,7 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
   // Write literal attribute values on element.
   view.component.hostAttributes.forEach((name, value) {
     var binding = convertHostAttributeToBinding(
-        name, value, view.component.analyzedClass);
+        name, ASTWithSource.missingSource(value), view.component.analyzedClass);
     var statement = view.createAttributeStatement(
       binding,
       tagName,
@@ -670,8 +670,8 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
   return [
     for (var viewContainer in view.viewContainers)
       viewContainer.callMethod('destroyNestedViews', []).toStmt(),
-    for (var componentView in view.viewChildren)
-      componentView.callMethod('destroyInternalState', []).toStmt(),
+    for (var viewChild in view.viewChildren)
+      viewChild.componentView.callMethod('destroyInternalState', []).toStmt(),
     ...view.destroyMethod.finish(),
   ];
 }
@@ -808,7 +808,7 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
       rootEl: parentRenderNodeVar,
     );
 
-    if (view.component.changeDetection == ChangeDetectionStrategy.Stateful) {
+    if (view.component.isLegacyComponentState) {
       // Connect ComponentState callback to view.
       final setCallback = DetectChangesVars.internalSetStateChanged.callFn([
         DetectChangesVars.cachedCtx,
