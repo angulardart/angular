@@ -944,15 +944,10 @@ ir.Binding _parseEvent(
 }
 
 o.OutputType _getContextType(CompileView view) {
-  // TODO(matanl): Cleanup in https://github.com/dart-lang/angular/issues/1421.
-  final originType = view.component.originType;
-  if (originType != null) {
-    return o.importType(
-      originType,
-      originType.typeParameters.map((t) => t.toType()).toList(),
-    );
-  }
-  return o.DYNAMIC_TYPE;
+  return o.importType(
+    view.component.originType,
+    view.component.originType.typeParameters.map((t) => t.toType()).toList(),
+  );
 }
 
 int _getChangeDetectionMode(CompileView view) {
