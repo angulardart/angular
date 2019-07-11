@@ -1,41 +1,39 @@
 @TestOn('browser')
+import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
-import 'query_integration_test.template.dart' as ng_generated;
+import 'query_integration_test.template.dart';
 
-// ignore_for_file: deprecated_member_use
-
-// TODO: Either delete these or port them to use List<T> instead.
-// See https://github.com/dart-lang/angular/issues/916.
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   group('query for Directive', () {
     test('should contain first content child', () async {
-      final testBed = NgTestBed<TestsContentChildComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsContentChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '2');
     });
 
     test('should contain all view children', () async {
-      final testBed = NgTestBed<TestsViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'a|b|c');
     });
 
     test('should contain first view child', () async {
-      final testBed = NgTestBed<TestsViewChildComponent>();
+      final testBed = NgTestBed.forComponent(TestsViewChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'a');
     });
 
     test('should contain first content child in embedded view', () async {
-      final testBed = NgTestBed<TestsEmbeddedContentChildComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsEmbeddedContentChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), isEmpty);
       await testFixture.update((component) => component.showContent = true);
@@ -43,7 +41,8 @@ void main() {
     });
 
     test('should contain all view children in embedded view', () async {
-      final testBed = NgTestBed<TestsEmbeddedViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsEmbeddedViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), isEmpty);
       await testFixture.update((component) => component.showView = true);
@@ -51,7 +50,8 @@ void main() {
     });
 
     test('should contain first view child in embedded view', () async {
-      final testBed = NgTestBed<TestsEmbeddedViewChildComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsEmbeddedViewChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'c');
       await testFixture.update((component) => component.showView = true);
@@ -59,7 +59,7 @@ void main() {
     });
 
     test('should handle moved directives', () async {
-      final testBed = NgTestBed<MovesDirectiveComponent>();
+      final testBed = NgTestBed.forComponent(MovesDirectiveComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1|2|3');
       await testFixture.update((component) => component.list = ['3', '2']);
@@ -67,13 +67,15 @@ void main() {
     });
 
     test('should support transclusion', () async {
-      final testBed = NgTestBed<TestsTranscludedContentChildrenComponent>();
+      final testBed = NgTestBed.forComponent(
+          TestsTranscludedContentChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '2|7');
     });
 
     test('should not be affected by unrelated changes', () async {
-      final testBed = NgTestBed<UnrelatedChangesComponent>();
+      final testBed =
+          NgTestBed.forComponent(UnrelatedChangesComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1');
       await testFixture.update((component) {
@@ -83,7 +85,7 @@ void main() {
     });
 
     test('should handle long ngFor cycles', () async {
-      final testBed = NgTestBed<LongNgForCycleComponent>();
+      final testBed = NgTestBed.forComponent(LongNgForCycleComponentNgFactory);
       final testFixture = await testBed.create();
       // No significance to 50, just a reasonably long cycle.
       for (var i = 0; i < 50; i++) {
@@ -95,7 +97,7 @@ void main() {
     });
 
     test('should support more than three queries', () async {
-      final testBed = NgTestBed<FourQueriesComponent>();
+      final testBed = NgTestBed.forComponent(FourQueriesComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1|1|1|1');
     });
@@ -103,7 +105,8 @@ void main() {
 
   group('query for TemplateRef', () {
     test('should find content and view children', () async {
-      final testBed = NgTestBed<TestsTemplateRefComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsTemplateRefComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.rootElement.querySelectorAll('.embedded-from-content'),
           hasLength(2));
@@ -112,7 +115,8 @@ void main() {
     });
 
     test('should find named content child and named view child', () async {
-      final testBed = NgTestBed<TestsNamedTemplateRefComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsNamedTemplateRefComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.rootElement.querySelectorAll('.embedded-from-content'),
           hasLength(1));
@@ -123,31 +127,35 @@ void main() {
 
   group('query for a different token via read', () {
     test('should contain all content children', () async {
-      final testBed = NgTestBed<TestsReadsContentChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsReadsContentChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1|3');
     });
 
     test('should contain the first content child', () async {
-      final testBed = NgTestBed<TestsReadsContentChildComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsReadsContentChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '2');
     });
 
     test('should contain all view children', () async {
-      final testBed = NgTestBed<ReadsViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(ReadsViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '2|3');
     });
 
     test('should contain the first view child', () async {
-      final testBed = NgTestBed<ReadsViewChildComponent>();
+      final testBed = NgTestBed.forComponent(ReadsViewChildComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '2');
     });
 
     test('should support ViewContainer', () async {
-      final testBed = NgTestBed<TestsReadsViewContainerRefComponent>();
+      final testBed =
+          NgTestBed.forComponent(TestsReadsViewContainerRefComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'Embedded in view container!');
     });
@@ -155,7 +163,8 @@ void main() {
 
   group('changes', () {
     test('should update query results', () async {
-      final testBed = NgTestBed<ChangesViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(ChangesViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1|2|3');
       await testFixture.update((component) {
@@ -166,7 +175,8 @@ void main() {
     });
 
     test('should remove destroyed directives from query results', () async {
-      final testBed = NgTestBed<DestroysViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(DestroysViewChildrenComponentNgFactory);
       var component;
       final testFixture = await testBed.create(
           beforeChangeDetection: (instance) => component = instance);
@@ -180,19 +190,22 @@ void main() {
 
   group('query for variable binding', () {
     test('should contain all view children', () async {
-      final testBed = NgTestBed<LabeledViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(LabeledViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '1|2|4|8');
     });
 
     test('should support multiple variables', () async {
-      final testBed = NgTestBed<MultipleLabeledViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(MultipleLabeledViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       expect(testFixture.text.trim(), '0|1');
     });
 
     test('should support changes', () async {
-      final testBed = NgTestBed<LabeledViewChildrenComponent>();
+      final testBed =
+          NgTestBed.forComponent(LabeledViewChildrenComponentNgFactory);
       final testFixture = await testBed.create();
       await testFixture.update((component) {
         component.list = ['8', '4', '2', '1'];
@@ -201,15 +214,16 @@ void main() {
     });
 
     test('should support element binding', () async {
-      var component;
-      final testBed = NgTestBed<LabeledElementViewChildrenComponent>();
-      await testBed.create(beforeChangeDetection: (comp) => component = comp);
+      final testBed =
+          NgTestBed.forComponent(LabeledElementViewChildrenComponentNgFactory);
+      var fixture = await testBed.create();
+      var component = fixture.assertOnlyInstance;
       final divIt = component.elementRefs.iterator;
       final itemIt = component.list.iterator;
 
       while (divIt.moveNext()) {
         itemIt.moveNext();
-        expect(divIt.current.nativeElement.text, itemIt.current);
+        expect(divIt.current.text, itemIt.current);
       }
 
       expect(itemIt.moveNext(), false);
@@ -227,7 +241,7 @@ class TextDirective {
 }
 
 abstract class TextDirectivesRenderer {
-  Iterable<dynamic> get textDirectives;
+  Iterable<TextDirective> get textDirectives;
 
   String get text => textDirectives.map((dir) => dir.text).join('|');
 }
@@ -238,7 +252,7 @@ abstract class TextDirectivesRenderer {
 )
 class ContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -283,7 +297,7 @@ class TestsContentChildComponent {}
 )
 class ViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -371,7 +385,7 @@ class TestsEmbeddedViewChildrenComponent extends TextDirectivesRenderer {
   bool showView = false;
 
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -416,7 +430,7 @@ class MovesDirectiveComponent {
 )
 class TranscludedContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -455,7 +469,7 @@ class UnrelatedChangesComponent extends TextDirectivesRenderer {
   bool showInertDirective = true;
 
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -473,7 +487,7 @@ class LongNgForCycleComponent extends TextDirectivesRenderer {
   List<String> list = <String>[];
 
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -514,10 +528,10 @@ class TemplateRefComponent implements AfterViewInit {
   final ViewContainerRef viewContainerRef;
 
   @ContentChildren(TemplateRef)
-  List<dynamic> contentTemplateRefs;
+  List<TemplateRef> contentTemplateRefs;
 
   @ViewChildren(TemplateRef)
-  List<dynamic> viewTemplateRefs;
+  List<TemplateRef> viewTemplateRefs;
 
   TemplateRefComponent(this.viewContainerRef);
 
@@ -527,7 +541,7 @@ class TemplateRefComponent implements AfterViewInit {
     createEmbeddedViewsFrom(viewTemplateRefs);
   }
 
-  void createEmbeddedViewsFrom(Iterable<dynamic> templateRefs) {
+  void createEmbeddedViewsFrom(Iterable<TemplateRef> templateRefs) {
     for (var templateRef in templateRefs) {
       viewContainerRef.createEmbeddedView(templateRef);
     }
@@ -597,7 +611,7 @@ class TestsNamedTemplateRefComponent {}
 )
 class ReadsContentChildrenComponent extends TextDirectivesRenderer {
   @ContentChildren('hasText', read: TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -651,7 +665,7 @@ class TestsReadsContentChildComponent {}
 )
 class ReadsViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('hasText', read: TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -718,7 +732,7 @@ class ChangesViewChildrenComponent extends TextDirectivesRenderer {
   String z = '3';
 
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -736,7 +750,7 @@ class DestroysViewChildrenComponent {
   bool showView = true;
 
   @ViewChildren(TextDirective)
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -757,7 +771,7 @@ class LabeledViewChildrenComponent extends TextDirectivesRenderer {
   List<String> list = <String>['1', '2', '4', '8'];
 
   @ViewChildren('textLabel')
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -773,7 +787,7 @@ class LabeledViewChildrenComponent extends TextDirectivesRenderer {
 )
 class MultipleLabeledViewChildrenComponent extends TextDirectivesRenderer {
   @ViewChildren('textLabel1,textLabel2')
-  List<dynamic> textDirectives;
+  List<TextDirective> textDirectives;
 }
 
 @Component(
@@ -790,5 +804,5 @@ class LabeledElementViewChildrenComponent {
   List<String> list = <String>['3', '1', '4'];
 
   @ViewChildren('divLabel')
-  List<dynamic> elementRefs;
+  List<HtmlElement> elementRefs;
 }
