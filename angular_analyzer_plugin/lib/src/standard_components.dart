@@ -389,7 +389,6 @@ class SecuritySchema {
 class StandardAngular {
   final ClassElement templateRef;
   final ClassElement elementRef;
-  final ClassElement queryList;
   final ClassElement pipeTransform;
   final ClassElement component;
   final SecuritySchema securitySchema;
@@ -397,7 +396,6 @@ class StandardAngular {
   StandardAngular(
       {this.templateRef,
       this.elementRef,
-      this.queryList,
       this.pipeTransform,
       this.component,
       this.securitySchema});
@@ -436,7 +434,6 @@ class StandardAngular {
             sanitizationAvailable: false));
 
     return StandardAngular(
-        queryList: ng.get("QueryList") as ClassElement,
         elementRef: ng.get("ElementRef") as ClassElement,
         templateRef: ng.get("TemplateRef") as ClassElement,
         pipeTransform: ng.get("PipeTransform") as ClassElement,
