@@ -27,6 +27,7 @@ export 'src/analyzer.dart'
         UseClassProviderElement,
         UseFactoryProviderElement,
         UseValueProviderElement,
+        $ChangeDetectionLink,
         $Component,
         $ComponentState,
         $Directive,

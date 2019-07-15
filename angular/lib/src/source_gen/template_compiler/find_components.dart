@@ -225,15 +225,35 @@ class _ComponentVisitor
 
   @override
   CompileDirectiveMetadata visitClassElement(ClassElement element) {
-    final annotationInfo =
-        annotationWhere(element, safeMatcher(isDirective), _exceptionHandler);
-    if (annotationInfo == null) return null;
+    AnnotationInformation<ClassElement> directiveInfo;
+    AnnotationInformation<ClassElement> linkInfo;
 
+    for (var index = 0; index < element.metadata.length; index++) {
+      final annotation = element.metadata[index];
+      final annotationInfo =
+          AnnotationInformation(element, annotation, index, _exceptionHandler);
+      final constantValue = annotationInfo.constantValue;
+      if (constantValue == null) {
+        _exceptionHandler.handleWarning(AngularAnalysisError(
+          annotationInfo.constantEvaluationErrors,
+          annotationInfo,
+        ));
+      } else if (safeMatcher(isDirective)(annotation)) {
+        directiveInfo = annotationInfo;
+      } else if ($ChangeDetectionLink.isExactlyType(constantValue.type)) {
+        linkInfo = annotationInfo;
+      }
+      if (directiveInfo != null && linkInfo != null) {
+        break;
+      }
+    }
+
+    if (directiveInfo == null) return null;
     if (element.isPrivate) {
       log.severe('Components and directives must be public: $element');
       return null;
     }
-    return _createCompileDirectiveMetadata(annotationInfo);
+    return _createCompileDirectiveMetadata(directiveInfo, linkInfo);
   }
 
   @override
@@ -572,9 +592,11 @@ class _ComponentVisitor
   }
 
   CompileDirectiveMetadata _createCompileDirectiveMetadata(
-      AnnotationInformation<ClassElement> annotationInfo) {
-    final element = annotationInfo.element;
-    final annotation = annotationInfo.annotation;
+    AnnotationInformation<ClassElement> directiveInfo,
+    AnnotationInformation<ClassElement> linkInfo,
+  ) {
+    final element = directiveInfo.element;
+    final annotation = directiveInfo.annotation;
 
     _directiveClassElement = element;
     DirectiveVisitor(
@@ -582,23 +604,22 @@ class _ComponentVisitor
       onHostListener: _addHostListener,
     ).visitDirective(element);
     _collectInheritableMetadata(element);
-    final isComponent = annotationInfo.isComponent;
-    final annotationValue = annotationInfo.constantValue;
+    final isComponent = directiveInfo.isComponent;
+    final annotationValue = directiveInfo.constantValue;
 
-    if (annotationInfo.hasErrors) {
+    if (directiveInfo.hasErrors) {
       _exceptionHandler.handle(AngularAnalysisError(
-          annotationInfo.constantEvaluationErrors, annotationInfo));
+          directiveInfo.constantEvaluationErrors, directiveInfo));
       return null;
     }
 
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     CompileTypeMetadata componentType = element.accept(
-        CompileTypeMetadataVisitor(
-            _library, _exceptionHandler, annotationInfo));
+        CompileTypeMetadataVisitor(_library, _exceptionHandler, directiveInfo));
 
     final template = isComponent
-        ? _createTemplateMetadata(annotationInfo, componentType)
+        ? _createTemplateMetadata(directiveInfo, componentType)
         : CompileTemplateMetadata();
 
     // _createTemplateMetadata failed to create the metadata.
@@ -612,7 +633,7 @@ class _ComponentVisitor
     final selector = coerceString(annotationValue, 'selector');
     if (selector == null || selector.isEmpty) {
       _exceptionHandler.handle(ErrorMessageForAnnotation(
-        annotationInfo,
+        directiveInfo,
         'Selector is required, got "$selector"',
       ));
     }
@@ -626,6 +647,13 @@ class _ComponentVisitor
             element, 'Directives cannot implement or use ComponentState'));
       }
       changeDetection = ChangeDetectionStrategy.OnPush;
+    }
+
+    final isChangeDetectionLink = linkInfo != null;
+    if (isChangeDetectionLink &&
+        !(isComponent && changeDetection == ChangeDetectionStrategy.OnPush)) {
+      _exceptionHandler.handle(ErrorMessageForAnnotation(linkInfo,
+          'Only supported on components that use "OnPush" change detection'));
     }
 
     return CompileDirectiveMetadata(
@@ -645,8 +673,8 @@ class _ComponentVisitor
       hostListeners: _hostListeners,
       analyzedClass: analyzedClass,
       lifecycleHooks: lifecycleHooks,
-      providers: _extractProviders(annotationInfo, 'providers'),
-      viewProviders: _extractProviders(annotationInfo, 'viewProviders'),
+      providers: _extractProviders(directiveInfo, 'providers'),
+      viewProviders: _extractProviders(directiveInfo, 'viewProviders'),
       exports: _extractExports(annotation as ElementAnnotationImpl, element),
       queries: _queries,
       viewQueries: _viewQueries,
