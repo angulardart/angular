@@ -11,6 +11,8 @@ const _module = '$_angular/src/di/module.dart';
 const _provider = '$_angular/src/di/providers.dart';
 const _token = '$_angular/src/core/di/opaque_token.dart';
 const _typed = '$_angular/src/core/metadata/typed.dart';
+const _changeDetectionLink =
+    '$_angular/src/core/metadata/change_detection_link.dart';
 
 // Class metadata.
 const $Directive = TypeChecker.fromUrl('$_meta#Directive');
@@ -38,3 +40,5 @@ const $Provider = TypeChecker.fromUrl('$_provider#Provider');
 const $OpaqueToken = TypeChecker.fromUrl('$_token#OpaqueToken');
 const $MultiToken = TypeChecker.fromUrl('$_token#MultiToken');
 const $Typed = TypeChecker.fromUrl('$_typed#Typed');
+const $ChangeDetectionLink =
+    TypeChecker.fromUrl('$_changeDetectionLink#_ChangeDetectionLink');

@@ -11,6 +11,10 @@
 *   Added support for a command-line flag, `allowed_typedefs_as_di_token`. This
     is intended to be used as a transitional flag to ban using a `typedef` as a
     DI token (which has non-predictable properties in Dart 2).
+
+*   Added `$ChangeDetectionLink`, a type checker for matching the experimental
+    `@changeDetectionLink` annotation.
+
 ## 0.4.4
 
 *   Maintenance release to support the newest version of `analyzer`.
