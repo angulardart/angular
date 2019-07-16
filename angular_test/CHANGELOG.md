@@ -1,3 +1,9 @@
+### Bug Fixes
+
+*   `NgTestFixture.update()` now delegates to `ComponentRef.update()`, which
+    automatically calls `markForCheck()`. Previously, an `OnPush` component
+    under test might not have been properly updated.
+
 ## 2.3.1
 
 *   Maintenance release to support Angular 6.0-alpha.
