@@ -30,8 +30,8 @@ final List<dynamic> styles$QueriesComponent = const [];
 
 // View for component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewQueriesComponent0 extends import0.ComponentView<import1.QueriesComponent> {
-  bool _query_AnotherDirective_1_5_isDirty = true;
-  bool _query_q3_1_6_isDirty = true;
+  bool _viewQuery_AnotherDirective_5_isDirty = true;
+  bool _viewQuery_q3_6_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   import1.AnotherDirective _AnotherDirective_1_5;
   ViewContainer _appEl_2;
@@ -72,7 +72,7 @@ class ViewQueriesComponent0 extends import0.ComponentView<import1.QueriesCompone
     this._NgIf_2_9.ngIf = _ctx.someValue;
     this._appEl_2.detectChangesInNestedViews();
     if ((!import8.debugThrowIfChanged)) {
-      if (this._query_AnotherDirective_1_5_isDirty) {
+      if (this._viewQuery_AnotherDirective_5_isDirty) {
         _ctx.usingTypeFromField = import12.flattenNodes([
           [this._AnotherDirective_0_5],
           [this._AnotherDirective_1_5],
@@ -80,13 +80,13 @@ class ViewQueriesComponent0 extends import0.ComponentView<import1.QueriesCompone
             return [nestedView._AnotherDirective_0_5];
           })
         ]);
-        this._query_AnotherDirective_1_5_isDirty = false;
+        this._viewQuery_AnotherDirective_5_isDirty = false;
       }
-      if (this._query_q3_1_6_isDirty) {
+      if (this._viewQuery_q3_6_isDirty) {
         _ctx.nestedViewChild = import12.firstOrNull(this._appEl_2.mapNestedViews((_ViewQueriesComponent1 nestedView) {
           return [ElementRef(nestedView._el_0)];
         }));
-        this._query_q3_1_6_isDirty = false;
+        this._viewQuery_q3_6_isDirty = false;
       }
     }
   }
@@ -125,8 +125,8 @@ class _ViewQueriesComponent1 extends import14.EmbeddedView<import1.QueriesCompon
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewQueriesComponent0>(this.parentView)._query_AnotherDirective_1_5_isDirty = true;
-    import8.unsafeCast<ViewQueriesComponent0>(this.parentView)._query_q3_1_6_isDirty = true;
+    import8.unsafeCast<ViewQueriesComponent0>(this.parentView)._viewQuery_AnotherDirective_5_isDirty = true;
+    import8.unsafeCast<ViewQueriesComponent0>(this.parentView)._viewQuery_q3_6_isDirty = true;
   }
 }
 
@@ -158,7 +158,7 @@ final List<dynamic> styles$EmbeddedQueries = const [];
 
 // View for component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries> {
-  bool _query_AnotherDirective_1_0_isDirty = true;
+  bool _viewQuery_AnotherDirective_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
@@ -189,7 +189,7 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if ((!import8.debugThrowIfChanged)) {
-      if (this._query_AnotherDirective_1_0_isDirty) {
+      if (this._viewQuery_AnotherDirective_0_isDirty) {
         _ctx.viewChildren = import12.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViews((_ViewEmbeddedQueries1 nestedView) {
@@ -199,7 +199,7 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
             return [nestedView._AnotherDirective_0_5];
           })
         ]);
-        this._query_AnotherDirective_1_0_isDirty = false;
+        this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     }
   }
@@ -232,7 +232,7 @@ class _ViewEmbeddedQueries1 extends import14.EmbeddedView<import1.EmbeddedQuerie
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewEmbeddedQueries0>(this.parentView)._query_AnotherDirective_1_0_isDirty = true;
+    import8.unsafeCast<ViewEmbeddedQueries0>(this.parentView)._viewQuery_AnotherDirective_0_isDirty = true;
   }
 }
 
@@ -253,7 +253,7 @@ class _ViewEmbeddedQueries2 extends import14.EmbeddedView<import1.EmbeddedQuerie
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewEmbeddedQueries0>(this.parentView)._query_AnotherDirective_1_0_isDirty = true;
+    import8.unsafeCast<ViewEmbeddedQueries0>(this.parentView)._viewQuery_AnotherDirective_0_isDirty = true;
   }
 }
 
@@ -284,7 +284,7 @@ final List<dynamic> styles$EmbeddedQueriesList = const [];
 
 // View for component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQueriesList> {
-  bool _query_AnotherDirective_1_0_isDirty = true;
+  bool _viewQuery_AnotherDirective_0_isDirty = true;
   import1.AnotherDirective _AnotherDirective_0_5;
   ViewContainer _appEl_1;
   ViewContainer _appEl_2;
@@ -315,7 +315,7 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if ((!import8.debugThrowIfChanged)) {
-      if (this._query_AnotherDirective_1_0_isDirty) {
+      if (this._viewQuery_AnotherDirective_0_isDirty) {
         _ctx.viewChildren = import12.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViews((_ViewEmbeddedQueriesList1 nestedView) {
@@ -325,7 +325,7 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
             return [nestedView._AnotherDirective_0_5];
           })
         ]);
-        this._query_AnotherDirective_1_0_isDirty = false;
+        this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     }
   }
@@ -358,7 +358,7 @@ class _ViewEmbeddedQueriesList1 extends import14.EmbeddedView<import1.EmbeddedQu
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewEmbeddedQueriesList0>(this.parentView)._query_AnotherDirective_1_0_isDirty = true;
+    import8.unsafeCast<ViewEmbeddedQueriesList0>(this.parentView)._viewQuery_AnotherDirective_0_isDirty = true;
   }
 }
 
@@ -379,7 +379,7 @@ class _ViewEmbeddedQueriesList2 extends import14.EmbeddedView<import1.EmbeddedQu
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewEmbeddedQueriesList0>(this.parentView)._query_AnotherDirective_1_0_isDirty = true;
+    import8.unsafeCast<ViewEmbeddedQueriesList0>(this.parentView)._viewQuery_AnotherDirective_0_isDirty = true;
   }
 }
 
@@ -410,7 +410,7 @@ final List<dynamic> styles$NestedNgForQueriesList = const [];
 
 // View for component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNgForQueriesList> {
-  bool _query_taggedItem_1_0_isDirty = true;
+  bool _viewQuery_taggedItem_0_isDirty = true;
   ViewContainer _appEl_0;
   NgIf _NgIf_0_9;
   static import4.ComponentStyles _componentStyles;
@@ -437,7 +437,7 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
     this._NgIf_0_9.ngIf = _ctx.conditionA;
     this._appEl_0.detectChangesInNestedViews();
     if ((!import8.debugThrowIfChanged)) {
-      if (this._query_taggedItem_1_0_isDirty) {
+      if (this._viewQuery_taggedItem_0_isDirty) {
         _ctx.taggedItems = this._appEl_0.mapNestedViews((_ViewNestedNgForQueriesList1 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList2 nestedView) {
             return nestedView._appEl_1.mapNestedViews((_ViewNestedNgForQueriesList3 nestedView) {
@@ -445,7 +445,7 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
             });
           });
         });
-        this._query_taggedItem_1_0_isDirty = false;
+        this._viewQuery_taggedItem_0_isDirty = false;
       }
     }
   }
@@ -557,7 +557,7 @@ class _ViewNestedNgForQueriesList3 extends import14.EmbeddedView<import1.NestedN
 
   @override
   void dirtyParentQueriesInternal() {
-    import8.unsafeCast<ViewNestedNgForQueriesList0>(this.parentView.parentView.parentView)._query_taggedItem_1_0_isDirty = true;
+    import8.unsafeCast<ViewNestedNgForQueriesList0>(this.parentView.parentView.parentView)._viewQuery_taggedItem_0_isDirty = true;
   }
 }
 
