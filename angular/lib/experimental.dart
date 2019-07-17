@@ -23,13 +23,29 @@ export 'src/core/linker/component_factory.dart'
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
 export 'src/core/zone/ng_zone.dart' show longestPendingTimer, inAngularZone;
 
-/// Create a root (legacy, with `SlowComponentLoader`) application injector.
+/// Create a root application [Injector].
+///
+/// Requires [userInjector] to provide app-level services or overrides:
+/// ```dart
+/// main() {
+///   var injector = rootInjector((parent) {
+///     return Injector.map({ /* ... */ }, parent);
+///   });
+/// }
+/// ```
+///
+/// **WARNING**: This API is not considered part of the stable API.
+Injector rootInjector(InjectorFactory userInjector) {
+  return appInjector(([parent]) => unsafeCast(userInjector(parent)));
+}
+
+/// Create a root (legacy, with `SlowComponentLoader`) application [Injector].
 ///
 /// Requires [userInjector] to provide app-level services or overrides:
 /// ```dart
 /// main() {
 ///   var injector = rootLegacyInjector((parent) {
-///     return new Injector.map({ /* ... */ }, parent);
+///     return Injector.map({ /* ... */ }, parent);
 ///   });
 /// }
 /// ```
