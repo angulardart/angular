@@ -21,6 +21,7 @@ export 'src/common/directives/ng_for_identity.dart' show NgForIdentity;
 export 'src/core/linker/component_factory.dart'
     show debugUsesDefaultChangeDetection;
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
+export 'src/core/metadata/change_detection_link.dart' show changeDetectionLink;
 export 'src/core/zone/ng_zone.dart' show longestPendingTimer, inAngularZone;
 
 /// Create a root application [Injector].

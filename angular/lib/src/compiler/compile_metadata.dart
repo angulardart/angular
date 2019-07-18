@@ -465,6 +465,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   /// Restricts where the directive is injectable.
   final Visibility visibility;
 
+  /// Whether this is an `OnPush` component that also works in a `Default` app.
+  final bool isChangeDetectionLink;
+
   CompileDirectiveMetadata({
     this.type,
     this.isLegacyComponentState = false,
@@ -487,6 +490,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.exports = const [],
     this.queries = const [],
     this.viewQueries = const [],
+    this.isChangeDetectionLink = false,
   });
 
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
@@ -511,7 +515,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         this.viewProviders = other.viewProviders,
         this.exports = other.exports,
         this.queries = other.queries,
-        this.viewQueries = other.viewQueries;
+        this.viewQueries = other.viewQueries,
+        this.isChangeDetectionLink = other.isChangeDetectionLink;
 
   @override
   CompileIdentifierMetadata get identifier => type;

@@ -15,6 +15,7 @@ import 'change_detection_link.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 
 // For @Component class DefaultAncestor.
 external List<dynamic> get styles$DefaultAncestor;

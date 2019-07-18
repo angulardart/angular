@@ -6,6 +6,7 @@ import 'change_detection_link.dart';
 export 'change_detection_link.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
 import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/experimental.template.dart' as _ref1;
 import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'change_detection_link.dart' as import1;
 import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
@@ -150,6 +151,14 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
   }
 
   @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+    this._appEl_2.detectChangesInCheckAlwaysViews();
+    this._appEl_5.detectChangesInCheckAlwaysViews();
+    this._compView_4.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     this._NgIf_2_9.ngIf = _ctx.isVisible;
@@ -218,6 +227,11 @@ class _ViewOnPushLink2 extends import15.EmbeddedView<import1.OnPushLink> {
   }
 
   @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
   void detectChangesInternal() {
     this._appEl_0.detectChangesInNestedViews();
   }
@@ -261,6 +275,11 @@ class _ViewOnPushLink4 extends import15.EmbeddedView<import1.OnPushLink> {
     this._NestedOnPushLink_0_5 = import1.NestedOnPushLink();
     this._compView_0.create(this._NestedOnPushLink_0_5);
     this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    this._compView_0.detectChangesInCheckAlwaysViews();
   }
 
   @override
@@ -375,6 +394,11 @@ class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLi
   }
 
   @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
   void detectChangesInternal() {
     this._appEl_0.detectChangesInNestedViews();
   }
@@ -442,4 +466,5 @@ void initReflector() {
   _ngRef.registerComponent(NestedOnPush, NestedOnPushNgFactory);
   _ngRef.registerComponent(NestedOnPushLink, NestedOnPushLinkNgFactory);
   _ref0.initReflector();
+  _ref1.initReflector();
 }

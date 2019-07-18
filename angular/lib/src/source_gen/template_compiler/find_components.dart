@@ -685,6 +685,7 @@ class _ComponentVisitor
         Visibility.values,
         defaultTo: Visibility.local,
       ),
+      isChangeDetectionLink: isChangeDetectionLink,
     );
   }
 

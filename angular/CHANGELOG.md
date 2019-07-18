@@ -13,6 +13,23 @@
     });
     ```
 
+*   Added `@changeDetectionLink` to `package:angular/experimental.dart`.
+
+    This annotation allows a component that imperatively loads another component
+    from a user-provided factory to adopt the OnPush change detection strategy,
+    without dictacting the change detection strategy of the component created
+    from the factory. This allows such a component to be used in both Default
+    and OnPush apps.
+
+    An annotated component will serve as a link between an ancestor and an
+    imperatively loaded descendant that both use the Default change detection
+    strategy. This link is used to change detect the descendant anytime the
+    ancestor is change detected, thus honoring its Default change detection
+    contract. Without this annotation, the descendant would be skipped anytime
+    the annotated OnPush component had not been marked to be checked.
+
+    For more details, see this annotation's documentation.
+
 ## 6.0.0-alpha
 
 ### New features

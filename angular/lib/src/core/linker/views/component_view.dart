@@ -127,7 +127,12 @@ abstract class ComponentView<T> extends RenderView {
 
   @override
   void detectChanges() {
-    if (_data.shouldSkipChangeDetection) return;
+    if (_data.shouldSkipChangeDetection) {
+      if (_data.changeDetectionMode == ChangeDetectionStrategy.Checked) {
+        detectChangesInCheckAlwaysViews();
+      }
+      return;
+    }
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
     if (isDevMode && _data.destroyed) {

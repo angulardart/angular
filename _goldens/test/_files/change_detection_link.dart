@@ -1,4 +1,5 @@
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 
 /// This demonstrates the code generated to implement `@changeDetectionLink`.
 ///
@@ -16,7 +17,7 @@ import 'package:angular/angular.dart';
 )
 class DefaultAncestor {}
 
-// @changeDetectionLink
+@changeDetectionLink
 @Component(
   selector: 'on-push-link',
   template: '''
@@ -51,7 +52,7 @@ class OnPushLink {
 )
 class NestedOnPush {}
 
-// @changeDetectionLink
+@changeDetectionLink
 @Component(
   selector: 'nested-on-push-link',
   template: '''
