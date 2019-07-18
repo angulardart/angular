@@ -1,7 +1,9 @@
 import 'dart:html';
 
+import 'package:meta/meta.dart';
 import 'package:angular/src/di/injector/injector.dart' show Injector;
 import 'package:angular/src/runtime.dart';
+
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'component_loader.dart';
 import 'element_ref.dart';
@@ -57,6 +59,17 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
 
   @override
   Injector get injector => parentView.injector(index);
+
+  @experimental
+  void detectChangesInCheckAlwaysViews() {
+    final nested = nestedViews;
+    if (nested == null) {
+      return;
+    }
+    for (var i = 0, len = nested.length; i < len; i++) {
+      nested[i].detectChangesInCheckAlwaysViews();
+    }
+  }
 
   void detectChangesInNestedViews() {
     final nested = nestedViews;

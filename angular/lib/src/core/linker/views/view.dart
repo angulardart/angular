@@ -60,6 +60,19 @@ abstract class View implements ChangeDetectorRef {
   /// detection mode that skips checks conditionally) should immediately return.
   void detectChanges();
 
+  /// Invokes change detection on views that use default change detection.
+  ///
+  /// This applies to all embedded and components views whose associated
+  /// component does not use default change detection and is annotated with
+  /// `@changeDetectionLink`. Upon reaching a host view, [detectChanges] is
+  /// invoked on the hosted component view if it uses default change detection.
+  ///
+  /// Defaults to an empty method for views that use default change detection,
+  /// aren't annotated with `@changeDetectionLink`, or contain no view
+  /// containers and `@changeDetectionLink` children.
+  @experimental
+  void detectChangesInCheckAlwaysViews() {}
+
   /// Backing implementation of [detectChanges] for this view.
   ///
   /// Generated views may override this method to detect and propagate changes.

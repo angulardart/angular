@@ -1,6 +1,7 @@
 @TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'change_detection_link_test.template.dart' as ng;
@@ -30,35 +31,60 @@ void main() {
       expect(testFixture.text, 'Changed value');
     }
 
-    // CheckAlways (passes factory) ->
-    //      \   @changeDetectionLink OnPush (loads factory) -> CheckAlways
-    //       \_____________________________________________________/
-    //            CheckAlways change detection link
+    // CheckAlways component -------.
+    //                    |         |
+    //   (passes factory) |         |
+    //                    v         |
+    //        @changeDetectionLink  | (change detection link)
+    //        OnPush component      |
+    //                    |         |
+    //    (loads factory) |         |
+    //                    v         v
+    //                CheckAlways component
     //
     test('in a @changeDetectionLink OnPush component', () {
       return testComponent(ng.LoadInOnPushNgFactory);
     });
 
-    // CheckAlways (passes factory) ->
-    //      \   @changeDetectionLink OnPush (passes factory) ->
-    //       \    @changeDetectionLink OnPush (loads factory) -> CheckAlways
-    //        \______________________________________________________/
-    //            CheckAlways change detection link
+    // CheckAlways component -------.
+    //                    |         |
+    //   (passes factory) |         |
+    //                    v         |
+    //        @changeDetectionLink  |
+    //        OnPush component      |
+    //                    |         |
+    //   (passes factory) |         | (change detection link)
+    //                    v         |
+    //        @changeDetectionLink  |
+    //        OnPush component      |
+    //                    |         |
+    //    (loads factory) |         |
+    //                    v         v
+    //                CheckAlways component
     //
     test('through multiple @changeDetectionLink OnPush components', () {
       return testComponent(ng.LoadInOnPushDescendantNgFactory);
     });
 
-    // CheckAlways (passes factory) ->
-    //      \   @changeDetectionLink OnPush (loads template) ->
-    //       \    embedded view (loads factory) -> CheckAlways
-    //        \_________________________________________/
-    //            CheckAlways change detection link
+    // CheckAlways component -------.
+    //                    |         |
+    //   (passes factory) |         |
+    //                    v         |
+    //        @changeDetectionLink  |
+    //        OnPush component      |
+    //                    |         |
+    //   (loads template) |         | (change detection link)
+    //                    v         |
+    //              embedded view   |
+    //                    |         |
+    //    (loads factory) |         |
+    //                    v         v
+    //                CheckAlways component
     //
     test('in an embedded view of a @changeDetectionLink OnPush component', () {
       return testComponent(ng.LoadInOnPushEmbeddedViewNgFactory);
     });
-  }, skip: 'b/119571379');
+  });
 }
 
 /// A shared model whose internal state is mutable.
@@ -79,7 +105,7 @@ class DefaultComponent {
   final MutableState state;
 }
 
-// TODO(b/119571379): @changeDetectionLink
+@changeDetectionLink
 @Component(
   selector: 'on-push-container',
   template: '<template #container></template>',
@@ -107,7 +133,7 @@ class LoadInOnPush {
   static final defaultComponentFactory = ng.DefaultComponentNgFactory;
 }
 
-// TODO(b/119571379): @changeDetectionLink
+@changeDetectionLink
 @Component(
   selector: 'on-push-ancestor',
   template: '''
@@ -134,7 +160,7 @@ class LoadInOnPushDescendant {
   static final defaultComponentFactory = ng.DefaultComponentNgFactory;
 }
 
-// TODO(b/119571379): @changeDetectionLink
+@changeDetectionLink
 @Component(
   selector: 'on-push-embedded-container',
   template: '''

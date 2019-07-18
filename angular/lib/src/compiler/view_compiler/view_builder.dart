@@ -466,6 +466,15 @@ o.ClassStmt createViewClass(CompileView view, Parser parser) {
       [o.importExpr(Identifiers.dartCoreOverride)],
     ),
     view.writeInjectorGetMethod(),
+    if (view.component.isChangeDetectionLink)
+      o.ClassMethod(
+        'detectChangesInCheckAlwaysViews',
+        [],
+        view.writeCheckAlwaysChangeDetectionStatements(),
+        null,
+        null,
+        [o.importExpr(Identifiers.dartCoreOverride)],
+      ),
     o.ClassMethod(
       "detectChangesInternal",
       [],

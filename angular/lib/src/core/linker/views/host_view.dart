@@ -158,6 +158,14 @@ abstract class HostView<T> extends View implements DynamicView {
     _data.changeDetectorState = ChangeDetectorState.CheckedBefore;
   }
 
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    if (componentView.usesDefaultChangeDetection) {
+      // Change detect the component, and any view containers it injects.
+      detectChanges();
+    }
+  }
+
   // Default implementation for simple host views whose component meets the
   // following criteria:
   //

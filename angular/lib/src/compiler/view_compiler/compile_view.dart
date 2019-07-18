@@ -1294,6 +1294,20 @@ class CompileView {
     targetStatements.addAll(_createMethod.finish());
   }
 
+  List<o.Statement> writeCheckAlwaysChangeDetectionStatements() {
+    final methodName = 'detectChangesInCheckAlwaysViews';
+    return [
+      // `HostView` already has a specialized implementation of this method.
+      if (viewType != ViewType.host) ...[
+        for (final viewContainer in viewContainers)
+          viewContainer.callMethod(methodName, []).toStmt(),
+        for (final viewChild in viewChildren)
+          if (viewChild.component.isChangeDetectionLink)
+            viewChild.componentView.callMethod(methodName, []).toStmt(),
+      ],
+    ];
+  }
+
   List<o.Statement> writeChangeDetectionStatements() {
     var statements = <o.Statement>[];
     if (detectChangesInInputsMethod.isEmpty &&
