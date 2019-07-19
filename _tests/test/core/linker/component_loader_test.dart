@@ -308,7 +308,7 @@ class Lifecycles
         AfterViewChecked {
   Lifecycles(this._log);
 
-  Log _log;
+  final Log _log;
 
   @override
   ngOnInit() {

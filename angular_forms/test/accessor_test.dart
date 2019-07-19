@@ -67,7 +67,7 @@ typedef dynamic ChangeFunctionSimple(value);
   ],
 )
 class IntValueAccessor implements ControlValueAccessor, Validator {
-  HtmlElement _elementRef;
+  final HtmlElement _elementRef;
 
   @HostListener('input')
   void onChangeBinding() => onChange(null);
