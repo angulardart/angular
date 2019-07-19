@@ -62,7 +62,7 @@ class Log {
   selector: "[lifecycle-dir]",
 )
 class LifecycleDir implements DoCheck {
-  Log _log;
+  final Log _log;
   LifecycleDir(this._log);
   ngDoCheck() {
     _log.add("child_ngDoCheck");
@@ -83,7 +83,7 @@ class LifecycleCmp
         AfterContentChecked,
         AfterViewInit,
         AfterViewChecked {
-  Log _log;
+  final Log _log;
   @Input()
   var field;
 

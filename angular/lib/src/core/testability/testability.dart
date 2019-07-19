@@ -7,7 +7,7 @@ import '../zone/ng_zone.dart';
 /// the browser and by services such as Protractor. Each bootstrapped Angular
 /// application on the page will have an instance of Testability.
 class Testability {
-  NgZone _ngZone;
+  final NgZone _ngZone;
   num _pendingCount = 0;
   bool _isZoneStable = true;
 

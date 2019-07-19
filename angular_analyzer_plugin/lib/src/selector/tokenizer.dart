@@ -24,7 +24,7 @@ class Tokenizer with ReportParseErrors {
   Match _currentMatch;
 
   /// The iterator of regex matches against the selector [str].
-  Iterator<Match> _matches;
+  final Iterator<Match> _matches;
 
   /// The end offset of the last token from the [str].
   int lastOffset = 0;

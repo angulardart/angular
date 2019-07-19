@@ -61,7 +61,7 @@ class ProviderElementContext implements ElementProviderUsage {
   // True if parent is template or template has bindings.
   final bool _isViewRoot;
   final List<DirectiveAst> _directiveAsts;
-  SourceSpan _sourceSpan;
+  final SourceSpan _sourceSpan;
   CompileTokenMap<List<CompileQueryMetadata>> _contentQueries;
   final _transformedProviders = CompileTokenMap<ProviderAst>();
   final _seenProviders = CompileTokenMap<bool>();

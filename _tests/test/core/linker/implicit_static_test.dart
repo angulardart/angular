@@ -102,7 +102,7 @@ class TestCallingStaticField {
 
 @Directive(selector: '[invoke]')
 class InvokeTearOff {
-  Element _host;
+  final Element _host;
 
   InvokeTearOff(this._host);
 
