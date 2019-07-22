@@ -237,9 +237,7 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
 }
 
 class CompileTokenMap<V> {
-  final _valueMap = Map<dynamic, V>();
-  final List<V> _values = [];
-  final List<CompileTokenMetadata> _tokens = [];
+  final _valueMap = <dynamic, V>{};
 
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
@@ -247,8 +245,6 @@ class CompileTokenMap<V> {
       throw StateError(
           'Add failed. Token already exists. Token: ${token.name}');
     }
-    _tokens.add(token);
-    _values.add(value);
     var ak = token.assetCacheKey;
     if (ak != null) {
       _valueMap[ak] = value;
@@ -262,11 +258,9 @@ class CompileTokenMap<V> {
 
   bool containsKey(CompileTokenMetadata token) => get(token) != null;
 
-  List<CompileTokenMetadata> get keys => _tokens;
+  List<V> get values => _valueMap.values.toList();
 
-  List<V> get values => _values;
-
-  int get size => _values.length;
+  int get length => _valueMap.length;
 }
 
 /// Metadata regarding compilation of a type.
