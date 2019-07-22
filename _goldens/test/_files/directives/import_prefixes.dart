@@ -17,7 +17,7 @@ class ParentComponent {
 }
 
 @angular.Component(
-  selector: 'child-cmp',
+  selector: 'child-comp',
   template: r'''
     {{myType}}
   ''',
