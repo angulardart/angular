@@ -19,8 +19,19 @@ import 'timer_hook_zone.dart';
 ///
 /// **NOTE**: _Periodic_ timers are not supported by this stabilizer.
 class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
+  static const defaultMaxIterations = 10;
+
   /// Creates a new stabilizer which uses a combination of zones.
-  factory FakeTimeNgZoneStabilizer(TimerHookZone timerZone, NgZone ngZone) {
+  ///
+  /// Optionally, specify the [maxIterations] that will be attempted to elapse
+  /// all pending timers before giving up and throwing "will never complete". In
+  /// most cases, the default value [defaultMaxIterations] is appropriate but it
+  /// may be increased in code that has heavy usage of repetitive timers.
+  factory FakeTimeNgZoneStabilizer(
+    TimerHookZone timerZone,
+    NgZone ngZone, {
+    int maxIterations,
+  }) {
     // All non-periodic timers that have been started, but not completed.
     final pendingTimers = PriorityQueue<_FakeTimer>();
 
@@ -56,16 +67,19 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
     return stabilizer = FakeTimeNgZoneStabilizer._(
       ngZone,
       pendingTimers,
+      maxIterations: maxIterations,
     );
   }
 
-  // We can consider making this configurable if needed.
-  static const _maxIterations = 10;
+  /// Maximum stabilization attempts before throwing "will never complete".
+  final int _maxIterations;
 
   FakeTimeNgZoneStabilizer._(
     NgZone ngZone,
-    PriorityQueue<_FakeTimer> pendingTimers,
-  ) : super(ngZone, pendingTimers);
+    PriorityQueue<_FakeTimer> pendingTimers, {
+    int maxIterations,
+  })  : _maxIterations = maxIterations ?? defaultMaxIterations,
+        super(ngZone, pendingTimers);
 
   /// The amount of time since construction that [elapse] has executed on.
   var _lastElapse = Duration.zero;
@@ -75,6 +89,8 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
   /// After each timers is elapsed, this implicitly calls [update], awaiting any
   /// pending microtasks, and returns a future that completes when both all
   /// timers and microtasks are completed.
+  ///
+  /// May throw [TimersWillNotCompleteError].
   Future<void> elapse(Duration time) async {
     final waitUntil = _lastElapse + time;
     await _completeTimers((t) => t._completeAfter <= waitUntil);
@@ -95,8 +111,9 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
 
       if (++totalIterations > _maxIterations) {
         final willNeverComplete = pendingTimers.toList().where(shouldComplete);
-        throw StateError(
-          'Timers will never complete: ${willNeverComplete.toList()}',
+        throw TimersWillNotCompleteError._(
+          _maxIterations,
+          willNeverComplete.toList(),
         );
       }
 
@@ -104,6 +121,23 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
       await update(() => run.complete(pendingTimers.add));
     }
   }
+}
+
+class TimersWillNotCompleteError extends Error {
+  final int _maxIterations;
+  final List<_FakeTimer> _timers;
+
+  TimersWillNotCompleteError._(this._maxIterations, this._timers);
+
+  @override
+  String toString() => (StringBuffer('Could not complete timers!')
+        ..write('Tried $_maxIterations times to elapse timers')
+        ..writeln(', but everytime more were scheduled.')
+        ..writeln('The following timers are pending:')
+        ..writeAll(_timers, '\n')
+        ..write('Check your code carefully and/or increase maxIterations only ')
+        ..writeln('when timers are being continously scheduled by design.'))
+      .toString();
 }
 
 /// A simplified fake timer that does not wrap an actual timer.

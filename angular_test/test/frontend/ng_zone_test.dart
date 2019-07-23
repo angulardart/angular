@@ -8,10 +8,11 @@ import 'package:test/test.dart';
 void main() {
   group('FakeTimeNgZoneStabilizer', () {
     NgZone ngZone;
+    TimerHookZone timerZone;
     FakeTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
-      final timerZone = TimerHookZone();
+      timerZone = TimerHookZone();
       ngZone = timerZone.run(() => NgZone());
       stabilizer = FakeTimeNgZoneStabilizer(timerZone, ngZone);
     });
@@ -191,6 +192,49 @@ void main() {
 
       // Executes a timer.
       expect(stabilizer.elapse(Duration(seconds: 3)), _throwsIntentionalError);
+    });
+
+    test('should throw TimersWillNotCompleteError', () {
+      var iterations = FakeTimeNgZoneStabilizer.defaultMaxIterations;
+      ngZone.run(() {
+        void scheduleTimer() {
+          if (iterations >= 0) {
+            iterations--;
+            Timer.run(scheduleTimer);
+          }
+        }
+
+        scheduleTimer();
+      });
+      expect(
+        stabilizer.elapse(Duration.zero),
+        throwsA(isA<TimersWillNotCompleteError>()),
+      );
+    });
+
+    test('should have a configurable maxIterations', () {
+      // Use a different maxIterations:
+      stabilizer = FakeTimeNgZoneStabilizer(
+        timerZone,
+        ngZone,
+        maxIterations: FakeTimeNgZoneStabilizer.defaultMaxIterations + 1,
+      );
+
+      var iterations = FakeTimeNgZoneStabilizer.defaultMaxIterations;
+      ngZone.run(() {
+        void scheduleTimer() {
+          if (iterations >= 0) {
+            iterations--;
+            Timer.run(scheduleTimer);
+          }
+        }
+
+        scheduleTimer();
+      });
+      expect(
+        stabilizer.elapse(Duration.zero),
+        completes,
+      );
     });
   });
 
