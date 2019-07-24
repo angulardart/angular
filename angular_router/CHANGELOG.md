@@ -1,3 +1,7 @@
+## 2.0.0-alpha+24
+
+*   Maintenance release to support Angular 6.0-alpha+1.
+
 ## 2.0.0-alpha+23
 
 ### Bug fixes
