@@ -5,7 +5,8 @@ authors:
   - Konstantin Scheglov <scheglov@google.com>
   - Mike Fairhurst <mfairhurst@google.com>
   - Max Kim <maxkim@google.com>
-homepage: https://github.com/dart-lang/angular_analyzer_plugin
+homepage: https://angulardart.dev/
+repository: https://github.com/dart-lang/angular
 environment:
   sdk: ">=2.5.0-dev.1.0 <3.0.0"
 dependencies:

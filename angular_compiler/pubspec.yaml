@@ -1,6 +1,7 @@
 name: angular_compiler
 author: Dart Team <misc@dartlang.org>
-homepage: https://github.com/dart-lang/angular
+homepage: https://angulardart.dev/
+repository: https://github.com/dart-lang/angular
 description: Compiler for AngularDart.
 version: 0.4.5
 

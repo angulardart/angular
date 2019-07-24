@@ -1,6 +1,7 @@
 name: angular_test
 author: Dart Team <misc@dartlang.org>
-homepage: https://github.com/dart-lang/angular
+homepage: https://angulardart.dev/
+repository: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
 version: 2.4.0
 

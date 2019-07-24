@@ -65,8 +65,8 @@ a set of [community contributed tutorials][comm].
 [ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
 [ad_words]: http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html
 [fiber]: http://news.dartlang.org/2015/11/how-google-uses-angular-2-with-dart.html
-[webdev_angular]: https://webdev.dartlang.org/angular
-[dart_web]: https://webdev.dartlang.org/
+[webdev_angular]: https://angulardart.dev/
+[dart_web]: https://dart.dev/web
 [pub_angular]: https://pub.dev/packages/angular
 [pub_angular_components]: https://pub.dev/packages/angular_components
 [pub_angular_forms]: https://pub.dev/packages/angular_forms
