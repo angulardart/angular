@@ -9,12 +9,12 @@ Documentation and examples:
 
 * [`_tests/test/`][test_folder] (tests for the main dart-lang/angular package)
 * [AngularDart component testing documentation][webdev_testing]:
-  * [Running Component Tests](https://webdev.dartlang.org/angular/guide/testing/component/running-tests)
-  * [Component Testing: Basics](https://webdev.dartlang.org/angular/guide/testing/component/basics)
+  * [Running Component Tests](https://angulardart.dev/guide/testing/component/running-tests)
+  * [Component Testing: Basics](https://angulardart.dev/guide/testing/component/basics)
   * Pages for individual topics, such as
-    [page objects](https://webdev.dartlang.org/angular/guide/testing/component/page-objects)
+    [page objects](https://angulardart.dev/guide/testing/component/page-objects)
     and
-    [user actions](https://webdev.dartlang.org/angular/guide/testing/component/simulating-user-action)
+    [user actions](https://angulardart.dev/guide/testing/component/simulating-user-action)
 
 **NOTE**: Some of the guides above are out of date the for the latest `angular_test` versions.
 
@@ -22,8 +22,8 @@ Documentation and examples:
 [pub_test]: https://pub.dev/packages/test
 [build_runner]: https://pub.dev/packages/build_runner
 [test_folder]: https://github.com/dart-lang/angular/tree/master/_tests/test
-[webdev_angular]: https://webdev.dartlang.org/angular
-[webdev_testing]: https://webdev.dartlang.org/angular/guide/testing/component
+[webdev_angular]: https://angulardart.dev/
+[webdev_testing]: https://angulardart.dev/guide/testing/component
 
 Additional resources:
 
