@@ -23,6 +23,7 @@ export 'src/core/linker/component_factory.dart'
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
 export 'src/core/metadata/change_detection_link.dart' show changeDetectionLink;
 export 'src/core/zone/ng_zone.dart' show longestPendingTimer, inAngularZone;
+export 'src/runtime/check_binding.dart' show debugCheckBindings;
 
 /// Create a root application [Injector].
 ///
