@@ -686,3 +686,110 @@ class HeroService {}
 ```dart
 class HeroService {}
 ```
+
+## Testing
+
+### AVOID initialization code outside of Angular
+
+When writing classic unit tests, it is often compelling to use `setUp` or to
+create and reuse helper functions for initializing services or other complex
+dependencies:
+
+```dart
+void main() {
+  HttpService service;
+  Analytics analytics;
+
+  // Every test('...', () { ... }) can re-use this initialization logic.
+  setUp(() {
+    service = FakeHttpService();
+    analytics = Analytics(service);
+  });
+
+  test('should not retry on a 404', () async {
+    service.respondWith(404);
+    await analytics.trackHit();
+    expect(service.attempts, 1);
+  });
+}
+```
+
+**BAD**: Passing pre-initialized complex services
+
+In Angular, this pattern causes a very fundamental problem - nothing was created
+within our `Zone`, so the test framework is not able to tell when asynchronous
+code has started and stopped executing:
+
+```dart
+void main() {
+  HttpService service;
+  Analytics analytics;
+
+  setUp(() {
+    service = FakeHttpService();
+    analytics = Analytics(service);
+  });
+
+  test('should display the current progress status', () async {
+    // There are multiple patterns for creating a test bed, yours may not match.
+    final testBed = NgTestBed.forComponent(
+      TestProgressComponentNgFactory,
+      rootInjector: ([parent]) {
+        return Injector.map({
+          Analytics: analytics,
+        }, parent);
+      },
+    );
+    final fixture = await testBed.create();
+
+    await expectProgressIndicator(0.0);
+    await testBed.update(() => service.sendProgress(10.0));
+    await expectProgressIndictator(10.0);
+  });
+}
+```
+
+See the problem? There is no guarantee that anything `Analytics` executes is
+tracked by the test framework, so it's possible that the UI will not update.
+This often leads to frustrating behavior, or having to wait arbitrary amounts
+of time to "simulate" asynchronous work (which is flaky and slow).
+
+**GOOD**: Create complex services within `@Component.providers`:
+
+```dart
+void main() {
+  HttpService service;
+
+  test('should display the current progress status', () async {
+    // There are multiple patterns for creating a test bed, yours may not match.
+    final testBed = NgTestBed.forComponent(
+      TestProgressComponentNgFactory,
+    );
+    final fixture = await testBed.create(
+      beforeComponentCreated: (injector) {
+        service = injector.provide(HttpService);
+      },
+    );
+
+    await expectProgressIndicator(0.0);
+    await testBed.update(() => service.sendProgress(10.0));
+    await expectProgressIndictator(10.0);
+  });
+}
+
+@Component(
+  selector: 'test',
+  directives: [
+    ProgressComponent,
+  ],
+  providers: [
+    ClassProvider(HttpService, useClass: FakeHttpService),
+    ClassProvider(Analytics),
+  ],
+)
+class TestProgressComponent {
+  // ...
+}
+```
+
+This does the same thing, but creates and manages the services just like an app!
