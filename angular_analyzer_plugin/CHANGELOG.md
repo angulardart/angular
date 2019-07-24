@@ -1,3 +1,7 @@
+## 1.0.0-alpha+1
+
+*   Maintenance release to support Angular 6.0-alpha+1.
+
 ## 1.0.0-alpha
 
 *  The Angular analyzer plugin has moved into the core angular repo, and will be

@@ -1,3 +1,5 @@
+## 0.4.5
+
 *   The InjectorReader now fails with an explicit error if types are used inside
     a ValueProvider object. Previously, using types in ValueProviders would
     crash the AngularDart compiler.

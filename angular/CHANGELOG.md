@@ -1,3 +1,5 @@
+## 6.0.0-alpha+1
+
 ### New features
 
 *   Added `ComponentRef.update()`. This method should be used to apply changes

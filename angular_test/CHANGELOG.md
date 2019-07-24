@@ -1,3 +1,5 @@
+## 2.4.0
+
 ### New Features
 
 *   Added an optional named parameter, `maxIterations`, to
