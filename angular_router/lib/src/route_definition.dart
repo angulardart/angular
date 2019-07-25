@@ -22,6 +22,8 @@ import 'url.dart';
 abstract class RouteDefinition {
   static final RegExp _findParameters = RegExp(r':([\w-]+)');
 
+  final RoutePath _routePath;
+
   /// Logical name used for determining a route.
   final String path;
 
@@ -40,7 +42,8 @@ abstract class RouteDefinition {
       RoutePath routePath})
       : this.path = Url.trimSlashes(path ?? routePath?.path),
         this.useAsDefault = useAsDefault ?? routePath?.useAsDefault ?? false,
-        this.additionalData = additionalData ?? routePath?.additionalData;
+        this.additionalData = additionalData ?? routePath?.additionalData,
+        this._routePath = routePath;
 
   /// Runs a dev-mode assertion that the definition is valid.
   ///
@@ -177,7 +180,7 @@ abstract class RouteDefinition {
     if (isDevMode && paramValues == null) {
       throw ArgumentError.notNull('paramValues');
     }
-    var url = '/' + path;
+    var url = '/' + (_routePath != null ? _routePath.toUrl() : path);
     for (final parameter in parameters) {
       url = url.replaceFirst(
           ':$parameter', Uri.encodeComponent(paramValues[parameter]));
