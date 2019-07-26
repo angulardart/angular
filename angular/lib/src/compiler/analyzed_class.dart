@@ -60,8 +60,7 @@ DartType boolType(AnalyzedClass analyzedClass) =>
 /// Returns whether the type [expression] is [String].
 bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
   final type = getExpressionType(expression, analyzedClass);
-  final string = analyzedClass._typeProvider.stringType;
-  return type.isEquivalentTo(string);
+  return type.isDartCoreString;
 }
 
 PropertyInducingElement _getField(AnalyzedClass clazz, String name) {
