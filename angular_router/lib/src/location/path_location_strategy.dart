@@ -51,7 +51,7 @@ import 'platform_location.dart' show PlatformLocation;
 /// ```
 @Injectable()
 class PathLocationStrategy extends LocationStrategy {
-  PlatformLocation _platformLocation;
+  final PlatformLocation _platformLocation;
   String _baseHref;
   PathLocationStrategy(this._platformLocation,
       [@Optional() @Inject(appBaseHref) String href]) {

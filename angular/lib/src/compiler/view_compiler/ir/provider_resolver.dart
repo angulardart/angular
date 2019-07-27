@@ -156,7 +156,7 @@ class ProviderResolver {
         _instances.add(
             token,
             _host.createProviderInstance(resolvedProvider, directiveMetadata,
-                providerSources, _instances.size));
+                providerSources, _instances.length));
       }
     }
   }

@@ -31,6 +31,22 @@ void debugExitThrowOnChanged() {
 /// Additionally, if `true` the failing expression (and location) is reported.
 var _debugCheckAllExpressionsAndReportExpressionContext = false;
 
+/// Opt-in/out to more precise and exhaustive checking of AngularDart bindings.
+///
+/// The current (live) version of `checkBinding` (in debug mode) accidentally
+/// was implemented where it only checks primitive values (strings, numbers,
+/// booleans, null) and not other types. While in practice most bindings
+/// eventually propagate to strings, this makes errors much more difficult to
+/// debug.
+///
+/// Context (expression and source location) is also reported when available.
+///
+/// **WARNING**: This API is not considered part of the stable API.
+@experimental
+void debugCheckBindings([bool enabled = true]) {
+  _debugCheckAllExpressionsAndReportExpressionContext = enabled;
+}
+
 /// Returns whether [oldValue] is considered "changed" compared to [newValue].
 ///
 /// Semantically, this method is equivalent to [identical].
@@ -109,8 +125,13 @@ class UnstableExpressionError extends Error {
   @override
   String toString() {
     if (_debugCheckAllExpressionsAndReportExpressionContext) {
-      assert(expression != null && location != null, 'Context not provided');
-      return 'TODO: Implement';
+      final message = ''
+          'An expression bound in an AngularDart template returned a different '
+          'value the second time it was evaluated.\n\n';
+      return '$message'
+          '${expression ?? 'UNKNOWN'} in ${location ?? 'UNKNOWN'}:\n'
+          '  Previous: $oldValue\n'
+          '  Current:  $newValue';
     }
     return ''
         'Expression has changed after it was checked. '

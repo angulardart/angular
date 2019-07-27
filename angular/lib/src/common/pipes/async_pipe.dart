@@ -84,7 +84,7 @@ class AsyncPipe implements OnDestroy, PipeTransform {
   Object _subscription;
   dynamic /* Stream | Future | EventEmitter */ _obj;
   dynamic _strategy;
-  ChangeDetectorRef _ref;
+  final ChangeDetectorRef _ref;
 
   AsyncPipe(this._ref);
 

@@ -52,6 +52,7 @@ class AstDirectiveNormalizer {
         template: result,
         analyzedClass: directive.analyzedClass,
         visibility: directive.visibility,
+        isChangeDetectionLink: directive.isChangeDetectionLink,
       );
     });
   }

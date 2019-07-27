@@ -93,7 +93,7 @@ void main() {
 class MockRouter extends Mock implements Router {}
 
 class DelegatingRouter extends RouterImpl {
-  Router _delegate;
+  final Router _delegate;
 
   DelegatingRouter(this._delegate)
       : super(Location(MockLocationStrategy()), null);

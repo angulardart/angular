@@ -1,3 +1,24 @@
+## 2.4.0
+
+### New Features
+
+*   Added an optional named parameter, `maxIterations`, to
+    `FakeTimeNgZoneStabilizer`'s constructor. If not specified 10 maximum loops
+    are attempted to `elapse` pending timers. In advanced use cases, a test may
+    configure a higher threshold:
+
+    ```dart
+    NgZoneStabilizer allow100InsteadOf10() {
+      return FakeTimeNgZoneStabilizer(timerZone, ngZone, maxIterations: 100);
+    }
+    ```
+
+### Bug Fixes
+
+*   `NgTestFixture.update()` now delegates to `ComponentRef.update()`, which
+    automatically calls `markForCheck()`. Previously, an `OnPush` component
+    under test might not have been properly updated.
+
 ## 2.3.1
 
 *   Maintenance release to support Angular 6.0-alpha.

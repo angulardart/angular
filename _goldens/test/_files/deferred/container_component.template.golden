@@ -34,7 +34,7 @@ final List<dynamic> styles$TestContainerComponent = const [];
 
 // View for component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
 class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestContainerComponent> {
-  bool _query_queryMe_1_0_isDirty = true;
+  bool _viewQuery_queryMe_0_isDirty = true;
   ViewContainer _appEl_0;
   void Function() _cancelDeferredLoad0;
   ViewContainer _appEl_1;
@@ -112,13 +112,13 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
     this._appEl_5.detectChangesInNestedViews();
     this._appEl_7.detectChangesInNestedViews();
     if ((!import10.debugThrowIfChanged)) {
-      if (this._query_queryMe_1_0_isDirty) {
+      if (this._viewQuery_queryMe_0_isDirty) {
         _ctx.queryDeferredChild = import14.firstOrNull(this._appEl_2.mapNestedViews((_ViewTestContainerComponent4 nestedView) {
           return nestedView._appEl_1.mapNestedViews((_ViewTestContainerComponent5 nestedView) {
             return [nestedView._DeferredChild3Component_0_5];
           });
         }));
-        this._query_queryMe_1_0_isDirty = false;
+        this._viewQuery_queryMe_0_isDirty = false;
       }
     }
     this._compView_6.detectChanges();
@@ -295,7 +295,7 @@ class _ViewTestContainerComponent5 extends import16.EmbeddedView<import1.TestCon
 
   @override
   void dirtyParentQueriesInternal() {
-    import10.unsafeCast<ViewTestContainerComponent0>(this.parentView.parentView)._query_queryMe_1_0_isDirty = true;
+    import10.unsafeCast<ViewTestContainerComponent0>(this.parentView.parentView)._viewQuery_queryMe_0_isDirty = true;
   }
 
   @override

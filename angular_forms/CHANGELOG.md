@@ -1,3 +1,7 @@
+## 2.1.4
+
+*   Maintenance release to support Angular 6.0-alpha+1.
+
 ## 2.1.3
 
 *   Maintenance release to support Angular 6.0-alpha.
