@@ -383,8 +383,8 @@ class AngularDriver
     final unlinkedSummary = _buildUnlinkedAngularTopLevels(path);
     final errorListener = RecordingErrorListener();
     final errorReporter = ErrorReporter(errorListener, _sourceFor(path));
-    final linker =
-        EagerLinker(standardAngular, standardHtml, errorReporter, this);
+    final linker = EagerLinker(
+        context.typeSystem, standardAngular, standardHtml, errorReporter, this);
     final directives = linkTopLevels(unlinkedSummary, unit, linker);
     final pipes = linkPipes(unlinkedSummary.pipeSummaries, unit, linker);
 
@@ -528,8 +528,12 @@ class AngularDriver
     final htmlSource = _sourceFactory.forUri('file:$htmlPath');
     final dartSource = _sourceFactory.forUri('file:$dartPath');
     final summary = _buildUnlinkedAngularTopLevels(dartPath);
-    final linker = EagerLinker(standardAngular, standardHtml,
-        ErrorReporter(AnalysisErrorListener.NULL_LISTENER, htmlSource), this,
+    final linker = EagerLinker(
+        unit.context.typeSystem,
+        standardAngular,
+        standardHtml,
+        ErrorReporter(AnalysisErrorListener.NULL_LISTENER, htmlSource),
+        this,
         linkHtmlNgContents: false);
     final directives = linkTopLevels(summary, unit, linker);
     final context = unit.context;
@@ -599,9 +603,10 @@ class AngularDriver
 
   @override
   TopLevel getAngularTopLevel(Element element) {
+    final typeSystem = element.context.typeSystem;
     final path = element.source.fullName;
     final summary = _buildUnlinkedAngularTopLevels(path);
-    final linker = LazyLinker(standardAngular, standardHtml, this);
+    final linker = LazyLinker(typeSystem, standardAngular, standardHtml, this);
     return linkTopLevel(summary, element, linker);
   }
 
@@ -612,7 +617,7 @@ class AngularDriver
     final bytes = byteStore.get(key);
     final source = _sourceFor(path);
     if (bytes != null) {
-      final linker = EagerLinker(null, null, null, null);
+      final linker = EagerLinker(null, null, null, null, null);
       return UnlinkedHtmlSummary.fromBuffer(bytes)
           .ngContents
           .map((ngContent) => linker.ngContent(ngContent, source))
@@ -642,9 +647,10 @@ class AngularDriver
 
   @override
   Pipe getPipe(ClassElement element) {
+    final typeSystem = element.context.typeSystem;
     final path = element.source.fullName;
     final summary = _buildUnlinkedAngularTopLevels(path);
-    final linker = LazyLinker(standardAngular, standardHtml, this);
+    final linker = LazyLinker(typeSystem, standardAngular, standardHtml, this);
     return linkPipe(summary.pipeSummaries, element, linker);
   }
 
