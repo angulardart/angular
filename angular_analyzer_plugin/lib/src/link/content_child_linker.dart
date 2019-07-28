@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer/src/generated/constant.dart';
@@ -22,14 +23,15 @@ import 'package:angular_analyzer_plugin/src/summary/idl.dart';
 /// annotation, and resolve that value into a [QueriedChildType] so the query
 /// can be matched later against elements in the template.
 class ContentChildLinker {
+  final TypeSystem _typeSystem;
   final DirectiveProvider _directiveProvider;
   final StandardHtml _standardHtml;
   final ErrorReporter _errorReporter;
 
   final htmlTypes = {'ElementRef', 'Element', 'HtmlElement'};
 
-  ContentChildLinker(
-      this._directiveProvider, this._standardHtml, this._errorReporter);
+  ContentChildLinker(this._typeSystem, this._directiveProvider,
+      this._standardHtml, this._errorReporter);
 
   /// Link [contentChildField] against class of [classElement].
   ///
@@ -195,7 +197,8 @@ class ContentChildLinker {
       DartType annotatedType,
       SummarizedContentChildField field,
       String annotationName) {
-    if (setterType != null && !setterType.isSupertypeOf(annotatedType)) {
+    if (setterType != null &&
+        !_typeSystem.isSubtypeOf(annotatedType, setterType)) {
       _errorReporter.reportErrorForOffset(
           AngularWarningCode.INVALID_TYPE_FOR_CHILD_QUERY,
           field.typeOffset,
@@ -262,7 +265,7 @@ class ContentChildLinker {
     final listBottom =
         typeProvider.listType.instantiate([typeProvider.bottomType]);
 
-    if (!setterType.isSupertypeOf(listBottom)) {
+    if (!_typeSystem.isSubtypeOf(listBottom, setterType)) {
       _errorReporter.reportErrorForOffset(
           AngularWarningCode.CONTENT_OR_VIEW_CHILDREN_REQUIRES_LIST,
           field.typeOffset,

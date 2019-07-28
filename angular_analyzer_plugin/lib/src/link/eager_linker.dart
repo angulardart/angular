@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
 import 'package:analyzer/src/dart/resolver/scope.dart';
@@ -43,15 +44,15 @@ class EagerLinker implements TopLevelLinker {
   final ContentChildLinker _contentChildLinker;
   final bool linkHtmlNgContents;
 
-  EagerLinker(this._standardAngular, StandardHtml standardHtml,
-      this._errorReporter, this._directiveProvider,
+  EagerLinker(TypeSystem typeSystem, this._standardAngular,
+      StandardHtml standardHtml, this._errorReporter, this._directiveProvider,
       {this.linkHtmlNgContents = true})
       : _exportLinker = ExportLinker(_errorReporter),
         _subDirectiveLinker =
             SubDirectiveLinker(_directiveProvider, _errorReporter),
         _subPipeLinker = SubPipeLinker(_directiveProvider, _errorReporter),
         _contentChildLinker = ContentChildLinker(
-            _directiveProvider, standardHtml, _errorReporter);
+            typeSystem, _directiveProvider, standardHtml, _errorReporter);
 
   /// Fully link an [AngularAnnotatedClass] from a summary and a [ClassElement].
   @override
