@@ -149,7 +149,7 @@ be avoided](#avoid-using-reflectiveinjector).
 ```dart
 void main() {
   var injector = ReflectiveInjector.resolveAndCreate([
-    ClassProvider(HeroService),
+    new ClassProvider(HeroService),
   ]);
 }
 ```
@@ -163,7 +163,7 @@ future:
 ```dart
 void main() {
   var injector = ReflectiveInjector.resolveAndCreate([
-    ClassProvider(HeroService),
+    const ClassProvider(HeroService),
   ]);
 }
 ```
