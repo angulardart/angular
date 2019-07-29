@@ -693,8 +693,7 @@ void main() {
 
         test('should provide a directive', () {
           var dirA = createDir('[dirA]');
-          ElementAst elAst =
-              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providerType, ProviderAstType.Directive);
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
@@ -703,8 +702,7 @@ void main() {
         test('should use the public providers of a directive', () {
           var provider = createProvider('service');
           var dirA = createDir('[dirA]', providers: [provider]);
-          ElementAst elAst =
-              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PublicService);
@@ -715,7 +713,7 @@ void main() {
           var provider = createProvider('service');
           var comp = createDir('my-comp', viewProviders: [provider]);
           ElementAst elAst =
-              (parse('<my-comp></my-comp>', [comp])[0] as ElementAst);
+              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PrivateService);
@@ -729,7 +727,7 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0, provider1]);
           var dirB = createDir('[dirB]', providers: [provider2]);
           ElementAst elAst =
-              (parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst);
+              parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers,
               orderedEquals([provider0, provider2]));
@@ -743,7 +741,7 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider1, provider2]);
           var dirB = createDir('[dirB]', providers: [provider3]);
           ElementAst elAst =
-              (parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst);
+              parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers, orderedEquals([provider3]));
           expect(elAst.providers[3].providers, orderedEquals([provider2]));
@@ -754,8 +752,8 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', providers: [compProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst = (parse('<my-comp dirA></my-comp>', [dirA, comp])[0]
-              as ElementAst);
+          ElementAst elAst =
+              parse('<my-comp dirA></my-comp>', [dirA, comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
@@ -765,8 +763,8 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', viewProviders: [viewProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst = (parse('<my-comp dirA></my-comp>', [dirA, comp])[0]
-              as ElementAst);
+          ElementAst elAst =
+              parse('<my-comp dirA></my-comp>', [dirA, comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
         });
@@ -775,7 +773,7 @@ void main() {
           var dirProvider = createProvider('type:my-comp');
           var comp = createDir('my-comp', providers: [dirProvider]);
           ElementAst elAst =
-              (parse('<my-comp></my-comp>', [comp])[0] as ElementAst);
+              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providers, orderedEquals([dirProvider]));
         });
@@ -845,8 +843,8 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0, provider1]);
           var dirB = createDir('[dirB]', deps: ['service0']);
           ElementAst elAst =
-              (parse('<div dirA><div dirB></div></div>', [dirA, dirB])[0]
-                  as ElementAst);
+              parse('<div dirA><div dirB></div></div>', [dirA, dirB])[0]
+                  as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
@@ -861,8 +859,7 @@ void main() {
           var provider1 = createProvider('service1');
           var dirA = createDir('[dirA]',
               providers: [provider0, provider1], queries: ['service0']);
-          ElementAst elAst =
-              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
@@ -878,8 +875,8 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0]);
           var dirB = createDir('[dirB]', deps: ['service0']);
           ElementAst elAst =
-              (parse('<div dirA><div *ngIf dirB></div></div>', [dirA, dirB])[0]
-                  as ElementAst);
+              parse('<div dirA><div *ngIf dirB></div></div>', [dirA, dirB])[0]
+                  as ElementAst;
           expect(elAst.providers, hasLength(2));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
@@ -901,8 +898,7 @@ void main() {
 
         test('should change missing @Self() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:self:provider0']);
-          ElementAst elAst =
-              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers[0].providers[0].deps[0].isValue, true);
           expect(elAst.providers[0].providers[0].deps[0].value, isNull);
         });
@@ -921,8 +917,7 @@ void main() {
 
         test('should change missing @Host() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:host:provider0']);
-          ElementAst elAst =
-              (parse('<div dirA></div>', [dirA])[0] as ElementAst);
+          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers[0].providers[0].deps[0].isValue, true);
           expect(elAst.providers[0].providers[0].deps[0].value, isNull);
         });

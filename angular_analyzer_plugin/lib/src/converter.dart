@@ -521,7 +521,7 @@ class HtmlTreeConverter {
     final suffixToken = ast.suffixToken;
 
     final prefixComponent =
-        (prefixToken.errorSynthetic ? '' : prefixToken.lexeme);
+        prefixToken.errorSynthetic ? '' : prefixToken.lexeme;
     final suffixComponent =
         ((suffixToken == null) || suffixToken.errorSynthetic)
             ? ''
