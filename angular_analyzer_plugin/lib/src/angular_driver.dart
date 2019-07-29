@@ -406,7 +406,7 @@ class AngularDriver
           htmlViews.add(directive.templateUrlSource.fullName);
         }
 
-        for (final subDirective in (directive.directives ?? <Null>[])) {
+        for (final subDirective in directive.directives ?? <Null>[]) {
           usesDart.add(subDirective.source.fullName);
         }
       }
