@@ -35,6 +35,7 @@ import 'package:angular_analyzer_plugin/src/summary/idl.dart';
 /// to false, as those can be discovered during template resolution and would
 /// otherwise occur multiple times.
 class EagerLinker implements TopLevelLinker {
+  final TypeSystem _typeSystem;
   final DirectiveProvider _directiveProvider;
   final StandardAngular _standardAngular;
   final ErrorReporter _errorReporter;
@@ -44,7 +45,7 @@ class EagerLinker implements TopLevelLinker {
   final ContentChildLinker _contentChildLinker;
   final bool linkHtmlNgContents;
 
-  EagerLinker(TypeSystem typeSystem, this._standardAngular,
+  EagerLinker(this._typeSystem, this._standardAngular,
       StandardHtml standardHtml, this._errorReporter, this._directiveProvider,
       {this.linkHtmlNgContents = true})
       : _exportLinker = ExportLinker(_errorReporter),
@@ -52,7 +53,7 @@ class EagerLinker implements TopLevelLinker {
             SubDirectiveLinker(_directiveProvider, _errorReporter),
         _subPipeLinker = SubPipeLinker(_directiveProvider, _errorReporter),
         _contentChildLinker = ContentChildLinker(
-            typeSystem, _directiveProvider, standardHtml, _errorReporter);
+            _typeSystem, _directiveProvider, standardHtml, _errorReporter);
 
   /// Fully link an [AngularAnnotatedClass] from a summary and a [ClassElement].
   @override
@@ -292,7 +293,8 @@ class EagerLinker implements TopLevelLinker {
   @override
   Pipe pipe(SummarizedPipe pipeSum, ClassElement classElement) {
     // Check if 'extends PipeTransform' exists.
-    if (!classElement.type.isSubtypeOf(_standardAngular.pipeTransform.type)) {
+    if (!_typeSystem.isSubtypeOf(
+        classElement.type, _standardAngular.pipeTransform.type)) {
       _errorReporter.reportErrorForOffset(
           AngularWarningCode.PIPE_REQUIRES_PIPETRANSFORM,
           pipeSum.pipeNameOffset,
