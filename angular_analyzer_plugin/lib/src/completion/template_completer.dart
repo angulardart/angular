@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:analyzer/dart/element/type_system.dart' show TypeSystem;
 import 'package:analyzer/src/generated/resolver.dart' show TypeProvider;
 import 'package:analyzer_plugin/protocol/protocol_common.dart'
     hide AnalysisError;
@@ -44,8 +45,10 @@ class TemplateCompleter {
     List<Output> standardHtmlEvents,
     Set<Input> standardHtmlAttributes,
   ) async {
-    final typeProvider = template.component.classElement.enclosingElement
-        .enclosingElement.context.typeProvider;
+    var analysisContext = template
+        .component.classElement.enclosingElement.enclosingElement.context;
+    final typeSystem = analysisContext.typeSystem;
+    final typeProvider = analysisContext.typeProvider;
     final dartSnippet = request.dartSnippet;
     final target = request.angularTarget;
 
@@ -73,6 +76,7 @@ class TemplateCompleter {
           collector,
           standardHtmlAttributes,
           target.boundStandardInputs,
+          typeSystem,
           typeProvider,
           includePlainAttributes: true,
         );
@@ -131,6 +135,7 @@ class TemplateCompleter {
             collector,
             standardHtmlAttributes,
             target.parent.boundStandardInputs,
+            typeSystem,
             typeProvider,
             currentAttr: target);
       }
@@ -167,6 +172,7 @@ class TemplateCompleter {
             collector,
             standardHtmlAttributes,
             target.parent.boundStandardInputs,
+            typeSystem,
             typeProvider,
             includePlainAttributes: true);
         suggestOutputs(target.parent.boundDirectives, collector,
@@ -312,6 +318,7 @@ class TemplateCompleter {
     CompletionCollector collector,
     Set<Input> standardHtmlAttributes,
     List<InputBinding> boundStandardAttributes,
+    TypeSystem typeSystem,
     TypeProvider typeProvider, {
     ExpressionBoundAttribute currentAttr,
     bool includePlainAttributes = false,
@@ -329,7 +336,8 @@ class TemplateCompleter {
         }
 
         if (includePlainAttributes && typeProvider != null) {
-          if (typeProvider.stringType.isAssignableTo(input.setterType)) {
+          if (typeSystem.isAssignableTo(
+              typeProvider.stringType, input.setterType)) {
             final relevance = input.setterType.displayName == 'String'
                 ? DART_RELEVANCE_DEFAULT
                 : DART_RELEVANCE_DEFAULT - 1;
@@ -360,7 +368,8 @@ class TemplateCompleter {
         continue;
       }
       if (includePlainAttributes && typeProvider != null) {
-        if (typeProvider.stringType.isAssignableTo(input.setterType)) {
+        if (typeSystem.isAssignableTo(
+            typeProvider.stringType, input.setterType)) {
           final relevance = input.setterType.displayName == 'String'
               ? DART_RELEVANCE_DEFAULT - 2
               : DART_RELEVANCE_DEFAULT - 3;
