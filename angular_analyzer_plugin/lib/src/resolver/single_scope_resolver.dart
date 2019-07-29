@@ -199,7 +199,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
         // Some attr `foo` by itself, no brackets, as such, and no value, will
         // be bound "true" when its a boolean, which requires no typecheck.
         final booleanException =
-            input.setterType.isSubtypeOf(typeProvider.boolType) &&
+            typeSystem.isSubtypeOf(input.setterType, typeProvider.boolType) &&
                 attribute.value == null;
 
         if (!directiveBinding.boundDirective.isHtml &&
