@@ -63,6 +63,7 @@ class TemplateResolver {
     ];
 
     final directiveResolver = DirectiveResolver(
+        typeSystem,
         allDirectives,
         templateSource,
         template,

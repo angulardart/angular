@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/type.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/generated/source.dart';
@@ -17,6 +18,7 @@ import 'package:angular_analyzer_plugin/src/standard_components.dart';
 /// content children for directives within directives (and stores those
 /// [ContentChildBinding]- on the [DirectiveBinding]s it makes).
 class DirectiveResolver extends AngularAstVisitor {
+  final TypeSystem _typeSystem;
   final List<DirectiveBase> allDirectives;
   final Source templateSource;
   final Template template;
@@ -29,6 +31,7 @@ class DirectiveResolver extends AngularAstVisitor {
   final Set<String> customTagNames;
 
   DirectiveResolver(
+      this._typeSystem,
       this.allDirectives,
       this.templateSource,
       this.template,
@@ -193,7 +196,7 @@ class DirectiveResolver extends AngularAstVisitor {
       return;
     }
 
-    if (contentChild.query.accept(_MatchContentChildQueryVisitor(
+    if (contentChild.query.accept(_MatchContentChildQueryVisitor(_typeSystem,
         element, _standardAngular, _standardHtml, _errorReporter))) {
       contentChildBindings.putIfAbsent(contentChild,
           () => ContentChildBinding(boundDirective, contentChild));
@@ -209,13 +212,14 @@ class DirectiveResolver extends AngularAstVisitor {
 
 /// A visitor for content child queries that checks if a query matches a tag.
 class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
+  final TypeSystem typeSystem;
   final NodeInfo element;
   final StandardAngular standardAngular;
   final StandardHtml standardHtml;
   final ErrorReporter errorReporter;
 
-  _MatchContentChildQueryVisitor(this.element, this.standardAngular,
-      this.standardHtml, this.errorReporter);
+  _MatchContentChildQueryVisitor(this.typeSystem, this.element,
+      this.standardAngular, this.standardHtml, this.errorReporter);
 
   @override
   bool visitDirectiveQueriedChildType(DirectiveQueriedChildType query) =>
@@ -286,7 +290,8 @@ class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
     }
 
     // Don't do isAssignable. Because we KNOW downcasting makes no sense here.
-    if (!matchTypes.any(query.containerType.isSupertypeOf)) {
+    if (!matchTypes
+        .any((t) => typeSystem.isSubtypeOf(t, query.containerType))) {
       errorReporter.reportErrorForOffset(
           AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
           element.offset,
