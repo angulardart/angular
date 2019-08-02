@@ -271,7 +271,7 @@ import 'package:angular/angular.dart';
 class MyComponent {}
 ''')..newFile('/test/test.html', '');
 
-    final driver = (plugin.driverForPath('/test/test.dart') as AngularDriver);
+    final driver = plugin.driverForPath('/test/test.dart') as AngularDriver;
     await driver.requestDartResult('/test/test.dart');
     await driver.requestHtmlResult('/test/test.html');
     verifyNever(mockChannel.sendNotification(
