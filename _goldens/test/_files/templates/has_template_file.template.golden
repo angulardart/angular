@@ -45,7 +45,7 @@ class ViewHasTemplateFileComponent0 extends import1.ComponentView<import2.HasTem
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.scoped(styles$HasTemplateFileComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.scoped(styles$HasTemplateFileComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

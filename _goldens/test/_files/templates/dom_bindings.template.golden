@@ -50,7 +50,7 @@ class ViewHasHostAttributes0 extends import0.ComponentView<import1.HasHostAttrib
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasHostAttributes, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasHostAttributes, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -123,7 +123,7 @@ class ViewHasTemplateAttributes0 extends import0.ComponentView<import1.HasTempla
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasTemplateAttributes, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasTemplateAttributes, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -186,7 +186,7 @@ class ViewHasStaticAttribute0 extends import0.ComponentView<import1.HasStaticAtt
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStaticAttribute, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasStaticAttribute, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -248,7 +248,7 @@ class ViewHasHostClass0 extends import0.ComponentView<import1.HasHostClass> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasHostClass, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasHostClass, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -321,7 +321,7 @@ class ViewHasTemplateClass0 extends import0.ComponentView<import1.HasTemplateCla
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasTemplateClass, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasTemplateClass, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -393,7 +393,7 @@ class ViewHasStyleProperty0 extends import0.ComponentView<import1.HasStyleProper
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasStyleProperty, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasStyleProperty, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

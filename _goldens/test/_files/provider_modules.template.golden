@@ -41,7 +41,7 @@ class ViewProviderModulesComponent0 extends import0.ComponentView<import1.Provid
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProviderModulesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ProviderModulesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

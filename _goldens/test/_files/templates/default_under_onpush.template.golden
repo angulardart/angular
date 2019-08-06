@@ -51,7 +51,7 @@ class ViewDefaultComp0 extends import0.ComponentView<import1.DefaultComp> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$DefaultComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$DefaultComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -123,7 +123,7 @@ class ViewOnPushComp0 extends import0.ComponentView<import1.OnPushComp> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$OnPushComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$OnPushComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

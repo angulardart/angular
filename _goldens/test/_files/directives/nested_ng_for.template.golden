@@ -74,7 +74,7 @@ class ViewNestedNgForComponent0 extends import0.ComponentView<import1.NestedNgFo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$NestedNgForComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

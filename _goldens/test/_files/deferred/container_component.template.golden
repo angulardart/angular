@@ -145,7 +145,7 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import6.ComponentStyles.unscoped(styles$TestContainerComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import6.ComponentStyles.unscoped(styles$TestContainerComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

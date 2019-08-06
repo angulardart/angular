@@ -57,7 +57,7 @@ class ViewCompWithoutFinal0 extends import0.ComponentView<import1.CompWithoutFin
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$CompWithoutFinal, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithoutFinal, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -116,7 +116,7 @@ class ViewCompWithFinal0 extends import0.ComponentView<import1.CompWithFinal> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$CompWithFinal, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinal, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -174,7 +174,7 @@ class ViewCompWithFinalStatic0 extends import0.ComponentView<import1.CompWithFin
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$CompWithFinalStatic, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinalStatic, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -232,7 +232,7 @@ class ViewCompWithExternalFinal0 extends import0.ComponentView<import1.CompWithE
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$CompWithExternalFinal, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithExternalFinal, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

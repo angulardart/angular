@@ -42,7 +42,7 @@ class ViewHostComponentNewSyntax0 extends import0.ComponentView<import1.HostComp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HostComponentNewSyntax, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HostComponentNewSyntax, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -119,7 +119,7 @@ class ViewUsesHostComponentWithDirective0 extends import0.ComponentView<import1.
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesHostComponentWithDirective, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesHostComponentWithDirective, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -223,7 +223,7 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HostComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HostComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

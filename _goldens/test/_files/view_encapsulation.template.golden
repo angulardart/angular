@@ -54,7 +54,7 @@ class ViewEmulatedComponent0 extends import1.ComponentView<import2.EmulatedCompo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.scoped(styles$EmulatedComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.scoped(styles$EmulatedComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -129,7 +129,7 @@ class ViewNoneComponent0 extends import1.ComponentView<import2.NoneComponent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$NoneComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NoneComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

@@ -53,7 +53,7 @@ class ViewPreserveWhitespace0 extends import0.ComponentView<import1.PreserveWhit
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$PreserveWhitespace, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$PreserveWhitespace, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -114,7 +114,7 @@ class ViewMinifyWhitespace0 extends import0.ComponentView<import1.MinifyWhitespa
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MinifyWhitespace, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$MinifyWhitespace, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

@@ -64,7 +64,7 @@ class ViewInlinedNgIfComponent0 extends import0.ComponentView<import1.InlinedNgI
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$InlinedNgIfComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -152,7 +152,7 @@ class ViewIgnoredNgIfComponent0 extends import0.ComponentView<import1.IgnoredNgI
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -243,7 +243,7 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends import0.ComponentV
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$InlinedNgIfWithImmutableConditionComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfWithImmutableConditionComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

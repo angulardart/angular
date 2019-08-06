@@ -100,7 +100,7 @@ class ViewQueriesComponent0 extends import0.ComponentView<import1.QueriesCompone
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$QueriesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$QueriesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -208,7 +208,7 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$EmbeddedQueries, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueries, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -334,7 +334,7 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$EmbeddedQueriesList, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueriesList, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -459,7 +459,7 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$NestedNgForQueriesList, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForQueriesList, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

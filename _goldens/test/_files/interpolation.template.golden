@@ -62,7 +62,7 @@ class ViewInterpolationComponent0 extends import0.ComponentView<import1.Interpol
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -124,7 +124,7 @@ class ViewInterpolationComponentNoWhitespace0 extends import0.ComponentView<impo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationComponentNoWhitespace, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponentNoWhitespace, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -191,7 +191,7 @@ class ViewInterpolationTwoAdjacent0 extends import0.ComponentView<import1.Interp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationTwoAdjacent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationTwoAdjacent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -263,7 +263,7 @@ class ViewInterpolationLongerSentence0 extends import0.ComponentView<import1.Int
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLongerSentence, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLongerSentence, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -321,7 +321,7 @@ class ViewInterpolationLiterals0 extends import0.ComponentView<import1.Interpola
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLiterals, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLiterals, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -399,7 +399,7 @@ class ViewInterpolationLocals0 extends import0.ComponentView<import1.Interpolati
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$InterpolationLocals, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLocals, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -538,7 +538,7 @@ class ViewAttribute0 extends import0.ComponentView<import1.Attribute> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -614,7 +614,7 @@ class ViewAttributePW0 extends import0.ComponentView<import1.AttributePW> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

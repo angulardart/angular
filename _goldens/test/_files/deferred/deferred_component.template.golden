@@ -42,7 +42,7 @@ class ViewDeferredChild1Component0 extends import0.ComponentView<import1.Deferre
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild1Component, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChild1Component, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -95,7 +95,7 @@ class ViewDeferredChild2Component0 extends import0.ComponentView<import1.Deferre
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild2Component, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChild2Component, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -148,7 +148,7 @@ class ViewDeferredChild3Component0 extends import0.ComponentView<import1.Deferre
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChild3Component, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChild3Component, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -201,7 +201,7 @@ class ViewDeferredChildOnPush0 extends import0.ComponentView<import1.DeferredChi
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildOnPush, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChildOnPush, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -253,7 +253,7 @@ class ViewNotDeferredChildComponent0 extends import0.ComponentView<import1.NotDe
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NotDeferredChildComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NotDeferredChildComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -308,7 +308,7 @@ class ViewDeferredChildComponentWithoutNgContent0 extends import0.ComponentView<
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithoutNgContent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithoutNgContent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -363,7 +363,7 @@ class ViewDeferredChildComponentWithNgContent0 extends import0.ComponentView<imp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithNgContent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithNgContent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -415,7 +415,7 @@ class ViewDeferredChildComponentWithServices0 extends import0.ComponentView<impo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithServices, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DeferredChildComponentWithServices, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

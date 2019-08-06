@@ -100,13 +100,10 @@ class _ViewStyleLinker {
           _componentStylesStatic,
           o.WriteVarExpr(
             localStylesVar,
-            o.WriteStaticMemberExpr(
-              _componentStylesStatic,
-              _styleType.instantiate([
-                _view.styles,
-                o.ReadVarExpr(_debugComponentUrl),
-              ]),
-            ),
+            _styleType.instantiate([
+              _view.styles,
+              o.ReadVarExpr(_debugComponentUrl),
+            ]),
           ),
         ).toStmt(),
       ],

@@ -57,7 +57,7 @@ class ViewComp10 extends import0.ComponentView<import1.Comp1> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp1, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -117,7 +117,7 @@ class ViewComp1String0 extends import0.ComponentView<import1.Comp1String> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp1String, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1String, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -177,7 +177,7 @@ class ViewComp20 extends import0.ComponentView<import1.Comp2> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp2, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp2, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -237,7 +237,7 @@ class ViewComp30 extends import0.ComponentView<import1.Comp3> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp3, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp3, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -301,7 +301,7 @@ class ViewComp40 extends import0.ComponentView<import1.Comp4> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp4, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp4, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -379,7 +379,7 @@ class ViewComp60 extends import0.ComponentView<import1.Comp6> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp6, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp6, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -476,7 +476,7 @@ class ViewComp70 extends import0.ComponentView<import1.Comp7> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$Comp7, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp7, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
