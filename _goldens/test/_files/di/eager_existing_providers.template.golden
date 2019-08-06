@@ -77,7 +77,7 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -130,7 +130,7 @@ class ViewProvidesServicesComponent0 extends import0.ComponentView<import1.Provi
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ProvidesServicesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ProvidesServicesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -190,7 +190,7 @@ class ViewInjectsServicesComponent0 extends import0.ComponentView<import1.Inject
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectsServicesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$InjectsServicesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

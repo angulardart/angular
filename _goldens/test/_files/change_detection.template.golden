@@ -74,7 +74,7 @@ class ViewUsesOnPushComponent0 extends import0.ComponentView<import1.UsesOnPushC
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesOnPushComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesOnPushComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -157,7 +157,7 @@ class ViewOnPushComponent0 extends import0.ComponentView<import1.OnPushComponent
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$OnPushComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -229,7 +229,7 @@ class ViewOnPushChildComponent0 extends import0.ComponentView<import1.OnPushChil
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$OnPushChildComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushChildComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -295,7 +295,7 @@ class ViewLegacyComponentState0 extends import0.ComponentView<import1.LegacyComp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$LegacyComponentState, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$LegacyComponentState, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -350,7 +350,7 @@ class ViewDefaultComponent0 extends import0.ComponentView<import1.DefaultCompone
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DefaultComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DefaultComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -434,7 +434,7 @@ class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNgModelLike, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNgModelLike, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -520,7 +520,7 @@ class ViewUsesDoCheckOnPushComponent0 extends import0.ComponentView<import1.Uses
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesDoCheckOnPushComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesDoCheckOnPushComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -581,7 +581,7 @@ class ViewDoCheckOnPushComponent0 extends import0.ComponentView<import1.DoCheckO
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DoCheckOnPushComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DoCheckOnPushComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

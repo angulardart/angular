@@ -41,7 +41,7 @@ class ViewDependent0 extends import0.ComponentView<import1.Dependent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$Dependent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$Dependent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -119,7 +119,7 @@ class ViewDependencyWithDependentInView0 extends import0.ComponentView<import1.D
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DependencyWithDependentInView, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DependencyWithDependentInView, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -180,7 +180,7 @@ class ViewDependencyWithContent0 extends import0.ComponentView<import1.Dependenc
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DependencyWithContent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DependencyWithContent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -264,7 +264,7 @@ class ViewDependencyAndDependentInView0 extends import0.ComponentView<import1.De
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DependencyAndDependentInView, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DependencyAndDependentInView, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -316,7 +316,7 @@ class ViewHasVisibilityAll0 extends import0.ComponentView<import1.HasVisibilityA
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasVisibilityAll, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasVisibilityAll, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -376,7 +376,7 @@ class ViewHasVisibilityLocal0 extends import0.ComponentView<import1.HasVisibilit
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasVisibilityLocal, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasVisibilityLocal, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

@@ -48,7 +48,7 @@ class ViewInjectableComponent0 extends import0.ComponentView<import1.InjectableC
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectableComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$InjectableComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

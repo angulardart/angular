@@ -284,7 +284,7 @@ class ViewParentComponent0 extends import0.ComponentView<import1.ParentComponent
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -336,7 +336,7 @@ class ViewChildComponentProvidingA$B$C0 extends import0.ComponentView<import1.Ch
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentProvidingA$B$C, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildComponentProvidingA$B$C, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -429,7 +429,7 @@ class ViewChildComponentWithNgContentProviding$D0 extends import0.ComponentView<
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentWithNgContentProviding$D, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildComponentWithNgContentProviding$D, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -497,7 +497,7 @@ class ViewChildComponentInjecting$D0 extends import0.ComponentView<import1.Child
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentInjecting$D, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildComponentInjecting$D, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -553,7 +553,7 @@ class ViewChildComponentWithVisibilityAll0 extends import0.ComponentView<import1
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponentWithVisibilityAll, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildComponentWithVisibilityAll, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

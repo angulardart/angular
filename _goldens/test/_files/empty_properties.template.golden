@@ -96,7 +96,7 @@ class ViewEmptyPropertiesComponent0 extends import0.ComponentView<import1.EmptyP
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$EmptyPropertiesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$EmptyPropertiesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -148,7 +148,7 @@ class ViewFancyButtonComponent0 extends import0.ComponentView<import1.FancyButto
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$FancyButtonComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$FancyButtonComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

@@ -59,7 +59,7 @@ class ViewMostLifecycleHooksComponent0 extends import0.ComponentView<import1.Mos
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MostLifecycleHooksComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MostLifecycleHooksComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -138,7 +138,7 @@ class ViewEmptyComponent0 extends import0.ComponentView<import1.EmptyComponent> 
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$EmptyComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$EmptyComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -190,7 +190,7 @@ class ViewAfterChangesComponent0 extends import0.ComponentView<import1.AfterChan
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$AfterChangesComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$AfterChangesComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -330,7 +330,7 @@ class ViewUsesLifecycleHooksComponent0 extends import0.ComponentView<import1.Use
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesLifecycleHooksComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesLifecycleHooksComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

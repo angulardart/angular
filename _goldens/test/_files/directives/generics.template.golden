@@ -47,7 +47,7 @@ class ViewUntypedComp0 extends import0.ComponentView<import1.UntypedComp> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -124,7 +124,7 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -176,7 +176,7 @@ class ViewGenericComp0<T> extends import0.ComponentView<import1.GenericComp<T>> 
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -253,7 +253,7 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -330,7 +330,7 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -382,7 +382,7 @@ class ViewMappingComp10<K, V> extends import0.ComponentView<import1.MappingComp1
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -465,7 +465,7 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -517,7 +517,7 @@ class ViewMappingComp20<K, V> extends import0.ComponentView<import1.MappingComp2
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -594,7 +594,7 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -646,7 +646,7 @@ class ViewBoundComp0<T extends num> extends import0.ComponentView<import1.BoundC
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -723,7 +723,7 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -800,7 +800,7 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -852,7 +852,7 @@ class ViewSelfBoundComp0<A, B extends A> extends import0.ComponentView<import1.S
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -935,7 +935,7 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -987,7 +987,7 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends import0.ComponentView<
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$RecursiveComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$RecursiveComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1064,7 +1064,7 @@ class ViewUsesRecursiveComp0 extends import0.ComponentView<import1.UsesRecursive
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesRecursiveComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesRecursiveComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1116,7 +1116,7 @@ class ViewFunctionTypeComp0<F> extends import0.ComponentView<import1.FunctionTyp
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1193,7 +1193,7 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1305,7 +1305,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1393,7 +1393,7 @@ class ViewNestedChildComp0<T> extends import0.ComponentView<import1.NestedChildC
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1482,7 +1482,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1575,7 +1575,7 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -1645,7 +1645,7 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

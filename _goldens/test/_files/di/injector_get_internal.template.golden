@@ -481,7 +481,7 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -533,7 +533,7 @@ class ViewMaterialAutoSuggestInputComponent0 extends import0.ComponentView<impor
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialAutoSuggestInputComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$MaterialAutoSuggestInputComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -593,7 +593,7 @@ class ViewMaterialIcon0 extends import0.ComponentView<import1.MaterialIcon> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialIcon, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$MaterialIcon, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -646,7 +646,7 @@ class ViewMaterialInputComponent0 extends import0.ComponentView<import1.Material
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$MaterialInputComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$MaterialInputComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

@@ -45,7 +45,7 @@ class ViewUsesNativeEvents0 extends import0.ComponentView<import1.UsesNativeEven
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesNativeEvents, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNativeEvents, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -118,7 +118,7 @@ class ViewUsesAngularEvents0 extends import0.ComponentView<import1.UsesAngularEv
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$UsesAngularEvents, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesAngularEvents, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -170,7 +170,7 @@ class ViewHasAngularEvents0 extends import0.ComponentView<import1.HasAngularEven
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasAngularEvents, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasAngularEvents, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -229,7 +229,7 @@ class ViewHasManyNativeHostEvents0 extends import0.ComponentView<import1.HasMany
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasManyNativeHostEvents, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasManyNativeHostEvents, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

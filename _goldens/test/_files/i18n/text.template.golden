@@ -45,7 +45,7 @@ class ViewI18nTextComponent0 extends import0.ComponentView<import1.I18nTextCompo
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$I18nTextComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$I18nTextComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

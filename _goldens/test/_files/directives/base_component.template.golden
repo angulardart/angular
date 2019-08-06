@@ -63,7 +63,7 @@ class ViewTestFooComponent0 extends import0.ComponentView<import1.TestFooCompone
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import4.ComponentStyles.unscoped(styles$TestFooComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$TestFooComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

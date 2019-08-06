@@ -55,7 +55,7 @@ class ViewI18nPropertyComponent0 extends import0.ComponentView<import1.I18nPrope
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import3.ComponentStyles.unscoped(styles$I18nPropertyComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$I18nPropertyComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

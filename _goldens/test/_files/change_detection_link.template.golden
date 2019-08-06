@@ -65,7 +65,7 @@ class ViewDefaultAncestor0 extends import0.ComponentView<import1.DefaultAncestor
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$DefaultAncestor, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DefaultAncestor, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -191,7 +191,7 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$OnPushLink, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushLink, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -338,7 +338,7 @@ class ViewNestedOnPush0 extends import0.ComponentView<import1.NestedOnPush> {
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedOnPush, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPush, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -412,7 +412,7 @@ class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLi
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$NestedOnPushLink, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPushLink, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

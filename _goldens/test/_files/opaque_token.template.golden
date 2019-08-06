@@ -51,7 +51,7 @@ class ViewHasOpaqueTokens0 extends import0.ComponentView<import1.HasOpaqueTokens
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$HasOpaqueTokens, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasOpaqueTokens, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -131,7 +131,7 @@ class ViewContainsChildComponent0 extends import0.ComponentView<import1.Contains
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ContainsChildComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ContainsChildComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -251,7 +251,7 @@ class ViewInjectsTypedTokenFromSomeParent0 extends import0.ComponentView<import1
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$InjectsTypedTokenFromSomeParent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$InjectsTypedTokenFromSomeParent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }

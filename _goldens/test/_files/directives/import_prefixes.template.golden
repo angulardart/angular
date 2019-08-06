@@ -66,7 +66,7 @@ class ViewParentComponent0 extends import0.ComponentView<import1.ParentComponent
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ParentComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
@@ -126,7 +126,7 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = (_componentStyles = import2.ComponentStyles.unscoped(styles$ChildComponent, _debugComponentUrl))));
+      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildComponent, _debugComponentUrl)));
     }
     this.componentStyles = styles;
   }
