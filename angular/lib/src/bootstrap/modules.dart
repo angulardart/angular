@@ -3,7 +3,6 @@ library angular.src.bootstrap.modules;
 
 // ignore_for_file: deprecated_member_use
 
-import 'dart:html';
 import 'dart:math';
 
 import 'package:angular/src/core/application_tokens.dart';
@@ -62,9 +61,6 @@ const bootstrapMinimalModule = <Object>[
 @GenerateInjector([bootstrapMinimalModule])
 final InjectorFactory minimalApp =
     ng.minimalApp$Injector; //ignore: invalid_assignment
-
-/// Returns the current [Document] of the browser.
-HtmlDocument getDocument() => document;
 
 /// Creates a random [APP_ID] for use in CSS encapsulation.
 String createRandomAppId() {
