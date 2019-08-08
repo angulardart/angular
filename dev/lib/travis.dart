@@ -206,10 +206,6 @@ rm -rf **/build/\n
       _stages.addAll(const [
         r'      addons:',
         r'        chrome: stable',
-        r'      before_install:',
-        r'        - export DISPLAY=:99.0',
-        r'        - sh -e /etc/init.d/xvfb start',
-        r'        - "t=0; until (xdpyinfo -display :99 &> /dev/null || test $t -gt 10); do sleep 1; let t=$t+1; done"',
         '',
       ]);
     }
