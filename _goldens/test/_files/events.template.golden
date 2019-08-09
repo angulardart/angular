@@ -41,11 +41,17 @@ class ViewUsesNativeEvents0 extends import0.ComponentView<import1.UsesNativeEven
     parentRenderNode.addEventListener('focus', this.eventHandler0(_ctx.onFocus));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNativeEvents, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNativeEvents, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -114,11 +120,17 @@ class ViewUsesAngularEvents0 extends import0.ComponentView<import1.UsesAngularEv
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesAngularEvents, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesAngularEvents, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -166,11 +178,17 @@ class ViewHasAngularEvents0 extends import0.ComponentView<import1.HasAngularEven
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasAngularEvents, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasAngularEvents, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -225,11 +243,17 @@ class ViewHasManyNativeHostEvents0 extends import0.ComponentView<import1.HasMany
     parentRenderNode.addEventListener('blur', this.eventHandler1(_ctx.onBlur));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasManyNativeHostEvents, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasManyNativeHostEvents, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

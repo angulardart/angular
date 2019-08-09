@@ -43,11 +43,17 @@ class ViewUntypedComp0 extends import0.ComponentView<import1.UntypedComp> {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -120,11 +126,17 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -172,11 +184,17 @@ class ViewGenericComp0<T> extends import0.ComponentView<import1.GenericComp<T>> 
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -249,11 +267,17 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -326,11 +350,17 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -378,11 +408,17 @@ class ViewMappingComp10<K, V> extends import0.ComponentView<import1.MappingComp1
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -461,11 +497,17 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -513,11 +555,17 @@ class ViewMappingComp20<K, V> extends import0.ComponentView<import1.MappingComp2
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -590,11 +638,17 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -642,11 +696,17 @@ class ViewBoundComp0<T extends num> extends import0.ComponentView<import1.BoundC
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -719,11 +779,17 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -796,11 +862,17 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -848,11 +920,17 @@ class ViewSelfBoundComp0<A, B extends A> extends import0.ComponentView<import1.S
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -931,11 +1009,17 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -983,11 +1067,17 @@ class ViewRecursiveComp0<T extends Comparable<T>> extends import0.ComponentView<
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$RecursiveComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$RecursiveComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1060,11 +1150,17 @@ class ViewUsesRecursiveComp0 extends import0.ComponentView<import1.UsesRecursive
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesRecursiveComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesRecursiveComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1112,11 +1208,17 @@ class ViewFunctionTypeComp0<F> extends import0.ComponentView<import1.FunctionTyp
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1189,11 +1291,17 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1301,11 +1409,17 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
     this._compView_1.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1389,11 +1503,17 @@ class ViewNestedChildComp0<T> extends import0.ComponentView<import1.NestedChildC
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1478,11 +1598,17 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1571,11 +1697,17 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
     this._compView_1.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -1641,11 +1773,17 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
     this._GenericDirective_0_5.detectHostChanges(this, this._el_0);
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

@@ -61,11 +61,17 @@ class ViewDefaultAncestor0 extends import0.ComponentView<import1.DefaultAncestor
     this._compView_0.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DefaultAncestor, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$DefaultAncestor, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -187,11 +193,17 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     this._compView_4.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushLink, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushLink, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -334,11 +346,17 @@ class ViewNestedOnPush0 extends import0.ComponentView<import1.NestedOnPush> {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPush, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPush, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -408,11 +426,17 @@ class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLi
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPushLink, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPushLink, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

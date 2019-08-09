@@ -41,11 +41,17 @@ class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
     import1.generateTextDirective(_el_0, this.parentView.injectorGet(import1.TextService, this.parentIndex));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

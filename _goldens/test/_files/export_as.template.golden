@@ -39,11 +39,17 @@ class ViewTestFooComponent0 extends import0.ComponentView<import1.TestFooCompone
     final _text_1 = import7.appendText(_el_0, 'Foo');
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$TestFooComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$TestFooComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

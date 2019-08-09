@@ -60,11 +60,17 @@ class ViewInlinedNgIfComponent0 extends import0.ComponentView<import1.InlinedNgI
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -148,11 +154,17 @@ class ViewIgnoredNgIfComponent0 extends import0.ComponentView<import1.IgnoredNgI
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$IgnoredNgIfComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -239,11 +251,17 @@ class ViewInlinedNgIfWithImmutableConditionComponent0 extends import0.ComponentV
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfWithImmutableConditionComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$InlinedNgIfWithImmutableConditionComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

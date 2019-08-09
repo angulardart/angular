@@ -79,11 +79,17 @@ class ViewComp0 extends import0.ComponentView<import1.Comp> {
     this._pipe_lifecycle_2.ngOnDestroy();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$Comp, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$Comp, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

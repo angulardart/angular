@@ -41,11 +41,17 @@ class ViewUsesEventTearoff0 extends import0.ComponentView<import1.UsesEventTearo
     _el_0.addEventListener('blur', this.eventHandler0(_ctx.onBlur));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesEventTearoff, _debugComponentUrl)));
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesEventTearoff, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

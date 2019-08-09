@@ -47,11 +47,17 @@ class ViewDefaultComp0 extends import0.ComponentView<import1.DefaultComp> {
     this._textBinding_1.updateText(import9.interpolateString0(_ctx.time));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$DefaultComp, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$DefaultComp, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -119,11 +125,17 @@ class ViewOnPushComp0 extends import0.ComponentView<import1.OnPushComp> {
     this._compView_1.destroyInternalState();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$OnPushComp, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$OnPushComp, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

@@ -10153,10 +10153,9 @@
       var target = H.setRuntimeTypeInfo([], [P.String]),
         styles = C.JSArray_methods.join$1(O._flattenStyles(this._styles, target, ""), "\n"),
         t1 = document,
-        t2 = t1.head;
-      t1 = t1.createElement("style");
-      t1.textContent = styles;
-      t2.appendChild(t1);
+        styleElement = t1.createElement("style");
+      styleElement.textContent = styles;
+      t1.head.appendChild(styleElement);
     }
   };
   O._UnscopedComponentStyles.prototype = {};

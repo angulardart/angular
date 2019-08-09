@@ -53,11 +53,17 @@ class ViewCompWithoutFinal0 extends import0.ComponentView<import1.CompWithoutFin
     this._textBinding_4.updateText(import9.interpolateString0(_ctx.cancelMessage));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithoutFinal, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithoutFinal, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -112,11 +118,17 @@ class ViewCompWithFinal0 extends import0.ComponentView<import1.CompWithFinal> {
     final _text_4 = import8.appendText(_el_3, import9.interpolateString0(_ctx.cancelMessage));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinal, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinal, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -170,11 +182,17 @@ class ViewCompWithFinalStatic0 extends import0.ComponentView<import1.CompWithFin
     final _text_4 = import8.appendText(_el_3, import9.interpolateString0(import1.CompWithFinalStatic.cancelMessage));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinalStatic, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithFinalStatic, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -228,11 +246,17 @@ class ViewCompWithExternalFinal0 extends import0.ComponentView<import1.CompWithE
     final _text_4 = import8.appendText(_el_3, import9.interpolateString0(import1.Messages.cancelMessage));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithExternalFinal, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$CompWithExternalFinal, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

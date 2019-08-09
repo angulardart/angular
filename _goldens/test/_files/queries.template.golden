@@ -96,11 +96,17 @@ class ViewQueriesComponent0 extends import0.ComponentView<import1.QueriesCompone
     this._appEl_2.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$QueriesComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$QueriesComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -204,11 +210,17 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
     }
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueries, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueries, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -330,11 +342,17 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
     }
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueriesList, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$EmbeddedQueriesList, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -455,11 +473,17 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForQueriesList, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForQueriesList, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

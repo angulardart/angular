@@ -50,11 +50,17 @@ class ViewEmulatedComponent0 extends import1.ComponentView<import2.EmulatedCompo
     TemplateRef _TemplateRef_2_7 = TemplateRef(this._appEl_2, viewFactory_EmulatedComponent1);
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.scoped(styles$EmulatedComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.scoped(styles$EmulatedComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -125,11 +131,17 @@ class ViewNoneComponent0 extends import1.ComponentView<import2.NoneComponent> {
     TemplateRef _TemplateRef_2_7 = TemplateRef(this._appEl_2, viewFactory_NoneComponent1);
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NoneComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NoneComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

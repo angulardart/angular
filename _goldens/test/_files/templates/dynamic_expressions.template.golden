@@ -53,11 +53,17 @@ class ViewComp10 extends import0.ComponentView<import1.Comp1> {
     this._textBinding_0.updateText(import8.interpolate0((_ctx.a + _ctx.b)));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -113,11 +119,17 @@ class ViewComp1String0 extends import0.ComponentView<import1.Comp1String> {
     this._textBinding_0.updateText(import8.interpolateString0((_ctx.a + _ctx.b)));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1String, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp1String, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -173,11 +185,17 @@ class ViewComp20 extends import0.ComponentView<import1.Comp2> {
     this._textBinding_0.updateText(import8.interpolateString0(_ctx.a.b(_ctx.c)));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp2, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp2, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -233,11 +251,17 @@ class ViewComp30 extends import0.ComponentView<import1.Comp3> {
     this._textBinding_0.updateText(import8.interpolate0(import1.Comp3.max(_ctx.a, _ctx.b).toInt().isEven));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp3, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp3, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -297,11 +321,17 @@ class ViewComp40 extends import0.ComponentView<import1.Comp4> {
     this._textBinding_0.updateText(import8.interpolate0(this._arr_0(_ctx.a, _ctx.b).first.inMilliseconds));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp4, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp4, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -375,11 +405,17 @@ class ViewComp60 extends import0.ComponentView<import1.Comp6> {
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp6, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp6, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -472,11 +508,17 @@ class ViewComp70 extends import0.ComponentView<import1.Comp7> {
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp7, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Comp7, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
