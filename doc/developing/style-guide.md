@@ -65,7 +65,7 @@ class AnimalEquality extends Equality<Animal> {
 ```dart
 class Animal implements Comparable<Animal> {
   @override
-  int compareTo(Animal a, Animal b) => doCompare();
+  int compareTo(Animal other) => doCompare();
 }
 ```
 
