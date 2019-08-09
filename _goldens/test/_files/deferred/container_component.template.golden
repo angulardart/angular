@@ -141,11 +141,17 @@ class ViewTestContainerComponent0 extends import0.ComponentView<import1.TestCont
     this._cancelDeferredLoad7();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import6.ComponentStyles.unscoped(styles$TestContainerComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import6.ComponentStyles.unscoped(styles$TestContainerComponent, _debugComponentUrl));
+      if (import10.isDevMode) {
+        import6.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

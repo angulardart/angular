@@ -53,11 +53,17 @@ class ViewStylesComponent0 extends import0.ComponentView<import1.StylesComponent
     }
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$StylesComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$StylesComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

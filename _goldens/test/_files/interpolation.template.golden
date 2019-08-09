@@ -58,11 +58,17 @@ class ViewInterpolationComponent0 extends import0.ComponentView<import1.Interpol
     this._textBinding_3.updateText(import9.interpolateString0(_ctx.foo));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponent, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -120,11 +126,17 @@ class ViewInterpolationComponentNoWhitespace0 extends import0.ComponentView<impo
     this._textBinding_1.updateText(import9.interpolateString0(_ctx.foo));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponentNoWhitespace, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationComponentNoWhitespace, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -187,11 +199,17 @@ class ViewInterpolationTwoAdjacent0 extends import0.ComponentView<import1.Interp
     this._textBinding_3.updateText(import9.interpolateString0(_ctx.noun));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationTwoAdjacent, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationTwoAdjacent, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -259,11 +277,17 @@ class ViewInterpolationLongerSentence0 extends import0.ComponentView<import1.Int
     this._textBinding_6.updateText(import9.interpolateString0(_ctx.location));
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLongerSentence, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLongerSentence, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -317,11 +341,17 @@ class ViewInterpolationLiterals0 extends import0.ComponentView<import1.Interpola
     final _text_4 = import8.appendText(_el_0, '!');
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLiterals, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLiterals, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -395,11 +425,17 @@ class ViewInterpolationLocals0 extends import0.ComponentView<import1.Interpolati
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLocals, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$InterpolationLocals, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -534,11 +570,17 @@ class ViewAttribute0 extends import0.ComponentView<import1.Attribute> {
     }
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$Attribute, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }
@@ -610,11 +652,17 @@ class ViewAttributePW0 extends import0.ComponentView<import1.AttributePW> {
     }
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$AttributePW, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

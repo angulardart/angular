@@ -70,11 +70,17 @@ class ViewNestedNgForComponent0 extends import0.ComponentView<import1.NestedNgFo
     this._appEl_0.destroyNestedViews();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NestedNgForComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

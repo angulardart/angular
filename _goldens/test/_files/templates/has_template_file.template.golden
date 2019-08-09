@@ -41,11 +41,17 @@ class ViewHasTemplateFileComponent0 extends import1.ComponentView<import2.HasTem
     final _text_1 = import8.appendText(_el_0, 'Has Template File!');
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.scoped(styles$HasTemplateFileComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.scoped(styles$HasTemplateFileComponent, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

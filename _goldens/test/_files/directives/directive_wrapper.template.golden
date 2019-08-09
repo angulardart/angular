@@ -84,11 +84,17 @@ class ViewTestFooComponent0 extends import0.ComponentView<import1.TestFooCompone
     this._ChildDirective_0_5.instance.ngOnDestroy();
   }
 
-  @override
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
   void initComponentStyles() {
     var styles = _componentStyles;
     if (identical(styles, null)) {
-      (_componentStyles = (styles = import3.ComponentStyles.scoped(styles$TestFooComponent, _debugComponentUrl)));
+      _componentStyles = (styles = import3.ComponentStyles.scoped(styles$TestFooComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
     }
     this.componentStyles = styles;
   }

@@ -1,3 +1,11 @@
+### New features
+
+*   Added `debugClearComponentStyles()`. This top-level function resets all
+    static state used for component styles, and removes all component `<style>`
+    tags from the DOM. This can be called to prevent styles leaking between DDC
+    hot restarts or hermetic test cases. It can only be called in development
+    mode.
+
 ## 6.0.0-alpha+1
 
 ### New features

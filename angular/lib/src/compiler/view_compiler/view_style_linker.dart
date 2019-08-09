@@ -15,6 +15,7 @@ void initStyleEncapsulation(CompileView view, o.ClassStmt viewClass) {
 
 class _ViewStyleLinker {
   static const _initComponentStyles = 'initComponentStyles';
+  static const _debugClearComponentStyles = '_debugClearComponentStyles';
   static const _debugComponentUrl = '_debugComponentUrl';
   static const _componentStylesStatic = '_componentStyles';
   static const _componentStylesMember = 'componentStyles';
@@ -44,7 +45,8 @@ class _ViewStyleLinker {
     );
     _addStaticDebugUrlGetter();
     _addStaticComponentStylesField();
-    _overrideInitComponentStyles();
+    _implementDebugClearComponentStyles();
+    _implementInitComponentStyles();
   }
 
   void _addStaticDebugUrlGetter() {
@@ -78,7 +80,24 @@ class _ViewStyleLinker {
     _class.fields.add(_componentStyles);
   }
 
-  void _overrideInitComponentStyles() {
+  void _implementDebugClearComponentStyles() {
+    // Static._componentStyles = null
+    final nullifyStaticComponentStyles =
+        o.WriteStaticMemberExpr(_componentStylesStatic, o.NULL_EXPR).toStmt();
+    _class.methods.add(
+      o.ClassMethod(
+        _debugClearComponentStyles,
+        const [],
+        [
+          nullifyStaticComponentStyles,
+        ],
+        o.VOID_TYPE,
+        const [o.StmtModifier.Static],
+      ),
+    );
+  }
+
+  void _implementInitComponentStyles() {
     final staticCacheField = o.ReadStaticMemberExpr(_componentStylesStatic);
 
     // **NOTE**: It might tempting to try and minimize a lot of this by using
@@ -92,6 +111,9 @@ class _ViewStyleLinker {
 
     // if (styles == null) {
     //   Static._componentStyles = styles = ComponentStyles(...);
+    //   if (isDevMode) {
+    //      ComponentStyles.debugOnClear(_debugClearComponentStyles);
+    //   }
     // }
     final ifStylesNullInit = o.IfStmt(
       readStyles.identical(o.NULL_EXPR),
@@ -106,6 +128,15 @@ class _ViewStyleLinker {
             ]),
           ),
         ).toStmt(),
+        o.IfStmt(
+          o.importExpr(Identifiers.isDevMode),
+          [
+            o.importExpr(StyleEncapsulation.componentStyles).callMethod(
+              'debugOnClear',
+              [o.ReadStaticMemberExpr(_debugClearComponentStyles)],
+            ).toStmt(),
+          ],
+        ),
       ],
     );
 
@@ -123,11 +154,6 @@ class _ViewStyleLinker {
           defineStyles,
           ifStylesNullInit,
           assignMember,
-        ],
-        o.BuiltinType(o.BuiltinTypeName.Void),
-        const [],
-        [
-          o.importExpr(Identifiers.dartCoreOverride),
         ],
       ),
     );
