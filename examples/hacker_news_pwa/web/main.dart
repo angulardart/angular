@@ -26,6 +26,15 @@ final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 final _service = HackerNewsService(defaultBaseUrl);
 HackerNewsService getNewsService() => _service;
 
+ComponentRef<void> _rootComponentRef;
+
+/// DDC hot restart hook.
+void onReloadStart() {
+  _rootComponentRef?.destroy();
+  _rootComponentRef = null;
+  debugClearComponentStyles();
+}
+
 void main() {
   // Start fetching the articles if we are a first time viewer.
   //
@@ -38,7 +47,7 @@ void main() {
 
   // Start app after fetched.
   prefetch.then((_) {
-    runApp(
+    _rootComponentRef = runApp(
       app.AppComponentNgFactory,
       createInjector: hackerNewsApp,
     );
