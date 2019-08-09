@@ -243,6 +243,37 @@ void ngOnInit() async {
 }
 ```
 
+## Updating loaded components
+
+Sometimes, you need to set inputs on a component loaded via `ComponentLoader`.
+You can use `ComponentRef.update()` to trigger the appropriate Angular
+lifecycles, like `AfterChanges` after running the callback.
+
+```
+@Component(selector: 'foo', template: '{{name}}')
+class FooComponent implements AfterChanges {
+  @Input()
+  String name;
+
+  @override
+  void ngAfterChanges() {
+    // This is called by ComponentRef.update().
+  }
+}
+
+@Directive(selector: '[fooLoader]')
+class FooLoaderDirective {
+  final ComponentLoader _loader;
+
+  FooLoaderDirective(this._loader);
+
+  @override
+  void ngOnInit() {
+    var ref = _loader.loadNextTo(FooComponentNgFactory);
+    ref.update((fooComponent) => fooComponent.name = 'Foo');
+  }
+}
+```
 
 ## Migration
 
