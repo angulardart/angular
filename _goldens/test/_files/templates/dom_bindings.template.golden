@@ -119,7 +119,7 @@ class ViewHasTemplateAttributes0 extends import0.ComponentView<import1.HasTempla
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'title', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'title', '<FileLocation: 9 asset:_goldens/test/_files/templates/dom_bindings.dart:1:10>')) {
       import7.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -335,7 +335,7 @@ class ViewHasTemplateClass0 extends import0.ComponentView<import1.HasTemplateCla
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.fancy;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'fancy', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'fancy', '<FileLocation: 9 asset:_goldens/test/_files/templates/dom_bindings.dart:1:10>')) {
       import7.updateClassBinding(this._el_0, 'fancy', currVal_0);
       this._expr_0 = currVal_0;
     }
@@ -408,12 +408,12 @@ class ViewHasStyleProperty0 extends import0.ComponentView<import1.HasStyleProper
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.width;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'width', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'width', '<FileLocation: 17 asset:_goldens/test/_files/templates/dom_bindings.dart:2:9>')) {
       this._el_0.style.setProperty('width', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.height;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'height', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'height', '<FileLocation: 47 asset:_goldens/test/_files/templates/dom_bindings.dart:3:9>')) {
       this._el_0.style.setProperty('height', ((currVal_1 == null) ? null : (currVal_1.toString() + 'px')));
       this._expr_1 = currVal_1;
     }

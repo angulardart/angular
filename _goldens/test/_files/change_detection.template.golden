@@ -54,7 +54,7 @@ class ViewUsesOnPushComponent0 extends import0.ComponentView<import1.UsesOnPushC
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '<FileLocation: 12 asset:_goldens/test/_files/change_detection.dart:1:13>')) {
       this._OnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -143,7 +143,7 @@ class ViewOnPushComponent0 extends import0.ComponentView<import1.OnPushComponent
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '<FileLocation: 18 asset:_goldens/test/_files/change_detection.dart:1:19>')) {
       this._OnPushChildComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -442,7 +442,7 @@ class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike
     bool firstCheck = this.firstCheck;
     changed = false;
     final currVal_0 = _ctx.value;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'value', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'value', '<FileLocation: 7 asset:_goldens/test/_files/change_detection.dart:1:8>')) {
       this._NgModelLike_0_5.model = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -533,7 +533,7 @@ class ViewUsesDoCheckOnPushComponent0 extends import0.ComponentView<import1.Uses
     bool changed = false;
     changed = false;
     final currVal_0 = _ctx.name;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '<FileLocation: 21 asset:_goldens/test/_files/change_detection.dart:1:22>')) {
       this._DoCheckOnPushComponent_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;

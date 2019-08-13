@@ -114,7 +114,7 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._UntypedComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -255,7 +255,7 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -338,7 +338,7 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -480,12 +480,12 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindKey;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'bindKey', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'bindKey', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._MappingComp1_0_5.key = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'bindValue', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'bindValue', '<FileLocation: 22 asset:_goldens/test/_files/directives/generics.dart:1:23>')) {
       this._MappingComp1_0_5.value = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -626,7 +626,7 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._MappingComp2_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -767,7 +767,7 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -850,7 +850,7 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -992,12 +992,12 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindA;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'bindA', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'bindA', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._SelfBoundComp_0_5.a = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'bindB', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'bindB', '<FileLocation: 18 asset:_goldens/test/_files/directives/generics.dart:1:19>')) {
       this._SelfBoundComp_0_5.b = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1138,7 +1138,7 @@ class ViewUsesRecursiveComp0 extends import0.ComponentView<import1.UsesRecursive
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._RecursiveComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1279,7 +1279,7 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding', '<FileLocation: 6 asset:_goldens/test/_files/directives/generics.dart:1:7>')) {
       this._FunctionTypeComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1380,17 +1380,17 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.input1;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'input1', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'input1', '<FileLocation: 11 asset:_goldens/test/_files/directives/generics.dart:1:12>')) {
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'input2', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'input2', '<FileLocation: 48 asset:_goldens/test/_files/directives/generics.dart:2:12>')) {
       this._NestedChildComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
-    if (import6.checkBinding(this._expr_2, currVal_2, 'moreInputs', '')) {
+    if (import6.checkBinding(this._expr_2, currVal_2, 'moreInputs', '<FileLocation: 85 asset:_goldens/test/_files/directives/generics.dart:3:12>')) {
       this._NgFor_2_9.ngForOf = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1449,7 +1449,7 @@ class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedPare
   void detectChangesInternal() {
     final local_input = import6.unsafeCast<T>(this.locals['\$implicit']);
     final currVal_0 = local_input;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'input', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'input', '<FileLocation: 118 asset:_goldens/test/_files/directives/generics.dart:3:45>')) {
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1576,17 +1576,17 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding1;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'binding1', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'binding1', '<FileLocation: 18 asset:_goldens/test/_files/directives/generics.dart:2:7>')) {
       this._NestedParentComp_0_5.input1 = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'binding2', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'binding2', '<FileLocation: 44 asset:_goldens/test/_files/directives/generics.dart:3:7>')) {
       this._NestedParentComp_0_5.input2 = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
-    if (import6.checkBinding(this._expr_2, currVal_2, 'moreBindings', '')) {
+    if (import6.checkBinding(this._expr_2, currVal_2, 'moreBindings', '<FileLocation: 70 asset:_goldens/test/_files/directives/generics.dart:4:7>')) {
       this._NestedParentComp_0_5.moreInputs = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1678,12 +1678,12 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.name;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'name', '<FileLocation: 10 asset:_goldens/test/_files/directives/generics.dart:1:11>')) {
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.index;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'index', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'index', '<FileLocation: 43 asset:_goldens/test/_files/directives/generics.dart:2:11>')) {
       this._GenericComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1766,7 +1766,7 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'value', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'value', '<FileLocation: 13 asset:_goldens/test/_files/directives/generics.dart:1:14>')) {
       this._GenericDirective_0_5.instance.input = currVal_0;
       this._expr_0 = currVal_0;
     }

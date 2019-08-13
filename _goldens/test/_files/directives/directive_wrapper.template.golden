@@ -65,7 +65,7 @@ class ViewTestFooComponent0 extends import0.ComponentView<import1.TestFooCompone
     bool firstCheck = this.firstCheck;
     changed = false;
     final currVal_0 = _ctx.rowIndex;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'rowIndex', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'rowIndex', '<FileLocation: 70 asset:_goldens/test/_files/directives/directive_wrapper.dart:3:10>')) {
       this._ChildDirective_0_5.instance.gridRow = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;

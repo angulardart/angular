@@ -985,8 +985,15 @@ CssSelector _selector(String elementName, List<ast.AttributeAst> attributes,
   return createElementCssSelector(elementName, matchableAttributes);
 }
 
-String _location(ast.TemplateAst astNode) =>
-    astNode.isSynthetic ? '' : astNode.sourceSpan.start.toString();
+String _location(ast.TemplateAst astNode) {
+  if (astNode == null) {
+    return '';
+  }
+  if (astNode.isSynthetic) {
+    return _location((astNode as ast.SyntheticTemplateAst).origin);
+  }
+  return astNode.sourceSpan.start.toString();
+}
 
 String _getPropertyName(ast.PropertyAst astNode) {
   if (astNode.unit != null) {

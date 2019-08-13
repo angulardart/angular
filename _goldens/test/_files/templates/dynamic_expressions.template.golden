@@ -390,7 +390,7 @@ class ViewComp60 extends import0.ComponentView<import1.Comp6> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.durations;
-    if (import7.checkBinding(this._expr_0, currVal_0, 'durations', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, 'durations', '<FileLocation: 18 asset:_goldens/test/_files/templates/dynamic_expressions.dart:1:19>')) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -493,7 +493,7 @@ class ViewComp70 extends import0.ComponentView<import1.Comp7> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.items;
-    if (import7.checkBinding(this._expr_0, currVal_0, 'items', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, 'items', '<FileLocation: 18 asset:_goldens/test/_files/templates/dynamic_expressions.dart:1:19>')) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -547,7 +547,7 @@ class _ViewComp71 extends import17.EmbeddedView<import1.Comp7> {
   void detectChangesInternal() {
     final local_durations = import7.unsafeCast<List<Duration>>(this.locals['\$implicit']);
     final currVal_0 = local_durations;
-    if (import7.checkBinding(this._expr_0, currVal_0, 'durations', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, 'durations', '<FileLocation: 71 asset:_goldens/test/_files/templates/dynamic_expressions.dart:2:21>')) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }

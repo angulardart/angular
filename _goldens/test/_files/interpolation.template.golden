@@ -464,7 +464,7 @@ class _ViewInterpolationLocals1 extends import16.EmbeddedView<import1.Interpolat
   void detectChangesInternal() {
     final local_bar = import7.unsafeCast<List<int>>(this.locals['\$implicit']);
     final currVal_0 = local_bar;
-    if (import7.checkBinding(this._expr_0, currVal_0, 'bar', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, 'bar', '<FileLocation: 64 asset:_goldens/test/_files/interpolation.dart:2:21>')) {
       this._NgFor_0_9.ngForOf = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -559,12 +559,12 @@ class ViewAttribute0 extends import0.ComponentView<import1.Attribute> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = import9.interpolateString0(_ctx.altText);
-    if (import7.checkBinding(this._expr_0, currVal_0, '\n{{altText}}\n', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, '\n{{altText}}\n', '<FileLocation: 9 asset:_goldens/test/_files/interpolation.dart:1:10>')) {
       import8.setProperty(this._el_0, 'alt', currVal_0);
       this._expr_0 = currVal_0;
     }
     final currVal_1 = import9.interpolateString2('', _ctx.altText, '\n', _ctx.altText, '');
-    if (import7.checkBinding(this._expr_1, currVal_1, '\n{{altText}}\n{{altText}}\n', '')) {
+    if (import7.checkBinding(this._expr_1, currVal_1, '\n{{altText}}\n{{altText}}\n', '<FileLocation: 39 asset:_goldens/test/_files/interpolation.dart:4:10>')) {
       import8.setProperty(this._el_2, 'alt', currVal_1);
       this._expr_1 = currVal_1;
     }
@@ -641,12 +641,12 @@ class ViewAttributePW0 extends import0.ComponentView<import1.AttributePW> {
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = import9.interpolateString1('\n', _ctx.altText, '\n');
-    if (import7.checkBinding(this._expr_0, currVal_0, '\n{{altText}}\n', '')) {
+    if (import7.checkBinding(this._expr_0, currVal_0, '\n{{altText}}\n', '<FileLocation: 9 asset:_goldens/test/_files/interpolation.dart:1:10>')) {
       import8.setProperty(this._el_1, 'alt', currVal_0);
       this._expr_0 = currVal_0;
     }
     final currVal_1 = import9.interpolateString2('\n', _ctx.altText, '\n', _ctx.altText, '\n');
-    if (import7.checkBinding(this._expr_1, currVal_1, '\n{{altText}}\n{{altText}}\n', '')) {
+    if (import7.checkBinding(this._expr_1, currVal_1, '\n{{altText}}\n{{altText}}\n', '<FileLocation: 39 asset:_goldens/test/_files/interpolation.dart:4:10>')) {
       import8.setProperty(this._el_3, 'alt', currVal_1);
       this._expr_1 = currVal_1;
     }

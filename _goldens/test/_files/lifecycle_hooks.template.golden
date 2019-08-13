@@ -294,7 +294,7 @@ class ViewUsesLifecycleHooksComponent0 extends import0.ComponentView<import1.Use
     bool changed = false;
     bool firstCheck = this.firstCheck;
     final currVal_0 = _ctx.input;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'input', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'input', '<FileLocation: 21 asset:_goldens/test/_files/lifecycle_hooks.dart:1:22>')) {
       this._MostLifecycleHooksComponent_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -302,7 +302,7 @@ class ViewUsesLifecycleHooksComponent0 extends import0.ComponentView<import1.Use
       this._MostLifecycleHooksComponent_0_5.ngOnInit();
     }
     final currVal_1 = _ctx.input;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'input', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'input', '<FileLocation: 107 asset:_goldens/test/_files/lifecycle_hooks.dart:4:15>')) {
       this._DoCheckDirective_2_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -311,7 +311,7 @@ class ViewUsesLifecycleHooksComponent0 extends import0.ComponentView<import1.Use
     }
     changed = false;
     final currVal_2 = _ctx.input;
-    if (import6.checkBinding(this._expr_2, currVal_2, 'input', '')) {
+    if (import6.checkBinding(this._expr_2, currVal_2, 'input', '<FileLocation: 154 asset:_goldens/test/_files/lifecycle_hooks.dart:5:20>')) {
       this._AfterChangesComponent_3_5.input = currVal_2;
       changed = true;
       this._expr_2 = currVal_2;

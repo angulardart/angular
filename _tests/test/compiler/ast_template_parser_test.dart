@@ -1727,7 +1727,7 @@ void main() {
         expect(
             () => parse('<div [prop]="a b"></div>', []),
             throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in \n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 path://to/test-comp:1:6>\n'
                 '  ,\n'
                 '1 | <div [prop]="a b"></div>\n'
                 '  |      ^^^^^^^^^^^^\n'
