@@ -331,7 +331,7 @@ class ViewUsesDefaultChangeDetectionAndInputs0 extends import0.ComponentView<imp
       }
     }
     final currVal_1 = _ctx.name;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'name', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'name', '<FileLocation: 57 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:1:58>')) {
       this._DefaultChangeDetectionAndInputs_0_5.name = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -502,7 +502,7 @@ class ViewUsesOnPushChangeDetectionAndInputs0 extends import0.ComponentView<impo
       }
     }
     final currVal_1 = _ctx.name;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'name', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'name', '<FileLocation: 57 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:1:58>')) {
       this._OnPushChangeDetectionAndInputs_0_5.name = currVal_1;
       changed = true;
       this._expr_1 = currVal_1;
@@ -1370,12 +1370,12 @@ class ViewUsesDomBindings0 extends import0.ComponentView<import1.UsesDomBindings
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.title;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'title', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'title', '<FileLocation: 12 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:1:13>')) {
       import7.updateAttribute(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.isFancy;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'isFancy', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'isFancy', '<FileLocation: 33 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:1:34>')) {
       import7.updateClassBinding(this._el_0, 'fancy', currVal_1);
       this._expr_1 = currVal_1;
     }
@@ -1485,7 +1485,7 @@ class ViewUsesNgDirectives0 extends import0.ComponentView<import1.UsesNgDirectiv
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.ngClassesMap;
-    if (import6.checkBinding(this._expr_0, currVal_0, 'ngClassesMap', '')) {
+    if (import6.checkBinding(this._expr_0, currVal_0, 'ngClassesMap', '<FileLocation: 9 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:1:10>')) {
       this._NgClass_0_5.rawClass = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1493,7 +1493,7 @@ class ViewUsesNgDirectives0 extends import0.ComponentView<import1.UsesNgDirectiv
       this._NgClass_0_5.ngDoCheck();
     }
     final currVal_1 = _ctx.ngClassesList;
-    if (import6.checkBinding(this._expr_1, currVal_1, 'ngClassesList', '')) {
+    if (import6.checkBinding(this._expr_1, currVal_1, 'ngClassesList', '<FileLocation: 66 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:2:10>')) {
       this._NgClass_2_5.rawClass = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1501,7 +1501,7 @@ class ViewUsesNgDirectives0 extends import0.ComponentView<import1.UsesNgDirectiv
       this._NgClass_2_5.ngDoCheck();
     }
     final currVal_2 = _ctx.ngClassesString;
-    if (import6.checkBinding(this._expr_2, currVal_2, 'ngClassesString', '')) {
+    if (import6.checkBinding(this._expr_2, currVal_2, 'ngClassesString', '<FileLocation: 125 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:3:10>')) {
       this._NgClass_4_5.rawClass = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1509,7 +1509,7 @@ class ViewUsesNgDirectives0 extends import0.ComponentView<import1.UsesNgDirectiv
       this._NgClass_4_5.ngDoCheck();
     }
     final currVal_3 = _ctx.ngStyles;
-    if (import6.checkBinding(this._expr_3, currVal_3, 'ngStyles', '')) {
+    if (import6.checkBinding(this._expr_3, currVal_3, 'ngStyles', '<FileLocation: 188 asset:_goldens/test/_files/dart2js/dart2js_golden.dart:4:10>')) {
       this._NgStyle_6_5.rawStyle = currVal_3;
       this._expr_3 = currVal_3;
     }
