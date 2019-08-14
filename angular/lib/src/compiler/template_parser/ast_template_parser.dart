@@ -1196,6 +1196,11 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
       _reportError(astNode,
           'Requires a value describing the message to help translators');
     }
+    if ((astNode.name == i18nLocale ||
+            astNode.name.startsWith(i18nLocalePrefix)) &&
+        (astNode.value == null || astNode.value.trim().isEmpty)) {
+      _reportError(astNode, 'Requires a value to specify a locale');
+    }
     if ((astNode.name == i18nMeaning ||
             astNode.name.startsWith(i18nMeaningPrefix)) &&
         (astNode.value == null || astNode.value.trim().isEmpty)) {

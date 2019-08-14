@@ -6,6 +6,14 @@
     hot restarts or hermetic test cases. It can only be called in development
     mode.
 
+*   Added `@i18n.locale`. This annotation overrides the locale of the message to
+    use, even if a translation is available for the current locale.
+
+    ```html
+    <!-- Use "en_US" even if translation for current locale exists. -->
+    <div @i18n="..." @i18n.locale="en_US">...</div>
+    ```
+
 ## 6.0.0-alpha+1
 
 ### New features

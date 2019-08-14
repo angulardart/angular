@@ -493,13 +493,12 @@ class CompileView {
     final args = [
       _textExpression(message),
       o.NamedExpr('desc', o.literal(message.metadata.description)),
+      if (message.metadata.locale != null)
+        o.NamedExpr('locale', o.literal(message.metadata.locale)),
+      if (message.metadata.meaning != null)
+        o.NamedExpr('meaning', o.literal(message.metadata.meaning)),
+      if (message.metadata.skip) o.NamedExpr('skip', o.literal(true)),
     ];
-    if (message.metadata.meaning != null) {
-      args.add(o.NamedExpr('meaning', o.literal(message.metadata.meaning)));
-    }
-    if (message.metadata.skip) {
-      args.add(o.NamedExpr('skip', o.literal(true)));
-    }
     final i18n = o.importExpr(Identifiers.Intl);
     final name = '_message_${_i18nMessages.length}';
     o.Expression messageExpression;
