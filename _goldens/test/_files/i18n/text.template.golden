@@ -23,7 +23,7 @@ final List<dynamic> styles$I18nTextComponent = const [];
 
 // View for component I18nTextComponent in asset:_goldens/test/_files/i18n/text.dart (changeDetection: Default)
 class ViewI18nTextComponent0 extends import0.ComponentView<import1.I18nTextComponent> {
-  static final String _message_0 = import2.Intl.message('message', desc: 'description', meaning: 'meaning', skip: true);
+  static final String _message_0 = import2.Intl.message('message', desc: 'description', locale: 'en_US', meaning: 'meaning', skip: true);
   static import3.ComponentStyles _componentStyles;
   ViewI18nTextComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();

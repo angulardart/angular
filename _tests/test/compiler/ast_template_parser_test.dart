@@ -1946,6 +1946,18 @@ void main() {
                 "  '"));
       });
 
+      test('should report error for "@i18n.locale" without description', () {
+        expect(
+            () => parse('<p @i18n.locale="en_US"></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
+                'A corresponding message description (@i18n) is required\n'
+                '  ,\n'
+                '1 | <p @i18n.locale="en_US"></p>\n'
+                '  |    ^^^^^^^^^^^^^^^^^^^^\n'
+                "  '"));
+      });
+
       test('should report error for "@i18n.meaning" without description', () {
         expect(
             () => parse('<p @i18n.meaning="meaning"></p>'),
@@ -1967,6 +1979,18 @@ void main() {
                 '  ,\n'
                 '1 | <p @i18n.skip></p>\n'
                 '  |    ^^^^^^^^^^\n'
+                "  '"));
+      });
+
+      test('should report error for empty "@i18n.locale"', () {
+        expect(
+            () => parse('<p @i18n="description" @i18n.locale></p>'),
+            throwsWith('Template parse errors:\n'
+                'line 1, column 24 of path://to/test-comp: ParseErrorLevel.FATAL: '
+                'Requires a value to specify a locale\n'
+                '  ,\n'
+                '1 | <p @i18n="description" @i18n.locale></p>\n'
+                '  |                        ^^^^^^^^^^^^\n'
                 "  '"));
       });
 

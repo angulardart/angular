@@ -165,12 +165,16 @@ class TestI18nNodeWithHtmlAndEscapedHtmlCharacters {}
   selector: 'test',
   template: '''
     <p
-        @i18n="description" @i18n.meaning="meaning" @i18n.skip>
+        @i18n="description"
+        @i18n.locale="en_US"
+        @i18n.meaning="meaning"
+        @i18n.skip>
       A paragraph.
     </p>
     <img
         alt="An image."
         @i18n:alt="description"
+        @i18n.locale:alt="en_US"
         @i18n.meaning:alt="meaning"
         @i18n.skip:alt />
   ''',
