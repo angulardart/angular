@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:meta/meta.dart';
 
+import 'messages.dart';
 import 'optimizations.dart';
 
 /// Whether [_debugCheckBinding] should throw if the values are different.
@@ -45,6 +46,14 @@ var _debugCheckAllExpressionsAndReportExpressionContext = false;
 @experimental
 void debugCheckBindings([bool enabled = true]) {
   _debugCheckAllExpressionsAndReportExpressionContext = enabled;
+  if (isDevMode && enabled) {
+    _warnAboutExperimentalFeature();
+  }
+}
+
+void _warnAboutExperimentalFeature() {
+  print('WARNING: debugCheckBindings() is an experimental feature.');
+  print('${runtimeMessages.unstableExpressionReadMore}');
 }
 
 /// Returns whether [oldValue] is considered "changed" compared to [newValue].
@@ -131,7 +140,8 @@ class UnstableExpressionError extends Error {
       return '$message'
           '${expression ?? 'UNKNOWN'} in ${location ?? 'UNKNOWN'}:\n'
           '  Previous: $oldValue\n'
-          '  Current:  $newValue';
+          '  Current:  $newValue\n\n'
+          '${runtimeMessages.unstableExpressionReadMore}';
     }
     return ''
         'Expression has changed after it was checked. '
