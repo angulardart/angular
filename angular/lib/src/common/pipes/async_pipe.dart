@@ -8,7 +8,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 class _ObservableStrategy {
   StreamSubscription<Object> createSubscription(
       Stream<Object> stream, void updateLatestValue(value)) {
-    return stream.listen(updateLatestValue, onError: (e) => throw e);
+    return stream.listen(updateLatestValue);
   }
 
   void dispose(StreamSubscription<Object> subscription) {
