@@ -14,6 +14,11 @@
     <div @i18n="..." @i18n.locale="en_US">...</div>
     ```
 
+*   Added `debugCheckBindings()`. This top-level function opts in to stricter
+    checking for template bindings and interpolation, and will often have some
+    contextual information (expression source and source location) for the
+    underlying failure. See `/docs/advanced/debugging.md` for details.
+
 ## 6.0.0-alpha+1
 
 ### New features
