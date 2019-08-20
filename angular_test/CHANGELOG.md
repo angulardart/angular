@@ -1,3 +1,8 @@
+### New Features
+
+*   `NgTestFixture.dispose()` now resets and clears all component styles from
+    the DOM when assertions are enabled.
+
 ## 2.4.0
 
 ### New Features
