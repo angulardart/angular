@@ -8,21 +8,14 @@ import 'clear_component_styles_test.template.dart' as ng;
 void main() {
   tearDown(disposeAnyRunningTest);
 
-  test('styles should leak between test beds by default (undesired)', () async {
-    await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
-    // Has unexpected italic font style that leaked from previous test bed.
-    await expectTextFontStyle(ng.NormalTextComponentNgFactory, 'italic');
-  });
-
+  // Note that `NgTestFixture.dipose()` invokes `debugClearComponentStyles()`.
   group('debugClearComponentStyles()', () {
     test('should clear component styles from DOM', () async {
       await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
-      debugClearComponentStyles();
       await expectTextFontStyle(ng.NormalTextComponentNgFactory, 'normal');
     });
     test('should allow reloading the same component styles', () async {
       await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
-      debugClearComponentStyles();
       await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
     });
   });
@@ -44,7 +37,7 @@ Future<void> expectTextFontStyle(
   selector: 'test',
   template: '<p class="text"></p>',
   styles: [
-    // Intentionally unscoped to leak between test fixtures.
+    // Intentionally unscoped to leak between test fixtures if not cleared.
     '''
       ::ng-deep .text {
         font-style: italic;
