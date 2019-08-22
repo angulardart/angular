@@ -488,7 +488,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   });
 
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
-      {AnalyzedClass analyzedClass})
+      {AnalyzedClass analyzedClass, CompileTemplateMetadata template})
       : this.type = other.type,
         this.isLegacyComponentState = other.isLegacyComponentState,
         this.originType = other.originType,
@@ -502,7 +502,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         this.hostBindings = other.hostBindings,
         this.hostListeners = other.hostListeners,
         this.analyzedClass = analyzedClass ?? other.analyzedClass,
-        this.template = other.template,
+        this.template = template ?? other.template,
         this.visibility = other.visibility,
         this.lifecycleHooks = other.lifecycleHooks,
         this.providers = other.providers,

@@ -30,30 +30,7 @@ class AstDirectiveNormalizer {
       directive.type,
       directive.template,
     ).then((result) {
-      return CompileDirectiveMetadata(
-        type: directive.type,
-        isLegacyComponentState: directive.isLegacyComponentState,
-        originType: directive.originType,
-        metadataType: directive.metadataType,
-        selector: directive.selector,
-        exportAs: directive.exportAs,
-        changeDetection: directive.changeDetection,
-        inputs: directive.inputs,
-        inputTypes: directive.inputTypes,
-        outputs: directive.outputs,
-        hostBindings: directive.hostBindings,
-        hostListeners: directive.hostListeners,
-        lifecycleHooks: directive.lifecycleHooks,
-        providers: directive.providers,
-        viewProviders: directive.viewProviders,
-        exports: directive.exports,
-        queries: directive.queries,
-        viewQueries: directive.viewQueries,
-        template: result,
-        analyzedClass: directive.analyzedClass,
-        visibility: directive.visibility,
-        isChangeDetectionLink: directive.isChangeDetectionLink,
-      );
+      return CompileDirectiveMetadata.from(directive, template: result);
     });
   }
 
