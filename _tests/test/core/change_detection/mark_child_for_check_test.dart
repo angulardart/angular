@@ -61,6 +61,46 @@ void main() {
         expect(testFixture.text, 'aaa', skip: 'b/138134670');
       });
     });
+
+    group('nested', () {
+      test('content children', () async {
+        final testBed =
+            NgTestBed.forComponent(ng.TestEmbeddedContentChildrenNgFactory);
+        final testFixture = await testBed.create();
+        expect(testFixture.text, isEmpty);
+        await testFixture.update((component) => component.child.update('a'));
+        expect(testFixture.text, 'a', skip: 'b/138134670');
+        await testFixture.update((component) {
+          component.isSecondChildVisible = true;
+        });
+        expect(testFixture.text, 'aa', skip: 'b/138134670');
+        await testFixture.update((component) => component.child.update('b'));
+        expect(testFixture.text, 'bb', skip: 'b/138134670');
+        await testFixture.update((component) {
+          component.areRemainingChildrenVisible = true;
+        });
+        expect(testFixture.text, 'bbbb', skip: 'b/138134670');
+      });
+
+      test('view children', () async {
+        final testBed =
+            NgTestBed.forComponent(ng.TestEmbeddedViewChildrenNgFactory);
+        final testFixture = await testBed.create();
+        expect(testFixture.text, isEmpty);
+        await testFixture.update((component) {
+          component.areRemainingChildrenVisible = true;
+        });
+        expect(testFixture.text, isEmpty);
+        await testFixture.update((component) => component.update('a'));
+        expect(testFixture.text, 'aaa', skip: 'b/138134670');
+        await testFixture.update((component) {
+          component.isSecondChildVisible = true;
+        });
+        expect(testFixture.text, 'aaaa', skip: 'b/138134670');
+        await testFixture.update((component) => component.update('b'));
+        expect(testFixture.text, 'bbbb', skip: 'b/138134670');
+      });
+    });
   });
 }
 
@@ -257,6 +297,55 @@ class TestExistingProviderViewChildren {
 
   @ViewChildren(HasValue)
   List<HasValue> children;
+
+  void update(String value) {
+    for (final child in children) {
+      child.value = value;
+      // TODO: _changeDetectorRef.markChildForCheck(child);
+    }
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <has-content-children>
+      <child></child>
+      <child *ngIf="isSecondChildVisible"></child>
+      <ng-container *ngIf="areRemainingChildrenVisible">
+        <child></child>
+        <child *ngIf="areRemainingChildrenVisible"></child>
+      </ng-container>
+    </has-content-children>
+  ''',
+  directives: [Child, HasContentChildren, NgIf],
+)
+class TestEmbeddedContentChildren {
+  var isSecondChildVisible = false;
+  var areRemainingChildrenVisible = false;
+
+  @ViewChild(HasContentChildren)
+  HasContentChildren child;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <child></child>
+    <child *ngIf="isSecondChildVisible"></child>
+    <ng-container *ngIf="areRemainingChildrenVisible">
+      <child></child>
+      <child *ngIf="areRemainingChildrenVisible"></child>
+    </ng-container>
+  ''',
+  directives: [Child, NgIf],
+)
+class TestEmbeddedViewChildren {
+  var isSecondChildVisible = false;
+  var areRemainingChildrenVisible = false;
+
+  @ViewChildren(Child)
+  List<Child> children;
 
   void update(String value) {
     for (final child in children) {
