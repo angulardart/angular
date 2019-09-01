@@ -22,7 +22,7 @@ import 'package:angular/src/core/linker/views/view.dart' as _ng;
 
 const _analyzerIgnores =
     '// ignore_for_file: library_prefixes,unused_import,strict_raw_type,'
-    'no_default_super_constructor_explicit';
+    'no_default_super_constructor_explicit,undefined_hidden_name';
 
 String _typeArgumentsFor(ClassElement element) {
   if (element.typeParameters.isEmpty) {

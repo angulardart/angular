@@ -1,4 +1,4 @@
-// ignore_for_file: library_prefixes,unused_import,strict_raw_type,no_default_super_constructor_explicit
+// ignore_for_file: library_prefixes,unused_import,strict_raw_type,no_default_super_constructor_explicit,undefined_hidden_name
 // The .template.dart files also export the user code.
 export 'container_component.dart';
 
