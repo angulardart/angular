@@ -428,8 +428,6 @@ void main() {
           InjectsGeneric(GenericType a);
         }
       ''';
-      // TODO(matanl): This isn't quite right. Work with analyzer team on this.
-      // We'd expect GenericType<Comparable<dynamic>, Comparable<dynamic>>.
       expect(
         dartfmt(await initReflectorOf(source)),
         dartfmt(r'''
@@ -440,7 +438,7 @@ void main() {
             }
             _visited = true;
 
-            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, dynamic> p0) => InjectsGeneric(p0));
+            _ngRef.registerFactory(InjectsGeneric, (GenericType<Comparable<dynamic>, Comparable<dynamic>> p0) => InjectsGeneric(p0));
             _ngRef.registerDependencies(InjectsGeneric, const [
               [
                 GenericType
