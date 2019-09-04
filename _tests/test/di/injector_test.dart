@@ -372,8 +372,8 @@ void main() {
           throwsA(
             predicate(
               (e) => '$e'.contains(''
-                  'No provider found for $ExampleService2: '
-                  '$ExampleService -> $ExampleService2.'),
+                  'No provider found for $ExampleService2:\n  '
+                  '$ExampleService ->\n  $ExampleService2.'),
             ),
           ),
         );
@@ -406,8 +406,9 @@ void main() {
           throwsA(
             predicate(
               (e) => '$e'.contains(''
-                  'No provider found for $ExampleService4: '
-                  '$ExampleService -> $ExampleService2 -> $ExampleService4.'),
+                  'No provider found for $ExampleService4:\n  '
+                  '$ExampleService ->\n  $ExampleService2 ->\n  '
+                  '$ExampleService4.'),
             ),
           ),
         );
@@ -538,8 +539,8 @@ void main() {
           throwsA(
             predicate(
               (e) => '$e'.contains(''
-                  'No provider found for $MissingService: '
-                  '$ExampleService3 -> $MissingService.'),
+                  'No provider found for $MissingService:\n  '
+                  '$ExampleService3 ->\n  $MissingService.'),
             ),
           ),
         );
@@ -551,8 +552,9 @@ void main() {
           throwsA(
             predicate(
               (e) => '$e'.contains(''
-                  'No provider found for $MissingService: '
-                  '$ExampleService4 -> $ExampleService3 -> $MissingService.'),
+                  'No provider found for $MissingService:\n  '
+                  '$ExampleService4 ->\n  $ExampleService3 ->\n  '
+                  '$MissingService.'),
             ),
           ),
         );
