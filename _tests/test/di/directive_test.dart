@@ -170,8 +170,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$InjectsMissingService -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$InjectsMissingService ->\n  $MissingService'),
         ),
       ),
     );
@@ -183,8 +183,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$WillFailInjecting1Node -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$WillFailInjecting1Node ->\n  $MissingService'),
         ),
       ),
     );
@@ -196,8 +196,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$WillFailInjecting1Node -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$WillFailInjecting1Node ->\n  $MissingService'),
         ),
       ),
     );
@@ -209,8 +209,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$InjectsMissingService -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$InjectsMissingService ->\n  $MissingService'),
         ),
       ),
     );
@@ -222,8 +222,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$InjectsMissingService -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$InjectsMissingService ->\n  $MissingService'),
         ),
       ),
     );
@@ -235,8 +235,8 @@ void main() {
       () => testBed.create(),
       throwsA(
         predicate(
-          (e) => '$e'.contains('No provider found for $MissingService: '
-              '$PrimeInjectsMissingService -> $MissingService'),
+          (e) => '$e'.contains('No provider found for $MissingService:\n  '
+              '$PrimeInjectsMissingService ->\n  $MissingService'),
         ),
       ),
     );
@@ -257,9 +257,9 @@ void main() {
       throwsA(
         predicate(
           (e) => '$e'.contains(''
-              'No provider found for $MissingService: '
-              '$WillFailInjecting2NodeParent -> $InjectsMissingService -> '
-              '$MissingService.'),
+              'No provider found for $MissingService:\n  '
+              '$WillFailInjecting2NodeParent ->\n  '
+              '$InjectsMissingService ->\n  $MissingService.'),
         ),
       ),
     );

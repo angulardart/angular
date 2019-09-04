@@ -51,7 +51,7 @@ class OpaqueToken<T> {
   @override
   String toString() {
     if (isDevMode) {
-      return "OpaqueToken (${super.toString()}) <$T>('$_uniqueName')";
+      return "OpaqueToken<$T>('$_uniqueName')";
     }
     return super.toString();
   }
