@@ -15,4 +15,8 @@ silo_acl {
 
   # Shopping Abuse Prevention TVC group.
   allowed_ganpati_groups: "job-0000312204632-engineershoppingtransactionsriskabuseenginee"
+
+  # Resource Management Frontend TVC job functions group,
+  # Contact: resource-management-frontend@
+  allowed_ganpati_groups: "job-0000355205470-softwareengineersoftwareengineeriii"
 }
