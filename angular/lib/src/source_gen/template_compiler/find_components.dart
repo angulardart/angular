@@ -675,7 +675,7 @@ class _ComponentVisitor
       lifecycleHooks: lifecycleHooks,
       providers: _extractProviders(directiveInfo, 'providers'),
       viewProviders: _extractProviders(directiveInfo, 'viewProviders'),
-      exports: _extractExports(annotation as ElementAnnotationImpl, element),
+      exports: _extractExports(directiveInfo),
       queries: _queries,
       viewQueries: _viewQueries,
       template: template,
@@ -780,7 +780,9 @@ class _ComponentVisitor
               .createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
-      ElementAnnotationImpl annotation, ClassElement element) {
+      AnnotationInformation annotationInfo) {
+    final annotation = annotationInfo.annotation as ElementAnnotationImpl;
+    final element = annotationInfo.element;
     var exports = <CompileIdentifierMetadata>[];
 
     // There is an implicit "export" for the directive class itself
@@ -798,9 +800,12 @@ class _ComponentVisitor
     }
 
     var staticNames = (exportsArg.expression as ListLiteral).elements;
-    if (!staticNames.every((name) => name is Identifier)) {
-      log.severe('Every item in the "exports" field must be an identifier');
-      return exports;
+    for (var staticName in staticNames) {
+      if (staticName is! Identifier) {
+        _exceptionHandler.handle(ErrorMessageForAnnotation(annotationInfo,
+            'Item $staticName in the "exports" field must be an identifier'));
+        return exports;
+      }
     }
 
     final unresolvedExports = <Identifier>[];
@@ -812,8 +817,10 @@ class _ComponentVisitor
       if (id is PrefixedIdentifier) {
         // We only allow prefixed identifiers to have library prefixes.
         if (id.prefix.staticElement is! PrefixElement) {
-          log.severe('Every item in the "exports" field must be either '
-              'a simple identifier or an identifier with a library prefix');
+          _exceptionHandler.handle(ErrorMessageForAnnotation(
+              annotationInfo,
+              'Item $id in the "exports" field must be either a simple '
+              'identifier or an identifier with a library prefix'));
           return exports;
         }
         name = id.identifier.name;
