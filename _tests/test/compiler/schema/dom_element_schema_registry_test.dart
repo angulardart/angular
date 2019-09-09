@@ -35,8 +35,8 @@ void main() {
       // from *; but events are not properties
       expect(registry.hasProperty('video', 'click'), false);
     });
-    test('should return true for custom-like elements', () {
-      expect(registry.hasProperty('custom-like', 'unknown'), true);
+    test('should return false for custom-like elements', () {
+      expect(registry.hasProperty('custom-like', 'unknown'), false);
     });
     test('should re-map property names that are specified in DOM facade', () {
       expect(registry.getMappedPropName('readonly'), 'readOnly');

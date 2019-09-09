@@ -19,6 +19,15 @@
     contextual information (expression source and source location) for the
     underlying failure. See `/docs/advanced/debugging.md` for details.
 
+### Breaking changes
+
+*   Warn for all unknown properties in a template.
+
+    Previously, we would skip the warning for tags that contained `-`, as a
+    compatibility layer for custom web elements. Now that most of our users have
+    migrated away from custom elements, such as from Polymer, we are going to
+    strictly enforce unknown properties with a warning.
+
 ## 6.0.0-alpha+1
 
 ### New features
