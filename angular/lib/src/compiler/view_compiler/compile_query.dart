@@ -13,7 +13,7 @@ import "view_compiler_utils.dart"
 const _viewQueryNodeIndex = -1;
 
 class _QueryValues {
-  /// Compiled template associated to [values] and embedded [templates].
+  /// Compiled template associated with [valuesOrTemplates].
   final CompileView view;
 
   /// Values or embedded templates of the query.
