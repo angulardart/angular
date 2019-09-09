@@ -171,6 +171,89 @@ class Foo {
 }
 ```
 
+### PREFER using the template to update children
+
+Whenever possible, update children through the template. This allows Angular to
+track changes to components and update them accordingly.
+
+**BAD**
+
+```dart
+@Component(
+  selector: 'expansion-panel',
+  template: '''
+    <ng-container *ngIf="isExpanded">
+      <ng-content></ng-content>
+    </ng-container>
+  ''',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class ExpansionPanelComponent {
+  @Input()
+  var isExpanded = false;
+}
+
+@Component(
+  selector: 'parent',
+  template: '''
+    <expansion-panel>
+      <div>Hello!</div>
+    </expansion-panel>
+  ''',
+  directives: [ExpansionPanelComponent],
+)
+class ExampleComponent {
+  @ViewChild(ExpansionPanelComponent)
+  ExpansionPanelComponent expansionPanel;
+
+  void expand() {
+    expansionPanel.isExpanded = true;
+  }
+}
+```
+
+This example doesn't even work, because Angular can't see the change to
+`isExpanded` and thus won't update `ExpansionPanelComponent` which uses
+`ChangeDetectionStrategy.OnPush`.
+
+**GOOD**
+
+```dart
+@Component(
+  selector: 'expansion-panel',
+  template: '''
+    <ng-container *ngIf="isExpanded">
+      <ng-content></ng-content>
+    </ng-container>
+  ''',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class ExpansionPanelComponent {
+  @Input()
+  var isExpanded = false;
+}
+
+@Component(
+  selector: 'parent',
+  template: '''
+    <expansion-panel [isExpanded]="isExpanded">
+      <div>Hello!</div>
+    </expansion-panel>
+  ''',
+  directives: [ExpansionPanelComponent],
+)
+class ExampleComponent {
+  var isExpanded = false;
+
+  void expand() {
+    isExpanded = true;
+  }
+}
+```
+
+Angular can now observe the change to `isExpanded` and will update
+`ExpansionPanelComponent` accordingly.
+
 ## Components
 
 ### AVOID order-dependent input setters
