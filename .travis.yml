@@ -5,7 +5,10 @@
 language: dart
 
 dart:
-  - dev
+  # Normally we want `dev`, but the latest dev release (2.5.0-dev.2.1) does not work
+  # while the stable (2.5.0) does. We will move back to `dev` once we have a 2.6.0-dev
+  # that we want to test.
+  - stable
 
 # Gives more resources on Travis (8GB Ram, 2CPUs).
 # Do not remove without verifying w/ Travis.
