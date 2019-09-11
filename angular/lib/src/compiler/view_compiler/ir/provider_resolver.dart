@@ -268,9 +268,6 @@ class BuiltInSource extends ProviderSource {
 
   @override
   o.Expression build() => _value;
-
-  @override
-  final hasDynamicDependencies = false;
 }
 
 /// A provider source for arbitrary expressions.
@@ -285,9 +282,6 @@ class ExpressionProviderSource extends ProviderSource {
 
   @override
   o.Expression build() => _value;
-
-  @override
-  bool get hasDynamicDependencies => false;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {

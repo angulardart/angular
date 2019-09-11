@@ -20,5 +20,5 @@ abstract class ProviderSource {
   ///   // DependencyService is dynamically required to resolve MyService.
   ///   _MyService = MyService(injectorGet(DependencyService));
   /// ```
-  bool get hasDynamicDependencies;
+  bool get hasDynamicDependencies => false;
 }
