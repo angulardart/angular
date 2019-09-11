@@ -151,16 +151,24 @@ class TestContentChild {
   template: '<ng-content></ng-content>',
 )
 class HasContentChildren {
-  HasContentChildren(this._changeDetectorRef);
+  HasContentChildren(this._changeDetectorRef, this._ngZone);
 
   // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
+  final NgZone _ngZone;
+
+  List<Child> _children = [];
+  var _value = '';
 
   @ContentChildren(Child)
-  List<Child> children;
+  set children(List<Child> value) {
+    _children = value;
+    _ngZone.runAfterChangesObserved(() => update(_value));
+  }
 
   void update(String value) {
-    for (final child in children) {
+    _value = value;
+    for (final child in _children) {
       child.value = value;
       // TODO: _changeDetectorRef.markChildForCheck(child);
     }
@@ -239,6 +247,7 @@ abstract class HasValue {
   providers: [
     ExistingProvider(HasValue, ChildWithExistingProvider),
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class ChildWithExistingProvider implements HasValue {
   var value = '';
@@ -341,14 +350,26 @@ class TestEmbeddedContentChildren {
   directives: [Child, NgIf],
 )
 class TestEmbeddedViewChildren {
+  TestEmbeddedViewChildren(this._changeDetectorRef, this._ngZone);
+
+  final ChangeDetectorRef _changeDetectorRef;
+  final NgZone _ngZone;
+
   var isSecondChildVisible = false;
   var areRemainingChildrenVisible = false;
 
+  List<Child> _children = [];
+  var _value = '';
+
   @ViewChildren(Child)
-  List<Child> children;
+  set children(List<Child> value) {
+    _children = value;
+    _ngZone.runAfterChangesObserved(() => update(_value));
+  }
 
   void update(String value) {
-    for (final child in children) {
+    _value = value;
+    for (final child in _children) {
       child.value = value;
       // TODO: _changeDetectorRef.markChildForCheck(child);
     }
