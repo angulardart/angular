@@ -131,7 +131,7 @@ class ProviderResolver {
             }
           }
         } else {
-          providerSource = LiteralValueSource(
+          providerSource = ExpressionProviderSource(
               provider.token, convertValueToOutputAst(provider.useValue));
         }
         providerSources.add(providerSource);
@@ -205,10 +205,10 @@ class ProviderResolver {
       if (value is I18nMessage) {
         // Value is an injected `@i18n:` attribute value.
         final message = _host.createI18nMessage(value);
-        result = LiteralValueSource(dep.token, message);
+        result = ExpressionProviderSource(dep.token, message);
       } else {
         // Value is a literal primitive, such as an injected attribute value.
-        result = LiteralValueSource(dep.token, o.literal(dep.value));
+        result = ExpressionProviderSource(dep.token, o.literal(dep.value));
       }
     }
     if (result == null && !dep.isSkipSelf) {
@@ -273,20 +273,21 @@ class BuiltInSource extends ProviderSource {
   final hasDynamicDependencies = false;
 }
 
-class LiteralValueSource extends ProviderSource {
+/// A provider source for arbitrary expressions.
+///
+/// This is used to provide simple literal values and locally available
+/// expressions.
+class ExpressionProviderSource extends ProviderSource {
   final o.Expression _value;
 
-  LiteralValueSource(
-    CompileTokenMetadata token,
-    this._value, {
-    this.hasDynamicDependencies = false,
-  }) : super(token);
+  ExpressionProviderSource(CompileTokenMetadata token, this._value)
+      : super(token);
 
   @override
   o.Expression build() => _value;
 
   @override
-  final bool hasDynamicDependencies;
+  bool get hasDynamicDependencies => false;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
