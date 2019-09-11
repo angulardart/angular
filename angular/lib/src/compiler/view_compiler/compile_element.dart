@@ -464,7 +464,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
         forceDynamic:
             (resolvedProvider.providerType == ProviderAstType.Component) &&
                 isDeferredComponent);
-    return LiteralValueSource(resolvedProvider.token, providerExpr);
+    return ExpressionProviderSource(resolvedProvider.token, providerExpr);
   }
 
   @override
