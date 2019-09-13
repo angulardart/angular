@@ -30,6 +30,7 @@ void main() {
 @Component(
   selector: 'root-component',
   directives: [
+    NgIf,
     HasProvider,
     HasProviders,
     ComponentConditionalFeatures,
@@ -43,6 +44,10 @@ void main() {
     UsesNgDirectives,
     HasNestedProviderLookups,
     HasHostListeners,
+    OnPushChild,
+    Child,
+    HasContentChildren,
+    HasViewChildren,
   ],
   template: r'''
     <div hasProviders>
@@ -71,6 +76,15 @@ void main() {
     </has-nested-provider-lookups>
     <has-host-listeners>
     </has-host-listeners>
+    <has-content-children>
+      <child></child>
+      <child onPush></child>
+      <ng-container *ngIf="false">
+        <child></child>
+      </ng-container>
+    </has-content-children>
+    <has-view-children>
+    </has-view-children>
   ''',
 )
 class RootComponent {}
@@ -379,4 +393,45 @@ class HasHostListeners {
 
   @HostListener('focus')
   void onFocus() {}
+}
+
+@Component(
+  selector: 'child',
+  template: '',
+)
+class Child {}
+
+@Component(
+  selector: 'child[onPush]',
+  template: '',
+  providers: [
+    ExistingProvider(Child, OnPushChild),
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class OnPushChild implements Child {}
+
+@Component(
+  selector: 'has-content-children',
+  template: '<ng-content></ng-content>',
+)
+class HasContentChildren {
+  @ContentChildren(Child)
+  set children(List<Child> value) => defeatDart2JsOptimizations(value);
+}
+
+@Component(
+  selector: 'has-view-children',
+  template: '''
+      <child onPush></child>
+      <child></child>
+      <ng-container *ngIf="false">
+        <child onPush></child>
+      </ng-container>
+  ''',
+  directives: [OnPushChild, Child, NgIf],
+)
+class HasViewChildren {
+  @ViewChildren(Child)
+  set children(List<Child> value) => defeatDart2JsOptimizations(value);
 }

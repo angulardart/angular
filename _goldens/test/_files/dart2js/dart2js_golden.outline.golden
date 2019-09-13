@@ -127,6 +127,30 @@ external _ng.ComponentFactory<HasHostListeners> get HasHostListenersNgFactory;
 class ViewHasHostListeners0 extends _ng.ComponentView<HasHostListeners> {
   external ViewHasHostListeners0(_ng.View parentView, int parentIndex);
 }
+// For @Component class Child.
+external List<dynamic> get styles$Child;
+external _ng.ComponentFactory<Child> get ChildNgFactory;
+class ViewChild0 extends _ng.ComponentView<Child> {
+  external ViewChild0(_ng.View parentView, int parentIndex);
+}
+// For @Component class OnPushChild.
+external List<dynamic> get styles$OnPushChild;
+external _ng.ComponentFactory<OnPushChild> get OnPushChildNgFactory;
+class ViewOnPushChild0 extends _ng.ComponentView<OnPushChild> {
+  external ViewOnPushChild0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasContentChildren.
+external List<dynamic> get styles$HasContentChildren;
+external _ng.ComponentFactory<HasContentChildren> get HasContentChildrenNgFactory;
+class ViewHasContentChildren0 extends _ng.ComponentView<HasContentChildren> {
+  external ViewHasContentChildren0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasViewChildren.
+external List<dynamic> get styles$HasViewChildren;
+external _ng.ComponentFactory<HasViewChildren> get HasViewChildrenNgFactory;
+class ViewHasViewChildren0 extends _ng.ComponentView<HasViewChildren> {
+  external ViewHasViewChildren0(_ng.View parentView, int parentIndex);
+}
 // For @Directive class HasProvider.
 class HasProviderNgCd extends _ng.DirectiveChangeDetector {
   external HasProvider get instance;

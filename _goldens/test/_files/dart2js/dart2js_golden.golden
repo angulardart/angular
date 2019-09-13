@@ -3193,6 +3193,10 @@
     }
   },
   W = {
+    Comment_Comment: function() {
+      var t1 = document;
+      return t1.createComment("");
+    },
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = 536870911 & hash + value;
       hash = 536870911 & hash + ((524287 & hash) << 10);
@@ -3729,7 +3733,15 @@
   X = {NgStyle: function NgStyle(t0) {
       this._ngElement = t0;
       this._differ = this._rawStyle = null;
-    }},
+    },
+    flattenNodes: function(nodes, $T) {
+      var i,
+        result = H.setRuntimeTypeInfo([], [$T]);
+      for (i = 0; i < 3; ++i)
+        C.JSArray_methods.addAll$1(result, nodes[i]);
+      return result;
+    }
+  },
   S = {ChangeDetectorRef: function ChangeDetectorRef() {
     }, OpaqueToken: function OpaqueToken(t0, t1) {
       this._uniqueName = t0;
@@ -3759,6 +3771,9 @@
       this._currentValue = "";
       this.element = t0;
     },
+    viewFactory_RootComponent1: function(parentView, parentIndex) {
+      return new N._ViewRootComponent1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
     viewFactory_RootComponentHost0: function(injector) {
       return new N._ViewRootComponentHost0(injector, new G._HostViewData());
     },
@@ -3783,10 +3798,49 @@
     viewFactory_HasNestedProviderLookups2: function(parentView, parentIndex) {
       return new N._ViewHasNestedProviderLookups2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
+    ViewChild0$: function(parentView, parentIndex) {
+      var t2,
+        t1 = new N.ViewChild0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3)),
+        styles = $.ViewChild0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
+        styles._appendStyles$0();
+        $.ViewChild0__componentStyles = styles;
+      }
+      t1.componentStyles = styles;
+      t2 = document.createElement("child");
+      t1.rootElement = t2;
+      return t1;
+    },
+    ViewOnPushChild0$: function(parentView, parentIndex) {
+      var t2,
+        t1 = new N.ViewOnPushChild0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 1)),
+        styles = $.ViewOnPushChild0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(null, C.List_empty);
+        styles._appendStyles$0();
+        $.ViewOnPushChild0__componentStyles = styles;
+      }
+      t1.componentStyles = styles;
+      t2 = document.createElement("child");
+      t1.rootElement = t2;
+      return t1;
+    },
+    viewFactory_HasViewChildren1: function(parentView, parentIndex) {
+      return new N._ViewHasViewChildren1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
     ViewRootComponent0: function ViewRootComponent0(t0) {
       var _ = this;
-      _.rootElement = _.componentStyles = _.ctx = _._HasHostListeners_13_5 = _._compView_13 = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
+      _._query_Child_14_0_isDirty = true;
+      _._compView_15 = _._HasContentChildren_14_5 = _._compView_14 = _._HasHostListeners_13_5 = _._compView_13 = _._HasNestedProviderLookups_12_5 = _._compView_12 = _._UsesNgDirectives_11_5 = _._compView_11 = _._UsesDomBindings_10_5 = _._compView_10 = _._ComponentConditionalFeatures_9_5 = _._compView_9 = _._InjectsFromArbitraryParent_8_5 = _._compView_8 = _._EmbeddedNgFor_7_5 = _._compView_7 = _._EmbeddedNgIf_6_5 = _._compView_6 = _._InlinedNgIf_5_5 = _._compView_5 = _._UsesOnPushChangeDetectionAndInputs_4_5 = _._compView_4 = _._UsesDefaultChangeDetectionAndInputs_3_5 = _._compView_3 = _.__C_2_6 = _.__C_1_6 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = null;
+      _.rootElement = _.componentStyles = _.ctx = _._HasViewChildren_18_5 = _._compView_18 = _._NgIf_17_9 = _._appEl_17 = _._OnPushChild_16_5 = _._compView_16 = _._Child_15_5 = null;
       _._data = t0;
+    },
+    ViewRootComponent0_detectChangesInternal_closure: function ViewRootComponent0_detectChangesInternal_closure() {
+    },
+    _ViewRootComponent1: function _ViewRootComponent1(t0) {
+      this._Child_0_5 = this._compView_0 = null;
+      this._embedded_view$_data = t0;
     },
     _ViewRootComponentHost0: function _ViewRootComponentHost0(t0, t1) {
       var _ = this;
@@ -3909,6 +3963,33 @@
       var _ = this;
       _.rootElement = _.componentStyles = _.ctx = null;
       _._data = t0;
+    },
+    ViewChild0: function ViewChild0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._data = t0;
+    },
+    ViewOnPushChild0: function ViewOnPushChild0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._data = t0;
+    },
+    ViewHasContentChildren0: function ViewHasContentChildren0(t0) {
+      var _ = this;
+      _.rootElement = _.componentStyles = _.ctx = null;
+      _._data = t0;
+    },
+    ViewHasViewChildren0: function ViewHasViewChildren0(t0) {
+      var _ = this;
+      _._viewQuery_Child_0_isDirty = true;
+      _.rootElement = _.componentStyles = _.ctx = _._NgIf_2_9 = _._appEl_2 = _._Child_1_5 = _._compView_1 = _._OnPushChild_0_5 = _._compView_0 = null;
+      _._data = t0;
+    },
+    ViewHasViewChildren0_detectChangesInternal_closure: function ViewHasViewChildren0_detectChangesInternal_closure() {
+    },
+    _ViewHasViewChildren1: function _ViewHasViewChildren1(t0) {
+      this._OnPushChild_0_5 = this._compView_0 = null;
+      this._embedded_view$_data = t0;
     }
   },
   M = {
@@ -3956,6 +4037,24 @@
     },
     ViewFragment_ViewFragment: function(nodesOrViewContainers) {
       return new D.ViewFragment(nodesOrViewContainers);
+    },
+    ViewFragment_appendDomNodes: function(target, nodesOrViewContainers) {
+      var i, node, nestedViews, length0, n,
+        t1 = J.getInterceptor$asx(nodesOrViewContainers),
+        $length = t1.get$length(nodesOrViewContainers);
+      for (i = 0; i < $length; ++i) {
+        node = t1.$index(nodesOrViewContainers, i);
+        if (node instanceof V.ViewContainer) {
+          target.appendChild(node.nativeElement);
+          nestedViews = node.nestedViews;
+          if (nestedViews != null) {
+            length0 = nestedViews.length;
+            for (n = 0; n < length0; ++n)
+              nestedViews[n].get$viewFragment().appendDomNodesInto$1(target);
+          }
+        } else
+          target.appendChild(node);
+      }
     },
     ViewFragment__flattenDomNodes: function(target, nodes) {
       var i;
@@ -4093,6 +4192,14 @@
     DepF: function DepF() {
     },
     HasHostListeners: function HasHostListeners() {
+    },
+    Child: function Child() {
+    },
+    OnPushChild: function OnPushChild() {
+    },
+    HasContentChildren: function HasContentChildren() {
+    },
+    HasViewChildren: function HasViewChildren() {
     }
   },
   V = {ViewContainer: function ViewContainer(t0, t1, t2) {
@@ -4205,9 +4312,11 @@
     appendText: function($parent, text) {
       return $parent.appendChild(T.createText(text));
     },
+    createAnchor: function() {
+      return W.Comment_Comment();
+    },
     appendAnchor: function($parent) {
-      var t1 = document;
-      return $parent.appendChild(t1.createComment(""));
+      return $parent.appendChild(W.Comment_Comment());
     },
     appendDiv: function(doc, $parent) {
       var t1 = doc.createElement("div");
@@ -5980,7 +6089,7 @@
     $defaultValues: function() {
       return [null];
     },
-    $signature: 21
+    $signature: 32
   };
   P._Future__chainForeignFuture_closure1.prototype = {
     call$0: function() {
@@ -9466,7 +9575,7 @@
         if (!J.getInterceptor$(collection).$isIterable)
           throw H.wrapException(P.StateError$("Error trying to diff '" + H.S(collection) + "'"));
       } else
-        collection = C.List_empty1;
+        collection = C.List_empty2;
       return this.check$1(0, collection) ? this : null;
     },
     check$1: function(_, collection) {
@@ -10233,6 +10342,16 @@
         t1.destroyInternalState$0();
       }
     },
+    mapNestedViews$2$1: function(callback, $T, $U) {
+      var result, l, i,
+        nestedViews = this.nestedViews;
+      if (nestedViews == null || nestedViews.length === 0)
+        return C.List_empty1;
+      result = H.setRuntimeTypeInfo([], [$T]);
+      for (l = nestedViews.length, i = 0; i < l; ++i)
+        C.JSArray_methods.addAll$1(result, callback.call$1(nestedViews[i]));
+      return result;
+    },
     _findRenderNode$2: function(views, index) {
       return index > 0 ? views[index - 1].get$lastRootNode() : this.nativeElement;
     },
@@ -10250,6 +10369,9 @@
     }
   };
   D.ViewFragment.prototype = {
+    appendDomNodesInto$1: function(target) {
+      D.ViewFragment_appendDomNodes(target, this._nodesOrViewContainers);
+    },
     findLastDomNode$0: function() {
       var node = this._nodesOrViewContainers[0];
       return node;
@@ -10271,7 +10393,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty1);
+      this.createAndProject$2(component, C.List_empty2);
     },
     createAndProject$2: function(component, projectedNodes) {
       this.ctx = component;
@@ -10365,6 +10487,9 @@
     get$lastRootNode: function() {
       return this._embedded_view$_data.viewFragment.findLastDomNode$0();
     },
+    get$viewFragment: function() {
+      return this._embedded_view$_data.viewFragment;
+    },
     initRootNode$1: function(rootNodeOrViewContainer) {
       this.initRootNodesAndSubscriptions$2(H.setRuntimeTypeInfo([rootNodeOrViewContainer], [P.Object]), null);
     },
@@ -10378,6 +10503,7 @@
       if (!t1._destroyed) {
         t1.destroy$0();
         this.destroyInternal$0();
+        this.dirtyParentQueriesInternal$0();
       }
     },
     detectChanges$0: function() {
@@ -10408,12 +10534,17 @@
       T.removeNodes(nodes);
       $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
     },
+    dirtyParentQueriesInternal$0: function() {
+    },
     wasInserted$1: function(viewContainer) {
       this._embedded_view$_data.viewContainer = viewContainer;
+      this.dirtyParentQueriesInternal$0();
     },
     wasMoved$0: function() {
+      this.dirtyParentQueriesInternal$0();
     },
     wasRemoved$0: function() {
+      this.dirtyParentQueriesInternal$0();
       this._embedded_view$_data.viewContainer = null;
     }
   };
@@ -10439,6 +10570,9 @@
     },
     get$lastRootNode: function() {
       return this._host_view$_data.viewFragment.findLastDomNode$0();
+    },
+    get$viewFragment: function() {
+      return this._host_view$_data.viewFragment;
     },
     initRootNode$1: function(nodeOrViewContainer) {
       this._host_view$_data.viewFragment = D.ViewFragment_ViewFragment(H.setRuntimeTypeInfo([nodeOrViewContainer], [P.Object]));
@@ -10508,6 +10642,33 @@
     }
   };
   A.RenderView.prototype = {
+    project$2: function(target, index) {
+      var projectedNodesByContentIndex, nodesToProjectIntoTarget, $length, i, node, t1, nestedViews, length0, n;
+      if (target == null)
+        return;
+      projectedNodesByContentIndex = this.get$projectedNodes();
+      if (projectedNodesByContentIndex == null || index >= projectedNodesByContentIndex.length)
+        return;
+      nodesToProjectIntoTarget = projectedNodesByContentIndex[index];
+      $length = nodesToProjectIntoTarget.length;
+      for (i = 0; i < $length; ++i) {
+        node = nodesToProjectIntoTarget[i];
+        t1 = J.getInterceptor$(node);
+        if (!!t1.$isViewContainer) {
+          target.appendChild(node.nativeElement);
+          nestedViews = node.nestedViews;
+          if (nestedViews != null) {
+            length0 = nestedViews.length;
+            for (n = 0; n < length0; ++n)
+              nestedViews[n].get$viewFragment().appendDomNodesInto$1(target);
+          }
+        } else if (!!t1.$isList)
+          D.ViewFragment_appendDomNodes(target, node);
+        else
+          target.appendChild(node);
+      }
+      $.domRootRendererIsDirty = true;
+    },
     injectFromAncestry$2: function(token, notFoundValue) {
       return this.get$parentView().inject$3(token, this.get$parentIndex(), notFoundValue);
     },
@@ -11057,9 +11218,13 @@
     onFocus$0: function(_) {
     }
   };
+  O.Child.prototype = {};
+  O.OnPushChild.prototype = {};
+  O.HasContentChildren.prototype = {};
+  O.HasViewChildren.prototype = {};
   N.ViewRootComponent0.prototype = {
     build$0: function() {
-      var t1, styles, t2, t3, t4, t5, t6, _this = this, _null = null,
+      var t1, styles, t2, t3, t4, t5, t6, _el_15, _el_16, _this = this, _null = null,
         _s11_ = "hasProvider",
         parentRenderNode = _this.initViewRoot$0(),
         doc = document,
@@ -11242,6 +11407,50 @@
       t1 = new O.HasHostListeners();
       _this._HasHostListeners_13_5 = t1;
       _this._compView_13.create$1(0, t1);
+      t1 = new N.ViewHasContentChildren0(E._ComponentViewData__ComponentViewData(_this, 14, 3));
+      styles = $.ViewHasContentChildren0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
+        styles._appendStyles$0();
+        $.ViewHasContentChildren0__componentStyles = styles;
+      }
+      t1.componentStyles = styles;
+      t2 = doc.createElement("has-content-children");
+      t1.rootElement = t2;
+      _this._compView_14 = t1;
+      parentRenderNode.appendChild(t2);
+      _this._HasContentChildren_14_5 = new O.HasContentChildren();
+      t1 = _this._compView_15 = N.ViewChild0$(_this, 15);
+      _el_15 = t1.rootElement;
+      t2 = new O.Child();
+      _this._Child_15_5 = t2;
+      t1.create$1(0, t2);
+      t2 = N.ViewOnPushChild0$(_this, 16);
+      _this._compView_16 = t2;
+      _el_16 = t2.rootElement;
+      T.setAttribute(_el_16, "onPush", "");
+      t2 = new O.OnPushChild();
+      _this._OnPushChild_16_5 = t2;
+      _this._compView_16.create$1(0, t2);
+      t2 = _this._appEl_17 = new V.ViewContainer(17, _this, T.createAnchor());
+      _this._NgIf_17_9 = new K.NgIf(new D.TemplateRef(t2, N.dart2js_golden_template__viewFactory_RootComponent1$closure()), t2);
+      t1 = [P.Object];
+      _this._compView_14.createAndProject$2(_this._HasContentChildren_14_5, H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_15, _el_16, t2], t1)], t1));
+      t1 = new N.ViewHasViewChildren0(E._ComponentViewData__ComponentViewData(_this, 18, 3));
+      styles = $.ViewHasViewChildren0__componentStyles;
+      if (styles == null) {
+        styles = new O._UnscopedComponentStyles(_null, C.List_empty);
+        styles._appendStyles$0();
+        $.ViewHasViewChildren0__componentStyles = styles;
+      }
+      t1.componentStyles = styles;
+      t2 = doc.createElement("has-view-children");
+      t1.rootElement = t2;
+      _this._compView_18 = t1;
+      parentRenderNode.appendChild(t2);
+      t1 = new O.HasViewChildren();
+      _this._HasViewChildren_18_5 = t1;
+      _this._compView_18.create$1(0, t1);
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       var t1, _this = this;
@@ -11268,6 +11477,8 @@
         t1 = _this.__C_2_6;
         return t1 == null ? _this.__C_2_6 = new O.C2() : t1;
       }
+      if (token === C.Type_Child_DMX && 16 === nodeIndex)
+        return _this._OnPushChild_16_5;
       return notFoundResult;
     },
     detectChangesInternal$0: function() {
@@ -11276,6 +11487,17 @@
         t1 = _this._ComponentConditionalFeatures_9_5;
         t1.useFeatureA = true;
         t1.useFeatureB = false;
+        _this._NgIf_17_9.set$ngIf(false);
+      }
+      _this._appEl_17.detectChangesInNestedViews$0();
+      if (_this._query_Child_14_0_isDirty) {
+        t1 = _this._HasContentChildren_14_5;
+        t2 = O.Child;
+        t3 = [t2];
+        t2 = X.flattenNodes(H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_this._Child_15_5], t3), H.setRuntimeTypeInfo([_this._OnPushChild_16_5], t3), _this._appEl_17.mapNestedViews$2$1(new N.ViewRootComponent0_detectChangesInternal_closure(), t2, N._ViewRootComponent1)], [[P.List, O.Child]]), t2);
+        t1.toString;
+        self.defeatDart2JsOptimizations(t2);
+        _this._query_Child_14_0_isDirty = false;
       }
       t1 = _this._compView_10;
       t1.ctx.toString;
@@ -11302,9 +11524,14 @@
       _this._compView_11.detectChanges$0();
       _this._compView_12.detectChanges$0();
       _this._compView_13.detectChanges$0();
+      _this._compView_14.detectChanges$0();
+      _this._compView_15.detectChanges$0();
+      _this._compView_16.detectChanges$0();
+      _this._compView_18.detectChanges$0();
     },
     destroyInternal$0: function() {
       var _this = this;
+      _this._appEl_17.destroyNestedViews$0();
       _this._compView_3.destroyInternalState$0();
       _this._compView_4.destroyInternalState$0();
       _this._compView_5.destroyInternalState$0();
@@ -11316,6 +11543,35 @@
       _this._compView_11.destroyInternalState$0();
       _this._compView_12.destroyInternalState$0();
       _this._compView_13.destroyInternalState$0();
+      _this._compView_14.destroyInternalState$0();
+      _this._compView_15.destroyInternalState$0();
+      _this._compView_16.destroyInternalState$0();
+      _this._compView_18.destroyInternalState$0();
+    }
+  };
+  N.ViewRootComponent0_detectChangesInternal_closure.prototype = {
+    call$1: function(nestedView) {
+      return H.setRuntimeTypeInfo([nestedView._Child_0_5], [O.Child]);
+    }
+  };
+  N._ViewRootComponent1.prototype = {
+    build$0: function() {
+      var _this = this,
+        t1 = _this._compView_0 = N.ViewChild0$(_this, 0),
+        _el_0 = t1.rootElement,
+        t2 = new O.Child();
+      _this._Child_0_5 = t2;
+      t1.create$1(0, t2);
+      _this.initRootNode$1(_el_0);
+    },
+    detectChangesInternal$0: function() {
+      this._compView_0.detectChanges$0();
+    },
+    dirtyParentQueriesInternal$0: function() {
+      this._embedded_view$_data.parentView._query_Child_14_0_isDirty = true;
+    },
+    destroyInternal$0: function() {
+      this._compView_0.destroyInternalState$0();
     }
   };
   N._ViewRootComponentHost0.prototype = {};
@@ -11825,6 +12081,102 @@
       t2.addEventListener$2(parentRenderNode, "focus", _this.eventHandler0$1$1(_ctx.get$onFocus(_ctx), t1));
     }
   };
+  N.ViewChild0.prototype = {
+    build$0: function() {
+      this.initViewRoot$0();
+    }
+  };
+  N.ViewOnPushChild0.prototype = {
+    build$0: function() {
+      this.initViewRoot$0();
+    }
+  };
+  N.ViewHasContentChildren0.prototype = {
+    build$0: function() {
+      this.project$2(this.initViewRoot$0(), 0);
+    }
+  };
+  N.ViewHasViewChildren0.prototype = {
+    build$0: function() {
+      var _el_0, _this = this,
+        parentRenderNode = _this.initViewRoot$0(),
+        t1 = N.ViewOnPushChild0$(_this, 0);
+      _this._compView_0 = t1;
+      _el_0 = t1.rootElement;
+      parentRenderNode.appendChild(_el_0);
+      T.setAttribute(_el_0, "onPush", "");
+      t1 = new O.OnPushChild();
+      _this._OnPushChild_0_5 = t1;
+      _this._compView_0.create$1(0, t1);
+      t1 = N.ViewChild0$(_this, 1);
+      _this._compView_1 = t1;
+      parentRenderNode.appendChild(t1.rootElement);
+      t1 = new O.Child();
+      _this._Child_1_5 = t1;
+      _this._compView_1.create$1(0, t1);
+      t1 = _this._appEl_2 = new V.ViewContainer(2, _this, T.appendAnchor(parentRenderNode));
+      _this._NgIf_2_9 = new K.NgIf(new D.TemplateRef(t1, N.dart2js_golden_template__viewFactory_HasViewChildren1$closure()), t1);
+    },
+    injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
+      if (token === C.Type_Child_DMX && 0 === nodeIndex)
+        return this._OnPushChild_0_5;
+      return notFoundResult;
+    },
+    detectChangesInternal$0: function() {
+      var t1, t2, _this = this,
+        _ctx = _this.ctx;
+      if (_this._data._changeDetectorState === 0)
+        _this._NgIf_2_9.set$ngIf(false);
+      _this._appEl_2.detectChangesInNestedViews$0();
+      if (_this._viewQuery_Child_0_isDirty) {
+        t1 = O.Child;
+        t2 = [t1];
+        t1 = X.flattenNodes(H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_this._OnPushChild_0_5], t2), H.setRuntimeTypeInfo([_this._Child_1_5], t2), _this._appEl_2.mapNestedViews$2$1(new N.ViewHasViewChildren0_detectChangesInternal_closure(), t1, N._ViewHasViewChildren1)], [[P.List, O.Child]]), t1);
+        _ctx.toString;
+        self.defeatDart2JsOptimizations(t1);
+        _this._viewQuery_Child_0_isDirty = false;
+      }
+      _this._compView_0.detectChanges$0();
+      _this._compView_1.detectChanges$0();
+    },
+    destroyInternal$0: function() {
+      this._appEl_2.destroyNestedViews$0();
+      this._compView_0.destroyInternalState$0();
+      this._compView_1.destroyInternalState$0();
+    }
+  };
+  N.ViewHasViewChildren0_detectChangesInternal_closure.prototype = {
+    call$1: function(nestedView) {
+      return H.setRuntimeTypeInfo([nestedView._OnPushChild_0_5], [O.Child]);
+    }
+  };
+  N._ViewHasViewChildren1.prototype = {
+    build$0: function() {
+      var _el_0, _this = this,
+        t1 = N.ViewOnPushChild0$(_this, 0);
+      _this._compView_0 = t1;
+      _el_0 = t1.rootElement;
+      T.setAttribute(_el_0, "onPush", "");
+      t1 = new O.OnPushChild();
+      _this._OnPushChild_0_5 = t1;
+      _this._compView_0.create$1(0, t1);
+      _this.initRootNode$1(_el_0);
+    },
+    injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
+      if (token === C.Type_Child_DMX && 0 === nodeIndex)
+        return this._OnPushChild_0_5;
+      return notFoundResult;
+    },
+    detectChangesInternal$0: function() {
+      this._compView_0.detectChanges$0();
+    },
+    dirtyParentQueriesInternal$0: function() {
+      this._embedded_view$_data.parentView._viewQuery_Child_0_isDirty = true;
+    },
+    destroyInternal$0: function() {
+      this._compView_0.destroyInternalState$0();
+    }
+  };
   (function aliases() {
     var _ = J.Interceptor.prototype;
     _.super$Interceptor$toString = _.toString$0;
@@ -11906,7 +12258,8 @@
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 8, 0);
     _instance_0_i(_ = O.HasHostListeners.prototype, "get$onClick", "onClick$0", 1);
     _instance_0_i(_, "get$onFocus", "onFocus$0", 1);
-    _static_1(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 32);
+    _static_2(N, "dart2js_golden_template__viewFactory_RootComponent1$closure", "viewFactory_RootComponent1", 0);
+    _static_1(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 21);
     _static_2(N, "dart2js_golden_template__viewFactory_InlinedNgIf1$closure", "viewFactory_InlinedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 0);
@@ -11914,13 +12267,14 @@
     _static_2(N, "dart2js_golden_template__viewFactory_ComponentConditionalFeatures2$closure", "viewFactory_ComponentConditionalFeatures2", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_HasNestedProviderLookups1$closure", "viewFactory_HasNestedProviderLookups1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_HasNestedProviderLookups2$closure", "viewFactory_HasNestedProviderLookups2", 0);
+    _static_2(N, "dart2js_golden_template__viewFactory_HasViewChildren1$closure", "viewFactory_HasViewChildren1", 0);
   })();
   (function inheritance() {
     var _mixin = hunkHelpers.mixin,
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.RegExpMatch, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, A.View, E._ComponentViewData, B.DynamicView, E._EmbeddedViewData, G._HostViewData, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, L.EventManager, N.TextBinding, R.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF, O.HasHostListeners]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, P.Error, H._StackTrace, H.TypeImpl, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H.StringMatch, H._StringAllMatchesIterator, P._TimerImpl, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamSubscription, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P.Timer, P.AsyncError, P._ZoneFunction, P.ZoneSpecification, P._ZoneSpecification, P.ZoneDelegate, P.Zone, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.bool, P.DateTime, P.num, P.Duration, P.OutOfMemoryError, P.StackOverflowError, P._Exception, P.FormatException, P.Function, P.List, P.Map, P.Null, P.Match, P.RegExpMatch, P.StackTrace, P._StringStackTrace, P.String, P.StringBuffer, P.Symbol0, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._StructuredClone, P._AcceptStructuredClone, P._JSRandom, P._RectangleBase, G.ThrowingSlowComponentLoader, M.Injector, Y.NgClass, R.NgFor, R._RecordViewTuple, K.NgIf, X.NgStyle, K.TransitionalAppHost, M.ChangeDetectionHost, S.ChangeDetectorRef, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, N.DefaultKeyValueDiffer, N.KeyValueChangeRecord, S.OpaqueToken, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, L.SlowComponentLoader, O.ComponentStyles, D.TemplateRef, D.ViewFragment, A.View, E._ComponentViewData, B.DynamicView, E._EmbeddedViewData, G._HostViewData, E.SanitizationService, D.Testability, D.TestabilityRegistry, D._NoopGetTestability, Y.NgZone, Y._WrappedTimer, Y.NgZoneError, U.ExceptionHandler, T.BrowserExceptionHandler, K.BrowserGetTestability, L.EventManager, N.TextBinding, R.DomSanitizationService, R.DomSanitizationServiceImpl, O.RootComponent, O.A, O.B, O.C, O.C2, O.UsesDefaultChangeDetectionAndInputs, O.DefaultChangeDetectionAndInputs, O.UsesOnPushChangeDetectionAndInputs, O.OnPushChangeDetectionAndInputs, O.InlinedNgIf, O.EmbeddedNgIf, O.EmbeddedNgFor, O.NullComponent, O.InjectableService, O.InjectsFromArbitraryParent, O.ComponentConditionalFeatures, O.FeatureA, O.FeatureB, O.UsesDomBindings, O.UsesNgDirectives, O.HasNestedProviderLookups, O.InjectsManyThingsDynamically, O.DepA, O.DepB, O.DepC, O.DepD, O.DepE, O.DepF, O.HasHostListeners, O.Child, O.OnPushChild, O.HasContentChildren, O.HasViewChildren]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeByteBuffer, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssStyleValue, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W.Event, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.ImageData, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.ObjectStore, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability, U.JsTestabilityRegistry]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -11934,7 +12288,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.NgClass__applyKeyValueChanges_closure, Y.NgClass__applyKeyValueChanges_closure0, Y.NgClass__applyKeyValueChanges_closure1, Y.NgClass__applyIterableChanges_closure, Y.NgClass__applyIterableChanges_closure0, Y.NgClass__applyClasses_closure, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, R.DefaultIterableDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure0, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, A.RenderView_eventHandler0_closure, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure, O.OnPushChangeDetectionAndInputs_ngOnInit_closure]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.unwrapException_saveStackTrace, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncComplete_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._CustomZone_bindUnaryCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._RootZone_bindUnaryCallbackGuarded_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, W._EventStreamSubscription_closure, P._StructuredClone_walk_closure, P._AcceptStructuredClone_walk_closure, P.convertNativePromiseToDartFuture_closure, P.convertNativePromiseToDartFuture_closure0, P._completeRequest_closure, P.AudioParamMap_keys_closure, G.createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.NgClass__applyKeyValueChanges_closure, Y.NgClass__applyKeyValueChanges_closure0, Y.NgClass__applyKeyValueChanges_closure1, Y.NgClass__applyIterableChanges_closure, Y.NgClass__applyIterableChanges_closure0, Y.NgClass__applyClasses_closure, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, R.DefaultIterableDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure, N.DefaultKeyValueDiffer_check_closure0, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, A.RenderView_eventHandler0_closure, D.Testability__watchAngularEvents_closure, D.Testability__watchAngularEvents_closure0, D.Testability__watchAngularEvents__closure, D.Testability__watchAngularEvents___closure, D.Testability__runCallbacksIfReady_closure, Y.NgZone__scheduleMicrotask_closure, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_closure0, Y.NgZone__createTimer_closure, Y.NgZone__checkStable_closure, K.BrowserGetTestability_addToWindow_closure, K.BrowserGetTestability_addToWindow_closure0, K.BrowserGetTestability_addToWindow_closure1, K.BrowserGetTestability_addToWindow__closure, K.BrowserGetTestability__createRegistry_closure, K.BrowserGetTestability__createRegistry_closure0, K.BrowserGetTestability__createRegistry__closure, O.OnPushChangeDetectionAndInputs_ngOnInit_closure, N.ViewRootComponent0_detectChangesInternal_closure, N.ViewHasViewChildren0_detectChangesInternal_closure]);
     _inheritMany(P.Error, [H.NullError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.CastErrorImplementation, H.RuntimeError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -12031,9 +12385,9 @@
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(A.View, [A.RenderView, G.HostView]);
     _inheritMany(A.RenderView, [E.ComponentView, E.EmbeddedView]);
-    _inheritMany(E.ComponentView, [N.ViewRootComponent0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N.ViewEmbeddedNgFor0, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N.ViewInjectsManyThingsDynamically0, N.ViewHasHostListeners0]);
+    _inheritMany(E.ComponentView, [N.ViewRootComponent0, N.ViewUsesDefaultChangeDetectionAndInputs0, N.ViewDefaultChangeDetectionAndInputs0, N.ViewUsesOnPushChangeDetectionAndInputs0, N.ViewOnPushChangeDetectionAndInputs0, N.ViewInlinedNgIf0, N.ViewEmbeddedNgIf0, N.ViewEmbeddedNgFor0, N.ViewNullComponent0, N.ViewInjectsFromArbitraryParent0, N.ViewComponentConditionalFeatures0, N.ViewFeatureA0, N.ViewFeatureB0, N.ViewUsesDomBindings0, N.ViewUsesNgDirectives0, N.ViewHasNestedProviderLookups0, N.ViewInjectsManyThingsDynamically0, N.ViewHasHostListeners0, N.ViewChild0, N.ViewOnPushChild0, N.ViewHasContentChildren0, N.ViewHasViewChildren0]);
+    _inheritMany(E.EmbeddedView, [N._ViewRootComponent1, N._ViewInlinedNgIf1, N._ViewEmbeddedNgIf1, N._ViewEmbeddedNgFor1, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2, N._ViewHasViewChildren1]);
     _inherit(N._ViewRootComponentHost0, G.HostView);
-    _inheritMany(E.EmbeddedView, [N._ViewInlinedNgIf1, N._ViewEmbeddedNgIf1, N._ViewEmbeddedNgFor1, N._ViewComponentConditionalFeatures1, N._ViewComponentConditionalFeatures2, N._ViewHasNestedProviderLookups1, N._ViewHasNestedProviderLookups2]);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
     _mixin(H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin, P.ListMixin);
@@ -12090,7 +12444,7 @@
     _mixin(P._SqlResultSetRowList_Interceptor_ListMixin, P.ListMixin);
     _mixin(P._SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin, W.ImmutableListMixin);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [E.EmbeddedView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: [G.HostView, O.RootComponent], args: [M.Injector]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [E.EmbeddedView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: [G.HostView, O.RootComponent], args: [M.Injector]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
   (function constants() {
     var makeConstList = hunkHelpers.makeConstList;
     C.CssStyleDeclaration_methods = W.CssStyleDeclaration.prototype;
@@ -12231,10 +12585,11 @@
     C.Duration_0 = new P.Duration(0);
     C.EmptyInjector_null = new R.EmptyInjector(null);
     C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), [[P.List, P.Object]]);
-    C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), [P.Object]);
+    C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), [P.Null]);
+    C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), [P.Object]);
     C.List_empty = makeConstList([]);
-    C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), [P.Symbol0]);
-    C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty2, [P.Symbol0, null]);
+    C.List_empty3 = H.setRuntimeTypeInfo(makeConstList([]), [P.Symbol0]);
+    C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty3, [P.Symbol0, null]);
     C.MultiToken_usPresidents = new S.MultiToken("usPresidents", [P.String]);
     C.MultiToken_whiteHouse = new S.MultiToken("whiteHouse", [P.String]);
     C.OpaqueToken_APP_ID = new S.OpaqueToken("APP_ID", [P.String]);
@@ -12244,6 +12599,7 @@
     C.Type_ApplicationRef_Aij = H.createRuntimeType(Y.ApplicationRef);
     C.Type_B_CJJ = H.createRuntimeType(O.B);
     C.Type_C_CJJ = H.createRuntimeType(O.C);
+    C.Type_Child_DMX = H.createRuntimeType(O.Child);
     C.Type_ComponentLoader_7xV = H.createRuntimeType(M.ComponentLoader);
     C.Type_DepA_qtW = H.createRuntimeType(O.DepA);
     C.Type_DepB_sty = H.createRuntimeType(O.DepB);
@@ -12319,6 +12675,10 @@
     $.ViewHasNestedProviderLookups0__componentStyles = null;
     $.ViewInjectsManyThingsDynamically0__componentStyles = null;
     $.ViewHasHostListeners0__componentStyles = null;
+    $.ViewChild0__componentStyles = null;
+    $.ViewOnPushChild0__componentStyles = null;
+    $.ViewHasContentChildren0__componentStyles = null;
+    $.ViewHasViewChildren0__componentStyles = null;
   })();
   (function lazyInitializers() {
     var _lazy = hunkHelpers.lazy;
