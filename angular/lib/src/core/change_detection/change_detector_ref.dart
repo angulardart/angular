@@ -52,6 +52,52 @@ abstract class ChangeDetectorRef {
   /// ultimately marks the component or widget as dirty.
   void markForCheck();
 
+  /// Invokes [markForCheck] on [child]'s associated [ChangeDetectorRef].
+  ///
+  /// This only works if [child] is a reference obtained from any of the
+  /// following annotations:
+  ///
+  ///   * `@ContentChild()`
+  ///   * `@ContentChildren()`
+  ///   * `@ViewChild()`
+  ///   * `@ViewChildren()`
+  ///
+  /// On any other argument, this method is still safe to call, but has no
+  /// effect. This allows the caller to use this method without explicit
+  /// knowledge of whether or not [child] is backed by a component using
+  /// `ChangeDetectionStrategy.OnPush`.
+  ///
+  /// ```
+  /// @Component(
+  ///   selector: 'example',
+  ///   template: '<ng-content></ng-content>',
+  ///   changeDetection: ChangeDetectionStrategy.OnPush,
+  /// )
+  /// class ExampleComponent {
+  ///   ExampleComponent(this._changeDetectorRef);
+  ///
+  ///   final ChangeDetectorRef _changeDetectorRef;
+  ///
+  ///   @ContentChildren(Child)
+  ///   List<Child> children;
+  ///
+  ///   void updateChildren(Model model) {
+  ///     for (final child in children) {
+  ///       // If child is implemented by an OnPush component, imperatively
+  ///       // mutating a property like this won't be observed without marking
+  ///       // the child to be checked.
+  ///       child.model = model;
+  ///       _changeDetectorRef.markChildForCheck(child);
+  ///     }
+  ///   }
+  /// }
+  /// ```
+  ///
+  /// Prefer propagating updates to children through the template over this
+  /// method when possible. This method is intended as a last resort to
+  /// facilitate migrating components to use `ChangeDetectionStrategy.OnPush`.
+  void markChildForCheck(Object child);
+
   /// Detaches the component from the change detection hierarchy.
   ///
   /// A component whose change detector has been detached will be skipped during

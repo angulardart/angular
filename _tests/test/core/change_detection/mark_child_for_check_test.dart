@@ -14,7 +14,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.child.update('a'));
-      expect(testFixture.text, 'a', skip: 'b/138134670');
+      expect(testFixture.text, 'a');
     });
 
     test('content children', () async {
@@ -22,7 +22,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.child.update('a'));
-      expect(testFixture.text, 'aaa', skip: 'b/138134670');
+      expect(testFixture.text, 'aaa');
     });
 
     test('view child', () async {
@@ -30,7 +30,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
-      expect(testFixture.text, 'a', skip: 'b/138134670');
+      expect(testFixture.text, 'a');
     });
 
     test('view children', () async {
@@ -38,7 +38,7 @@ void main() {
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
-      expect(testFixture.text, 'aaa', skip: 'b/138134670');
+      expect(testFixture.text, 'aaa');
     });
 
     // This is a common pattern we should be certain works.
@@ -49,7 +49,7 @@ void main() {
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.child.update('a'));
-        expect(testFixture.text, 'aaa', skip: 'b/138134670');
+        expect(testFixture.text, 'aaa');
       });
 
       test('view children', () async {
@@ -58,7 +58,7 @@ void main() {
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.update('a'));
-        expect(testFixture.text, 'aaa', skip: 'b/138134670');
+        expect(testFixture.text, 'aaa');
       });
     });
 
@@ -69,17 +69,17 @@ void main() {
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.child.update('a'));
-        expect(testFixture.text, 'a', skip: 'b/138134670');
+        expect(testFixture.text, 'a');
         await testFixture.update((component) {
           component.isSecondChildVisible = true;
         });
-        expect(testFixture.text, 'aa', skip: 'b/138134670');
+        expect(testFixture.text, 'aa');
         await testFixture.update((component) => component.child.update('b'));
-        expect(testFixture.text, 'bb', skip: 'b/138134670');
+        expect(testFixture.text, 'bb');
         await testFixture.update((component) {
           component.areRemainingChildrenVisible = true;
         });
-        expect(testFixture.text, 'bbbb', skip: 'b/138134670');
+        expect(testFixture.text, 'bbbb');
       });
 
       test('view children', () async {
@@ -92,13 +92,13 @@ void main() {
         });
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.update('a'));
-        expect(testFixture.text, 'aaa', skip: 'b/138134670');
+        expect(testFixture.text, 'aaa');
         await testFixture.update((component) {
           component.isSecondChildVisible = true;
         });
-        expect(testFixture.text, 'aaaa', skip: 'b/138134670');
+        expect(testFixture.text, 'aaaa');
         await testFixture.update((component) => component.update('b'));
-        expect(testFixture.text, 'bbbb', skip: 'b/138134670');
+        expect(testFixture.text, 'bbbb');
       });
     });
   });
@@ -120,7 +120,6 @@ class Child {
 class HasContentChild {
   HasContentChild(this._changeDetectorRef);
 
-  // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
 
   @ContentChild(Child)
@@ -128,7 +127,7 @@ class HasContentChild {
 
   void update(String value) {
     child.value = value;
-    // TODO: _changeDetectorRef.markChildForCheck(child);
+    _changeDetectorRef.markChildForCheck(child);
   }
 }
 
@@ -153,7 +152,6 @@ class TestContentChild {
 class HasContentChildren {
   HasContentChildren(this._changeDetectorRef, this._ngZone);
 
-  // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
   final NgZone _ngZone;
 
@@ -170,7 +168,7 @@ class HasContentChildren {
     _value = value;
     for (final child in _children) {
       child.value = value;
-      // TODO: _changeDetectorRef.markChildForCheck(child);
+      _changeDetectorRef.markChildForCheck(child);
     }
   }
 }
@@ -199,7 +197,6 @@ class TestContentChildren {
 class TestViewChild {
   TestViewChild(this._changeDetectorRef);
 
-  // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
 
   @ViewChild(Child)
@@ -207,7 +204,7 @@ class TestViewChild {
 
   void update(String value) {
     child.value = value;
-    // TODO: _changeDetectorRef.markChildForCheck(child);
+    _changeDetectorRef.markChildForCheck(child);
   }
 }
 
@@ -223,7 +220,6 @@ class TestViewChild {
 class TestViewChildren {
   TestViewChildren(this._changeDetectorRef);
 
-  // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
 
   @ViewChildren(Child)
@@ -232,7 +228,7 @@ class TestViewChildren {
   void update(String value) {
     for (final child in children) {
       child.value = value;
-      // TODO: _changeDetectorRef.markChildForCheck(child);
+      _changeDetectorRef.markChildForCheck(child);
     }
   }
 }
@@ -260,7 +256,6 @@ class ChildWithExistingProvider implements HasValue {
 class HasExistingProviderContentChildren {
   HasExistingProviderContentChildren(this._changeDetectorRef);
 
-  // ignore: unused_field
   final ChangeDetectorRef _changeDetectorRef;
 
   @ContentChildren(HasValue)
@@ -269,7 +264,7 @@ class HasExistingProviderContentChildren {
   void update(String value) {
     for (final child in children) {
       child.value = value;
-      // TODO: _changeDetectorRef.markChildForCheck(child);
+      _changeDetectorRef.markChildForCheck(child);
     }
   }
 }
@@ -310,7 +305,7 @@ class TestExistingProviderViewChildren {
   void update(String value) {
     for (final child in children) {
       child.value = value;
-      // TODO: _changeDetectorRef.markChildForCheck(child);
+      _changeDetectorRef.markChildForCheck(child);
     }
   }
 }
@@ -371,7 +366,7 @@ class TestEmbeddedViewChildren {
     _value = value;
     for (final child in _children) {
       child.value = value;
-      // TODO: _changeDetectorRef.markChildForCheck(child);
+      _changeDetectorRef.markChildForCheck(child);
     }
   }
 }

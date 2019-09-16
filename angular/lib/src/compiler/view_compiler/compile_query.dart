@@ -1,7 +1,7 @@
 import "package:meta/meta.dart";
 
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
-import "../identifiers.dart" show Identifiers;
+import "../identifiers.dart" show Identifiers, Views;
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
@@ -12,17 +12,49 @@ import "view_compiler_utils.dart"
 
 const _viewQueryNodeIndex = -1;
 
-class _QueryValues {
+/// The value of a static query result.
+class _QueryValue {
+  _QueryValue(this.value, this.changeDetectorRef);
+
+  /// A reference to the value of this query result.
+  final o.Expression value;
+
+  /// A reference to the associated `ChangeDetectorRef` of the query result.
+  final o.Expression changeDetectorRef;
+
+  /// Whether this value is an OnPush component with a `ChangeDetectorRef`.
+  bool get hasChangeDetectorRef => changeDetectorRef != null;
+}
+
+/// The values of all query results nested within an embedded view.
+class _NestedQueryValues {
+  _NestedQueryValues(this.view);
+
   /// Compiled template associated with [valuesOrTemplates].
   final CompileView view;
 
   /// Values or embedded templates of the query.
-  final valuesOrTemplates = <dynamic>[];
-
-  _QueryValues(this.view);
+  ///
+  /// Elements should be either a [_QueryValue] or [_NestedQueryValues].
+  final valuesOrTemplates = <Object>[];
 
   /// Whether there are nested embedded views in this instance.
-  bool get hasNestedViews => valuesOrTemplates.any((v) => v is _QueryValues);
+  bool get hasNestedViews =>
+      valuesOrTemplates.any((v) => v is _NestedQueryValues);
+}
+
+/// The query results of a view.
+class _QueryResults {
+  _QueryResults(this.values, this.withChangeDetectorRefs);
+
+  /// The expressions used to populate a query.
+  final List<o.Expression> values;
+
+  /// A subset of [values] with associated change detectors.
+  ///
+  /// These [values] are backed by OnPush components, whose change detectors
+  /// must be registered to implement `ChangeDetectorRef.markChildForCheck()`.
+  final List<_QueryValue> withChangeDetectorRefs;
 }
 
 /// Compiles `@{Content|View}Child[ren]` to template IR.
@@ -48,7 +80,7 @@ abstract class CompileQuery {
   /// A combination of direct expressions and nested templates needed.
   ///
   /// This is built-up during the lifetime of this class.
-  final _QueryValues _values;
+  final _NestedQueryValues _values;
 
   factory CompileQuery({
     @required CompileQueryMetadata metadata,
@@ -89,7 +121,7 @@ abstract class CompileQuery {
     this.metadata,
     this._queryRoot,
     this._boundDirective,
-  ) : _values = _QueryValues(_queryRoot);
+  ) : _values = _NestedQueryValues(_queryRoot);
 
   /// Whether the query is entirely static, i.e. there are no `<template>`s.
   bool get _isStatic => !_values.hasNestedViews;
@@ -106,7 +138,15 @@ abstract class CompileQuery {
   /// Some of the expressions are simple (i.e. reads from an existing class
   /// field) and others require proxy-ing through `mapNestedViews` in order to
   /// determine what `<template>`s are currently active.
-  void addQueryResult(CompileView origin, o.Expression result) {
+  ///
+  /// If [result] is a component instance that uses the OnPush change detection
+  /// strategy, [changeDetectorRef] should be its associated `ChangeDetectorRef`
+  /// instance. Otherwise this parameter should be null.
+  void addQueryResult(
+    CompileView origin,
+    o.Expression result,
+    o.Expression changeDetectorRef,
+  ) {
     // Determine if we have a path of embedded templates.
     final elementPath = _resolvePathToRoot(origin);
     var viewValues = _values;
@@ -115,18 +155,18 @@ abstract class CompileQuery {
     for (final element in elementPath) {
       final valuesOrTemplates = viewValues.valuesOrTemplates;
       final last = valuesOrTemplates.isNotEmpty ? valuesOrTemplates.last : null;
-      if (last is _QueryValues && last.view == element.embeddedView) {
+      if (last is _NestedQueryValues && last.view == element.embeddedView) {
         viewValues = last;
       } else {
         assert(element.hasEmbeddedView);
-        final newViewValues = _QueryValues(element.embeddedView);
+        final newViewValues = _NestedQueryValues(element.embeddedView);
         valuesOrTemplates.add(newViewValues);
         viewValues = newViewValues;
       }
     }
 
     // Add it to the applicable part of the view (either root or embedded).
-    viewValues.valuesOrTemplates.add(result);
+    viewValues.valuesOrTemplates.add(_QueryValue(result, changeDetectorRef));
 
     // Finally, if this result doesn't come from the root, it means that some
     // change in an embedded view needs to invalidate the state of the previous
@@ -137,32 +177,36 @@ abstract class CompileQuery {
   }
 
   /// Returns the literal values of the list that the user-code receives.
-  List<o.Expression> _buildQueryResult(
-    _QueryValues viewValues, {
+  _QueryResults _buildQueryResult(
+    _NestedQueryValues viewValues, {
     bool recursive = false,
   }) {
     // Fast-path: There are no nested views, these are all static elements.
     if (!viewValues.hasNestedViews) {
-      final result = <o.Expression>[];
-      for (final expression in viewValues.valuesOrTemplates) {
-        result.add(expression as o.Expression);
+      var values = <o.Expression>[];
+      final valuesWithChangeDetectorRefs = <_QueryValue>[];
+      for (final value in viewValues.valuesOrTemplates) {
+        final queryValue = value as _QueryValue;
+        values.add(queryValue.value);
+
+        if (queryValue.hasChangeDetectorRef) {
+          valuesWithChangeDetectorRefs.add(queryValue);
+        }
       }
       // In the recursive case (i.e. called by another mapNestedViews), we need
       // to return the results as a List<T> explicitly (this is a little complex
       // but lets further optimizations take place for the List<T> case).
       if (recursive) {
-        return [o.literalArr(result)];
+        values = [o.literalArr(values)];
       }
-      return result;
+      return _QueryResults(values, valuesWithChangeDetectorRefs);
     }
 
     // At least a single node is a call to "mapNestedViews".
-    return [
-      _resultsWithNestedViews(viewValues.valuesOrTemplates, recursive),
-    ];
+    return _resultsWithNestedViews(viewValues.valuesOrTemplates, recursive);
   }
 
-  o.Expression _resultsWithNestedViews(
+  _QueryResults _resultsWithNestedViews(
     List<dynamic> valuesOrTemplates, [
     bool recursive = false,
   ]) {
@@ -170,13 +214,17 @@ abstract class CompileQuery {
     // using the "flattenNodes" function where needed in order to conform to
     // the Dart type system.
     final expressions = <o.Expression>[];
+    final valuesWithChangeDetectorRefs = <_QueryValue>[];
     var isNestedViewsOnly = true;
 
     for (final valueOrTemplate in valuesOrTemplates) {
-      if (valueOrTemplate is o.Expression) {
-        expressions.add(o.literalArr([valueOrTemplate]));
+      if (valueOrTemplate is _QueryValue) {
+        expressions.add(o.literalArr([valueOrTemplate.value]));
+        if (valueOrTemplate.hasChangeDetectorRef) {
+          valuesWithChangeDetectorRefs.add(valueOrTemplate);
+        }
         isNestedViewsOnly = false;
-      } else if (valueOrTemplate is _QueryValues) {
+      } else if (valueOrTemplate is _NestedQueryValues) {
         final invocation = _mapNestedViews(
           valueOrTemplate.view.declarationElement.appViewContainer,
           valueOrTemplate.view,
@@ -193,10 +241,13 @@ abstract class CompileQuery {
     //
     // ... instead of needing flattenNodes at all.
     if (isNestedViewsOnly && expressions.length == 1) {
-      return expressions.first;
+      return _QueryResults(expressions, valuesWithChangeDetectorRefs);
     }
 
-    return _flattenNodes(o.literalArr(expressions));
+    return _QueryResults(
+      [_flattenNodes(o.literalArr(expressions))],
+      valuesWithChangeDetectorRefs,
+    );
   }
 
   /// Returns an expression that invokes `appElementN.mapNestedViews`.
@@ -205,7 +256,7 @@ abstract class CompileQuery {
   o.Expression _mapNestedViews(
     o.Expression appElementN,
     CompileView view,
-    List<o.Expression> expressions,
+    _QueryResults results,
   ) {
     // Should return:
     //
@@ -214,18 +265,29 @@ abstract class CompileQuery {
     //   });
 
     // Changes `_el_0` to `nestedView._el_0`.
-    final adjustedExpressions = expressions.map((expr) {
+    o.Expression readFromNestedView(o.Expression expr) {
       return replaceReadClassMemberInExpression(
         expr,
         (_) => o.variable('nestedView'),
       );
-    }).toList();
+    }
+
+    final adjustedExpressions = results.values.map(readFromNestedView).toList();
+    final adjustedValuesWithChangeDetectorRefs =
+        results.withChangeDetectorRefs.map((value) => _QueryValue(
+              readFromNestedView(value.value),
+              readFromNestedView(value.changeDetectorRef),
+            ));
 
     // Invokes `appElementN.mapNestedView`.
     return appElementN.callMethod('mapNestedViews', [
       o.fn(
         [o.FnParam('nestedView', view.classType)],
-        [o.ReturnStatement(o.literalVargs(adjustedExpressions))],
+        [
+          ..._createAddQueryChangeDetectorRefs(
+              adjustedValuesWithChangeDetectorRefs),
+          o.ReturnStatement(o.literalVargs(adjustedExpressions)),
+        ],
       ),
     ]);
   }
@@ -238,7 +300,7 @@ abstract class CompileQuery {
 
   /// Returns the path required to traverse back to the [_queryRoot].
   ///
-  /// This information is used to build up the [_QueryValues] required to
+  /// This information is used to build up the [_NestedQueryValues] required to
   /// express and retrieve the contents of the query at runtime.
   ///
   /// * For a simple query of static elements in a template, this is `[]`.
@@ -374,14 +436,14 @@ class _ListCompileQuery extends CompileQuery {
   }
 
   List<o.Statement> _createUpdates() {
-    final queryValueExpressions = _buildQueryResult(_values);
+    final results = _buildQueryResult(_values);
     o.Expression result;
 
     if (_values.hasNestedViews) {
-      if (queryValueExpressions.length == 1) {
-        result = _createsUpdatesSingleNested(queryValueExpressions);
+      if (results.values.length == 1) {
+        result = _createsUpdatesSingleNested(results.values);
       } else {
-        result = _createUpdatesMultiNested(queryValueExpressions);
+        result = _createUpdatesMultiNested(results.values);
       }
     } else {
       // Optimization: Avoid .singleChild = null.
@@ -392,13 +454,14 @@ class _ListCompileQuery extends CompileQuery {
       //   }
       //
       // ... which should be skip-able in the following condition:
-      if (_isSingle && queryValueExpressions.isEmpty) {
+      if (_isSingle && results.values.isEmpty) {
         return const [];
       }
-      result = _createUpdatesStaticOnly(queryValueExpressions);
+      result = _createUpdatesStaticOnly(results.values);
     }
     return [
-      _boundDirective.build().prop(metadata.propertyName).set(result).toStmt()
+      ..._createAddQueryChangeDetectorRefs(results.withChangeDetectorRefs),
+      _boundDirective.build().prop(metadata.propertyName).set(result).toStmt(),
     ];
   }
 
@@ -463,6 +526,27 @@ void addQueryToTokenMap(
     }
     entry.add(query);
   }
+}
+
+/// Returns statements to populate `View.queryChangeDetectorRefs`.
+///
+/// Generates the following line for each item in [changeDetectorRefs]:
+///
+/// ```
+/// View.queryChangeDetectorRefs[query.value] = query.changeDetectorRef;
+/// ```
+List<o.Statement> _createAddQueryChangeDetectorRefs(
+  Iterable<_QueryValue> queriesWithChangeDetectorRefs,
+) {
+  final queryChangeDetectorRefs =
+      o.importExpr(Views.view).prop('queryChangeDetectorRefs');
+  return [
+    for (final query in queriesWithChangeDetectorRefs)
+      queryChangeDetectorRefs
+          .key(query.value)
+          .set(query.changeDetectorRef)
+          .toStmt()
+  ];
 }
 
 final _flattenNodesFn = o.importExpr(Identifiers.flattenNodes);

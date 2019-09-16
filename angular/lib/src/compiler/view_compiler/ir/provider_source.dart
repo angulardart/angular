@@ -11,7 +11,17 @@ abstract class ProviderSource {
 
   ProviderSource(this.token);
 
+  /// Returns a reference to this provider instance.
   o.Expression build();
+
+  /// Returns a reference to this provider's `ChangeDetectorRef`, if necessary.
+  ///
+  /// Returns a non-null result only if this provider instance is a component
+  /// that uses `ChangeDetectionStrategy.OnPush`. This result is used to
+  /// implement `ChangeDetectorRef.markChildForCheck()`.
+  ///
+  /// Returns null otherwise.
+  o.Expression buildChangeDetectorRef() => null;
 
   /// Whether a dynamic `injectorGet(...)` is required to resolve this provider.
   ///

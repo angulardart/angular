@@ -140,18 +140,22 @@ class ViewQuery0 extends import0.ComponentView<import1.Query> {
     this._appEl_1.detectChangesInNestedViews();
     if ((!import6.debugThrowIfChanged)) {
       if (this._viewQuery_Interface_0_isDirty) {
+        import3.View.queryChangeDetectorRefs[this._Child_0_5] = this._compView_0;
         _ctx.viewInterface = import14.firstOrNull(import14.flattenNodes([
           [this._Child_0_5],
           this._appEl_1.mapNestedViews((_ViewQuery1 nestedView) {
+            import3.View.queryChangeDetectorRefs[nestedView._Child_0_5] = nestedView._compView_0;
             return [nestedView._Child_0_5];
           })
         ]));
         this._viewQuery_Interface_0_isDirty = false;
       }
       if (this._viewQuery_Child_1_isDirty) {
+        import3.View.queryChangeDetectorRefs[this._Child_0_5] = this._compView_0;
         _ctx.viewChildren = import14.flattenNodes([
           [this._Child_0_5],
           this._appEl_1.mapNestedViews((_ViewQuery1 nestedView) {
+            import3.View.queryChangeDetectorRefs[nestedView._Child_0_5] = nestedView._compView_0;
             return [nestedView._Child_0_5];
           })
         ]);
@@ -288,6 +292,8 @@ class ViewTest0 extends import0.ComponentView<import1.Test> {
     final _el_2 = this._compView_2.rootElement;
     this._Child_2_5 = import1.Child();
     this._compView_2.create(this._Child_2_5);
+    import3.View.queryChangeDetectorRefs[this._Child_1_5] = this._compView_1;
+    import3.View.queryChangeDetectorRefs[this._Child_2_5] = this._compView_2;
     this._Query_0_5.contentChildren = [this._Child_1_5, this._Child_2_5];
     this._compView_0.createAndProject(this._Query_0_5, [
       [_el_1, _el_2]
