@@ -273,6 +273,7 @@ class ViewRootComponent0 extends import0.ComponentView<import1.RootComponent> {
     this._appEl_17.detectChangesInNestedViews();
     if ((!import8.debugThrowIfChanged)) {
       if (this._query_Child_14_0_isDirty) {
+        import5.View.queryChangeDetectorRefs[this._OnPushChild_16_5] = this._compView_16;
         this._HasContentChildren_14_5.children = import14.flattenNodes([
           [this._Child_15_5],
           [this._OnPushChild_16_5],
@@ -2177,10 +2178,12 @@ class ViewHasViewChildren0 extends import0.ComponentView<import1.HasViewChildren
     this._appEl_2.detectChangesInNestedViews();
     if ((!import8.debugThrowIfChanged)) {
       if (this._viewQuery_Child_0_isDirty) {
+        import5.View.queryChangeDetectorRefs[this._OnPushChild_0_5] = this._compView_0;
         _ctx.children = import14.flattenNodes([
           [this._OnPushChild_0_5],
           [this._Child_1_5],
           this._appEl_2.mapNestedViews((_ViewHasViewChildren1 nestedView) {
+            import5.View.queryChangeDetectorRefs[nestedView._OnPushChild_0_5] = nestedView._compView_0;
             return [nestedView._OnPushChild_0_5];
           })
         ]);

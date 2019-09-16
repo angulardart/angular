@@ -276,12 +276,20 @@ class BuiltInSource extends ProviderSource {
 /// expressions.
 class ExpressionProviderSource extends ProviderSource {
   final o.Expression _value;
+  final o.Expression _changeDetectorRef;
 
-  ExpressionProviderSource(CompileTokenMetadata token, this._value)
-      : super(token);
+  ExpressionProviderSource(
+    CompileTokenMetadata token,
+    this._value, {
+    o.Expression changeDetectorRef,
+  })  : _changeDetectorRef = changeDetectorRef,
+        super(token);
 
   @override
   o.Expression build() => _value;
+
+  @override
+  o.Expression buildChangeDetectorRef() => _changeDetectorRef;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {

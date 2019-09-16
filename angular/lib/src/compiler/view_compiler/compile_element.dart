@@ -1,3 +1,4 @@
+import 'package:angular/src/core/change_detection.dart';
 import 'package:angular_compiler/cli.dart';
 
 import '../compile_metadata.dart'
@@ -264,28 +265,38 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     // resolve value.
     for (_QueryWithRead queryWithRead in queriesWithReads) {
       o.Expression value;
+      o.Expression changeDetectorRef;
+
       if (queryWithRead.read.identifier != null) {
-        // query for an identifier.
-        //
-        // TODO: add test for coverage, only target using this is
-        // acx2/components/charts/bar_chart/examples:examples
-        value = _providers.get(queryWithRead.read)?.build();
+        // Query for an identifier.
+        var providerSource = _providers.get(queryWithRead.read);
+        if (providerSource != null) {
+          value = providerSource.build();
+          changeDetectorRef = providerSource.buildChangeDetectorRef();
+        }
       } else {
-        // query for a reference
-        var token = (referenceTokens != null)
+        // Query for a reference.
+        var token = referenceTokens != null
             ? referenceTokens[queryWithRead.read.value]
             : null;
-        // If we can't find a valid query type, then we fall back to ElementRef.
-        //
-        // HOWEVER, if specifically typed as Element or HtmlElement, use that.
-        value = token != null
-            ? _providers.get(token)?.build()
-            : queryWithRead.query.metadata.isElementType
-                ? renderNode.toReadExpr()
-                : elementRef;
+        if (token != null) {
+          var providerSource = _providers.get(token);
+          if (providerSource != null) {
+            value = providerSource.build();
+            changeDetectorRef = providerSource.buildChangeDetectorRef();
+          }
+        } else {
+          // If we can't find a valid query type, then we fall back to
+          // ElementRef. HOWEVER, if specifically typed as Element or
+          // HtmlElement, use that.
+          value = queryWithRead.query.metadata.isElementType
+              ? renderNode.toReadExpr()
+              : elementRef;
+        }
       }
+
       if (value != null) {
-        queryWithRead.query.addQueryResult(this.view, value);
+        queryWithRead.query.addQueryResult(view, value, changeDetectorRef);
       }
     }
   }
@@ -445,26 +456,42 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   // NodeProvidersHost implementation.
   @override
   ProviderSource createProviderInstance(
-      ProviderAst resolvedProvider,
-      CompileDirectiveMetadata directiveMetadata,
-      List<ProviderSource> providerSources,
-      int uniqueId) {
+    ProviderAst resolvedProvider,
+    CompileDirectiveMetadata directiveMetadata,
+    List<ProviderSource> providerSources,
+    int uniqueId,
+  ) {
     // Create a new field property for this provider.
-    var propName = '_${resolvedProvider.token.name}_${nodeIndex}_$uniqueId';
-    List<o.Expression> providerValueExpressions =
-        providerSources.map((ProviderSource s) => s.build()).toList();
-    o.Expression providerExpr = view.createProvider(
-        propName,
-        directiveMetadata,
-        resolvedProvider,
-        providerValueExpressions,
-        resolvedProvider.multiProvider,
-        resolvedProvider.eager,
-        this,
-        forceDynamic:
-            (resolvedProvider.providerType == ProviderAstType.Component) &&
-                isDeferredComponent);
-    return ExpressionProviderSource(resolvedProvider.token, providerExpr);
+    final propName = '_${resolvedProvider.token.name}_${nodeIndex}_$uniqueId';
+    final providerValueExpressions =
+        providerSources.map((s) => s.build()).toList();
+
+    var forceDynamic = false;
+    o.Expression changeDetectorRefExpr;
+
+    if (resolvedProvider.providerType == ProviderAstType.Component) {
+      forceDynamic = isDeferredComponent;
+      if (directiveMetadata.changeDetection == ChangeDetectionStrategy.OnPush) {
+        changeDetectorRefExpr = componentView;
+      }
+    }
+
+    final providerExpr = view.createProvider(
+      propName,
+      directiveMetadata,
+      resolvedProvider,
+      providerValueExpressions,
+      resolvedProvider.multiProvider,
+      resolvedProvider.eager,
+      this,
+      forceDynamic: forceDynamic,
+    );
+
+    return ExpressionProviderSource(
+      resolvedProvider.token,
+      providerExpr,
+      changeDetectorRef: changeDetectorRefExpr,
+    );
   }
 
   @override

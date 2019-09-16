@@ -19,6 +19,42 @@
     contextual information (expression source and source location) for the
     underlying failure. See `/docs/advanced/debugging.md` for details.
 
+*   Added `ChangeDetectorRef.markChildForCheck()`. This method can be used to
+    mark a child query for change detection when the underlying result is a
+    component that uses the OnPush change detection strategy.
+
+    ```
+    @Component(
+      selector: 'example',
+      template: '<ng-content></ng-content>',
+      changeDetection: ChangeDetectionStrategy.OnPush,
+    )
+    class ExampleComponent {
+      ExampleComponent(this._changeDetectorRef);
+
+      final ChangeDetectorRef _changeDetectorRef;
+
+      @ContentChildren(Child),
+      List<Child> children;
+
+      void updateChildren(Model model) {
+        for (final child in children) {
+          // If child is implemented by an onPush component, imperatively
+          // mutating a property like this won't be observed without marking the
+          // child to be checked.
+          child.model = model;
+          _changeDetectorRef.markChildForCheck(child);
+        }
+      }
+    }
+    ```
+
+    Prefer propagating updates to children through the template over this method
+    when possible. This method is intended to faciliate migrating existing
+    components to use OnPush change detection.
+
+    See `ChangeDetectorRef.markChildForCheck()` documentation for more details.
+
 ### Breaking changes
 
 *   Warn for all unknown properties in a template.

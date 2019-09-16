@@ -11,6 +11,23 @@ import 'package:angular/src/di/injector/injector.dart';
 /// Note that generated views should never extend this class directly, but
 /// rather one of its specializations.
 abstract class View implements ChangeDetectorRef {
+  /// All live query children's associated [ChangeDetectorRef]s.
+  ///
+  /// The framework generates code to store the associated [ChangeDetectorRef]
+  /// for each result used to populate any of the following queries:
+  ///
+  ///   * `@ContentChild()`
+  ///   * `@ContentChildren()`
+  ///   * `@ViewChild()`
+  ///   * `@ViewChildren()`
+  ///
+  /// This is used to implement [markChildForCheck].
+  ///
+  /// The [ChangeDetectorRef] associated with a query child depends on its
+  /// source. A component's associated [ChangeDetectorRef] is its component
+  /// view. A directive's associated [ChangeDetectorRef] is its enclosing view.
+  static final queryChangeDetectorRefs = Expando<ChangeDetectorRef>();
+
   /// Sentinel value that means an injector has no provider for a given token.
   static const _providerNotFound = Object();
 
@@ -100,6 +117,11 @@ abstract class View implements ChangeDetectorRef {
   /// from throwing the same exception repeatedly on subsequent change detection
   /// cycles.
   void disableChangeDetection();
+
+  @override
+  void markChildForCheck(Object child) {
+    queryChangeDetectorRefs[child]?.markForCheck();
+  }
 
   /// Adapts and returns services available at [nodeIndex] as an [Injector].
   ///
