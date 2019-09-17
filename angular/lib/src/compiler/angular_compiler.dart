@@ -12,8 +12,8 @@ import 'package:angular/src/compiler/source_module.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/core/metadata/view.dart' show ViewEncapsulation;
-import 'package:angular/src/source_gen/template_compiler/component_visitor_exceptions.dart';
 import 'package:angular/src/source_gen/template_compiler/find_components.dart';
+import 'package:angular_compiler/cli.dart';
 
 /// The main compiler for the AngularDart framework.
 class AngularCompiler {
@@ -30,7 +30,7 @@ class AngularCompiler {
   );
 
   Future<SourceModule> compile(LibraryElement element) async {
-    final exceptionHandler = ComponentVisitorExceptionHandler();
+    final exceptionHandler = AngularExceptionHandler();
     // Parse Dart code for @Components and @Directives
     final compileComponentsData =
         findComponentsAndDirectives(LibraryReader(element), exceptionHandler);
@@ -43,7 +43,7 @@ class AngularCompiler {
     final components = <ir.Component>[];
     for (final component in compileComponentsData.components) {
       final normalizedComponent = await _normalizeComponent(component);
-      final componentIR = _convertToIR(normalizedComponent);
+      final componentIR = await _convertToIR(normalizedComponent);
       components.add(componentIR);
     }
 
@@ -77,16 +77,16 @@ class AngularCompiler {
         pipes: component.pipes,
       );
 
-  ir.Component _convertToIR(
-      NormalizedComponentWithViewDirectives componentWithDirs) {
+  Future<ir.Component> _convertToIR(
+      NormalizedComponentWithViewDirectives componentWithDirs) async {
     return ir.Component(componentWithDirs.component.type.name,
         encapsulation: _encapsulation(componentWithDirs),
         styles: componentWithDirs.component.template.styles,
         styleUrls: componentWithDirs.component.template.styleUrls,
-        views: [
+        views: await Future.wait([
           _componentView(componentWithDirs),
           _hostView(componentWithDirs.component)
-        ]);
+        ]));
   }
 
   ir.ViewEncapsulation _encapsulation(
@@ -102,9 +102,9 @@ class AngularCompiler {
     }
   }
 
-  ir.View _componentView(
-      NormalizedComponentWithViewDirectives componentWithDirs) {
-    List<TemplateAst> parsedTemplate = _templateParser.parse(
+  Future<ir.View> _componentView(
+      NormalizedComponentWithViewDirectives componentWithDirs) async {
+    List<TemplateAst> parsedTemplate = await _templateParser.parse(
       componentWithDirs.component,
       componentWithDirs.component.template.template,
       componentWithDirs.directives,
@@ -119,14 +119,14 @@ class AngularCompiler {
         pipes: componentWithDirs.pipes);
   }
 
-  ir.View _hostView(CompileDirectiveMetadata component) {
+  Future<ir.View> _hostView(CompileDirectiveMetadata component) async {
     var hostMeta = createHostComponentMeta(
       component.type,
       component.selector,
       component.analyzedClass,
       component.template.preserveWhitespace,
     );
-    var parsedTemplate = _templateParser.parse(
+    var parsedTemplate = await _templateParser.parse(
       hostMeta,
       hostMeta.template.template,
       [component],

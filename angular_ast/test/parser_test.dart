@@ -10,6 +10,7 @@ void main() {
     return const NgParser().parse(
       template,
       sourceUrl: '/test/parser_test.dart#inline',
+      exceptionHandler: const ThrowingExceptionHandler(),
     );
   }
 

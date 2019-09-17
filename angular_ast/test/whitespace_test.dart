@@ -314,7 +314,11 @@ void main() {
 }
 
 String _parseAndMinifiy(String template) {
-  final nodes = parse(template, sourceUrl: 'whitespace_test.dart');
+  final nodes = parse(
+    template,
+    sourceUrl: 'whitespace_test.dart',
+    exceptionHandler: const ThrowingExceptionHandler(),
+  );
   final buffer = StringBuffer();
   for (final node in _minimizing.visitAllRoot(nodes)) {
     buffer.write(_humanize(node));

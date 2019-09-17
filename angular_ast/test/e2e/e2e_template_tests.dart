@@ -16,7 +16,9 @@ main() {
   Directory(templatesDir).listSync().forEach((file) {
     if (file is File) {
       test('should parse ${p.basenameWithoutExtension(file.path)}', () {
-        parse(file.readAsStringSync(), sourceUrl: file.absolute.path);
+        parse(file.readAsStringSync(),
+            sourceUrl: file.absolute.path,
+            exceptionHandler: const ThrowingExceptionHandler());
       });
     }
   });
