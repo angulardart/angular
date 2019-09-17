@@ -62,7 +62,7 @@ class TemplateParseResult {
 abstract class TemplateParser {
   ElementSchemaRegistry get schemaRegistry;
 
-  List<TemplateAst> parse(
+  Future<List<TemplateAst>> parse(
       CompileDirectiveMetadata compMeta,
       String template,
       List<CompileDirectiveMetadata> directives,

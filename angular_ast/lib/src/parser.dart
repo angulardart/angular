@@ -160,7 +160,7 @@ class NgParser {
     @required String sourceUrl,
     bool desugar = true,
     @deprecated bool parseExpressions,
-    ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
+    @required ExceptionHandler exceptionHandler,
   }) {
     var tokens = const NgLexer().tokenize(template, exceptionHandler);
     var parser = RecursiveAstParser(

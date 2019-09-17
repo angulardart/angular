@@ -29,7 +29,7 @@ bool _isEmptyString(String s) => s == null || s.isEmpty;
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final LibraryReader _library;
-  final ComponentVisitorExceptionHandler _exceptionHandler;
+  final AngularExceptionHandler _exceptionHandler;
   final IndexedAnnotation _indexedAnnotation;
 
   CompileTypeMetadataVisitor(
@@ -638,8 +638,7 @@ class ParameterInfo {
 
   DartType get type => _parameter.type;
 
-  ParameterInfo(
-      this._parameter, ComponentVisitorExceptionHandler exceptionHandler) {
+  ParameterInfo(this._parameter, AngularExceptionHandler exceptionHandler) {
     for (var annotationIndex = 0;
         annotationIndex < _parameter.metadata.length;
         annotationIndex++) {
