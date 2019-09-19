@@ -179,7 +179,8 @@ class AstDirectiveNormalizer {
   /// Parse the template, and visit to find <ng-content>.
   Future<List<String>> _parseTemplate(String template,
       CompileTypeMetadata directiveType, String templateAbsUrl) async {
-    final exceptionHandler = AstExceptionHandler(template, templateAbsUrl);
+    final exceptionHandler =
+        AstExceptionHandler(template, templateAbsUrl, directiveType.name);
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.

@@ -276,7 +276,7 @@ void main() {
           expect(
               () => parse('<p [atTr.foo]></p>', []),
               throwsWith(
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'atTr.foo\'\n'
+                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Invalid property name \'atTr.foo\'\n'
                   '  ,\n'
                   '1 | <p [atTr.foo]></p>\n'
                   '  |    ^^^^^^^^^^\n'
@@ -284,7 +284,7 @@ void main() {
           expect(
               () => parse('<p [sTyle.foo]></p>', []),
               throwsWith(
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'sTyle.foo\'\n'
+                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Invalid property name \'sTyle.foo\'\n'
                   '  ,\n'
                   '1 | <p [sTyle.foo]></p>\n'
                   '  |    ^^^^^^^^^^^\n'
@@ -292,7 +292,7 @@ void main() {
           expect(
               () => parse('<p [Class.foo]></p>', []),
               throwsWith(
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'Class.foo\'\n'
+                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Invalid property name \'Class.foo\'\n'
                   '  ,\n'
                   '1 | <p [Class.foo]></p>\n'
                   '  |    ^^^^^^^^^^^\n'
@@ -300,7 +300,7 @@ void main() {
           expect(
               () => parse('<p [bar.foo]></p>', []),
               throwsWith(
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'bar.foo\'\n'
+                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Invalid property name \'bar.foo\'\n'
                   '  ,\n'
                   '1 | <p [bar.foo]></p>\n'
                   '  |    ^^^^^^^^^\n'
@@ -358,7 +358,7 @@ void main() {
           expect(
               () => parse('<div (window:event)="v"></div>', []),
               throwsWith(
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: ":" is not allowed in event names: window:event\n'
+                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) ":" is not allowed in event names: window:event\n'
                   '  ,\n'
                   '1 | <div (window:event)="v"></div>\n'
                   '  |      ^^^^^^^^^^^^^^^^^^\n'
@@ -443,7 +443,7 @@ void main() {
 
           expect(console.warnings, [
             [
-              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "bindon-" for properties/events is no longer supported. Use "[()]" instead!\n'
+              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: (TestComp) "bindon-" for properties/events is no longer supported. Use "[()]" instead!\n'
                   '  ,\n'
                   '1 | <div bindon-prop="v"></div>\n'
                   '  |      ^^^^^^^^^^^^^^^\n'
@@ -820,7 +820,7 @@ void main() {
           expect(
               () => parse('<div dirA dirB></div>', [dirA, dirB]),
               throwsWith(
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: Mixing multi and non multi provider is not possible for token service0\n'
+                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Mixing multi and non multi provider is not possible for token service0\n'
                   '  ,\n'
                   '1 | <div dirA dirB></div>\n'
                   '  | ^^^^^^^^^^^^^^^\n'
@@ -926,7 +926,7 @@ void main() {
           expect(
               () => parse('<div dirA></div>', [dirA]),
               throwsWith(
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: No provider for provider0\n'
+                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) No provider for provider0\n'
                   '  ,\n'
                   '1 | <div dirA></div>\n'
                   '  | ^^^^^^^^^^\n'
@@ -947,7 +947,7 @@ void main() {
           expect(
               () => parse('<div dirA></div>', [dirA]),
               throwsWith(
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: No provider for provider0\n'
+                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) No provider for provider0\n'
                   '  ,\n'
                   '1 | <div dirA></div>\n'
                   '  | ^^^^^^^^^^\n'
@@ -970,7 +970,7 @@ void main() {
               () => parse('<div cycleDirective></div>', [cycle]),
               throwsWith(
                   'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                  'Cannot instantiate cyclic dependency! [cycleDirective]\n'
+                  '(TestComp) Cannot instantiate cyclic dependency! [cycleDirective]\n'
                   '  ,\n'
                   '1 | <div cycleDirective></div>\n'
                   '  | ^^^^^^^^^^^^^^^^^^^^\n'
@@ -982,7 +982,7 @@ void main() {
           expect(
               () => parse('<div needsHost></div>', [needsHost]),
               throwsWith('line 1, column 1 of path://to/test-comp: '
-                  'ParseErrorLevel.FATAL: No provider for service\n'
+                  'ParseErrorLevel.FATAL: (TestComp) No provider for service\n'
                   '  ,\n'
                   '1 | <div needsHost></div>\n'
                   '  | ^^^^^^^^^^^^^^^\n'
@@ -999,7 +999,7 @@ void main() {
                     <div needsDirectiveFromSelf></div>
                   </div>''', [needsDirectiveFromSelf, simpleDirective]),
               throwsWith('line 2, column 21 of path://to/test-comp: '
-                  'ParseErrorLevel.FATAL: No provider for [simpleDirective]\n'
+                  'ParseErrorLevel.FATAL: (TestComp) No provider for [simpleDirective]\n'
                   '  ,\n'
                   '2 |                     <div needsDirectiveFromSelf></div>\n'
                   '  |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
@@ -1027,7 +1027,7 @@ void main() {
 
           expect(console.warnings, [
             [
-              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
+              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: (TestComp) "ref-" for references is no longer supported. Use "#" instead!\n'
                   '  ,\n'
                   '1 | <div ref-a></div>\n'
                   '  |      ^^^^^\n'
@@ -1045,7 +1045,7 @@ void main() {
           ]);
           expect(console.warnings, [
             [
-              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
+              'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: (TestComp) "var-" for references is no longer supported. Use "#" instead!\n'
                   '  ,\n'
                   '1 | <div var-a></div>\n'
                   '  |      ^^^^^\n'
@@ -1100,7 +1100,7 @@ void main() {
           expect(
               () => parse('<div #a-b></div>', []),
               throwsWith(
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "-" is not allowed in reference names\n'
+                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) "-" is not allowed in reference names\n'
                   '  ,\n'
                   '1 | <div #a-b></div>\n'
                   '  |      ^^^^\n'
@@ -1190,7 +1190,7 @@ void main() {
 
           expect(console.warnings, [
             [
-              'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
+              'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: (TestComp) "ref-" for references is no longer supported. Use "#" instead!\n'
                   '  ,\n'
                   '1 | <template ref-a></template>\n'
                   '  |           ^^^^^\n'
@@ -1220,7 +1220,7 @@ void main() {
               ]);
           expect(console.warnings, [
             [
-              'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
+              'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: (TestComp) "var-" for references is no longer supported. Use "#" instead!\n'
                   '  ,\n'
                   '1 | <template var-a="b"></template>\n'
                   '  |           ^^^^^^^^^\n'
@@ -1250,7 +1250,7 @@ void main() {
           expect(
               () => parse('<div *ngIf="#a=b"></div>', []),
               throwsWith(
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "#" inside of expressions is no longer supported. Use "let" instead!\n'
+                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) "#" inside of expressions is no longer supported. Use "let" instead!\n'
                   '  ,\n'
                   '1 | <div *ngIf="#a=b"></div>\n'
                   '  |      ^^^^^^^^^^^^\n'
@@ -1262,7 +1262,7 @@ void main() {
           expect(
               () => parse('<div *ngIf="var a=b"></div>', []),
               throwsWith(
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "var" inside of expressions is no longer supported. Use "let" instead!\n'
+                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) "var" inside of expressions is no longer supported. Use "let" instead!\n'
                   '  ,\n'
                   '1 | <div *ngIf="var a=b"></div>\n'
                   '  |      ^^^^^^^^^^^^^^^\n'
@@ -1778,7 +1778,7 @@ void main() {
         expect(
             () => parse('<div [invalidProp]></div>', []),
             throwsWith(
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Can\'t bind to \'invalidProp\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list.\n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Can\'t bind to \'invalidProp\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list.\n'
                 '  ,\n'
                 '1 | <div [invalidProp]></div>\n'
                 '  |      ^^^^^^^^^^^^^\n'
@@ -1789,7 +1789,7 @@ void main() {
         expect(
             () => parse('<div [prop]="a b"></div>', []),
             throwsWith(
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 path://to/test-comp:1:6>\n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 path://to/test-comp:1:6>\n'
                 '  ,\n'
                 '1 | <div [prop]="a b"></div>\n'
                 '  |      ^^^^^^^^^^^^\n'
@@ -1885,8 +1885,8 @@ void main() {
             () => parse(template, []),
             throwsWith(
                 'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Binding to event attribute \'onclick\' is disallowed for '
-                'security reasons, please use (click)=...\n'
+                '(TestComp) Binding to event attribute \'onclick\' is disallowed '
+                'for security reasons, please use (click)=...\n'
                 '  ,\n'
                 '1 | <div [attr.onclick]="onClick()"></div>\n'
                 '  |      ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
@@ -1902,8 +1902,8 @@ void main() {
             () => parse(template, []),
             throwsWith(
                 'line 1, column 13 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                "Can't bind to 'xlink:href' since it isn't a known native "
-                'property or known directive. Please fix typo or add to '
+                "(TestComp) Can't bind to 'xlink:href' since it isn't a known "
+                'native property or known directive. Please fix typo or add to '
                 'directives list.\n'
                 '  ,\n'
                 '1 | <svg:circle [xlink:href]="url"></svg:circle>\n'
@@ -1915,7 +1915,7 @@ void main() {
         expect(
             () => parse('<div a="b" a="c"></div>', []),
             throwsWith(
-                'line 1, column 12 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple attributes with the same name: a.\n'
+                'line 1, column 12 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Found multiple attributes with the same name: a.\n'
                 '  ,\n'
                 '1 | <div a="b" a="c"></div>\n'
                 '  |            ^^^^^\n'
@@ -1926,7 +1926,7 @@ void main() {
         expect(
             () => parse('<div [a]="b" [a]="c"></div>', []),
             throwsWith(
-                'line 1, column 14 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
+                'line 1, column 14 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Found multiple properties with the same name: a.\n'
                 '  ,\n'
                 '1 | <div [a]="b" [a]="c"></div>\n'
                 '  |              ^^^^^^^\n'
@@ -1937,7 +1937,7 @@ void main() {
         expect(
             () => parse('<div [(a)]="b" [a]="c"></div>', []),
             throwsWith(
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Found multiple properties with the same name: a.\n'
                 '  ,\n'
                 '1 | <div [(a)]="b" [a]="c"></div>\n'
                 '  |      ^^^^^^^^^\n'
@@ -1948,7 +1948,7 @@ void main() {
         expect(
             () => parse('<div (a)="b()" (a)="c()"></div>', []),
             throwsWith(
-                'line 1, column 16 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple events with the same name: a. You should merge the handlers into a single statement.\n'
+                'line 1, column 16 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Found multiple events with the same name: a. You should merge the handlers into a single statement.\n'
                 '  ,\n'
                 '1 | <div (a)="b()" (a)="c()"></div>\n'
                 '  |                ^^^^^^^^^\n'
@@ -1959,7 +1959,7 @@ void main() {
         expect(
             () => parse('<div [(a)]="b" (aChange)="c()"></div>', []),
             throwsWith(
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple events with the same name: aChange. You should merge the handlers into a single statement.\n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Found multiple events with the same name: aChange. You should merge the handlers into a single statement.\n'
                 '  ,\n'
                 '1 | <div [(a)]="b" (aChange)="c()"></div>\n'
                 '  |      ^^^^^^^^^\n'
@@ -1970,7 +1970,7 @@ void main() {
         expect(
             () => parse('<div *ngFor="let item in items"></div>', []),
             throwsWith(
-                "line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Can't "
+                "line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) Can't "
                 "bind to 'ngForIn' since it isn't an input of any bound "
                 "directive. Please check that the spelling is correct, and "
                 "that the intended directive is included in the host "
@@ -1989,7 +1989,7 @@ void main() {
             () => parse('<p @i18n></p>'),
             throwsWith(
                 'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Requires a value describing the message to help translators\n'
+                '(TestComp) Requires a value describing the message to help translators\n'
                 '  ,\n'
                 '1 | <p @i18n></p>\n'
                 '  |    ^^^^^\n'
@@ -2001,7 +2001,7 @@ void main() {
             () => parse('<p @i18n="description"></p>'),
             throwsWith(
                 'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Internationalized messages must contain text\n'
+                '(TestComp) Internationalized messages must contain text\n'
                 '  ,\n'
                 '1 | <p @i18n="description"></p>\n'
                 '  | ^^^^^^^^^^^^^^^^^^^^^^^\n'
@@ -2013,7 +2013,7 @@ void main() {
             () => parse('<p @i18n.locale="en_US"></p>'),
             throwsWith(
                 'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
+                '(TestComp) A corresponding message description (@i18n) is required\n'
                 '  ,\n'
                 '1 | <p @i18n.locale="en_US"></p>\n'
                 '  |    ^^^^^^^^^^^^^^^^^^^^\n'
@@ -2025,7 +2025,7 @@ void main() {
             () => parse('<p @i18n.meaning="meaning"></p>'),
             throwsWith(
                 'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
+                '(TestComp) A corresponding message description (@i18n) is required\n'
                 '  ,\n'
                 '1 | <p @i18n.meaning="meaning"></p>\n'
                 '  |    ^^^^^^^^^^^^^^^^^^^^^^^\n'
@@ -2037,7 +2037,7 @@ void main() {
             () => parse('<p @i18n.skip></p>'),
             throwsWith(
                 'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
+                '(TestComp) A corresponding message description (@i18n) is required\n'
                 '  ,\n'
                 '1 | <p @i18n.skip></p>\n'
                 '  |    ^^^^^^^^^^\n'
@@ -2049,7 +2049,7 @@ void main() {
             () => parse('<p @i18n="description" @i18n.locale></p>'),
             throwsWith(
                 'line 1, column 24 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Requires a value to specify a locale\n'
+                '(TestComp) Requires a value to specify a locale\n'
                 '  ,\n'
                 '1 | <p @i18n="description" @i18n.locale></p>\n'
                 '  |                        ^^^^^^^^^^^^\n'
@@ -2061,7 +2061,7 @@ void main() {
             () => parse('<p @i18n="description" @i18n.meaning=" "></p>'),
             throwsWith(
                 'line 1, column 24 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'While optional, when specified the meaning must be non-empty '
+                '(TestComp) While optional, when specified the meaning must be non-empty '
                 'to disambiguate from other equivalent messages\n'
                 '  ,\n'
                 '1 | <p @i18n="description" @i18n.meaning=" "></p>\n'
@@ -2344,7 +2344,7 @@ void main() {
         expect(
             () => parse('{{a | test}}', []),
             throwsWith(
-                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found.\n'
+                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) The pipe \'test\' could not be found.\n'
                 '  ,\n'
                 '1 | {{a | test}}\n'
                 '  | ^^^^^^^^^^^^\n'
@@ -2360,7 +2360,7 @@ void main() {
         expect(
             () => parse('{{a | test:12}}', [], [testPipe]),
             throwsWith(
-                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: The pipe '
+                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: (TestComp) The pipe '
                 "'test' was invoked with too many arguments: 0 expected, but 1 "
                 'found.\n'
                 '  ,\n'
