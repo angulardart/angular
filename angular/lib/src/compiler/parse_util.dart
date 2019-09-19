@@ -8,22 +8,30 @@ abstract class ParseError extends BuildError {
   final SourceSpan _span;
   final String _msg;
   final ParseErrorLevel level;
+  String _context;
 
   ParseError(this._span, this._msg, [this.level = ParseErrorLevel.FATAL]);
 
   @override
-  String get message => _span.message('$level: $_msg');
+  String get message {
+    var context = _context == null || _context.isEmpty ? '' : '($_context) ';
+    return _span.message('$level: $context$_msg');
+  }
 
   @override
   String toString() => message;
+
+  void setContext(String context) => _context = context;
 }
 
 class AstExceptionHandler implements ExceptionHandler {
   final SourceFile _sourceFile;
   final _angularExceptionHandler = AngularExceptionHandler();
+  final String _componentName;
 
-  AstExceptionHandler(String template, String sourceUrl)
-      : _sourceFile = SourceFile.fromString(template, url: sourceUrl);
+  AstExceptionHandler(String template, String sourceUrl, [String componentName])
+      : _sourceFile = SourceFile.fromString(template, url: sourceUrl),
+        _componentName = componentName;
 
   @override
   void handle(AngularParserException e) {
@@ -36,6 +44,7 @@ class AstExceptionHandler implements ExceptionHandler {
   }
 
   void handleParseError(ParseError error) {
+    error.setContext(_componentName);
     if (error.level == ParseErrorLevel.WARNING) {
       _angularExceptionHandler.handleWarning(error);
     } else {

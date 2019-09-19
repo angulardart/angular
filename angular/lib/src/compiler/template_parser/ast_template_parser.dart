@@ -60,7 +60,8 @@ class AstTemplateParser implements TemplateParser {
       List<CompilePipeMetadata> pipes,
       String name,
       String templateSourceUrl) async {
-    final exceptionHandler = AstExceptionHandler(template, templateSourceUrl);
+    final exceptionHandler =
+        AstExceptionHandler(template, templateSourceUrl, name);
 
     final parsedAst = _parseTemplate(
         template, name, exceptionHandler, templateSourceUrl ?? name);
