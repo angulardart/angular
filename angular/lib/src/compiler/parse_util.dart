@@ -2,20 +2,17 @@ import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_compiler/cli.dart';
 import 'package:source_span/source_span.dart';
 
-enum ParseErrorLevel { WARNING, FATAL }
-
 abstract class ParseError extends BuildError {
   final SourceSpan _span;
   final String _msg;
-  final ParseErrorLevel level;
   String _context;
 
-  ParseError(this._span, this._msg, [this.level = ParseErrorLevel.FATAL]);
+  ParseError(this._span, this._msg);
 
   @override
   String get message {
     var context = _context == null || _context.isEmpty ? '' : '($_context) ';
-    return _span.message('$level: $context$_msg');
+    return _span.message('$context$_msg');
   }
 
   @override
@@ -45,11 +42,12 @@ class AstExceptionHandler implements ExceptionHandler {
 
   void handleParseError(ParseError error) {
     error.setContext(_componentName);
-    if (error.level == ParseErrorLevel.WARNING) {
-      _angularExceptionHandler.handleWarning(error);
-    } else {
-      _angularExceptionHandler.handle(error);
-    }
+    _angularExceptionHandler.handle(error);
+  }
+
+  void handleParseWarning(ParseError warning) {
+    warning.setContext(_componentName);
+    _angularExceptionHandler.handleWarning(warning);
   }
 
   void handleAll(Iterable<ParseError> errors) {
