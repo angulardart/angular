@@ -1217,23 +1217,23 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [_]) {
     // warnings
     if (astNode.name.startsWith('bindon-')) {
-      _reportError(
-          astNode,
-          '"bindon-" for properties/events is no longer supported. Use "[()]" '
-          'instead!',
-          ParseErrorLevel.WARNING);
+      _reportWarning(
+        astNode,
+        '"bindon-" for properties/events is no longer supported. Use "[()]" '
+        'instead!',
+      );
     }
     if (astNode.name.startsWith('ref-')) {
-      _reportError(
-          astNode,
-          '"ref-" for references is no longer supported. Use "#" instead!',
-          ParseErrorLevel.WARNING);
+      _reportWarning(
+        astNode,
+        '"ref-" for references is no longer supported. Use "#" instead!',
+      );
     }
     if (astNode.name.startsWith('var-')) {
-      _reportError(
-          astNode,
-          '"var-" for references is no longer supported. Use "#" instead!',
-          ParseErrorLevel.WARNING);
+      _reportWarning(
+        astNode,
+        '"var-" for references is no longer supported. Use "#" instead!',
+      );
     }
     return super.visitAttribute(astNode);
   }
@@ -1312,10 +1312,14 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     }
   }
 
-  void _reportError(ast.TemplateAst astNode, String message,
-      [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
-    exceptionHandler.handleParseError(
-        TemplateParseError(message, astNode.sourceSpan, level));
+  void _reportError(ast.TemplateAst astNode, String message) {
+    exceptionHandler
+        .handleParseError(TemplateParseError(message, astNode.sourceSpan));
+  }
+
+  void _reportWarning(ast.TemplateAst astNode, String message) {
+    exceptionHandler
+        .handleParseWarning(TemplateParseError(message, astNode.sourceSpan));
   }
 }
 
@@ -1350,9 +1354,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
       final pipe = _pipesByName[pipeName];
       if (pipe == null) {
         _exceptionHandler.handleParseError(TemplateParseError(
-            "The pipe '$pipeName' could not be found.",
-            sourceSpan,
-            ParseErrorLevel.FATAL));
+            "The pipe '$pipeName' could not be found.", sourceSpan));
       } else {
         for (var numArgs in collector.pipeInvocations[pipeName]) {
           // Don't include the required parameter to the left of the pipe name.
@@ -1361,8 +1363,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
             _exceptionHandler.handleParseError(TemplateParseError(
                 "The pipe '$pipeName' was invoked with too many arguments: "
                 '$numParams expected, but $numArgs found.',
-                sourceSpan,
-                ParseErrorLevel.FATAL));
+                sourceSpan));
           }
         }
       }
