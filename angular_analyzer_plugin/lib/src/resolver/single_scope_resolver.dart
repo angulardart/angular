@@ -4,7 +4,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/element/builder.dart';
-import 'package:analyzer/src/dart/element/inheritance_manager2.dart';
+import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:analyzer/src/generated/error_verifier.dart';
 import 'package:analyzer/src/generated/resolver.dart';
 import 'package:analyzer/src/generated/source.dart';
@@ -390,8 +390,8 @@ class SingleScopeResolver extends AngularScopeVisitor {
           library, component.source, typeProvider, errorListener);
       astNode.accept(visitor);
     }
-    final inheritanceManager2 = InheritanceManager2(typeSystem);
-    final resolver = AngularResolverVisitor(inheritanceManager2, library,
+    final inheritanceManager = InheritanceManager3(typeSystem);
+    final resolver = AngularResolverVisitor(inheritanceManager, library,
         templateSource, typeProvider, errorListener,
         pipes: pipes);
     // fill the name scope
@@ -406,7 +406,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
     astNode.accept(resolver);
     // verify
     final verifier = ErrorVerifier(
-        errorReporter, library, typeProvider, inheritanceManager2, true)
+        errorReporter, library, typeProvider, inheritanceManager, true)
       ..enclosingClass = classElement;
     astNode.accept(verifier);
     // Check for concepts illegal to templates (for instance function literals).

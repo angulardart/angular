@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart' hide Directive;
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/listener.dart';
-import 'package:analyzer/src/dart/element/inheritance_manager2.dart';
+import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:analyzer/src/error/codes.dart';
 import 'package:analyzer/src/generated/resolver.dart';
 import 'package:analyzer/src/generated/source.dart';
@@ -18,14 +18,13 @@ class AngularResolverVisitor extends _IntermediateResolverVisitor {
   final List<Pipe> pipes;
 
   AngularResolverVisitor(
-      InheritanceManager2 inheritanceManager2,
+      InheritanceManager3 inheritanceManager,
       LibraryElement library,
       Source source,
       TypeProvider typeProvider,
       AnalysisErrorListener errorListener,
       {@required this.pipes})
-      : super(
-            inheritanceManager2, library, source, typeProvider, errorListener);
+      : super(inheritanceManager, library, source, typeProvider, errorListener);
 
   @override
   void visitAsExpression(AsExpression exp) {
@@ -67,11 +66,10 @@ class AngularResolverVisitor extends _IntermediateResolverVisitor {
 /// in the definition of [AngularResolverVisitor].
 class _IntermediateResolverVisitor extends ResolverVisitor {
   _IntermediateResolverVisitor(
-      InheritanceManager2 inheritanceManager2,
+      InheritanceManager3 inheritanceManager,
       LibraryElement library,
       Source source,
       TypeProvider typeProvider,
       AnalysisErrorListener errorListener)
-      : super(
-            inheritanceManager2, library, source, typeProvider, errorListener);
+      : super(inheritanceManager, library, source, typeProvider, errorListener);
 }
