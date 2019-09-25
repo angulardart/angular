@@ -13,10 +13,9 @@ import 'package:analyzer/src/generated/sdk.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:analyzer/src/generated/source_io.dart';
 import 'package:analyzer/src/source/package_map_resolver.dart';
+import 'package:analyzer/src/test_utilities/mock_sdk.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-
-import 'mock_sdk.dart';
 
 /// Base shared functionality for tests that rely on dart analysis
 class AnalyzerTestBase {

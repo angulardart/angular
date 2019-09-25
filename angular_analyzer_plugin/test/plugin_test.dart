@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:analyzer/file_system/file_system.dart';
 import 'package:analyzer/file_system/memory_file_system.dart';
+import 'package:analyzer/src/test_utilities/mock_sdk.dart';
 import 'package:analyzer_plugin/channel/channel.dart';
 import 'package:analyzer_plugin/protocol/protocol.dart' as protocol;
 import 'package:analyzer_plugin/protocol/protocol_common.dart' as protocol;
@@ -13,7 +14,6 @@ import 'package:test/test.dart';
 import 'package:test_reflective_loader/test_reflective_loader.dart';
 
 import 'mock_angular.dart';
-import 'mock_sdk.dart';
 
 void main() {
   defineReflectiveSuite(() {
