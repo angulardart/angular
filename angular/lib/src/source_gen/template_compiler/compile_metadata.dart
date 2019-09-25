@@ -184,9 +184,10 @@ class CompileTypeMetadataVisitor
   CompileFactoryMetadata _getUseFactory(DartObject provider) {
     var maybeUseFactory = dart_objects.getField(provider, 'useFactory');
     if (!dart_objects.isNull(maybeUseFactory)) {
-      if (maybeUseFactory.type.element is FunctionTypedElement) {
+      var element = maybeUseFactory.toFunctionValue();
+      if (element != null) {
         return _factoryForFunction(
-          maybeUseFactory.type.element as FunctionTypedElement,
+          element,
           dart_objects.coerceList(provider, 'deps', defaultTo: null),
         );
       } else {
@@ -452,6 +453,8 @@ class CompileTypeMetadataVisitor
       return _expressionForProtobufEnum(token);
     } else if (token.type is InterfaceType) {
       return _expressionForType(token);
+    } else if (token.toFunctionValue() != null) {
+      return o.importExpr(_identifierForFunction(token.toFunctionValue()));
     } else if (token.type.element is FunctionTypedElement) {
       return o.importExpr(
           _identifierForFunction(token.type.element as FunctionTypedElement));

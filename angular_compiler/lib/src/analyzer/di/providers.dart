@@ -142,7 +142,8 @@ class ProviderReader {
     TokenElement token,
     ConstantReader provider,
   ) {
-    final factoryElement = provider.read('useFactory').objectValue.type.element;
+    final objectValue = provider.read('useFactory').objectValue;
+    final factoryElement = objectValue.toFunctionValue();
     final manualDeps = provider.read('deps');
     return UseFactoryProviderElement(
       token,

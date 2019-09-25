@@ -104,6 +104,9 @@ T coerceEnum<T>(
 /// May return null if [value] isn't a valid constant expression or has an
 /// unknown type.
 Element typeDeclarationOf(DartObject value) {
+  var function = value.toFunctionValue();
+  if (function != null) return function;
+
   // For functions, `toTypeValue()` is null so we fall back on `type`.
   final type = value.toTypeValue() ?? value.type;
   return type?.element;

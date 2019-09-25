@@ -79,7 +79,7 @@ class AngularDriver
       SourceFactory sourceFactory,
       this.contentOverlay,
       this.options) {
-    _sourceFactory = sourceFactory.clone();
+    _sourceFactory = sourceFactory;
     _scheduler.add(this);
     _fileTracker = FileTracker(this, options);
     // TODO only support package:angular once we all move to that
