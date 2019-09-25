@@ -147,7 +147,7 @@ class ExampleBridge {
 }
 ```
 
-### Avoid closing Streams
+### Avoid closing StreamController
 
 AngularDart does _not_ require you use the `ngOnDestroy()` or other methods to
 `.close()` the underlying `StreamController`. When all listeners have
