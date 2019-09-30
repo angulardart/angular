@@ -91,7 +91,7 @@ caller to the root for change detection. This is necessary in order for the
 caller to be visited during the next change detection pass. Otherwise an OnPush
 ancestor could be skipped and the caller wouldn't be reached.
 
-## Compatibility with Default change detection
+## Compatibility with default change detection
 
 Mixing Default and OnPush components in the same app is supported so long as the
 following rule is observed:
@@ -107,6 +107,31 @@ compiler.
 
 NOTE: A Default component can be projected into an OnPush component with
 `<ng-content>`.
+
+A Default component shouldn't be used by an OnPush component for the same reason
+that `markForCheck()` marks all ancestors to the root for change detection: an
+OnPush ancestor could be skipped for change detection and the descendant would
+never be reached. Skipping a Default component in this manner would be a
+violation of its change detection strategy.
+
+Historically the framework offered no advice on change detection strategy
+compatibility; therefore, there are many cases of Default components working in
+OnPush contexts. However, this pattern is error prone and likely to cause bugs
+where the Default component won't properly update. For this reason, the compiler
+now issues a warning, which will eventually be upgraded to an error.
+
+If you encounter a warning during development
+
+* for a new component, convert it to OnPush. If it's composed of other Default
+  components, see the next point.
+
+* for an existing component, migrate it to OnPush, beginning with its
+  dependencies.
+
+TIP: Migrate existing component trees from leaf to root.
+
+In either case, the following sections may prove useful for overcoming common
+challenges with OnPush components.
 
 ## Sharing state
 
