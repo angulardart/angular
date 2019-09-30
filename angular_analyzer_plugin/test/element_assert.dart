@@ -204,11 +204,18 @@ class _AbstractElementAssert {
   }
 
   void _inCoreHtml(Source actualSource) {
-    _inFile(actualSource, '/sdk/lib/html/dartium/html_dartium.dart');
+    _inUri(actualSource, 'dart:html');
   }
 
   void _inFile(Source actualSource, String expectedPath) {
     expect(actualSource.fullName, expectedPath);
+    _source = actualSource;
+    _code = null;
+  }
+
+  void _inUri(Source actualSource, String expectedUri) {
+    var uri = actualSource.uri;
+    expect('$uri', expectedUri);
     _source = actualSource;
     _code = null;
   }
