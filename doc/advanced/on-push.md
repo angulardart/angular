@@ -32,7 +32,7 @@ WARNING: This document is still a work in progress and subject to change.
 
 By default, change detection reevaluates every bound expression in every
 component on each pass. This is the magic that keeps your data and view in sync,
-but it isn't without cost. As the size of your application grows, default change
+but it isn't without cost. As the size of your app grows, default change
 detection may begin to negatively impact performance. Any asynchronous activity
 requires checking your entire app for changes; this doesn't scale well.
 
@@ -67,8 +67,8 @@ All OnPush components begin marked for change detection. After being checked,
 there are three ways an OnPush component can be marked for change detection
 again:
 
-1. The identity of an expression bound to one of its inputs has changed since it
-   was last checked during change detection. This allows changes to propagate
+1. The *identity* of an expression bound to one of its inputs has changed since
+   it was last checked during change detection. This allows changes to propagate
    down the component hierarchy through inputs.
 
 2. An event binding in the template of the component or a descendant is
@@ -76,7 +76,7 @@ again:
    framework automatically marks the component that bound the event handler and
    its ancestors for change detection.
 
-3. It, a directive on its host element, or a descendant injects its
+3. It, a directive on its host element, or a descendant injects
    `ChangeDetectorRef` and calls `markForCheck()`. This is used to mark a
    component for change detection after handling an asynchronous change.
    Examples include receiving data from the network or a stream subscription.
@@ -110,9 +110,19 @@ NOTE: A Default component can be projected into an OnPush component with
 
 ## Sharing state
 
-**BAD**:
+OnPush imposes some restrictions on shared state to ensure that changes can
+propagate between components. Patterns that work with Default components may not
+work with OnPush components. Following these guidelines when sharing state
+between OnPush components is advised.
 
-Avoid deeply mutable state that can be changed externally without notice.
+BEST PRACTICE: Avoid deeply mutable state that can be changed without notice.
+
+WARNING: Tear-offs and anonymous functions that close over mutable state *are*
+deeply mutable state.
+
+This component won't update when the `label` property is mutated by another
+component because inputs are change detected by identity. This is an example of
+a pattern that works fine for Default components, but not for OnPush components.
 
 ```dart {.bad}
 class MutableModel {
@@ -132,12 +142,12 @@ class ExampleComponent {
 }
 ```
 
-**GOOD**:
+BEST PRACTICE: Use deeply immutable state.
 
-Use a deeply immutable model. Changing any state requires rebuilding the entire
-model. This works well with inputs, which are change detected based on identity.
-Prefer this approach when state is shared locally, such as directly between a
-parent and child.
+Updating immutable state requires rebuilding it entirely, changing its identity.
+This works well with inputs which are change detected based on identity. Prefer
+this approach when state is shared locally, such as directly between a parent
+and child.
 
 ```dart {.good}
 class ImmutableModel {
@@ -145,7 +155,6 @@ class ImmutableModel {
 
   final String label;
 }
-
 
 @Component(
   selector: 'example',
@@ -160,10 +169,11 @@ class ExampleComponent {
 }
 ```
 
-**GOOD**:
+BEST PRACTICE: Use observable mutable state.
 
-Use an observable mutable model. Prefer this approach when state is shared
-non-locally, such as between disjoint subtrees or across multiple generations.
+Mutations should notify observers, which can then mark themselves for change
+detection if necessary. Prefer this approach when state is shared non-locally,
+such as between disjoint subtrees or across multiple generations.
 
 ```dart {.good}
 class ObservableModel {
