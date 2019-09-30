@@ -51,7 +51,45 @@ that is expected to be large or performance-sensitive.
 
 ## How it works
 
-Coming soon...
+A change detection pass always begins at the root of an app and attempts to
+recursively change detect every component. What happens when visiting a
+component during change detection depends on its change detection strategy:
+
+*  A Default component is unconditionally change detected before recursively
+   visiting its children.
+
+*  An OnPush component keeps track of whether it needs to be change detected.
+   If marked for change detection, change detection proceeds as it would on a
+   Default component, then the component is marked as checked. If already
+   checked, the component is skipped along with its descendants.
+
+All OnPush components begin marked for change detection. After being checked,
+there are three ways an OnPush component can be marked for change detection
+again:
+
+1. The identity of an expression bound to one of its inputs has changed since it
+   was last checked during change detection. This allows changes to propagate
+   down the component hierarchy through inputs.
+
+2. An event binding in the template of the component or a descendant is
+   triggered. Since handling an event is likely to change a component, the
+   framework automatically marks the component that bound the event handler and
+   its ancestors for change detection.
+
+3. It, a directive on its host element, or a descendant injects its
+   `ChangeDetectorRef` and calls `markForCheck()`. This is used to mark a
+   component for change detection after handling an asynchronous change.
+   Examples include receiving data from the network or a stream subscription.
+
+Note how the first two cases are handled automatically. Developer intervention
+is only necessary when applying asynchronous updates that don't originate from
+the template. The second case is just a specific instance of the third that the
+framework handles automatically because it's compiled from the template.
+
+Also note that calling `markForCheck()` will mark all OnPush components from the
+caller to the root for change detection. This is necessary in order for the
+caller to be visited during the next change detection pass. Otherwise an OnPush
+ancestor could be skipped and the caller wouldn't be reached.
 
 ## Compatibility with Default change detection
 
