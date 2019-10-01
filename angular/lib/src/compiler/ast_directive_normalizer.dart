@@ -13,8 +13,6 @@ import 'style_url_resolver.dart' show isStyleUrlResolvable;
 ///
 /// [CompileDirectiveMetadata] is converted to a normalized form where template
 /// content and styles are available to the compilation step as simple strings.
-///
-/// The normalizer also resolves inline style and stylesheets in the template.
 class AstDirectiveNormalizer {
   final NgAssetReader _reader;
   const AstDirectiveNormalizer(this._reader);
