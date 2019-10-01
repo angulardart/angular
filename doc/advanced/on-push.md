@@ -251,17 +251,25 @@ Coming soon...
 
 ## Component reuse
 
-The hierarchical requirements described
-[above](#compatibility-with-default-change-detection) pose a challenge for
-component reuse.
+The [restrictions](#compatibility-with-default-change-detection) on Default and
+OnPush component compatibility pose a challenge for component reuse.
 
-If a component is to be used in an OnPush context, it must also be OnPush. This
-in itself is fine, but becomes problematic if such a component takes a
-`ComponentFactory` as input to render children.
+If a component is to be used in an OnPush context, it must also be OnPush. Thus
+any components in a common library should ideally be OnPush. This in itself is
+fine, but becomes problematic if such a component takes a `ComponentFactory` as
+input to render children.
 
-In order to not violate the aforementioned requirements, the `ComponentFactory`
-would be expected to create an OnPush component. However, it's undesirable to
-force this requirement on users of a shared component whose own components may
-entirely use Default change detection.
+In order to comply with the requirement that OnPush components should only have
+OnPush descendants, the `ComponentFactory` would have to create an OnPush
+component. However, it's undesirable to force this requirement on users of a
+shared component whose app may otherwise entirely use default change detection.
 
-How to use `@changeDetectionLink` coming soon...
+The `@changeDetectionLink` annotation addresses this conundrum. It allows an
+OnPush component to load Default components via `ComponentFactory` and honor
+their change detection contract as if they were used by another Default
+component.
+
+NOTE: `@changeDetectionLink` is restricted to
+`package:angular/experimental.dart` users.
+
+For more details, see the `@changeDetectionLink` documentation.
