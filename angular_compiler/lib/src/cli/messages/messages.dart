@@ -1,5 +1,8 @@
 import '../messages.dart';
 
+/// URL of the AngularDart GitHub repository.
+const _github = 'https://github.com/dart-lang/angular';
+
 /// Concrete implementation of [Messages] for external users.
 class $Messages extends Messages {
   const $Messages() : super.base();
@@ -14,5 +17,9 @@ class $Messages extends Messages {
       '$urlFileBugs';
 
   @override
-  final urlFileBugs = 'https://github.com/dart-lang/angular/issues/new';
+  final urlFileBugs = '$_github/issues/new';
+
+  @override
+  final urlOnPushCompatibility = '$_github/blob/master/doc/advanced/on-push.md'
+      '#compatibility-with-default-change-detection';
 }

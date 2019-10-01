@@ -30,6 +30,9 @@ abstract class Messages {
     return buffer.toString();
   }
 
+  /// What URL should be used for OnPush compatibility documentation.
+  String get urlOnPushCompatibility;
+
   /// What URL should be used for filing bugs when the compiler fails.
   String get urlFileBugs;
 }

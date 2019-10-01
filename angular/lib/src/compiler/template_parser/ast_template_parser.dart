@@ -121,6 +121,7 @@ class AstTemplateParser implements TemplateParser {
       SourceSpan span) {
     final boundAsts =
         _bindDirectives(directives, compMeta, filteredAst, exceptionHandler);
+    _validateBoundDirectives(boundAsts, compMeta, exceptionHandler);
     return _bindProviders(compMeta, boundAsts, span, exceptionHandler);
   }
 
@@ -161,6 +162,16 @@ class AstTemplateParser implements TemplateParser {
     );
     final context = _ParseContext.forRoot(templateContext);
     return visitor._visitAll(filteredAst, context);
+  }
+
+  void _validateBoundDirectives(
+    List<ng.TemplateAst> boundAsts,
+    CompileDirectiveMetadata componentMetadata,
+    AstExceptionHandler exceptionHandler,
+  ) {
+    if (componentMetadata.isOnPush) {
+      _OnPushValidator(exceptionHandler).visitAll(boundAsts);
+    }
   }
 
   List<ng.TemplateAst> _bindProviders(
@@ -1053,6 +1064,35 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<Null> {
     }
     return null;
   }
+}
+
+/// Validates that all bound components use `ChangeDetectionStrategy.OnPush`.
+class _OnPushValidator extends InPlaceRecursiveTemplateVisitor<void> {
+  _OnPushValidator(this._exceptionHandler);
+
+  final AstExceptionHandler _exceptionHandler;
+
+  @override
+  void visitElement(ng.ElementAst ast, [_]) {
+    var componentAst = _firstComponent(ast.directives);
+    if (componentAst != null && !componentAst.directive.isOnPush) {
+      final componentName = _name(componentAst.directive);
+      _exceptionHandler.handleParseWarning(TemplateParseError(
+        '"$componentName" doesn\'t use "ChangeDetectionStrategy.OnPush", but '
+        'is used by a component that does. This is unsupported and unlikely to '
+        'work as expected.'
+        '\n\n'
+        'See ${messages.urlOnPushCompatibility}.',
+        componentAst.sourceSpan,
+      ));
+    }
+    super.visitElement(ast, null);
+  }
+
+  static ng.DirectiveAst _firstComponent(List<ng.DirectiveAst> asts) =>
+      asts.firstWhere((ast) => ast.directive.isComponent, orElse: () => null);
+
+  static String _name(CompileDirectiveMetadata metadata) => metadata.type.name;
 }
 
 /// Visitor which binds providers to element nodes.

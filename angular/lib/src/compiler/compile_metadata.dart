@@ -527,6 +527,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   bool get isComponent =>
       metadataType == CompileDirectiveMetadataType.Component;
 
+  bool get isOnPush => changeDetection == ChangeDetectionStrategy.OnPush;
+
   /// Whether the directive requires a change detector class to be generated.
   ///
   /// [DirectiveChangeDetector] classes should only be generated if they
