@@ -1,8 +1,6 @@
 # OnPush Change Detection
 
 
-WARNING: This document is still a work in progress and subject to change.
-
 ## Terminology
 
 *   __Default component__: A component that uses
@@ -245,9 +243,58 @@ class ExampleComponent implements OnInit, OnDestroy {
 }
 ```
 
-## Imperative updates
+## Updating query children
 
-Coming soon...
+The framework is only aware of changes propagated through inputs and outputs.
+When an OnPush component is mutated imperatively through any other means, it
+must be manually marked for change detection. Imperatively updating OnPush query
+children is particularly challenging due to their location in the component
+hierarchy relative to the caller.
+
+> NOTE: A query child is a reference obtained using one of the following annotations:
+>
+> * `@ContentChild()`
+> * `@ContentChildren()`
+> * `@ViewChild()`
+> * `@ViewChildren()`
+
+The component or directive that defines a query can't inject the
+`ChangeDetectoRef` of the query target. Furthermore, calling `markForCheck()` on
+its own `ChangeDetectoRef` won't mark the query target for change detection.
+
+It's tempting to add defensive `markForCheck()` invocations to members of the
+query target, but this approach should be avoided. Invoking `markForCheck()` in a
+code path that's called during change detection (such as in an input) is
+suboptimal, and sometimes outside the developer's control.
+
+```dart {.bad}
+@Component(
+  selector: 'example',
+  template: '<div>{{label}}</div>',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+)
+class ExampleComponent {
+  ExampleComponent(this._changeDetectorRef);
+
+  final ChangeDetectoRef _changeDetectorRef;
+
+  String _label;
+  String get label => _label;
+  @Input()
+  set label(String value) {
+    _label = value;
+    _changeDetectorRef.markForCheck();
+  }
+}
+```
+
+The `markChildForCheck()` method on `ChangeDetectorRef` provides a way to mark
+an OnPush query child for change detection that doesn't require changing its
+implementation.
+
+BEST PRACTICE: Use the template to propagate changes whenever possible.
+
+For more details, see the `markChildForCheck()` documentation.
 
 ## Component reuse
 
