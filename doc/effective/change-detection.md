@@ -539,36 +539,42 @@ class MyComponent {
 ### PREFER using `OnPush` where possible
 
 In many cases, components only need change detection run on them if one of their
-inputs has changed. Angular supports this use case with
-`ChangeDetectionStrategy.OnPush`. There are some considerations to make before
-just switching to `OnPush`, however. You cannot use `OnPush` on the root
-component of your app. Also, if your component may change due to something other
-than a changing input - for instance, an event handler changing your component's
-state - then you either shouldn't use `OnPush` or implement change detection
-manually (see below for an example).
+inputs has changed or event handlers has been triggered. Angular supports this
+use case with `ChangeDetectionStrategy.OnPush`. There are some considerations to
+make before just switching to `OnPush`, however.
 
 **GOOD**:
 
 ```dart {.good}
 @Component(
   selector: 'my-component',
-  template: '<div>{{message}}</div>',
+  template: '''
+    <div>{{message}}</div>
+    <button (click)="flipGreeting()">Click me!</button>
+  ''',
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class MyComponent {
   @Input()
-  String message = 'Hello, World!';
+  var name = 'world';
+  var _isArriving = true;
+
+  String get message => _isArriving ? 'Hello, $name!' : 'Goodbye, $name!';
+
+  void flipGreeting() {
+    _isArriving = !_isArriving;
+  }
 }
 ```
 
-The above component only needs to run change detection when the `message`
-changes, so it's a perfect candidate for using `OnPush`. It won't waste cycles
-running change detection when it knows the message field hasn't changed. But
-what if an event handler could change the component? In that case, you can
-inject a `ChangeDetectorRef` and call `markForCheck()` to manually mark the
-component to be checked in the next change detection cycle. If you opt for this
-approach, you must make sure that `markForCheck()` is called inside the
-Angular zone.
+The above component only needs to run change detection when the `name` changes
+or the button is clicked, so it's a perfect candidate for using `OnPush`. It
+won't waste cycles running change detection when it knows the name field hasn't
+changed or the button hasn't been clicked.
+
+But what if an injected service or subscription could change the component? In
+that case, you can inject a `ChangeDetectorRef` and call `markForCheck()` to
+manually mark the component to be checked in the next change detection cycle.
 
 **IMPORTANT NOTE**: It is a misconception that one should use
 `ChangeDetectorRef#detectChanges()` to do manual change detection. Please note
@@ -580,22 +586,29 @@ way is to call `markForCheck()`.
 ```dart {.good}
 @Component(
   selector: 'my-component',
-  template: '<div>{{message}}</div><div (click)="flipGreeting()">Click Me!</div>',
+  template: '<div>{{message}}</div',
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
-class MyComponent {
-  bool greeting = true;
-  String get message => greeting ? 'Hello' : 'Goodbye';
+class MyComponent implements OnInit {
+  MyComponent(this._changeDetectorRef, this._service);
 
-  final ChangeDetectorRef _cdRef;
-  MyComponent(this._cdRef);
+  final ChangeDetectorRef _changeDetectorRef;
+  final MyService _service;
 
-  void flipGreeting() {
-    greeting = !greeting;
-    _cdRef.markForCheck();
+  String _message = '';
+  String get message => _message;
+
+  @override
+  void ngOnInit() {
+    _service.fetchMessage().then((value) {
+      _message = value;
+      _changeDetectorRef.markForCheck();
+    });
   }
 }
 ```
+
+To learn more, see the [OnPush change detection][on-push-docs] guide.
 
 ### Prefer `NgZone.runAfterChangesObserved` to timers or microtasks
 
@@ -655,3 +668,6 @@ class MyComponent {
 As an added bonus, the AngularDart team and other knowledgeable folks will be
 much better prepared to help diagnose bugs or issues when they see this method
 being used than arbitrary timing.
+
+[on-push-docs]: https://github.com/dart-lang/angular/blob/master/doc/advanced/on-push.md
+
