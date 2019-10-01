@@ -294,7 +294,8 @@ implementation.
 
 BEST PRACTICE: Use the template to propagate changes whenever possible.
 
-For more details, see the `markChildForCheck()` documentation.
+For more details, see the `markChildForCheck()`
+[documentation][mark-child-for-check-docs].
 
 ## Component reuse
 
@@ -319,4 +320,9 @@ component.
 NOTE: `@changeDetectionLink` is restricted to
 `package:angular/experimental.dart` users.
 
-For more details, see the `@changeDetectionLink` documentation.
+For more details, see the `@changeDetectionLink`
+[documentation][change-detection-link-docs].
+
+[change-detection-link-docs]: https://github.com/dart-lang/angular/blob/master/angular/lib/src/core/metadata/change_detection_link.dart
+[mark-child-for-check-docs]: https://github.com/dart-lang/angular/blob/master/angular/lib/src/core/change_detection/change_detector_ref.dart
+
