@@ -55,6 +55,11 @@
 
     See `ChangeDetectorRef.markChildForCheck()` documentation for more details.
 
+*   The compiler now issues a warning when a component that doesn't use
+    "ChangeDetectionStrategy.OnPush" is used by a component that does. This is
+    unsupported and likely to cause bugs, as the component's change detection
+    contract can't be upheld.
+
 ### Breaking changes
 
 *   Warn for all unknown properties in a template.

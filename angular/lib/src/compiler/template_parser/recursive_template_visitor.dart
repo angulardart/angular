@@ -103,3 +103,87 @@ abstract class RecursiveTemplateVisitor<C>
   @override
   TemplateAst visitI18nText(I18nTextAst ast, _) => ast;
 }
+
+// TODO(b/141691580): This should be named `RecursiveTemplateVisitor`, while the
+// existing class should be renamed to indicate that it recreates the AST.
+abstract class InPlaceRecursiveTemplateVisitor<C>
+    implements TemplateAstVisitor<void, C> {
+  void visitAll(Iterable<TemplateAst> astNodes, [C context]) {
+    if (astNodes == null) return;
+    for (final astNode in astNodes) {
+      astNode.visit(this, context);
+    }
+  }
+
+  @override
+  @mustCallSuper
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) {
+    visitAll(ast.attrs, context);
+    visitAll(ast.references, context);
+    visitAll(ast.variables, context);
+    visitAll(ast.directives, context);
+    visitAll(ast.providers, context);
+    visitAll(ast.children, context);
+  }
+
+  @override
+  @mustCallSuper
+  void visitElement(ElementAst ast, C context) {
+    visitAll(ast.attrs, context);
+    visitAll(ast.inputs, context);
+    visitAll(ast.outputs, context);
+    visitAll(ast.references, context);
+    visitAll(ast.directives, context);
+    visitAll(ast.providers, context);
+    visitAll(ast.children, context);
+  }
+
+  @override
+  @mustCallSuper
+  void visitDirective(DirectiveAst ast, C context) {
+    visitAll(ast.inputs, context);
+    visitAll(ast.outputs, context);
+  }
+
+  @override
+  @mustCallSuper
+  void visitNgContainer(NgContainerAst ast, context) {
+    visitAll(ast.children, context);
+  }
+
+  @override
+  void visitNgContent(NgContentAst ast, _) {}
+
+  @override
+  void visitReference(ReferenceAst ast, _) {}
+
+  @override
+  void visitVariable(VariableAst ast, _) {}
+
+  @override
+  void visitEvent(BoundEventAst ast, _) {}
+
+  @override
+  void visitElementProperty(BoundElementPropertyAst ast, _) {}
+
+  @override
+  void visitAttr(AttrAst ast, _) {}
+
+  @override
+  void visitBoundText(BoundTextAst ast, _) {}
+
+  @override
+  void visitText(TextAst ast, _) {}
+
+  @override
+  void visitDirectiveProperty(BoundDirectivePropertyAst ast, _) {}
+
+  @override
+  void visitDirectiveEvent(BoundDirectiveEventAst ast, _) {}
+
+  @override
+  void visitProvider(ProviderAst ast, _) {}
+
+  @override
+  void visitI18nText(I18nTextAst ast, _) {}
+}
