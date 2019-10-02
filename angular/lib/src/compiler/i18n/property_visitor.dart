@@ -112,11 +112,6 @@ class _I18nPropertyVisitor extends AstVisitor<void, _I18nPropertyContext> {
   }
 
   @override
-  void visitLiteralMap(_, _I18nPropertyContext context) {
-    _reportInvalidBinding(context);
-  }
-
-  @override
   void visitLiteralPrimitive(
     LiteralPrimitive ast,
     _I18nPropertyContext context,

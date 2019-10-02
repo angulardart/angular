@@ -153,17 +153,6 @@ class LiteralArray extends AST {
       visitor.visitLiteralArray(this, context);
 }
 
-class LiteralMap extends AST {
-  List<String> keys;
-  List<AST> values;
-  LiteralMap(this.keys, this.values);
-
-  @override
-  R visit<R, C, CO extends C>(AstVisitor<R, C> visitor, [CO context]) {
-    return visitor.visitLiteralMap(this, context);
-  }
-}
-
 class Interpolation extends AST {
   List<String> strings;
   List<AST> expressions;
@@ -279,7 +268,6 @@ abstract class AstVisitor<R, C> {
   R visitKeyedRead(KeyedRead ast, C context);
   R visitKeyedWrite(KeyedWrite ast, C context);
   R visitLiteralArray(LiteralArray ast, C context);
-  R visitLiteralMap(LiteralMap ast, C context);
   R visitLiteralPrimitive(LiteralPrimitive ast, C context);
   R visitMethodCall(MethodCall ast, C context);
   R visitNamedExpr(NamedExpr ast, C context);
@@ -362,11 +350,6 @@ class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   @override
   void visitLiteralArray(LiteralArray ast, C context) {
     visitAll(ast.expressions, context);
-  }
-
-  @override
-  void visitLiteralMap(LiteralMap ast, C context) {
-    visitAll(ast.values, context);
   }
 
   @override
@@ -465,10 +448,6 @@ class AstTransformer implements AstVisitor<AST, Null> {
   @override
   AST visitLiteralArray(LiteralArray ast, _) =>
       LiteralArray(this._visitAll(ast.expressions));
-
-  @override
-  AST visitLiteralMap(LiteralMap ast, _) =>
-      LiteralMap(ast.keys, this._visitAll(ast.values));
 
   @override
   AST visitBinary(Binary ast, _) =>

@@ -5,11 +5,6 @@
 /// Type is [Null] in order to implement all expected types of List.
 const emptyListLiteral = <Null>[];
 
-/// Represents an empty map literal in a template (`{}`).
-///
-/// Types are [Null] in order to implement all expected types of Map.
-const emptyMapLiteral = <Null, Null>{};
-
 T Function(S0) pureProxy1<T, S0>(T Function(S0) fn) {
   T result;
   var first = true;

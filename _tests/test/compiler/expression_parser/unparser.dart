@@ -138,19 +138,6 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitLiteralMap(LiteralMap ast, dynamic context) {
-    sb.write("{");
-    var isFirst = true;
-    for (var i = 0; i < ast.keys.length; i++) {
-      if (!isFirst) sb.write(", ");
-      isFirst = false;
-      sb.write('${ast.keys[i]}: ');
-      _visit(ast.values[i]);
-    }
-    sb.write("}");
-  }
-
-  @override
   void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
     if (ast.value is String) {
       sb.write('"${ast.value.replaceAll(Unparser._quoteRegExp, '"')}"');
