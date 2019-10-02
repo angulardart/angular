@@ -246,9 +246,6 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitLiteralArray(ast.LiteralArray ast, _) => _dynamicType;
 
   @override
-  DartType visitLiteralMap(ast.LiteralMap ast, _) => _dynamicType;
-
-  @override
   DartType visitLiteralPrimitive(ast.LiteralPrimitive ast, _) =>
       ast.value is String ? _stringType : _dynamicType;
 

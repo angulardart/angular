@@ -30,12 +30,6 @@ abstract class NameResolver {
     o.OutputType type,
   });
 
-  /// Creates a closure that returns a map of [type] when [values] change.
-  o.Expression createLiteralMap(
-    List<List<dynamic /* String | o.Expression */ >> values, {
-    o.OutputType type,
-  });
-
   int createUniqueBindIndex();
 
   /// Creates a name resolver with shared state for use in a new method scope.
@@ -321,17 +315,6 @@ class _AstToExpressionVisitor
   }
 
   @override
-  o.Expression visitLiteralMap(compiler_ast.LiteralMap ast, bool visitingRoot) {
-    var parts = <List<Object>>[];
-    for (var i = 0; i < ast.keys.length; i++) {
-      parts.add(
-          [ast.keys[i], ast.values[i].visit(this, false /* visitingRoot */)]);
-    }
-    return _nameResolver.createLiteralMap(parts,
-        type: visitingRoot ? _boundType : null);
-  }
-
-  @override
   o.Expression visitLiteralPrimitive(compiler_ast.LiteralPrimitive ast, _) =>
       o.literal(ast.value);
 
@@ -503,11 +486,6 @@ class _AstToStatementVisitor
   @override
   List<o.Statement> visitLiteralArray(
           compiler_ast.LiteralArray ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitLiteralMap(
-          compiler_ast.LiteralMap ast, bool visitingRoot) =>
       _visitExpression(ast, visitingRoot);
 
   @override

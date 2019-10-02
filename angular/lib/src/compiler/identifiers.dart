@@ -208,8 +208,6 @@ class Identifiers {
       name: "firstOrNull", moduleUrl: _queriesModuleUrl);
   static final emptyListLiteral = CompileIdentifierMetadata(
       name: "emptyListLiteral", moduleUrl: _proxiesModuleUrl);
-  static final emptyMapLiteral = CompileIdentifierMetadata(
-      name: "emptyMapLiteral", moduleUrl: _proxiesModuleUrl);
   static final pureProxies = [
     null,
     CompileIdentifierMetadata(name: "pureProxy1", moduleUrl: _proxiesModuleUrl),

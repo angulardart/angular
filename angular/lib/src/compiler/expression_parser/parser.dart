@@ -18,7 +18,6 @@ import 'ast.dart'
         KeyedRead,
         KeyedWrite,
         LiteralArray,
-        LiteralMap,
         LiteralPrimitive,
         MethodCall,
         NamedExpr,
@@ -519,7 +518,7 @@ class _ParseAST {
       expectCharacter($RBRACKET);
       return LiteralArray(elements);
     } else if (next.isCharacter($LBRACE)) {
-      return parseLiteralMap();
+      throwForLiteralMap();
     } else if (next.isIdentifier) {
       AST receiver = _implicitReceiver;
       if (exports != null) {
@@ -571,7 +570,7 @@ class _ParseAST {
   }
 
   // Despite no longer being supported, we want an actionable error message.
-  LiteralMap parseLiteralMap() {
+  void throwForLiteralMap() {
     throw ParseException(
       'UNSUPPORTED: Map literals are no longer supported in the template.\n'
       'Move code that constructs or maintains Map instances inside of your '

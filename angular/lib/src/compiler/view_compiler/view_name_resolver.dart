@@ -132,44 +132,6 @@ class ViewNameResolver implements NameResolver {
   }
 
   @override
-  o.Expression createLiteralMap(
-    List<List<dynamic /* String | o.Expression */ >> entries, {
-    o.OutputType type,
-  }) {
-    if (entries.isEmpty) {
-      return o.importExpr(Identifiers.emptyMapLiteral);
-    }
-    final proxyFieldName = '_map_${_state.literalListCount++}';
-    final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
-    final proxyParams = <o.FnParam>[];
-    final proxyReturnEntries = <List<Object>>[];
-    final values = <o.Expression>[];
-    final entriesCount = entries.length;
-    for (var i = 0; i < entriesCount; i++) {
-      final paramName = 'p$i';
-      proxyParams.add(o.FnParam(paramName));
-      proxyReturnEntries.add([entries[i][0], o.variable(paramName)]);
-      values.add(entries[i][1] as o.Expression);
-    }
-    final mapType = _createMapTypeFrom(type);
-    final pureProxyType = o.FunctionType(
-      mapType,
-      List.filled(entriesCount, mapType.valueType),
-    );
-    _state.view.createPureProxy(
-      o.fn(
-        proxyParams,
-        [o.ReturnStatement(o.literalMap(proxyReturnEntries))],
-        o.MapType(o.DYNAMIC_TYPE),
-      ),
-      entriesCount,
-      proxyExpr,
-      pureProxyType: pureProxyType,
-    );
-    return proxyExpr.callFn(values);
-  }
-
-  @override
   int createUniqueBindIndex() => _state.bindingCount++;
 
   @override
@@ -189,17 +151,4 @@ o.ArrayType _createListTypeFrom(o.OutputType type) {
     return o.ArrayType(type.typeParams.first);
   }
   return o.ArrayType(o.DYNAMIC_TYPE);
-}
-
-/// Creates a Map<String, V> type assignable to [type].
-///
-/// It's possible that [type] and can't be assigned a map, in which case we rely
-/// on analysis of the generated code to report the incompatibility.
-o.MapType _createMapTypeFrom(o.OutputType type) {
-  if (type is o.ExternalType &&
-      type.typeParams.isNotEmpty &&
-      (type.value.name == 'Map' || type.value.name == 'dynamic')) {
-    return o.MapType(type.typeParams[1]);
-  }
-  return o.MapType(o.DYNAMIC_TYPE);
 }
