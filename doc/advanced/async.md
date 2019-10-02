@@ -24,10 +24,15 @@ does not update until X happens_.
 
 ## Making Angular aware of async callbacks
 
-When using [`Future`][futures], [`Stream`][streams], or most HTML-based events
-within Angular, the framework is automatically aware when an event completes
-and will use that as a signal to rerun change detection. In some cases, though,
-you may have code that uses callbacks or JS-interop that is not aware of zones:
+When using [`Future`][futures], [`Stream`][streams], or event bindings in
+templates, Angular is automatically aware when an event completes and will use
+that as a signal to rerun change detection. In some cases, though, you may have
+code that uses callbacks or JS-interop that is not aware of zones.
+
+**NOTE**: Angular is not aware of DOM events, but reenters the Angular zone
+automatically when handling them in templates. DOM event listeners registered in
+Dart code must manually reenter the zone to trigger change detection as
+demonstrated below.
 
 Imagine you have the following code, perhaps in another shared library:
 
@@ -106,9 +111,8 @@ You should now see the DOM and the development console updated. This pattern is
 also useful for JS-interop or any other library or API that involves registering
 callbacks/closures that might not be aware of Angular.
 
-**NOTE**: If you are using `ChangeDetectionStrategy.OnPush`, inject and use
-`<ChangeDetectorRef>.markForCheck` instead of injecting and manipulating
-`NgZone`:
+**NOTE**: If you are using `ChangeDetectionStrategy.OnPush`, don't forget to
+inject and use `<ChangeDetectorRef>.markForCheck` when reentering the `NgZone`:
 
 ```dart
 import 'package:angular/angular.dart';
@@ -120,17 +124,20 @@ import 'package:angular/angular.dart';
 )
 class NotifyListener {
   final ChangeDetectorRef _changeDetector;
+  final NgZone _ngZone;
 
-  NotifyListener(this._changeDetector);
+  NotifyListener(this._changeDetector, this._ngZone);
 
   var count = 0;
 
   @Input()
   set notifier(AsyncNotifier notifier) {
     notifier.registerListener(() {
-      count++;
-      print('New count is $count');
-      _changeDetector.markForCheck();
+      _ngZone.run(() {
+        count++;
+        print('New count is $count');
+        _changeDetector.markForCheck();
+      });
     });
   }
 }
