@@ -679,6 +679,8 @@ operator, `?.`:
 <coffee-machine [brand]="coffee?.brand"></coffee-machine>
 ```
 
+> WARNING: Properties backed by extensions methods are not supported.
+
 ### Function Calls
 
 Use `(...)` to invoke a function or method:
@@ -699,6 +701,8 @@ Named arguments are also supported:
 >
 > The pipe syntax will be changed in a future version of AngularDart to avoid
 > this ambiguity.
+
+> WARNING: Extension methods are not supported.
 
 ### Literals
 
