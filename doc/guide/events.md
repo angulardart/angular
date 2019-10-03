@@ -149,8 +149,7 @@ class ExampleBridge {
 
 ### Avoid closing StreamController
 
-AngularDart does _not_ require you use the `ngOnDestroy()` or other methods to
-`.close()` the underlying `StreamController`. When all listeners have
+AngularDart (or Dart) does _not_ require you use the `ngOnDestroy()` or other
+methods to `.close()` the underlying `StreamController`. When all listeners have
 unsubscribed, the `StreamController` is automatically garbage collected by the
-browser and does not require any developer intervention; closing the Stream just
-adds code size with no benefit. AngularDart automatically unsubscribes for you.
+browser and does not require any developer intervention.
