@@ -417,11 +417,12 @@ class _Indices {
 
 /// Shims selectors to emulate Shadow DOM CSS style encapsulation.
 class _ShadowTransformer extends Visitor {
-  final String contentClass;
-  final String hostClass;
+  final String _contentClass;
+  final String _hostClass;
 
-  _ShadowTransformer(this.contentClass, this.hostClass);
+  _ShadowTransformer(this._contentClass, this._hostClass);
 
+  @override
   void visitTree(StyleSheet tree) {
     tree.visit(this);
   }
@@ -497,7 +498,7 @@ class _ShadowTransformer extends Visitor {
           compoundSelector.containsHostContext) {
         indices.hostIndex = i;
       } else {
-        compoundSelector.add(_createClassSelectorSequence(contentClass));
+        compoundSelector.add(_createClassSelectorSequence(_contentClass));
       }
     }
 
@@ -510,7 +511,7 @@ class _ShadowTransformer extends Visitor {
         if (_isHostFunction(selector) || _isHostContextFunction(selector)) {
           // Replace :host() or :host-context() with host class.
           compoundSelector._sequences[j] =
-              _createClassSelectorSequence(hostClass);
+              _createClassSelectorSequence(_hostClass);
 
           // Add :host() or :host-context() argument to constituent selector.
           var hostFn = selector as PseudoClassFunctionSelector;
@@ -519,12 +520,13 @@ class _ShadowTransformer extends Visitor {
         } else if (_isHost(selector)) {
           // Replace :host with host class.
           compoundSelector._sequences[j] =
-              _createClassSelectorSequence(hostClass);
+              _createClassSelectorSequence(_hostClass);
         }
       }
     }
   }
 
+  @override
   void visitSelectorGroup(SelectorGroup node) {
     var complexSelectors = <_ComplexSelector>[];
     for (var selector in node.selectors) {
@@ -556,7 +558,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
 
   final _unscopedSelectorGroups = <SelectorGroup>{};
 
-  void shimPolyfillNextSelector(List<TreeNode> list) {
+  void _shimPolyfillNextSelector(List<TreeNode> list) {
     SelectorGroup nextSelectorGroup;
 
     // Apply 'polyfill-next-selector' transformations.
@@ -583,7 +585,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
         : false);
   }
 
-  void shimPolyfillUnscopedRule(RuleSet ruleSet) {
+  void _shimPolyfillUnscopedRule(RuleSet ruleSet) {
     if (_matchesElement(ruleSet.selectorGroup, 'polyfill-unscoped-rule')) {
       var contentSelectorGroup = _selectorGroupForProperty(
           ruleSet.declarationGroup, 'content',
@@ -597,6 +599,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
     }
   }
 
+  @override
   void shimDeepCombinators(_ComplexSelector selector, _Indices indices) {
     for (var i = selector.compoundSelectors.length - 1; i >= 0; i--) {
       var compoundSelector = selector.compoundSelectors[i];
@@ -611,6 +614,7 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
     }
   }
 
+  @override
   void shimSelectors(_ComplexSelector selector) {
     // Remove all ::content and ::shadow selectors. This does not correctly
     // emulate the behavior of these selectors, however, the shim never has
@@ -628,34 +632,40 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
     super.shimSelectors(selector);
   }
 
+  @override
   void visitTree(StyleSheet tree) {
     tree.visit(this);
     _unscopedSelectorGroups.clear();
   }
 
+  @override
   void visitDeclarationGroup(DeclarationGroup node) {
-    shimPolyfillNextSelector(node.declarations);
+    _shimPolyfillNextSelector(node.declarations);
     super.visitDeclarationGroup(node);
   }
 
+  @override
   void visitMediaDirective(MediaDirective node) {
-    shimPolyfillNextSelector(node.rules);
+    _shimPolyfillNextSelector(node.rules);
     super.visitMediaDirective(node);
   }
 
+  @override
   void visitRuleSet(RuleSet node) {
-    shimPolyfillUnscopedRule(node);
+    _shimPolyfillUnscopedRule(node);
     super.visitRuleSet(node);
   }
 
+  @override
   void visitSelectorGroup(SelectorGroup node) {
     if (!_unscopedSelectorGroups.contains(node)) {
       super.visitSelectorGroup(node);
     }
   }
 
+  @override
   void visitStyleSheet(StyleSheet node) {
-    shimPolyfillNextSelector(node.topLevels);
+    _shimPolyfillNextSelector(node.topLevels);
     super.visitStyleSheet(node);
   }
 }
