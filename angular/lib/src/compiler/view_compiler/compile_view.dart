@@ -682,7 +682,7 @@ class CompileView {
         source.expression.ast,
         source.sourceSpan,
         component,
-        o.STRING_TYPE,
+        boundType: o.STRING_TYPE,
       );
     } else {
       throw ArgumentError.value(source, 'source', 'Unsupported source type');
