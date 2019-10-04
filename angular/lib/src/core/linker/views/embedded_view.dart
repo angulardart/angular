@@ -53,19 +53,11 @@ abstract class EmbeddedView<T> extends RenderView
   @override
   bool get destroyed => _data.destroyed;
 
-  @dart2js.noInline
-  @override
-  List<Node> get flatRootNodes => viewFragment.flattenDomNodes();
-
-  @dart2js.noInline
-  @override
-  Node get lastRootNode => viewFragment.findLastDomNode();
-
   // A convenience getter exposed for generated code.
   Map<String, dynamic> get locals => _data.locals;
 
   @override
-  List<Node> get rootNodes => flatRootNodes;
+  List<Node> get rootNodes => viewFragment.flattenDomNodes();
 
   @override
   ViewFragment get viewFragment => _data.viewFragment;
@@ -184,15 +176,16 @@ abstract class EmbeddedView<T> extends RenderView
 
   @override
   void addRootNodesAfter(Node node) {
-    insertNodesAsSibling(flatRootNodes, node);
+    insertNodesAsSibling(rootNodes, node);
     domRootRendererIsDirty = true;
   }
 
   @override
   void removeRootNodes() {
-    final nodes = flatRootNodes;
-    removeNodes(nodes);
-    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
+    // Cache to avoid computing twice.
+    final rootNodes = this.rootNodes;
+    removeNodes(rootNodes);
+    domRootRendererIsDirty = domRootRendererIsDirty || rootNodes.isNotEmpty;
   }
 
   /// Marks queries in parent views as dirty.

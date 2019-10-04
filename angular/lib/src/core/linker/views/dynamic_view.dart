@@ -11,20 +11,6 @@ import 'view.dart';
 /// Note that generated views should never extend this class directly, but
 /// rather one of its specializations.
 abstract class DynamicView implements View, ViewRef {
-  /// This view's root DOM nodes.
-  ///
-  /// Any root view containers are recursively flattened until only HTML nodes
-  /// remain.
-  // TODO(b/132109022): replace with `viewFragment.flattenRootNodes()`.
-  List<Node> get flatRootNodes;
-
-  /// This view's last root DOM node.
-  ///
-  /// If the last root element is a view container, the view container's last
-  /// root node is returned.
-  // TODO(b/132109022): replace with `viewFragment.findLastDomNode()`.
-  Node get lastRootNode;
-
   /// Tracks the root DOM nodes or view containers of this view.
   ViewFragment get viewFragment;
 

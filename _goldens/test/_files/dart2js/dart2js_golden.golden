@@ -10432,7 +10432,7 @@
       return result;
     },
     _findRenderNode$2: function(views, index) {
-      return index > 0 ? views[index - 1].get$lastRootNode() : this.nativeElement;
+      return index > 0 ? views[index - 1].get$viewFragment().findLastDomNode$0() : this.nativeElement;
     },
     attachView$2: function(view, viewIndex) {
       var refRenderNode, _this = this,
@@ -10560,12 +10560,6 @@
     get$projectedNodes: function() {
       return this._embedded_view$_data.projectedNodes;
     },
-    get$flatRootNodes: function() {
-      return this._embedded_view$_data.viewFragment.flattenDomNodes$0();
-    },
-    get$lastRootNode: function() {
-      return this._embedded_view$_data.viewFragment.findLastDomNode$0();
-    },
     get$viewFragment: function() {
       return this._embedded_view$_data.viewFragment;
     },
@@ -10605,13 +10599,13 @@
         t1.markForCheck$0();
     },
     addRootNodesAfter$1: function(node) {
-      T.insertNodesAsSibling(this.get$flatRootNodes(), node);
+      T.insertNodesAsSibling(this._embedded_view$_data.viewFragment.flattenDomNodes$0(), node);
       $.domRootRendererIsDirty = true;
     },
     removeRootNodes$0: function() {
-      var nodes = this.get$flatRootNodes();
-      T.removeNodes(nodes);
-      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+      var rootNodes = this._embedded_view$_data.viewFragment.flattenDomNodes$0();
+      T.removeNodes(rootNodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || rootNodes.length !== 0;
     },
     dirtyParentQueriesInternal$0: function() {
     },
@@ -10644,12 +10638,6 @@
     }
   };
   G.HostView.prototype = {
-    get$flatRootNodes: function() {
-      return this._host_view$_data.viewFragment.flattenDomNodes$0();
-    },
-    get$lastRootNode: function() {
-      return this._host_view$_data.viewFragment.findLastDomNode$0();
-    },
     get$viewFragment: function() {
       return this._host_view$_data.viewFragment;
     },
@@ -10689,13 +10677,13 @@
       return this._host_view$_injector.$get$2(0, token, notFoundValue);
     },
     addRootNodesAfter$1: function(node) {
-      T.insertNodesAsSibling(this.get$flatRootNodes(), node);
+      T.insertNodesAsSibling(this._host_view$_data.viewFragment.flattenDomNodes$0(), node);
       $.domRootRendererIsDirty = true;
     },
     removeRootNodes$0: function() {
-      var nodes = this.get$flatRootNodes();
-      T.removeNodes(nodes);
-      $.domRootRendererIsDirty = $.domRootRendererIsDirty || nodes.length !== 0;
+      var rootNodes = this._host_view$_data.viewFragment.flattenDomNodes$0();
+      T.removeNodes(rootNodes);
+      $.domRootRendererIsDirty = $.domRootRendererIsDirty || rootNodes.length !== 0;
     },
     wasInserted$1: function(viewContainer) {
       this._host_view$_data.viewContainer = viewContainer;

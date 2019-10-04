@@ -86,7 +86,7 @@ class ViewFragment {
     // As an optimization (?) `nestedViews` may be `null` instead of empty.
     if (nestedViews != null) {
       for (var i = nestedViews.length - 1; i >= 0; i--) {
-        return nestedViews[i].lastRootNode;
+        return nestedViews[i].viewFragment.findLastDomNode();
       }
     }
 
