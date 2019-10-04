@@ -67,15 +67,15 @@ List<o.Statement> convertCdStatementToIr(
   SourceSpan stmtSourceSpan,
   CompileDirectiveMetadata metadata,
 ) {
-  assert(nameResolver != null);
-  final expressionVisitor = _AstToExpressionVisitor(
+  final expression = convertCdExpressionToIr(
     nameResolver,
     implicitReceiver,
+    stmt,
+    stmtSourceSpan,
     metadata,
-    null /* boundType */,
+    null, /* boundType */
   );
-  final visitor = _AstToStatementVisitor(expressionVisitor);
-  return _visit(stmt, visitor, stmtSourceSpan);
+  return [expression.toStmt()];
 }
 
 /// Visits [ast] using [visitor].
@@ -416,113 +416,4 @@ bool _isBoolType(o.OutputType type) {
     return 'bool' == name.trim();
   }
   return false;
-}
-
-class _AstToStatementVisitor
-    implements compiler_ast.AstVisitor<List<o.Statement>, bool> {
-  final _AstToExpressionVisitor _expressionVisitor;
-
-  _AstToStatementVisitor(this._expressionVisitor);
-
-  @override
-  List<o.Statement> visitBinary(compiler_ast.Binary ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitConditional(
-          compiler_ast.Conditional ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitEmptyExpr(
-          compiler_ast.EmptyExpr ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitPipe(
-          compiler_ast.BindingPipe ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitFunctionCall(
-          compiler_ast.FunctionCall ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitIfNull(compiler_ast.IfNull ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitImplicitReceiver(
-      compiler_ast.ImplicitReceiver ast, _) {
-    throw UnsupportedError('ImplicitReceiver not supported for statements.');
-  }
-
-  @override
-  List<o.Statement> visitInterpolation(compiler_ast.Interpolation ast, _) {
-    throw UnsupportedError('Interpolation not suported for statements.');
-  }
-
-  @override
-  List<o.Statement> visitKeyedRead(
-          compiler_ast.KeyedRead ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitKeyedWrite(
-          compiler_ast.KeyedWrite ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitLiteralArray(
-          compiler_ast.LiteralArray ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitLiteralPrimitive(
-          compiler_ast.LiteralPrimitive ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitMethodCall(
-          compiler_ast.MethodCall ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitPrefixNot(
-          compiler_ast.PrefixNot ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitPropertyRead(
-          compiler_ast.PropertyRead ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitPropertyWrite(
-          compiler_ast.PropertyWrite ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitSafePropertyRead(
-          compiler_ast.SafePropertyRead ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitSafeMethodCall(
-          compiler_ast.SafeMethodCall ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitStaticRead(
-          compiler_ast.StaticRead ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  @override
-  List<o.Statement> visitNamedExpr(
-          compiler_ast.NamedExpr ast, bool visitingRoot) =>
-      _visitExpression(ast, visitingRoot);
-
-  List<o.Statement> _visitExpression(compiler_ast.AST ast, bool visitingRoot) =>
-      [ast.visit(_expressionVisitor, visitingRoot).toStmt()];
 }
