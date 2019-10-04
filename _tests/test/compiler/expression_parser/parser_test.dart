@@ -192,7 +192,6 @@ void main() {
         test("should support field assignments", () {
           checkAction("a = 12");
           checkAction("a.a.a = 123");
-          checkAction("a = 123; b = 234;");
         });
         test("should throw on safe field assignments", () {
           expectActionError(
@@ -216,6 +215,12 @@ void main() {
             "{{a()}}",
             throwsWith(
                 "Got interpolation ({{}}) where expression was expected"));
+      });
+      test("should not support multiple statements", () {
+        expect(
+          () => parseAction("1;2"),
+          throwsWith("Event bindings no longer support multiple statements"),
+        );
       });
     });
     group("general error handling", () {
@@ -292,9 +297,11 @@ void main() {
       test("should store the passed-in location", () {
         expect(parseBinding("someExpr", "location").location, "location");
       });
-      test("should throw on chain expressions", () {
-        expect(() => parseBinding("1;2"),
-            throwsWith("contain chained expression"));
+      test("should throw on multiple statements", () {
+        expect(
+          () => parseBinding("1;2"),
+          throwsWith("Expression binding cannot contain multiple statements"),
+        );
       });
       test("should throw on assignment", () {
         expect(() => parseBinding("a=2"), throwsWith("contain assignments"));

@@ -8,7 +8,6 @@ import 'ast.dart'
         ASTWithSource,
         Binary,
         BindingPipe,
-        Chain,
         Conditional,
         EmptyExpr,
         FunctionCall,
@@ -88,7 +87,7 @@ class Parser {
       true,
       exports,
       supportNewPipeSyntax,
-    ).parseChain();
+    ).parse();
     return ASTWithSource(ast, input, location);
   }
 
@@ -117,7 +116,7 @@ class Parser {
       false,
       exports,
       supportNewPipeSyntax,
-    ).parseChain();
+    ).parse();
   }
 
   ASTWithSource parseInterpolation(
@@ -135,7 +134,7 @@ class Parser {
         false,
         exports,
         supportNewPipeSyntax,
-      ).parseChain();
+      ).parse();
       expressions.add(ast);
     }
     return ASTWithSource(
@@ -301,23 +300,22 @@ class _ParseAST {
     return n.toString();
   }
 
-  AST parseChain() {
-    var exprs = <AST>[];
-    while (index < tokens.length) {
-      var expr = parsePipe();
-      exprs.add(expr);
-      if (optionalCharacter($SEMICOLON)) {
-        if (!parseAction) {
-          error('Binding expression cannot contain chained expression');
-        }
-        while (optionalCharacter($SEMICOLON)) {}
-      } else if (index < tokens.length) {
-        error("Unexpected token '$next'");
+  AST parse() {
+    if (tokens.isEmpty) {
+      return EmptyExpr();
+    }
+    final expr = parsePipe();
+    if (optionalCharacter($SEMICOLON)) {
+      if (parseAction) {
+        error('Event bindings no longer support multiple statements');
+      } else {
+        error('Expression binding cannot contain multiple statements');
       }
     }
-    if (exprs.isEmpty) return EmptyExpr();
-    if (exprs.length == 1) return exprs[0];
-    return Chain(exprs);
+    if (index < tokens.length) {
+      error("Unexpected token '$next'");
+    }
+    return expr;
   }
 
   AST parsePipe() {

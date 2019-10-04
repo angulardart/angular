@@ -176,11 +176,6 @@ class _AstToExpressionVisitor
   }
 
   @override
-  o.Expression visitChain(compiler_ast.Chain ast, _) {
-    throw UnsupportedError('Chains are not supported as Expressions');
-  }
-
-  @override
   o.Expression visitConditional(compiler_ast.Conditional ast, _) {
     o.Expression value = ast.condition.visit(this, false /* visitingRoot */);
     return value.conditional(
@@ -434,11 +429,6 @@ class _AstToStatementVisitor
       _visitExpression(ast, visitingRoot);
 
   @override
-  List<o.Statement> visitChain(compiler_ast.Chain ast, _) {
-    return _visitAll(ast.expressions, false /* visitingRoot */);
-  }
-
-  @override
   List<o.Statement> visitConditional(
           compiler_ast.Conditional ast, bool visitingRoot) =>
       _visitExpression(ast, visitingRoot);
@@ -535,12 +525,4 @@ class _AstToStatementVisitor
 
   List<o.Statement> _visitExpression(compiler_ast.AST ast, bool visitingRoot) =>
       [ast.visit(_expressionVisitor, visitingRoot).toStmt()];
-
-  List<o.Statement> _visitAll(List<compiler_ast.AST> asts, bool visitingRoot) {
-    final statements = <o.Statement>[];
-    for (var ast in asts) {
-      statements.addAll(ast.visit(this, visitingRoot));
-    }
-    return statements;
-  }
 }

@@ -69,6 +69,28 @@
     migrated away from custom elements, such as from Polymer, we are going to
     strictly enforce unknown properties with a warning.
 
+*   Event bindings no longer support multiple statements.
+
+    Supported:
+
+    ```html
+    <!-- Bind method named "handleClick" (both equivalent) -->
+    <button (click)="handleClick"></button>
+    <button (click)="handleClick($event)"></button>
+
+    <!-- Execute a single statement -->
+    <button (click)="isPopupVisible = true"></button>
+    ```
+
+    Not supported:
+
+    ```html
+    <!-- Execute multiple statements -->
+    <button (click)="isPopupVisible = true; $event.stopPropagation()"></button>
+    ```
+
+    To execute multiple statements, define and bind a method.
+
 ## 6.0.0-alpha+1
 
 ### New features
