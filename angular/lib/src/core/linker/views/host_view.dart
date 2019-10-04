@@ -61,14 +61,6 @@ abstract class HostView<T> extends View implements DynamicView {
   bool get firstCheck =>
       _data.changeDetectorState == ChangeDetectorState.NeverChecked;
 
-  @dart2js.noInline
-  @override
-  List<Node> get flatRootNodes => viewFragment.flattenDomNodes();
-
-  @dart2js.noInline
-  @override
-  Node get lastRootNode => viewFragment.findLastDomNode();
-
   @override
   int get parentIndex => null;
 
@@ -223,15 +215,16 @@ abstract class HostView<T> extends View implements DynamicView {
 
   @override
   void addRootNodesAfter(Node node) {
-    insertNodesAsSibling(flatRootNodes, node);
+    final rootNodes = viewFragment.flattenDomNodes();
+    insertNodesAsSibling(rootNodes, node);
     domRootRendererIsDirty = true;
   }
 
   @override
   void removeRootNodes() {
-    final nodes = flatRootNodes;
-    removeNodes(nodes);
-    domRootRendererIsDirty = domRootRendererIsDirty || nodes.isNotEmpty;
+    final rootNodes = viewFragment.flattenDomNodes();
+    removeNodes(rootNodes);
+    domRootRendererIsDirty = domRootRendererIsDirty || rootNodes.isNotEmpty;
   }
 
   @override

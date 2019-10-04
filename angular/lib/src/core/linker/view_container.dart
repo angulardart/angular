@@ -202,7 +202,9 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   Node _findRenderNode(List<DynamicView> views, int index) {
-    return index > 0 ? views[index - 1].lastRootNode : nativeElement;
+    return index > 0
+        ? views[index - 1].viewFragment.findLastDomNode()
+        : nativeElement;
   }
 
   void moveView(DynamicView view, int currentIndex) {
