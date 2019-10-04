@@ -38,7 +38,7 @@ abstract class NameResolver {
 
 /// Converts a bound [AST] expression to an [o.Expression].
 ///
-/// If non-null, [boundType] is the type of the input to which [expression] is
+/// If specified, [boundType] is the type of the input to which [expression] is
 /// bound. This is used to support empty expressions for boolean inputs, and to
 /// type annotate collection literal bindings.
 o.Expression convertCdExpressionToIr(
@@ -46,9 +46,9 @@ o.Expression convertCdExpressionToIr(
   o.Expression implicitReceiver,
   compiler_ast.AST expression,
   SourceSpan expressionSourceSpan,
-  CompileDirectiveMetadata metadata,
+  CompileDirectiveMetadata metadata, {
   o.OutputType boundType,
-) {
+}) {
   assert(nameResolver != null);
   final visitor = _AstToExpressionVisitor(
     nameResolver,
@@ -57,25 +57,6 @@ o.Expression convertCdExpressionToIr(
     boundType,
   );
   return _visit(expression, visitor, expressionSourceSpan);
-}
-
-/// Converts a bound [AST] expression to a list of [o.Statement]s.
-List<o.Statement> convertCdStatementToIr(
-  NameResolver nameResolver,
-  o.Expression implicitReceiver,
-  compiler_ast.AST stmt,
-  SourceSpan stmtSourceSpan,
-  CompileDirectiveMetadata metadata,
-) {
-  final expression = convertCdExpressionToIr(
-    nameResolver,
-    implicitReceiver,
-    stmt,
-    stmtSourceSpan,
-    metadata,
-    null, /* boundType */
-  );
-  return [expression.toStmt()];
 }
 
 /// Visits [ast] using [visitor].

@@ -7,8 +7,7 @@ import 'package:angular/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular/src/compiler/view_compiler/constants.dart';
 import 'package:angular_compiler/cli.dart';
 
-import 'expression_converter.dart'
-    show NameResolver, convertCdExpressionToIr, convertCdStatementToIr;
+import 'expression_converter.dart' show NameResolver, convertCdExpressionToIr;
 
 /// An abstract utility for converting bound values to output expressions.
 abstract class BoundValueConverter
@@ -64,7 +63,7 @@ abstract class BoundValueConverter
         boundExpression.expression.ast,
         boundExpression.sourceSpan,
         _metadata,
-        type,
+        boundType: type,
       );
 
   @override
@@ -78,30 +77,22 @@ abstract class BoundValueConverter
 
   @override
   o.Expression visitSimpleEventHandler(ir.SimpleEventHandler handler, [_]) {
-    List<o.Statement> actionStmts = _convertToStatements(handler);
-    var returnExpr = _convertStmtIntoExpression(actionStmts.last);
-    if (returnExpr is! o.InvokeMethodExpr) {
-      final message = "Expected method for event binding.";
-      throwFailure(handler.sourceSpan?.message(message) ?? message);
+    var expr = _convertToExpression(handler);
+    if (expr is o.InvokeMethodExpr) {
+      var tearOff = _tearOffSimpleHandler(expr);
+      return _wrapHandler(tearOff, handler.numArgs);
     }
-    var simpleHandler = _extractFunction(returnExpr);
-    return _wrapHandler(simpleHandler, handler.numArgs);
+    final message = "Expected method for event binding.";
+    throwFailure(handler.sourceSpan?.message(message) ?? message);
   }
 
-  o.Expression _convertStmtIntoExpression(o.Statement stmt) {
-    if (stmt is o.ExpressionStatement) {
-      return stmt.expr;
-    } else if (stmt is o.ReturnStatement) {
-      return stmt.value;
-    }
-    return null;
-  }
-
-  o.Expression _extractFunction(o.Expression returnExpr) {
-    assert(returnExpr is o.InvokeMethodExpr);
-    final callExpr = returnExpr as o.InvokeMethodExpr;
-    return o.ReadPropExpr(callExpr.receiver, callExpr.name);
-  }
+  /// Converts a [method] invocation to a tear-off.
+  ///
+  /// This doesn't retain any of [method]'s argument, but is only used for
+  /// simple event handlers where the arguments are known to be nothing, or the
+  /// event itself.
+  o.Expression _tearOffSimpleHandler(o.InvokeMethodExpr method) =>
+      o.ReadPropExpr(method.receiver, method.name);
 
   @override
   o.Expression visitComplexEventHandler(ir.ComplexEventHandler handler, [_]) {
@@ -109,26 +100,29 @@ abstract class BoundValueConverter
     return _wrapHandler(_createEventHandler(statements), 1);
   }
 
-  List<o.Statement> _convertToStatements(ir.EventHandler handler) {
-    if (handler is ir.SimpleEventHandler) {
-      return convertCdStatementToIr(
-        _nameResolver,
-        // If the handler has a directive instance set, then we wll use that as
-        // the implicit receiver for the handler expression. Otherwise, we
-        // assume the default receiver for the view.
-        handler.directiveInstance?.build() ?? _implicitReceiver,
-        handler.handler.ast,
-        handler.sourceSpan,
-        _metadata,
-      );
-    } else if (handler is ir.ComplexEventHandler) {
-      return [
-        for (var nestedHandler in handler.handlers)
-          ..._convertToStatements(nestedHandler)
-      ];
-    }
-    throw ArgumentError.value(
-        handler, 'handler', 'Unknown ${ir.EventHandler} type.');
+  o.Expression _convertToExpression(ir.SimpleEventHandler handler) {
+    return convertCdExpressionToIr(
+      _nameResolver,
+      // If the handler has a directive instance set, then we'll use that as
+      // the implicit receiver for the handler expression. Otherwise, we
+      // assume the default receiver for the view.
+      handler.directiveInstance?.build() ?? _implicitReceiver,
+      handler.handler.ast,
+      handler.sourceSpan,
+      _metadata,
+    );
+  }
+
+  List<o.Statement> _convertToStatements(ir.ComplexEventHandler handler) {
+    return [
+      for (final handler in handler.handlers)
+        if (handler is ir.SimpleEventHandler)
+          _convertToExpression(handler).toStmt()
+        else if (handler is ir.ComplexEventHandler)
+          ..._convertToStatements(handler)
+        else
+          throw ArgumentError('Unknown ${ir.EventHandler} type: $handler')
+    ];
   }
 
   o.Expression _wrapHandler(o.Expression handlerExpr, int numArgs) =>
