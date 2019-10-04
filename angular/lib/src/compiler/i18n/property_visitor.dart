@@ -57,11 +57,6 @@ class _I18nPropertyVisitor extends AstVisitor<void, _I18nPropertyContext> {
   }
 
   @override
-  void visitChain(_, _I18nPropertyContext context) {
-    _reportInvalidBinding(context);
-  }
-
-  @override
   void visitConditional(_, _I18nPropertyContext context) {
     _reportInvalidBinding(context);
   }

@@ -41,15 +41,6 @@ class ImplicitReceiver extends AST {
       visitor.visitImplicitReceiver(this, context);
 }
 
-/// Multiple expressions separated by a semicolon.
-class Chain extends AST {
-  List<AST> expressions;
-  Chain(this.expressions);
-  @override
-  R visit<R, C, CO extends C>(AstVisitor<R, C> visitor, [CO context]) =>
-      visitor.visitChain(this, context);
-}
-
 class Conditional extends AST {
   AST condition;
   AST trueExp;
@@ -258,7 +249,6 @@ class TemplateBinding {
 
 abstract class AstVisitor<R, C> {
   R visitBinary(Binary ast, C context);
-  R visitChain(Chain ast, C context);
   R visitConditional(Conditional ast, C context);
   R visitEmptyExpr(EmptyExpr ast, C context);
   R visitFunctionCall(FunctionCall ast, C context);
@@ -285,11 +275,6 @@ class RecursiveAstVisitor<C> implements AstVisitor<void, C> {
   void visitBinary(Binary ast, C context) {
     ast.left.visit(this, context);
     ast.right.visit(this, context);
-  }
-
-  @override
-  void visitChain(Chain ast, C context) {
-    visitAll(ast.expressions, context);
   }
 
   @override
@@ -477,9 +462,6 @@ class AstTransformer implements AstVisitor<AST, Null> {
   @override
   AST visitKeyedWrite(KeyedWrite ast, _) => KeyedWrite(
       ast.obj.visit(this), ast.key.visit(this), ast.value.visit(this));
-
-  @override
-  AST visitChain(Chain ast, _) => Chain(this._visitAll(ast.expressions));
 
   @override
   AST visitEmptyExpr(EmptyExpr ast, _) => EmptyExpr();

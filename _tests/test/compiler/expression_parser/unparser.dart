@@ -33,15 +33,6 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitChain(Chain ast, dynamic context) {
-    var len = ast.expressions.length;
-    for (var i = 0; i < len; i++) {
-      _visit(ast.expressions[i]);
-      sb.write(i == len - 1 ? ";" : "; ");
-    }
-  }
-
-  @override
   void visitConditional(Conditional ast, dynamic context) {
     _visit(ast.condition);
     sb.write(" ? ");

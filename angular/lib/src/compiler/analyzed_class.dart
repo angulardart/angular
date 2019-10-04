@@ -215,9 +215,6 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   }
 
   @override
-  DartType visitChain(ast.Chain ast, _) => _dynamicType;
-
-  @override
   DartType visitConditional(ast.Conditional ast, _) => _dynamicType;
 
   @override
