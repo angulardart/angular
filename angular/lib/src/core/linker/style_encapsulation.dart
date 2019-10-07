@@ -137,7 +137,7 @@ class ComponentStyles {
     if (isDevMode) {
       target.add('/* From: $_componentUrl*/');
     }
-    final styles = _flattenStyles(_styles, target, _componentId).join('\n');
+    final styles = _flattenStyles(_styles, target, _componentId).join();
     final styleElement = StyleElement()..text = styles;
     // Cache styles in development mode so they can be removed on hot restart.
     if (isDevMode) {
