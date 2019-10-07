@@ -4511,6 +4511,9 @@
         list[i] = H.S(receiver[i]);
       return list.join(separator);
     },
+    join$0: function($receiver) {
+      return this.join$1($receiver, "");
+    },
     elementAt$1: function(receiver, index) {
       return receiver[index];
     },
@@ -10346,7 +10349,7 @@
   O.ComponentStyles.prototype = {
     _appendStyles$0: function() {
       var target = H.setRuntimeTypeInfo([], [P.String]),
-        styles = C.JSArray_methods.join$1(O._flattenStyles(this._styles, target, ""), "\n"),
+        styles = C.JSArray_methods.join$0(O._flattenStyles(this._styles, target, "")),
         t1 = document,
         styleElement = t1.createElement("style");
       styleElement.textContent = styles;
