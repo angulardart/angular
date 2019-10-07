@@ -21,13 +21,6 @@ void debugClearComponentStyles() {
 
 /// Stores `styles: [ ... ]`,  `styleUrls: [ ... ]` for a given `@Component`.
 class ComponentStyles {
-  /// All component `<style>` tags currently in the DOM.
-  ///
-  /// Intentionally stored as [Node] (which is sufficient for this use case) to
-  /// avoid cost of reifying another type (the framework stores lists of [Node]
-  /// elsewhere, but not [StyleElement]).
-  static List<Node> _debugStyleElements;
-
   /// Callbacks to invoke when [_debugClear] is called.
   static List<void Function()> _debugClearCallbacks;
 
@@ -39,17 +32,12 @@ class ComponentStyles {
       }
       _debugClearCallbacks.clear();
     }
-    if (_debugStyleElements != null) {
-      for (final element in _debugStyleElements) {
-        element.remove();
-      }
-      _debugStyleElements.clear();
-    }
   }
 
   /// Registers a [callback] to be called by [_debugClear].
   ///
-  /// Used to clear static component styles in generated views.
+  /// Used to remove all component `<style>` elements in the DOM and clear
+  /// static component styles in generated views.
   static void debugOnClear(void Function() callback) {
     _debugClearCallbacks ??= [];
     _debugClearCallbacks.add(callback);
@@ -139,10 +127,11 @@ class ComponentStyles {
     }
     final styles = _flattenStyles(_styles, target, _componentId).join();
     final styleElement = StyleElement()..text = styles;
-    // Cache styles in development mode so they can be removed on hot restart.
     if (isDevMode) {
-      _debugStyleElements ??= [];
-      _debugStyleElements.add(styleElement);
+      // Remove style element from the DOM on hot restart.
+      debugOnClear(() {
+        styleElement.remove();
+      });
     }
     document.head.append(styleElement);
   }
