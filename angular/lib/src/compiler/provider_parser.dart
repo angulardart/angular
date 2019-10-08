@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart' show mergeSort;
 import 'package:source_span/source_span.dart';
 
 import '../core/metadata/visibility.dart';
@@ -136,13 +137,26 @@ class ProviderElementContext implements ElementProviderUsage {
   }
 
   List<DirectiveAst> get transformedDirectiveAsts {
+    // Directives must be sorted according to the dependency graph between them.
+    // For example, if directive A depends on directive B, then directive B must
+    // be instantiated before A so that it's available for injection into A.
     var sortedProviderTypes = _transformedProviders.values
         .map((provider) => provider.token.identifier)
         .toList();
     var sortedDirectives = List<DirectiveAst>.from(_directiveAsts);
-    sortedDirectives.sort((dir1, dir2) =>
-        sortedProviderTypes.indexOf(dir1.directive.type) -
-        sortedProviderTypes.indexOf(dir2.directive.type));
+    // Components are an exception to the sorting rule mentioned above. Multiple
+    // components may match an element, but only the first is selected. It's
+    // important not to change the order of componenets relative to each other,
+    // so that the first component is reliably matched. (b/140618316).
+    int _compareDirectives(DirectiveAst dir1, DirectiveAst dir2) {
+      if (dir1.directive.isComponent && dir2.directive.isComponent) {
+        return 0;
+      }
+      return sortedProviderTypes.indexOf(dir1.directive.type) -
+          sortedProviderTypes.indexOf(dir2.directive.type);
+    }
+
+    mergeSort(sortedDirectives, compare: _compareDirectives);
     return sortedDirectives;
   }
 
