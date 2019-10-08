@@ -27,5 +27,5 @@ void main() {
       )
       class TestComponent {}
     """);
-  }, skip: 'b/140618316');
+  });
 }
