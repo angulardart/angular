@@ -17,9 +17,8 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/src/core/linker/element_ref.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import10;
-import 'package:angular/src/di/injector/injector.dart' as import11;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import12;
-import 'package:angular/src/core/linker/views/render_view.dart' as import13;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import11;
+import 'package:angular/src/core/linker/views/render_view.dart' as import12;
 
 final List<dynamic> styles$TestFooComponent = ['div._ngcontent-%ID%{font-size:10px}'];
 
@@ -109,7 +108,6 @@ final List<dynamic> styles$TestFooComponentHost = const [];
 
 // Host for component TestFooComponent in asset:_goldens/test/_files/directives/directive_wrapper.dart (changeDetection: Default)
 class _ViewTestFooComponentHost0 extends import10.HostView<import1.TestFooComponent> {
-  _ViewTestFooComponentHost0(import11.Injector injector) : super(injector);
   @override
   void build() {
     // Child component TestFooComponent in asset:_goldens/test/_files/directives/directive_wrapper.dart (changeDetection: Default)
@@ -120,17 +118,17 @@ class _ViewTestFooComponentHost0 extends import10.HostView<import1.TestFooCompon
   }
 }
 
-import10.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(import11.Injector injector) {
-  return _ViewTestFooComponentHost0(injector);
+import10.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
+  return _ViewTestFooComponentHost0();
 }
 
-class ChildDirectiveNgCd extends import12.DirectiveChangeDetector {
+class ChildDirectiveNgCd extends import11.DirectiveChangeDetector {
   final import1.ChildDirective instance;
   var _expr_0;
   var _expr_1;
   bool _expr_2;
   ChildDirectiveNgCd(this.instance);
-  void detectHostChanges(import13.RenderView view, import2.Element el) {
+  void detectHostChanges(import12.RenderView view, import2.Element el) {
     bool firstCheck = view.firstCheck;
     if (firstCheck) {
       if (!identical(this.instance.label, null)) {

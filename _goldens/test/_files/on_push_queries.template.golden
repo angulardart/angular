@@ -15,14 +15,13 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
-import 'package:angular/src/runtime/dom_helpers.dart' as import12;
+import 'package:angular/src/runtime/dom_helpers.dart' as import11;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/runtime/queries.dart' as import14;
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
-import 'package:angular/src/core/linker/views/render_view.dart' as import16;
+import 'package:angular/src/runtime/queries.dart' as import13;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
+import 'package:angular/src/core/linker/views/render_view.dart' as import15;
 
 final List<dynamic> styles$Child = const [];
 
@@ -67,7 +66,6 @@ final List<dynamic> styles$ChildHost = const [];
 
 // Host for component Child in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: Default)
 class _ViewChildHost0 extends import8.HostView<import1.Child> {
-  _ViewChildHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Child in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: OnPush)
@@ -86,8 +84,8 @@ class _ViewChildHost0 extends import8.HostView<import1.Child> {
   }
 }
 
-import8.HostView<import1.Child> viewFactory_ChildHost0(import9.Injector injector) {
-  return _ViewChildHost0(injector);
+import8.HostView<import1.Child> viewFactory_ChildHost0() {
+  return _ViewChildHost0();
 }
 
 final List<dynamic> styles$Query = const [];
@@ -119,7 +117,7 @@ class ViewQuery0 extends import0.ComponentView<import1.Query> {
     parentRenderNode.append(_el_0);
     this._Child_0_5 = import1.Child();
     this._compView_0.create(this._Child_0_5);
-    final _anchor_1 = import12.appendAnchor(parentRenderNode);
+    final _anchor_1 = import11.appendAnchor(parentRenderNode);
     this._appEl_1 = ViewContainer(1, null, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_Query1);
     this._NgIf_1_9 = NgIf(this._appEl_1, _TemplateRef_1_8);
@@ -141,7 +139,7 @@ class ViewQuery0 extends import0.ComponentView<import1.Query> {
     if ((!import6.debugThrowIfChanged)) {
       if (this._viewQuery_Interface_0_isDirty) {
         import3.View.queryChangeDetectorRefs[this._Child_0_5] = this._compView_0;
-        _ctx.viewInterface = import14.firstOrNull(import14.flattenNodes([
+        _ctx.viewInterface = import13.firstOrNull(import13.flattenNodes([
           [this._Child_0_5],
           this._appEl_1.mapNestedViews((_ViewQuery1 nestedView) {
             import3.View.queryChangeDetectorRefs[nestedView._Child_0_5] = nestedView._compView_0;
@@ -152,7 +150,7 @@ class ViewQuery0 extends import0.ComponentView<import1.Query> {
       }
       if (this._viewQuery_Child_1_isDirty) {
         import3.View.queryChangeDetectorRefs[this._Child_0_5] = this._compView_0;
-        _ctx.viewChildren = import14.flattenNodes([
+        _ctx.viewChildren = import13.flattenNodes([
           [this._Child_0_5],
           this._appEl_1.mapNestedViews((_ViewQuery1 nestedView) {
             import3.View.queryChangeDetectorRefs[nestedView._Child_0_5] = nestedView._compView_0;
@@ -192,10 +190,10 @@ ComponentFactory<import1.Query> get QueryNgFactory {
   return _QueryNgFactory;
 }
 
-class _ViewQuery1 extends import15.EmbeddedView<import1.Query> {
+class _ViewQuery1 extends import14.EmbeddedView<import1.Query> {
   ViewChild0 _compView_0;
   import1.Child _Child_0_5;
-  _ViewQuery1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewQuery1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     // Child component Child in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: OnPush)
@@ -231,7 +229,7 @@ class _ViewQuery1 extends import15.EmbeddedView<import1.Query> {
   }
 }
 
-import15.EmbeddedView<void> viewFactory_Query1(import16.RenderView parentView, int parentIndex) {
+import14.EmbeddedView<void> viewFactory_Query1(import15.RenderView parentView, int parentIndex) {
   return _ViewQuery1(parentView, parentIndex);
 }
 
@@ -239,7 +237,6 @@ final List<dynamic> styles$QueryHost = const [];
 
 // Host for component Query in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: Default)
 class _ViewQueryHost0 extends import8.HostView<import1.Query> {
-  _ViewQueryHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Query in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: Default)
@@ -251,8 +248,8 @@ class _ViewQueryHost0 extends import8.HostView<import1.Query> {
   }
 }
 
-import8.HostView<import1.Query> viewFactory_QueryHost0(import9.Injector injector) {
-  return _ViewQueryHost0(injector);
+import8.HostView<import1.Query> viewFactory_QueryHost0() {
+  return _ViewQueryHost0();
 }
 
 final List<dynamic> styles$Test = const [];
@@ -350,7 +347,6 @@ final List<dynamic> styles$TestHost = const [];
 
 // Host for component Test in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: Default)
 class _ViewTestHost0 extends import8.HostView<import1.Test> {
-  _ViewTestHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Test in asset:_goldens/test/_files/on_push_queries.dart (changeDetection: Default)
@@ -361,8 +357,8 @@ class _ViewTestHost0 extends import8.HostView<import1.Test> {
   }
 }
 
-import8.HostView<import1.Test> viewFactory_TestHost0(import9.Injector injector) {
-  return _ViewTestHost0(injector);
+import8.HostView<import1.Test> viewFactory_TestHost0() {
+  return _ViewTestHost0();
 }
 
 var _visited = false;

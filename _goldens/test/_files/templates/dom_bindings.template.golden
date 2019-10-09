@@ -16,7 +16,6 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
 
 final List<dynamic> styles$HasHostAttributes = const [];
 
@@ -71,7 +70,6 @@ final List<dynamic> styles$HasHostAttributesHost = const [];
 
 // Host for component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasHostAttributesHost0 extends import9.HostView<import1.HasHostAttributes> {
-  _ViewHasHostAttributesHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasHostAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -89,8 +87,8 @@ class _ViewHasHostAttributesHost0 extends import9.HostView<import1.HasHostAttrib
   }
 }
 
-import9.HostView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0(import10.Injector injector) {
-  return _ViewHasHostAttributesHost0(injector);
+import9.HostView<import1.HasHostAttributes> viewFactory_HasHostAttributesHost0() {
+  return _ViewHasHostAttributesHost0();
 }
 
 final List<dynamic> styles$HasTemplateAttributes = const [];
@@ -150,7 +148,6 @@ final List<dynamic> styles$HasTemplateAttributesHost = const [];
 
 // Host for component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasTemplateAttributesHost0 extends import9.HostView<import1.HasTemplateAttributes> {
-  _ViewHasTemplateAttributesHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasTemplateAttributes in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -161,8 +158,8 @@ class _ViewHasTemplateAttributesHost0 extends import9.HostView<import1.HasTempla
   }
 }
 
-import9.HostView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0(import10.Injector injector) {
-  return _ViewHasTemplateAttributesHost0(injector);
+import9.HostView<import1.HasTemplateAttributes> viewFactory_HasTemplateAttributesHost0() {
+  return _ViewHasTemplateAttributesHost0();
 }
 
 final List<dynamic> styles$HasStaticAttribute = const [];
@@ -219,7 +216,6 @@ final List<dynamic> styles$HasStaticAttributeHost = const [];
 
 // Host for component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasStaticAttributeHost0 extends import9.HostView<import1.HasStaticAttribute> {
-  _ViewHasStaticAttributeHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasStaticAttribute in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -230,8 +226,8 @@ class _ViewHasStaticAttributeHost0 extends import9.HostView<import1.HasStaticAtt
   }
 }
 
-import9.HostView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0(import10.Injector injector) {
-  return _ViewHasStaticAttributeHost0(injector);
+import9.HostView<import1.HasStaticAttribute> viewFactory_HasStaticAttributeHost0() {
+  return _ViewHasStaticAttributeHost0();
 }
 
 final List<dynamic> styles$HasHostClass = const [];
@@ -287,7 +283,6 @@ final List<dynamic> styles$HasHostClassHost = const [];
 
 // Host for component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasHostClassHost0 extends import9.HostView<import1.HasHostClass> {
-  _ViewHasHostClassHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasHostClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -305,8 +300,8 @@ class _ViewHasHostClassHost0 extends import9.HostView<import1.HasHostClass> {
   }
 }
 
-import9.HostView<import1.HasHostClass> viewFactory_HasHostClassHost0(import10.Injector injector) {
-  return _ViewHasHostClassHost0(injector);
+import9.HostView<import1.HasHostClass> viewFactory_HasHostClassHost0() {
+  return _ViewHasHostClassHost0();
 }
 
 final List<dynamic> styles$HasTemplateClass = const [];
@@ -366,7 +361,6 @@ final List<dynamic> styles$HasTemplateClassHost = const [];
 
 // Host for component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasTemplateClassHost0 extends import9.HostView<import1.HasTemplateClass> {
-  _ViewHasTemplateClassHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasTemplateClass in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -377,8 +371,8 @@ class _ViewHasTemplateClassHost0 extends import9.HostView<import1.HasTemplateCla
   }
 }
 
-import9.HostView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0(import10.Injector injector) {
-  return _ViewHasTemplateClassHost0(injector);
+import9.HostView<import1.HasTemplateClass> viewFactory_HasTemplateClassHost0() {
+  return _ViewHasTemplateClassHost0();
 }
 
 final List<dynamic> styles$HasStyleProperty = const [];
@@ -444,7 +438,6 @@ final List<dynamic> styles$HasStylePropertyHost = const [];
 
 // Host for component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
 class _ViewHasStylePropertyHost0 extends import9.HostView<import1.HasStyleProperty> {
-  _ViewHasStylePropertyHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasStyleProperty in asset:_goldens/test/_files/templates/dom_bindings.dart (changeDetection: Default)
@@ -455,8 +448,8 @@ class _ViewHasStylePropertyHost0 extends import9.HostView<import1.HasStyleProper
   }
 }
 
-import9.HostView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0(import10.Injector injector) {
-  return _ViewHasStylePropertyHost0(injector);
+import9.HostView<import1.HasStyleProperty> viewFactory_HasStylePropertyHost0() {
+  return _ViewHasStylePropertyHost0();
 }
 
 var _visited = false;

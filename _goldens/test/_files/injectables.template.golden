@@ -18,9 +18,8 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
-import 'package:angular/src/di/errors.dart' as import11;
-import 'package:angular/src/core/di/opaque_token.dart' as import12;
+import 'package:angular/src/di/errors.dart' as import10;
+import 'package:angular/src/core/di/opaque_token.dart' as import11;
 import 'dart:core';
 
 final List<dynamic> styles$InjectableComponent = const [];
@@ -72,7 +71,6 @@ class _ViewInjectableComponentHost0 extends import9.HostView<import1.InjectableC
   dynamic _test_0_5;
   dynamic __SomeDep_0_7;
   dynamic __BaseService_0_8;
-  _ViewInjectableComponentHost0(import10.Injector injector) : super(injector);
   dynamic get _SomeDep_0_7 {
     if ((this.__SomeDep_0_7 == null)) {
       (this.__SomeDep_0_7 = import1.createLinkedHashMap(this._test_0_5));
@@ -83,7 +81,7 @@ class _ViewInjectableComponentHost0 extends import9.HostView<import1.InjectableC
   dynamic get _BaseService_0_8 {
     if ((this.__BaseService_0_8 == null)) {
       (this.__BaseService_0_8 = (import6.isDevMode
-          ? import11.debugInjectorWrap(import1.BaseService, () {
+          ? import10.debugInjectorWrap(import1.BaseService, () {
               return import1.createLinkedHashMap(this._SomeDep_0_7, this.injectorGet(import1.SomeDep, this.parentIndex), this._SomeDep_0_7);
             })
           : import1.createLinkedHashMap(this._SomeDep_0_7, this.injectorGet(import1.SomeDep, this.parentIndex), this._SomeDep_0_7)));
@@ -97,12 +95,12 @@ class _ViewInjectableComponentHost0 extends import9.HostView<import1.InjectableC
     this.componentView = ViewInjectableComponent0(this, 0);
     final _el_0 = this.componentView.rootElement;
     this._test_0_5 = (import6.isDevMode
-        ? import11.debugInjectorWrap(const import12.OpaqueToken<dynamic>('test'), () {
+        ? import10.debugInjectorWrap(const import11.OpaqueToken<dynamic>('test'), () {
             return import1.injectableFactory(this.injectorGet(import5.Window, this.parentIndex));
           })
         : import1.injectableFactory(this.injectorGet(import5.Window, this.parentIndex)));
     this.component = (import6.isDevMode
-        ? import11.debugInjectorWrap(import1.InjectableComponent, () {
+        ? import10.debugInjectorWrap(import1.InjectableComponent, () {
             return import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, this.parentIndex), this._test_0_5, this.injectorGetOptional(String, this.parentIndex));
           })
         : import1.InjectableComponent(null, this.injectorGetOptional(import1.InjectableService, this.parentIndex), this._test_0_5, this.injectorGetOptional(String, this.parentIndex)));
@@ -112,7 +110,7 @@ class _ViewInjectableComponentHost0 extends import9.HostView<import1.InjectableC
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
-      if (identical(token, const import12.OpaqueToken<dynamic>('test'))) {
+      if (identical(token, const import11.OpaqueToken<dynamic>('test'))) {
         return this._test_0_5;
       }
       if (identical(token, import1.SomeDep)) {
@@ -126,8 +124,8 @@ class _ViewInjectableComponentHost0 extends import9.HostView<import1.InjectableC
   }
 }
 
-import9.HostView<import1.InjectableComponent> viewFactory_InjectableComponentHost0(import10.Injector injector) {
-  return _ViewInjectableComponentHost0(injector);
+import9.HostView<import1.InjectableComponent> viewFactory_InjectableComponentHost0() {
+  return _ViewInjectableComponentHost0();
 }
 
 var _visited = false;

@@ -21,8 +21,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/embedded_view.dart' as import12;
 import 'package:angular/src/core/linker/views/render_view.dart' as import13;
 import 'package:angular/src/core/linker/views/host_view.dart' as import14;
-import 'package:angular/src/di/injector/injector.dart' as import15;
-import 'package:angular/src/runtime/interpolate.dart' as import16;
+import 'package:angular/src/runtime/interpolate.dart' as import15;
 
 final List<dynamic> styles$InlinedNgIfComponent = const [];
 
@@ -100,7 +99,6 @@ final List<dynamic> styles$InlinedNgIfComponentHost = const [];
 
 // Host for component InlinedNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
 class _ViewInlinedNgIfComponentHost0 extends import14.HostView<import1.InlinedNgIfComponent> {
-  _ViewInlinedNgIfComponentHost0(import15.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InlinedNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
@@ -111,8 +109,8 @@ class _ViewInlinedNgIfComponentHost0 extends import14.HostView<import1.InlinedNg
   }
 }
 
-import14.HostView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0(import15.Injector injector) {
-  return _ViewInlinedNgIfComponentHost0(injector);
+import14.HostView<import1.InlinedNgIfComponent> viewFactory_InlinedNgIfComponentHost0() {
+  return _ViewInlinedNgIfComponentHost0();
 }
 
 final List<dynamic> styles$IgnoredNgIfComponent = const [];
@@ -183,7 +181,7 @@ class _ViewIgnoredNgIfComponent1 extends import12.EmbeddedView<import1.IgnoredNg
     final doc = import7.document;
     final _el_0 = doc.createElement('div');
     final _text_1 = import9.appendText(_el_0, 'Hello ');
-    final _text_2 = import9.appendText(_el_0, import16.interpolateString0(_ctx.name));
+    final _text_2 = import9.appendText(_el_0, import15.interpolateString0(_ctx.name));
     final _text_3 = import9.appendText(_el_0, '!');
     this.initRootNode(_el_0);
   }
@@ -197,7 +195,6 @@ final List<dynamic> styles$IgnoredNgIfComponentHost = const [];
 
 // Host for component IgnoredNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
 class _ViewIgnoredNgIfComponentHost0 extends import14.HostView<import1.IgnoredNgIfComponent> {
-  _ViewIgnoredNgIfComponentHost0(import15.Injector injector) : super(injector);
   @override
   void build() {
     // Child component IgnoredNgIfComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
@@ -208,8 +205,8 @@ class _ViewIgnoredNgIfComponentHost0 extends import14.HostView<import1.IgnoredNg
   }
 }
 
-import14.HostView<import1.IgnoredNgIfComponent> viewFactory_IgnoredNgIfComponentHost0(import15.Injector injector) {
-  return _ViewIgnoredNgIfComponentHost0(injector);
+import14.HostView<import1.IgnoredNgIfComponent> viewFactory_IgnoredNgIfComponentHost0() {
+  return _ViewIgnoredNgIfComponentHost0();
 }
 
 final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponent = const [];
@@ -291,7 +288,6 @@ final List<dynamic> styles$InlinedNgIfWithImmutableConditionComponentHost = cons
 
 // Host for component InlinedNgIfWithImmutableConditionComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
 class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends import14.HostView<import1.InlinedNgIfWithImmutableConditionComponent> {
-  _ViewInlinedNgIfWithImmutableConditionComponentHost0(import15.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InlinedNgIfWithImmutableConditionComponent in asset:_goldens/test/_files/inlined_ngif.dart (changeDetection: Default)
@@ -302,8 +298,8 @@ class _ViewInlinedNgIfWithImmutableConditionComponentHost0 extends import14.Host
   }
 }
 
-import14.HostView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponentHost0(import15.Injector injector) {
-  return _ViewInlinedNgIfWithImmutableConditionComponentHost0(injector);
+import14.HostView<import1.InlinedNgIfWithImmutableConditionComponent> viewFactory_InlinedNgIfWithImmutableConditionComponentHost0() {
+  return _ViewInlinedNgIfWithImmutableConditionComponentHost0();
 }
 
 var _visited = false;

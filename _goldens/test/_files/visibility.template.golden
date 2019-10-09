@@ -15,9 +15,8 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
-import 'package:angular/src/di/errors.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
+import 'package:angular/src/di/errors.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
 
 final List<dynamic> styles$Dependent = const [];
 
@@ -62,14 +61,13 @@ final List<dynamic> styles$DependentHost = const [];
 
 // Host for component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependentHost0 extends import8.HostView<import1.Dependent> {
-  _ViewDependentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     this.componentView = ViewDependent0(this, 0);
     final _el_0 = this.componentView.rootElement;
     this.component = (import6.isDevMode
-        ? import10.debugInjectorWrap(import1.Dependent, () {
+        ? import9.debugInjectorWrap(import1.Dependent, () {
             return import1.Dependent(this.injectorGet(import1.Dependency, this.parentIndex));
           })
         : import1.Dependent(this.injectorGet(import1.Dependency, this.parentIndex)));
@@ -77,8 +75,8 @@ class _ViewDependentHost0 extends import8.HostView<import1.Dependent> {
   }
 }
 
-import8.HostView<import1.Dependent> viewFactory_DependentHost0(import9.Injector injector) {
-  return _ViewDependentHost0(injector);
+import8.HostView<import1.Dependent> viewFactory_DependentHost0() {
+  return _ViewDependentHost0();
 }
 
 final List<dynamic> styles$DependencyWithDependentInView = const [];
@@ -104,7 +102,7 @@ class ViewDependencyWithDependentInView0 extends import0.ComponentView<import1.D
     final _el_0 = this._compView_0.rootElement;
     parentRenderNode.append(_el_0);
     this._Dependent_0_5 = (import6.isDevMode
-        ? import10.debugInjectorWrap(import1.Dependent, () {
+        ? import9.debugInjectorWrap(import1.Dependent, () {
             return import1.Dependent(this.parentView.injectorGet(import1.Dependency, this.parentIndex));
           })
         : import1.Dependent(this.parentView.injectorGet(import1.Dependency, this.parentIndex)));
@@ -146,7 +144,6 @@ final List<dynamic> styles$DependencyWithDependentInViewHost = const [];
 
 // Host for component DependencyWithDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyWithDependentInViewHost0 extends import8.HostView<import1.DependencyWithDependentInView> {
-  _ViewDependencyWithDependentInViewHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DependencyWithDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
@@ -165,8 +162,8 @@ class _ViewDependencyWithDependentInViewHost0 extends import8.HostView<import1.D
   }
 }
 
-import8.HostView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInViewHost0(import9.Injector injector) {
-  return _ViewDependencyWithDependentInViewHost0(injector);
+import8.HostView<import1.DependencyWithDependentInView> viewFactory_DependencyWithDependentInViewHost0() {
+  return _ViewDependencyWithDependentInViewHost0();
 }
 
 final List<dynamic> styles$DependencyWithContent = const [];
@@ -213,7 +210,6 @@ final List<dynamic> styles$DependencyWithContentHost = const [];
 
 // Host for component DependencyWithContent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyWithContentHost0 extends import8.HostView<import1.DependencyWithContent> {
-  _ViewDependencyWithContentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DependencyWithContent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
@@ -232,8 +228,8 @@ class _ViewDependencyWithContentHost0 extends import8.HostView<import1.Dependenc
   }
 }
 
-import8.HostView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0(import9.Injector injector) {
-  return _ViewDependencyWithContentHost0(injector);
+import8.HostView<import1.DependencyWithContent> viewFactory_DependencyWithContentHost0() {
+  return _ViewDependencyWithContentHost0();
 }
 
 final List<dynamic> styles$DependencyAndDependentInView = const [];
@@ -255,13 +251,13 @@ class ViewDependencyAndDependentInView0 extends import0.ComponentView<import1.De
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    final _el_0 = import11.appendElement(doc, parentRenderNode, 'dependency');
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'dependency');
     // Child component Dependent in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
     this._compView_1 = ViewDependent0(this, 1);
     final _el_1 = this._compView_1.rootElement;
     _el_0.append(_el_1);
     this._Dependent_1_5 = (import6.isDevMode
-        ? import10.debugInjectorWrap(import1.Dependent, () {
+        ? import9.debugInjectorWrap(import1.Dependent, () {
             return import1.Dependent(this.parentView.injectorGet(import1.Dependency, this.parentIndex));
           })
         : import1.Dependent(this.parentView.injectorGet(import1.Dependency, this.parentIndex)));
@@ -303,7 +299,6 @@ final List<dynamic> styles$DependencyAndDependentInViewHost = const [];
 
 // Host for component DependencyAndDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewDependencyAndDependentInViewHost0 extends import8.HostView<import1.DependencyAndDependentInView> {
-  _ViewDependencyAndDependentInViewHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DependencyAndDependentInView in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
@@ -314,8 +309,8 @@ class _ViewDependencyAndDependentInViewHost0 extends import8.HostView<import1.De
   }
 }
 
-import8.HostView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInViewHost0(import9.Injector injector) {
-  return _ViewDependencyAndDependentInViewHost0(injector);
+import8.HostView<import1.DependencyAndDependentInView> viewFactory_DependencyAndDependentInViewHost0() {
+  return _ViewDependencyAndDependentInViewHost0();
 }
 
 final List<dynamic> styles$HasVisibilityAll = const [];
@@ -361,7 +356,6 @@ final List<dynamic> styles$HasVisibilityAllHost = const [];
 
 // Host for component HasVisibilityAll in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewHasVisibilityAllHost0 extends import8.HostView<import1.HasVisibilityAll> {
-  _ViewHasVisibilityAllHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasVisibilityAll in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
@@ -380,8 +374,8 @@ class _ViewHasVisibilityAllHost0 extends import8.HostView<import1.HasVisibilityA
   }
 }
 
-import8.HostView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0(import9.Injector injector) {
-  return _ViewHasVisibilityAllHost0(injector);
+import8.HostView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0() {
+  return _ViewHasVisibilityAllHost0();
 }
 
 final List<dynamic> styles$HasVisibilityLocal = const [];
@@ -427,7 +421,6 @@ final List<dynamic> styles$HasVisibilityLocalHost = const [];
 
 // Host for component HasVisibilityLocal in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
 class _ViewHasVisibilityLocalHost0 extends import8.HostView<import1.HasVisibilityLocal> {
-  _ViewHasVisibilityLocalHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasVisibilityLocal in asset:_goldens/test/_files/visibility.dart (changeDetection: Default)
@@ -438,8 +431,8 @@ class _ViewHasVisibilityLocalHost0 extends import8.HostView<import1.HasVisibilit
   }
 }
 
-import8.HostView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0(import9.Injector injector) {
-  return _ViewHasVisibilityLocalHost0(injector);
+import8.HostView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0() {
+  return _ViewHasVisibilityLocalHost0();
 }
 
 var _visited = false;

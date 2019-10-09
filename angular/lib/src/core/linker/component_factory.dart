@@ -131,7 +131,7 @@ class ComponentFactory<T> {
   // Not intuitive, but the _Host{Comp}View0 is NOT AppView<{Comp}>, but is a
   // special (not-typed to a user-defined class) AppView that itself creates a
   // AppView<{Comp}> as a child view.
-  final HostView<T> Function(Injector) _viewFactory;
+  final HostView<T> Function() _viewFactory;
 
   /// Internal constructor for generated code only - **do not invoke**.
   const ComponentFactory(
@@ -147,7 +147,7 @@ class ComponentFactory<T> {
     Injector injector, [
     List<List<Object>> projectableNodes,
   ]) {
-    final hostView = _viewFactory(injector);
-    return hostView.create(projectableNodes ?? const []);
+    final hostView = _viewFactory();
+    return hostView.create(projectableNodes ?? const [], injector);
   }
 }

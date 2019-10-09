@@ -3803,8 +3803,8 @@
     viewFactory_RootComponent1: function(parentView, parentIndex) {
       return new N._ViewRootComponent1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
     },
-    viewFactory_RootComponentHost0: function(injector) {
-      return new N._ViewRootComponentHost0(injector, new G._HostViewData());
+    viewFactory_RootComponentHost0: function() {
+      return new N._ViewRootComponentHost0(new G._HostViewData());
     },
     viewFactory_InlinedNgIf1: function(parentView, parentIndex) {
       return new N._ViewInlinedNgIf1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
@@ -3871,11 +3871,10 @@
       this._Child_0_5 = this._compView_0 = null;
       this._embedded_view$_data = t0;
     },
-    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0, t1) {
+    _ViewRootComponentHost0: function _ViewRootComponentHost0(t0) {
       var _ = this;
-      _.componentView = _.component = null;
-      _._host_view$_injector = t0;
-      _._host_view$_data = t1;
+      _._host_view$_injector = _.componentView = _.component = null;
+      _._host_view$_data = t0;
     },
     ViewUsesDefaultChangeDetectionAndInputs0: function ViewUsesDefaultChangeDetectionAndInputs0(t0) {
       var _ = this;
@@ -9524,8 +9523,8 @@
       var t3, styles, t4, t5, replacement, component, existing, replacement0, testability,
         t1 = this.$this,
         t2 = t1._injector,
-        hostView = N.viewFactory_RootComponentHost0(t2);
-      hostView.toString;
+        hostView = N.viewFactory_RootComponentHost0();
+      hostView._host_view$_injector = t2;
       t3 = new N.ViewRootComponent0(E._ComponentViewData__ComponentViewData(hostView, 0, 3));
       styles = $.ViewRootComponent0__componentStyles;
       if (styles == null) {
@@ -12332,7 +12331,7 @@
     _instance_0_i(_ = O.HasHostListeners.prototype, "get$onClick", "onClick$0", 1);
     _instance_0_i(_, "get$onFocus", "onFocus$0", 1);
     _static_2(N, "dart2js_golden_template__viewFactory_RootComponent1$closure", "viewFactory_RootComponent1", 0);
-    _static_1(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 21);
+    _static_0(N, "dart2js_golden_template__viewFactory_RootComponentHost0$closure", "viewFactory_RootComponentHost0", 21);
     _static_2(N, "dart2js_golden_template__viewFactory_InlinedNgIf1$closure", "viewFactory_InlinedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgIf1$closure", "viewFactory_EmbeddedNgIf1", 0);
     _static_2(N, "dart2js_golden_template__viewFactory_EmbeddedNgFor1$closure", "viewFactory_EmbeddedNgFor1", 0);
@@ -12517,7 +12516,7 @@
     _mixin(P._SqlResultSetRowList_Interceptor_ListMixin, P.ListMixin);
     _mixin(P._SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin, W.ImmutableListMixin);
   })();
-  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [E.EmbeddedView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: [G.HostView, O.RootComponent], args: [M.Injector]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
+  var init = {mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"}, mangledNames: {}, getTypeFromName: getGlobalFromName, metadata: [], types: [{func: 1, ret: [E.EmbeddedView, -1], args: [A.RenderView, P.int]}, {func: 1, ret: -1}, {func: 1, ret: P.Null, args: [,,]}, {func: 1, ret: P.Null, args: [-1]}, {func: 1, ret: -1, args: [P.Object], opt: [P.StackTrace]}, {func: 1, ret: P.Null, args: [,]}, {func: 1, ret: P.Null, args: [P.Object, P.Object]}, {func: 1, ret: -1, args: [{func: 1, ret: -1}]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone,, P.StackTrace]}, {func: 1, ret: -1, args: [,]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}, 1, 2]}, {func: 1, args: [,]}, {func: 1, bounds: [P.Object, P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}, 1]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: -1}]}, {func: 1, bounds: [P.Object], ret: 0, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, ret: P.bool}, {func: 1, ret: P.Null, args: [P.Object]}, {func: 1, ret: -1, args: [N.KeyValueChangeRecord]}, {func: 1, args: [,,]}, {func: 1, ret: [P._Future,,], args: [,]}, {func: 1, ret: [G.HostView, O.RootComponent]}, {func: 1, bounds: [P.Object], ret: {func: 1, ret: 0}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0}]}, {func: 1, bounds: [P.Object, P.Object], ret: {func: 1, ret: 0, args: [1]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1]}]}, {func: 1, bounds: [P.Object, P.Object, P.Object], ret: {func: 1, ret: 0, args: [1, 2]}, args: [P.Zone, P.ZoneDelegate, P.Zone, {func: 1, ret: 0, args: [1, 2]}]}, {func: 1, ret: P.AsyncError, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Object, P.StackTrace]}, {func: 1, ret: P.Timer, args: [P.Zone, P.ZoneDelegate, P.Zone, P.Duration, {func: 1, ret: -1, args: [P.Timer]}]}, {func: 1, ret: -1, args: [P.Zone, P.ZoneDelegate, P.Zone, P.String]}, {func: 1, ret: P.Zone, args: [P.Zone, P.ZoneDelegate, P.Zone, P.ZoneSpecification, [P.Map,,,]]}, {func: 1, ret: Y.NgZone}, {func: 1, ret: M.Injector, opt: [M.Injector]}, {func: 1, ret: P.Object, args: [P.int,,]}, {func: 1, ret: P.Null, args: [,], opt: [P.StackTrace]}, {func: 1, ret: -1, args: [P.Function]}], interceptorsByTag: null, leafTags: null};
   (function constants() {
     var makeConstList = hunkHelpers.makeConstList;
     C.CssStyleDeclaration_methods = W.CssStyleDeclaration.prototype;

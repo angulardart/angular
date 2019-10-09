@@ -15,9 +15,8 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import10;
 
 final List<dynamic> styles$HostComponentNewSyntax = const [];
 
@@ -63,7 +62,6 @@ final List<dynamic> styles$HostComponentNewSyntaxHost = const [];
 
 // Host for component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewHostComponentNewSyntaxHost0 extends import8.HostView<import1.HostComponentNewSyntax> {
-  _ViewHostComponentNewSyntaxHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HostComponentNewSyntax in asset:_goldens/test/_files/host.dart (changeDetection: Default)
@@ -74,8 +72,8 @@ class _ViewHostComponentNewSyntaxHost0 extends import8.HostView<import1.HostComp
   }
 }
 
-import8.HostView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0(import9.Injector injector) {
-  return _ViewHostComponentNewSyntaxHost0(injector);
+import8.HostView<import1.HostComponentNewSyntax> viewFactory_HostComponentNewSyntaxHost0() {
+  return _ViewHostComponentNewSyntaxHost0();
 }
 
 final List<dynamic> styles$UsesHostComponentWithDirective = const [];
@@ -101,7 +99,7 @@ class ViewUsesHostComponentWithDirective0 extends import0.ComponentView<import1.
     this._compView_0 = ViewHostComponent0(this, 0);
     final _el_0 = this._compView_0.rootElement;
     parentRenderNode.append(_el_0);
-    import10.setAttribute(_el_0, 'listens-to-foo', '');
+    import9.setAttribute(_el_0, 'listens-to-foo', '');
     this._HostComponent_0_5 = import1.HostComponent();
     this._ListensToFooEvent_0_6 = import1.ListensToFooEvent();
     this._compView_0.create(this._HostComponent_0_5);
@@ -146,7 +144,6 @@ final List<dynamic> styles$UsesHostComponentWithDirectiveHost = const [];
 
 // Host for component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewUsesHostComponentWithDirectiveHost0 extends import8.HostView<import1.UsesHostComponentWithDirective> {
-  _ViewUsesHostComponentWithDirectiveHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesHostComponentWithDirective in asset:_goldens/test/_files/host.dart (changeDetection: Default)
@@ -157,8 +154,8 @@ class _ViewUsesHostComponentWithDirectiveHost0 extends import8.HostView<import1.
   }
 }
 
-import8.HostView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0(import9.Injector injector) {
-  return _ViewUsesHostComponentWithDirectiveHost0(injector);
+import8.HostView<import1.UsesHostComponentWithDirective> viewFactory_UsesHostComponentWithDirectiveHost0() {
+  return _ViewUsesHostComponentWithDirectiveHost0();
 }
 
 final List<dynamic> styles$HostComponent = const [];
@@ -174,7 +171,7 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
   ViewHostComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
     this.rootElement = import5.document.createElement('host');
-    import10.updateAttribute(this.rootElement, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
+    import9.updateAttribute(this.rootElement, 'has-shiny', (import1.HostComponent.hasShinyAttribute ? '' : null));
   }
   static String get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:_goldens/test/_files/host.dart' : null);
@@ -185,7 +182,7 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
     final _ctx = this.ctx;
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     parentRenderNode.addEventListener('click', this.eventHandler1(_ctx.onClick));
-    import11.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', this.eventHandler1(this._handleEvent_0));
+    import10.appViewUtils.eventManager.addEventListener(parentRenderNode, 'tripleclick', this.eventHandler1(this._handleEvent_0));
     parentRenderNode.addEventListener('keydown', this.eventHandler0(_ctx.onKeyDown));
   }
 
@@ -198,7 +195,7 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
     final _ctx = this.ctx;
     if (firstCheck) {
       if (!identical(import1.HostComponent.hostClassFoo, null)) {
-        import10.updateClassBindingNonHtml(this.rootElement, 'foo', import1.HostComponent.hostClassFoo);
+        import9.updateClassBindingNonHtml(this.rootElement, 'foo', import1.HostComponent.hostClassFoo);
       }
       if (!identical(import1.HostComponent.hostStyleColor, null)) {
         this.rootElement.style.setProperty('color', import1.HostComponent.hostStyleColor);
@@ -206,27 +203,27 @@ class ViewHostComponent0 extends import0.ComponentView<import1.HostComponent> {
     }
     final currVal_0 = import1.HostComponent.hasTerrible;
     if (import6.checkBinding(this._expr_0, currVal_0, null, null)) {
-      import10.updateAttribute(this.rootElement, 'has-terrible', (currVal_0 ? '' : null));
+      import9.updateAttribute(this.rootElement, 'has-terrible', (currVal_0 ? '' : null));
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.title;
     if (import6.checkBinding(this._expr_1, currVal_1, null, null)) {
-      import10.setProperty(this.rootElement, 'title', currVal_1);
+      import9.setProperty(this.rootElement, 'title', currVal_1);
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.title;
     if (import6.checkBinding(this._expr_2, currVal_2, null, null)) {
-      import10.updateAttribute(this.rootElement, 'aria-title', currVal_2);
+      import9.updateAttribute(this.rootElement, 'aria-title', currVal_2);
       this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.isDisabled;
     if (import6.checkBinding(this._expr_3, currVal_3, null, null)) {
-      import10.updateAttribute(this.rootElement, 'aria-disabled', (currVal_3 ? '' : null));
+      import9.updateAttribute(this.rootElement, 'aria-disabled', (currVal_3 ? '' : null));
       this._expr_3 = currVal_3;
     }
     final currVal_4 = _ctx.isDisabled;
     if (import6.checkBinding(this._expr_4, currVal_4, null, null)) {
-      import10.updateClassBindingNonHtml(this.rootElement, 'is-disabled', currVal_4);
+      import9.updateClassBindingNonHtml(this.rootElement, 'is-disabled', currVal_4);
       this._expr_4 = currVal_4;
     }
   }
@@ -256,7 +253,6 @@ final List<dynamic> styles$HostComponentHost = const [];
 
 // Host for component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
 class _ViewHostComponentHost0 extends import8.HostView<import1.HostComponent> {
-  _ViewHostComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HostComponent in asset:_goldens/test/_files/host.dart (changeDetection: Default)
@@ -274,8 +270,8 @@ class _ViewHostComponentHost0 extends import8.HostView<import1.HostComponent> {
   }
 }
 
-import8.HostView<import1.HostComponent> viewFactory_HostComponentHost0(import9.Injector injector) {
-  return _ViewHostComponentHost0(injector);
+import8.HostView<import1.HostComponent> viewFactory_HostComponentHost0() {
+  return _ViewHostComponentHost0();
 }
 
 var _visited = false;

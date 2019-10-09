@@ -16,7 +16,6 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
 
 final List<dynamic> styles$EmptyPropertiesComponent = const [];
 
@@ -117,7 +116,6 @@ final List<dynamic> styles$EmptyPropertiesComponentHost = const [];
 
 // Host for component EmptyPropertiesComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
 class _ViewEmptyPropertiesComponentHost0 extends import9.HostView<import1.EmptyPropertiesComponent> {
-  _ViewEmptyPropertiesComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component EmptyPropertiesComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
@@ -128,8 +126,8 @@ class _ViewEmptyPropertiesComponentHost0 extends import9.HostView<import1.EmptyP
   }
 }
 
-import9.HostView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHost0(import10.Injector injector) {
-  return _ViewEmptyPropertiesComponentHost0(injector);
+import9.HostView<import1.EmptyPropertiesComponent> viewFactory_EmptyPropertiesComponentHost0() {
+  return _ViewEmptyPropertiesComponentHost0();
 }
 
 final List<dynamic> styles$FancyButtonComponent = const [];
@@ -175,7 +173,6 @@ final List<dynamic> styles$FancyButtonComponentHost = const [];
 
 // Host for component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
 class _ViewFancyButtonComponentHost0 extends import9.HostView<import1.FancyButtonComponent> {
-  _ViewFancyButtonComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component FancyButtonComponent in asset:_goldens/test/_files/empty_properties.dart (changeDetection: Default)
@@ -186,8 +183,8 @@ class _ViewFancyButtonComponentHost0 extends import9.HostView<import1.FancyButto
   }
 }
 
-import9.HostView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0(import10.Injector injector) {
-  return _ViewFancyButtonComponentHost0(injector);
+import9.HostView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0() {
+  return _ViewFancyButtonComponentHost0();
 }
 
 var _visited = false;

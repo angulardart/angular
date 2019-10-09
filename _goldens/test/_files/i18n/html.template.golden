@@ -18,7 +18,6 @@ import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
 import 'package:intl/intl.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
-import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$I18nHtmlComponent = const [];
 
@@ -71,7 +70,6 @@ final List<dynamic> styles$I18nHtmlComponentHost = const [];
 
 // Host for component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
 class _ViewI18nHtmlComponentHost0 extends import11.HostView<import1.I18nHtmlComponent> {
-  _ViewI18nHtmlComponentHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component I18nHtmlComponent in asset:_goldens/test/_files/i18n/html.dart (changeDetection: Default)
@@ -82,8 +80,8 @@ class _ViewI18nHtmlComponentHost0 extends import11.HostView<import1.I18nHtmlComp
   }
 }
 
-import11.HostView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0(import12.Injector injector) {
-  return _ViewI18nHtmlComponentHost0(injector);
+import11.HostView<import1.I18nHtmlComponent> viewFactory_I18nHtmlComponentHost0() {
+  return _ViewI18nHtmlComponentHost0();
 }
 
 var _visited = false;

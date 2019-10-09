@@ -24,7 +24,6 @@ import 'dart:core';
 import 'package:angular/src/runtime/text_binding.dart' as import15;
 import 'package:angular/src/runtime/interpolate.dart' as import16;
 import 'package:angular/src/core/linker/views/host_view.dart' as import17;
-import 'package:angular/src/di/injector/injector.dart' as import18;
 
 final List<dynamic> styles$NestedNgForComponent = const [];
 
@@ -157,7 +156,6 @@ final List<dynamic> styles$NestedNgForComponentHost = const [];
 
 // Host for component NestedNgForComponent in asset:_goldens/test/_files/directives/nested_ng_for.dart (changeDetection: Default)
 class _ViewNestedNgForComponentHost0 extends import17.HostView<import1.NestedNgForComponent> {
-  _ViewNestedNgForComponentHost0(import18.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NestedNgForComponent in asset:_goldens/test/_files/directives/nested_ng_for.dart (changeDetection: Default)
@@ -168,8 +166,8 @@ class _ViewNestedNgForComponentHost0 extends import17.HostView<import1.NestedNgF
   }
 }
 
-import17.HostView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0(import18.Injector injector) {
-  return _ViewNestedNgForComponentHost0(injector);
+import17.HostView<import1.NestedNgForComponent> viewFactory_NestedNgForComponentHost0() {
+  return _ViewNestedNgForComponentHost0();
 }
 
 var _visited = false;

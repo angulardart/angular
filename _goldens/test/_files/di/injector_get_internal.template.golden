@@ -19,7 +19,6 @@ import 'package:angular/src/core/di/opaque_token.dart' as import9;
 import 'injector_get_internal.dart' as import10;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import12;
-import 'package:angular/src/di/injector/injector.dart' as import13;
 
 final List<dynamic> styles$AppComponent = const [];
 
@@ -502,7 +501,6 @@ final List<dynamic> styles$AppComponentHost = const [];
 
 // Host for component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewAppComponentHost0 extends import12.HostView<import1.AppComponent> {
-  _ViewAppComponentHost0(import13.Injector injector) : super(injector);
   @override
   void build() {
     // Child component AppComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
@@ -513,8 +511,8 @@ class _ViewAppComponentHost0 extends import12.HostView<import1.AppComponent> {
   }
 }
 
-import12.HostView<import1.AppComponent> viewFactory_AppComponentHost0(import13.Injector injector) {
-  return _ViewAppComponentHost0(injector);
+import12.HostView<import1.AppComponent> viewFactory_AppComponentHost0() {
+  return _ViewAppComponentHost0();
 }
 
 final List<dynamic> styles$MaterialAutoSuggestInputComponent = const [];
@@ -560,7 +558,6 @@ final List<dynamic> styles$MaterialAutoSuggestInputComponentHost = const [];
 
 // Host for component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewMaterialAutoSuggestInputComponentHost0 extends import12.HostView<import1.MaterialAutoSuggestInputComponent> {
-  _ViewMaterialAutoSuggestInputComponentHost0(import13.Injector injector) : super(injector);
   @override
   void build() {
     // Child component MaterialAutoSuggestInputComponent in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
@@ -579,8 +576,8 @@ class _ViewMaterialAutoSuggestInputComponentHost0 extends import12.HostView<impo
   }
 }
 
-import12.HostView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponentHost0(import13.Injector injector) {
-  return _ViewMaterialAutoSuggestInputComponentHost0(injector);
+import12.HostView<import1.MaterialAutoSuggestInputComponent> viewFactory_MaterialAutoSuggestInputComponentHost0() {
+  return _ViewMaterialAutoSuggestInputComponentHost0();
 }
 
 final List<dynamic> styles$MaterialIcon = const [];
@@ -626,7 +623,6 @@ final List<dynamic> styles$MaterialIconHost = const [];
 
 // Host for component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
 class _ViewMaterialIconHost0 extends import12.HostView<import1.MaterialIcon> {
-  _ViewMaterialIconHost0(import13.Injector injector) : super(injector);
   @override
   void build() {
     // Child component MaterialIcon in asset:_goldens/test/_files/di/injector_get_internal.dart (changeDetection: Default)
@@ -637,8 +633,8 @@ class _ViewMaterialIconHost0 extends import12.HostView<import1.MaterialIcon> {
   }
 }
 
-import12.HostView<import1.MaterialIcon> viewFactory_MaterialIconHost0(import13.Injector injector) {
-  return _ViewMaterialIconHost0(injector);
+import12.HostView<import1.MaterialIcon> viewFactory_MaterialIconHost0() {
+  return _ViewMaterialIconHost0();
 }
 
 final List<dynamic> styles$MaterialInputComponent = const [];
@@ -689,7 +685,6 @@ class _ViewMaterialInputComponentHost0 extends import12.HostView<import1.Materia
   import1.DeferredValidator __DeferredValidator_0_7;
   List<import1.Validator> __MultiToken_0_8;
   int __luckyNumber_0_12;
-  _ViewMaterialInputComponentHost0(import13.Injector injector) : super(injector);
   import1.ServiceB get _Service_0_6 {
     if ((this.__Service_0_6 == null)) {
       (this.__Service_0_6 = import1.ServiceB());
@@ -750,8 +745,8 @@ class _ViewMaterialInputComponentHost0 extends import12.HostView<import1.Materia
   }
 }
 
-import12.HostView<import1.MaterialInputComponent> viewFactory_MaterialInputComponentHost0(import13.Injector injector) {
-  return _ViewMaterialInputComponentHost0(injector);
+import12.HostView<import1.MaterialInputComponent> viewFactory_MaterialInputComponentHost0() {
+  return _ViewMaterialInputComponentHost0();
 }
 
 var _visited = false;

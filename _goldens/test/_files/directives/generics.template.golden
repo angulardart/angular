@@ -15,15 +15,14 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
 import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import12;
-import 'package:angular/src/runtime/dom_helpers.dart' as import13;
+import 'package:angular/src/common/directives/ng_for.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
-import 'package:angular/src/core/linker/views/render_view.dart' as import16;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import17;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
+import 'package:angular/src/core/linker/views/render_view.dart' as import15;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import16;
 
 final List<dynamic> styles$UntypedComp = const [];
 
@@ -68,7 +67,6 @@ final List<dynamic> styles$UntypedCompHost = const [];
 
 // Host for component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUntypedCompHost0 extends import8.HostView<import1.UntypedComp> {
-  _ViewUntypedCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -79,8 +77,8 @@ class _ViewUntypedCompHost0 extends import8.HostView<import1.UntypedComp> {
   }
 }
 
-import8.HostView<import1.UntypedComp> viewFactory_UntypedCompHost0(import9.Injector injector) {
-  return _ViewUntypedCompHost0(injector);
+import8.HostView<import1.UntypedComp> viewFactory_UntypedCompHost0() {
+  return _ViewUntypedCompHost0();
 }
 
 final List<dynamic> styles$UsesUntypedComp = const [];
@@ -151,7 +149,6 @@ final List<dynamic> styles$UsesUntypedCompHost = const [];
 
 // Host for component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesUntypedCompHost0 extends import8.HostView<import1.UsesUntypedComp> {
-  _ViewUsesUntypedCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesUntypedComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -162,8 +159,8 @@ class _ViewUsesUntypedCompHost0 extends import8.HostView<import1.UsesUntypedComp
   }
 }
 
-import8.HostView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0(import9.Injector injector) {
-  return _ViewUsesUntypedCompHost0(injector);
+import8.HostView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0() {
+  return _ViewUsesUntypedCompHost0();
 }
 
 final List<dynamic> styles$GenericComp = const [];
@@ -209,7 +206,6 @@ final List<dynamic> styles$GenericCompHost = const [];
 
 // Host for component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewGenericCompHost0<T> extends import8.HostView<import1.GenericComp<T>> {
-  _ViewGenericCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component GenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -220,8 +216,8 @@ class _ViewGenericCompHost0<T> extends import8.HostView<import1.GenericComp<T>> 
   }
 }
 
-import8.HostView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>(import9.Injector injector) {
-  return _ViewGenericCompHost0(injector);
+import8.HostView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>() {
+  return _ViewGenericCompHost0();
 }
 
 final List<dynamic> styles$UsesGenericComp = const [];
@@ -292,7 +288,6 @@ final List<dynamic> styles$UsesGenericCompHost = const [];
 
 // Host for component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericCompHost0 extends import8.HostView<import1.UsesGenericComp> {
-  _ViewUsesGenericCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesGenericComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -303,8 +298,8 @@ class _ViewUsesGenericCompHost0 extends import8.HostView<import1.UsesGenericComp
   }
 }
 
-import8.HostView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0(import9.Injector injector) {
-  return _ViewUsesGenericCompHost0(injector);
+import8.HostView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0() {
+  return _ViewUsesGenericCompHost0();
 }
 
 final List<dynamic> styles$UsesGenericCompGeneric = const [];
@@ -375,7 +370,6 @@ final List<dynamic> styles$UsesGenericCompGenericHost = const [];
 
 // Host for component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericCompGenericHost0<E> extends import8.HostView<import1.UsesGenericCompGeneric<E>> {
-  _ViewUsesGenericCompGenericHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesGenericCompGeneric in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -386,8 +380,8 @@ class _ViewUsesGenericCompGenericHost0<E> extends import8.HostView<import1.UsesG
   }
 }
 
-import8.HostView<import1.UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGenericHost0<E>(import9.Injector injector) {
-  return _ViewUsesGenericCompGenericHost0(injector);
+import8.HostView<import1.UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGenericHost0<E>() {
+  return _ViewUsesGenericCompGenericHost0();
 }
 
 final List<dynamic> styles$MappingComp1 = const [];
@@ -433,7 +427,6 @@ final List<dynamic> styles$MappingComp1Host = const [];
 
 // Host for component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewMappingComp1Host0<K, V> extends import8.HostView<import1.MappingComp1<K, V>> {
-  _ViewMappingComp1Host0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component MappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -444,8 +437,8 @@ class _ViewMappingComp1Host0<K, V> extends import8.HostView<import1.MappingComp1
   }
 }
 
-import8.HostView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>(import9.Injector injector) {
-  return _ViewMappingComp1Host0(injector);
+import8.HostView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>() {
+  return _ViewMappingComp1Host0();
 }
 
 final List<dynamic> styles$UsesMappingComp1 = const [];
@@ -522,7 +515,6 @@ final List<dynamic> styles$UsesMappingComp1Host = const [];
 
 // Host for component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMappingComp1Host0 extends import8.HostView<import1.UsesMappingComp1> {
-  _ViewUsesMappingComp1Host0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesMappingComp1 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -533,8 +525,8 @@ class _ViewUsesMappingComp1Host0 extends import8.HostView<import1.UsesMappingCom
   }
 }
 
-import8.HostView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0(import9.Injector injector) {
-  return _ViewUsesMappingComp1Host0(injector);
+import8.HostView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0() {
+  return _ViewUsesMappingComp1Host0();
 }
 
 final List<dynamic> styles$MappingComp2 = const [];
@@ -580,7 +572,6 @@ final List<dynamic> styles$MappingComp2Host = const [];
 
 // Host for component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewMappingComp2Host0<K, V> extends import8.HostView<import1.MappingComp2<K, V>> {
-  _ViewMappingComp2Host0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component MappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -591,8 +582,8 @@ class _ViewMappingComp2Host0<K, V> extends import8.HostView<import1.MappingComp2
   }
 }
 
-import8.HostView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>(import9.Injector injector) {
-  return _ViewMappingComp2Host0(injector);
+import8.HostView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>() {
+  return _ViewMappingComp2Host0();
 }
 
 final List<dynamic> styles$UsesMappingComp2 = const [];
@@ -663,7 +654,6 @@ final List<dynamic> styles$UsesMappingComp2Host = const [];
 
 // Host for component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMappingComp2Host0 extends import8.HostView<import1.UsesMappingComp2> {
-  _ViewUsesMappingComp2Host0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesMappingComp2 in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -674,8 +664,8 @@ class _ViewUsesMappingComp2Host0 extends import8.HostView<import1.UsesMappingCom
   }
 }
 
-import8.HostView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0(import9.Injector injector) {
-  return _ViewUsesMappingComp2Host0(injector);
+import8.HostView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0() {
+  return _ViewUsesMappingComp2Host0();
 }
 
 final List<dynamic> styles$BoundComp = const [];
@@ -721,7 +711,6 @@ final List<dynamic> styles$BoundCompHost = const [];
 
 // Host for component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewBoundCompHost0<T extends num> extends import8.HostView<import1.BoundComp<T>> {
-  _ViewBoundCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component BoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -732,8 +721,8 @@ class _ViewBoundCompHost0<T extends num> extends import8.HostView<import1.BoundC
   }
 }
 
-import8.HostView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>(import9.Injector injector) {
-  return _ViewBoundCompHost0(injector);
+import8.HostView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>() {
+  return _ViewBoundCompHost0();
 }
 
 final List<dynamic> styles$UsesBoundCompWithBounds = const [];
@@ -804,7 +793,6 @@ final List<dynamic> styles$UsesBoundCompWithBoundsHost = const [];
 
 // Host for component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesBoundCompWithBoundsHost0 extends import8.HostView<import1.UsesBoundCompWithBounds> {
-  _ViewUsesBoundCompWithBoundsHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesBoundCompWithBounds in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -815,8 +803,8 @@ class _ViewUsesBoundCompWithBoundsHost0 extends import8.HostView<import1.UsesBou
   }
 }
 
-import8.HostView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0(import9.Injector injector) {
-  return _ViewUsesBoundCompWithBoundsHost0(injector);
+import8.HostView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0() {
+  return _ViewUsesBoundCompWithBoundsHost0();
 }
 
 final List<dynamic> styles$UsesBoundComp = const [];
@@ -887,7 +875,6 @@ final List<dynamic> styles$UsesBoundCompHost = const [];
 
 // Host for component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesBoundCompHost0 extends import8.HostView<import1.UsesBoundComp> {
-  _ViewUsesBoundCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -898,8 +885,8 @@ class _ViewUsesBoundCompHost0 extends import8.HostView<import1.UsesBoundComp> {
   }
 }
 
-import8.HostView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0(import9.Injector injector) {
-  return _ViewUsesBoundCompHost0(injector);
+import8.HostView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0() {
+  return _ViewUsesBoundCompHost0();
 }
 
 final List<dynamic> styles$SelfBoundComp = const [];
@@ -945,7 +932,6 @@ final List<dynamic> styles$SelfBoundCompHost = const [];
 
 // Host for component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewSelfBoundCompHost0<A, B extends A> extends import8.HostView<import1.SelfBoundComp<A, B>> {
-  _ViewSelfBoundCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component SelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -956,8 +942,8 @@ class _ViewSelfBoundCompHost0<A, B extends A> extends import8.HostView<import1.S
   }
 }
 
-import8.HostView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>(import9.Injector injector) {
-  return _ViewSelfBoundCompHost0(injector);
+import8.HostView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>() {
+  return _ViewSelfBoundCompHost0();
 }
 
 final List<dynamic> styles$UsesSelfBoundComp = const [];
@@ -1034,7 +1020,6 @@ final List<dynamic> styles$UsesSelfBoundCompHost = const [];
 
 // Host for component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesSelfBoundCompHost0 extends import8.HostView<import1.UsesSelfBoundComp> {
-  _ViewUsesSelfBoundCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesSelfBoundComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1045,8 +1030,8 @@ class _ViewUsesSelfBoundCompHost0 extends import8.HostView<import1.UsesSelfBound
   }
 }
 
-import8.HostView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0(import9.Injector injector) {
-  return _ViewUsesSelfBoundCompHost0(injector);
+import8.HostView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0() {
+  return _ViewUsesSelfBoundCompHost0();
 }
 
 final List<dynamic> styles$RecursiveComp = const [];
@@ -1092,7 +1077,6 @@ final List<dynamic> styles$RecursiveCompHost = const [];
 
 // Host for component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewRecursiveCompHost0<T extends Comparable<T>> extends import8.HostView<import1.RecursiveComp<T>> {
-  _ViewRecursiveCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component RecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1103,8 +1087,8 @@ class _ViewRecursiveCompHost0<T extends Comparable<T>> extends import8.HostView<
   }
 }
 
-import8.HostView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>(import9.Injector injector) {
-  return _ViewRecursiveCompHost0(injector);
+import8.HostView<import1.RecursiveComp<T>> viewFactory_RecursiveCompHost0<T extends Comparable<T>>() {
+  return _ViewRecursiveCompHost0();
 }
 
 final List<dynamic> styles$UsesRecursiveComp = const [];
@@ -1175,7 +1159,6 @@ final List<dynamic> styles$UsesRecursiveCompHost = const [];
 
 // Host for component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesRecursiveCompHost0 extends import8.HostView<import1.UsesRecursiveComp> {
-  _ViewUsesRecursiveCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesRecursiveComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1186,8 +1169,8 @@ class _ViewUsesRecursiveCompHost0 extends import8.HostView<import1.UsesRecursive
   }
 }
 
-import8.HostView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0(import9.Injector injector) {
-  return _ViewUsesRecursiveCompHost0(injector);
+import8.HostView<import1.UsesRecursiveComp> viewFactory_UsesRecursiveCompHost0() {
+  return _ViewUsesRecursiveCompHost0();
 }
 
 final List<dynamic> styles$FunctionTypeComp = const [];
@@ -1233,7 +1216,6 @@ final List<dynamic> styles$FunctionTypeCompHost = const [];
 
 // Host for component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewFunctionTypeCompHost0<F> extends import8.HostView<import1.FunctionTypeComp<F>> {
-  _ViewFunctionTypeCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component FunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1244,8 +1226,8 @@ class _ViewFunctionTypeCompHost0<F> extends import8.HostView<import1.FunctionTyp
   }
 }
 
-import8.HostView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>(import9.Injector injector) {
-  return _ViewFunctionTypeCompHost0(injector);
+import8.HostView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>() {
+  return _ViewFunctionTypeCompHost0();
 }
 
 final List<dynamic> styles$UsesFunctionTypeComp = const [];
@@ -1316,7 +1298,6 @@ final List<dynamic> styles$UsesFunctionTypeCompHost = const [];
 
 // Host for component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesFunctionTypeCompHost0 extends import8.HostView<import1.UsesFunctionTypeComp> {
-  _ViewUsesFunctionTypeCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesFunctionTypeComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1327,8 +1308,8 @@ class _ViewUsesFunctionTypeCompHost0 extends import8.HostView<import1.UsesFuncti
   }
 }
 
-import8.HostView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0(import9.Injector injector) {
-  return _ViewUsesFunctionTypeCompHost0(injector);
+import8.HostView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0() {
+  return _ViewUsesFunctionTypeCompHost0();
 }
 
 final List<dynamic> styles$NestedParentComp = const [];
@@ -1340,7 +1321,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
   ViewNestedChildComp0<T> _compView_1;
   import1.NestedChildComp<T> _NestedChildComp_1_5;
   ViewContainer _appEl_2;
-  import12.NgFor _NgFor_2_9;
+  import11.NgFor _NgFor_2_9;
   var _expr_0;
   var _expr_1;
   var _expr_2;
@@ -1368,12 +1349,12 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
     parentRenderNode.append(_el_1);
     this._NestedChildComp_1_5 = import1.NestedChildComp();
     this._compView_1.create(this._NestedChildComp_1_5);
-    final _anchor_2 = import13.appendAnchor(parentRenderNode);
+    final _anchor_2 = import12.appendAnchor(parentRenderNode);
     this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
     TemplateRef _TemplateRef_2_8 = TemplateRef(this._appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
-    this._NgFor_2_9 = import12.NgFor(this._appEl_2, _TemplateRef_2_8);
+    this._NgFor_2_9 = import11.NgFor(this._appEl_2, _TemplateRef_2_8);
   }
 
   @override
@@ -1430,11 +1411,11 @@ ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
   return _NestedParentCompNgFactory;
 }
 
-class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedParentComp<T>> {
+class _ViewNestedParentComp1<T> extends import14.EmbeddedView<import1.NestedParentComp<T>> {
   ViewNestedChildComp0<T> _compView_0;
   import1.NestedChildComp<T> _NestedChildComp_0_5;
   var _expr_0;
-  _ViewNestedParentComp1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewNestedParentComp1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1462,7 +1443,7 @@ class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedPare
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedParentComp1<T>(import16.RenderView parentView, int parentIndex) {
+import14.EmbeddedView<void> viewFactory_NestedParentComp1<T>(import15.RenderView parentView, int parentIndex) {
   return _ViewNestedParentComp1<T>(parentView, parentIndex);
 }
 
@@ -1470,7 +1451,6 @@ final List<dynamic> styles$NestedParentCompHost = const [];
 
 // Host for component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewNestedParentCompHost0<T> extends import8.HostView<import1.NestedParentComp<T>> {
-  _ViewNestedParentCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1481,8 +1461,8 @@ class _ViewNestedParentCompHost0<T> extends import8.HostView<import1.NestedParen
   }
 }
 
-import8.HostView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>(import9.Injector injector) {
-  return _ViewNestedParentCompHost0(injector);
+import8.HostView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>() {
+  return _ViewNestedParentCompHost0();
 }
 
 final List<dynamic> styles$NestedChildComp = const [];
@@ -1528,7 +1508,6 @@ final List<dynamic> styles$NestedChildCompHost = const [];
 
 // Host for component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewNestedChildCompHost0<T> extends import8.HostView<import1.NestedChildComp<T>> {
-  _ViewNestedChildCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NestedChildComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1539,8 +1518,8 @@ class _ViewNestedChildCompHost0<T> extends import8.HostView<import1.NestedChildC
   }
 }
 
-import8.HostView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>(import9.Injector injector) {
-  return _ViewNestedChildCompHost0(injector);
+import8.HostView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>() {
+  return _ViewNestedChildCompHost0();
 }
 
 final List<dynamic> styles$UsesNestedParentComp = const [];
@@ -1623,7 +1602,6 @@ final List<dynamic> styles$UsesNestedParentCompHost = const [];
 
 // Host for component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesNestedParentCompHost0 extends import8.HostView<import1.UsesNestedParentComp> {
-  _ViewUsesNestedParentCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesNestedParentComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1634,8 +1612,8 @@ class _ViewUsesNestedParentCompHost0 extends import8.HostView<import1.UsesNested
   }
 }
 
-import8.HostView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0(import9.Injector injector) {
-  return _ViewUsesNestedParentCompHost0(injector);
+import8.HostView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0() {
+  return _ViewUsesNestedParentCompHost0();
 }
 
 final List<dynamic> styles$UsesMultipleTypesComp = const [];
@@ -1722,7 +1700,6 @@ final List<dynamic> styles$UsesMultipleTypesCompHost = const [];
 
 // Host for component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesMultipleTypesCompHost0 extends import8.HostView<import1.UsesMultipleTypesComp> {
-  _ViewUsesMultipleTypesCompHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesMultipleTypesComp in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1733,8 +1710,8 @@ class _ViewUsesMultipleTypesCompHost0 extends import8.HostView<import1.UsesMulti
   }
 }
 
-import8.HostView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0(import9.Injector injector) {
-  return _ViewUsesMultipleTypesCompHost0(injector);
+import8.HostView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0() {
+  return _ViewUsesMultipleTypesCompHost0();
 }
 
 final List<dynamic> styles$UsesGenericChangeDetector = const [];
@@ -1757,8 +1734,8 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    this._el_0 = import13.appendDiv(doc, parentRenderNode);
-    import13.setAttribute(this._el_0, 'generic', '');
+    this._el_0 = import12.appendDiv(doc, parentRenderNode);
+    import12.setAttribute(this._el_0, 'generic', '');
     this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
   }
 
@@ -1798,7 +1775,6 @@ final List<dynamic> styles$UsesGenericChangeDetectorHost = const [];
 
 // Host for component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
 class _ViewUsesGenericChangeDetectorHost0 extends import8.HostView<import1.UsesGenericChangeDetector> {
-  _ViewUsesGenericChangeDetectorHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesGenericChangeDetector in asset:_goldens/test/_files/directives/generics.dart (changeDetection: Default)
@@ -1809,18 +1785,18 @@ class _ViewUsesGenericChangeDetectorHost0 extends import8.HostView<import1.UsesG
   }
 }
 
-import8.HostView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0(import9.Injector injector) {
-  return _ViewUsesGenericChangeDetectorHost0(injector);
+import8.HostView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0() {
+  return _ViewUsesGenericChangeDetectorHost0();
 }
 
-class GenericDirectiveNgCd<T> extends import17.DirectiveChangeDetector {
+class GenericDirectiveNgCd<T> extends import16.DirectiveChangeDetector {
   final import1.GenericDirective<T> instance;
   var _expr_0;
   GenericDirectiveNgCd(this.instance);
-  void detectHostChanges(import16.RenderView view, import5.Element el) {
+  void detectHostChanges(import15.RenderView view, import5.Element el) {
     final currVal_0 = this.instance.input;
     if (import6.checkBinding(this._expr_0, currVal_0, null, null)) {
-      import13.updateAttribute(el, 'a', currVal_0?.toString());
+      import12.updateAttribute(el, 'a', currVal_0?.toString());
       this._expr_0 = currVal_0;
     }
   }

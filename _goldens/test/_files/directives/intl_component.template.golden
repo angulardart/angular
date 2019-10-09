@@ -18,7 +18,6 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/src/runtime/interpolate.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
-import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$CompWithoutFinal = const [];
 
@@ -78,7 +77,6 @@ final List<dynamic> styles$CompWithoutFinalHost = const [];
 
 // Host for component CompWithoutFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithoutFinalHost0 extends import11.HostView<import1.CompWithoutFinal> {
-  _ViewCompWithoutFinalHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component CompWithoutFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
@@ -89,8 +87,8 @@ class _ViewCompWithoutFinalHost0 extends import11.HostView<import1.CompWithoutFi
   }
 }
 
-import11.HostView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0(import12.Injector injector) {
-  return _ViewCompWithoutFinalHost0(injector);
+import11.HostView<import1.CompWithoutFinal> viewFactory_CompWithoutFinalHost0() {
+  return _ViewCompWithoutFinalHost0();
 }
 
 final List<dynamic> styles$CompWithFinal = const [];
@@ -143,7 +141,6 @@ final List<dynamic> styles$CompWithFinalHost = const [];
 
 // Host for component CompWithFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithFinalHost0 extends import11.HostView<import1.CompWithFinal> {
-  _ViewCompWithFinalHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component CompWithFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
@@ -154,8 +151,8 @@ class _ViewCompWithFinalHost0 extends import11.HostView<import1.CompWithFinal> {
   }
 }
 
-import11.HostView<import1.CompWithFinal> viewFactory_CompWithFinalHost0(import12.Injector injector) {
-  return _ViewCompWithFinalHost0(injector);
+import11.HostView<import1.CompWithFinal> viewFactory_CompWithFinalHost0() {
+  return _ViewCompWithFinalHost0();
 }
 
 final List<dynamic> styles$CompWithFinalStatic = const [];
@@ -207,7 +204,6 @@ final List<dynamic> styles$CompWithFinalStaticHost = const [];
 
 // Host for component CompWithFinalStatic in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithFinalStaticHost0 extends import11.HostView<import1.CompWithFinalStatic> {
-  _ViewCompWithFinalStaticHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component CompWithFinalStatic in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
@@ -218,8 +214,8 @@ class _ViewCompWithFinalStaticHost0 extends import11.HostView<import1.CompWithFi
   }
 }
 
-import11.HostView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0(import12.Injector injector) {
-  return _ViewCompWithFinalStaticHost0(injector);
+import11.HostView<import1.CompWithFinalStatic> viewFactory_CompWithFinalStaticHost0() {
+  return _ViewCompWithFinalStaticHost0();
 }
 
 final List<dynamic> styles$CompWithExternalFinal = const [];
@@ -271,7 +267,6 @@ final List<dynamic> styles$CompWithExternalFinalHost = const [];
 
 // Host for component CompWithExternalFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
 class _ViewCompWithExternalFinalHost0 extends import11.HostView<import1.CompWithExternalFinal> {
-  _ViewCompWithExternalFinalHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component CompWithExternalFinal in asset:_goldens/test/_files/directives/intl_component.dart (changeDetection: Default)
@@ -282,8 +277,8 @@ class _ViewCompWithExternalFinalHost0 extends import11.HostView<import1.CompWith
   }
 }
 
-import11.HostView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0(import12.Injector injector) {
-  return _ViewCompWithExternalFinalHost0(injector);
+import11.HostView<import1.CompWithExternalFinal> viewFactory_CompWithExternalFinalHost0() {
+  return _ViewCompWithExternalFinalHost0();
 }
 
 var _visited = false;

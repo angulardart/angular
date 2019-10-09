@@ -20,7 +20,6 @@ import 'package:angular/src/runtime/proxies.dart' as import10;
 import 'package:angular/src/runtime/interpolate.dart' as import11;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import13;
-import 'package:angular/src/di/injector/injector.dart' as import14;
 
 final List<dynamic> styles$Comp = const [];
 
@@ -104,7 +103,6 @@ final List<dynamic> styles$CompHost = const [];
 
 // Host for component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
 class _ViewCompHost0 extends import13.HostView<import1.Comp> {
-  _ViewCompHost0(import14.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Comp in asset:_goldens/test/_files/pipes.dart (changeDetection: Default)
@@ -115,8 +113,8 @@ class _ViewCompHost0 extends import13.HostView<import1.Comp> {
   }
 }
 
-import13.HostView<import1.Comp> viewFactory_CompHost0(import14.Injector injector) {
-  return _ViewCompHost0(injector);
+import13.HostView<import1.Comp> viewFactory_CompHost0() {
+  return _ViewCompHost0();
 }
 
 var _visited = false;
