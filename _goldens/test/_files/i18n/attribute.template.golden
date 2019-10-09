@@ -17,7 +17,6 @@ import 'package:angular/src/runtime.dart' as import7;
 import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import10;
-import 'package:angular/src/di/injector/injector.dart' as import11;
 
 final List<dynamic> styles$I18nAttributeComponent = const [];
 
@@ -66,7 +65,6 @@ final List<dynamic> styles$I18nAttributeComponentHost = const [];
 
 // Host for component I18nAttributeComponent in asset:_goldens/test/_files/i18n/attribute.dart (changeDetection: Default)
 class _ViewI18nAttributeComponentHost0 extends import10.HostView<import1.I18nAttributeComponent> {
-  _ViewI18nAttributeComponentHost0(import11.Injector injector) : super(injector);
   @override
   void build() {
     // Child component I18nAttributeComponent in asset:_goldens/test/_files/i18n/attribute.dart (changeDetection: Default)
@@ -77,8 +75,8 @@ class _ViewI18nAttributeComponentHost0 extends import10.HostView<import1.I18nAtt
   }
 }
 
-import10.HostView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0(import11.Injector injector) {
-  return _ViewI18nAttributeComponentHost0(injector);
+import10.HostView<import1.I18nAttributeComponent> viewFactory_I18nAttributeComponentHost0() {
+  return _ViewI18nAttributeComponentHost0();
 }
 
 var _visited = false;

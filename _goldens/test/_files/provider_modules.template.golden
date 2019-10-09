@@ -16,8 +16,7 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
 import 'dart:core';
-import 'package:angular/src/di/injector/injector.dart' as import10;
-import 'package:angular/src/core/di/opaque_token.dart' as import11;
+import 'package:angular/src/core/di/opaque_token.dart' as import10;
 
 final List<dynamic> styles$ProviderModulesComponent = const [];
 
@@ -66,7 +65,6 @@ class _ViewProviderModulesComponentHost0 extends import8.HostView<import1.Provid
   Duration __fooToken_0_7;
   List<dynamic> __barToken_0_8;
   dynamic __bazToken_0_9;
-  _ViewProviderModulesComponentHost0(import10.Injector injector) : super(injector);
   import1.FooService get _FooService_0_6 {
     if ((this.__FooService_0_6 == null)) {
       (this.__FooService_0_6 = import1.FooService());
@@ -110,13 +108,13 @@ class _ViewProviderModulesComponentHost0 extends import8.HostView<import1.Provid
       if (identical(token, import1.FooService)) {
         return this._FooService_0_6;
       }
-      if (identical(token, const import11.OpaqueToken<dynamic>('fooToken'))) {
+      if (identical(token, const import10.OpaqueToken<dynamic>('fooToken'))) {
         return this._fooToken_0_7;
       }
-      if (identical(token, const import11.OpaqueToken<dynamic>('barToken'))) {
+      if (identical(token, const import10.OpaqueToken<dynamic>('barToken'))) {
         return this._barToken_0_8;
       }
-      if (identical(token, const import11.OpaqueToken<dynamic>('bazToken'))) {
+      if (identical(token, const import10.OpaqueToken<dynamic>('bazToken'))) {
         return this._bazToken_0_9;
       }
     }
@@ -124,8 +122,8 @@ class _ViewProviderModulesComponentHost0 extends import8.HostView<import1.Provid
   }
 }
 
-import8.HostView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0(import10.Injector injector) {
-  return _ViewProviderModulesComponentHost0(injector);
+import8.HostView<import1.ProviderModulesComponent> viewFactory_ProviderModulesComponentHost0() {
+  return _ViewProviderModulesComponentHost0();
 }
 
 var _visited = false;

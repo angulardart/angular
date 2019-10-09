@@ -26,7 +26,6 @@ import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
 import 'package:angular/src/core/linker/views/render_view.dart' as import17;
 import 'external_service.dart' as import18;
 import 'package:angular/src/core/linker/views/host_view.dart' as import19;
-import 'package:angular/src/di/injector/injector.dart' as import20;
 import 'deferred_component.dart' deferred as deflib0;
 import 'deferred_component.template.dart' deferred as deflib1;
 
@@ -460,7 +459,6 @@ final List<dynamic> styles$TestContainerComponentHost = const [];
 
 // Host for component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
 class _ViewTestContainerComponentHost0 extends import19.HostView<import1.TestContainerComponent> {
-  _ViewTestContainerComponentHost0(import20.Injector injector) : super(injector);
   @override
   void build() {
     // Child component TestContainerComponent in asset:_goldens/test/_files/deferred/container_component.dart (changeDetection: Default)
@@ -471,8 +469,8 @@ class _ViewTestContainerComponentHost0 extends import19.HostView<import1.TestCon
   }
 }
 
-import19.HostView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0(import20.Injector injector) {
-  return _ViewTestContainerComponentHost0(injector);
+import19.HostView<import1.TestContainerComponent> viewFactory_TestContainerComponentHost0() {
+  return _ViewTestContainerComponentHost0();
 }
 
 var _visited = false;

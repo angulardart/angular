@@ -15,11 +15,10 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
-import 'package:angular/src/runtime/text_binding.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
-import 'package:angular/src/runtime/interpolate.dart' as import12;
-import 'package:angular/src/core/change_detection/component_state.dart' as import13;
+import 'package:angular/src/runtime/text_binding.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/src/core/change_detection/component_state.dart' as import12;
 
 final List<dynamic> styles$UsesOnPushComponent = const [];
 
@@ -95,7 +94,6 @@ final List<dynamic> styles$UsesOnPushComponentHost = const [];
 
 // Host for component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewUsesOnPushComponentHost0 extends import8.HostView<import1.UsesOnPushComponent> {
-  _ViewUsesOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
@@ -106,8 +104,8 @@ class _ViewUsesOnPushComponentHost0 extends import8.HostView<import1.UsesOnPushC
   }
 }
 
-import8.HostView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0(import9.Injector injector) {
-  return _ViewUsesOnPushComponentHost0(injector);
+import8.HostView<import1.UsesOnPushComponent> viewFactory_UsesOnPushComponentHost0() {
+  return _ViewUsesOnPushComponentHost0();
 }
 
 final List<dynamic> styles$OnPushComponent = const [];
@@ -184,7 +182,6 @@ final List<dynamic> styles$OnPushComponentHost = const [];
 
 // Host for component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewOnPushComponentHost0 extends import8.HostView<import1.OnPushComponent> {
-  _ViewOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component OnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
@@ -204,15 +201,15 @@ class _ViewOnPushComponentHost0 extends import8.HostView<import1.OnPushComponent
   }
 }
 
-import8.HostView<import1.OnPushComponent> viewFactory_OnPushComponentHost0(import9.Injector injector) {
-  return _ViewOnPushComponentHost0(injector);
+import8.HostView<import1.OnPushComponent> viewFactory_OnPushComponentHost0() {
+  return _ViewOnPushComponentHost0();
 }
 
 final List<dynamic> styles$OnPushChildComponent = const [];
 
 // View for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewOnPushChildComponent0 extends import0.ComponentView<import1.OnPushChildComponent> {
-  final import10.TextBinding _textBinding_2 = import10.TextBinding();
+  final import9.TextBinding _textBinding_2 = import9.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewOnPushChildComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -226,15 +223,15 @@ class ViewOnPushChildComponent0 extends import0.ComponentView<import1.OnPushChil
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'OnPushChild: ');
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'OnPushChild: ');
     _el_0.append(this._textBinding_2.element);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_2.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_2.updateText(import11.interpolateString0(_ctx.name));
   }
 
   static void _debugClearComponentStyles() {
@@ -262,7 +259,6 @@ final List<dynamic> styles$OnPushChildComponentHost = const [];
 
 // Host for component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewOnPushChildComponentHost0 extends import8.HostView<import1.OnPushChildComponent> {
-  _ViewOnPushChildComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component OnPushChildComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
@@ -282,8 +278,8 @@ class _ViewOnPushChildComponentHost0 extends import8.HostView<import1.OnPushChil
   }
 }
 
-import8.HostView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0(import9.Injector injector) {
-  return _ViewOnPushChildComponentHost0(injector);
+import8.HostView<import1.OnPushChildComponent> viewFactory_OnPushChildComponentHost0() {
+  return _ViewOnPushChildComponentHost0();
 }
 
 final List<dynamic> styles$LegacyComponentState = const [];
@@ -304,9 +300,9 @@ class ViewLegacyComponentState0 extends import0.ComponentView<import1.LegacyComp
     final _ctx = this.ctx;
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'Stateful');
-    import13.internalSetStateChanged(_ctx, this.markForCheck);
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'Stateful');
+    import12.internalSetStateChanged(_ctx, this.markForCheck);
   }
 
   static void _debugClearComponentStyles() {
@@ -334,7 +330,6 @@ final List<dynamic> styles$LegacyComponentStateHost = const [];
 
 // Host for component LegacyComponentState in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewLegacyComponentStateHost0 extends import8.HostView<import1.LegacyComponentState> {
-  _ViewLegacyComponentStateHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component LegacyComponentState in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
@@ -345,8 +340,8 @@ class _ViewLegacyComponentStateHost0 extends import8.HostView<import1.LegacyComp
   }
 }
 
-import8.HostView<import1.LegacyComponentState> viewFactory_LegacyComponentStateHost0(import9.Injector injector) {
-  return _ViewLegacyComponentStateHost0(injector);
+import8.HostView<import1.LegacyComponentState> viewFactory_LegacyComponentStateHost0() {
+  return _ViewLegacyComponentStateHost0();
 }
 
 final List<dynamic> styles$DefaultComponent = const [];
@@ -366,8 +361,8 @@ class ViewDefaultComponent0 extends import0.ComponentView<import1.DefaultCompone
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    final _el_0 = import11.appendDiv(doc, parentRenderNode);
-    final _text_1 = import11.appendText(_el_0, 'Default');
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'Default');
   }
 
   static void _debugClearComponentStyles() {
@@ -395,7 +390,6 @@ final List<dynamic> styles$DefaultComponentHost = const [];
 
 // Host for component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewDefaultComponentHost0 extends import8.HostView<import1.DefaultComponent> {
-  _ViewDefaultComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DefaultComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
@@ -406,8 +400,8 @@ class _ViewDefaultComponentHost0 extends import8.HostView<import1.DefaultCompone
   }
 }
 
-import8.HostView<import1.DefaultComponent> viewFactory_DefaultComponentHost0(import9.Injector injector) {
-  return _ViewDefaultComponentHost0(injector);
+import8.HostView<import1.DefaultComponent> viewFactory_DefaultComponentHost0() {
+  return _ViewDefaultComponentHost0();
 }
 
 final List<dynamic> styles$UsesNgModelLike = const [];
@@ -429,7 +423,7 @@ class ViewUsesNgModelLike0 extends import0.ComponentView<import1.UsesNgModelLike
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
     final doc = import5.document;
-    final _el_0 = import11.appendElement(doc, parentRenderNode, 'input');
+    final _el_0 = import10.appendElement(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handleEvent_0));
     this.initSubscriptions([subscription_0]);
@@ -485,7 +479,6 @@ final List<dynamic> styles$UsesNgModelLikeHost = const [];
 
 // Host for component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewUsesNgModelLikeHost0 extends import8.HostView<import1.UsesNgModelLike> {
-  _ViewUsesNgModelLikeHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesNgModelLike in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
@@ -496,8 +489,8 @@ class _ViewUsesNgModelLikeHost0 extends import8.HostView<import1.UsesNgModelLike
   }
 }
 
-import8.HostView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0(import9.Injector injector) {
-  return _ViewUsesNgModelLikeHost0(injector);
+import8.HostView<import1.UsesNgModelLike> viewFactory_UsesNgModelLikeHost0() {
+  return _ViewUsesNgModelLikeHost0();
 }
 
 final List<dynamic> styles$UsesDoCheckOnPushComponent = const [];
@@ -577,7 +570,6 @@ final List<dynamic> styles$UsesDoCheckOnPushComponentHost = const [];
 
 // Host for component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewUsesDoCheckOnPushComponentHost0 extends import8.HostView<import1.UsesDoCheckOnPushComponent> {
-  _ViewUsesDoCheckOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesDoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
@@ -588,15 +580,15 @@ class _ViewUsesDoCheckOnPushComponentHost0 extends import8.HostView<import1.Uses
   }
 }
 
-import8.HostView<import1.UsesDoCheckOnPushComponent> viewFactory_UsesDoCheckOnPushComponentHost0(import9.Injector injector) {
-  return _ViewUsesDoCheckOnPushComponentHost0(injector);
+import8.HostView<import1.UsesDoCheckOnPushComponent> viewFactory_UsesDoCheckOnPushComponentHost0() {
+  return _ViewUsesDoCheckOnPushComponentHost0();
 }
 
 final List<dynamic> styles$DoCheckOnPushComponent = const [];
 
 // View for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
 class ViewDoCheckOnPushComponent0 extends import0.ComponentView<import1.DoCheckOnPushComponent> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
+  final import9.TextBinding _textBinding_1 = import9.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewDoCheckOnPushComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -609,14 +601,14 @@ class ViewDoCheckOnPushComponent0 extends import0.ComponentView<import1.DoCheckO
   @override
   void build() {
     final import5.HtmlElement parentRenderNode = this.initViewRoot();
-    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
+    final _text_0 = import10.appendText(parentRenderNode, 'Name: ');
     parentRenderNode.append(this._textBinding_1.element);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.name));
   }
 
   static void _debugClearComponentStyles() {
@@ -644,7 +636,6 @@ final List<dynamic> styles$DoCheckOnPushComponentHost = const [];
 
 // Host for component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: Default)
 class _ViewDoCheckOnPushComponentHost0 extends import8.HostView<import1.DoCheckOnPushComponent> {
-  _ViewDoCheckOnPushComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DoCheckOnPushComponent in asset:_goldens/test/_files/change_detection.dart (changeDetection: OnPush)
@@ -667,8 +658,8 @@ class _ViewDoCheckOnPushComponentHost0 extends import8.HostView<import1.DoCheckO
   }
 }
 
-import8.HostView<import1.DoCheckOnPushComponent> viewFactory_DoCheckOnPushComponentHost0(import9.Injector injector) {
-  return _ViewDoCheckOnPushComponentHost0(injector);
+import8.HostView<import1.DoCheckOnPushComponent> viewFactory_DoCheckOnPushComponentHost0() {
+  return _ViewDoCheckOnPushComponentHost0();
 }
 
 var _visited = false;

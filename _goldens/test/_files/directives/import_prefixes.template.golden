@@ -15,9 +15,8 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
-import 'package:angular/src/runtime/text_binding.dart' as import10;
-import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/src/runtime/text_binding.dart' as import9;
+import 'package:angular/src/runtime/interpolate.dart' as import10;
 
 final List<dynamic> styles$ParentComponent = const [];
 
@@ -87,7 +86,6 @@ final List<dynamic> styles$ParentComponentHost = const [];
 
 // Host for component ParentComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class _ViewParentComponentHost0 extends import8.HostView<import1.ParentComponent> {
-  _ViewParentComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component ParentComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
@@ -98,15 +96,15 @@ class _ViewParentComponentHost0 extends import8.HostView<import1.ParentComponent
   }
 }
 
-import8.HostView<import1.ParentComponent> viewFactory_ParentComponentHost0(import9.Injector injector) {
-  return _ViewParentComponentHost0(injector);
+import8.HostView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
+  return _ViewParentComponentHost0();
 }
 
 final List<dynamic> styles$ChildComponent = const [];
 
 // View for component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> {
-  final import10.TextBinding _textBinding_0 = import10.TextBinding();
+  final import9.TextBinding _textBinding_0 = import9.TextBinding();
   static import2.ComponentStyles _componentStyles;
   ViewChildComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -125,7 +123,7 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import11.interpolate0(_ctx.myType));
+    this._textBinding_0.updateText(import10.interpolate0(_ctx.myType));
   }
 
   static void _debugClearComponentStyles() {
@@ -153,7 +151,6 @@ final List<dynamic> styles$ChildComponentHost = const [];
 
 // Host for component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
 class _ViewChildComponentHost0 extends import8.HostView<import1.ChildComponent> {
-  _ViewChildComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component ChildComponent in asset:_goldens/test/_files/directives/import_prefixes.dart (changeDetection: Default)
@@ -164,8 +161,8 @@ class _ViewChildComponentHost0 extends import8.HostView<import1.ChildComponent> 
   }
 }
 
-import8.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0(import9.Injector injector) {
-  return _ViewChildComponentHost0(injector);
+import8.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
+  return _ViewChildComponentHost0();
 }
 
 var _visited = false;

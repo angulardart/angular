@@ -18,7 +18,6 @@ import 'package:angular/src/runtime.dart' as import8;
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
-import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -84,7 +83,6 @@ final List<dynamic> styles$TestFooComponentHost = const [];
 
 // Host for component TestFooComponent in asset:_goldens/test/_files/directives/base_component.dart (changeDetection: Default)
 class _ViewTestFooComponentHost0 extends import11.HostView<import1.TestFooComponent> {
-  _ViewTestFooComponentHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component TestFooComponent in asset:_goldens/test/_files/directives/base_component.dart (changeDetection: Default)
@@ -95,8 +93,8 @@ class _ViewTestFooComponentHost0 extends import11.HostView<import1.TestFooCompon
   }
 }
 
-import11.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(import12.Injector injector) {
-  return _ViewTestFooComponentHost0(injector);
+import11.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
+  return _ViewTestFooComponentHost0();
 }
 
 var _visited = false;

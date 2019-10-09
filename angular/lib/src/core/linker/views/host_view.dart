@@ -35,8 +35,6 @@ import 'view.dart';
 ///
 /// The type parameter [T] is the type of the hosted [component].
 abstract class HostView<T> extends View implements DynamicView {
-  HostView(this._injector);
-
   /// The hosted component instance.
   ///
   /// To be instantiated in [build] by the generated implementation.
@@ -48,8 +46,11 @@ abstract class HostView<T> extends View implements DynamicView {
   ComponentView<T> componentView;
 
   /// The host injector provided by this view's creator.
-  // TODO(leonsenft): move to _HostData.
-  final Injector _injector;
+  // Ideally this field should be final and initialized in the constructor (as
+  // it historically was), but late initializing it in `create()` produces less
+  // generated code.
+  // TODO(b/133171082): make this field `late`.
+  Injector _injector;
 
   final _data = _HostViewData();
 
@@ -76,7 +77,12 @@ abstract class HostView<T> extends View implements DynamicView {
   ///
   /// The [projectedNodes] specify the nodes and [ViewContainer]s to project
   /// into each content slot by index in the [componentView].
-  ComponentRef<T> create(List<List<Object>> projectedNodes) {
+  ///
+  /// The [injector] is provided by the caller, and is typically used to connect
+  /// this host view to the rest of the dependency injection hierarchy. See
+  /// [ViewContainer.createComponent] for details.
+  ComponentRef<T> create(List<List<Object>> projectedNodes, Injector injector) {
+    _injector = injector;
     build(); // This initializes `component` and `componentView`.
     componentView.createAndProject(component, projectedNodes);
     return ComponentRef(this, componentView.rootElement, component);

@@ -25,7 +25,6 @@ import 'package:angular/src/runtime/text_binding.dart' as import15;
 import 'dart:core';
 import 'package:angular/src/runtime/interpolate.dart' as import17;
 import 'package:angular/src/core/linker/views/host_view.dart' as import18;
-import 'package:angular/src/di/injector/injector.dart' as import19;
 
 final List<dynamic> styles$TestFooComponent = const [];
 
@@ -160,7 +159,6 @@ final List<dynamic> styles$TestFooComponentHost = const [];
 
 // Host for component TestFooComponent in asset:_goldens/test/_files/core_directives.dart (changeDetection: Default)
 class _ViewTestFooComponentHost0 extends import18.HostView<import1.TestFooComponent> {
-  _ViewTestFooComponentHost0(import19.Injector injector) : super(injector);
   @override
   void build() {
     // Child component TestFooComponent in asset:_goldens/test/_files/core_directives.dart (changeDetection: Default)
@@ -171,8 +169,8 @@ class _ViewTestFooComponentHost0 extends import18.HostView<import1.TestFooCompon
   }
 }
 
-import18.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0(import19.Injector injector) {
-  return _ViewTestFooComponentHost0(injector);
+import18.HostView<import1.TestFooComponent> viewFactory_TestFooComponentHost0() {
+  return _ViewTestFooComponentHost0();
 }
 
 var _visited = false;

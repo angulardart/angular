@@ -16,7 +16,6 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
 
 final List<dynamic> styles$UsesNativeEvents = const [];
 
@@ -66,7 +65,6 @@ final List<dynamic> styles$UsesNativeEventsHost = const [];
 
 // Host for component UsesNativeEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewUsesNativeEventsHost0 extends import9.HostView<import1.UsesNativeEvents> {
-  _ViewUsesNativeEventsHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesNativeEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
@@ -77,8 +75,8 @@ class _ViewUsesNativeEventsHost0 extends import9.HostView<import1.UsesNativeEven
   }
 }
 
-import9.HostView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0(import10.Injector injector) {
-  return _ViewUsesNativeEventsHost0(injector);
+import9.HostView<import1.UsesNativeEvents> viewFactory_UsesNativeEventsHost0() {
+  return _ViewUsesNativeEventsHost0();
 }
 
 final List<dynamic> styles$UsesAngularEvents = const [];
@@ -145,7 +143,6 @@ final List<dynamic> styles$UsesAngularEventsHost = const [];
 
 // Host for component UsesAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewUsesAngularEventsHost0 extends import9.HostView<import1.UsesAngularEvents> {
-  _ViewUsesAngularEventsHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
@@ -156,8 +153,8 @@ class _ViewUsesAngularEventsHost0 extends import9.HostView<import1.UsesAngularEv
   }
 }
 
-import9.HostView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0(import10.Injector injector) {
-  return _ViewUsesAngularEventsHost0(injector);
+import9.HostView<import1.UsesAngularEvents> viewFactory_UsesAngularEventsHost0() {
+  return _ViewUsesAngularEventsHost0();
 }
 
 final List<dynamic> styles$HasAngularEvents = const [];
@@ -203,7 +200,6 @@ final List<dynamic> styles$HasAngularEventsHost = const [];
 
 // Host for component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewHasAngularEventsHost0 extends import9.HostView<import1.HasAngularEvents> {
-  _ViewHasAngularEventsHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasAngularEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
@@ -214,8 +210,8 @@ class _ViewHasAngularEventsHost0 extends import9.HostView<import1.HasAngularEven
   }
 }
 
-import9.HostView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0(import10.Injector injector) {
-  return _ViewHasAngularEventsHost0(injector);
+import9.HostView<import1.HasAngularEvents> viewFactory_HasAngularEventsHost0() {
+  return _ViewHasAngularEventsHost0();
 }
 
 final List<dynamic> styles$HasManyNativeHostEvents = const [];
@@ -268,7 +264,6 @@ final List<dynamic> styles$HasManyNativeHostEventsHost = const [];
 
 // Host for component HasManyNativeHostEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
 class _ViewHasManyNativeHostEventsHost0 extends import9.HostView<import1.HasManyNativeHostEvents> {
-  _ViewHasManyNativeHostEventsHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component HasManyNativeHostEvents in asset:_goldens/test/_files/events.dart (changeDetection: Default)
@@ -279,8 +274,8 @@ class _ViewHasManyNativeHostEventsHost0 extends import9.HostView<import1.HasMany
   }
 }
 
-import9.HostView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0(import10.Injector injector) {
-  return _ViewHasManyNativeHostEventsHost0(injector);
+import9.HostView<import1.HasManyNativeHostEvents> viewFactory_HasManyNativeHostEventsHost0() {
+  return _ViewHasManyNativeHostEventsHost0();
 }
 
 var _visited = false;

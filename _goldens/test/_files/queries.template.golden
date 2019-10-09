@@ -23,8 +23,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
 import 'package:angular/src/core/linker/views/render_view.dart' as import15;
 import 'package:angular/src/core/linker/views/host_view.dart' as import16;
-import 'package:angular/src/di/injector/injector.dart' as import17;
-import 'package:angular/src/common/directives/ng_for.dart' as import18;
+import 'package:angular/src/common/directives/ng_for.dart' as import17;
 
 final List<dynamic> styles$QueriesComponent = const [];
 
@@ -144,7 +143,6 @@ final List<dynamic> styles$QueriesComponentHost = const [];
 
 // Host for component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewQueriesComponentHost0 extends import16.HostView<import1.QueriesComponent> {
-  _ViewQueriesComponentHost0(import17.Injector injector) : super(injector);
   @override
   void build() {
     // Child component QueriesComponent in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
@@ -156,8 +154,8 @@ class _ViewQueriesComponentHost0 extends import16.HostView<import1.QueriesCompon
   }
 }
 
-import16.HostView<import1.QueriesComponent> viewFactory_QueriesComponentHost0(import17.Injector injector) {
-  return _ViewQueriesComponentHost0(injector);
+import16.HostView<import1.QueriesComponent> viewFactory_QueriesComponentHost0() {
+  return _ViewQueriesComponentHost0();
 }
 
 final List<dynamic> styles$EmbeddedQueries = const [];
@@ -277,7 +275,6 @@ final List<dynamic> styles$EmbeddedQueriesHost = const [];
 
 // Host for component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewEmbeddedQueriesHost0 extends import16.HostView<import1.EmbeddedQueries> {
-  _ViewEmbeddedQueriesHost0(import17.Injector injector) : super(injector);
   @override
   void build() {
     // Child component EmbeddedQueries in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
@@ -288,8 +285,8 @@ class _ViewEmbeddedQueriesHost0 extends import16.HostView<import1.EmbeddedQuerie
   }
 }
 
-import16.HostView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0(import17.Injector injector) {
-  return _ViewEmbeddedQueriesHost0(injector);
+import16.HostView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0() {
+  return _ViewEmbeddedQueriesHost0();
 }
 
 final List<dynamic> styles$EmbeddedQueriesList = const [];
@@ -409,7 +406,6 @@ final List<dynamic> styles$EmbeddedQueriesListHost = const [];
 
 // Host for component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewEmbeddedQueriesListHost0 extends import16.HostView<import1.EmbeddedQueriesList> {
-  _ViewEmbeddedQueriesListHost0(import17.Injector injector) : super(injector);
   @override
   void build() {
     // Child component EmbeddedQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
@@ -420,8 +416,8 @@ class _ViewEmbeddedQueriesListHost0 extends import16.HostView<import1.EmbeddedQu
   }
 }
 
-import16.HostView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0(import17.Injector injector) {
-  return _ViewEmbeddedQueriesListHost0(injector);
+import16.HostView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0() {
+  return _ViewEmbeddedQueriesListHost0();
 }
 
 final List<dynamic> styles$NestedNgForQueriesList = const [];
@@ -528,7 +524,7 @@ import14.EmbeddedView<void> viewFactory_NestedNgForQueriesList1(import15.RenderV
 
 class _ViewNestedNgForQueriesList2 extends import14.EmbeddedView<import1.NestedNgForQueriesList> {
   ViewContainer _appEl_1;
-  import18.NgFor _NgFor_1_9;
+  import17.NgFor _NgFor_1_9;
   _ViewNestedNgForQueriesList2(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
@@ -537,7 +533,7 @@ class _ViewNestedNgForQueriesList2 extends import14.EmbeddedView<import1.NestedN
     final _anchor_1 = import9.appendAnchor(_el_0);
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     TemplateRef _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_NestedNgForQueriesList3);
-    this._NgFor_1_9 = import18.NgFor(this._appEl_1, _TemplateRef_1_8);
+    this._NgFor_1_9 = import17.NgFor(this._appEl_1, _TemplateRef_1_8);
     this.initRootNode(_el_0);
   }
 
@@ -593,7 +589,6 @@ final List<dynamic> styles$NestedNgForQueriesListHost = const [];
 
 // Host for component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
 class _ViewNestedNgForQueriesListHost0 extends import16.HostView<import1.NestedNgForQueriesList> {
-  _ViewNestedNgForQueriesListHost0(import17.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NestedNgForQueriesList in asset:_goldens/test/_files/queries.dart (changeDetection: Default)
@@ -604,8 +599,8 @@ class _ViewNestedNgForQueriesListHost0 extends import16.HostView<import1.NestedN
   }
 }
 
-import16.HostView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0(import17.Injector injector) {
-  return _ViewNestedNgForQueriesListHost0(injector);
+import16.HostView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0() {
+  return _ViewNestedNgForQueriesListHost0();
 }
 
 var _visited = false;

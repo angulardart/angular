@@ -21,8 +21,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/embedded_view.dart' as import12;
 import 'package:angular/src/core/linker/views/render_view.dart' as import13;
 import 'package:angular/src/core/linker/views/host_view.dart' as import14;
-import 'package:angular/src/di/injector/injector.dart' as import15;
-import 'view_encapsulated_styles.css.dart' as import16;
+import 'view_encapsulated_styles.css.dart' as import15;
 
 final List<dynamic> styles$EmulatedComponent = [import0.styles, '._nghost-%ID%{border:1px solid black}', 'div._ngcontent-%ID%{color:red}'];
 
@@ -91,7 +90,6 @@ final List<dynamic> styles$EmulatedComponentHost = const [];
 
 // Host for component EmulatedComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class _ViewEmulatedComponentHost0 extends import14.HostView<import2.EmulatedComponent> {
-  _ViewEmulatedComponentHost0(import15.Injector injector) : super(injector);
   @override
   void build() {
     // Child component EmulatedComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
@@ -102,11 +100,11 @@ class _ViewEmulatedComponentHost0 extends import14.HostView<import2.EmulatedComp
   }
 }
 
-import14.HostView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0(import15.Injector injector) {
-  return _ViewEmulatedComponentHost0(injector);
+import14.HostView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0() {
+  return _ViewEmulatedComponentHost0();
 }
 
-final List<dynamic> styles$NoneComponent = [import16.styles, ':host { border: 1px solid #000; } ', 'div { color: red; }'];
+final List<dynamic> styles$NoneComponent = [import15.styles, ':host { border: 1px solid #000; } ', 'div { color: red; }'];
 
 // View for component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class ViewNoneComponent0 extends import1.ComponentView<import2.NoneComponent> {
@@ -171,7 +169,6 @@ final List<dynamic> styles$NoneComponentHost = const [];
 
 // Host for component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
 class _ViewNoneComponentHost0 extends import14.HostView<import2.NoneComponent> {
-  _ViewNoneComponentHost0(import15.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NoneComponent in asset:_goldens/test/_files/view_encapsulation.dart (changeDetection: Default)
@@ -182,8 +179,8 @@ class _ViewNoneComponentHost0 extends import14.HostView<import2.NoneComponent> {
   }
 }
 
-import14.HostView<import2.NoneComponent> viewFactory_NoneComponentHost0(import15.Injector injector) {
-  return _ViewNoneComponentHost0(injector);
+import14.HostView<import2.NoneComponent> viewFactory_NoneComponentHost0() {
+  return _ViewNoneComponentHost0();
 }
 
 var _visited = false;

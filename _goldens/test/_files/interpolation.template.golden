@@ -18,12 +18,11 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/src/runtime/interpolate.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
-import 'package:angular/src/di/injector/injector.dart' as import12;
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import14;
+import 'package:angular/src/common/directives/ng_for.dart' as import13;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
-import 'package:angular/src/core/linker/views/render_view.dart' as import17;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
+import 'package:angular/src/core/linker/views/render_view.dart' as import16;
 import 'dart:core';
 
 final List<dynamic> styles$InterpolationComponent = const [];
@@ -83,7 +82,6 @@ final List<dynamic> styles$InterpolationComponentHost = const [];
 
 // Host for component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationComponentHost0 extends import11.HostView<import1.InterpolationComponent> {
-  _ViewInterpolationComponentHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationComponent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -94,8 +92,8 @@ class _ViewInterpolationComponentHost0 extends import11.HostView<import1.Interpo
   }
 }
 
-import11.HostView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0(import12.Injector injector) {
-  return _ViewInterpolationComponentHost0(injector);
+import11.HostView<import1.InterpolationComponent> viewFactory_InterpolationComponentHost0() {
+  return _ViewInterpolationComponentHost0();
 }
 
 final List<dynamic> styles$InterpolationComponentNoWhitespace = const [];
@@ -151,7 +149,6 @@ final List<dynamic> styles$InterpolationComponentNoWhitespaceHost = const [];
 
 // Host for component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationComponentNoWhitespaceHost0 extends import11.HostView<import1.InterpolationComponentNoWhitespace> {
-  _ViewInterpolationComponentNoWhitespaceHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationComponentNoWhitespace in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -162,8 +159,8 @@ class _ViewInterpolationComponentNoWhitespaceHost0 extends import11.HostView<imp
   }
 }
 
-import11.HostView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0(import12.Injector injector) {
-  return _ViewInterpolationComponentNoWhitespaceHost0(injector);
+import11.HostView<import1.InterpolationComponentNoWhitespace> viewFactory_InterpolationComponentNoWhitespaceHost0() {
+  return _ViewInterpolationComponentNoWhitespaceHost0();
 }
 
 final List<dynamic> styles$InterpolationTwoAdjacent = const [];
@@ -224,7 +221,6 @@ final List<dynamic> styles$InterpolationTwoAdjacentHost = const [];
 
 // Host for component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationTwoAdjacentHost0 extends import11.HostView<import1.InterpolationTwoAdjacent> {
-  _ViewInterpolationTwoAdjacentHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationTwoAdjacent in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -235,8 +231,8 @@ class _ViewInterpolationTwoAdjacentHost0 extends import11.HostView<import1.Inter
   }
 }
 
-import11.HostView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0(import12.Injector injector) {
-  return _ViewInterpolationTwoAdjacentHost0(injector);
+import11.HostView<import1.InterpolationTwoAdjacent> viewFactory_InterpolationTwoAdjacentHost0() {
+  return _ViewInterpolationTwoAdjacentHost0();
 }
 
 final List<dynamic> styles$InterpolationLongerSentence = const [];
@@ -302,7 +298,6 @@ final List<dynamic> styles$InterpolationLongerSentenceHost = const [];
 
 // Host for component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLongerSentenceHost0 extends import11.HostView<import1.InterpolationLongerSentence> {
-  _ViewInterpolationLongerSentenceHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationLongerSentence in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -313,8 +308,8 @@ class _ViewInterpolationLongerSentenceHost0 extends import11.HostView<import1.In
   }
 }
 
-import11.HostView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0(import12.Injector injector) {
-  return _ViewInterpolationLongerSentenceHost0(injector);
+import11.HostView<import1.InterpolationLongerSentence> viewFactory_InterpolationLongerSentenceHost0() {
+  return _ViewInterpolationLongerSentenceHost0();
 }
 
 final List<dynamic> styles$InterpolationLiterals = const [];
@@ -366,7 +361,6 @@ final List<dynamic> styles$InterpolationLiteralsHost = const [];
 
 // Host for component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLiteralsHost0 extends import11.HostView<import1.InterpolationLiterals> {
-  _ViewInterpolationLiteralsHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationLiterals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -377,8 +371,8 @@ class _ViewInterpolationLiteralsHost0 extends import11.HostView<import1.Interpol
   }
 }
 
-import11.HostView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0(import12.Injector injector) {
-  return _ViewInterpolationLiteralsHost0(injector);
+import11.HostView<import1.InterpolationLiterals> viewFactory_InterpolationLiteralsHost0() {
+  return _ViewInterpolationLiteralsHost0();
 }
 
 final List<dynamic> styles$InterpolationLocals = const [];
@@ -386,7 +380,7 @@ final List<dynamic> styles$InterpolationLocals = const [];
 // View for component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class ViewInterpolationLocals0 extends import0.ComponentView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import14.NgFor _NgFor_0_9;
+  import13.NgFor _NgFor_0_9;
   static import3.ComponentStyles _componentStyles;
   ViewInterpolationLocals0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -402,7 +396,7 @@ class ViewInterpolationLocals0 extends import0.ComponentView<import1.Interpolati
     final _anchor_0 = import8.appendAnchor(parentRenderNode);
     this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InterpolationLocals1);
-    this._NgFor_0_9 = import14.NgFor(this._appEl_0, _TemplateRef_0_8);
+    this._NgFor_0_9 = import13.NgFor(this._appEl_0, _TemplateRef_0_8);
   }
 
   @override
@@ -446,17 +440,17 @@ ComponentFactory<import1.InterpolationLocals> get InterpolationLocalsNgFactory {
   return _InterpolationLocalsNgFactory;
 }
 
-class _ViewInterpolationLocals1 extends import16.EmbeddedView<import1.InterpolationLocals> {
+class _ViewInterpolationLocals1 extends import15.EmbeddedView<import1.InterpolationLocals> {
   ViewContainer _appEl_0;
-  import14.NgFor _NgFor_0_9;
+  import13.NgFor _NgFor_0_9;
   var _expr_0;
-  _ViewInterpolationLocals1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewInterpolationLocals1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final _anchor_0 = import8.createAnchor();
     this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
     TemplateRef _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_InterpolationLocals2);
-    this._NgFor_0_9 = import14.NgFor(this._appEl_0, _TemplateRef_0_8);
+    this._NgFor_0_9 = import13.NgFor(this._appEl_0, _TemplateRef_0_8);
     this.initRootNode(this._appEl_0);
   }
 
@@ -480,14 +474,14 @@ class _ViewInterpolationLocals1 extends import16.EmbeddedView<import1.Interpolat
   }
 }
 
-import16.EmbeddedView<void> viewFactory_InterpolationLocals1(import17.RenderView parentView, int parentIndex) {
+import15.EmbeddedView<void> viewFactory_InterpolationLocals1(import16.RenderView parentView, int parentIndex) {
   return _ViewInterpolationLocals1(parentView, parentIndex);
 }
 
-class _ViewInterpolationLocals2 extends import16.EmbeddedView<import1.InterpolationLocals> {
+class _ViewInterpolationLocals2 extends import15.EmbeddedView<import1.InterpolationLocals> {
   final import2.TextBinding _textBinding_1 = import2.TextBinding();
   final import2.TextBinding _textBinding_3 = import2.TextBinding();
-  _ViewInterpolationLocals2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewInterpolationLocals2(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final _text_0 = import8.createText('Hello ');
@@ -506,7 +500,7 @@ class _ViewInterpolationLocals2 extends import16.EmbeddedView<import1.Interpolat
   }
 }
 
-import16.EmbeddedView<void> viewFactory_InterpolationLocals2(import17.RenderView parentView, int parentIndex) {
+import15.EmbeddedView<void> viewFactory_InterpolationLocals2(import16.RenderView parentView, int parentIndex) {
   return _ViewInterpolationLocals2(parentView, parentIndex);
 }
 
@@ -514,7 +508,6 @@ final List<dynamic> styles$InterpolationLocalsHost = const [];
 
 // Host for component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewInterpolationLocalsHost0 extends import11.HostView<import1.InterpolationLocals> {
-  _ViewInterpolationLocalsHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component InterpolationLocals in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -525,8 +518,8 @@ class _ViewInterpolationLocalsHost0 extends import11.HostView<import1.Interpolat
   }
 }
 
-import11.HostView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0(import12.Injector injector) {
-  return _ViewInterpolationLocalsHost0(injector);
+import11.HostView<import1.InterpolationLocals> viewFactory_InterpolationLocalsHost0() {
+  return _ViewInterpolationLocalsHost0();
 }
 
 final List<dynamic> styles$Attribute = const [];
@@ -595,7 +588,6 @@ final List<dynamic> styles$AttributeHost = const [];
 
 // Host for component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewAttributeHost0 extends import11.HostView<import1.Attribute> {
-  _ViewAttributeHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component Attribute in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -606,8 +598,8 @@ class _ViewAttributeHost0 extends import11.HostView<import1.Attribute> {
   }
 }
 
-import11.HostView<import1.Attribute> viewFactory_AttributeHost0(import12.Injector injector) {
-  return _ViewAttributeHost0(injector);
+import11.HostView<import1.Attribute> viewFactory_AttributeHost0() {
+  return _ViewAttributeHost0();
 }
 
 final List<dynamic> styles$AttributePW = const [];
@@ -677,7 +669,6 @@ final List<dynamic> styles$AttributePWHost = const [];
 
 // Host for component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
 class _ViewAttributePWHost0 extends import11.HostView<import1.AttributePW> {
-  _ViewAttributePWHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component AttributePW in asset:_goldens/test/_files/interpolation.dart (changeDetection: Default)
@@ -688,8 +679,8 @@ class _ViewAttributePWHost0 extends import11.HostView<import1.AttributePW> {
   }
 }
 
-import11.HostView<import1.AttributePW> viewFactory_AttributePWHost0(import12.Injector injector) {
-  return _ViewAttributePWHost0(injector);
+import11.HostView<import1.AttributePW> viewFactory_AttributePWHost0() {
+  return _ViewAttributePWHost0();
 }
 
 var _visited = false;

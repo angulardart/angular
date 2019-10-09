@@ -16,8 +16,7 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
-import 'external_service.dart' as import11;
+import 'external_service.dart' as import10;
 
 final List<dynamic> styles$DeferredChild1Component = const [];
 
@@ -63,7 +62,6 @@ final List<dynamic> styles$DeferredChild1ComponentHost = const [];
 
 // Host for component DeferredChild1Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChild1ComponentHost0 extends import9.HostView<import1.DeferredChild1Component> {
-  _ViewDeferredChild1ComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChild1Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -74,8 +72,8 @@ class _ViewDeferredChild1ComponentHost0 extends import9.HostView<import1.Deferre
   }
 }
 
-import9.HostView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost0(import10.Injector injector) {
-  return _ViewDeferredChild1ComponentHost0(injector);
+import9.HostView<import1.DeferredChild1Component> viewFactory_DeferredChild1ComponentHost0() {
+  return _ViewDeferredChild1ComponentHost0();
 }
 
 final List<dynamic> styles$DeferredChild2Component = const [];
@@ -122,7 +120,6 @@ final List<dynamic> styles$DeferredChild2ComponentHost = const [];
 
 // Host for component DeferredChild2Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChild2ComponentHost0 extends import9.HostView<import1.DeferredChild2Component> {
-  _ViewDeferredChild2ComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChild2Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -133,8 +130,8 @@ class _ViewDeferredChild2ComponentHost0 extends import9.HostView<import1.Deferre
   }
 }
 
-import9.HostView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost0(import10.Injector injector) {
-  return _ViewDeferredChild2ComponentHost0(injector);
+import9.HostView<import1.DeferredChild2Component> viewFactory_DeferredChild2ComponentHost0() {
+  return _ViewDeferredChild2ComponentHost0();
 }
 
 final List<dynamic> styles$DeferredChild3Component = const [];
@@ -181,7 +178,6 @@ final List<dynamic> styles$DeferredChild3ComponentHost = const [];
 
 // Host for component DeferredChild3Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChild3ComponentHost0 extends import9.HostView<import1.DeferredChild3Component> {
-  _ViewDeferredChild3ComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChild3Component in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -192,8 +188,8 @@ class _ViewDeferredChild3ComponentHost0 extends import9.HostView<import1.Deferre
   }
 }
 
-import9.HostView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost0(import10.Injector injector) {
-  return _ViewDeferredChild3ComponentHost0(injector);
+import9.HostView<import1.DeferredChild3Component> viewFactory_DeferredChild3ComponentHost0() {
+  return _ViewDeferredChild3ComponentHost0();
 }
 
 final List<dynamic> styles$DeferredChildOnPush = const [];
@@ -240,7 +236,6 @@ final List<dynamic> styles$DeferredChildOnPushHost = const [];
 
 // Host for component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChildOnPushHost0 extends import9.HostView<import1.DeferredChildOnPush> {
-  _ViewDeferredChildOnPushHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChildOnPush in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: OnPush)
@@ -251,8 +246,8 @@ class _ViewDeferredChildOnPushHost0 extends import9.HostView<import1.DeferredChi
   }
 }
 
-import9.HostView<import1.DeferredChildOnPush> viewFactory_DeferredChildOnPushHost0(import10.Injector injector) {
-  return _ViewDeferredChildOnPushHost0(injector);
+import9.HostView<import1.DeferredChildOnPush> viewFactory_DeferredChildOnPushHost0() {
+  return _ViewDeferredChildOnPushHost0();
 }
 
 final List<dynamic> styles$NotDeferredChildComponent = const [];
@@ -298,7 +293,6 @@ final List<dynamic> styles$NotDeferredChildComponentHost = const [];
 
 // Host for component NotDeferredChildComponent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewNotDeferredChildComponentHost0 extends import9.HostView<import1.NotDeferredChildComponent> {
-  _ViewNotDeferredChildComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component NotDeferredChildComponent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -309,8 +303,8 @@ class _ViewNotDeferredChildComponentHost0 extends import9.HostView<import1.NotDe
   }
 }
 
-import9.HostView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponentHost0(import10.Injector injector) {
-  return _ViewNotDeferredChildComponentHost0(injector);
+import9.HostView<import1.NotDeferredChildComponent> viewFactory_NotDeferredChildComponentHost0() {
+  return _ViewNotDeferredChildComponentHost0();
 }
 
 final List<dynamic> styles$DeferredChildComponentWithoutNgContent = const [];
@@ -359,7 +353,6 @@ final List<dynamic> styles$DeferredChildComponentWithoutNgContentHost = const []
 
 // Host for component DeferredChildComponentWithoutNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChildComponentWithoutNgContentHost0 extends import9.HostView<import1.DeferredChildComponentWithoutNgContent> {
-  _ViewDeferredChildComponentWithoutNgContentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChildComponentWithoutNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -370,8 +363,8 @@ class _ViewDeferredChildComponentWithoutNgContentHost0 extends import9.HostView<
   }
 }
 
-import9.HostView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChildComponentWithoutNgContentHost0(import10.Injector injector) {
-  return _ViewDeferredChildComponentWithoutNgContentHost0(injector);
+import9.HostView<import1.DeferredChildComponentWithoutNgContent> viewFactory_DeferredChildComponentWithoutNgContentHost0() {
+  return _ViewDeferredChildComponentWithoutNgContentHost0();
 }
 
 final List<dynamic> styles$DeferredChildComponentWithNgContent = const [];
@@ -420,7 +413,6 @@ final List<dynamic> styles$DeferredChildComponentWithNgContentHost = const [];
 
 // Host for component DeferredChildComponentWithNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChildComponentWithNgContentHost0 extends import9.HostView<import1.DeferredChildComponentWithNgContent> {
-  _ViewDeferredChildComponentWithNgContentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DeferredChildComponentWithNgContent in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
@@ -431,8 +423,8 @@ class _ViewDeferredChildComponentWithNgContentHost0 extends import9.HostView<imp
   }
 }
 
-import9.HostView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContentHost0(import10.Injector injector) {
-  return _ViewDeferredChildComponentWithNgContentHost0(injector);
+import9.HostView<import1.DeferredChildComponentWithNgContent> viewFactory_DeferredChildComponentWithNgContentHost0() {
+  return _ViewDeferredChildComponentWithNgContentHost0();
 }
 
 final List<dynamic> styles$DeferredChildComponentWithServices = const [];
@@ -478,12 +470,11 @@ final List<dynamic> styles$DeferredChildComponentWithServicesHost = const [];
 
 // Host for component DeferredChildComponentWithServices in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
 class _ViewDeferredChildComponentWithServicesHost0 extends import9.HostView<import1.DeferredChildComponentWithServices> {
-  import11.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
-  import11.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
-  _ViewDeferredChildComponentWithServicesHost0(import10.Injector injector) : super(injector);
-  import11.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
+  import10.ExternalServiceImmediatelyCreated _ExternalServiceImmediatelyCreated_0_5;
+  import10.ExternalServiceLazilyCreatedMaybe __ExternalServiceLazilyCreatedMaybe_0_7;
+  import10.ExternalServiceLazilyCreatedMaybe get _ExternalServiceLazilyCreatedMaybe_0_7 {
     if ((this.__ExternalServiceLazilyCreatedMaybe_0_7 == null)) {
-      (this.__ExternalServiceLazilyCreatedMaybe_0_7 = import11.ExternalServiceLazilyCreatedMaybe());
+      (this.__ExternalServiceLazilyCreatedMaybe_0_7 = import10.ExternalServiceLazilyCreatedMaybe());
     }
     return this.__ExternalServiceLazilyCreatedMaybe_0_7;
   }
@@ -493,7 +484,7 @@ class _ViewDeferredChildComponentWithServicesHost0 extends import9.HostView<impo
     // Child component DeferredChildComponentWithServices in asset:_goldens/test/_files/deferred/deferred_component.dart (changeDetection: Default)
     this.componentView = ViewDeferredChildComponentWithServices0(this, 0);
     final _el_0 = this.componentView.rootElement;
-    this._ExternalServiceImmediatelyCreated_0_5 = import11.ExternalServiceImmediatelyCreated();
+    this._ExternalServiceImmediatelyCreated_0_5 = import10.ExternalServiceImmediatelyCreated();
     this.component = import1.DeferredChildComponentWithServices(this._ExternalServiceImmediatelyCreated_0_5);
     this.initRootNode(_el_0);
   }
@@ -501,10 +492,10 @@ class _ViewDeferredChildComponentWithServicesHost0 extends import9.HostView<impo
   @override
   dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
     if ((0 == nodeIndex)) {
-      if (identical(token, import11.ExternalServiceImmediatelyCreated)) {
+      if (identical(token, import10.ExternalServiceImmediatelyCreated)) {
         return this._ExternalServiceImmediatelyCreated_0_5;
       }
-      if (identical(token, import11.ExternalServiceLazilyCreatedMaybe)) {
+      if (identical(token, import10.ExternalServiceLazilyCreatedMaybe)) {
         return this._ExternalServiceLazilyCreatedMaybe_0_7;
       }
     }
@@ -512,8 +503,8 @@ class _ViewDeferredChildComponentWithServicesHost0 extends import9.HostView<impo
   }
 }
 
-import9.HostView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServicesHost0(import10.Injector injector) {
-  return _ViewDeferredChildComponentWithServicesHost0(injector);
+import9.HostView<import1.DeferredChildComponentWithServices> viewFactory_DeferredChildComponentWithServicesHost0() {
+  return _ViewDeferredChildComponentWithServicesHost0();
 }
 
 var _visited = false;

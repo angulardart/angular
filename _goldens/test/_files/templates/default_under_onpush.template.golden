@@ -18,7 +18,6 @@ import 'package:angular/src/runtime/dom_helpers.dart' as import8;
 import 'package:angular/src/runtime/interpolate.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
-import 'package:angular/src/di/injector/injector.dart' as import12;
 
 final List<dynamic> styles$DefaultComp = const [];
 
@@ -72,7 +71,6 @@ final List<dynamic> styles$DefaultCompHost = const [];
 
 // Host for component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
 class _ViewDefaultCompHost0 extends import11.HostView<import1.DefaultComp> {
-  _ViewDefaultCompHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component DefaultComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
@@ -83,8 +81,8 @@ class _ViewDefaultCompHost0 extends import11.HostView<import1.DefaultComp> {
   }
 }
 
-import11.HostView<import1.DefaultComp> viewFactory_DefaultCompHost0(import12.Injector injector) {
-  return _ViewDefaultCompHost0(injector);
+import11.HostView<import1.DefaultComp> viewFactory_DefaultCompHost0() {
+  return _ViewDefaultCompHost0();
 }
 
 final List<dynamic> styles$OnPushComp = const [];
@@ -150,7 +148,6 @@ final List<dynamic> styles$OnPushCompHost = const [];
 
 // Host for component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: Default)
 class _ViewOnPushCompHost0 extends import11.HostView<import1.OnPushComp> {
-  _ViewOnPushCompHost0(import12.Injector injector) : super(injector);
   @override
   void build() {
     // Child component OnPushComp in asset:_goldens/test/_files/templates/default_under_onpush.dart (changeDetection: OnPush)
@@ -161,8 +158,8 @@ class _ViewOnPushCompHost0 extends import11.HostView<import1.OnPushComp> {
   }
 }
 
-import11.HostView<import1.OnPushComp> viewFactory_OnPushCompHost0(import12.Injector injector) {
-  return _ViewOnPushCompHost0(injector);
+import11.HostView<import1.OnPushComp> viewFactory_OnPushCompHost0() {
+  return _ViewOnPushCompHost0();
 }
 
 var _visited = false;

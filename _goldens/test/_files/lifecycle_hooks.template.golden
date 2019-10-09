@@ -15,8 +15,7 @@ import 'dart:html' as import5;
 import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
-import 'package:angular/src/di/injector/injector.dart' as import9;
-import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 
 final List<dynamic> styles$MostLifecycleHooksComponent = const [];
 
@@ -80,7 +79,6 @@ final List<dynamic> styles$MostLifecycleHooksComponentHost = const [];
 
 // Host for component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewMostLifecycleHooksComponentHost0 extends import8.HostView<import1.MostLifecycleHooksComponent> {
-  _ViewMostLifecycleHooksComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component MostLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
@@ -118,8 +116,8 @@ class _ViewMostLifecycleHooksComponentHost0 extends import8.HostView<import1.Mos
   }
 }
 
-import8.HostView<import1.MostLifecycleHooksComponent> viewFactory_MostLifecycleHooksComponentHost0(import9.Injector injector) {
-  return _ViewMostLifecycleHooksComponentHost0(injector);
+import8.HostView<import1.MostLifecycleHooksComponent> viewFactory_MostLifecycleHooksComponentHost0() {
+  return _ViewMostLifecycleHooksComponentHost0();
 }
 
 final List<dynamic> styles$EmptyComponent = const [];
@@ -165,7 +163,6 @@ final List<dynamic> styles$EmptyComponentHost = const [];
 
 // Host for component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewEmptyComponentHost0 extends import8.HostView<import1.EmptyComponent> {
-  _ViewEmptyComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component EmptyComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
@@ -176,8 +173,8 @@ class _ViewEmptyComponentHost0 extends import8.HostView<import1.EmptyComponent> 
   }
 }
 
-import8.HostView<import1.EmptyComponent> viewFactory_EmptyComponentHost0(import9.Injector injector) {
-  return _ViewEmptyComponentHost0(injector);
+import8.HostView<import1.EmptyComponent> viewFactory_EmptyComponentHost0() {
+  return _ViewEmptyComponentHost0();
 }
 
 final List<dynamic> styles$AfterChangesComponent = const [];
@@ -223,7 +220,6 @@ final List<dynamic> styles$AfterChangesComponentHost = const [];
 
 // Host for component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewAfterChangesComponentHost0 extends import8.HostView<import1.AfterChangesComponent> {
-  _ViewAfterChangesComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
@@ -234,8 +230,8 @@ class _ViewAfterChangesComponentHost0 extends import8.HostView<import1.AfterChan
   }
 }
 
-import8.HostView<import1.AfterChangesComponent> viewFactory_AfterChangesComponentHost0(import9.Injector injector) {
-  return _ViewAfterChangesComponentHost0(injector);
+import8.HostView<import1.AfterChangesComponent> viewFactory_AfterChangesComponentHost0() {
+  return _ViewAfterChangesComponentHost0();
 }
 
 final List<dynamic> styles$UsesLifecycleHooksComponent = const [];
@@ -278,7 +274,7 @@ class ViewUsesLifecycleHooksComponent0 extends import0.ComponentView<import1.Use
       [_el_1]
     ]);
     final doc = import5.document;
-    final _el_2 = import10.appendElement(doc, parentRenderNode, 'do-check');
+    final _el_2 = import9.appendElement(doc, parentRenderNode, 'do-check');
     this._DoCheckDirective_2_5 = import1.DoCheckDirective();
     // Child component AfterChangesComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
     this._compView_3 = ViewAfterChangesComponent0(this, 3);
@@ -369,7 +365,6 @@ final List<dynamic> styles$UsesLifecycleHooksComponentHost = const [];
 
 // Host for component UsesLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
 class _ViewUsesLifecycleHooksComponentHost0 extends import8.HostView<import1.UsesLifecycleHooksComponent> {
-  _ViewUsesLifecycleHooksComponentHost0(import9.Injector injector) : super(injector);
   @override
   void build() {
     // Child component UsesLifecycleHooksComponent in asset:_goldens/test/_files/lifecycle_hooks.dart (changeDetection: Default)
@@ -380,8 +375,8 @@ class _ViewUsesLifecycleHooksComponentHost0 extends import8.HostView<import1.Use
   }
 }
 
-import8.HostView<import1.UsesLifecycleHooksComponent> viewFactory_UsesLifecycleHooksComponentHost0(import9.Injector injector) {
-  return _ViewUsesLifecycleHooksComponentHost0(injector);
+import8.HostView<import1.UsesLifecycleHooksComponent> viewFactory_UsesLifecycleHooksComponentHost0() {
+  return _ViewUsesLifecycleHooksComponentHost0();
 }
 
 var _visited = false;

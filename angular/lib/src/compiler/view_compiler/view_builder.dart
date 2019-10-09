@@ -549,7 +549,9 @@ o.Constructor _createViewConstructor(CompileView view) {
     case ViewType.embedded:
       return _createEmbeddedViewConstructor(view);
     case ViewType.host:
-      return _createHostViewConstructor(view);
+      // Host views have no constructor parameters, thus don't require an
+      // explicit constructor.
+      return null;
     default:
       throw StateError('Unsupported $ViewType: ${view.viewType}');
   }
@@ -623,17 +625,6 @@ o.Constructor _createEmbeddedViewConstructor(CompileView view) {
         ViewConstructorVars.parentView,
         ViewConstructorVars.parentIndex,
       ]).toStmt(),
-    ],
-  );
-}
-
-o.Constructor _createHostViewConstructor(CompileView view) {
-  return o.Constructor(
-    params: [
-      o.FnParam('injector', o.importType(Identifiers.Injector)),
-    ],
-    initializers: [
-      o.SUPER_EXPR.callFn([o.variable('injector')]).toStmt(),
     ],
   );
 }
@@ -753,30 +744,25 @@ o.Statement _createHostViewFactory(CompileView view, o.ClassStmt viewClass) {
   // For host view factories, the returned `HostView` must include the component
   // type as a type argument:
   //
-  //    HostView<FooComponent> viewFactory_FooComponentHost0(...) { ... }
+  //    HostView<FooComponent> viewFactory_FooComponentHost0() { ... }
   //
   // This includes any generic type parameters the component itself might have.
   // Note how the generic type arguments of the constructor are inferred from
   // the return type.
   //
-  //    HostView<BarComponent<T>> viewFactory_BarComponentHost0<T>(...) {
-  //      return _ViewBarComponentHost0(...);
+  //    HostView<BarComponent<T>> viewFactory_BarComponentHost0<T>() {
+  //      return _ViewBarComponentHost0();
   //    }
   final returnTypeTypeArguments = [_getContextType(view)];
   final returnType = o.importType(Views.hostView, returnTypeTypeArguments);
-  final injectorParameterName = 'injector';
   final body = [
     o.ReturnStatement(
-      o.variable(viewClass.name).instantiate([
-        o.variable(injectorParameterName),
-      ]),
+      o.variable(viewClass.name).instantiate([]),
     ),
   ];
   return o.DeclareFunctionStmt(
     view.viewFactoryName,
-    [
-      o.FnParam(injectorParameterName, o.importType(Identifiers.Injector))
-    ], // No parameters.
+    [], // No parameters.
     body,
     type: returnType,
     typeParameters: viewClass.typeParameters,

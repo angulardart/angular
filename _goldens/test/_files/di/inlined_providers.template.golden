@@ -16,8 +16,7 @@ import 'package:angular/src/runtime.dart' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/injector/injector.dart' as import10;
-import 'package:angular/src/di/errors.dart' as import11;
+import 'package:angular/src/di/errors.dart' as import10;
 
 final List<dynamic> styles$ParentComponent = const [];
 
@@ -305,7 +304,6 @@ final List<dynamic> styles$ParentComponentHost = const [];
 
 // Host for component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewParentComponentHost0 extends import9.HostView<import1.ParentComponent> {
-  _ViewParentComponentHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component ParentComponent in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
@@ -316,8 +314,8 @@ class _ViewParentComponentHost0 extends import9.HostView<import1.ParentComponent
   }
 }
 
-import9.HostView<import1.ParentComponent> viewFactory_ParentComponentHost0(import10.Injector injector) {
-  return _ViewParentComponentHost0(injector);
+import9.HostView<import1.ParentComponent> viewFactory_ParentComponentHost0() {
+  return _ViewParentComponentHost0();
 }
 
 final List<dynamic> styles$ChildComponentProvidingA$B$C = const [];
@@ -366,7 +364,6 @@ class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.Ch
   import1.A __A_0_6;
   import1.B __B_0_7;
   import1.C __C_0_8;
-  _ViewChildComponentProvidingA$B$CHost0(import10.Injector injector) : super(injector);
   import1.A get _A_0_6 {
     if ((this.__A_0_6 == null)) {
       (this.__A_0_6 = import1.A());
@@ -414,8 +411,8 @@ class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.Ch
   }
 }
 
-import9.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0(import10.Injector injector) {
-  return _ViewChildComponentProvidingA$B$CHost0(injector);
+import9.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
+  return _ViewChildComponentProvidingA$B$CHost0();
 }
 
 final List<dynamic> styles$ChildComponentWithNgContentProviding$D = const [];
@@ -463,7 +460,6 @@ final List<dynamic> styles$ChildComponentWithNgContentProviding$DHost = const []
 // Host for component ChildComponentWithNgContentProviding$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<import1.ChildComponentWithNgContentProviding$D> {
   import1.D __D_0_6;
-  _ViewChildComponentWithNgContentProviding$DHost0(import10.Injector injector) : super(injector);
   import1.D get _D_0_6 {
     if ((this.__D_0_6 == null)) {
       (this.__D_0_6 = import1.D());
@@ -489,8 +485,8 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<
   }
 }
 
-import9.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0(import10.Injector injector) {
-  return _ViewChildComponentWithNgContentProviding$DHost0(injector);
+import9.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
+  return _ViewChildComponentWithNgContentProviding$DHost0();
 }
 
 final List<dynamic> styles$ChildComponentInjecting$D = const [];
@@ -536,14 +532,13 @@ final List<dynamic> styles$ChildComponentInjecting$DHost = const [];
 
 // Host for component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.ChildComponentInjecting$D> {
-  _ViewChildComponentInjecting$DHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component ChildComponentInjecting$D in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
     this.componentView = ViewChildComponentInjecting$D0(this, 0);
     final _el_0 = this.componentView.rootElement;
     this.component = (import6.isDevMode
-        ? import11.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
+        ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex)));
@@ -551,8 +546,8 @@ class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.Child
   }
 }
 
-import9.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0(import10.Injector injector) {
-  return _ViewChildComponentInjecting$DHost0(injector);
+import9.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
+  return _ViewChildComponentInjecting$DHost0();
 }
 
 final List<dynamic> styles$ChildComponentWithVisibilityAll = const [];
@@ -598,7 +593,6 @@ final List<dynamic> styles$ChildComponentWithVisibilityAllHost = const [];
 
 // Host for component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
 class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1.ChildComponentWithVisibilityAll> {
-  _ViewChildComponentWithVisibilityAllHost0(import10.Injector injector) : super(injector);
   @override
   void build() {
     // Child component ChildComponentWithVisibilityAll in asset:_goldens/test/_files/di/inlined_providers.dart (changeDetection: Default)
@@ -617,8 +611,8 @@ class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1
   }
 }
 
-import9.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0(import10.Injector injector) {
-  return _ViewChildComponentWithVisibilityAllHost0(injector);
+import9.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
+  return _ViewChildComponentWithVisibilityAllHost0();
 }
 
 var _visited = false;
