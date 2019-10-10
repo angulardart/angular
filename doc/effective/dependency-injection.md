@@ -219,6 +219,65 @@ const someProviders = [
 ];
 ```
 
+### PREFER to spread lists of Providers with the spread operator
+
+As of Dart 2.5, the new [spread operator] can be used in const expressions, for
+example in `@Component` annotations. This can make Provider lists more readable,
+and can allow them to be properly typed, as `List<Provider>`. Long lists of
+Providers are especially easier to scan for "nested" lists of Providers when
+they are spread.
+
+[spread operator]: https://dart.dev/guides/language/language-tour#spread-operator
+
+**BAD**: Mixing individual Providers with dynamic lists (of Providers and of
+lists of Providers, ...):
+
+```dart
+@Component(
+  selector: 'hero-component',
+  directives: [MaterialSelectComponent, MaterialSelectItemComponent, NgIf],
+  providers: [
+    windowBindings,
+    domServiceBinding,
+  ]
+)
+```
+
+**GOOD**: Spreading lists of bindings:
+
+```dart
+@Component(
+  selector: 'hero-component',
+  directives: [MaterialSelectComponent, MaterialSelectItemComponent, NgIf],
+  providers: <Provider>[
+    ...windowBindings,
+    domServiceBinding,
+  ]
+)
+```
+
+Even when a list of Providers includes only the elements found in another single
+list of Providers, it is more readable and understandable to declare a new list
+literal, and spread the elements of the other singe list.
+
+**BAD**: Referencing a bare list of Providers:
+
+```dart
+@Component(
+  selector: 'hero-component',
+  providers: autoSuggestInputBindings,
+)
+```
+
+**GOOD**: Spreading a list of Providers into a new list literal:
+
+```dart
+@Component(
+  selector: 'hero-component',
+  providers: [...autoSuggestInputBindings],
+)
+```
+
 ## Tokens
 
 ### DO use typed `OpaqueToken<T>`
@@ -659,6 +718,51 @@ class UserListComponent {
     // Use a new cache instance per component.
   }
 }
+```
+
+### PREFER to spread lists of directives with the spread operator
+
+As of Dart 2.5, the new spread syntax can be used in const expressions, for
+example in `@Component` annotations. This can make directive lists more
+readable. Long lists of directives are especially easier to scan for "nested"
+lists of directives when they are spread.
+
+**BAD**: Mixing individual directives with lists:
+
+```dart
+@Component(
+  selector: 'hero-component',
+  directives: [
+    formDirectives,
+    AutoFocusDirective,
+    MaterialButtonComponent,
+    MaterialIconComponent,
+    materialInputDirectives,
+    MaterialMultilineInputComponent,
+    MaterialInputAutoSelectDirective,
+    materialNumberInputDirectives,
+    MaterialPaperTooltipComponent,
+  ],
+)
+```
+
+**GOOD**: Spreading included lists of directives:
+
+```dart
+@Component(
+  selector: 'hero-component',
+  directives: [
+    ...formDirectives,
+    AutoFocusDirective,
+    MaterialButtonComponent,
+    MaterialIconComponent,
+    ...materialInputDirectives,
+    MaterialMultilineInputComponent,
+    MaterialInputAutoSelectDirective,
+    ...materialNumberInputDirectives,
+    MaterialPaperTooltipComponent,
+  ],
+)
 ```
 
 ## Annotations
