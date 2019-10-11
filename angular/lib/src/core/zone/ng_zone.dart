@@ -173,7 +173,6 @@ class NgZone {
   }
 
   void _onEnter() {
-    // console.log('ZONE.enter', this._nesting, this._isStable);
     _nesting++;
     if (_isStable) {
       _isStable = false;
@@ -184,7 +183,6 @@ class NgZone {
 
   void _onLeave() {
     _nesting--;
-    // console.log('ZONE.leave', this._nesting, this._isStable);
     _checkStable();
   }
 
