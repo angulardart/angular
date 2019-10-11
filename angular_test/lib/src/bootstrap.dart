@@ -104,7 +104,6 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   FutureOr<void> beforeChangeDetection(E componentInstance),
 }) {
   final componentRef = componentFactory.create(injector);
-  // TODO(b/131856980): assert(debugUsesDefaultChangeDetection(componentRef));
 
   Future<ComponentRef<E>> loadComponent() {
     hostElement.append(componentRef.location);
