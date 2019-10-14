@@ -3,6 +3,8 @@ import 'dart:html' show Element, NodeTreeSanitizer;
 import 'package:angular/angular.dart';
 import 'package:angular/security.dart';
 
+import 'dom_sanitization_service_impl.dart' show SafeHtmlImpl;
+
 /// Sets [Element.innerHtml] _without_ sanitizing the HTML output.
 ///
 /// Requires use of a [SafeHtml] wrapper created by [DomSanitizationService]:
@@ -41,9 +43,9 @@ class SafeInnerHtmlDirective {
 
   @Input()
   set safeInnerHtml(safeInnerHtml) {
-    if (safeInnerHtml is SafeHtml) {
+    if (safeInnerHtml is SafeHtmlImpl) {
       _element.setInnerHtml(
-        safeInnerHtml.toString(),
+        safeInnerHtml.changingThisWillBypassSecurityTrust,
         treeSanitizer: NodeTreeSanitizer.trusted,
       );
     } else if (safeInnerHtml == null) {
