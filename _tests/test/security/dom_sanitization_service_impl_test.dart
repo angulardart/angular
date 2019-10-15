@@ -1,6 +1,4 @@
 @TestOn('browser')
-library angular2.test.security.html_sanitizer_test;
-
 import 'package:test/test.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
