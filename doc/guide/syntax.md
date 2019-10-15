@@ -290,6 +290,15 @@ Assign a value to a property of an HTML element or an `@Input()` of a component:
 <coffee-machine [decaf]="isDecaf"></coffee-machine>
 ```
 
+### Boolean @Input()s
+
+If an `@Input()` expects a `bool` and should be set to `true` it can be written
+as `[myInput]`.
+
+```html
+<coffee-machine [decaf]></coffee-machine>
+```
+
 ## Structural Directives
 
 Use _structural_ directives (directives prefixed with a `*`) to control the
