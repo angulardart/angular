@@ -1,7 +1,6 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/facade/lang.dart' show jsSplit;
 
-import '../core/security.dart';
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
@@ -10,6 +9,7 @@ import 'compile_metadata.dart'
 import 'expression_parser/parser.dart' show Parser;
 import 'parse_util.dart';
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
+import 'security.dart';
 import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
     show BoundElementPropertyAst, BoundValue, PropertyBindingType, TemplateAst;

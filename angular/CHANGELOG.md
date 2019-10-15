@@ -91,6 +91,10 @@
 
     To execute multiple statements, define and bind a method.
 
+*   `TemplateSecurityContext` is no longer exported by
+    `package:angular/security.dart`. This enum is only used during compilation
+    and has no purpose in client code.
+
 ## 6.0.0-alpha+1
 
 ### New features
