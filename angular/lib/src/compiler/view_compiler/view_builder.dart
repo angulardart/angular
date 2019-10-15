@@ -657,21 +657,14 @@ String _tagNameFromComponentSelector(String selector) {
 }
 
 List<o.Statement> _generateDestroyMethod(CompileView view) {
-  // Host views have a default implementation of `destroyInternal()` that
-  // destroys their only child component view. Overriding this implementation is
-  // only necessary if the host view also hosts a view container or the child
-  // component implements `OnDestroy` (in which case `view.destroyMethod` will
-  // contain a statement to invoke the life cycle method).
-  if (view.viewType == ViewType.host &&
-      view.viewContainers.isEmpty &&
-      view.destroyMethod.isEmpty) {
-    return [];
-  }
   return [
     for (var viewContainer in view.viewContainers)
       viewContainer.callMethod('destroyNestedViews', []).toStmt(),
-    for (var viewChild in view.viewChildren)
-      viewChild.componentView.callMethod('destroyInternalState', []).toStmt(),
+    // Host views handle calling `destroyInternalState()` on their sole
+    // child component view.
+    if (view.viewType != ViewType.host)
+      for (var viewChild in view.viewChildren)
+        viewChild.componentView.callMethod('destroyInternalState', []).toStmt(),
     ...view.destroyMethod.finish(),
   ];
 }

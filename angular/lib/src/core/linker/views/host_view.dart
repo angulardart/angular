@@ -116,14 +116,13 @@ abstract class HostView<T> extends View implements DynamicView {
   // destroying any additional state and calling the appropriate lifecycle
   // methods will be generated.
   @override
-  void destroyInternal() {
-    componentView.destroyInternalState();
-  }
+  void destroyInternal() {}
 
   @override
   void destroyInternalState() {
     if (!_data.destroyed) {
       _data.destroy();
+      componentView.destroyInternalState();
       destroyInternal();
     }
   }
