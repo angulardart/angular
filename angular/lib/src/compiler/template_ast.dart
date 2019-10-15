@@ -2,7 +2,6 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 
-import '../core/security.dart';
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
@@ -12,6 +11,7 @@ import 'compile_metadata.dart'
 import 'expression_parser/ast.dart' show ASTWithSource;
 import 'i18n/message.dart';
 import 'output/output_ast.dart' show OutputType;
+import 'security.dart';
 
 /// An Abstract Syntax Tree node representing part of a parsed Angular template.
 abstract class TemplateAst {

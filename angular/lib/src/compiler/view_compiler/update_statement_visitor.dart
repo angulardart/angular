@@ -2,9 +2,9 @@ import 'package:angular/src/compiler/identifiers.dart'
     show DomHelpers, Identifiers;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/security.dart';
 import 'package:angular/src/compiler/view_compiler/compile_view.dart'
     show NodeReference, TextBindingNodeReference;
-import 'package:angular/src/core/security.dart';
 
 /// Converts [binding] to an update statement.
 ///

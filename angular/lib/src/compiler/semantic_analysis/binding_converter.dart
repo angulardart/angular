@@ -7,12 +7,12 @@ import 'package:angular/src/compiler/expression_parser/ast.dart';
 import 'package:angular/src/compiler/html_events.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/security.dart';
 import 'package:angular/src/compiler/template_ast.dart' as ast;
 import 'package:angular/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/parse_utils.dart'
     show HandlerType, handlerTypeFromExpression;
-import 'package:angular/src/core/security.dart';
 import 'package:angular_compiler/cli.dart';
 
 /// Converts a list of [ast.TemplateAst] nodes into [ir.Binding] instances.

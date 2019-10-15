@@ -3,13 +3,13 @@ import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/analyzed_class.dart' as analyzed;
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/i18n/message.dart';
+import 'package:angular/src/compiler/security.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart'
     show namespaceUris;
-import 'package:angular/src/core/security.dart';
 
 import '../expression_parser/ast.dart' as ast;
 import '../output/output_ast.dart' as o;

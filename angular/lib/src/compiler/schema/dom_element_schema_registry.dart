@@ -1,4 +1,4 @@
-import "package:angular/src/core/security.dart";
+import "package:angular/src/compiler/security.dart";
 
 import "element_schema_registry.dart" show ElementSchemaRegistry;
 
