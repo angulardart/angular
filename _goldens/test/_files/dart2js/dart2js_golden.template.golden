@@ -743,7 +743,6 @@ class _ViewOnPushChangeDetectionAndInputsHost0 extends import18.HostView<import1
 
   @override
   void destroyInternal() {
-    this.componentView.destroyInternalState();
     this.component.ngOnDestroy();
   }
 }

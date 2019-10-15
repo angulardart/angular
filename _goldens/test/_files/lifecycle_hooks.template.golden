@@ -111,7 +111,6 @@ class _ViewMostLifecycleHooksComponentHost0 extends import8.HostView<import1.Mos
 
   @override
   void destroyInternal() {
-    this.componentView.destroyInternalState();
     this.component.ngOnDestroy();
   }
 }
