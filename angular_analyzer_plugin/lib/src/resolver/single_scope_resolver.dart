@@ -3,10 +3,10 @@ import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
-import 'package:analyzer/src/dart/element/builder.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:analyzer/src/generated/error_verifier.dart';
 import 'package:analyzer/src/generated/resolver.dart';
+import 'package:analyzer/src/dart/resolver/resolution_visitor.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:angular_analyzer_plugin/ast.dart';
 import 'package:angular_analyzer_plugin/errors.dart';
@@ -380,16 +380,19 @@ class SingleScopeResolver extends AngularScopeVisitor {
   /// Resolve the [AstNode] ([expression] or [statement]) and report errors.
   void _resolveDartAstNode(AstNode astNode, bool acceptAssignment) {
     final classElement = component.classElement;
+    final unitElement = component.classElement.enclosingElement;
     final library = classElement.library;
-    {
-      final visitor = LocalElementBuilder.forDanglingExpression();
-      astNode.accept(visitor);
-    }
-    {
-      final visitor = TypeResolverVisitor(
-          library, component.source, typeProvider, errorListener);
-      astNode.accept(visitor);
-    }
+
+    final libraryScope = LibraryScope(library);
+    astNode.accept(
+      ResolutionVisitor(
+        unitElement: unitElement,
+        errorListener: errorListener,
+        featureSet: library.context.analysisOptions.contextFeatures,
+        nameScope: libraryScope,
+      ),
+    );
+
     final inheritanceManager = InheritanceManager3(typeSystem);
     final resolver = AngularResolverVisitor(inheritanceManager, library,
         templateSource, typeProvider, errorListener,
