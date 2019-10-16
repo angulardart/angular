@@ -15,5 +15,5 @@
 library angular.security;
 
 export 'src/security/dom_sanitization_service.dart';
-export 'src/security/safe_inner_html.dart';
+export 'src/security/safe_inner_html.g3.dart';
 export 'src/security/sanitization_service.dart';
