@@ -14,7 +14,6 @@ void main() {
     var template = parse(
       templateString,
       sourceUrl: '/test/visitor_test.dart#inline',
-      exceptionHandler: const ThrowingExceptionHandler(),
     );
     expect(
       template.map((t) => t.accept(visitor)).join(''),
@@ -26,7 +25,6 @@ void main() {
     var template = parse(
         '<widget *ngIf="someValue" [(value)]="value"></widget>',
         sourceUrl: '/test/visitor_test.dart#inline',
-        exceptionHandler: const ThrowingExceptionHandler(),
         toolFriendlyAst: false,
         desugar: true);
     expect(

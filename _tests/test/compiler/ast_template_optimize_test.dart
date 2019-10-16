@@ -21,11 +21,11 @@ void main() {
     CompilerFlags(),
   );
 
-  Future<List> getHumanizedTemplate(
+  List getHumanizedTemplate(
     NormalizedComponentWithViewDirectives component,
-  ) async {
+  ) {
     final componentMetadata = component.component;
-    final templateAsts = await templateParser.parse(
+    final templateAsts = templateParser.parse(
         componentMetadata,
         componentMetadata.template.template,
         component.directives,
@@ -46,7 +46,7 @@ void main() {
         class AppComponent {
           List<String> values;
         }""");
-      final template = await getHumanizedTemplate(component);
+      final template = getHumanizedTemplate(component);
       expect(template, [
         [EmbeddedTemplateAst],
         [AttrAst, 'ngFor', ''],
@@ -75,7 +75,7 @@ void main() {
         }
 
         class _Value {}""");
-      final template = await getHumanizedTemplate(component);
+      final template = getHumanizedTemplate(component);
       expect(template, [
         [EmbeddedTemplateAst],
         [AttrAst, 'ngFor', ''],
@@ -96,7 +96,7 @@ void main() {
         class AppComponent {
           List<int> values;
         }""");
-      final template = await getHumanizedTemplate(component);
+      final template = getHumanizedTemplate(component);
       expect(template, [
         [EmbeddedTemplateAst],
         [AttrAst, 'ngFor', ''],

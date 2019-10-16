@@ -15,6 +15,34 @@ class IndexedAnnotation<T extends Element> {
   IndexedAnnotation(this.element, this.annotation, this.annotationIndex);
 }
 
+class ComponentVisitorExceptionHandler {
+  final List<AsyncBuildError> _errors = [];
+  final List<AsyncBuildError> _warnings = [];
+
+  void handle(AsyncBuildError error) {
+    _errors.add(error);
+  }
+
+  void handleWarning(AsyncBuildError warning) {
+    _warnings.add(warning);
+  }
+
+  Future<void> maybeReportErrors() async {
+    if (_warnings.isNotEmpty) {
+      final buildWarnings =
+          await Future.wait(_warnings.map((warning) => warning.resolve()));
+      buildWarnings.forEach((buildWarning) => logWarning(buildWarning.message));
+    }
+    if (_errors.isEmpty) {
+      return;
+    }
+    final buildErrors =
+        await Future.wait(_errors.map((error) => error.resolve()));
+    throw BuildError(
+        buildErrors.map((buildError) => buildError.message).join("\n\n"));
+  }
+}
+
 Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
   var libraryElement = element.library;
   var libraryResult =
@@ -28,7 +56,13 @@ Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
   return libraryResult.getElementDeclaration(element);
 }
 
-class AngularAnalysisError extends BuildError {
+class AsyncBuildError extends BuildError {
+  AsyncBuildError([String message]) : super(message);
+
+  Future<BuildError> resolve() => Future.value(this);
+}
+
+class AngularAnalysisError extends AsyncBuildError {
   final List<AnalysisError> constantEvaluationErrors;
   final IndexedAnnotation<Element> indexedAnnotation;
 
@@ -77,16 +111,16 @@ class AngularAnalysisError extends BuildError {
         annotationSource);
   }
 
-  BuildError _buildErrorForAnalysisErrors(
-      Iterable<AnalysisError> errors, Element element, String annotationSouce) {
+  BuildError _buildErrorForAnalysisErrors(Iterable<AnalysisError> errors,
+      Element element, String annnotationSouce) {
     String reason;
-    if (element is ClassElement && annotationSouce.startsWith('@Component')) {
+    if (element is ClassElement && annnotationSouce.startsWith('@Component')) {
       reason = ''
           'Compiling @Component-annotated class "${element.name}" '
           'failed.\n\n${messages.analysisFailureReasons}';
     } else {
       reason =
-          'Compiling annotation $annotationSouce on element $element failed.';
+          'Compiling annotation $annnotationSouce on element $element failed.';
     }
 
     return BuildError(
@@ -120,7 +154,7 @@ class AngularAnalysisError extends BuildError {
   }
 }
 
-class UnresolvedExpressionError extends BuildError {
+class UnresolvedExpressionError extends AsyncBuildError {
   final Iterable<AstNode> expressions;
   final ClassElement componentType;
   final CompilationUnitElement compilationUnit;
@@ -217,7 +251,7 @@ List<Annotation> _metadataWithWorkaround(
   return resolvedMetadata;
 }
 
-class ErrorMessageForAnnotation extends BuildError {
+class ErrorMessageForAnnotation extends AsyncBuildError {
   final IndexedAnnotation indexedAnnotation;
 
   ErrorMessageForAnnotation(
@@ -249,7 +283,7 @@ class ErrorMessageForAnnotation extends BuildError {
   }
 }
 
-class ErrorMessageForElement extends BuildError {
+class ErrorMessageForElement extends AsyncBuildError {
   final Element element;
 
   ErrorMessageForElement(this.element, String message) : super(message);

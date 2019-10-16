@@ -17,8 +17,9 @@ class DesugarVisitor implements TemplateAstVisitor<TemplateAst, void> {
 
   DesugarVisitor({
     bool toolFriendlyAstOrigin = false,
-    this.exceptionHandler,
-  }) : _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
+    ExceptionHandler exceptionHandler,
+  })  : exceptionHandler = exceptionHandler ?? const ThrowingExceptionHandler(),
+        _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
 
   @override
   TemplateAst visitAnnotation(AnnotationAst astNode, [_]) => astNode;

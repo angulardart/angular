@@ -20,7 +20,6 @@ import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/angular_compiler.dart';
-import 'package:angular_compiler/cli.dart';
 
 import 'annotation_information.dart';
 import 'compile_metadata.dart';
@@ -36,7 +35,7 @@ const _statefulDirectiveFields = [
 
 AngularArtifacts findComponentsAndDirectives(
   LibraryReader library,
-  AngularExceptionHandler exceptionHandler,
+  ComponentVisitorExceptionHandler exceptionHandler,
 ) {
   final visitor = _NormalizedComponentVisitor(library, exceptionHandler);
   library.element.accept(visitor);
@@ -51,7 +50,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<Null> {
   final List<CompileDirectiveMetadata> directives = [];
   final LibraryReader _library;
 
-  final AngularExceptionHandler _exceptionHandler;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   _NormalizedComponentVisitor(this._library, this._exceptionHandler);
 
@@ -212,7 +211,7 @@ class _ComponentVisitor
   final _viewQueries = <CompileQueryMetadata>[];
 
   final LibraryReader _library;
-  final AngularExceptionHandler _exceptionHandler;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   /// Whether the component being visited re-implements 'noSuchMethod'.
   bool _implementsNoSuchMethod = false;
@@ -859,7 +858,7 @@ void _errorOnUnusedDirectiveTypes(
     ClassElement element,
     List<CompileDirectiveMetadata> directives,
     List<CompileTypedMetadata> directiveTypes,
-    AngularExceptionHandler exceptionHandler) {
+    ComponentVisitorExceptionHandler exceptionHandler) {
   if (directiveTypes.isEmpty) return;
 
   // Creates a unique key given a module URL and symbol name.

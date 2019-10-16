@@ -3,7 +3,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:angular/src/core/metadata.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
-import 'package:angular_compiler/cli.dart';
 
 import 'component_visitor_exceptions.dart';
 
@@ -17,7 +16,7 @@ import 'component_visitor_exceptions.dart';
 /// report errors directly to their exception handlers. In this case, this class
 /// will not issue warnings to the exception handler.
 class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
-  final AngularExceptionHandler _exceptionHandler;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
   final DartObject constantValue;
   final List<AnalysisError> constantEvaluationErrors;
 
@@ -61,7 +60,7 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
 AnnotationInformation<T> annotationWhere<T extends Element>(
     T element,
     bool test(ElementAnnotation element),
-    AngularExceptionHandler exceptionHandler) {
+    ComponentVisitorExceptionHandler exceptionHandler) {
   for (var annotationIndex = 0;
       annotationIndex < element.metadata.length;
       annotationIndex++) {

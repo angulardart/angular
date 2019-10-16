@@ -49,10 +49,7 @@ class TemplateParser {
       exceptionHandler: exceptionHandler,
     );
 
-    for (final e in [
-      ...exceptionHandler.exceptions,
-      ...exceptionHandler.warnings,
-    ]) {
+    for (final e in exceptionHandler.exceptions) {
       if (e.errorCode is ng_ast.NgParserWarningCode) {
         parseErrors.add(AnalysisError(
           source,

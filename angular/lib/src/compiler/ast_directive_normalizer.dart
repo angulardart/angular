@@ -127,15 +127,15 @@ class AstDirectiveNormalizer {
     });
   }
 
-  Future<CompileTemplateMetadata> _normalizeLoadedTemplate(
+  CompileTemplateMetadata _normalizeLoadedTemplate(
       CompileTypeMetadata directiveType,
       CompileTemplateMetadata templateMeta,
       String template,
-      String templateAbsUrl) async {
+      String templateAbsUrl) {
     // TODO(alorenzen): Remove need to parse template here.
     // We should be able to calculate this in the main parse.
     var ngContentSelectors =
-        await _parseTemplate(template, directiveType, templateAbsUrl);
+        _parseTemplate(template, directiveType, templateAbsUrl);
 
     List<String> allExternalStyles =
         _resolveExternalStylesheets(templateMeta, directiveType.moduleUrl);
@@ -175,10 +175,9 @@ class AstDirectiveNormalizer {
   }
 
   /// Parse the template, and visit to find <ng-content>.
-  Future<List<String>> _parseTemplate(String template,
-      CompileTypeMetadata directiveType, String templateAbsUrl) async {
-    final exceptionHandler =
-        AstExceptionHandler(template, templateAbsUrl, directiveType.name);
+  List<String> _parseTemplate(String template,
+      CompileTypeMetadata directiveType, String templateAbsUrl) {
+    final exceptionHandler = AstExceptionHandler(template, templateAbsUrl);
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.
@@ -187,7 +186,7 @@ class AstDirectiveNormalizer {
       exceptionHandler: exceptionHandler,
       desugar: false,
     );
-    await exceptionHandler.maybeReportExceptions();
+    exceptionHandler.maybeReportExceptions();
 
     final visitor = _TemplateNormalizerVisitor();
     for (final node in parsedNodes) {
