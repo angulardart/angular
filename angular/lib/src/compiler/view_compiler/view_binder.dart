@@ -3,13 +3,14 @@ import 'package:source_span/source_span.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular/src/compiler/parse_util.dart' show ParseErrorLevel;
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/semantic_analysis/element_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart';
 import 'package:angular/src/compiler/template_parser.dart';
 import 'package:angular/src/core/linker/view_type.dart';
-import 'package:angular_compiler/cli.dart' show logWarning;
+import 'package:angular_compiler/cli.dart' show logWarning, throwFailure;
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement;
@@ -206,7 +207,11 @@ void _bindViewHostProperties(
   }
 }
 
-void _handleError(String message, SourceSpan sourceSpan) {
-  // TODO(b/141135480): Treate these as errors instead of warnings.
-  logWarning(message);
+void _handleError(String message, SourceSpan sourceSpan,
+    [ParseErrorLevel level]) {
+  if (level == ParseErrorLevel.FATAL) {
+    throwFailure(message);
+  } else {
+    logWarning(message);
+  }
 }
