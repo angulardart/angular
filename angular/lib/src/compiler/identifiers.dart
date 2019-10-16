@@ -5,17 +5,13 @@ const _angularLib = 'asset:angular/lib';
 
 const _appViewUtilsModuleUrl =
     "$_angularLib/src/core/linker/app_view_utils.dart";
-const _interpolateModuleUrl = '$_angularLib/src/runtime/interpolate.dart';
 const _proxiesModuleUrl = '$_angularLib/src/runtime/proxies.dart';
-const _queriesModuleUrl = '$_angularLib/src/runtime/queries.dart';
 const _cdModuleUrl =
     "$_angularLib/src/core/change_detection/change_detection.dart";
 const _angularRootUrl = "package:angular/angular.dart";
 const _ngIfUrl = "$_angularLib/src/common/directives/ng_if.dart";
 const _ngForUrl = "$_angularLib/src/common/directives/ng_for.dart";
 const _profileRuntimeModuleUrl = "$_angularLib/src/debug/profile_runtime.dart";
-const _runtimeUtilsModuleUrl = "$_angularLib/src/runtime.dart";
-const _textBindingModuleUrl = "$_angularLib/src/runtime/text_binding.dart";
 const _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 
 /// A collection of methods for manipulating the DOM from generated code.
@@ -78,6 +74,83 @@ class Views {
   static final view = _of('View', 'view.dart');
 }
 
+class Interpolation {
+  static const _moduleUrl = '$_angularLib/src/runtime/interpolate.dart';
+
+  const Interpolation._();
+
+  static CompileIdentifierMetadata _interpolate(int n) {
+    return CompileIdentifierMetadata(
+      name: 'interpolate$n',
+      moduleUrl: _moduleUrl,
+    );
+  }
+
+  static CompileIdentifierMetadata _interpolateString(int n) {
+    return CompileIdentifierMetadata(
+      name: 'interpolateString$n',
+      moduleUrl: _moduleUrl,
+    );
+  }
+
+  static final interpolate = List<CompileIdentifierMetadata>.generate(
+    10,
+    _interpolate,
+  );
+
+  static final interpolateString = List<CompileIdentifierMetadata>.generate(
+    10,
+    _interpolateString,
+  );
+
+  static final textBinding = CompileIdentifierMetadata(
+    name: 'TextBinding',
+    moduleUrl: '$_angularLib/src/runtime/text_binding.dart',
+  );
+}
+
+class Runtime {
+  static const _moduleUrl = '$_angularLib/src/runtime.dart';
+
+  const Runtime._();
+
+  static final checkBinding = CompileIdentifierMetadata(
+    name: 'checkBinding',
+    moduleUrl: _moduleUrl,
+  );
+
+  static final debugThrowIfChanged = CompileIdentifierMetadata(
+    name: 'debugThrowIfChanged',
+    moduleUrl: _moduleUrl,
+  );
+
+  static final isDevMode = CompileIdentifierMetadata(
+    name: 'isDevMode',
+    moduleUrl: _moduleUrl,
+  );
+
+  static final unsafeCast = CompileIdentifierMetadata(
+    name: 'unsafeCast',
+    moduleUrl: _moduleUrl,
+  );
+}
+
+class Queries {
+  static const _moduleUrl = '$_angularLib/src/runtime/queries.dart';
+
+  const Queries._();
+
+  static final flattenNodes = CompileIdentifierMetadata(
+    name: 'flattenNodes',
+    moduleUrl: _moduleUrl,
+  );
+
+  static final firstOrNull = CompileIdentifierMetadata(
+    name: 'firstOrNull',
+    moduleUrl: _moduleUrl,
+  );
+}
+
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata(
       name: "appViewUtils", moduleUrl: _appViewUtilsModuleUrl);
@@ -125,8 +198,6 @@ class Identifiers {
       moduleUrl: 'asset:angular/lib/src/core/linker/view_type.dart');
   static final ChangeDetectionStrategy = CompileIdentifierMetadata(
       name: "ChangeDetectionStrategy", moduleUrl: _cdModuleUrl);
-  static final checkBinding = CompileIdentifierMetadata(
-      name: "checkBinding", moduleUrl: _runtimeUtilsModuleUrl);
   static final identical = CompileIdentifierMetadata(name: "identical");
   static final profileSetup = CompileIdentifierMetadata(
       name: "profileSetup", moduleUrl: _profileRuntimeModuleUrl);
@@ -136,12 +207,6 @@ class Identifiers {
       name: "profileMarkEnd", moduleUrl: _profileRuntimeModuleUrl);
   static final loadDeferred = CompileIdentifierMetadata(
       name: "loadDeferred", moduleUrl: _appViewUtilsModuleUrl);
-  static final debugThrowIfChanged = CompileIdentifierMetadata(
-      name: "debugThrowIfChanged", moduleUrl: _runtimeUtilsModuleUrl);
-  static final isDevMode = CompileIdentifierMetadata(
-      name: "isDevMode", moduleUrl: _runtimeUtilsModuleUrl);
-  static final unsafeCast = CompileIdentifierMetadata(
-      name: "unsafeCast", moduleUrl: _runtimeUtilsModuleUrl);
   static final debugInjectorEnter = CompileIdentifierMetadata(
       name: "debugInjectorEnter", moduleUrl: _debugInjectorModuleUrl);
   static final debugInjectorLeave = CompileIdentifierMetadata(
@@ -149,63 +214,8 @@ class Identifiers {
   static final debugInjectorWrap = CompileIdentifierMetadata(
       name: "debugInjectorWrap", moduleUrl: _debugInjectorModuleUrl);
 
-  static final TextBinding = CompileIdentifierMetadata(
-      name: "TextBinding", moduleUrl: _textBindingModuleUrl);
-
-  /// String interpolation where prefix,suffix are empty
-  /// (most common case).
-  static final interpolateString = [
-    CompileIdentifierMetadata(
-        name: "interpolateString0", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString1", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString2", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString3", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString4", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString5", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString6", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString7", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString8", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolateString9", moduleUrl: _interpolateModuleUrl),
-  ];
-
-  static final interpolate = [
-    CompileIdentifierMetadata(
-        name: "interpolate0", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate1", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate2", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate3", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate4", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate5", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate6", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate7", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate8", moduleUrl: _interpolateModuleUrl),
-    CompileIdentifierMetadata(
-        name: "interpolate9", moduleUrl: _interpolateModuleUrl),
-  ];
-
   static final createTrustedHtml = CompileIdentifierMetadata(
       name: 'createTrustedHtml', moduleUrl: _appViewUtilsModuleUrl);
-  static final flattenNodes = CompileIdentifierMetadata(
-      name: "flattenNodes", moduleUrl: _queriesModuleUrl);
-  static final firstOrNull = CompileIdentifierMetadata(
-      name: "firstOrNull", moduleUrl: _queriesModuleUrl);
   static final emptyListLiteral = CompileIdentifierMetadata(
       name: "emptyListLiteral", moduleUrl: _proxiesModuleUrl);
   static final pureProxies = [

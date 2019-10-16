@@ -1,4 +1,4 @@
-import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
+import 'package:angular/src/compiler/identifiers.dart';
 import 'package:angular/src/compiler/ir/model.dart' as ir;
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular/src/compiler/view_compiler/view_compiler_utils.dart';
@@ -241,7 +241,7 @@ class _CheckBindingVisitor
   @override
   o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
       [Null context]) {
-    return o.importExpr(Identifiers.checkBinding).callFn([
+    return o.importExpr(Runtime.checkBinding).callFn([
       fieldExpr,
       currValExpr,
       o.literal(boundExpression.expression.source),
@@ -252,34 +252,26 @@ class _CheckBindingVisitor
   @override
   o.Expression visitBoundI18nMessage(ir.BoundI18nMessage boundI18nMessage,
       [Null context]) {
-    return o
-        .importExpr(Identifiers.checkBinding)
-        .callFn([fieldExpr, currValExpr]);
+    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 
   @override
   o.Expression visitComplexEventHandler(
       ir.ComplexEventHandler complexEventHandler,
       [Null context]) {
-    return o
-        .importExpr(Identifiers.checkBinding)
-        .callFn([fieldExpr, currValExpr]);
+    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 
   @override
   o.Expression visitSimpleEventHandler(ir.SimpleEventHandler simpleEventHandler,
       [Null context]) {
-    return o
-        .importExpr(Identifiers.checkBinding)
-        .callFn([fieldExpr, currValExpr]);
+    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 
   @override
   o.Expression visitStringLiteral(ir.StringLiteral stringLiteral,
       [Null context]) {
-    return o
-        .importExpr(Identifiers.checkBinding)
-        .callFn([fieldExpr, currValExpr]);
+    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 }
 
