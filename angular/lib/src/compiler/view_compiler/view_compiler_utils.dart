@@ -34,7 +34,7 @@ final _renderViewProperties = Set<String>.from([
   'parentView',
 ]);
 
-final _unsafeCastFn = o.importExpr(Identifiers.unsafeCast);
+final _unsafeCastFn = o.importExpr(Runtime.unsafeCast);
 
 /// Returns `unsafeCast<{Cast}>(expression)`.
 o.Expression unsafeCast(o.Expression expression, [o.OutputType cast]) {
@@ -136,7 +136,7 @@ o.Statement debugInjectorLeave(o.Expression identifier) =>
     ]).toStmt();
 
 o.Expression debugInjectorWrap(o.Expression identifier, o.Expression wrap) =>
-    o.importExpr(Identifiers.isDevMode).conditional(
+    o.importExpr(Runtime.isDevMode).conditional(
           o.importExpr(Identifiers.debugInjectorWrap).callFn([
             identifier,
             o.fn([], [

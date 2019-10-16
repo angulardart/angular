@@ -5,7 +5,7 @@ import 'package:angular/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata;
 import 'package:angular/src/compiler/expression_parser/ast.dart'
     as compiler_ast;
-import 'package:angular/src/compiler/identifiers.dart' show Identifiers;
+import 'package:angular/src/compiler/identifiers.dart';
 import 'package:angular/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/cli.dart';
 
@@ -223,8 +223,8 @@ class _AstToExpressionVisitor
         ast.expressions.every((ast) => isString(ast, _metadata.analyzedClass));
 
     final interpolateIdentifiers = expressionsAreString
-        ? Identifiers.interpolateString
-        : Identifiers.interpolate;
+        ? Interpolation.interpolateString
+        : Interpolation.interpolate;
 
     /// Handle most common case where prefix and postfix are empty.
     if (ast.expressions.length == 1) {

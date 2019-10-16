@@ -65,7 +65,7 @@ enum NodeReferenceVisibility {
   build, // Only visible inside DOM build process.
 }
 
-final notThrowOnChanges = o.not(o.importExpr(Identifiers.debugThrowIfChanged));
+final notThrowOnChanges = o.not(o.importExpr(Runtime.debugThrowIfChanged));
 
 /// A reference to an HTML, Text, or View node created during `AppView.build()`.
 class NodeReference {
@@ -105,9 +105,9 @@ class NodeReference {
 
   /// Create a [NodeReference] for a `TextBinding` node.
   NodeReference._textBindingNode(this._storage, int nodeIndex)
-      : _type = o.importType(Identifiers.TextBinding),
+      : _type = o.importType(Interpolation.textBinding),
         _name = '_textBinding_$nodeIndex',
-        _initialValue = o.importExpr(Identifiers.TextBinding).callFn([]);
+        _initialValue = o.importExpr(Interpolation.textBinding).callFn([]);
 
   /// Create a [NodeReference] for an anchor node for view containers.
   NodeReference.anchor(

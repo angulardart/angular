@@ -56,7 +56,7 @@ class _ViewStyleLinker {
         [
           o.ReturnStatement(
             o.ConditionalExpr(
-              o.importExpr(Identifiers.isDevMode),
+              o.importExpr(Runtime.isDevMode),
               o.literal(_view.component.type.moduleUrl),
               o.NULL_EXPR,
             ),
@@ -129,7 +129,7 @@ class _ViewStyleLinker {
           ),
         ).toStmt(),
         o.IfStmt(
-          o.importExpr(Identifiers.isDevMode),
+          o.importExpr(Runtime.isDevMode),
           [
             o.importExpr(StyleEncapsulation.componentStyles).callMethod(
               'debugOnClear',

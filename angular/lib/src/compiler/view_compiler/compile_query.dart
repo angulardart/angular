@@ -1,7 +1,7 @@
 import "package:meta/meta.dart";
 
 import "../compile_metadata.dart" show CompileQueryMetadata, CompileTokenMap;
-import "../identifiers.dart" show Identifiers, Views;
+import "../identifiers.dart";
 import "../output/output_ast.dart" as o;
 import "compile_element.dart" show CompileElement;
 import "compile_view.dart" show CompileView;
@@ -549,8 +549,8 @@ List<o.Statement> _createAddQueryChangeDetectorRefs(
   ];
 }
 
-final _flattenNodesFn = o.importExpr(Identifiers.flattenNodes);
-final _firstOrNullFn = o.importExpr(Identifiers.firstOrNull);
+final _flattenNodesFn = o.importExpr(Queries.flattenNodes);
+final _firstOrNullFn = o.importExpr(Queries.firstOrNull);
 
 /// Flattens a `List<List<?>>` into a `List<?>`.
 o.Expression _flattenNodes(o.Expression nodeExpressions) =>
