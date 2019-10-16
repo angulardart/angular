@@ -90,36 +90,21 @@ abstract class SafeValueImpl implements SafeValue {
   final String changingThisWillBypassSecurityTrust;
   SafeValueImpl(this.changingThisWillBypassSecurityTrust);
 
-  String getTypeName();
   String toString() => changingThisWillBypassSecurityTrust;
 }
 
 class SafeHtmlImpl extends SafeValueImpl implements SafeHtml {
   SafeHtmlImpl(String value) : super(value);
-  @override
-  String getTypeName() {
-    return 'HTML';
-  }
 }
 
 class SafeStyleImpl extends SafeValueImpl implements SafeStyle {
   SafeStyleImpl(String value) : super(value);
-  @override
-  String getTypeName() {
-    return 'Style';
-  }
 }
 
 class SafeUrlImpl extends SafeValueImpl implements SafeUrl {
   SafeUrlImpl(String value) : super(value);
-  String getTypeName() {
-    return 'URL';
-  }
 }
 
 class SafeResourceUrlImpl extends SafeValueImpl implements SafeResourceUrl {
   SafeResourceUrlImpl(String value) : super(value);
-  String getTypeName() {
-    return 'ResourceURL';
-  }
 }
