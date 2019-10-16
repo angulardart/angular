@@ -21,7 +21,8 @@ const _classPrefix = 'class';
 const _stylePrefix = 'style';
 
 class TemplateParseError extends ParseError {
-  TemplateParseError(String message, SourceSpan span) : super(span, message);
+  TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
+      : super(span, message, level);
 }
 
 class TemplateContext {
@@ -41,9 +42,12 @@ class TemplateContext {
 
   void reportError(
     String message,
-    SourceSpan sourceSpan,
-  ) {
-    exceptionHandler.handleParseError(TemplateParseError(message, sourceSpan));
+    SourceSpan sourceSpan, [
+    ParseErrorLevel level,
+  ]) {
+    level ??= ParseErrorLevel.FATAL;
+    exceptionHandler
+        .handleParseError(TemplateParseError(message, sourceSpan, level));
   }
 }
 
@@ -67,7 +71,8 @@ abstract class TemplateParser {
       String templateSourceUrl);
 }
 
-typedef void ErrorCallback(String message, SourceSpan sourceSpan);
+typedef void ErrorCallback(String message, SourceSpan sourceSpan,
+    [ParseErrorLevel level]);
 
 BoundElementPropertyAst createElementPropertyAst(
     String elementName,

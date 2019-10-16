@@ -1077,13 +1077,12 @@ class _OnPushValidator extends InPlaceRecursiveTemplateVisitor<void> {
     var componentAst = _firstComponent(ast.directives);
     if (componentAst != null && !componentAst.directive.isOnPush) {
       final componentName = _name(componentAst.directive);
-      _exceptionHandler.handleParseWarning(TemplateParseError(
+      logWarning(componentAst.sourceSpan.message(
         '"$componentName" doesn\'t use "ChangeDetectionStrategy.OnPush", but '
         'is used by a component that does. This is unsupported and unlikely to '
         'work as expected.'
         '\n\n'
         'See ${messages.urlOnPushCompatibility}.',
-        componentAst.sourceSpan,
       ));
     }
     super.visitElement(ast, null);
@@ -1257,23 +1256,23 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [_]) {
     // warnings
     if (astNode.name.startsWith('bindon-')) {
-      _reportWarning(
-        astNode,
-        '"bindon-" for properties/events is no longer supported. Use "[()]" '
-        'instead!',
-      );
+      _reportError(
+          astNode,
+          '"bindon-" for properties/events is no longer supported. Use "[()]" '
+          'instead!',
+          ParseErrorLevel.WARNING);
     }
     if (astNode.name.startsWith('ref-')) {
-      _reportWarning(
-        astNode,
-        '"ref-" for references is no longer supported. Use "#" instead!',
-      );
+      _reportError(
+          astNode,
+          '"ref-" for references is no longer supported. Use "#" instead!',
+          ParseErrorLevel.WARNING);
     }
     if (astNode.name.startsWith('var-')) {
-      _reportWarning(
-        astNode,
-        '"var-" for references is no longer supported. Use "#" instead!',
-      );
+      _reportError(
+          astNode,
+          '"var-" for references is no longer supported. Use "#" instead!',
+          ParseErrorLevel.WARNING);
     }
     return super.visitAttribute(astNode);
   }
@@ -1352,14 +1351,10 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     }
   }
 
-  void _reportError(ast.TemplateAst astNode, String message) {
-    exceptionHandler
-        .handleParseError(TemplateParseError(message, astNode.sourceSpan));
-  }
-
-  void _reportWarning(ast.TemplateAst astNode, String message) {
-    exceptionHandler
-        .handleParseWarning(TemplateParseError(message, astNode.sourceSpan));
+  void _reportError(ast.TemplateAst astNode, String message,
+      [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
+    exceptionHandler.handleParseError(
+        TemplateParseError(message, astNode.sourceSpan, level));
   }
 }
 
@@ -1394,7 +1389,9 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
       final pipe = _pipesByName[pipeName];
       if (pipe == null) {
         _exceptionHandler.handleParseError(TemplateParseError(
-            "The pipe '$pipeName' could not be found.", sourceSpan));
+            "The pipe '$pipeName' could not be found.",
+            sourceSpan,
+            ParseErrorLevel.FATAL));
       } else {
         for (var numArgs in collector.pipeInvocations[pipeName]) {
           // Don't include the required parameter to the left of the pipe name.
@@ -1403,7 +1400,8 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
             _exceptionHandler.handleParseError(TemplateParseError(
                 "The pipe '$pipeName' was invoked with too many arguments: "
                 '$numParams expected, but $numArgs found.',
-                sourceSpan));
+                sourceSpan,
+                ParseErrorLevel.FATAL));
           }
         }
       }

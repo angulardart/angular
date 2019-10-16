@@ -3,6 +3,7 @@ import 'package:angular/src/compiler/analyzed_class.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/expression_parser/ast.dart' as ast;
 import 'package:angular/src/compiler/ir/model.dart' as ir;
+import 'package:angular/src/compiler/parse_util.dart';
 import 'package:angular/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular/src/compiler/template_ast.dart' as ast;
@@ -47,9 +48,16 @@ class DirectiveConverter {
     return convertAllToBinding(hostProperties, analyzedClass: analyzedClass);
   }
 
-  static void _reportError(String message, SourceSpan sourceSpan) {
-    // TODO(b/141135480): Treate these as errors instead of warnings.
-    logWarning(message);
+  static void _reportError(
+    String message,
+    SourceSpan sourceSpan, [
+    ParseErrorLevel level,
+  ]) {
+    if (level == ParseErrorLevel.FATAL) {
+      throwFailure(message);
+    } else {
+      logWarning(message);
+    }
   }
 
   static const _securityContextElementName = 'div';
