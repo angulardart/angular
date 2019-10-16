@@ -7,7 +7,7 @@ import '../../src/compile.dart';
 
 void main() {
   Future<void> expectBuildError(String source, Object matcherOrString) {
-    return compilesExpecting(source, (library) {
+    return compilesExpecting(source, (library) async {
       final visitDirective = const DirectiveVisitor().visitDirective;
       library.definingCompilationUnit.types.forEach(visitDirective);
     }, errors: [matcherOrString]);
