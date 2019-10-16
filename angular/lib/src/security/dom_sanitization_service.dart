@@ -1,5 +1,3 @@
-library angular.lib.src.security.dom_sanitization_service;
-
 import 'sanitization_service.dart';
 
 abstract class SafeValue {}
