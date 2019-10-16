@@ -6,7 +6,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/security.dart';
+import 'package:angular/security.dart';
 import 'package:js/js.dart';
 import 'package:test/test.dart';
 

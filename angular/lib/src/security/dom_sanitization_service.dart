@@ -1,8 +1,8 @@
 library angular.lib.src.security.dom_sanitization_service;
 
-import '../core/security.dart';
+import 'sanitization_service.dart';
 
-export '../core/security.dart';
+abstract class SafeValue {}
 
 abstract class SafeHtml extends SafeValue {}
 

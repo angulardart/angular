@@ -1,7 +1,6 @@
 import 'package:angular/src/runtime.dart';
 
 import '../core/di.dart' show Injectable;
-import '../core/security.dart';
 import 'dom_sanitization_service.dart';
 import 'html_sanitizer.dart';
 import 'style_sanitizer.dart';

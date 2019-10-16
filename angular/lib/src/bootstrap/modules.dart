@@ -14,6 +14,7 @@ import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
+import 'package:angular/src/security/sanitization_service.dart';
 
 import 'modules.template.dart' as ng;
 

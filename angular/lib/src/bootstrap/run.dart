@@ -17,7 +17,7 @@ import '../di/injector/hierarchical.dart';
 import '../di/injector/injector.dart';
 import '../runtime.dart';
 import '../runtime/dom_events.dart';
-import '../security/dom_sanitization_service.dart';
+import '../security/sanitization_service.dart';
 
 import 'modules.dart';
 
