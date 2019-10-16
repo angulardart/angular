@@ -13,18 +13,11 @@ part 'exceptions.dart';
 
 abstract class ExceptionHandler {
   void handle(AngularParserException e);
-
-  void handleWarning(AngularParserException e);
 }
 
 class ThrowingExceptionHandler implements ExceptionHandler {
   @override
   void handle(AngularParserException e) {
-    throw e;
-  }
-
-  @override
-  void handleWarning(AngularParserException e) {
     throw e;
   }
 
@@ -35,18 +28,11 @@ class ThrowingExceptionHandler implements ExceptionHandler {
 
 class RecoveringExceptionHandler implements ExceptionHandler {
   final exceptions = <AngularParserException>[];
-  final warnings = <AngularParserException>[];
 
   @override
   void handle(AngularParserException e) {
     if (e != null) {
       exceptions.add(e);
-    }
-  }
-
-  void handleWarning(AngularParserException e) {
-    if (e != null) {
-      warnings.add(e);
     }
   }
 }

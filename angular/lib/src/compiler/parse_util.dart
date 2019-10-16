@@ -8,60 +8,71 @@ abstract class ParseError extends BuildError {
   final SourceSpan _span;
   final String _msg;
   final ParseErrorLevel level;
-  String _context;
 
   ParseError(this._span, this._msg, [this.level = ParseErrorLevel.FATAL]);
 
   @override
-  String get message {
-    var context = _context == null || _context.isEmpty ? '' : '($_context) ';
-    return _span.message('$level: $context$_msg');
-  }
+  String get message => _span.message('$level: $_msg');
 
   @override
   String toString() => message;
-
-  void setContext(String context) => _context = context;
 }
 
-class AstExceptionHandler implements ExceptionHandler {
-  final SourceFile _sourceFile;
-  final _angularExceptionHandler = AngularExceptionHandler();
-  final String _componentName;
+class AstExceptionHandler extends RecoveringExceptionHandler {
+  final String template;
+  final String sourceUrl;
 
-  AstExceptionHandler(String template, String sourceUrl, [String componentName])
-      : _sourceFile = SourceFile.fromString(template, url: sourceUrl),
-        _componentName = componentName;
+  final parseErrors = <ParseError>[];
 
-  @override
-  void handle(AngularParserException e) {
-    _angularExceptionHandler.handle(_toBuildError(e));
-  }
-
-  @override
-  void handleWarning(AngularParserException e) {
-    _angularExceptionHandler.handleWarning(_toBuildError(e));
-  }
+  AstExceptionHandler(this.template, this.sourceUrl);
 
   void handleParseError(ParseError error) {
-    error.setContext(_componentName);
-    if (error.level == ParseErrorLevel.WARNING) {
-      _angularExceptionHandler.handleWarning(error);
-    } else {
-      _angularExceptionHandler.handle(error);
-    }
+    parseErrors.add(error);
   }
 
   void handleAll(Iterable<ParseError> errors) {
-    errors.forEach(handleParseError);
+    parseErrors.addAll(errors);
   }
 
-  Future<void> maybeReportExceptions() =>
-      _angularExceptionHandler.maybeReportErrors();
+  void maybeReportExceptions() {
+    if (exceptions.isNotEmpty) {
+      // We always throw here, so no need to clear the list.
+      _reportExceptions();
+    }
+    if (parseErrors.isNotEmpty) {
+      // TODO(alorenzen): Once this is no longer used for the legacy parser,
+      // rename to reportParseErrors.
+      _handleParseErrors(parseErrors);
+      // handleParseErrors() may only log warnings and not throw, so we need to
+      // clear the list before the next phase.
+      parseErrors.clear();
+    }
+  }
 
-  BuildError _toBuildError(AngularParserException exception) =>
-      BuildError.forSourceSpan(
-          _sourceFile.span(
-              exception.offset, exception.offset + exception.length),
-          exception.errorCode.message);
+  void _reportExceptions() {
+    final sourceFile = SourceFile.fromString(template, url: sourceUrl);
+    final buildErrors = exceptions.map((exception) => BuildError.forSourceSpan(
+        sourceFile.span(exception.offset, exception.offset + exception.length),
+        exception.errorCode.message));
+
+    throw BuildError.multiple(buildErrors, 'Template parse errors');
+  }
+}
+
+void _handleParseErrors(List<ParseError> parseErrors) {
+  final warnings = <ParseError>[];
+  final errors = <ParseError>[];
+  for (final error in parseErrors) {
+    if (error.level == ParseErrorLevel.WARNING) {
+      warnings.add(error);
+    } else if (error.level == ParseErrorLevel.FATAL) {
+      errors.add(error);
+    }
+  }
+  if (warnings.isNotEmpty) {
+    logWarning('Template parse warnings:\n${warnings.join('\n')}');
+  }
+  if (errors.isNotEmpty) {
+    throw BuildError.multiple(errors, 'Template parse errors');
+  }
 }

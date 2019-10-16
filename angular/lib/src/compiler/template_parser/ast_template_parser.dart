@@ -53,19 +53,18 @@ class AstTemplateParser implements TemplateParser {
   /// We will collect parse errors for each phase, and only continue to the next
   /// phase if no errors have occurred.
   @override
-  Future<List<ng.TemplateAst>> parse(
+  List<ng.TemplateAst> parse(
       CompileDirectiveMetadata compMeta,
       String template,
       List<CompileDirectiveMetadata> directives,
       List<CompilePipeMetadata> pipes,
       String name,
-      String templateSourceUrl) async {
-    final exceptionHandler =
-        AstExceptionHandler(template, templateSourceUrl, name);
+      String templateSourceUrl) {
+    final exceptionHandler = AstExceptionHandler(template, templateSourceUrl);
 
     final parsedAst = _parseTemplate(
         template, name, exceptionHandler, templateSourceUrl ?? name);
-    await exceptionHandler.maybeReportExceptions();
+    exceptionHandler.maybeReportExceptions();
     if (parsedAst.isEmpty) return const [];
 
     final filteredAst = _processRawTemplateNodes(
@@ -75,15 +74,15 @@ class AstTemplateParser implements TemplateParser {
       exceptionHandler: exceptionHandler,
       preserveWhitespace: compMeta.template.preserveWhitespace ?? false,
     );
-    await exceptionHandler.maybeReportExceptions();
+    exceptionHandler.maybeReportExceptions();
 
     final providedAsts = _bindDirectivesAndProviders(directives, compMeta,
         filteredAst, exceptionHandler, parsedAst.first.sourceSpan);
-    await exceptionHandler.maybeReportExceptions();
+    exceptionHandler.maybeReportExceptions();
 
     var processedAsts = _processBoundTemplateNodes(
         compMeta, providedAsts, pipes, exceptionHandler);
-    await exceptionHandler.maybeReportExceptions();
+    exceptionHandler.maybeReportExceptions();
 
     return processedAsts;
   }

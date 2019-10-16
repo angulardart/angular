@@ -103,37 +103,6 @@ SourceLocation _location(int offset, Uri uri, LineInfo lineInfo) {
   );
 }
 
-class AngularExceptionHandler {
-  final List<BuildError> _errors = [];
-  final List<BuildError> _warnings = [];
-
-  void handle(BuildError error) {
-    _errors.add(error);
-  }
-
-  void handleWarning(BuildError warning) {
-    _warnings.add(warning);
-  }
-
-  Future<void> maybeReportErrors() async {
-    if (_warnings.isNotEmpty) {
-      final buildWarnings =
-          await Future.wait(_warnings.map((warning) => warning.resolve()));
-      buildWarnings.forEach((buildWarning) => logWarning(buildWarning.message));
-      _warnings.clear();
-    }
-    if (_errors.isEmpty) {
-      return;
-    }
-    final buildErrors =
-        await Future.wait(_errors.map((error) => error.resolve()));
-    if (buildErrors.length == 1) {
-      throw buildErrors.single;
-    }
-    throw BuildError.multiple(buildErrors, "Multiple errors found");
-  }
-}
-
 /// Base error type for all fatal errors encountered while compiling.
 ///
 /// There is _intentionally_ not a `logFailure` function, as all failures should
@@ -146,8 +115,6 @@ class BuildError extends Error {
 
   @override
   final Trace stackTrace;
-
-  Future<BuildError> resolve() => Future.value(this);
 
   BuildError([this.message, Trace trace])
       : stackTrace = trace ?? Trace.current();

@@ -5,7 +5,6 @@ import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/compiler/compile_metadata.dart';
 import 'package:angular/src/compiler/output/convert.dart';
 import 'package:angular/src/source_gen/common/annotation_matcher.dart';
-import 'package:angular_compiler/cli.dart';
 
 import 'annotation_information.dart';
 import 'compile_metadata.dart';
@@ -15,7 +14,7 @@ import 'lifecycle_hooks.dart';
 
 class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   final LibraryReader _library;
-  final AngularExceptionHandler _exceptionHandler;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   PipeVisitor(this._library, this._exceptionHandler);
 

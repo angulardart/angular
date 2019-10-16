@@ -67,13 +67,15 @@ export 'src/visitor.dart'
 /// notations and banana syntax used in two-way binding.
 /// Optional bool flag [toolFriendlyAst] provides a reference to the original
 /// non-desugared nodes after desugaring occurs.
+/// Optional exceptionHandler. Pass in either [RecoveringExceptionHandler] or
+/// [ThrowingExceptionHandler] (default).
 List<TemplateAst> parse(
   String template, {
   @required String sourceUrl,
-  @required ExceptionHandler exceptionHandler,
   bool toolFriendlyAst = false, // Only needed if desugar = true
   bool desugar = true,
   bool parseExpressions = true,
+  ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
 }) {
   var parser = toolFriendlyAst
       ? const NgParser(toolFriendlyAstOrigin: true)
