@@ -1,5 +1,5 @@
 /// A set of functions to support text interpolation in generated views.
-import 'package:angular/src/core/security.dart';
+import 'package:angular/src/security/dom_sanitization_service.dart';
 
 dynamic interpolate0(dynamic p) {
   if (p is String) return p;

@@ -10,5 +10,3 @@ abstract class SanitizationService {
   // Sanitizes resource loading url.
   String sanitizeResourceUrl(value);
 }
-
-abstract class SafeValue {}

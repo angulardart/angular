@@ -4,7 +4,7 @@ import 'package:angular/di.dart' show Injectable;
 import 'package:angular/src/core/application_tokens.dart' show APP_ID;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/core/security.dart';
+import 'package:angular/src/security/sanitization_service.dart';
 import 'package:angular/src/runtime/dom_events.dart' show EventManager;
 
 /// Application wide view utilities.
