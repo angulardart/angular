@@ -597,7 +597,6 @@ class _ComponentVisitor
     AnnotationInformation<ClassElement> linkInfo,
   ) {
     final element = directiveInfo.element;
-    final annotation = directiveInfo.annotation;
 
     _directiveClassElement = element;
     DirectiveVisitor(
@@ -781,7 +780,8 @@ class _ComponentVisitor
               .createProviderMetadata);
 
   List<CompileIdentifierMetadata> _extractExports(
-      AnnotationInformation annotationInfo) {
+    AnnotationInformation<ClassElement> annotationInfo,
+  ) {
     final annotation = annotationInfo.annotation as ElementAnnotationImpl;
     final element = annotationInfo.element;
     var exports = <CompileIdentifierMetadata>[];
