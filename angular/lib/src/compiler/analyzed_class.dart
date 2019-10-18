@@ -63,6 +63,28 @@ bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
   return type.isDartCoreString;
 }
 
+String typeToCode(DartType type) {
+  if (type == null) {
+    return null;
+  } else if (type.isDynamic) {
+    return 'dynamic';
+  } else if (type is InterfaceType) {
+    var typeArguments = type.typeArguments;
+    if (typeArguments.isEmpty) {
+      return type.element.name;
+    } else {
+      final typeArgumentsStr = typeArguments.map(typeToCode).join(', ');
+      return '${type.element.name}<$typeArgumentsStr>';
+    }
+  } else if (type is TypeParameterType) {
+    return type.element.name;
+  } else if (type.isVoid) {
+    return 'void';
+  } else {
+    throw UnimplementedError('(${type.runtimeType}) $type');
+  }
+}
+
 PropertyInducingElement _getField(AnalyzedClass clazz, String name) {
   var getter =
       clazz._classElement.lookUpGetter(name, clazz._classElement.library);

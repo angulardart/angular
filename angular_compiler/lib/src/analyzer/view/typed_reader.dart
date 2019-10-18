@@ -44,9 +44,9 @@ class TypedReader {
   /// Parses the value of a compile-time constant `Typed` expression.
   TypedElement parse(DartObject typedObject) {
     if (!$Typed.isExactlyType(typedObject.type)) {
+      final typeStr = typeToCode(typedObject.type);
       throwFailure(''
-          'Expected an expression of type "Typed", but got '
-          '"${typedObject.type}"');
+          'Expected an expression of type "Typed", but got "$typeStr"');
     }
     return _parseTyped(typedObject, root: true);
   }
@@ -67,7 +67,7 @@ class TypedReader {
           '  * "Symbol"\n'
           '  * "Type"\n'
           '  * "Typed"\n'
-          'Got an expression of type "${object.type}".');
+          'Got an expression of type "${typeToCode(object.type)}".');
     }
   }
 
@@ -136,8 +136,8 @@ class TypedReader {
     } else {
       throwFailure(''
           'Expected a generic type to be used as a type argument of "Typed", '
-          'but got concrete type "$type". A concrete type may be used directly '
-          'as a type argument without the need for "Typed".');
+          'but got concrete type "${typeToCode(type)}". A concrete type may be'
+          'used directly as a type argument without the need for "Typed".');
     }
   }
 }

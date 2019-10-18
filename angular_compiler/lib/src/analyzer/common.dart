@@ -41,6 +41,28 @@ DartType typeArgumentOf(DartObject object, [int index = 0]) {
   return object.type.typeArguments[index];
 }
 
+String typeToCode(DartType type) {
+  if (type == null) {
+    return null;
+  } else if (type.isDynamic) {
+    return 'dynamic';
+  } else if (type is InterfaceType) {
+    var typeArguments = type.typeArguments;
+    if (typeArguments.isEmpty) {
+      return type.element.name;
+    } else {
+      final typeArgumentsStr = typeArguments.map(typeToCode).join(', ');
+      return '${type.element.name}<$typeArgumentsStr>';
+    }
+  } else if (type is TypeParameterType) {
+    return type.element.name;
+  } else if (type.isVoid) {
+    return 'void';
+  } else {
+    throw UnimplementedError('(${type.runtimeType}) $type');
+  }
+}
+
 /// Returns a canonical URL pointing to [element].
 ///
 /// For example, `List` would be `'dart:core#List'`.
