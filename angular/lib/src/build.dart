@@ -10,7 +10,6 @@
 library angular.builder;
 
 import 'package:build/build.dart';
-import 'package:logging/logging.dart';
 import 'package:angular_compiler/angular_compiler.dart';
 import 'package:angular_compiler/cli.dart';
 
@@ -58,7 +57,6 @@ Builder templateCompiler(
   final flags = CompilerFlags.parseRaw(
     config,
     defaultFlags,
-    severity: Level.SEVERE,
   );
   if (outline) {
     return TemplateOutliner(

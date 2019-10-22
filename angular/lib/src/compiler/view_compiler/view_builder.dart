@@ -28,7 +28,6 @@ import 'constants.dart'
         parentRenderNodeVar,
         DetectChangesVars,
         ViewConstructorVars;
-import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest, ProviderNode;
 import 'view_compiler_utils.dart'
     show
@@ -583,9 +582,6 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
     );
     body.add(statement);
   });
-  if (view.genConfig.profileFor != Profile.none) {
-    genProfileSetup(body);
-  }
   return o.Constructor(
     params: [
       o.FnParam(
@@ -775,10 +771,6 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   }
 
   var statements = <o.Statement>[];
-  var profileStartStatements = <o.Statement>[];
-  if (view.genConfig.profileFor == Profile.build) {
-    genProfileBuildStart(view, profileStartStatements);
-  }
 
   statements.addAll(parentRenderNodeStmts);
   view.writeBuildStatements(statements);
@@ -806,10 +798,6 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
     }
   }
 
-  if (view.genConfig.profileFor == Profile.build) {
-    genProfileBuildEnd(view, statements);
-  }
-
   if (identical(view.viewType, ViewType.host)) {
     if (view.nodes.isEmpty) {
       throwFailure('Template parser has crashed for ${view.className}');
@@ -817,7 +805,6 @@ List<o.Statement> _generateBuildMethod(CompileView view, Parser parser) {
   }
 
   return [
-    ...profileStartStatements,
     ...maybeCachedCtxDeclarationStatement(statements: statements),
     ...statements,
   ];

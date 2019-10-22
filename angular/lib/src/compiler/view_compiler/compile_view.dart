@@ -46,7 +46,6 @@ import 'constants.dart'
 import 'expression_converter.dart';
 import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
-import 'perf_profiler.dart';
 import 'provider_forest.dart' show ProviderForest;
 import 'update_statement_visitor.dart' show bindingToUpdateStatement;
 import 'view_compiler_utils.dart'
@@ -1324,10 +1323,6 @@ class CompileView {
       return statements;
     }
 
-    if (genConfig.profileFor == Profile.build) {
-      genProfileCdStart(this, statements);
-    }
-
     // Declare variables for locals used in this method.
     statements.addAll(nameResolver.getLocalDeclarations());
 
@@ -1377,9 +1372,6 @@ class CompileView {
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
       varStmts.add(o.DeclareVarStmt(DetectChangesVars.firstCheck.name,
           o.THIS_EXPR.prop('firstCheck'), o.BOOL_TYPE));
-    }
-    if (genConfig.profileFor == Profile.build) {
-      genProfileCdEnd(this, statements);
     }
     return List.from(varStmts)..addAll(statements);
   }
