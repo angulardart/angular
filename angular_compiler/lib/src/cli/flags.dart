@@ -1,9 +1,6 @@
 import 'package:args/args.dart';
-import 'package:build/build.dart' as build;
-import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
-const _argAllowedTypedefs = 'allowed_typedefs_as_di_token';
 const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
@@ -36,15 +33,6 @@ class CompilerFlags {
           'Whether to emit additional code that may be used by tooling '
           'in order to profile performance or other runtime information.',
     )
-    ..addMultiOption(
-      _argAllowedTypedefs,
-      defaultsTo: const [],
-      help: ''
-          'Specify what named function types (typedefs) can be temporarily '
-          'used as dependency injection tokens without the compiler throwing '
-          'an error.',
-      valueHelp: '<PACAKGE NAME>#<TYPEDEF>, i.e. package:foo/foo.dart#SomeFunc',
-    )
     ..addFlag(
       _argForceMinifyWhitespace,
       defaultsTo: null,
@@ -61,9 +49,6 @@ class CompilerFlags {
 
   /// What (named) function types (typedefs) can be used as DI tokens.
   final List<String> allowedTypeDefs;
-
-  /// May emit extra code suitable for profiling or tooling.
-  final Profile profileFor;
 
   /// Whether to opt-in to supporting a legacy mode of style encapsulation.
   ///
@@ -103,7 +88,6 @@ class CompilerFlags {
   const CompilerFlags({
     this.allowedTypeDefs = const [],
     this.ignoreNgPlaceholderForGoldens = false,
-    this.profileFor = Profile.none,
     this.useLegacyStyleEncapsulation = false,
     this.forceMinifyWhitespace = false,
     this.emitComponentFactories = true,
@@ -117,15 +101,11 @@ class CompilerFlags {
   factory CompilerFlags.parseArgs(
     List<String> args, {
     CompilerFlags defaultTo = const CompilerFlags(),
-    Logger logger,
-    Level severity = Level.WARNING,
   }) {
     final results = _argParser.parse(args);
     return CompilerFlags.parseRaw(
       results,
       defaultTo,
-      logger: logger,
-      severity: severity,
     );
   }
 
@@ -135,21 +115,11 @@ class CompilerFlags {
   factory CompilerFlags.parseRaw(
     // Untyped because 'argResults' doesn't expose a Map interface.
     dynamic options,
-    CompilerFlags defaultTo, {
-    Logger logger,
-    Level severity = Level.WARNING,
-  }) {
-    // Use the default package:build logger if not specified, otherwise throw.
-    logger ??= build.log;
-    void log(dynamic message) {
-      if (logger == null) throw message;
-      logger.log(severity, message);
-    }
-
+    CompilerFlags defaultTo,
+  ) {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map<Object, Object>) {
       final knownArgs = const [
-        _argAllowedTypedefs,
         _argProfileFor,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
@@ -165,16 +135,12 @@ class CompilerFlags {
       }
     }
 
-    final allowedTypeDefs = options[_argAllowedTypedefs] as List<String>;
-    final profileFor = options[_argProfileFor];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
     final noEmitComponentFactories = options[_argNoEmitComponentFactories];
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
 
     return CompilerFlags(
-      allowedTypeDefs: allowedTypeDefs ?? defaultTo.allowedTypeDefs,
-      profileFor: _toProfile(profileFor, log) ?? defaultTo.profileFor,
       useLegacyStyleEncapsulation:
           useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
       forceMinifyWhitespace:
@@ -182,29 +148,5 @@ class CompilerFlags {
       emitComponentFactories: !(noEmitComponentFactories == true),
       emitInjectableFactories: !(noEmitInjectableFactories == true),
     );
-  }
-}
-
-/// Optional configuration for emitting additional code for profiling.
-///
-/// See [CompilerFlags.profileFor].
-enum Profile {
-  /// No profiling is enabled.
-  none,
-
-  /// Profile component view construction performance.
-  build,
-}
-
-Profile _toProfile(dynamic profile, void log(dynamic message)) {
-  if (profile == null) return null;
-  switch (profile) {
-    case '':
-      return Profile.none;
-    case 'build':
-      return Profile.build;
-    default:
-      log('Invalid flag for "$_argProfileFor": $profile.');
-      return Profile.none;
   }
 }

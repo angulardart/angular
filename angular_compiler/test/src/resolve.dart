@@ -13,7 +13,7 @@ final _packageResolverFuture =
     Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH'] != null
         ? PackageResolver.loadConfig(
             Uri.file(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']))
-        : PackageResolver.current;
+        : Future.value(PackageResolver.current);
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
