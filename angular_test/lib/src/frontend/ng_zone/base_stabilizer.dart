@@ -32,6 +32,9 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
   Future<bool> update([
     void Function() runAndTrackSideEffects,
   ]) {
+    // Future.sync() ensures that any errors thrown by `runAndTrackSideEffects`
+    // are propagated through the returned Future instead of being thrown
+    // synchronously.
     return Future<void>.sync(() {
       _triggerSideEffects(runAndTrackSideEffects ?? _noSideEffects);
       return _waitForAsyncEventsOrErrors();
