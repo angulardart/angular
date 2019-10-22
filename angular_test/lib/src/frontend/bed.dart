@@ -19,11 +19,6 @@ import 'stabilizer.dart';
 /// Used to determine if there is an actively executing test.
 NgTestFixture<Object> activeTest;
 
-/// Returns a new [List] merging iterables [a] and [b].
-List<E> _concat<E>(Iterable<E> a, Iterable<E> b) {
-  return a.toList()..addAll(b);
-}
-
 /// If any [NgTestFixture] is currently executing, calls `dispose` on it.
 ///
 /// Returns a future that completes when the test is destroyed.
@@ -243,7 +238,7 @@ class NgTestBed<T> {
     if (_usesComponentFactory) {
       throw UnsupportedError('Use "addInjector" instead');
     }
-    return fork(providers: _concat(_providers, providers));
+    return fork(providers: [..._providers, ...providers]);
   }
 
   /// Returns a new instance of [NgTestBed] with the root injector wrapped.
@@ -260,7 +255,7 @@ class NgTestBed<T> {
   /// Returns a new instance of [NgTestBed] with [stabilizers] added.
   NgTestBed<T> addStabilizers(Iterable<NgTestStabilizerFactory> stabilizers) {
     return fork(
-      stabilizer: composeStabilizers([_createStabilizer]..addAll(stabilizers)),
+      stabilizer: composeStabilizers([_createStabilizer, ...stabilizers]),
     );
   }
 
