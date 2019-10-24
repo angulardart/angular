@@ -196,7 +196,6 @@ class TypeTokenElement implements TokenElement {
   /// Canonical URL of the source location and class name being referenced.
   final TypeLink link;
 
-  @visibleForTesting
   const TypeTokenElement(this.link);
 
   @override
