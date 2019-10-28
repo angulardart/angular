@@ -104,7 +104,7 @@ class CatchConstructorAsyncErrors {
   }
 
   CatchConstructorAsyncErrors() {
-    scheduleMicrotask(() {
+    Timer.run(() {
       throw StateError('Test');
     });
   }
