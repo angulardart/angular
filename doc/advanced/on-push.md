@@ -53,31 +53,31 @@ A change detection pass always begins at the root of an app and attempts to
 recursively change detect every component. What happens when visiting a
 component during change detection depends on its change detection strategy:
 
-*  A Default component is unconditionally change detected before recursively
-   visiting its children.
+*   A Default component is unconditionally change detected before recursively
+    visiting its children.
 
-*  An OnPush component keeps track of whether it needs to be change detected.
-   If marked for change detection, change detection proceeds as it would on a
-   Default component, then the component is marked as checked. If already
-   checked, the component is skipped along with its descendants.
+*   An OnPush component keeps track of whether it needs to be change detected.
+    If marked for change detection, change detection proceeds as it would on a
+    Default component, then the component is marked as checked. If already
+    checked, the component is skipped along with its descendants.
 
 All OnPush components begin marked for change detection. After being checked,
 there are three ways an OnPush component can be marked for change detection
 again:
 
-1. The *identity* of an expression bound to one of its inputs has changed since
-   it was last checked during change detection. This allows changes to propagate
-   down the component hierarchy through inputs.
+1.  The *identity* of an expression bound to one of its inputs has changed since
+    it was last checked during change detection. This allows changes to
+    propagate down the component hierarchy through inputs.
 
-2. An event binding in the template of the component or a descendant is
-   triggered. Since handling an event is likely to change a component, the
-   framework automatically marks the component that bound the event handler and
-   its ancestors for change detection.
+2.  An event binding in the template of the component or a descendant is
+    triggered. Since handling an event is likely to change a component, the
+    framework automatically marks the component that bound the event handler and
+    its ancestors for change detection.
 
-3. It, a directive on its host element, or a descendant injects
-   `ChangeDetectorRef` and calls `markForCheck()`. This is used to mark a
-   component for change detection after handling an asynchronous change.
-   Examples include receiving data from the network or a stream subscription.
+3.  If, a directive on its host element, or a descendant injects
+    `ChangeDetectorRef` and calls `markForCheck()`. This is used to mark a
+    component for change detection after handling an asynchronous change.
+    Examples include receiving data from the network or a stream subscription.
 
 Note how the first two cases are handled automatically. Developer intervention
 is only necessary when applying asynchronous updates that don't originate from
@@ -99,9 +99,9 @@ component.
 
 In other words, the descendants of an OnPush component should also be OnPush.
 The compiler warns when this rule is violated. The same rule also applies for
-imperatively loaded components, with one important caveat for [component
-reuse](#component-reuse). Unfortunately, this case isn't enforced by the
-compiler.
+imperatively loaded components, with one important caveat for
+[component reuse](#component-reuse). Unfortunately, this case isn't enforced by
+the compiler.
 
 NOTE: A Default component can be projected into an OnPush component with
 `<ng-content>`.
@@ -120,11 +120,11 @@ now issues a warning, which will eventually be upgraded to an error.
 
 If you encounter a warning during development
 
-* for a new component, convert it to OnPush. If it's composed of other Default
-  components, see the next point.
+*   for a new component, convert it to OnPush. If it's composed of other Default
+    components, see the next point.
 
-* for an existing component, migrate it to OnPush, beginning with its
-  dependencies.
+*   for an existing component, migrate it to OnPush, beginning with its
+    dependencies.
 
 TIP: Migrate existing component trees from leaf to root.
 
@@ -251,20 +251,21 @@ must be manually marked for change detection. Imperatively updating OnPush query
 children is particularly challenging due to their location in the component
 hierarchy relative to the caller.
 
-> NOTE: A query child is a reference obtained using one of the following annotations:
+> NOTE: A query child is a reference obtained using one of the following
+> annotations:
 >
-> * `@ContentChild()`
-> * `@ContentChildren()`
-> * `@ViewChild()`
-> * `@ViewChildren()`
+> *   `@ContentChild()`
+> *   `@ContentChildren()`
+> *   `@ViewChild()`
+> *   `@ViewChildren()`
 
 The component or directive that defines a query can't inject the
-`ChangeDetectoRef` of the query target. Furthermore, calling `markForCheck()` on
-its own `ChangeDetectoRef` won't mark the query target for change detection.
+`ChangeDetectorRef` of the query target. Furthermore, calling `markForCheck()`
+on its own `ChangeDetectorRef` won't mark the query target for change detection.
 
 It's tempting to add defensive `markForCheck()` invocations to members of the
-query target, but this approach should be avoided. Invoking `markForCheck()` in a
-code path that's called during change detection (such as in an input) is
+query target, but this approach should be avoided. Invoking `markForCheck()` in
+a code path that's called during change detection (such as in an input) is
 suboptimal, and sometimes outside the developer's control.
 
 ```dart {.bad}
@@ -276,7 +277,7 @@ suboptimal, and sometimes outside the developer's control.
 class ExampleComponent {
   ExampleComponent(this._changeDetectorRef);
 
-  final ChangeDetectoRef _changeDetectorRef;
+  final ChangeDetectorRef _changeDetectorRef;
 
   String _label;
   String get label => _label;
