@@ -262,8 +262,7 @@ class ContentChildLinker {
       AnalysisContext context) {
     // construct List<Bottom>, which is a subtype of all List<T>
     final typeProvider = context.typeProvider;
-    final listBottom =
-        typeProvider.listType.instantiate([typeProvider.bottomType]);
+    final listBottom = typeProvider.listType2(typeProvider.bottomType);
 
     if (!_typeSystem.isSubtypeOf(listBottom, setterType)) {
       _errorReporter.reportErrorForOffset(
@@ -275,7 +274,7 @@ class ContentChildLinker {
       return typeProvider.dynamicType;
     }
 
-    final iterableType = typeProvider.iterableType;
+    final iterableType = typeProvider.iterableType2(typeProvider.dynamicType);
 
     // get T for setterTypes that extend Iterable<T>
     return context.typeSystem
