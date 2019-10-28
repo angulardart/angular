@@ -1,4 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/generated/engine.dart';
@@ -33,7 +34,7 @@ class BindingTypeResolver {
     if (getter != null && getter.type != null) {
       final returnType = getter.type.returnType;
       if (returnType != null && returnType is InterfaceType) {
-        final streamType = _typeProvider.streamType;
+        final streamType = _typeProvider.streamType2(_typeProvider.dynamicType);
         final streamedType = _context.typeSystem
             .mostSpecificTypeArgument(returnType, streamType);
         if (streamedType != null) {
@@ -81,6 +82,9 @@ class BindingTypeResolver {
         : p.bound.resolveToBound(typeProvider.dynamicType);
 
     final bounds = classElement.typeParameters.map(getBound).toList();
-    return classElement.type.instantiate(bounds);
+    return classElement.instantiate(
+      typeArguments: bounds,
+      nullabilitySuffix: NullabilitySuffix.star,
+    );
   }
 }

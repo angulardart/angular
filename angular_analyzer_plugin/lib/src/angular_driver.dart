@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
@@ -738,11 +739,12 @@ class AngularDriver
     final typeElement =
         typeResult.libraryElement.publicNamespace.get(event.typeName);
     if (typeElement is ClassElement) {
-      var type = typeElement.type;
-      if (type is ParameterizedType) {
-        type = type.instantiate(
-            type.typeParameters.map((p) => p.bound ?? dynamicType).toList());
-      }
+      var type = typeElement.instantiate(
+        typeArguments: typeElement.typeParameters
+            .map((p) => p.bound ?? dynamicType)
+            .toList(),
+        nullabilitySuffix: NullabilitySuffix.star,
+      );
       return MissingOutput(
           name: event.name,
           nameRange: SourceRange(event.nameOffset, event.name.length),
