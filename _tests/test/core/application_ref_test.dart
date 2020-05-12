@@ -12,26 +12,27 @@ import 'application_ref_test.template.dart' as ng;
 void main() {
   ApplicationRef appRef;
 
+  setUp(() {
+    appRef = internalCreateApplicationRef(
+      NgZone(),
+      Injector.map({
+        ExceptionHandler: const BrowserExceptionHandler(),
+      }),
+    );
+
+    // Setup global variables that need to exist before using bootstrap.
+    // TODO: Move this to a common place. It's duplicated all over.
+    appViewUtils = AppViewUtils(
+      'appId',
+      null,
+      null,
+    );
+  });
+
   group('dispose should ', () {
-    setUp(() {
-      appRef = internalCreateApplicationRef(
-        NgZone(),
-        Injector.map({
-          ExceptionHandler: const BrowserExceptionHandler(),
-        }),
-      );
-
-      // Setup global variables that need to exist before using bootstrap.
-      // TODO: Move this to a common place. It's duplicated all over.
-      appViewUtils = AppViewUtils(
-        'appId',
-        null,
-        null,
-      );
-    });
-
     test('destroy bootstrapped components', () {
-      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
+      final comp =
+          appRef.bootstrap<HelloComponent>(ng.createHelloComponentFactory());
       final view = comp.hostView;
       expect(view.destroyed, isFalse);
 
@@ -57,7 +58,8 @@ void main() {
     test('replace an existing element if in the DOM', () {
       final existing = Element.tag('hello-component')..text = 'Loading...';
       document.body.append(existing);
-      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
+      final comp =
+          appRef.bootstrap<HelloComponent>(ng.createHelloComponentFactory());
       expect(comp.location.text, 'Hello World');
       expect(
         document.body.querySelector('hello-component'),
@@ -66,7 +68,8 @@ void main() {
     });
 
     test('create a new element if missing from the DOM', () {
-      final comp = appRef.bootstrap<HelloComponent>(ng.HelloComponentNgFactory);
+      final comp =
+          appRef.bootstrap<HelloComponent>(ng.createHelloComponentFactory());
       expect(comp.location.text, 'Hello World');
       expect(
         document.body.querySelector('hello-component'),

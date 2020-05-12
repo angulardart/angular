@@ -121,6 +121,7 @@ class NgModel extends NgControl implements AfterChanges, OnInit {
     _control.updateValueAndValidity(emitEvent: false);
   }
 
+  @override
   Control get control => _control;
 
   @override

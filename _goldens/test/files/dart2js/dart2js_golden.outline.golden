@@ -1,0 +1,199 @@
+// ignore_for_file: library_prefixes,unused_import,strict_raw_type,undefined_hidden_name
+// The .template.dart files also export the user code.
+export 'dart2js_golden.dart';
+
+// Required for referencing runtime code.
+import 'dart:html' as _html;
+import 'package:angular/angular.dart' as _ng;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as _ng;
+import 'package:angular/src/core/linker/views/component_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/render_view.dart' as _ng;
+import 'package:angular/src/core/linker/views/view.dart' as _ng;
+
+// Required for specifically referencing user code.
+import 'dart2js_golden.dart';
+
+// Required for "type inference" (scoping).
+import 'dart:async';
+import 'package:angular/angular.dart';
+import 'package:js/js.dart';
+import 'dart2js_golden.template.dart' as ng;
+
+// For @Component class RootComponent.
+external List<dynamic> get styles$RootComponent;
+external _ng.ComponentFactory<RootComponent> get RootComponentNgFactory;
+external _ng.ComponentFactory<RootComponent> createRootComponentFactory();
+class ViewRootComponent0 extends _ng.ComponentView<RootComponent> {
+  external ViewRootComponent0(_ng.View parentView, int parentIndex);
+}
+// For @Component class UsesDefaultChangeDetectionAndInputs.
+external List<dynamic> get styles$UsesDefaultChangeDetectionAndInputs;
+external _ng.ComponentFactory<UsesDefaultChangeDetectionAndInputs> get UsesDefaultChangeDetectionAndInputsNgFactory;
+external _ng.ComponentFactory<UsesDefaultChangeDetectionAndInputs> createUsesDefaultChangeDetectionAndInputsFactory();
+class ViewUsesDefaultChangeDetectionAndInputs0 extends _ng.ComponentView<UsesDefaultChangeDetectionAndInputs> {
+  external ViewUsesDefaultChangeDetectionAndInputs0(_ng.View parentView, int parentIndex);
+}
+// For @Component class DefaultChangeDetectionAndInputs.
+external List<dynamic> get styles$DefaultChangeDetectionAndInputs;
+external _ng.ComponentFactory<DefaultChangeDetectionAndInputs> get DefaultChangeDetectionAndInputsNgFactory;
+external _ng.ComponentFactory<DefaultChangeDetectionAndInputs> createDefaultChangeDetectionAndInputsFactory();
+class ViewDefaultChangeDetectionAndInputs0 extends _ng.ComponentView<DefaultChangeDetectionAndInputs> {
+  external ViewDefaultChangeDetectionAndInputs0(_ng.View parentView, int parentIndex);
+}
+// For @Component class UsesOnPushChangeDetectionAndInputs.
+external List<dynamic> get styles$UsesOnPushChangeDetectionAndInputs;
+external _ng.ComponentFactory<UsesOnPushChangeDetectionAndInputs> get UsesOnPushChangeDetectionAndInputsNgFactory;
+external _ng.ComponentFactory<UsesOnPushChangeDetectionAndInputs> createUsesOnPushChangeDetectionAndInputsFactory();
+class ViewUsesOnPushChangeDetectionAndInputs0 extends _ng.ComponentView<UsesOnPushChangeDetectionAndInputs> {
+  external ViewUsesOnPushChangeDetectionAndInputs0(_ng.View parentView, int parentIndex);
+}
+// For @Component class OnPushChangeDetectionAndInputs.
+external List<dynamic> get styles$OnPushChangeDetectionAndInputs;
+external _ng.ComponentFactory<OnPushChangeDetectionAndInputs> get OnPushChangeDetectionAndInputsNgFactory;
+external _ng.ComponentFactory<OnPushChangeDetectionAndInputs> createOnPushChangeDetectionAndInputsFactory();
+class ViewOnPushChangeDetectionAndInputs0 extends _ng.ComponentView<OnPushChangeDetectionAndInputs> {
+  external ViewOnPushChangeDetectionAndInputs0(_ng.View parentView, int parentIndex);
+}
+// For @Component class InlinedNgIf.
+external List<dynamic> get styles$InlinedNgIf;
+external _ng.ComponentFactory<InlinedNgIf> get InlinedNgIfNgFactory;
+external _ng.ComponentFactory<InlinedNgIf> createInlinedNgIfFactory();
+class ViewInlinedNgIf0 extends _ng.ComponentView<InlinedNgIf> {
+  external ViewInlinedNgIf0(_ng.View parentView, int parentIndex);
+}
+// For @Component class EmbeddedNgIf.
+external List<dynamic> get styles$EmbeddedNgIf;
+external _ng.ComponentFactory<EmbeddedNgIf> get EmbeddedNgIfNgFactory;
+external _ng.ComponentFactory<EmbeddedNgIf> createEmbeddedNgIfFactory();
+class ViewEmbeddedNgIf0 extends _ng.ComponentView<EmbeddedNgIf> {
+  external ViewEmbeddedNgIf0(_ng.View parentView, int parentIndex);
+}
+// For @Component class EmbeddedNgFor.
+external List<dynamic> get styles$EmbeddedNgFor;
+external _ng.ComponentFactory<EmbeddedNgFor> get EmbeddedNgForNgFactory;
+external _ng.ComponentFactory<EmbeddedNgFor> createEmbeddedNgForFactory();
+class ViewEmbeddedNgFor0 extends _ng.ComponentView<EmbeddedNgFor> {
+  external ViewEmbeddedNgFor0(_ng.View parentView, int parentIndex);
+}
+// For @Component class NullComponent.
+external List<dynamic> get styles$NullComponent;
+external _ng.ComponentFactory<NullComponent> get NullComponentNgFactory;
+external _ng.ComponentFactory<NullComponent> createNullComponentFactory();
+class ViewNullComponent0 extends _ng.ComponentView<NullComponent> {
+  external ViewNullComponent0(_ng.View parentView, int parentIndex);
+}
+// For @Component class InjectsFromArbitraryParent.
+external List<dynamic> get styles$InjectsFromArbitraryParent;
+external _ng.ComponentFactory<InjectsFromArbitraryParent> get InjectsFromArbitraryParentNgFactory;
+external _ng.ComponentFactory<InjectsFromArbitraryParent> createInjectsFromArbitraryParentFactory();
+class ViewInjectsFromArbitraryParent0 extends _ng.ComponentView<InjectsFromArbitraryParent> {
+  external ViewInjectsFromArbitraryParent0(_ng.View parentView, int parentIndex);
+}
+// For @Component class ComponentConditionalFeatures.
+external List<dynamic> get styles$ComponentConditionalFeatures;
+external _ng.ComponentFactory<ComponentConditionalFeatures> get ComponentConditionalFeaturesNgFactory;
+external _ng.ComponentFactory<ComponentConditionalFeatures> createComponentConditionalFeaturesFactory();
+class ViewComponentConditionalFeatures0 extends _ng.ComponentView<ComponentConditionalFeatures> {
+  external ViewComponentConditionalFeatures0(_ng.View parentView, int parentIndex);
+}
+// For @Component class FeatureA.
+external List<dynamic> get styles$FeatureA;
+external _ng.ComponentFactory<FeatureA> get FeatureANgFactory;
+external _ng.ComponentFactory<FeatureA> createFeatureAFactory();
+class ViewFeatureA0 extends _ng.ComponentView<FeatureA> {
+  external ViewFeatureA0(_ng.View parentView, int parentIndex);
+}
+// For @Component class FeatureB.
+external List<dynamic> get styles$FeatureB;
+external _ng.ComponentFactory<FeatureB> get FeatureBNgFactory;
+external _ng.ComponentFactory<FeatureB> createFeatureBFactory();
+class ViewFeatureB0 extends _ng.ComponentView<FeatureB> {
+  external ViewFeatureB0(_ng.View parentView, int parentIndex);
+}
+// For @Component class UsesDomBindings.
+external List<dynamic> get styles$UsesDomBindings;
+external _ng.ComponentFactory<UsesDomBindings> get UsesDomBindingsNgFactory;
+external _ng.ComponentFactory<UsesDomBindings> createUsesDomBindingsFactory();
+class ViewUsesDomBindings0 extends _ng.ComponentView<UsesDomBindings> {
+  external ViewUsesDomBindings0(_ng.View parentView, int parentIndex);
+}
+// For @Component class UsesNgDirectives.
+external List<dynamic> get styles$UsesNgDirectives;
+external _ng.ComponentFactory<UsesNgDirectives> get UsesNgDirectivesNgFactory;
+external _ng.ComponentFactory<UsesNgDirectives> createUsesNgDirectivesFactory();
+class ViewUsesNgDirectives0 extends _ng.ComponentView<UsesNgDirectives> {
+  external ViewUsesNgDirectives0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasNestedProviderLookups.
+external List<dynamic> get styles$HasNestedProviderLookups;
+external _ng.ComponentFactory<HasNestedProviderLookups> get HasNestedProviderLookupsNgFactory;
+external _ng.ComponentFactory<HasNestedProviderLookups> createHasNestedProviderLookupsFactory();
+class ViewHasNestedProviderLookups0 extends _ng.ComponentView<HasNestedProviderLookups> {
+  external ViewHasNestedProviderLookups0(_ng.View parentView, int parentIndex);
+}
+// For @Component class InjectsManyThingsDynamically.
+external List<dynamic> get styles$InjectsManyThingsDynamically;
+external _ng.ComponentFactory<InjectsManyThingsDynamically> get InjectsManyThingsDynamicallyNgFactory;
+external _ng.ComponentFactory<InjectsManyThingsDynamically> createInjectsManyThingsDynamicallyFactory();
+class ViewInjectsManyThingsDynamically0 extends _ng.ComponentView<InjectsManyThingsDynamically> {
+  external ViewInjectsManyThingsDynamically0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasHostListeners.
+external List<dynamic> get styles$HasHostListeners;
+external _ng.ComponentFactory<HasHostListeners> get HasHostListenersNgFactory;
+external _ng.ComponentFactory<HasHostListeners> createHasHostListenersFactory();
+class ViewHasHostListeners0 extends _ng.ComponentView<HasHostListeners> {
+  external ViewHasHostListeners0(_ng.View parentView, int parentIndex);
+}
+// For @Component class Child.
+external List<dynamic> get styles$Child;
+external _ng.ComponentFactory<Child> get ChildNgFactory;
+external _ng.ComponentFactory<Child> createChildFactory();
+class ViewChild0 extends _ng.ComponentView<Child> {
+  external ViewChild0(_ng.View parentView, int parentIndex);
+}
+// For @Component class OnPushChild.
+external List<dynamic> get styles$OnPushChild;
+external _ng.ComponentFactory<OnPushChild> get OnPushChildNgFactory;
+external _ng.ComponentFactory<OnPushChild> createOnPushChildFactory();
+class ViewOnPushChild0 extends _ng.ComponentView<OnPushChild> {
+  external ViewOnPushChild0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasContentChildren.
+external List<dynamic> get styles$HasContentChildren;
+external _ng.ComponentFactory<HasContentChildren> get HasContentChildrenNgFactory;
+external _ng.ComponentFactory<HasContentChildren> createHasContentChildrenFactory();
+class ViewHasContentChildren0 extends _ng.ComponentView<HasContentChildren> {
+  external ViewHasContentChildren0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasViewChildren.
+external List<dynamic> get styles$HasViewChildren;
+external _ng.ComponentFactory<HasViewChildren> get HasViewChildrenNgFactory;
+external _ng.ComponentFactory<HasViewChildren> createHasViewChildrenFactory();
+class ViewHasViewChildren0 extends _ng.ComponentView<HasViewChildren> {
+  external ViewHasViewChildren0(_ng.View parentView, int parentIndex);
+}
+// For @Component class HasLargeProviders.
+external List<dynamic> get styles$HasLargeProviders;
+external _ng.ComponentFactory<HasLargeProviders> get HasLargeProvidersNgFactory;
+external _ng.ComponentFactory<HasLargeProviders> createHasLargeProvidersFactory();
+class ViewHasLargeProviders0 extends _ng.ComponentView<HasLargeProviders> {
+  external ViewHasLargeProviders0(_ng.View parentView, int parentIndex);
+}
+// For @Directive class HasProvider.
+class HasProviderNgCd extends _ng.DirectiveChangeDetector {
+  external HasProvider get instance;
+  external void deliverChanges();
+  external HasProviderNgCd(HasProvider instance);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
+}
+// For @Directive class HasProviders.
+class HasProvidersNgCd extends _ng.DirectiveChangeDetector {
+  external HasProviders get instance;
+  external void deliverChanges();
+  external HasProvidersNgCd(HasProviders instance);
+  external void detectHostChanges(_ng.RenderView view, _html.Element hostElement);
+}
+external _ng.Injector doGenerate$Injector([_ng.Injector parent]);
+
+external void initReflector();

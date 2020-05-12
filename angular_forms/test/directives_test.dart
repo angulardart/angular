@@ -11,7 +11,7 @@ class DummyControlValueAccessor implements ControlValueAccessor {
 
   @override
   void writeValue(dynamic obj) {
-    this.writtenValue = obj;
+    writtenValue = obj;
   }
 
   @override
@@ -23,6 +23,7 @@ class DummyControlValueAccessor implements ControlValueAccessor {
 }
 
 class CustomValidatorDirective implements Validator {
+  @override
   Map<String, dynamic> validate(AbstractControl c) {
     return {'custom': true};
   }

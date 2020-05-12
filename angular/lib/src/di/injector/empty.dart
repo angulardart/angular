@@ -7,7 +7,7 @@ import 'injector.dart';
 ///
 /// **INTERNAL ONLY**: Use [Injector.empty] to create this class.
 @Immutable()
-class EmptyInjector extends HierarchicalInjector {
+class EmptyInjector extends HierarchicalInjector implements Injector {
   @protected
   const EmptyInjector([HierarchicalInjector parent]) : super.maybeEmpty(parent);
 

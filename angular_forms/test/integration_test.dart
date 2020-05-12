@@ -7,20 +7,18 @@ import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'integration_test.template.dart' as ng_generated;
+import 'integration_test.template.dart' as ng;
 
 void dispatchEvent(Element element, String eventType) {
   element.dispatchEvent(Event(eventType, canBubble: true));
 }
 
 void main() {
-  ng_generated.initReflector();
-
   group('ngForm', () {
     tearDown(() => disposeAnyRunningTest());
 
     test('should initialze DOM elements with the given form object', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
         component.form = ControlGroup({'login': Control('loginValue')});
@@ -29,7 +27,7 @@ void main() {
       expect(input.value, 'loginValue');
     });
     test('should throw if a form is not passed into ngFormModel', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
         component.form = ControlGroup({'login': Control('loginValue')});
@@ -45,7 +43,7 @@ void main() {
                   'ngFormModel expects a form. Please pass one in.')))));
     });
     test('should update the control group values on DOM change', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('oldValue')});
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
@@ -59,7 +57,7 @@ void main() {
       expect(form.value, {'login': 'updatedValue'});
     });
     test('should ignore the change event for <input type=text>', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('oldValue')});
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
@@ -75,7 +73,7 @@ void main() {
       });
     });
     test('should emit ngSubmit event on submit', () async {
-      var testBed = NgTestBed<SubmitFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createSubmitFormTestFactory());
       var fixture = await testBed.create(
           beforeChangeDetection: (SubmitFormTest component) {
         component.form = ControlGroup({});
@@ -89,7 +87,7 @@ void main() {
       expect(fixture.text.trim(), 'updated');
     });
     test('should work with single controls', () async {
-      var testBed = NgTestBed<SingleControlTest>();
+      var testBed = NgTestBed.forComponent(ng.createSingleControlTestFactory());
       var control = Control('loginValue');
       var fixture = await testBed.create(
           beforeChangeDetection: (SingleControlTest component) {
@@ -105,7 +103,7 @@ void main() {
     });
     test('should update DOM elements when rebinding the control group',
         () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
         component.form = ControlGroup({'login': Control('oldValue')});
@@ -118,7 +116,7 @@ void main() {
     });
     test('should update DOM elements when updating the value of a control',
         () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var login = Control('oldValue');
       var form = ControlGroup({'login': login});
       var fixture = await testBed.create(
@@ -134,7 +132,7 @@ void main() {
     test(
         'should mark controls as touched after '
         'interacting with the DOM control', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var login = Control('oldValue');
       var form = ControlGroup({'login': login});
       var fixture = await testBed.create(
@@ -149,7 +147,7 @@ void main() {
       expect(login.touched, true);
     });
     test('should support <input type=text>', () async {
-      var testBed = NgTestBed<InputFormTest>();
+      var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('old')});
       var fixture = await testBed.create(
           beforeChangeDetection: (InputFormTest component) {
@@ -164,7 +162,8 @@ void main() {
       expect(form.value, equals({'login': 'new'}));
     });
     test('should support <input> without type', () async {
-      var testBed = NgTestBed<InputWithoutTypeTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createInputWithoutTypeTestFactory());
       var form = ControlGroup({'text': Control('old')});
       var fixture = await testBed.create(
           beforeChangeDetection: (InputWithoutTypeTest component) {
@@ -179,7 +178,7 @@ void main() {
       expect(form.value, equals({'text': 'new'}));
     });
     test('should support <textarea>', () async {
-      var testBed = NgTestBed<TextAreaTest>();
+      var testBed = NgTestBed.forComponent(ng.createTextAreaTestFactory());
       var form = ControlGroup({'text': Control('old')});
       var fixture =
           await testBed.create(beforeChangeDetection: (TextAreaTest component) {
@@ -195,7 +194,7 @@ void main() {
       expect(form.value, equals({'text': 'new'}));
     });
     test('should support <type=checkbox>', () async {
-      var testBed = NgTestBed<CheckboxTest>();
+      var testBed = NgTestBed.forComponent(ng.createCheckboxTestFactory());
       var form = ControlGroup({'checkbox': Control(true)});
       var fixture =
           await testBed.create(beforeChangeDetection: (CheckboxTest component) {
@@ -210,7 +209,7 @@ void main() {
       expect(form.value, equals({'checkbox': false}));
     });
     test('should support <type=number>', () async {
-      var testBed = NgTestBed<NumberTest>();
+      var testBed = NgTestBed.forComponent(ng.createNumberTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture =
           await testBed.create(beforeChangeDetection: (NumberTest component) {
@@ -226,7 +225,8 @@ void main() {
     });
     test('should support <type=number> when value is cleared in the UI',
         () async {
-      var testBed = NgTestBed<NumberRequiredTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createNumberRequiredTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture = await testBed.create(
           beforeChangeDetection: (NumberRequiredTest component) {
@@ -248,7 +248,7 @@ void main() {
     });
     test('should support <type=number> when value is cleared programmatically',
         () async {
-      var testBed = NgTestBed<NumberModelTest>();
+      var testBed = NgTestBed.forComponent(ng.createNumberModelTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture = await testBed.create(
           beforeChangeDetection: (NumberModelTest component) {
@@ -259,7 +259,7 @@ void main() {
       expect(input.value, '');
     });
     test('should support <type=radio>', () async {
-      var testBed = NgTestBed<RadioTest>();
+      var testBed = NgTestBed.forComponent(ng.createRadioTestFactory());
       var form = ControlGroup({
         'foodChicken': Control(RadioButtonState(false, 'chicken')),
         'foodFish': Control(RadioButtonState(true, 'fish'))
@@ -280,7 +280,7 @@ void main() {
 
     group('should support select', () {
       test('with basic selection', () async {
-        var testBed = NgTestBed<BasicSelectTest>();
+        var testBed = NgTestBed.forComponent(ng.createBasicSelectTestFactory());
         var fixture = await testBed.create();
         var select =
             fixture.rootElement.querySelector('select') as SelectElement;
@@ -290,7 +290,7 @@ void main() {
         expect(sfOption.selected, true);
       });
       test('with basic selection and value bindings', () async {
-        var testBed = NgTestBed<SelectForTest>();
+        var testBed = NgTestBed.forComponent(ng.createSelectForTestFactory());
         var fixture = await testBed.create();
         var sfOption =
             fixture.rootElement.querySelector('option') as OptionElement;
@@ -301,7 +301,8 @@ void main() {
         expect(sfOption.value, '2');
       });
       test('with ngControl', () async {
-        var testBed = NgTestBed<SelectControlTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectControlTestFactory());
         var form = ControlGroup({'city': Control('SF')});
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectControlTest component) {
@@ -321,14 +322,16 @@ void main() {
         expect(sfOption.selected, false);
       });
       test('with a dynamic list of options', () async {
-        var testBed = NgTestBed<SelectControlDynamicDataTest>();
+        var testBed = NgTestBed.forComponent(
+            ng.createSelectControlDynamicDataTestFactory());
         var fixture = await testBed.create();
         var select =
             fixture.rootElement.querySelector('select') as SelectElement;
         expect(select.value, 'NYC');
       });
       test('with option values that are maps', () async {
-        var testBed = NgTestBed<SelectOptionValueMapTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create();
         await fixture.update((SelectOptionValueMapTest component) {
           component.selectedCity = component.cities[1];
@@ -348,7 +351,8 @@ void main() {
         });
       });
       test('when new options are added', () async {
-        var testBed = NgTestBed<SelectOptionValueMapTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectOptionValueMapTest component) {
           component.cities = [
@@ -369,7 +373,8 @@ void main() {
         expect(buffalo.selected, true);
       });
       test('when options are removed', () async {
-        var testBed = NgTestBed<SelectOptionValueMapTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectOptionValueMapTest component) {
           component.cities = [
@@ -388,7 +393,8 @@ void main() {
       });
       test('when option values change identity while tracking by index',
           () async {
-        var testBed = NgTestBed<SelectTrackByTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectTrackByTestFactory());
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectTrackByTest component) {
           component.selectedCity = component.cities.first;
@@ -405,7 +411,8 @@ void main() {
         expect(buffalo.selected, true);
       });
       test('with duplicate option values', () async {
-        var testBed = NgTestBed<SelectOptionValueMapTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectOptionValueMapTest component) {
           component.cities = [
@@ -427,7 +434,8 @@ void main() {
       });
       test('when option values have same content, but different identities',
           () async {
-        var testBed = NgTestBed<SelectOptionValueMapTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
             beforeChangeDetection: (SelectOptionValueMapTest component) {
           component.cities = [
@@ -449,7 +457,8 @@ void main() {
       });
     });
     test('should support custom value accessors', () async {
-      var testBed = NgTestBed<CustomAccessorTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createCustomAccessorTestFactory());
       var form = ControlGroup({'name': Control('aa')});
       var fixture = await testBed.create(
           beforeChangeDetection: (CustomAccessorTest component) {
@@ -467,7 +476,7 @@ void main() {
         'should support custom value accessors on non builtin input '
         'elements that fire a change event without a "target" property',
         () async {
-      var testBed = NgTestBed<MyInputTest>();
+      var testBed = NgTestBed.forComponent(ng.createMyInputTestFactory());
       var fixture = await testBed.create();
       MyInput myInput;
       await fixture.update((MyInputTest component) {
@@ -482,7 +491,8 @@ void main() {
     });
     group('validations', () {
       test('should use sync validators defined in html', () async {
-        var testBed = NgTestBed<SyncValidatorsHtmlTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createSyncValidatorsHtmlTestFactory());
         var form = ControlGroup(
             {'login': Control(''), 'min': Control(''), 'max': Control('')});
         var fixture = await testBed.create(
@@ -518,7 +528,7 @@ void main() {
         expect(form.valid, true);
       });
       test('should use sync validators defined in the model', () async {
-        var testBed = NgTestBed<InputFormTest>();
+        var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
         var form = ControlGroup({'login': Control('aa', Validators.required)});
         var fixture = await testBed.create(
             beforeChangeDetection: (InputFormTest component) {
@@ -536,13 +546,13 @@ void main() {
     });
     group('nested forms', () {
       test('should init DOM with the given form object', () async {
-        var testBed = NgTestBed<NestedFormTest>();
+        var testBed = NgTestBed.forComponent(ng.createNestedFormTestFactory());
         var fixture = await testBed.create();
         var input = fixture.rootElement.querySelector('input') as InputElement;
         expect(input.value, 'value');
       });
       test('should update the control group values on DOM change', () async {
-        var testBed = NgTestBed<NestedFormTest>();
+        var testBed = NgTestBed.forComponent(ng.createNestedFormTestFactory());
         var fixture = await testBed.create();
         var input = fixture.rootElement.querySelector('input') as InputElement;
         var form;
@@ -559,7 +569,8 @@ void main() {
       });
     });
     test('should support ngModel for complex forms', () async {
-      var testBed = NgTestBed<ComplexNgModelTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createComplexNgModelTestFactory());
       var fixture = await testBed.create();
       await fixture.update((ComplexNgModelTest component) {
         component.name = 'oldValue';
@@ -575,7 +586,8 @@ void main() {
       expect(comp.name, 'updatedValue');
     });
     test('should support ngModel for single fields', () async {
-      var testBed = NgTestBed<SingleFieldNgModelTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createSingleFieldNgModelTestFactory());
       var fixture = await testBed.create();
       await fixture.update((SingleFieldNgModelTest component) {
         component.name = 'oldValue';
@@ -593,7 +605,8 @@ void main() {
     });
     group('template-driven forms', () {
       test('should add new controls and control groups', () async {
-        var testBed = NgTestBed<TemplateFormTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createTemplateFormTestFactory());
         var fixture = await testBed.create();
         NgForm form;
         await fixture.update((TemplateFormTest component) {
@@ -604,7 +617,8 @@ void main() {
             contains('login'));
       });
       test('should emit ngSubmit event on submit', () async {
-        var testBed = NgTestBed<TemplateSubmitTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createTemplateSubmitTestFactory());
         var fixture = await testBed.create();
         await fixture.update((TemplateSubmitTest component) {
           component.name = 'old';
@@ -618,7 +632,7 @@ void main() {
         expect(comp.name, 'updated');
       });
       test('should not create a form when ngNoForm is used', () async {
-        var testBed = NgTestBed<NgNoFormTest>();
+        var testBed = NgTestBed.forComponent(ng.createNgNoFormTestFactory());
         var fixture = await testBed.create();
         await fixture.update((form) {
           expect(form.hasForm.ngForm, isNotNull);
@@ -626,7 +640,8 @@ void main() {
         });
       });
       test('should remove controls', () async {
-        var testBed = NgTestBed<RemoveControlsTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createRemoveControlsTestFactory());
         var fixture = await testBed.create();
         NgForm form;
         await fixture.update((RemoveControlsTest component) {
@@ -640,7 +655,8 @@ void main() {
         expect(form, isNot(contains('login')));
       });
       test('should remove control groups', () async {
-        var testBed = NgTestBed<RemoveControlGroupTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createRemoveControlGroupTestFactory());
         var fixture = await testBed.create();
         NgForm form;
         await fixture.update((RemoveControlGroupTest component) {
@@ -654,7 +670,8 @@ void main() {
         expect(form.controls, isNot(contains('user')));
       });
       test('should support ngModel for complex forms', () async {
-        var testBed = NgTestBed<NgModelComplexTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createNgModelComplexTestFactory());
         var fixture = await testBed.create();
         await fixture.update((NgModelComplexTest component) {
           component.name = 'oldValue';
@@ -670,7 +687,8 @@ void main() {
         expect(comp.name, 'updatedValue');
       });
       test('should support ngModel for single fields', () async {
-        var testBed = NgTestBed<NgModelSingleFieldTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createNgModelSingleFieldTestFactory());
         var fixture = await testBed.create();
         await fixture.update((NgModelSingleFieldTest component) {
           component.name = 'oldValue';
@@ -686,7 +704,8 @@ void main() {
         expect(comp.name, 'updatedValue');
       });
       test('should support <type=radio>', () async {
-        var testBed = NgTestBed<TemplateRadioTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createTemplateRadioTestFactory());
         var data = <String, RadioButtonState>{
           'chicken1': RadioButtonState(false, 'chicken'),
           'fish1': RadioButtonState(true, 'fish'),
@@ -716,7 +735,8 @@ void main() {
       test(
           'should not update the view when the value '
           'initially came from the view', () async {
-        var testBed = NgTestBed<NgModelInitialViewTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createNgModelInitialViewTestFactory());
         var fixture = await testBed.create();
         var input = fixture.rootElement.querySelector('input') as InputElement;
         await fixture.update((_) {
@@ -729,7 +749,8 @@ void main() {
       test(
           'should update the view when the model is set '
           'back to what used to be in the view', () async {
-        var testBed = NgTestBed<NgModelRevertViewTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createNgModelRevertViewTestFactory());
         var fixture = await testBed.create();
         await fixture.update((NgModelRevertViewTest component) {
           component.name = '';
@@ -757,7 +778,8 @@ void main() {
         // {{x.valid}} used to crash because valid() tried to read a property
         // from form.control before it was set. This test verifies this bug is
         // fixed.
-        var testBed = NgTestBed<NgModelValidityTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createNgModelValidityTestFactory());
         await testBed.create();
       });
     });
@@ -786,7 +808,7 @@ class WrappedAccessor implements ControlValueAccessor {
 
   @override
   void registerOnChange(fn) {
-    this.onChange = fn;
+    onChange = fn;
   }
 
   @override
@@ -794,7 +816,7 @@ class WrappedAccessor implements ControlValueAccessor {
 
   @HostListener('input', [r'$event.target.value'])
   void handleOnInput(value) {
-    this.onChange(value.substring(1, value.length - 1));
+    onChange(value.substring(1, value.length - 1));
   }
 
   @override
@@ -819,14 +841,14 @@ class MyInput implements ControlValueAccessor {
 
   @override
   void registerOnChange(fn) {
-    this.onInput.stream.listen(fn);
+    onInput.stream.listen(fn);
   }
 
   @override
   void registerOnTouched(fn) {}
 
   void dispatchChangeEvent() {
-    this.onInput.add(this.value.substring(1, this.value.length - 1));
+    onInput.add(value.substring(1, value.length - 1));
   }
 
   @override

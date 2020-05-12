@@ -17,7 +17,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed = NgTestBed.forComponent(ng.NgFormControlTestNgFactory);
+      var testBed = NgTestBed.forComponent(ng.createNgFormControlTestFactory());
       fixture = await testBed.create();
     });
 

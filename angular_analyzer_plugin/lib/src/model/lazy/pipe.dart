@@ -48,6 +48,7 @@ class Pipe implements resolved.Pipe {
   bool operator ==(Object other) =>
       other is Pipe && other.classElement == classElement;
 
+  @override
   int get hashCode => classElement.hashCode;
 
   resolved.Pipe load() => _linkedPipe ??= linkFn();

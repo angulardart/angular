@@ -94,7 +94,7 @@ class Validators {
   // TODO(tsander): Remove the need to filter the validation. The list of
   // validators should not contain null values.
   static List<T> _removeNullValidators<T>(List<T> validators) {
-    final result = List<T>();
+    final result = <T>[];
     for (var i = 0, len = validators.length; i < len; i++) {
       var validator = validators[i];
       if (validator != null) result.add(validator);
@@ -105,7 +105,7 @@ class Validators {
 
 Map<String, dynamic> _executeValidators(
     model_module.AbstractControl control, List<ValidatorFn> validators) {
-  var result = Map<String, dynamic>();
+  var result = <String, dynamic>{};
   for (var i = 0, len = validators.length; i < len; i++) {
     final validator = validators[i];
     assert(validator != null, 'Validator should be non-null');

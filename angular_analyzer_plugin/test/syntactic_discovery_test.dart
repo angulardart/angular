@@ -227,7 +227,7 @@ void directiveA() {
     await getDirectives(source);
     expect(directives, hasLength(1));
     final directive = directives.single as FunctionalDirective;
-    expect(directive.functionName, "directiveA");
+    expect(directive.functionName, 'directiveA');
     final selector = directive.selector;
     expect(selector, isA<AndSelector>());
     expect((selector as AndSelector).selectors, hasLength(3));
@@ -273,8 +273,8 @@ class ContentChildComp {}
     expect(childFields, hasLength(0));
     // validate
     errorListener.assertErrorsWithCodes([
-      CompileTimeErrorCode.NOT_ENOUGH_REQUIRED_ARGUMENTS,
-      CompileTimeErrorCode.NOT_ENOUGH_REQUIRED_ARGUMENTS
+      CompileTimeErrorCode.NOT_ENOUGH_POSITIONAL_ARGUMENTS,
+      CompileTimeErrorCode.NOT_ENOUGH_POSITIONAL_ARGUMENTS
     ]);
   }
 
@@ -301,23 +301,23 @@ class ContentChildComp {}
     final childFields = component.contentChildFields;
     expect(childFields, hasLength(1));
     final child = childFields.first;
-    expect(child.fieldName, equals("contentChild"));
+    expect(child.fieldName, equals('contentChild'));
     expect(
-        child.nameRange.offset, equals(code.indexOf("ContentChildComp) // 1")));
-    expect(child.nameRange.length, equals("ContentChildComp".length));
-    expect(child.typeRange.offset, equals(code.indexOf("ContentChildComp ")));
-    expect(child.typeRange.length, equals("ContentChildComp".length));
+        child.nameRange.offset, equals(code.indexOf('ContentChildComp) // 1')));
+    expect(child.nameRange.length, equals('ContentChildComp'.length));
+    expect(child.typeRange.offset, equals(code.indexOf('ContentChildComp ')));
+    expect(child.typeRange.length, equals('ContentChildComp'.length));
 
     final childrenFields = component.contentChildrenFields;
     expect(childrenFields, hasLength(1));
     final children = childrenFields.first;
-    expect(children.fieldName, equals("contentChildren"));
+    expect(children.fieldName, equals('contentChildren'));
     expect(children.nameRange.offset,
-        equals(code.indexOf("ContentChildComp) // 2")));
-    expect(children.nameRange.length, equals("ContentChildComp".length));
+        equals(code.indexOf('ContentChildComp) // 2')));
+    expect(children.nameRange.length, equals('ContentChildComp'.length));
     expect(children.typeRange.offset,
-        equals(code.indexOf("List<ContentChildComp>")));
-    expect(children.typeRange.length, equals("List<ContentChildComp>".length));
+        equals(code.indexOf('List<ContentChildComp>')));
+    expect(children.typeRange.length, equals('List<ContentChildComp>'.length));
 
     errorListener.assertNoErrors();
   }
@@ -342,11 +342,11 @@ class ContentChildComp {}
     final childFields = component.contentChildFields;
     expect(childFields, hasLength(1));
     final child = childFields.first;
-    expect(child.fieldName, equals("contentChild"));
-    expect(child.nameRange.offset, equals(code.indexOf("ContentChildComp)")));
-    expect(child.nameRange.length, equals("ContentChildComp".length));
-    expect(child.typeRange.offset, equals(code.indexOf("ContentChildComp ")));
-    expect(child.typeRange.length, equals("ContentChildComp".length));
+    expect(child.fieldName, equals('contentChild'));
+    expect(child.nameRange.offset, equals(code.indexOf('ContentChildComp)')));
+    expect(child.nameRange.length, equals('ContentChildComp'.length));
+    expect(child.typeRange.offset, equals(code.indexOf('ContentChildComp ')));
+    expect(child.typeRange.length, equals('ContentChildComp'.length));
     // validate
     errorListener.assertNoErrors();
   }
@@ -371,13 +371,13 @@ class ContentChildComp {}
     final childrenFields = component.contentChildrenFields;
     expect(childrenFields, hasLength(1));
     final children = childrenFields.first;
-    expect(children.fieldName, equals("contentChildren"));
+    expect(children.fieldName, equals('contentChildren'));
     expect(
-        children.nameRange.offset, equals(code.indexOf("ContentChildComp)")));
-    expect(children.nameRange.length, equals("ContentChildComp".length));
+        children.nameRange.offset, equals(code.indexOf('ContentChildComp)')));
+    expect(children.nameRange.length, equals('ContentChildComp'.length));
     expect(children.typeRange.offset,
-        equals(code.indexOf("List<ContentChildComp>")));
-    expect(children.typeRange.length, equals("List<ContentChildComp>".length));
+        equals(code.indexOf('List<ContentChildComp>')));
+    expect(children.typeRange.length, equals('List<ContentChildComp>'.length));
     // validate
     errorListener.assertNoErrors();
   }
@@ -409,7 +409,7 @@ class ComponentA {
     await getDirectives(source);
     // validate
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, "+");
+        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, '+');
   }
 
   // ignore: non_constant_identifier_names
@@ -523,7 +523,7 @@ class MyComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.INPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "@Input()");
+        '@Input()');
   }
 
   // ignore: non_constant_identifier_names
@@ -601,7 +601,7 @@ class MyComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "@Output()");
+        '@Output()');
   }
 
   // ignore: non_constant_identifier_names

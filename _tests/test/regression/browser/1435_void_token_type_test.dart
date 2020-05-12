@@ -12,7 +12,7 @@ import '1435_void_token_type_test.template.dart' as ng;
 void main() {
   test('should support void and Null in a @Component', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.ComponentInjectorNgFactory,
+      ng.createComponentInjectorFactory(),
     ).create();
     expect(
       fixture.assertOnlyInstance.aListOfNull,

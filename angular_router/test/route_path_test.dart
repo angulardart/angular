@@ -9,8 +9,8 @@ import 'package:angular_router/angular_router.dart';
 void main() {
   group('$RoutePath', () {
     test('should set all properties', () {
-      RoutePath parent = RoutePath();
-      RoutePath routePath = RoutePath(
+      var parent = RoutePath();
+      var routePath = RoutePath(
           path: 'path',
           useAsDefault: true,
           additionalData: 'data',
@@ -23,7 +23,7 @@ void main() {
 
     group('fromRoutes', () {
       test('should set all properties from routes', () {
-        RoutePath routePath = RoutePath.fromRoutes([
+        var routePath = RoutePath.fromRoutes([
           RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
         ]);
@@ -34,7 +34,7 @@ void main() {
       });
 
       test('should take properties from last route', () {
-        RoutePath routePath = RoutePath.fromRoutes([
+        var routePath = RoutePath.fromRoutes([
           RouteDefinition(),
           RouteDefinition(
               path: 'path', useAsDefault: true, additionalData: 'data')
@@ -46,7 +46,7 @@ void main() {
       });
 
       test('should construct with an empty list', () {
-        RoutePath routePath = RoutePath.fromRoutes([]);
+        var routePath = RoutePath.fromRoutes([]);
         expect(routePath.path, '');
         expect(routePath.useAsDefault, false);
         expect(routePath.additionalData, isNull);
@@ -54,7 +54,7 @@ void main() {
       });
 
       test('should chain libraries', () {
-        RoutePath routePath = RoutePath.fromRoutes([
+        var routePath = RoutePath.fromRoutes([
           RouteDefinition(path: 'path1'),
           RouteDefinition(path: 'path2'),
           RouteDefinition(path: 'path3')
@@ -68,7 +68,7 @@ void main() {
 
     group('path', () {
       test('should return a slash-trimmed version of the path', () {
-        RoutePath routePath = RoutePath(path: '/path/');
+        var routePath = RoutePath(path: '/path/');
         expect(routePath.path, 'path');
         routePath = RoutePath.fromRoutes([RouteDefinition(path: '/path/')]);
         expect(routePath.path, 'path');
@@ -79,8 +79,8 @@ void main() {
       RoutePath routePath;
 
       setUpAll(() {
-        RoutePath parentParentPath = RoutePath(path: 'path1/:param1');
-        RoutePath parentPath =
+        var parentParentPath = RoutePath(path: 'path1/:param1');
+        var parentPath =
             RoutePath(path: 'path2/:param2', parent: parentParentPath);
         routePath = RoutePath(path: 'path3/:param3', parent: parentPath);
       });

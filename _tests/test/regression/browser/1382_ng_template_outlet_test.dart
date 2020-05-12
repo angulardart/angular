@@ -7,7 +7,7 @@ import '1382_ng_template_outlet_test.template.dart' as ng;
 
 void main() {
   test('should not crash setting and resetting [ngTemplateOutlet]', () async {
-    final testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     final testFixture = await testBed.create();
     await testFixture.update((component) {
       // This sets the active view within `NgTemplateOutlet`.

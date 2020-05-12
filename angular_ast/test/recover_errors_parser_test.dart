@@ -399,30 +399,26 @@ void main() {
 
   test('Should drop invalid attrs in ng-content', () {
     var html =
-        '<ng-content bad = "badValue" select="*" [badProp] = "badPropValue" #badRef></ng-content>';
+        '<ng-content bad = "badValue" select="*" [badProp] = "badPropValue" #validRef></ng-content>';
     var asts = parse(html);
     expect(asts.length, 1);
 
     var ngcontent = asts[0] as EmbeddedContentAst;
     expect(ngcontent.selector, '*');
+    expect(ngcontent.reference, ReferenceAst('validRef'));
 
     var exceptions = recoveringExceptionHandler.exceptions;
-    expect(exceptions.length, 3);
+    expect(exceptions.length, 2);
 
     var e1 = exceptions[0];
     expect(e1.errorCode, NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT);
-    expect(e1.offset, 11);
-    expect(e1.length, 17);
+    expect(e1.offset, 12);
+    expect(e1.length, 16);
 
     var e2 = exceptions[1];
     expect(e2.errorCode, NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT);
-    expect(e2.offset, 39);
-    expect(e2.length, 27);
-
-    var e3 = exceptions[2];
-    expect(e3.errorCode, NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT);
-    expect(e3.offset, 66);
-    expect(e3.length, 8);
+    expect(e2.offset, 40);
+    expect(e2.length, 26);
   });
 
   test('Should drop duplicate select attrs in ng-content', () {
@@ -433,7 +429,18 @@ void main() {
     var ngcontent = asts[0] as EmbeddedContentAst;
     expect(ngcontent.selector, '*');
 
-    checkException(NgParserWarningCode.DUPLICATE_SELECT_DECORATOR, 24, 21);
+    checkException(NgParserWarningCode.DUPLICATE_SELECT_DECORATOR, 25, 20);
+  });
+
+  test('Should drop duplicate reference attrs in ng-content', () {
+    var html = '<ng-content #foo #bar></ng-content>';
+    var asts = parse(html);
+    expect(asts.length, 1);
+
+    var ngcontent = asts[0] as EmbeddedContentAst;
+    expect(ngcontent.reference, ReferenceAst('foo'));
+
+    checkException(NgParserWarningCode.DUPLICATE_REFERENCE_DECORATOR, 17, 4);
   });
 
   test(

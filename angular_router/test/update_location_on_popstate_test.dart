@@ -14,7 +14,7 @@ void main() {
 
   setUp(() async {
     final testBed = NgTestBed.forComponent(
-      ng.AppComponentNgFactory,
+      ng.createAppComponentFactory(),
       rootInjector: createInjector,
     );
     testFixture = await testBed.create(beforeComponentCreated: (injector) {
@@ -78,7 +78,7 @@ class AppComponent {
   final routes = [
     RouteDefinition(
       path: '',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
     RouteDefinition.redirect(
       path: '/redirect-from',
@@ -86,11 +86,11 @@ class AppComponent {
     ),
     RouteDefinition(
       path: '/redirect-to',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
     RouteDefinition(
       path: '/rewrite-to',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
   ];
 }
@@ -102,6 +102,7 @@ class AppComponent {
 class RouteComponent {}
 
 class TestRouterHook extends RouterHook {
+  @override
   Future<String> navigationPath(String path, NavigationParams params) =>
       Future.value(path == '/rewrite-from' ? 'rewrite-to' : path);
 }

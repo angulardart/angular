@@ -1,7 +1,5 @@
 @TestOn('browser')
 
-import 'dart:html';
-
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
@@ -12,9 +10,9 @@ void main() {
   tearDown(() => disposeAnyRunningTest());
 
   test('should update bound properties when setState is called', () async {
-    var testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    var testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     var testRoot = await testBed.create();
-    Element targetElement = testRoot.rootElement.querySelector('.target');
+    var targetElement = testRoot.rootElement.querySelector('.target');
     expect(targetElement.text, '');
     await testRoot.update((component) {
       component.componentStateChild.title = 'Matan';

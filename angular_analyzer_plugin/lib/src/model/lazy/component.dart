@@ -97,6 +97,7 @@ class Component implements resolved.Component {
       other.source == source &&
       other.classElement == classElement;
 
+  @override
   int get hashCode => classElement.hashCode;
 
   resolved.Component load() => _linkedComponent ??= linkFn();

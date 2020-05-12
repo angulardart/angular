@@ -4,10 +4,9 @@ import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection.dart'
     show ChangeDetectionStrategy, ChangeDetectorRef;
 import 'package:angular/src/core/di.dart' show Injector;
-import 'package:angular/src/core/metadata/lifecycle_hooks.dart'
-    show AfterChanges;
 import 'package:angular/src/core/zone/ng_zone.dart';
 import 'package:angular/src/runtime.dart' show isDevMode;
+import 'package:angular_compiler/v1/src/metadata.dart' show AfterChanges;
 
 import 'view_ref.dart' show ViewRef;
 import 'views/host_view.dart';

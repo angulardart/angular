@@ -8,7 +8,7 @@ import 'injector.dart';
 ///
 /// **INTERNAL ONLY**: Use [Injector.map] to create this class.
 @Immutable()
-class MapInjector extends HierarchicalInjector {
+class MapInjector extends HierarchicalInjector implements Injector {
   final Map<Object, Object> _providers;
 
   const MapInjector(
@@ -23,8 +23,10 @@ class MapInjector extends HierarchicalInjector {
   ]) {
     var result = _providers[token];
     if (result == null) {
-      assert(!_providers.containsKey(token),
-          'Value for $token should not be null for Injector.map');
+      assert(
+        !_providers.containsKey(token),
+        'Value for $token should not be null for Injector.map',
+      );
       if (identical(token, Injector)) {
         return this;
       }

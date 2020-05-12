@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
@@ -38,6 +37,7 @@ import 'package:angular_analyzer_plugin/src/model/syntactic/top_level.dart'
     as syntactic;
 import 'package:angular_analyzer_plugin/src/options.dart';
 import 'package:angular_analyzer_plugin/src/resolver/template_resolver.dart';
+import 'package:angular_analyzer_plugin/src/resolver/type_helpers.dart';
 import 'package:angular_analyzer_plugin/src/standard_components.dart';
 import 'package:angular_analyzer_plugin/src/summary/format.dart';
 import 'package:angular_analyzer_plugin/src/summary/idl.dart';
@@ -85,7 +85,7 @@ class AngularDriver
     _fileTracker = FileTracker(this, options);
     // TODO only support package:angular once we all move to that
     _hasAngularImported =
-        _sourceFactory.resolveUri(null, "package:angular/angular.dart") != null;
+        _sourceFactory.resolveUri(null, 'package:angular/angular.dart') != null;
   }
 
   @override
@@ -222,7 +222,7 @@ class AngularDriver
         // WILL come.
         if (_fileTracker.getDartPathsReferencingHtml(path).isEmpty) {
           result =
-              await _resolveHtmlFrom(path, path.replaceAll(".html", ".dart"));
+              await _resolveHtmlFrom(path, path.replaceAll('.html', '.dart'));
         } else {
           result = await _resolveHtml(path, ignoreCache: true);
         }
@@ -344,7 +344,7 @@ class AngularDriver
 
   Future<DirectivesResult> _resolveDart(String path,
       {bool ignoreCache = false, bool onlyIfChangedSignature = true}) async {
-    // This happens when the path is..."hidden by a generated file"..whch I
+    // This happens when the path is..."hidden by a generated file"..which I
     // don't understand, but, can protect against. Should not be analyzed.
     // TODO detect this on file add rather than on file analyze.
     if (await dartDriver.getUnitElementSignature(path) == null) {
@@ -368,7 +368,9 @@ class AngularDriver
         _trackAndHandleFileRelationships(path, summary);
         final result = DirectivesResult.fromCache(
             path, _deserializeErrors(_sourceFor(path), summary.errors));
-        _dartResultsController.add(result);
+        if (!_dartResultsController.isClosed) {
+          _dartResultsController.add(result);
+        }
         return result;
       }
     }
@@ -378,14 +380,14 @@ class AngularDriver
       return null;
     }
 
-    final context = unit.context;
+    final libraryElement = unit.library;
     final source = unit.source;
 
     final unlinkedSummary = _buildUnlinkedAngularTopLevels(path);
     final errorListener = RecordingErrorListener();
     final errorReporter = ErrorReporter(errorListener, _sourceFor(path));
-    final linker = EagerLinker(
-        context.typeSystem, standardAngular, standardHtml, errorReporter, this);
+    final linker = EagerLinker(libraryElement.typeSystem, standardAngular,
+        standardHtml, errorReporter, this);
     final directives = linkTopLevels(unlinkedSummary, unit, linker);
     final pipes = linkPipes(unlinkedSummary.pipeSummaries, unit, linker);
 
@@ -401,7 +403,8 @@ class AngularDriver
       if (directive is Component) {
         if ((directive.templateText ?? '') != '') {
           hasDartTemplate = true;
-          await _resolveDartTemplateText(directive, source, context, errors);
+          await _resolveDartTemplateText(
+              directive, source, libraryElement, errors);
           fullyResolvedDirectives.add(directive);
         } else if (directive.templateUrlSource != null) {
           htmlViews.add(directive.templateUrlSource.fullName);
@@ -424,7 +427,9 @@ class AngularDriver
     _trackAndHandleFileRelationships(path, summary);
     final directivesResult = DirectivesResult(path, directives, pipes, errors,
         fullyResolvedDirectives: fullyResolvedDirectives);
-    _dartResultsController.add(directivesResult);
+    if (!_dartResultsController.isClosed) {
+      _dartResultsController.add(directivesResult);
+    }
     return directivesResult;
   }
 
@@ -448,7 +453,7 @@ class AngularDriver
   }
 
   Future<void> _resolveDartTemplateText(Component directive, Source source,
-      AnalysisContext context, List<AnalysisError> errors) async {
+      LibraryElement libraryElement, List<AnalysisError> errors) async {
     final tplErrorListener = RecordingErrorListener();
     final errorReporter = ErrorReporter(tplErrorListener, source);
 
@@ -467,8 +472,8 @@ class AngularDriver
     directive.template = template;
     setIgnoredErrors(template, document);
     TemplateResolver(
-            context.typeProvider,
-            context.typeSystem,
+            libraryElement.typeProvider,
+            libraryElement.typeSystem,
             standardHtml.components.values.toList(),
             standardHtml.events,
             standardHtml.attributes,
@@ -530,14 +535,13 @@ class AngularDriver
     final dartSource = _sourceFactory.forUri('file:$dartPath');
     final summary = _buildUnlinkedAngularTopLevels(dartPath);
     final linker = EagerLinker(
-        unit.context.typeSystem,
+        unit.library.typeSystem,
         standardAngular,
         standardHtml,
         ErrorReporter(AnalysisErrorListener.NULL_LISTENER, htmlSource),
         this,
         linkHtmlNgContents: false);
     final directives = linkTopLevels(summary, unit, linker);
-    final context = unit.context;
     final htmlContent = fileContent(htmlPath);
 
     final errors = <AnalysisError>[];
@@ -564,8 +568,8 @@ class AngularDriver
           directive.template = template;
           setIgnoredErrors(template, document);
           TemplateResolver(
-                  context.typeProvider,
-                  context.typeSystem,
+                  unit.library.typeProvider,
+                  unit.library.typeSystem,
                   standardHtml.components.values.toList(),
                   standardHtml.events,
                   standardHtml.attributes,
@@ -604,7 +608,7 @@ class AngularDriver
 
   @override
   TopLevel getAngularTopLevel(Element element) {
-    final typeSystem = element.context.typeSystem;
+    final typeSystem = element.library.typeSystem;
     final path = element.source.fullName;
     final summary = _buildUnlinkedAngularTopLevels(path);
     final linker = LazyLinker(typeSystem, standardAngular, standardHtml, this);
@@ -648,7 +652,7 @@ class AngularDriver
 
   @override
   Pipe getPipe(ClassElement element) {
-    final typeSystem = element.context.typeSystem;
+    final typeSystem = element.library.typeSystem;
     final path = element.source.fullName;
     final summary = _buildUnlinkedAngularTopLevels(path);
     final linker = LazyLinker(typeSystem, standardAngular, standardHtml, this);
@@ -658,7 +662,7 @@ class AngularDriver
   Future<StandardAngular> buildStandardAngular() async {
     if (standardAngular == null) {
       final source =
-          _sourceFactory.resolveUri(null, "package:angular/angular.dart");
+          _sourceFactory.resolveUri(null, 'package:angular/angular.dart');
 
       if (source == null) {
         return standardAngular;
@@ -739,24 +743,20 @@ class AngularDriver
     final typeElement =
         typeResult.libraryElement.publicNamespace.get(event.typeName);
     if (typeElement is ClassElement) {
-      var type = typeElement.instantiate(
-        typeArguments: typeElement.typeParameters
-            .map((p) => p.bound ?? dynamicType)
-            .toList(),
-        nullabilitySuffix: NullabilitySuffix.star,
-      );
+      var type = instantiateClassElementToBounds(typeElement);
       return MissingOutput(
           name: event.name,
           nameRange: SourceRange(event.nameOffset, event.name.length),
           source: options.source,
           eventType: type);
     }
-    if (typeElement is TypeDefiningElement) {
+    if (typeElement is FunctionTypeAliasElement) {
+      var type = instantiateFunctionTypeAliasElementToBounds(typeElement);
       return MissingOutput(
           name: event.name,
           nameRange: SourceRange(event.nameOffset, event.name.length),
           source: options.source,
-          eventType: typeElement.type);
+          eventType: type);
     }
 
     return defaultOutput();
@@ -775,7 +775,7 @@ class AngularDriver
     if (overlay != null) {
       return overlay;
     }
-    Source source = _sourceFor(path);
+    var source = _sourceFor(path);
     return source.exists() ? source.contents.data : '';
   }
 

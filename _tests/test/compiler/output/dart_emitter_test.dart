@@ -1,9 +1,10 @@
 @TestOn('vm')
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/compile_metadata.dart'
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
-import 'package:angular/src/compiler/output/dart_emitter.dart' show DartEmitter;
-import 'package:angular/src/compiler/output/output_ast.dart' as o;
+import 'package:angular_compiler/v1/src/compiler/output/dart_emitter.dart'
+    show DartEmitter;
+import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 
 var someModuleUrl = 'asset:somePackage/lib/somePath';
 var anotherModuleUrl = 'asset:somePackage/lib/someOtherPath';
@@ -142,8 +143,8 @@ void main() {
       expect(
           emitStmt(o.variable('observable').callMethod(
               o.BuiltinMethod.SubscribeObservable,
-              [o.variable("listener")]).toStmt()),
-          "observable.listen(listener);");
+              [o.variable('listener')]).toStmt()),
+          'observable.listen(listener);');
     });
     test('should support literals', () {
       expect(emitStmt(o.literal(0).toStmt()), '0;');

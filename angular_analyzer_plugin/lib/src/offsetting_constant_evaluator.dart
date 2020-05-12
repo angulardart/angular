@@ -62,12 +62,12 @@ class OffsettingConstantEvaluator extends ast_utils.ConstantEvaluator {
   Object visitBinaryExpression(ast.BinaryExpression node) {
     if (node.operator.type == TokenType.PLUS) {
       // ignore: omit_local_variable_types
-      final Object leftOperand = node.leftOperand.accept(this);
+      final leftOperand = node.leftOperand.accept(this);
       if (identical(leftOperand, ast_utils.ConstantEvaluator.NOT_A_CONSTANT)) {
         return leftOperand;
       }
       // ignore: omit_local_variable_types
-      final Object rightOperand = node.rightOperand.accept(this);
+      final rightOperand = node.rightOperand.accept(this);
       if (identical(rightOperand, ast_utils.ConstantEvaluator.NOT_A_CONSTANT)) {
         return rightOperand;
       }
@@ -101,7 +101,7 @@ class OffsettingConstantEvaluator extends ast_utils.ConstantEvaluator {
         node.expression.offset -
         node.expression.length;
     // ignore: omit_local_variable_types
-    final Object value = super.visitParenthesizedExpression(node);
+    final value = super.visitParenthesizedExpression(node);
     if (value is String) {
       // ignore: prefer_interpolation_to_compose_strings
       return ' ' * preGap + value + ' ' * postGap;

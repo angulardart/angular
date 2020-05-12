@@ -1,0 +1,109 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'functional_directives.dart';
+export 'functional_directives.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'functional_directives.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/src/runtime/dom_helpers.dart' as import7;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import9;
+
+final List<dynamic> styles$AppComponent = const [];
+
+class ViewAppComponent0 extends import0.ComponentView<import1.AppComponent> {
+  static import2.ComponentStyles _componentStyles;
+  ViewAppComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('app');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:_goldens/test/files/directives/functional_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import5.document;
+    final _el_0 = import7.appendDiv(doc, parentRenderNode);
+    import7.setAttribute(_el_0, 'generateText', '');
+    final _el_1 = import7.appendDiv(doc, _el_0);
+    import1.generateTextDirective(_el_0, this.parentView.injectorGet(import1.TextService, this.parentIndex));
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$AppComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _AppComponentNgFactory = ComponentFactory<import1.AppComponent>('app', viewFactory_AppComponentHost0);
+ComponentFactory<import1.AppComponent> get AppComponentNgFactory {
+  return _AppComponentNgFactory;
+}
+
+ComponentFactory<import1.AppComponent> createAppComponentFactory() {
+  return ComponentFactory('app', viewFactory_AppComponentHost0);
+}
+
+final List<dynamic> styles$AppComponentHost = const [];
+
+class _ViewAppComponentHost0 extends import9.HostView<import1.AppComponent> {
+  import1.TextService __TextService_0_6;
+  import1.TextService get _TextService_0_6 {
+    if ((this.__TextService_0_6 == null)) {
+      (this.__TextService_0_6 = import1.TextService());
+    }
+    return this.__TextService_0_6;
+  }
+
+  @override
+  void build() {
+    this.componentView = ViewAppComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.AppComponent();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.TextService) && (0 == nodeIndex))) {
+      return this._TextService_0_6;
+    }
+    return notFoundResult;
+  }
+}
+
+import9.HostView<import1.AppComponent> viewFactory_AppComponentHost0() {
+  return _ViewAppComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerFactory(TextService, () => TextService());
+  _ngRef.registerComponent(AppComponent, createAppComponentFactory());
+  _ref0.initReflector();
+}

@@ -11,7 +11,7 @@ void main() {
 
   test('should detect changes via @Input', () async {
     final testBed = NgTestBed.forComponent<UsesOnPushComponent>(
-      ng.UsesOnPushComponentNgFactory,
+      ng.createUsesOnPushComponentFactory(),
     );
 
     final fixture = await testBed.create(beforeChangeDetection: (comp) {
@@ -32,7 +32,7 @@ void main() {
   // a zone turn.
   test('ignores changes when markForCheck is invoked imperatively', () async {
     final testBed = NgTestBed.forComponent<UsesOnPushComponent>(
-      ng.UsesOnPushComponentNgFactory,
+      ng.createUsesOnPushComponentFactory(),
     );
 
     final fixture = await testBed.create();

@@ -21,7 +21,7 @@ void main() {
           ? encodable.toString()
           : encodable.toJson()).convert(allDependencies));
 
-  final failingDeps = List<String>();
+  final failingDeps = <String>[];
   allDependencies.forEach((package, versions) {
     final intersection = VersionConstraint.intersection(versions);
     if (intersection.isEmpty) {

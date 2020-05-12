@@ -12,8 +12,8 @@ final injector = ng.injector$Injector;
 
 void main() {
   test('router link with empty path should be marked active', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.AppComponentNgFactory).addInjector(injector);
+    final testBed = NgTestBed.forComponent(ng.createAppComponentFactory())
+        .addInjector(injector);
     final testFixture = await testBed.create();
     final anchor = testFixture.rootElement.querySelector('a');
     expect(anchor.classes, contains(AppComponent.activeClassName));
@@ -42,6 +42,7 @@ class AppComponent {
   static const activeClassName = 'active';
   static const indexPath = '/';
   static final routes = [
-    RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
+    RouteDefinition(
+        path: indexPath, component: ng.createIndexComponentFactory()),
   ];
 }

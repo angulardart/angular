@@ -4,10 +4,10 @@ import 'package:test/test.dart';
 
 void main() {
   test('should warn on a bad enum annotation', () async {
-    await compilesExpecting("""
+    await compilesExpecting('''
       @undefinedAnnotation
       enum SomeEnum {}
-    """, errors: [], warnings: [
+    ''', errors: [], warnings: [
       allOf(contains('@undefinedAnnotation'), containsSourceLocation(1, 7))
     ]);
   });

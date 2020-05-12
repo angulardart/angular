@@ -124,7 +124,7 @@ class _OptionsBuilder {
       customEvents: customEvents,
       source: source);
 
-  T getOption<T>(String key, bool validator(input)) {
+  T getOption<T>(String key, bool Function(Object) validator) {
     if (angularOptions != null && validator(angularOptions[key])) {
       return angularOptions[key] as T;
     }

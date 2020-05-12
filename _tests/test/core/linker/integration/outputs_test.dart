@@ -7,15 +7,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'outputs_test.template.dart' as ng_generated;
+import 'outputs_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support directive outputs on regular elements', () async {
-    final testBed = NgTestBed<ElementWithEventDirectivesComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createElementWithEventDirectivesComponentFactory());
     final testFixture = await testBed.create();
     final emitter = testFixture.assertOnlyInstance.emitter;
     final listener = testFixture.assertOnlyInstance.listener;
@@ -25,7 +24,8 @@ void main() {
   });
 
   test('should support directive outputs on template elements', () async {
-    final testBed = NgTestBed<TemplateWithEventDirectivesComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createTemplateWithEventDirectivesComponentFactory());
     final testFixture = await testBed.create();
     final component = testFixture.assertOnlyInstance;
     expect(component.msg, isNull);
@@ -36,7 +36,8 @@ void main() {
   });
 
   test('should support [()] syntax', () async {
-    final testBed = NgTestBed<TwoWayBindingComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTwoWayBindingComponentFactory());
     final testFixture = await testBed.create();
     final component = testFixture.assertOnlyInstance;
     expect(component.directive.control, 'one');
@@ -46,7 +47,8 @@ void main() {
   });
 
   test('should support render events', () async {
-    final testBed = NgTestBed<ElementWithDomEventComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createElementWithDomEventComponentFactory());
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     final listener = testFixture.assertOnlyInstance.listener;
@@ -55,7 +57,8 @@ void main() {
   });
 
   test('should support preventing default on render events', () async {
-    final testBed = NgTestBed<TestPreventDefaultComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTestPreventDefaultComponentFactory());
     final testFixture = await testBed.create();
     final inputPrevent = testFixture.rootElement.children[0] as InputElement;
     final inputNoPrevent = testFixture.rootElement.children[1] as InputElement;
@@ -71,7 +74,8 @@ void main() {
   });
 
   test('should provide helpful error for incorrectly typed handler', () async {
-    final testBed = NgTestBed<TestMismatchedHandler>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTestMismatchedHandlerFactory());
     expect(
       testBed.create,
       throwsA(const TypeMatcher<AssertionError>().having(
@@ -93,7 +97,7 @@ class EventEmitterDirective {
   @Output()
   Stream get event => _streamController.stream;
 
-  fireEvent(String msg) {
+  void fireEvent(String msg) {
     _streamController.add(msg);
   }
 }
@@ -105,7 +109,7 @@ class EventListenerDirective {
   String msg;
 
   @HostListener('event')
-  onEvent(String msg) {
+  void onEvent(String msg) {
     this.msg = msg;
   }
 }
@@ -150,7 +154,7 @@ class DirectiveWithTwoWayBinding {
   @Output()
   Stream<String> get controlChange => _streamController.stream;
 
-  triggerChange(String value) {
+  void triggerChange(String value) {
     _streamController.add(value);
   }
 }
@@ -174,7 +178,7 @@ class DomEventListenerDirective {
   List<String> eventTypes = [];
 
   @HostListener('domEvent', [r'$event.type'])
-  onEvent(String eventType) {
+  void onEvent(String eventType) {
     eventTypes.add(eventType);
   }
 }
@@ -194,7 +198,7 @@ class ElementWithDomEventComponent {
 )
 class DirectiveListeningDomEventPrevent {
   @HostListener('click')
-  onEvent(Event event) {
+  void onEvent(Event event) {
     event.preventDefault();
   }
 }
@@ -204,7 +208,7 @@ class DirectiveListeningDomEventPrevent {
 )
 class DirectiveListeningDomEventNoPrevent {
   @HostListener('click')
-  onEvent(Event event) {}
+  void onEvent(Event event) {}
 }
 
 @Component(

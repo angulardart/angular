@@ -58,7 +58,7 @@ void main() {
         expect(pipe.transform(date, 'shortTime'), '9:43 PM');
       });
       test('should format millis in local timezone', () {
-        int millis = date.millisecondsSinceEpoch;
+        var millis = date.millisecondsSinceEpoch;
         expect(pipe.transform(millis, 'y'), '2015');
         expect(pipe.transform(millis, 'yy'), '15');
         expect(pipe.transform(millis, 'M'), '6');

@@ -35,7 +35,6 @@ import 'package:angular_analyzer_plugin/src/summary/idl.dart';
 /// to false, as those can be discovered during template resolution and would
 /// otherwise occur multiple times.
 class EagerLinker implements TopLevelLinker {
-  final TypeSystem _typeSystem;
   final DirectiveProvider _directiveProvider;
   final StandardAngular _standardAngular;
   final ErrorReporter _errorReporter;
@@ -45,7 +44,7 @@ class EagerLinker implements TopLevelLinker {
   final ContentChildLinker _contentChildLinker;
   final bool linkHtmlNgContents;
 
-  EagerLinker(this._typeSystem, this._standardAngular,
+  EagerLinker(TypeSystem typeSystem, this._standardAngular,
       StandardHtml standardHtml, this._errorReporter, this._directiveProvider,
       {this.linkHtmlNgContents = true})
       : _exportLinker = ExportLinker(_errorReporter),
@@ -53,7 +52,7 @@ class EagerLinker implements TopLevelLinker {
             SubDirectiveLinker(_directiveProvider, _errorReporter),
         _subPipeLinker = SubPipeLinker(_directiveProvider, _errorReporter),
         _contentChildLinker = ContentChildLinker(
-            _typeSystem, _directiveProvider, standardHtml, _errorReporter);
+            typeSystem, _directiveProvider, standardHtml, _errorReporter);
 
   /// Fully link an [AngularAnnotatedClass] from a summary and a [ClassElement].
   @override
@@ -61,7 +60,7 @@ class EagerLinker implements TopLevelLinker {
       SummarizedClassAnnotations classSum, ClassElement classElement) {
     final bindingSynthesizer = BindingTypeResolver(
         classElement,
-        classElement.context.typeProvider,
+        classElement.library.typeProvider,
         classElement.context,
         _errorReporter);
 
@@ -156,7 +155,7 @@ class EagerLinker implements TopLevelLinker {
   /// Partially link [Directive] from summary and [ClassElement].
   @override
   Directive directive(SummarizedDirective dirSum, ClassElement classElement) {
-    assert(dirSum.functionName == "");
+    assert(dirSum.functionName == '');
 
     final selector = SelectorParser(
             classElement.source, dirSum.selectorOffset, dirSum.selectorStr)
@@ -166,11 +165,11 @@ class EagerLinker implements TopLevelLinker {
     selector.recordElementNameSelectors(elementTags);
     final bindingSynthesizer = BindingTypeResolver(
         classElement,
-        classElement.context.typeProvider,
+        classElement.library.typeProvider,
         classElement.context,
         _errorReporter);
 
-    final exportAs = dirSum.exportAs == ""
+    final exportAs = dirSum.exportAs == ''
         ? null
         : NavigableString(dirSum.exportAs,
             SourceRange(dirSum.exportAsOffset, dirSum.exportAs.length), source);
@@ -214,7 +213,7 @@ class EagerLinker implements TopLevelLinker {
       selector: selector,
       looksLikeTemplate: classElement.constructors.any((constructor) =>
           constructor.parameters
-              .any((param) => param.type == _standardAngular.templateRef.type)),
+              .any((param) => param.type == _standardAngular.templateRefType)),
       inputs: inputs,
       outputs: outputs,
       contentChildFields: contentChildFields,
@@ -222,21 +221,21 @@ class EagerLinker implements TopLevelLinker {
     );
   }
 
-  /// Partially link [FunctionalDirective] from summary and [FunctionEement].
+  /// Partially link [FunctionalDirective] from summary and [FunctionElement].
   @override
   FunctionalDirective functionalDirective(
       SummarizedDirective dirSum, FunctionElement functionElement) {
     final selector = SelectorParser(
             functionElement.source, dirSum.selectorOffset, dirSum.selectorStr)
         .parse();
-    assert(dirSum.functionName != "");
+    assert(dirSum.functionName != '');
     assert(dirSum.classAnnotations == null);
-    assert(dirSum.exportAs == "");
+    assert(dirSum.exportAs == '');
     assert(dirSum.isComponent == false);
 
     return FunctionalDirective(functionElement, selector,
         looksLikeTemplate: functionElement.parameters
-            .any((param) => param.type == _standardAngular.templateRef.type));
+            .any((param) => param.type == _standardAngular.templateRefType));
   }
 
   /// Fully link an [Input] from a summary and a [ClassElement].
@@ -262,7 +261,7 @@ class EagerLinker implements TopLevelLinker {
   }
 
   NgContent ngContent(SummarizedNgContent ngContentSum, Source source) {
-    final selector = ngContentSum.selectorStr == ""
+    final selector = ngContentSum.selectorStr == ''
         ? null
         : SelectorParser(
                 source, ngContentSum.selectorOffset, ngContentSum.selectorStr)
@@ -293,8 +292,7 @@ class EagerLinker implements TopLevelLinker {
   @override
   Pipe pipe(SummarizedPipe pipeSum, ClassElement classElement) {
     // Check if 'extends PipeTransform' exists.
-    if (!_typeSystem.isSubtypeOf(
-        classElement.type, _standardAngular.pipeTransform.type)) {
+    if (!_standardAngular.extendsPipeTransform(classElement)) {
       _errorReporter.reportErrorForOffset(
           AngularWarningCode.PIPE_REQUIRES_PIPETRANSFORM,
           pipeSum.pipeNameOffset,
@@ -345,20 +343,20 @@ class EagerLinker implements TopLevelLinker {
     for (final constructor in classElement.constructors) {
       for (final parameter in constructor.parameters) {
         for (final annotation in parameter.metadata) {
-          if (annotation.element?.enclosingElement?.name != "Attribute") {
+          if (annotation.element?.enclosingElement?.name != 'Attribute') {
             continue;
           }
 
           final attributeName = annotation
               .computeConstantValue()
-              ?.getField("attributeName")
+              ?.getField('attributeName')
               ?.toStringValue();
           if (attributeName == null) {
             continue;
             // TODO do we ever need to report an error here, or will DAS?
           }
 
-          if (parameter.type.name != "String") {
+          if (parameter.type.name != 'String') {
             _errorReporter.reportErrorForOffset(
                 AngularWarningCode.ATTRIBUTE_PARAMETER_MUST_BE_STRING,
                 parameter.nameOffset,

@@ -2,9 +2,11 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart' as ast;
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:angular_analyzer_plugin/src/model.dart';
+import 'package:angular_analyzer_plugin/src/resolver/type_helpers.dart';
 import 'package:angular_analyzer_plugin/src/selector.dart';
 import 'package:angular_analyzer_plugin/src/selector/element_name_selector.dart';
 import 'package:meta/meta.dart';
@@ -31,13 +33,13 @@ typedef CaptureAspectFn<T> = void Function(
 /// in `dart:html` itself, give autocompletions, etc.
 class BuildStandardHtmlComponentsVisitor extends RecursiveAstVisitor {
   static const Map<String, String> specialElementClasses = <String, String>{
-    "AudioElement": 'audio',
-    "OptionElement": 'option',
-    "DialogElement": "dialog",
-    "MediaElement": "media",
-    "MenuItemElement": "menuitem",
-    "ModElement": "mod",
-    "PictureElement": "picture"
+    'AudioElement': 'audio',
+    'OptionElement': 'option',
+    'DialogElement': 'dialog',
+    'MediaElement': 'media',
+    'MenuItemElement': 'menuitem',
+    'ModElement': 'mod',
+    'PictureElement': 'picture'
   };
 
   // https://github.com/dart-lang/angular/blob/master/angular/lib/src/compiler/schema/dom_element_schema_registry.dart#196
@@ -111,7 +113,13 @@ class BuildStandardHtmlComponentsVisitor extends RecursiveAstVisitor {
       final namespace = unitElement.library.publicNamespace;
       final eventClass = namespace.get(type) as ClassElement;
       events[name] = MissingOutput(
-          name: name, eventType: eventClass.type, source: unitElement.source);
+        name: name,
+        eventType: eventClass.instantiate(
+          typeArguments: const [],
+          nullabilitySuffix: NullabilitySuffix.star,
+        ),
+        source: unitElement.source,
+      );
     });
   }
 
@@ -136,7 +144,7 @@ class BuildStandardHtmlComponentsVisitor extends RecursiveAstVisitor {
       final tag = tagArgument.value;
       final tagOffset = tagArgument.contentsOffset;
       // don't track <template>, angular treats those specially.
-      if (tag != "template") {
+      if (tag != 'template') {
         final component = _buildComponent(tag, tagOffset);
         components[tag] = component;
       }
@@ -223,7 +231,7 @@ class BuildStandardHtmlComponentsVisitor extends RecursiveAstVisitor {
         }
 
         // Event domnames start with on
-        final name = domName.substring("on".length);
+        final name = domName.substring('on'.length);
 
         if (!outputMap.containsKey(name)) {
           if (accessor.isGetter) {
@@ -267,7 +275,7 @@ class BuildStandardHtmlComponentsVisitor extends RecursiveAstVisitor {
       }
     }
 
-    addAspects(classElement.type);
+    addAspects(instantiateClassElementThis(classElement));
     return aspectMap.values.toList();
   }
 }
@@ -394,6 +402,9 @@ class StandardAngular {
   final ClassElement component;
   final SecuritySchema securitySchema;
 
+  InterfaceType _templateRefType;
+  InterfaceType _elementRefType;
+
   StandardAngular(
       {this.templateRef,
       this.elementRef,
@@ -414,8 +425,12 @@ class StandardAngular {
 
     List<DartType> interfaceTypes(List<Element> elements) => elements
         .whereType<ClassElement>()
-        .map((e) => e?.type)
-        .where((e) => e != null)
+        .map(
+          (e) => e.instantiate(
+            typeArguments: const [],
+            nullabilitySuffix: NullabilitySuffix.star,
+          ),
+        )
         .toList();
 
     List<DartType> safeTypes(String id) => interfaceTypes(
@@ -435,11 +450,31 @@ class StandardAngular {
             sanitizationAvailable: false));
 
     return StandardAngular(
-        elementRef: ng.get("ElementRef") as ClassElement,
-        templateRef: ng.get("TemplateRef") as ClassElement,
-        pipeTransform: ng.get("PipeTransform") as ClassElement,
-        component: ng.get("Component") as ClassElement,
+        elementRef: ng.get('ElementRef') as ClassElement,
+        templateRef: ng.get('TemplateRef') as ClassElement,
+        pipeTransform: ng.get('PipeTransform') as ClassElement,
+        component: ng.get('Component') as ClassElement,
         securitySchema: securitySchema);
+  }
+
+  InterfaceType get templateRefType {
+    return _templateRefType ??= templateRef.instantiate(
+      typeArguments: const [],
+      nullabilitySuffix: NullabilitySuffix.star,
+    );
+  }
+
+  InterfaceType get elementRefType {
+    return _elementRefType ??= elementRef.instantiate(
+      typeArguments: const [],
+      nullabilitySuffix: NullabilitySuffix.star,
+    );
+  }
+
+  bool extendsPipeTransform(ClassElement element) {
+    return element.allSupertypes.any(
+      (superType) => superType.element == pipeTransform,
+    );
   }
 }
 
@@ -463,6 +498,9 @@ class StandardHtml {
 
   final ClassElement htmlElementClass;
 
+  InterfaceType _elementClassType;
+  InterfaceType _htmlElementClassType;
+
   /// Attributes as a Set to remove duplicates.
   ///
   /// In attributes, there can be multiple strings that point to the same
@@ -476,4 +514,18 @@ class StandardHtml {
 
   Map<String, Output> get events =>
       Map<String, Output>.from(standardEvents)..addAll(customEvents);
+
+  InterfaceType get elementClassType {
+    return _elementClassType ??= elementClass.instantiate(
+      typeArguments: const [],
+      nullabilitySuffix: NullabilitySuffix.star,
+    );
+  }
+
+  InterfaceType get htmlElementClassType {
+    return _htmlElementClassType ??= htmlElementClass.instantiate(
+      typeArguments: const [],
+      nullabilitySuffix: NullabilitySuffix.star,
+    );
+  }
 }

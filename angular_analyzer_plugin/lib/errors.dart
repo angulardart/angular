@@ -349,7 +349,7 @@ class AngularWarningCode extends ErrorCode {
   /// An error for when an output-binding is not an [ExpressionStatement].
   static const OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT =
       AngularWarningCode('OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT',
-          "Syntax Error: unexpected {0}");
+          'Syntax Error: unexpected {0}');
 
   /// An error for when a dart expression in a template uses unsupported dart
   /// syntax.
@@ -357,7 +357,7 @@ class AngularWarningCode extends ErrorCode {
   /// Unsupported syntax includes expressions such as 'as' expressions and
   /// constructors.
   static const DISALLOWED_EXPRESSION = AngularWarningCode(
-      'DISALLOWED_EXPRESSION', "{0} not allowed in angular templates");
+      'DISALLOWED_EXPRESSION', '{0} not allowed in angular templates');
 
   /// An error for when dom inside a component won't be transcluded.
   static const CONTENT_NOT_TRANSCLUDED = AngularWarningCode(
@@ -492,14 +492,14 @@ class AngularWarningCode extends ErrorCode {
   /// An error for when pipe syntax is used but does not match a pipe name.
   static const PIPE_NOT_FOUND = AngularWarningCode(
       'PIPE_NOT_FOUND',
-      "Pipe by name of {0} not found. Did you reference it in your @Component"
-          " configuration?");
+      'Pipe by name of {0} not found. Did you reference it in your @Component'
+          ' configuration?');
 
   /// An error for when pipe syntax is used but the name matches multiple pipes.
   static const AMBIGUOUS_PIPE = AngularWarningCode(
       'AMBIGUOUS_PIPE',
-      "Multiple pipes by name of {0} found. Check the `pipes` field of your "
-          "@Component annotation for duplicates and/or conflicts.");
+      'Multiple pipes by name of {0} found. Check the `pipes` field of your '
+          '@Component annotation for duplicates and/or conflicts.');
 
   /// An error for when a security exception will be thrown by an input binding.
   static const UNSAFE_BINDING = AngularWarningCode(

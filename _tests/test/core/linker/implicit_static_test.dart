@@ -11,25 +11,25 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support implicit static field', () async {
-    final testBed = NgTestBed.forComponent(ng.TestStaticFieldNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestStaticFieldFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, TestStaticField.field);
   });
 
   test('should support implicit static getter', () async {
-    final testBed = NgTestBed.forComponent(ng.TestStaticGetterNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestStaticGetterFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, TestStaticGetter.getter);
   });
 
   test('should support implicit static method', () async {
-    final testBed = NgTestBed.forComponent(ng.TestStaticMethodNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestStaticMethodFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, TestStaticMethod.method());
   });
 
   test('should support implicit static setter', () async {
-    final testBed = NgTestBed.forComponent(ng.TestStaticSetterNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestStaticSetterFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
     await testFixture.update((_) {
@@ -39,13 +39,14 @@ void main() {
   });
 
   test('should support calling an implicit static field', () async {
-    final testBed = NgTestBed.forComponent(ng.TestCallingStaticFieldNgFactory);
+    final testBed =
+        NgTestBed.forComponent(ng.createTestCallingStaticFieldFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, TestCallingStaticField.field());
   });
 
   test('should support binding an implicit static tear-off', () async {
-    final testBed = NgTestBed.forComponent(ng.TestStaticTearOffNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestStaticTearOffFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, TestStaticTearOff.method());
   });

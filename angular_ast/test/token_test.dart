@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 
 void main() => group('$NgToken', _testNgToken);
 
-_testNgToken() {
+void _testNgToken() {
   NgToken token;
 
   test('beforeElementDecorator', () {

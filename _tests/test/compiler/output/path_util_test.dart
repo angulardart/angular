@@ -1,7 +1,7 @@
 @TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/src/compiler/output/path_util.dart'
+import 'package:angular_compiler/v1/src/compiler/output/path_util.dart'
     show getImportModulePath;
 
 void main() {
@@ -23,7 +23,7 @@ void main() {
           () => getImportModulePath(
               'asset:somePkg/lib/modPath', 'asset:somePkg/test/impPath'),
           throwsWith("Can't import url asset:somePkg/test/impPath from "
-              "asset:somePkg/lib/modPath"));
+              'asset:somePkg/lib/modPath'));
     });
     test('should not allow non asset urls as base url', () {
       expect(

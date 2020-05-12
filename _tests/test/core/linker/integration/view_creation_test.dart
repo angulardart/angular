@@ -253,11 +253,11 @@ class DirectiveWithPropDecorators {
   String myAttr;
 
   @HostListener('click', ['\$event.target'])
-  onClick(target) {
+  void onClick(target) {
     this.target = target;
   }
 
-  fireEvent(msg) {
+  void fireEvent(msg) {
     _streamController.add(msg);
   }
 }

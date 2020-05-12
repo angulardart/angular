@@ -70,6 +70,7 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
   bool get isStable => super.isStable && pendingTimers.isEmpty;
 
   @protected
+  @override
   Future<void> waitForAsyncEvents() async {
     await super.waitForAsyncEvents();
     if (pendingTimers.isNotEmpty) {

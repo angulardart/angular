@@ -101,7 +101,7 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector injector, {
-  FutureOr<void> beforeChangeDetection(E componentInstance),
+  FutureOr<void> Function(E) beforeChangeDetection,
 }) {
   final componentRef = componentFactory.create(injector);
 

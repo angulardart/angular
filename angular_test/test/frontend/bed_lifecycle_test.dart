@@ -9,11 +9,9 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'bed_lifecycle_test.template.dart' as ng_generated;
+import 'bed_lifecycle_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   Element docRoot;
   Element testRoot;
 
@@ -40,7 +38,9 @@ void main() {
   });
 
   test('should invoke ngAfterChanges, then ngOnInit', () async {
-    final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
+    final fixture =
+        await NgTestBed.forComponent(ng.createNgAfterChangesInitOrderFactory())
+            .create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
     expect(
@@ -52,7 +52,9 @@ void main() {
   test(
       'should invoke ngAfterChanges with asynchronous beforeChangeDetection,'
       ' then ngOnInit', () async {
-    final fixture = await NgTestBed<NgAfterChangesInitOrder>().create(
+    final fixture =
+        await NgTestBed.forComponent(ng.createNgAfterChangesInitOrderFactory())
+            .create(
       beforeChangeDetection: (root) async => root.name = 'Hello',
     );
     expect(

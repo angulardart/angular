@@ -142,7 +142,7 @@ class TestDependencyInjectionComponent {}
 @Directive(selector: '[addAttributes]')
 void addAttributesForTokenDirective(
   Element element,
-  @Inject("attributesForToken") Map<String, String> attributes,
+  @Inject('attributesForToken') Map<String, String> attributes,
 ) {
   element.attributes.addAll(attributes);
 }

@@ -72,7 +72,7 @@ class SyntacticDiscovery extends _AnnotationProcessorMixin {
       for (final item in listExpression.elements) {
         if (item is ast.Identifier) {
           var name = item.name;
-          var prefix = "";
+          var prefix = '';
           if (item is ast.PrefixedIdentifier) {
             name = item.identifier.name;
             prefix = item.prefix.name;
@@ -599,7 +599,7 @@ class _AnnotationProcessorMixin {
   String getExpressionString(ast.Expression expression) {
     if (expression != null) {
       // ignore: omit_local_variable_types
-      final Object value = expression.accept(_constantEvaluator);
+      final value = expression.accept(_constantEvaluator);
       if (value is String) {
         return value;
       }
@@ -682,7 +682,7 @@ class NgContentRecorder extends AngularAstVisitor {
             selectorAttr.nameOffset,
             selectorAttr.name.length,
             ['missing']);
-      } else if (selectorAttr.value == "") {
+      } else if (selectorAttr.value == '') {
         // TODO(mfairhust) report different error for a missing selector
         errorReporter.reportErrorForOffset(
             AngularWarningCode.CANNOT_PARSE_SELECTOR,

@@ -6,7 +6,7 @@ import 'injector.dart';
 
 /// **INTERNAL ONLY**: Adapts the [View] interfaces as an injector.
 @Immutable()
-class ElementInjector extends HierarchicalInjector {
+class ElementInjector extends HierarchicalInjector implements Injector {
   final View _view;
   final int _nodeIndex;
 
@@ -17,21 +17,21 @@ class ElementInjector extends HierarchicalInjector {
       _view.injectorGet(token, _nodeIndex, orElse);
 
   @override
-  injectFromAncestryOptional(
+  Object injectFromAncestryOptional(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
       throw UnimplementedError();
 
   @override
-  injectFromParentOptional(
+  Object injectFromParentOptional(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>
       throw UnimplementedError();
 
   @override
-  injectFromSelfOptional(
+  Object injectFromSelfOptional(
     Object token, [
     Object orElse = throwIfNotFound,
   ]) =>

@@ -8,7 +8,7 @@ void main() {
 
   test('should create 20 DI bindings (eager)', () async {
     final testBed = NgTestBed.forComponent(
-      ng_generated.Create20BindingsEagerBenchmarkNgFactory,
+      ng_generated.createCreate20BindingsEagerBenchmarkFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((comp) => comp.ready = true);
@@ -16,7 +16,7 @@ void main() {
 
   test('should create 20 DI bindings (lazy)', () async {
     final testBed = NgTestBed.forComponent(
-      ng_generated.Create20BindingsLazyBenchmarkNgFactory,
+      ng_generated.createCreate20BindingsLazyBenchmarkFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((comp) => comp.ready = true);

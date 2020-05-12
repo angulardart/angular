@@ -4,8 +4,8 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/source/source_range.dart';
+import 'package:analyzer/src/dart/element/type.dart';
 import 'package:analyzer/src/generated/constant.dart';
-import 'package:analyzer/src/generated/engine.dart';
 import 'package:analyzer/src/generated/source.dart' show SourceRange;
 import 'package:meta/meta.dart';
 import 'package:angular_analyzer_plugin/errors.dart';
@@ -61,7 +61,7 @@ class ContentChildLinker {
         SourceRange(contentChildField.typeOffset, contentChildField.typeLength);
     final bindingSynthesizer = BindingTypeResolver(
         classElement,
-        classElement.context.typeProvider,
+        classElement.library.typeProvider,
         classElement.context,
         _errorReporter);
 
@@ -76,11 +76,11 @@ class ContentChildLinker {
         bindingSynthesizer.getSetterType(member),
         contentChildField,
         annotationName,
-        classElement.context);
+        classElement.library);
 
     if (read != null) {
       _checkQueriedTypeAssignableTo(transformedType, read, contentChildField,
-          '$annotationName(read: $read)');
+          '$annotationName(read: ${_typeToCode(read)})');
     }
 
     if (value?.toStringValue() != null) {
@@ -124,10 +124,10 @@ class ContentChildLinker {
     @required SourceRange nameRange,
     @required SourceRange typeRange,
   }) {
-    if (transformedType == _standardHtml.elementClass.type ||
-        transformedType == _standardHtml.htmlElementClass.type ||
-        read == _standardHtml.elementClass.type ||
-        read == _standardHtml.htmlElementClass.type) {
+    if (transformedType == _standardHtml.elementClassType ||
+        transformedType == _standardHtml.htmlElementClassType ||
+        read == _standardHtml.elementClassType ||
+        read == _standardHtml.htmlElementClassType) {
       if (read == null) {
         _errorReporter.reportErrorForOffset(
             AngularWarningCode.CHILD_QUERY_TYPE_REQUIRES_READ,
@@ -148,7 +148,7 @@ class ContentChildLinker {
     // Take the type -- except, we can't validate DI symbols via `read`.
     final setterType = read == null
         ? transformedType
-        : classElement.context.typeProvider.dynamicType;
+        : classElement.library.typeProvider.dynamicType;
 
     return ContentChild(contentChildField.fieldName,
         query: LetBoundQueriedChildType(value, setterType),
@@ -259,9 +259,9 @@ class ContentChildLinker {
       DartType setterType,
       SummarizedContentChildField field,
       String annotationName,
-      AnalysisContext context) {
+      LibraryElement libraryElement) {
     // construct List<Bottom>, which is a subtype of all List<T>
-    final typeProvider = context.typeProvider;
+    final typeProvider = libraryElement.typeProvider;
     final listBottom = typeProvider.listType2(typeProvider.bottomType);
 
     if (!_typeSystem.isSubtypeOf(listBottom, setterType)) {
@@ -274,18 +274,26 @@ class ContentChildLinker {
       return typeProvider.dynamicType;
     }
 
-    final iterableType = typeProvider.iterableType2(typeProvider.dynamicType);
-
     // get T for setterTypes that extend Iterable<T>
-    return context.typeSystem
-            .mostSpecificTypeArgument(setterType, iterableType) ??
-        typeProvider.dynamicType;
+    if (setterType is InterfaceTypeImpl) {
+      final iterableType =
+          setterType.asInstanceOf(typeProvider.iterableElement);
+      if (iterableType != null) {
+        return iterableType.typeArguments[0];
+      }
+    }
+    return typeProvider.dynamicType;
   }
 
   DartType _transformSetterTypeSingular(
           DartType setterType,
           SummarizedContentChildField field,
           String annotationName,
-          AnalysisContext analysisContext) =>
+          LibraryElement libraryElement) =>
       setterType;
+
+  String _typeToCode(DartType type) {
+    // TODO(scheglov) This should be replaced with actual code generation.
+    return type?.getDisplayString(withNullability: false);
+  }
 }

@@ -7,21 +7,20 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'directive_integration_test.template.dart' as ng_generated;
+import 'directive_integration_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support nested components', () async {
-    final testBed = NgTestBed<ParentComponent>();
+    final testBed = NgTestBed.forComponent(ng.createParentComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello');
   });
 
   test('should consume directive input binding', () async {
-    final testBed = NgTestBed<BoundDirectiveInputComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createBoundDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
     final directives = testFixture.assertOnlyInstance.directives;
     await testFixture.update((component) => component.value = 'New property');
@@ -32,7 +31,8 @@ void main() {
   });
 
   test('should support multiple directives on a single node', () async {
-    final testBed = NgTestBed<MultipleDirectivesComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createMultipleDirectivesComponentFactory());
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.dirProp, 'Hello world!');
@@ -40,21 +40,24 @@ void main() {
   });
 
   test('should support directives missing input bindings', () async {
-    final testBed = NgTestBed<UnboundDirectiveInputComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createUnboundDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
   });
 
   test('should execute a directive once, even if specified multiple times',
       () async {
-    final testBed = NgTestBed<DuplicateDirectivesComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createDuplicateDirectivesComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'noduplicate');
   });
 
   test('should support directives whose selector matches native property',
       () async {
-    final testBed = NgTestBed<OverrideNativePropertyComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createOverrideNativePropertyComponentFactory());
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.id, 'some_id');
@@ -64,20 +67,23 @@ void main() {
 
   test('should support directives whose selector matches event binding',
       () async {
-    final testBed = NgTestBed<EventDirectiveComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createEventDirectiveComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.directive, isNotNull);
   });
 
   test('should read directives metadata from their binding token', () async {
-    final testBed = NgTestBed<RetrievesDependencyFromHostComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createRetrievesDependencyFromHostComponentFactory());
     final testFixture = await testBed.create();
     final needsPublicApi = testFixture.assertOnlyInstance.needsPublicApi;
     expect(needsPublicApi.api, const TypeMatcher<PrivateImpl>());
   });
 
   test('should consume pipe binding', () async {
-    final testBed = NgTestBed<PipedDirectiveInputComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createPipedDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
     expect(directive.dirProp, 'aa');
@@ -86,13 +92,13 @@ void main() {
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = NgTestBed<SimpleButton>();
+    final testBed = NgTestBed.forComponent(ng.createSimpleButtonFactory());
     await testBed.create();
   });
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = NgTestBed<SimpleInput>();
+    final testBed = NgTestBed.forComponent(ng.createSimpleInputFactory());
     await testBed.create();
   });
 }

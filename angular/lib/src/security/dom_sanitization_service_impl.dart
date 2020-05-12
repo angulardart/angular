@@ -90,6 +90,7 @@ abstract class SafeValueImpl implements SafeValue {
   final String changingThisWillBypassSecurityTrust;
   SafeValueImpl(this.changingThisWillBypassSecurityTrust);
 
+  @override
   String toString() => changingThisWillBypassSecurityTrust;
 }
 

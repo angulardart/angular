@@ -6,20 +6,20 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'mock_like_directive_test.template.dart' as ng_generated;
+import 'mock_like_directive_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support null @Output if mock-like', () async {
-    final testBed = NgTestBed<TestMockNotificationComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTestMockNotificationComponentFactory());
     await testBed.create();
   });
 
   test("shouldn't support null @Output if not mock-like", () async {
-    final testBed = NgTestBed<TestFakeNotificationComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTestFakeNotificationComponentFactory());
     expect(testBed.create(), throwsA(const TypeMatcher<NoSuchMethodError>()));
   });
 }
@@ -41,7 +41,8 @@ class NotifierComponent {
   template: '',
 )
 class MockNotifierComponent implements NotifierComponent {
-  noSuchMethod(Invocation invocation) => null;
+  @override
+  Object noSuchMethod(Invocation invocation) => null;
 }
 
 @Component(
@@ -60,6 +61,7 @@ class TestMockNotificationComponent {
   template: '',
 )
 class FakeNotifierComponent extends NotifierComponent {
+  @override
   Stream<String> get notifications => null;
 }
 

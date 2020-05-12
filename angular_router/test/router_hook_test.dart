@@ -10,19 +10,19 @@ import 'package:angular_test/angular_test.dart';
 import 'router_hook_test.template.dart' as ng;
 
 void main() {
+  tearDown(() {
+    testRouterHook.reset();
+    return disposeAnyRunningTest();
+  });
+
   group('RouterHook', () {
     Router router;
 
     setUp(() async {
-      final testBed = NgTestBed.forComponent(ng.TestAppComponentNgFactory)
+      final testBed = NgTestBed.forComponent(ng.createTestAppComponentFactory())
           .addInjector(createInjector);
       final testFixture = await testBed.create();
       router = testFixture.assertOnlyInstance.router;
-    });
-
-    tearDown(() {
-      disposeAnyRunningTest();
-      testRouterHook.reset();
     });
 
     test('canActivate should block navigation', () async {
@@ -66,7 +66,7 @@ void main() {
   });
 
   test('can support cyclic dependency with lazy injection', () async {
-    final testBed = NgTestBed.forComponent(ng.TestAppComponentNgFactory)
+    final testBed = NgTestBed.forComponent(ng.createTestAppComponentFactory())
         .addInjector(accumulateQueryHookInjector);
     final testFixture = await testBed.create();
     final router = testFixture.assertOnlyInstance.router;
@@ -101,8 +101,9 @@ class TestAppComponent {
   static final fooPath = '/foo';
   static final indexPath = '';
   static final routes = [
-    RouteDefinition(path: fooPath, component: ng.FooComponentNgFactory),
-    RouteDefinition(path: indexPath, component: ng.IndexComponentNgFactory),
+    RouteDefinition(path: fooPath, component: ng.createFooComponentFactory()),
+    RouteDefinition(
+        path: indexPath, component: ng.createIndexComponentFactory()),
   ];
   final Router router;
 

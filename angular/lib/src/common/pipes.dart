@@ -3,7 +3,6 @@
 export 'pipes/async_pipe.dart' show AsyncPipe;
 export 'pipes/common_pipes.dart' show commonPipes;
 export 'pipes/date_pipe.dart' show DatePipe;
-export 'pipes/json_pipe.dart' show JsonPipe;
 export 'pipes/lowercase_pipe.dart' show LowerCasePipe;
 export 'pipes/number_pipe.dart' show DecimalPipe, PercentPipe, CurrencyPipe;
 export 'pipes/replace_pipe.dart' show ReplacePipe;

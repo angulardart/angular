@@ -2,7 +2,6 @@ import 'dart:html';
 
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:meta/meta.dart';
-import 'package:angular/src/core/change_detection/constants.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/core/linker/view_container.dart';
@@ -10,6 +9,7 @@ import 'package:angular/src/core/linker/view_fragment.dart';
 import 'package:angular/src/di/injector/injector.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
+import 'package:angular_compiler/v1/src/metadata.dart';
 
 import 'component_view.dart';
 import 'dynamic_view.dart';
@@ -289,6 +289,7 @@ class _HostViewData implements DynamicViewData {
   bool _shouldSkipChangeDetection = false;
 
   /// Registers a [callback] to be invoked by [destroy].
+  @override
   void addOnDestroyCallback(void Function() callback) {
     _onDestroyCallbacks ??= [];
     _onDestroyCallbacks.add(callback);

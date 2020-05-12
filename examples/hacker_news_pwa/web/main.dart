@@ -3,7 +3,6 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
-import 'package:examples.hacker_news_pwa/pwa/shim_client.dart';
 
 // We are ignoring files that will be generated at compile-time.
 // ignore: uri_has_not_been_generated
@@ -14,24 +13,43 @@ import 'package:examples.hacker_news_pwa/hacker_news_service.dart';
 // ignore: uri_has_not_been_generated
 import 'main.template.dart' as ng;
 
+bool get _isDevMode {
+  var enabled = false;
+  assert(enabled = true);
+  return enabled;
+}
+
 @GenerateInjector([
   // HTTP and Services.
   FactoryProvider(HackerNewsService, getNewsService),
 
   // SPA Router.
   routerProviders,
+
+  // Conditional: Use HashLocationStrategy
+  FactoryProvider(LocationStrategy, createLocationStrategy),
 ])
 final InjectorFactory hackerNewsApp = ng.hackerNewsApp$Injector;
 
 final _service = HackerNewsService(defaultBaseUrl);
 HackerNewsService getNewsService() => _service;
 
+LocationStrategy createLocationStrategy(
+  PlatformLocation platformLocation,
+  @Optional() @baseUrl String baseUrl,
+) {
+  if (_isDevMode) {
+    return HashLocationStrategy(platformLocation, baseUrl);
+  } else {
+    return PathLocationStrategy(platformLocation, baseUrl);
+  }
+}
+
 ComponentRef<void> _rootComponentRef;
 
 /// DDC hot restart hook.
 void onReloadStart() {
   _rootComponentRef?.destroy();
-  _rootComponentRef = null;
   debugClearComponentStyles();
 }
 
@@ -43,8 +61,6 @@ void main() {
   // PWA scores.
   final prefetch = _prefetchFeed();
 
-  installServiceWorker();
-
   // Start app after fetched.
   prefetch.then((_) {
     _rootComponentRef = runApp(
@@ -54,16 +70,19 @@ void main() {
   });
 }
 
-/// Maybe prefetches data for the initial page if the source can be determined.
+/// Maybe pre-fetches data for the initial page if the source can be determined.
 Future<void> _prefetchFeed() {
   final path = window.location.pathname;
   final query = window.location.search;
-  // We don't bother prefetching a paginated feed or an item page, since it
+  // We don't bother pre-fetching a paginated feed or an item page, since it
   // avoids the need to parse parameters, and it's less likely a user will land
   // on such a view rather than a main feed.
-  if (query.isNotEmpty || path.startsWith('/item')) return Future.value();
+  if (query.isNotEmpty || path.startsWith('/item')) {
+    return Future.value();
+  }
   // All feed route paths match the name of their corresponding feed, except for
   // the default route ('/') which corresponds to the 'news' feed.
-  final feed = path == '/' ? 'news' : path.substring(1);
+  final isRootRoute = _isDevMode ? window.location.hash.isEmpty : path == '/';
+  final feed = isRootRoute ? 'news' : path.substring(1);
   return _service.getFeed(feed, 1);
 }

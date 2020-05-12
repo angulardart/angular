@@ -14,6 +14,8 @@
 
 library angular.security;
 
+// LINT.IfChange
 export 'src/security/dom_sanitization_service.dart';
-export 'src/security/safe_inner_html.g3.dart';
+export 'src/security/safe_inner_html.dart';
 export 'src/security/sanitization_service.dart';
+// LINT.ThenChange(//depot/google3/third_party/dart_lang/v2/g3_linter/lib/src/rules/avoid_bypassing_html_security.dart)

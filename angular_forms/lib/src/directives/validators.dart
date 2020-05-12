@@ -49,7 +49,7 @@ abstract class Validator {
 /// information used by the component to display the error. For instance a
 /// length validator could provide information about how long the current
 /// invalid string is and the max string length for the input to display.
-typedef Map<String, dynamic> ValidatorFn(AbstractControl c);
+typedef ValidatorFn = Map<String, dynamic> Function(AbstractControl c);
 
 /// A [Directive] adding a required validator to controls with `required`:
 ///

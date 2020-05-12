@@ -39,7 +39,7 @@ void testRecoverySolution(
 }) {
   var recoveryOffset = baseHtml.length;
 
-  for (NgSimpleTokenType type in encounteredTokens) {
+  for (var type in encounteredTokens) {
     var reader = NgTokenReversibleReader(null, []);
     var token = NgSimpleToken(type, recoveryOffset);
 

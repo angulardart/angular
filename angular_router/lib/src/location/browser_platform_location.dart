@@ -26,6 +26,7 @@ class BrowserPlatformLocation extends PlatformLocation {
 
   Location get location => _location;
 
+  @override
   String getBaseHrefFromDOM() => baseHRefFromDOM();
 
   @override
@@ -38,14 +39,17 @@ class BrowserPlatformLocation extends PlatformLocation {
     window.addEventListener('hashchange', fn, false);
   }
 
+  @override
   String get pathname {
     return _location.pathname;
   }
 
+  @override
   String get search {
     return _location.search;
   }
 
+  @override
   String get hash {
     return _location.hash;
   }
@@ -54,18 +58,22 @@ class BrowserPlatformLocation extends PlatformLocation {
     _location.pathname = newPath;
   }
 
+  @override
   void pushState(dynamic state, String title, String url) {
     _history.pushState(state, title, url);
   }
 
+  @override
   void replaceState(dynamic state, String title, String url) {
     _history.replaceState(state, title, url);
   }
 
+  @override
   void forward() {
     _history.forward();
   }
 
+  @override
   void back() {
     _history.back();
   }

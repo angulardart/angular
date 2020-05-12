@@ -1,115 +1,113 @@
 @TestOn('browser')
 
-import 'dart:html';
-
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 
-import 'if_test.template.dart' as ng_generated;
+import 'if_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group('ngIf', () {
     tearDown(() => disposeAnyRunningTest());
 
-    test("should work in a template element", () async {
-      var testBed = NgTestBed<NgIfInTemplateComponent>();
+    test('should work in a template element', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgIfInTemplateComponentFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
+      var element = testFixture.rootElement;
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
       expect(element.innerHtml, contains('hello2'));
     });
 
-    test("should toggle node when condition changes", () async {
-      var testBed = NgTestBed<NgIfToggleTestComponent>();
-      NgTestFixture<NgIfToggleTestComponent> testFixture =
-          await testBed.create();
-      Element element = testFixture.rootElement;
+    test('should toggle node when condition changes', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgIfToggleTestComponentFactory());
+      var testFixture = await testBed.create();
+      var element = testFixture.rootElement;
 
       await testFixture.update((NgIfToggleTestComponent component) {
         component.booleanCondition = false;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(0));
+      expect(element.querySelectorAll('copy-me'), hasLength(0));
 
       await testFixture.update((NgIfToggleTestComponent component) {
         component.booleanCondition = true;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
 
       await testFixture.update((NgIfToggleTestComponent component) {
         component.booleanCondition = false;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(0));
+      expect(element.querySelectorAll('copy-me'), hasLength(0));
     });
 
-    test("should handle nested if correctly", () async {
-      var testBed = NgTestBed<NgIfNestedTestComponent>();
-      NgTestFixture<NgIfNestedTestComponent> testFixture =
-          await testBed.create();
-      Element element = testFixture.rootElement;
+    test('should handle nested if correctly', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgIfNestedTestComponentFactory());
+      var testFixture = await testBed.create();
+      var element = testFixture.rootElement;
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = false;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(0));
+      expect(element.querySelectorAll('copy-me'), hasLength(0));
       expect(element.innerHtml.contains('hello'), false);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = true;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
       expect(element.innerHtml.contains('hello'), true);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.nestedBooleanCondition = false;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(0));
+      expect(element.querySelectorAll('copy-me'), hasLength(0));
       expect(element.innerHtml.contains('hello'), false);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.nestedBooleanCondition = true;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
       expect(element.innerHtml.contains('hello'), true);
 
       await testFixture.update((NgIfNestedTestComponent component) {
         component.booleanCondition = false;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(0));
+      expect(element.querySelectorAll('copy-me'), hasLength(0));
       expect(element.innerHtml.contains('hello'), false);
     });
 
-    test("should update multiple bindings", () async {
-      var testBed = NgTestBed<NgIfMultiUpdateTestComponent>();
-      NgTestFixture<NgIfMultiUpdateTestComponent> testFixture =
-          await testBed.create();
-      Element element = testFixture.rootElement;
+    test('should update multiple bindings', () async {
+      var testBed = NgTestBed.forComponent(
+          ng.createNgIfMultiUpdateTestComponentFactory());
+      var testFixture = await testBed.create();
+      var element = testFixture.rootElement;
       // Check startup.
-      expect(element.querySelectorAll("copy-me"), hasLength(3));
-      expect(element.text, "helloNumberhelloStringhelloFunction");
+      expect(element.querySelectorAll('copy-me'), hasLength(3));
+      expect(element.text, 'helloNumberhelloStringhelloFunction');
 
       await testFixture.update((NgIfMultiUpdateTestComponent component) {
         component.numberCondition = 0;
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
-      expect(element.text, "helloString");
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
+      expect(element.text, 'helloString');
 
       await testFixture.update((NgIfMultiUpdateTestComponent component) {
         component.numberCondition = 1;
         component.stringCondition = 'bar';
       });
-      expect(element.querySelectorAll("copy-me"), hasLength(1));
-      expect(element.text, "helloNumber");
+      expect(element.querySelectorAll('copy-me'), hasLength(1));
+      expect(element.text, 'helloNumber');
       await testFixture.update((NgIfMultiUpdateTestComponent component) {
         component.booleanCondition = false;
       });
     });
 
     test('should throw during change detection if getter changes', () async {
-      var testBed = NgTestBed<NgIfThrowsDuringChangeDetection>();
+      var testBed = NgTestBed.forComponent(
+          ng.createNgIfThrowsDuringChangeDetectionFactory());
       var fixture = await testBed.create();
       expect(
         fixture.update((c) => c.startFailing = true),
@@ -196,7 +194,7 @@ class NgIfMultiUpdateTestComponent {
   bool nestedBooleanCondition = true;
   num numberCondition = 1;
   String stringCondition = 'foo';
-  bool functionCondition(s, n) => s == "foo" && n == 1;
+  bool functionCondition(s, n) => s == 'foo' && n == 1;
 }
 
 @Component(

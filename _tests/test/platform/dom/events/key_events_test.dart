@@ -7,15 +7,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'key_events_test.template.dart' as ng_generated;
+import 'key_events_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test("Should receive 'keydown' event", () async {
-    var testBed = NgTestBed<KeydownListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keydown');
     testFixture.rootElement.dispatchEvent(event);
@@ -27,7 +26,8 @@ void main() {
   });
 
   test("Should receive 'keydown.a' event", () async {
-    var testBed = NgTestBed<KeydownListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keydown', KeyCode.A);
     testFixture.rootElement.dispatchEvent(event);
@@ -39,7 +39,8 @@ void main() {
   });
 
   test("Should receive 'keydown.shift.a", () async {
-    var testBed = NgTestBed<KeydownListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keydown', KeyCode.A, shiftKey: true);
     testFixture.rootElement.dispatchEvent(event);
@@ -51,7 +52,8 @@ void main() {
   });
 
   test("Should receive 'keypress' event", () async {
-    var testBed = NgTestBed<KeypressListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeypressListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keypress');
     testFixture.rootElement.dispatchEvent(event);
@@ -61,7 +63,8 @@ void main() {
   });
 
   test("Should receive 'keyup' event", () async {
-    var testBed = NgTestBed<KeyupListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keyup');
     testFixture.rootElement.dispatchEvent(event);
@@ -73,7 +76,8 @@ void main() {
   });
 
   test("Should receive 'keyup.enter' event", () async {
-    var testBed = NgTestBed<KeyupListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.ENTER);
     testFixture.rootElement.dispatchEvent(event);
@@ -85,7 +89,8 @@ void main() {
   });
 
   test("Should receive 'keyup.control.enter' event", () async {
-    var testBed = NgTestBed<KeyupListenerComponent>();
+    var testBed =
+        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.ENTER, ctrlKey: true);
     testFixture.rootElement.dispatchEvent(event);
@@ -96,8 +101,8 @@ void main() {
     });
   });
 
-  test("Should receive keyboard event with multiple modifiers", () async {
-    var testBed = NgTestBed<ModifiersListener>();
+  test('Should receive keyboard event with multiple modifiers', () async {
+    var testBed = NgTestBed.forComponent(ng.createModifiersListenerFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.NUM_ZERO,
         altKey: true, metaKey: true);

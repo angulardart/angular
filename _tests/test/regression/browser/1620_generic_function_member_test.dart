@@ -9,7 +9,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('generic function member should return normally', () async {
-    final testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
   });

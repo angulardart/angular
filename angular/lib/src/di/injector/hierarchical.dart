@@ -1,31 +1,37 @@
 import 'package:angular/src/runtime.dart';
+import 'package:angular_compiler/v1/src/metadata.dart';
 import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
 import 'empty.dart';
 import 'injector.dart';
 
-/// Implements the [Injector] interface with support for hierarchical injection.
+/// Base type for the [Injector] interface with support for hierarchies.
 ///
 /// Hierarchical injection is a popular pattern in AngularDart given that the
 /// component tree naturally forms a tree structure of components (and
 /// implicitly, injectors).
 ///
-/// **NOTE**: This is not a user-visible class.
-abstract class HierarchicalInjector extends Injector {
+/// **NOTE**: This is not a user-visible class. In the past
+/// [HierarchicalInjector] _extended_ [Injector] and relied on implicit
+/// (and explicit) downcasts across the API surface. See b/130182015.
+abstract class HierarchicalInjector {
   @protected
   final HierarchicalInjector parent;
 
   @visibleForTesting
   const HierarchicalInjector([HierarchicalInjector parent])
-      // Cannot use unsafeCast here, because it would make this non-const.
-      // ignore: const_field_initializer_not_assignable, field_initializer_not_assignable
       : parent = parent ?? const Injector.empty();
 
   /// **INTERNAL ONLY**: Used to implement [EmptyInjector] efficiently.
   const HierarchicalInjector.maybeEmpty([this.parent]);
 
-  @override
+  /// Injects and returns an object representing [token].
+  ///
+  /// If the key was not found, returns [orElse] (default is `null`).
+  ///
+  /// **NOTE**: This is an internal-only method and may be removed.
+  @protected
   Object provideUntyped(
     Object token, [
     Object orElse = throwIfNotFound,
@@ -121,4 +127,73 @@ abstract class HierarchicalInjector extends Injector {
     Object orElse = throwIfNotFound,
   ]) =>
       parent.provideUntyped(token, orElse);
+
+  /// Returns an instance from the injector based on the provided [token].
+  ///
+  /// ```
+  /// HeroService heroService = injector.get(HeroService);
+  /// ```
+  ///
+  /// If not found, either:
+  /// - Returns [notFoundValue] if set to a non-default value.
+  /// - Throws an error (default behavior).
+  ///
+  /// An injector always returns itself if [Injector] is given as a token.
+  @mustCallSuper
+  dynamic get(Object token, [Object notFoundValue = throwIfNotFound]) {
+    errors.debugInjectorEnter(token);
+    final result = provideUntyped(token, notFoundValue);
+    if (identical(result, throwIfNotFound)) {
+      return throwsNotFound(this, token);
+    }
+    errors.debugInjectorLeave(token);
+    return result;
+  }
+
+  /// Finds and returns an object instance provided for a type [token].
+  ///
+  /// A runtime assertion is thrown in debug mode if:
+  ///
+  /// * [T] is explicitly or implicitly bound to `dynamic`.
+  /// * If [T] is not `Object`, the DI [token] is not the *same* as [T].
+  ///
+  /// An error is thrown if a provider is not found.
+  T provideType<T extends Object>(Type token) {
+    // NOTE: It is not possible to design this API in such a way that only "T"
+    // can be used, and not require "token" as well. Our injection system
+    // currently uses "identical" (similar to JS' ===), and the types passed
+    // through "T" are not canonical (they are == equivalent, but not ===).
+    //
+    // See historic discussion here: dartbug.com/35098
+    assert(T != dynamic, 'Returning a dynamic is not supported');
+    return unsafeCast(get(token));
+  }
+
+  /// Finds and returns an object instance provided for a type [token].
+  ///
+  /// Unlike [provideType], `null` is returned if a provider is not found.
+  ///
+  /// A runtime assertion is thrown in debug mode if:
+  ///
+  /// * [T] is explicitly or implicitly bound to `dynamic`.
+  /// * If [T] is not `Object`, the DI [token] is not the *same* as [T].
+  T provideTypeOptional<T extends Object>(Type token) {
+    // See provideType.
+    assert(T != dynamic, 'Returning a dynamic is not supported');
+    return unsafeCast(get(token, null));
+  }
+
+  /// Finds and returns an object instance provided for a [token].
+  ///
+  /// An error is thrown if a provider is not found.
+  T provideToken<T>(OpaqueToken<T> token) {
+    return unsafeCast(get(token));
+  }
+
+  /// Finds and returns an object instance provided for a [token].
+  ///
+  /// Unlike [provideToken], `null` is returned if a provider is not found.
+  T provideTokenOptional<T>(OpaqueToken<T> token) {
+    return unsafeCast(get(token, null));
+  }
 }

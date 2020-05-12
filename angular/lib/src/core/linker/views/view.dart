@@ -1,3 +1,5 @@
+import 'dart:html' show Element;
+
 import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/core/change_detection/change_detector_ref.dart';
@@ -75,6 +77,7 @@ abstract class View implements ChangeDetectorRef {
   /// A view that has an uncaught exception, is destroyed, or is otherwise
   /// not meant to be checked (such as being detached or having a change
   /// detection mode that skips checks conditionally) should immediately return.
+  @override
   void detectChanges();
 
   /// Invokes change detection on views that use default change detection.
@@ -120,6 +123,7 @@ abstract class View implements ChangeDetectorRef {
 
   @override
   void markChildForCheck(Object child) {
+    assert(child is! Element, 'Expected a component instance');
     queryChangeDetectorRefs[child]?.markForCheck();
   }
 

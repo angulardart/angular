@@ -59,9 +59,9 @@ final RegExp _urlRe = RegExp(r'^url\([^)]+\)$');
 bool _hasBalancedQuotes(String value) {
   final quoteCodeUnit = "'".codeUnitAt(0);
   final doubleQuoteCodeUnit = '"'.codeUnitAt(0);
-  bool outsideSingle = true;
-  bool outsideDouble = true;
-  for (int i = 0; i < value.length; i++) {
+  var outsideSingle = true;
+  var outsideDouble = true;
+  for (var i = 0; i < value.length; i++) {
     var c = value.codeUnitAt(i);
     if (c == quoteCodeUnit && outsideDouble) {
       outsideSingle = !outsideSingle;
@@ -79,7 +79,7 @@ String internalSanitizeStyle(String value) {
   // cleanly. See above for reasoning behind this.
   Match urlMatch = _urlRe.firstMatch(value);
   if (urlMatch != null) {
-    String input = urlMatch.group(0);
+    var input = urlMatch.group(0);
     if (internalSanitizeUrl(input) == input) {
       return value; // Safe style values.
     }
@@ -87,12 +87,12 @@ String internalSanitizeStyle(String value) {
     return value;
   }
   if (value.contains(';')) {
-    List<String> parts = value.split(';');
-    bool failed = false;
-    for (String part in parts) {
+    var parts = value.split(';');
+    var failed = false;
+    for (var part in parts) {
       Match urlMatch = _urlRe.firstMatch(part);
       if (urlMatch != null) {
-        String input = urlMatch.group(0);
+        var input = urlMatch.group(0);
         if (internalSanitizeUrl(input) != input) {
           failed = true;
           break;

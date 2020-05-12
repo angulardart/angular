@@ -1,5 +1,4 @@
 import 'package:angular/core.dart';
-import 'package:angular/src/core/di/decorators.dart' show Host;
 import 'package:angular/src/core/linker.dart'
     show ViewContainerRef, TemplateRef;
 
@@ -12,7 +11,7 @@ class SwitchView {
   SwitchView(this._viewContainerRef, this._templateRef);
 
   void create() {
-    _viewContainerRef.createEmbeddedView(this._templateRef);
+    _viewContainerRef.createEmbeddedView(_templateRef);
   }
 
   void destroy() {
@@ -81,7 +80,7 @@ class SwitchView {
 class NgSwitch {
   dynamic _switchValue;
   bool _useDefault = false;
-  final _valueViews = Map<dynamic, List<SwitchView>>();
+  final _valueViews = <dynamic, List<SwitchView>>{};
 
   List<SwitchView> _activeViews = [];
 
@@ -104,32 +103,32 @@ class NgSwitch {
   }
 
   void _onWhenValueChanged(dynamic oldWhen, dynamic newWhen, SwitchView view) {
-    this._deregisterView(oldWhen, view);
-    this._registerView(newWhen, view);
-    if (identical(oldWhen, this._switchValue)) {
+    _deregisterView(oldWhen, view);
+    _registerView(newWhen, view);
+    if (identical(oldWhen, _switchValue)) {
       view.destroy();
       _activeViews.remove(view);
-    } else if (identical(newWhen, this._switchValue)) {
-      if (this._useDefault) {
-        this._useDefault = false;
-        this._emptyAllActiveViews();
+    } else if (identical(newWhen, _switchValue)) {
+      if (_useDefault) {
+        _useDefault = false;
+        _emptyAllActiveViews();
       }
       view.create();
-      this._activeViews.add(view);
+      _activeViews.add(view);
     }
     // Switch to default when there is no more active ViewContainers
-    if (identical(this._activeViews.length, 0) && !this._useDefault) {
-      this._useDefault = true;
-      this._activateViews(this._valueViews[_WHEN_DEFAULT]);
+    if (identical(_activeViews.length, 0) && !_useDefault) {
+      _useDefault = true;
+      _activateViews(_valueViews[_WHEN_DEFAULT]);
     }
   }
 
   void _emptyAllActiveViews() {
-    var activeContainers = this._activeViews;
+    var activeContainers = _activeViews;
     for (var i = 0, len = activeContainers.length; i < len; i++) {
       activeContainers[i].destroy();
     }
-    this._activeViews = [];
+    _activeViews = [];
   }
 
   void _activateViews(List<SwitchView> views) {
@@ -181,8 +180,8 @@ class NgSwitchWhen {
 
   NgSwitchWhen(ViewContainerRef viewContainer, TemplateRef templateRef,
       @Host() NgSwitch ngSwitch) {
-    this._switch = ngSwitch;
-    this._view = SwitchView(viewContainer, templateRef);
+    _switch = ngSwitch;
+    _view = SwitchView(viewContainer, templateRef);
   }
 
   @Input()
@@ -193,8 +192,8 @@ class NgSwitchWhen {
   @Input()
   set ngSwitchWhen(dynamic value) {
     if (identical(value, _value)) return;
-    this._switch._onWhenValueChanged(this._value, value, this._view);
-    this._value = value;
+    _switch._onWhenValueChanged(_value, value, _view);
+    _value = value;
   }
 }
 

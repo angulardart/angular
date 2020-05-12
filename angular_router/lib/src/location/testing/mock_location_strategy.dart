@@ -22,10 +22,13 @@ class MockLocationStrategy extends LocationStrategy {
     _subject.add(PopStateEvent('popstate'));
   }
 
+  @override
   String hash() => internalHash;
 
+  @override
   String path() => internalPath;
 
+  @override
   String prepareExternalUrl(String internal) {
     if (internal.startsWith('/') && internalBaseHref.endsWith('/')) {
       return internalBaseHref + internal.substring(1);
@@ -33,6 +36,7 @@ class MockLocationStrategy extends LocationStrategy {
     return internalBaseHref + internal;
   }
 
+  @override
   void pushState(dynamic ctx, String title, String path, String query) {
     internalTitle = title;
     var url = path + (query.isNotEmpty ? ('?' + query) : '');
@@ -41,6 +45,7 @@ class MockLocationStrategy extends LocationStrategy {
     urlChanges.add(externalUrl);
   }
 
+  @override
   void replaceState(dynamic ctx, String title, String path, String query) {
     internalTitle = title;
     var url = path + (query.isNotEmpty ? ('?' + query) : '');
@@ -49,21 +54,30 @@ class MockLocationStrategy extends LocationStrategy {
     urlChanges.add('replace: ' + externalUrl);
   }
 
+  @override
   void onPopState(EventListener fn) {
     _subject.stream.listen(fn);
   }
 
+  @override
   String getBaseHref() => internalBaseHref;
 
+  @override
   void back() {
+    while (urlChanges.isNotEmpty && urlChanges.last.startsWith('replace: ')) {
+      urlChanges.removeLast();
+    }
     if (urlChanges.isNotEmpty) {
       urlChanges.removeLast();
-      var nextUrl =
-          urlChanges.isNotEmpty ? urlChanges[urlChanges.length - 1] : '';
+      var nextUrl = urlChanges.isNotEmpty ? urlChanges.last : '';
+      if (nextUrl.startsWith('replace: ')) {
+        nextUrl = nextUrl.substring('replace: '.length);
+      }
       simulatePopState(nextUrl);
     }
   }
 
+  @override
   void forward() {
     throw UnimplementedError('not implemented');
   }

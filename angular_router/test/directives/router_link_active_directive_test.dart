@@ -113,7 +113,7 @@ class FakeRouter implements Router {
   }
 
   @override
-  noSuchMethod(i) => super.noSuchMethod(i);
+  dynamic noSuchMethod(i) => super.noSuchMethod(i);
 
   @override
   Stream<RouterState> get stream => _streamController.stream;

@@ -1,4 +1,4 @@
-@TestOn("!js")
+@TestOn('!js')
 library angular2.test.di.provider_test;
 
 import 'dart:mirrors';
@@ -43,7 +43,7 @@ class Foo {}
 
 class Bar extends Foo {}
 
-fn() => null;
+dynamic fn() => null;
 
 class Annotation {
   final List bindings;

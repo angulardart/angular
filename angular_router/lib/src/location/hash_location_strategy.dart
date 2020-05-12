@@ -17,32 +17,20 @@ import 'platform_location.dart' show PlatformLocation;
 /// ### Example
 ///
 /// ```
-/// import {Component, provide} from 'angular2/core';
-/// import {
-///   Location,
-///   LocationStrategy,
-///   HashLocationStrategy
-/// } from 'angular2/platform/common';
-/// import {
-///   ROUTER_DIRECTIVES,
-///   ROUTER_PROVIDERS,
-///   RouteConfig
-/// } from 'angular2/router';
+/// import 'package:angular/angular.dart';
+/// import 'package:angular_router/angular_router.dart';
 ///
-/// @Component({directives: [ROUTER_DIRECTIVES]})
-/// @RouteConfig([
-///  {...},
-/// ])
-/// class AppCmp {
-///   constructor(location: Location) {
+/// @Component(
+///   // Should only be provided at the root.
+///   providers: [
+///     routerProvidersHash,
+///   ],
+/// )
+/// class AppComponent {
+///   AppComponent(Location location) {
 ///     location.go('/foo');
 ///   }
 /// }
-///
-/// bootstrap(AppCmp, [
-///   ROUTER_PROVIDERS,
-///   provide(LocationStrategy, {useClass: HashLocationStrategy})
-/// ]);
 /// ```
 @Injectable()
 class HashLocationStrategy extends LocationStrategy {
@@ -59,14 +47,17 @@ class HashLocationStrategy extends LocationStrategy {
     _platformLocation.onPopState(fn);
   }
 
+  @override
   String getBaseHref() {
     return _baseHref;
   }
 
+  @override
   String hash() {
     return _platformLocation.hash;
   }
 
+  @override
   String path() {
     // the hash value is always prefixed with a `#`
     // and if it is empty then it will stay empty
@@ -77,6 +68,7 @@ class HashLocationStrategy extends LocationStrategy {
     return path.isEmpty ? path : path.substring(1);
   }
 
+  @override
   String prepareExternalUrl(String internal) {
     var url = Location.joinWithSlash(_baseHref, internal);
     // It's convention that if the hash path is empty, we omit the `#`; however,
@@ -88,12 +80,14 @@ class HashLocationStrategy extends LocationStrategy {
         : '#$url';
   }
 
+  @override
   void pushState(dynamic state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     _platformLocation.pushState(state, title, url);
   }
 
+  @override
   void replaceState(
       dynamic state, String title, String path, String queryParams) {
     var url =
@@ -101,10 +95,12 @@ class HashLocationStrategy extends LocationStrategy {
     _platformLocation.replaceState(state, title, url);
   }
 
+  @override
   void forward() {
     _platformLocation.forward();
   }
 
+  @override
   void back() {
     _platformLocation.back();
   }

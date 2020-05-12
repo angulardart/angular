@@ -13,7 +13,7 @@ void main() {
 
   test('should create 20 DI bindings (reflective)', () async {
     final testBed = NgTestBed.forComponent(
-      ng_comp.CreateTreeBindingsReflectiveBenchmarkNgFactory,
+      ng_comp.createCreateTreeBindingsReflectiveBenchmarkFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((comp) => comp.ready = true);

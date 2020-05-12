@@ -8,12 +8,12 @@ mixin ReportParseErrors {
   void expected(String expected,
       {@required String actual, @required int offset}) {
     throw SelectorParseError(
-        "Expected $expected, got $actual", str, offset, actual.length);
+        'Expected $expected, got $actual', str, offset, actual.length);
   }
 
   /// Report an unexpected string [string] at [offset].
   void unexpected(String string, int offset) {
-    throw SelectorParseError("Unexpected $string", str, offset, string.length);
+    throw SelectorParseError('Unexpected $string', str, offset, string.length);
   }
 }
 

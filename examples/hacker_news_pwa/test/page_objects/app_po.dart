@@ -9,6 +9,7 @@ part 'app_po.g.dart';
 abstract class AppPO {
   AppPO();
 
+  // ignore: redirect_to_non_class
   factory AppPO.create(PageLoaderElement context) = $AppPO.create;
 
   @ByTagName('feed')

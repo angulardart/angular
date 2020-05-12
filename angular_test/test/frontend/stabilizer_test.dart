@@ -10,8 +10,8 @@ import 'stabilizer_test.template.dart' as template;
 
 void main() {
   test('should throw error when stabilization threshold is exceeded', () async {
-    final testBed =
-        NgTestBed.forComponent(template.WillNeverStabilizeComponentNgFactory);
+    final testBed = NgTestBed.forComponent(
+        template.createWillNeverStabilizeComponentFactory());
     expect(testBed.create, throwsA(TypeMatcher<WillNeverStabilizeError>()));
   }, skip: 'b/140626607');
 }
