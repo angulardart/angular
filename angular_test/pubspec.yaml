@@ -6,7 +6,7 @@ description: Testing runner and library for AngularDart
 version: 2.4.0
 
 environment:
-  sdk: ">=2.5.0-dev.1.0 <3.0.0"
+  sdk: ">=2.8.1 <3.0.0"
 
 dependencies:
   angular: ^6.0.0-alpha+1
