@@ -32,7 +32,7 @@ class ComponentContentResolver extends AngularAstVisitor {
 
     final acceptAll = component.ngContents.any((s) => s.matchesAll);
     for (final child in children) {
-      if (child is TextInfo && !acceptAll && child.text.trim() != "") {
+      if (child is TextInfo && !acceptAll && child.text.trim() != '') {
         _reportErrorForRange(SourceRange(child.offset, child.length),
             AngularWarningCode.CONTENT_NOT_TRANSCLUDED);
       } else if (child is ElementInfo) {

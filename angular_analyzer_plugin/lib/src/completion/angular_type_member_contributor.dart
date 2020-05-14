@@ -22,13 +22,12 @@ class AngularTypeMemberContributor extends CompletionContributor {
     final templates = request.templates;
 
     for (final template in templates) {
-      final typeProvider = template.component.classElement.enclosingElement
-          .enclosingElement.context.typeProvider;
       final dartSnippet = request.dartSnippet;
 
       if (dartSnippet != null) {
         final classElement = template.component.classElement;
         final libraryElement = classElement.library;
+        final typeProvider = libraryElement.typeProvider;
 
         final dartResolveResult = DartResolveResultShell(request.path,
             libraryElement: libraryElement, typeProvider: typeProvider);

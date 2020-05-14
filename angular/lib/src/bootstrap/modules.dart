@@ -5,11 +5,12 @@ library angular.src.bootstrap.modules;
 
 import 'dart:math';
 
+import 'package:angular_compiler/v1/src/metadata.dart';
 import 'package:angular/src/core/application_tokens.dart';
 import 'package:angular/src/core/di.dart';
+import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/di/providers.dart';
 import 'package:angular/src/facade/exception_handler.dart';
 import 'package:angular/src/platform/browser/exceptions.dart';
 import 'package:angular/src/security/dom_sanitization_service.dart';
@@ -32,12 +33,12 @@ class ThrowingSlowComponentLoader implements SlowComponentLoader {
   const ThrowingSlowComponentLoader();
 
   @override
-  load<T>(_, __) {
+  Future<ComponentRef<T>> load<T>(_, __) {
     throw UnsupportedError(_slowComponentLoaderWarning);
   }
 
   @override
-  loadNextToLocation<T>(_, __, [___]) {
+  Future<ComponentRef<T>> loadNextToLocation<T>(_, __, [___]) {
     throw UnsupportedError(_slowComponentLoaderWarning);
   }
 }

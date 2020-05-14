@@ -243,7 +243,7 @@ class AttributeSelectorTest extends _SelectorTest {
     final selector = AttributeSelector(nameElement, 'silly');
     when(element.attributes).thenReturn({'kind': 'strange'});
     when(element.attributeNameSpans)
-        .thenReturn({'kind': _newStringSpan(100, "kind")});
+        .thenReturn({'kind': _newStringSpan(100, 'kind')});
     expect(selector.match(element, template), equals(SelectorMatch.NoMatch));
     expect(selector.availableTo(element), equals(false));
   }
@@ -253,7 +253,7 @@ class AttributeSelectorTest extends _SelectorTest {
     final selector = AttributeSelector(nameElement, null);
     when(element.attributes).thenReturn({'kind': 'no-matter'});
     when(element.attributeNameSpans)
-        .thenReturn({'kind': _newStringSpan(100, "kind")});
+        .thenReturn({'kind': _newStringSpan(100, 'kind')});
     // verify
     expect(
         selector.match(element, template), equals(SelectorMatch.NonTagMatch));
@@ -350,7 +350,7 @@ class AttributeStartsWithSelectorTest extends _SelectorTest {
 @reflectiveTest
 class AttributeValueRegexSelectorTest extends _SelectorTest {
   final selector =
-      AttributeValueRegexSelector(SelectorName("abc", SourceRange(0, 3), null));
+      AttributeValueRegexSelector(SelectorName('abc', SourceRange(0, 3), null));
 
   // ignore: non_constant_identifier_names
   void test_match() {
@@ -499,12 +499,12 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_addClassMultipleTimesOKDoesntRepeat() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass");
+      ..name = 'tagname'
+      ..addClass('myclass');
     // ignore: cascade_invocations
-    tag.addClass("myclass");
+    tag.addClass('myclass');
     // ignore: cascade_invocations
-    tag.addClass("myclass");
+    tag.addClass('myclass');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="myclass"'));
   }
@@ -512,8 +512,8 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_addClassOneClass() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass");
+      ..name = 'tagname'
+      ..addClass('myclass');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="myclass"'));
   }
@@ -521,10 +521,10 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_addClassTwoClasses() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass");
+      ..name = 'tagname'
+      ..addClass('myclass');
     // ignore: cascade_invocations
-    tag.addClass("myotherclass");
+    tag.addClass('myotherclass');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="myclass myotherclass"'));
   }
@@ -532,18 +532,18 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_classesAndClassAttrBindingInvalid() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass")
-      ..setAttribute("class", value: "blah");
+      ..name = 'tagname'
+      ..addClass('myclass')
+      ..setAttribute('class', value: 'blah');
     expect(tag.isValid, isFalse);
   }
 
   // ignore: non_constant_identifier_names
   void test_classesAndEmptyClassAttrBindingValid() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass")
-      ..setAttribute("class");
+      ..name = 'tagname'
+      ..addClass('myclass')
+      ..setAttribute('class');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="myclass"'));
   }
@@ -551,58 +551,58 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_classesAndMatchingClassAttrBindingValid() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("myclass")
-      ..setAttribute("class", value: 'myclass');
+      ..name = 'tagname'
+      ..addClass('myclass')
+      ..setAttribute('class', value: 'myclass');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="myclass"'));
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneHasItsOwnClasses() {
-    final tag = HtmlTagForSelector()..name = "tagname";
-    final clone = tag.clone()..addClass("myclass");
-    expect(tag.toString(), "<tagname");
+    final tag = HtmlTagForSelector()..name = 'tagname';
+    final clone = tag.clone()..addClass('myclass');
+    expect(tag.toString(), '<tagname');
     expect(clone.toString(), '<tagname class="myclass"');
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneHasItsOwnProperties() {
-    final tag = HtmlTagForSelector()..name = "tagname";
-    final clone = tag.clone()..setAttribute("attr");
-    expect(tag.toString(), "<tagname");
-    expect(clone.toString(), "<tagname attr");
+    final tag = HtmlTagForSelector()..name = 'tagname';
+    final clone = tag.clone()..setAttribute('attr');
+    expect(tag.toString(), '<tagname');
+    expect(clone.toString(), '<tagname attr');
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneIsAClone() {
     final tag = HtmlTagForSelector();
     final clone = tag.clone();
-    tag.name = "original";
-    clone.name = "clone";
+    tag.name = 'original';
+    clone.name = 'clone';
     expect(tag, isNot(equals(clone)));
     expect(tag.isValid, isTrue);
-    expect(tag.toString(), "<original");
+    expect(tag.toString(), '<original');
     expect(clone.isValid, isTrue);
-    expect(clone.toString(), "<clone");
+    expect(clone.toString(), '<clone');
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneKeepsAttributes() {
     var tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr1")
-      ..setAttribute("attr2");
+      ..name = 'tagname'
+      ..setAttribute('attr1')
+      ..setAttribute('attr2');
     tag = tag.clone();
-    expect(tag.toString(), equals("<tagname attr1 attr2"));
+    expect(tag.toString(), equals('<tagname attr1 attr2'));
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneKeepsAttributeValues() {
     var tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr1", value: 'value1')
-      ..setAttribute("attr2", value: 'value2');
+      ..name = 'tagname'
+      ..setAttribute('attr1', value: 'value1')
+      ..setAttribute('attr2', value: 'value2');
     tag = tag.clone();
     expect(tag.toString(), equals('<tagname attr1="value1" attr2="value2"'));
   }
@@ -610,9 +610,9 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_cloneKeepsClassnames() {
     var tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("class1")
-      ..addClass("class2");
+      ..name = 'tagname'
+      ..addClass('class1')
+      ..addClass('class2');
     tag = tag.clone();
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname class="class1 class2"'));
@@ -620,17 +620,17 @@ class HtmlTagForSelectorTest {
 
   // ignore: non_constant_identifier_names
   void test_cloneKeepsName() {
-    var tag = HtmlTagForSelector()..name = "tagname";
+    var tag = HtmlTagForSelector()..name = 'tagname';
     tag = tag.clone();
-    expect(tag.toString(), equals("<tagname"));
+    expect(tag.toString(), equals('<tagname'));
   }
 
   // ignore: non_constant_identifier_names
   void test_cloneKeepsValid() {
-    var tag = HtmlTagForSelector()..name = "tagname";
+    var tag = HtmlTagForSelector()..name = 'tagname';
 
     // ignore: cascade_invocations
-    tag.name = "break this tag";
+    tag.name = 'break this tag';
 
     // ignore: cascade_invocations
     tag = tag.clone();
@@ -640,7 +640,7 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_cloneWithoutNameCanBecomeValid() {
     var tag = HtmlTagForSelector();
-    tag = tag.clone()..name = "tagname";
+    tag = tag.clone()..name = 'tagname';
     expect(tag.isValid, isTrue);
   }
 
@@ -653,29 +653,29 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_setAttributeConflictingValues() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr", value: "value1");
+      ..name = 'tagname'
+      ..setAttribute('attr', value: 'value1');
     // ignore: cascade_invocations
-    tag.setAttribute("attr", value: "value2");
+    tag.setAttribute('attr', value: 'value2');
     expect(tag.isValid, isFalse);
   }
 
   // ignore: non_constant_identifier_names
   void test_setAttributeNoValue() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr");
+      ..name = 'tagname'
+      ..setAttribute('attr');
     expect(tag.isValid, isTrue);
-    expect(tag.toString(), equals("<tagname attr"));
+    expect(tag.toString(), equals('<tagname attr'));
   }
 
   // ignore: non_constant_identifier_names
   void test_setAttributeNoValueAfterValue() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr", value: "value");
+      ..name = 'tagname'
+      ..setAttribute('attr', value: 'value');
     // ignore: cascade_invocations
-    tag.setAttribute("attr");
+    tag.setAttribute('attr');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname attr="value"'));
   }
@@ -683,19 +683,19 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_setAttributeNoValueTwice() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr");
+      ..name = 'tagname'
+      ..setAttribute('attr');
     // ignore: cascade_invocations
-    tag.setAttribute("attr");
+    tag.setAttribute('attr');
     expect(tag.isValid, isTrue);
-    expect(tag.toString(), equals("<tagname attr"));
+    expect(tag.toString(), equals('<tagname attr'));
   }
 
   // ignore: non_constant_identifier_names
   void test_setAttributeValue() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr", value: "value");
+      ..name = 'tagname'
+      ..setAttribute('attr', value: 'value');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname attr="value"'));
   }
@@ -703,10 +703,10 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_setAttributeValueAfterJustAttr() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr");
+      ..name = 'tagname'
+      ..setAttribute('attr');
     // ignore: cascade_invocations
-    tag.setAttribute("attr", value: "value");
+    tag.setAttribute('attr', value: 'value');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname attr="value"'));
   }
@@ -714,58 +714,58 @@ class HtmlTagForSelectorTest {
   // ignore: non_constant_identifier_names
   void test_setAttributeValueTwice() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("attr", value: "value");
+      ..name = 'tagname'
+      ..setAttribute('attr', value: 'value');
     // ignore: cascade_invocations
-    tag.setAttribute("attr", value: "value");
+    tag.setAttribute('attr', value: 'value');
     expect(tag.isValid, isTrue);
     expect(tag.toString(), equals('<tagname attr="value"'));
   }
 
   // ignore: non_constant_identifier_names
   void test_setName() {
-    final tag = HtmlTagForSelector()..name = "myname";
+    final tag = HtmlTagForSelector()..name = 'myname';
     expect(tag.isValid, isTrue);
-    expect(tag.toString(), equals("<myname"));
+    expect(tag.toString(), equals('<myname'));
   }
 
   // ignore: non_constant_identifier_names
   void test_setNameConflicting() {
-    final tag = HtmlTagForSelector()..name = "myname1";
+    final tag = HtmlTagForSelector()..name = 'myname1';
     // ignore: cascade_invocations
-    tag.name = "myname2";
+    tag.name = 'myname2';
     expect(tag.isValid, isFalse);
   }
 
   // ignore: non_constant_identifier_names
   void test_setNameTwice() {
-    final tag = HtmlTagForSelector()..name = "myname";
+    final tag = HtmlTagForSelector()..name = 'myname';
     // ignore: cascade_invocations
-    tag.name = "myname";
+    tag.name = 'myname';
     expect(tag.isValid, isTrue);
-    expect(tag.toString(), equals("<myname"));
+    expect(tag.toString(), equals('<myname'));
   }
 
   // ignore: non_constant_identifier_names
   void test_toStringIsAlphabeticalClasses() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..addClass("apple")
-      ..addClass("flick")
-      ..addClass("ziggy")
-      ..addClass("cow");
+      ..name = 'tagname'
+      ..addClass('apple')
+      ..addClass('flick')
+      ..addClass('ziggy')
+      ..addClass('cow');
     expect(tag.toString(), '<tagname class="apple cow flick ziggy"');
   }
 
   // ignore: non_constant_identifier_names
   void test_toStringIsAlphabeticalProperties() {
     final tag = HtmlTagForSelector()
-      ..name = "tagname"
-      ..setAttribute("apple")
-      ..setAttribute("flick")
-      ..setAttribute("ziggy")
-      ..setAttribute("cow")
-      ..addClass("classes");
+      ..name = 'tagname'
+      ..setAttribute('apple')
+      ..setAttribute('flick')
+      ..setAttribute('ziggy')
+      ..setAttribute('cow')
+      ..addClass('classes');
     expect(tag.toString(), '<tagname apple class="classes" cow flick ziggy');
   }
 }
@@ -977,7 +977,7 @@ class SelectorParserTest {
       expect(e.offset, '[foo^='.length);
       return;
     }
-    fail("was supposed to throw");
+    fail('was supposed to throw');
   }
 
   // ignore: non_constant_identifier_names
@@ -989,7 +989,7 @@ class SelectorParserTest {
       expect(e.offset, '[foo*='.length);
       return;
     }
-    fail("was supposed to throw");
+    fail('was supposed to throw');
   }
 
   // ignore: non_constant_identifier_names
@@ -1071,7 +1071,7 @@ class SelectorParserTest {
       expect(e.offset, '[foo='.length);
       return;
     }
-    fail("was supposed to throw");
+    fail('was supposed to throw');
   }
 
   // ignore: non_constant_identifier_names
@@ -1104,7 +1104,7 @@ class SelectorParserTest {
     } catch (e) {
       return;
     }
-    fail("was supposed to throw");
+    fail('was supposed to throw');
   }
 
   // ignore: non_constant_identifier_names
@@ -1130,59 +1130,59 @@ class SelectorParserTest {
             ':not(:not(ddd) && [eee] || fff && [ggg])'));
     {
       final subSelector = selector.selectors[0] as ElementNameSelector;
-      expect(subSelector.toString(), "aaa");
+      expect(subSelector.toString(), 'aaa');
     }
     {
       final subSelector = selector.selectors[1] as AndSelector;
-      expect(subSelector.toString(), "bbb && :not(ccc)");
+      expect(subSelector.toString(), 'bbb && :not(ccc)');
       {
         final subSelector2 = subSelector.selectors[0] as ElementNameSelector;
-        expect(subSelector2.toString(), "bbb");
+        expect(subSelector2.toString(), 'bbb');
       }
       {
         final subSelector2 = subSelector.selectors[1] as NotSelector;
-        expect(subSelector2.toString(), ":not(ccc)");
+        expect(subSelector2.toString(), ':not(ccc)');
         {
           final subSelector3 = subSelector2.condition as ElementNameSelector;
-          expect(subSelector3.toString(), "ccc");
+          expect(subSelector3.toString(), 'ccc');
         }
       }
     }
     {
       final subSelector = selector.selectors[2] as NotSelector;
       expect(
-          subSelector.toString(), ":not(:not(ddd) && [eee] || fff && [ggg])");
+          subSelector.toString(), ':not(:not(ddd) && [eee] || fff && [ggg])');
       {
         final subSelector2 = subSelector.condition as OrSelector;
-        expect(subSelector2.toString(), ":not(ddd) && [eee] || fff && [ggg]");
+        expect(subSelector2.toString(), ':not(ddd) && [eee] || fff && [ggg]');
         {
           final subSelector3 = subSelector2.selectors[0] as AndSelector;
-          expect(subSelector3.toString(), ":not(ddd) && [eee]");
+          expect(subSelector3.toString(), ':not(ddd) && [eee]');
           {
             final subSelector4 = subSelector3.selectors[0] as NotSelector;
-            expect(subSelector4.toString(), ":not(ddd)");
+            expect(subSelector4.toString(), ':not(ddd)');
             {
               final subSelector5 =
                   subSelector4.condition as ElementNameSelector;
-              expect(subSelector5.toString(), "ddd");
+              expect(subSelector5.toString(), 'ddd');
             }
           }
           {
             final subSelector4 = subSelector3.selectors[1] as AttributeSelector;
-            expect(subSelector4.toString(), "[eee]");
+            expect(subSelector4.toString(), '[eee]');
           }
         }
         {
           final subSelector3 = subSelector2.selectors[1] as AndSelector;
-          expect(subSelector3.toString(), "fff && [ggg]");
+          expect(subSelector3.toString(), 'fff && [ggg]');
           {
             final subSelector4 =
                 subSelector3.selectors[0] as ElementNameSelector;
-            expect(subSelector4.toString(), "fff");
+            expect(subSelector4.toString(), 'fff');
           }
           {
             final subSelector4 = subSelector3.selectors[1] as AttributeSelector;
-            expect(subSelector4.toString(), "[ggg]");
+            expect(subSelector4.toString(), '[ggg]');
           }
         }
       }
@@ -1252,7 +1252,7 @@ class SuggestTagsTest {
     final nameSelector =
         ElementNameSelector(SelectorName('panel', SourceRange(10, 5), null));
     final attrSelector = AttributeContainsSelector(
-        SelectorName('attr', SourceRange(10, 5), null), "value");
+        SelectorName('attr', SourceRange(10, 5), null), 'value');
     final selector = AndSelector([nameSelector, attrSelector]);
 
     final suggestions = selector.suggestTags();
@@ -1270,9 +1270,9 @@ class SuggestTagsTest {
     final orSelector1 = OrSelector([nameSelector1, nameSelector2]);
 
     final attrSelector1 = AttributeContainsSelector(
-        SelectorName('attr1', SourceRange(10, 5), null), "value");
+        SelectorName('attr1', SourceRange(10, 5), null), 'value');
     final attrSelector2 = AttributeContainsSelector(
-        SelectorName('attr2', SourceRange(10, 5), null), "value");
+        SelectorName('attr2', SourceRange(10, 5), null), 'value');
     final orSelector2 = OrSelector([attrSelector1, attrSelector2]);
 
     final selector = AndSelector([orSelector1, orSelector2]);
@@ -1317,7 +1317,7 @@ class SuggestTagsTest {
 
   // ignore: non_constant_identifier_names
   void test_suggestContainsIsInvalid() {
-    final selector = ContainsSelector("foo");
+    final selector = ContainsSelector('foo');
 
     final suggestions = _evenInvalidSuggestions(selector);
     expect(suggestions.length, 1);
@@ -1336,7 +1336,7 @@ class SuggestTagsTest {
     final suggestions = selector.suggestTags();
     expect(suggestions.length, 1);
     expect(suggestions.first.isValid, isTrue);
-    expect(suggestions.first.toString(), equals("<panel"));
+    expect(suggestions.first.toString(), equals('<panel'));
   }
 
   // ignore: non_constant_identifier_names
@@ -1344,12 +1344,12 @@ class SuggestTagsTest {
     final nameSelector1 =
         ElementNameSelector(SelectorName('name1', SourceRange(10, 5), null));
     final attrSelector1 = AttributeContainsSelector(
-        SelectorName('attr1', SourceRange(10, 5), null), "value");
+        SelectorName('attr1', SourceRange(10, 5), null), 'value');
     final andSelector1 = AndSelector([nameSelector1, attrSelector1]);
     final nameSelector2 =
         ElementNameSelector(SelectorName('name2', SourceRange(10, 5), null));
     final attrSelector2 = AttributeContainsSelector(
-        SelectorName('attr2', SourceRange(10, 5), null), "value");
+        SelectorName('attr2', SourceRange(10, 5), null), 'value');
     final andSelector2 = AndSelector([nameSelector2, attrSelector2]);
     final selector = OrSelector([andSelector1, andSelector2]);
 
@@ -1366,15 +1366,15 @@ class SuggestTagsTest {
     final nameSelector =
         ElementNameSelector(SelectorName('panel', SourceRange(10, 5), null));
     final attrSelector = AttributeContainsSelector(
-        SelectorName('attr', SourceRange(10, 5), null), "value");
+        SelectorName('attr', SourceRange(10, 5), null), 'value');
     final selector = OrSelector([nameSelector, attrSelector]);
 
     final suggestions = _evenInvalidSuggestions(selector);
     expect(suggestions.length, 2);
     final suggestionsMap = <String, HtmlTagForSelector>{};
     suggestions.forEach((s) => suggestionsMap[s.toString()] = s);
-    expect(suggestionsMap["<panel"], isNotNull);
-    expect(suggestionsMap["<panel"].isValid, isTrue);
+    expect(suggestionsMap['<panel'], isNotNull);
+    expect(suggestionsMap['<panel'].isValid, isTrue);
     expect(suggestionsMap['<null attr="value"'], isNotNull);
     expect(suggestionsMap['<null attr="value"'].isValid, isFalse);
   }
@@ -1388,9 +1388,9 @@ class SuggestTagsTest {
     final orSelector1 = OrSelector([nameSelector1, nameSelector2]);
 
     final attrSelector1 = AttributeContainsSelector(
-        SelectorName('attr1', SourceRange(10, 5), null), "value");
+        SelectorName('attr1', SourceRange(10, 5), null), 'value');
     final attrSelector2 = AttributeContainsSelector(
-        SelectorName('attr2', SourceRange(10, 5), null), "value");
+        SelectorName('attr2', SourceRange(10, 5), null), 'value');
     final orSelector2 = OrSelector([attrSelector1, attrSelector2]);
 
     final selector = OrSelector([orSelector1, orSelector2]);
@@ -1415,13 +1415,13 @@ class SuggestTagsTest {
     final suggestions = _evenInvalidSuggestions(selector);
     expect(suggestions.length, 1);
     expect(suggestions.first.isValid, isFalse);
-    expect(suggestions.first.toString(), equals("<null attr"));
+    expect(suggestions.first.toString(), equals('<null attr'));
   }
 
   // ignore: non_constant_identifier_names
   void test_suggestPropertyWithValue() {
     final selector = AttributeSelector(
-        SelectorName('attr', SourceRange(10, 5), null), "blah");
+        SelectorName('attr', SourceRange(10, 5), null), 'blah');
 
     final suggestions = _evenInvalidSuggestions(selector);
     expect(suggestions.length, 1);
@@ -1453,7 +1453,7 @@ class SuggestTagsTest {
   // ignore: non_constant_identifier_names
   void test_suggestWildcardProperty() {
     final selector = AttributeContainsSelector(
-        SelectorName('attr', SourceRange(10, 5), null), "value");
+        SelectorName('attr', SourceRange(10, 5), null), 'value');
 
     final suggestions = _evenInvalidSuggestions(selector);
     expect(suggestions.length, 1);

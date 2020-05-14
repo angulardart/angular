@@ -82,13 +82,13 @@ class Testability {
 
 /// A global registry of [Testability] instances for specific elements.
 class TestabilityRegistry {
-  final _applications = Map<dynamic, Testability>();
+  final _applications = <dynamic, Testability>{};
   GetTestability _testabilityGetter = _NoopGetTestability();
 
   /// Set the [GetTestability] implementation used by the Angular testing
   /// framework.
   void setTestabilityGetter(GetTestability getter) {
-    this._testabilityGetter = getter;
+    _testabilityGetter = getter;
     getter.addToWindow(this);
   }
 
@@ -118,7 +118,9 @@ abstract class GetTestability {
 }
 
 class _NoopGetTestability implements GetTestability {
+  @override
   void addToWindow(TestabilityRegistry registry) {}
+  @override
   Testability findTestabilityInTree(
       TestabilityRegistry registry, Element elem) {
     return null;

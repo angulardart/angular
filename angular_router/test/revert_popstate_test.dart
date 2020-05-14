@@ -18,7 +18,7 @@ void main() {
   setUp(() async {
     routerHook = TestRouterHook();
     final testBed = NgTestBed.forComponent(
-      ng.TestComponentNgFactory,
+      ng.createTestComponentFactory(),
       rootInjector: ([parent]) {
         return createInjector(Injector.map({RouterHook: routerHook}, parent));
       },
@@ -93,15 +93,15 @@ class TestComponent {
   final routes = [
     RouteDefinition(
       path: '/a',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
     RouteDefinition(
       path: '/b',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
     RouteDefinition(
       path: '/c',
-      component: ng.RouteComponentNgFactory,
+      component: ng.createRouteComponentFactory(),
     ),
   ];
 }

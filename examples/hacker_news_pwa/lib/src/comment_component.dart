@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
-import 'package:angular/security.dart';
+
+import 'package:safe_html/safe_html.dart';
 
 @Component(
   selector: 'comment',
@@ -14,17 +15,12 @@ import 'package:angular/security.dart';
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class CommentComponent {
-  final DomSanitizationService _sanitizer;
-
   @Input()
-  Map comment;
+  Map<String, dynamic> comment;
 
   bool hidden = false;
 
-  CommentComponent(this._sanitizer);
-
-  SafeHtml get content =>
-      _sanitizer.bypassSecurityTrustHtml(comment['content']);
+  SafeHtml get content => SafeHtml.sanitize(comment['content']);
 
   String get showCommentText => '+${comment['comments_count']}';
 

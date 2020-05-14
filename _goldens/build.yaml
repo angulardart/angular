@@ -16,6 +16,7 @@ builders:
     target: "goldens"
     import: "bin/builder.dart"
     builder_factories:
+      - placeholderBuilder
       - releaseBuilder
       - outlineBuilder
     build_extensions:

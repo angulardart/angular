@@ -37,5 +37,5 @@ class NotSelector extends Selector {
       context;
 
   @override
-  String toString() => ":not($condition)";
+  String toString() => ':not($condition)';
 }

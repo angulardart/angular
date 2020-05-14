@@ -5,18 +5,16 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'deferred_component_ngmodel_test.template.dart' as ng_generated;
+import 'deferred_component_ngmodel_test.template.dart' as ng;
 import 'deferred_view_with_ngmodel.dart';
-import 'deferred_view_with_ngmodel.template.dart' deferred as deflib0;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should load a @deferred component', () async {
-    final fixture = await NgTestBed<TestContainerComponent>().create();
-    await deflib0.loadLibrary();
+    final fixture =
+        await NgTestBed.forComponent(ng.createTestContainerComponentFactory())
+            .create();
     final view = fixture.rootElement.querySelector('my-deferred-input');
     expect(view.attributes['data-xyz'], 'testValue');
     await fixture.update((TestContainerComponent component) {

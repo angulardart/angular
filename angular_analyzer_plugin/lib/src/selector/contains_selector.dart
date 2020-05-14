@@ -45,5 +45,5 @@ class ContainsSelector extends Selector {
       context;
 
   @override
-  String toString() => ":contains($regex)";
+  String toString() => ':contains($regex)';
 }

@@ -11,8 +11,6 @@ import 'package:angular_test/angular_test.dart';
 import 'lifecycle_test.template.dart' as ng;
 
 void main() {
-  ng.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   // /first-child -> /second-child
@@ -531,13 +529,10 @@ class CantNavigateChildComponent extends RouterLifecycleLogger {
   }
 }
 
-const testDirectives = [RouterOutlet];
-const testTemplate = '<router-outlet [routes]="routes"></router-outlet>';
-
 @Component(
   selector: 'parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class ParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = RouteDefinition(
@@ -559,8 +554,8 @@ class ParentComponent extends RouterLifecycleLogger {
 
 @Component(
   selector: 'reusable-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class ReusableParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = RouteDefinition(
@@ -588,8 +583,8 @@ class ReusableParentComponent extends RouterLifecycleLogger {
 
 @Component(
   selector: 'first-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class FirstParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = RouteDefinition(
@@ -610,8 +605,8 @@ class FirstParentComponent extends RouterLifecycleLogger {
 
 @Component(
   selector: 'second-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class SecondParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = RouteDefinition(
@@ -631,8 +626,8 @@ class SecondParentComponent extends RouterLifecycleLogger {
 
 @Component(
   selector: 'first-reusable-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class FirstReusableParentComponent extends RouterLifecycleLogger {
   static final RouteDefinition routeDefinition = RouteDefinition(
@@ -659,8 +654,8 @@ class FirstReusableParentComponent extends RouterLifecycleLogger {
 
 @Component(
   selector: 'test-navigate-to-sibling',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateToSibling {
   final List<String> lifecycleLog;
@@ -675,8 +670,8 @@ class TestNavigateToSibling {
 
 @Component(
   selector: 'test-navigate-to-sibling-from-reusable-child',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateToSiblingFromReusableChild {
   final List<String> lifecycleLog;
@@ -692,8 +687,8 @@ class TestNavigateToSiblingFromReusableChild {
 
 @Component(
   selector: 'test-navigate-to-nested-sibling',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateToNestedSibling {
   final List<String> lifecycleLog;
@@ -708,8 +703,8 @@ class TestNavigateToNestedSibling {
 
 @Component(
   selector: 'test-navigate-to-nested-sibling-with-shared-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateToNestedSiblingWithSharedParent {
   final List<String> lifecycleLog;
@@ -724,8 +719,8 @@ class TestNavigateToNestedSiblingWithSharedParent {
 
 @Component(
   selector: 'test-navigate-between-nested-routes',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateBetweenNestedRoutes {
   final List<String> lifecycleLog;
@@ -741,8 +736,8 @@ class TestNavigateBetweenNestedRoutes {
 
 @Component(
   selector: 'test-navigate-between-nested-routes-with-reusable-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateBetweenNestedRoutesWithReusableParent {
   final List<String> lifecycleLog;
@@ -758,8 +753,8 @@ class TestNavigateBetweenNestedRoutesWithReusableParent {
 
 @Component(
   selector: 'test-navigate-between-nested-routes-with-same-reusable-parent',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestNavigateBetweenNestedRoutesWithSameReusableParent {
   final List<String> lifecycleLog;
@@ -782,8 +777,8 @@ class TestNavigateBetweenNestedRoutesWithSameReusableParent {
 
 @Component(
   selector: 'test-prevent-navigation',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestPreventNavigation {
   final List<String> lifecycleLog;
@@ -798,8 +793,8 @@ class TestPreventNavigation {
 
 @Component(
   selector: 'test-redirect-to-sibiling',
-  template: testTemplate,
-  directives: testDirectives,
+  template: '<router-outlet [routes]="routes"></router-outlet>',
+  directives: [RouterOutlet],
 )
 class TestRedirectToSibling {
   final List<String> lifecycleLog;

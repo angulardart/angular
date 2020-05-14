@@ -55,7 +55,6 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
       collector.addSuggestion(_addExportedClassSuggestion(
           Export(
               component.classElement.name, null, null, component.classElement),
-          component.classElement.type,
           ElementKind.CLASS,
           optype,
           relevance: DART_RELEVANCE_DEFAULT));
@@ -83,13 +82,9 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
             relevance: DART_RELEVANCE_DEFAULT, withPrefix: prefix == null));
       }
       if (element is ClassElement) {
-        collector.addSuggestion(_addExportedClassSuggestion(
-            export,
-            element.type,
-            element.isEnum ? ElementKind.ENUM : ElementKind.CLASS,
-            optype,
-            relevance: DART_RELEVANCE_DEFAULT,
-            withPrefix: prefix == null));
+        collector.addSuggestion(_addExportedClassSuggestion(export,
+            element.isEnum ? ElementKind.ENUM : ElementKind.CLASS, optype,
+            relevance: DART_RELEVANCE_DEFAULT, withPrefix: prefix == null));
       }
     }
   }
@@ -109,10 +104,6 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
     final templates = request.templates;
 
     for (final template in templates) {
-      final context = template
-          .component.classElement.enclosingElement.enclosingElement.context;
-      final typeProvider = context.typeProvider;
-      final typeSystem = context.typeSystem;
       final dartSnippet = request.dartSnippet;
 
       if (dartSnippet != null) {
@@ -123,6 +114,8 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
             defineOpType(completionTarget, request.offset, dartSnippet);
         final classElement = template.component.classElement;
         final libraryElement = classElement.library;
+        final typeProvider = libraryElement.typeProvider;
+        final typeSystem = libraryElement.typeSystem;
 
         final dartResolveResult = DartResolveResultShell(request.path,
             libraryElement: libraryElement,
@@ -189,10 +182,10 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
   }
 
   CompletionSuggestion _addExportedClassSuggestion(
-          Export export, DartType typeName, ElementKind elemKind, OpType optype,
+          Export export, ElementKind elemKind, OpType optype,
           {int relevance = DART_RELEVANCE_DEFAULT, bool withPrefix = true}) =>
       _createExportSuggestion(
-          export, relevance, typeName, _createExportElement(export, elemKind),
+          export, relevance, _createExportElement(export, elemKind),
           withPrefix: withPrefix);
 
   CompletionSuggestion _addExportedFunctionSuggestion(
@@ -205,7 +198,6 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
     return _createExportSuggestion(
         export,
         relevance,
-        typeName,
         _createExportFunctionElement(element, elemKind, typeName)
           ..returnType = typeName.toString(),
         withPrefix: withPrefix)
@@ -230,7 +222,6 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
     return _createExportSuggestion(
         export,
         relevance,
-        typeName,
         _createExportElement(export, elemKind)
           ..returnType = typeName.toString(),
         withPrefix: withPrefix)
@@ -288,7 +279,7 @@ class AngularInheritedReferenceContributor extends CompletionContributor {
   }
 
   CompletionSuggestion _createExportSuggestion(
-      Export export, int defaultRelevance, DartType type, Element element,
+      Export export, int defaultRelevance, Element element,
       {bool withPrefix = true}) {
     final completion = (export.prefix ?? '').isEmpty || !withPrefix
         ? export.name

@@ -39,7 +39,7 @@ Injector appInjector(
   NgZone Function() createNgZone = _createNgZone,
 }) {
   // These are the required root services, always provided by AngularDart.
-  final Injector minimalInjector = appGlobals.createAppInjector(minimalApp);
+  final minimalInjector = appGlobals.createAppInjector(minimalApp);
 
   // Lazily initialized later on once we have the user injector.
   ApplicationRef applicationRef;
@@ -52,7 +52,7 @@ Injector appInjector(
   }, unsafeCast(minimalInjector));
 
   // These are the user-provided overrides.
-  final Injector userInjector = userProvidedInjector(appGlobalInjector);
+  final userInjector = userProvidedInjector(appGlobalInjector);
 
   // ... and then we add ApplicationRef, which has the unique property of
   // injecting services (specifically, `ExceptionHandler` and `APP_ID`) that
@@ -110,7 +110,7 @@ bool _checkSanitizationService(
 ///
 /// TODO(matanl): Consider making this a user-accessible injector type.
 @Immutable()
-class _LazyInjector extends HierarchicalInjector {
+class _LazyInjector extends HierarchicalInjector implements Injector {
   final Map<Object, Object Function()> _providers;
 
   const _LazyInjector(
@@ -235,7 +235,7 @@ Future<ComponentRef<T>> runAppAsync<T>(
   final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
   final ngZone = injector.provideType<NgZone>(NgZone);
   return ngZone.run(() {
-    final Future<void> future = beforeComponentCreated(injector);
+    final future = beforeComponentCreated(injector);
     assert(future != null, 'beforeComponentCreated must return a Future');
     return future.then((_) => appRef.bootstrap(componentFactory));
   });

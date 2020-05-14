@@ -1,10 +1,11 @@
 import 'package:angular/src/build.dart' as angular;
-import 'package:angular_compiler/cli.dart';
 import 'package:build/build.dart';
 
 BuilderOptions _withoutExtensions(BuilderOptions options) => BuilderOptions({}
   ..addAll(options.config)
   ..remove('extensions'));
+
+final placeholderBuilder = angular.templatePlaceholder;
 
 /// Returns a [Builder] to generate (release) template files for comparison.
 ///
@@ -16,9 +17,6 @@ BuilderOptions _withoutExtensions(BuilderOptions options) => BuilderOptions({}
 Builder releaseBuilder(BuilderOptions options) {
   return angular.templateCompiler(
     _withoutExtensions(options),
-    defaultFlags: const CompilerFlags(
-      ignoreNgPlaceholderForGoldens: true,
-    ),
     templateExtension: options.config['extensions']['template'],
   );
 }
@@ -33,9 +31,6 @@ Builder releaseBuilder(BuilderOptions options) {
 Builder outlineBuilder(BuilderOptions options) {
   return angular.outlineCompiler(
     _withoutExtensions(options),
-    defaultFlags: const CompilerFlags(
-      ignoreNgPlaceholderForGoldens: true,
-    ),
     extension: options.config['extensions']['outline'],
   );
 }

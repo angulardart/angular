@@ -82,7 +82,6 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   }
 
   /// What AST node this node originated from (before transformation); optional.
-  /// Requires `toolFriendlyAstOrigin` flag to be turned on.
   final TemplateAst origin;
 
   /// Create a synthetic AST that has no origin from parsed source.

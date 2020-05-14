@@ -184,11 +184,11 @@ abstract class ChangeDetectionHost {
       try {
         result = callback();
         if (result is Future<Object>) {
-          final Future<R> resultCast = unsafeCast(result);
+          final resultCast = unsafeCast<Future<R>>(result);
           resultCast.then((result) {
             completer.complete(result);
           }, onError: (e, s) {
-            final StackTrace sCasted = unsafeCast(s);
+            final sCasted = unsafeCast<StackTrace>(s);
             completer.completeError(e, sCasted);
             handleUncaughtException(e, sCasted);
           });

@@ -4,6 +4,4 @@ targets:
       build_web_compilers|entrypoint:
         release_options:
           dart2js_args:
-            - --minify
-            - --trust-type-annotations
-            - --trust-primitives
+            - -O4

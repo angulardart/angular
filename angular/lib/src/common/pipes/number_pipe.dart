@@ -3,7 +3,7 @@ import 'package:angular/core.dart' show PipeTransform, Pipe;
 
 import 'invalid_pipe_argument_exception.dart';
 
-final RegExp _re = RegExp("^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$");
+final RegExp _re = RegExp('^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$');
 
 /// Internal base class for numeric pipes.
 class _NumberPipe {
@@ -54,7 +54,7 @@ class _NumberPipe {
 ///
 /// ### Usage
 ///
-///     expression | number[:digitInfo]
+///     $pipe.number(expression, [digitInfo])
 ///
 /// where `expression` is a number and `digitInfo` has the following format:
 ///
@@ -82,7 +82,7 @@ class DecimalPipe extends _NumberPipe implements PipeTransform {
 ///
 /// ### Usage
 ///
-///     expression | percent[:digitInfo]
+///     $pipe.percent(expression, [digitInfo])
 ///
 /// For more information about `digitInfo` see [DecimalPipe]
 @Pipe('percent')
@@ -101,7 +101,7 @@ class PercentPipe extends _NumberPipe implements PipeTransform {
 ///
 /// ### Usage
 ///
-///     expression | currency[:currencyCode[:symbolDisplay[:digitInfo]]]
+///     $pipe.currency(expression, [currencyCode, symbolDisplay, digitInfo])
 ///
 /// where `currencyCode` is the ISO 4217 currency code, such as "USD" for the
 /// US dollar and "EUR" for the euro. `symbolDisplay` is a boolean indicating

@@ -11,7 +11,7 @@ import 'routes.dart';
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class ItemComponent {
-  Map _item;
+  Map<String, dynamic> _item;
 
   String discuss;
   String discussUrl;
@@ -19,7 +19,7 @@ class ItemComponent {
   bool linkDiscussion;
   bool showDetail;
 
-  Map get item => _item;
+  Map<String, dynamic> get item => _item;
 
   @Input()
   set item(Map value) {

@@ -4,11 +4,10 @@
 
 import 'ast.dart';
 
-export 'visitors/desugar_visitor.dart';
+export 'visitors/desugar.dart';
 export 'visitors/humanizing.dart';
 export 'visitors/identity.dart';
 export 'visitors/recursive.dart';
-export 'visitors/throwing.dart';
 export 'visitors/whitespace.dart';
 
 /// A visitor for [TemplateAst] trees that may process each node.

@@ -1,6 +1,6 @@
+import 'package:analyzer/dart/element/type_provider.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/listener.dart';
-import 'package:analyzer/src/generated/resolver.dart'
-    show TypeProvider, TypeSystem;
 import 'package:analyzer/src/generated/source.dart';
 import 'package:angular_analyzer_plugin/ast.dart';
 import 'package:angular_analyzer_plugin/src/model.dart';

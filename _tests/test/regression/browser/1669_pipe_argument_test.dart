@@ -10,7 +10,8 @@ void main() {
 
   test('should pass a pipe with multiple arguments as argument to function',
       () async {
-    final testBed = NgTestBed.forComponent(ng.TestThreeInterpolationNgFactory);
+    final testBed =
+        NgTestBed.forComponent(ng.createTestThreeInterpolationFactory());
     final testFixture = await testBed.create(
       beforeChangeDetection: (component) {
         component

@@ -12,7 +12,7 @@ void main() {
 
   test('should render a nested template', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.NestedTemplateTestNgFactory,
+      ng.createNestedTemplateTestFactory(),
     ).create();
 
     Future<void> setInnerCondition(bool value) {
@@ -42,7 +42,7 @@ void main() {
 
   test('should render a nested deferred template', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.NestedDeferredTestNgFactory,
+      ng.createNestedDeferredTestFactory(),
     ).create();
 
     Future<void> setOuterCondition(bool value) {
@@ -68,7 +68,7 @@ void main() {
 
   test('should render a nested deferred template with a div', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.NestedDeferredWithDivTestNgFactory,
+      ng.createNestedDeferredWithDivTestFactory(),
     ).create();
 
     Future<void> setOuterCondition(bool value) {
@@ -92,7 +92,7 @@ void main() {
 
   test('should render a nested template with a custom directive', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.NestedCustomTestNgFactory,
+      ng.createNestedCustomTestFactory(),
     ).create();
 
     Future<void> setInnerCondition(bool value) {

@@ -16,14 +16,15 @@ void main() {
       NgTestFixture<TestControlComponent> fixture;
       TestControlComponent readonlyCmp;
 
-      _showControls(TestControlComponent component, bool show) {
+      void _showControls(TestControlComponent component, bool show) {
         component
           ..showInputOne = show
           ..showInputTwo = show;
       }
 
       setUp(() async {
-        var testBed = NgTestBed.forComponent(ng.TestControlComponentNgFactory);
+        var testBed =
+            NgTestBed.forComponent(ng.createTestControlComponentFactory());
         fixture = await testBed.create();
         readonlyCmp = fixture.assertOnlyInstance;
       });
@@ -69,14 +70,15 @@ void main() {
       NgTestFixture<TestGroupComponent> fixture;
       TestGroupComponent readonlyCmp;
 
-      _showGroups(TestGroupComponent component, bool show) {
+      void _showGroups(TestGroupComponent component, bool show) {
         component
           ..showGroupOne = show
           ..showGroupTwo = show;
       }
 
       setUp(() async {
-        var testBed = NgTestBed.forComponent(ng.TestGroupComponentNgFactory);
+        var testBed =
+            NgTestBed.forComponent(ng.createTestGroupComponentFactory());
         fixture = await testBed.create();
         readonlyCmp = fixture.assertOnlyInstance;
       });

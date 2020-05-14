@@ -7,18 +7,17 @@ void main() {
     await compilesExpecting("""
       import '$ngImport';
 
-      String notConstFunction() => 'hello';
       const token = OpaqueToken<String>('my.token');
 
-      @GenerateInjector(const [
-        FactoryProvider.forToken(token, notConstFunction())
+      @GenerateInjector([
+        FactoryProvider.forToken(token, () => 'hello')
       ])
       final InjectorFactory injectorFactory = null; // OK for compiler tests.
     """, errors: [
       // NOTE: This error is associated with "injectorFactory". It should be
       // associated with "FactoryProvider.forToken instead.
       allOf(contains('Unable to parse @GenerateInjector'),
-          containsSourceLocation(9, 29))
+          containsSourceLocation(8, 29))
     ]);
   });
 }

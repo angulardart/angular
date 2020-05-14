@@ -56,12 +56,12 @@ void main() {
   });
 
   test('should fail with a readable error on a missing import', () async {
-    await compilesExpecting("""
+    await compilesExpecting('''
       // Intentionally missing import.
 
       @Injectable()
       class HeroService {}
-    """, errors: [
+    ''', errors: [
       allOf(
         contains('Could not resolve "@Injectable()"'),
         contains('class HeroService'),
@@ -69,17 +69,5 @@ void main() {
         containsSourceLocation(4, 13),
       ),
     ]);
-  });
-
-  test('should not fail on an invalid but unrelated annotation', () async {
-    await compilesNormally("""
-      import '$ngImport';
-      // Oops, we forgot to import 'package:meta/meta.dart'!
-
-      class NotRelatedtoAngular {
-        @protected
-        void doAThing() {}
-      }
-    """);
   });
 }

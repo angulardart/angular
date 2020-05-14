@@ -9,7 +9,8 @@ void main() {
   test('application should render', () async {
     final locale = await findSystemLocale();
     await initializeMessages(locale);
-    final testBed = NgTestBed.forComponent(app_template.AppComponentNgFactory);
+    final testBed =
+        NgTestBed.forComponent(app_template.createAppComponentFactory());
     expect(testBed.create(), completes);
   });
 }

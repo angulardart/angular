@@ -45,10 +45,9 @@ class TemplateCompleter {
     List<Output> standardHtmlEvents,
     Set<Input> standardHtmlAttributes,
   ) async {
-    var analysisContext = template
-        .component.classElement.enclosingElement.enclosingElement.context;
-    final typeSystem = analysisContext.typeSystem;
-    final typeProvider = analysisContext.typeProvider;
+    final libraryElement = template.component.classElement.library;
+    final typeProvider = libraryElement.typeProvider;
+    final typeSystem = libraryElement.typeSystem;
     final dartSnippet = request.dartSnippet;
     final target = request.angularTarget;
 
@@ -112,7 +111,7 @@ class TemplateCompleter {
     } else if (target is AttributeInfo && target.parent is TemplateAttribute) {
       final templateAttr = target.parent as TemplateAttribute;
       // `let foo`. Nothing to suggest.
-      if (target is TextAttribute && target.name.startsWith("let-")) {
+      if (target is TextAttribute && target.name.startsWith('let-')) {
         return;
       }
 
@@ -503,7 +502,7 @@ class TemplateCompleter {
         suggestStarAttrsForSelector(subselector, collector);
       }
     } else if (selector is AttributeSelector) {
-      if (selector.nameElement.string == "ngForOf") {
+      if (selector.nameElement.string == 'ngForOf') {
         // `ngFor`'s selector includes `[ngForOf]`, but `*ngForOf=..` won't ever
         // work, because it then becomes impossible to satisfy the other half,
         // `[ngFor]`. Hardcode to filter this out, rather than using some kind

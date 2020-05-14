@@ -472,78 +472,76 @@ class RecursiveAstParser {
     }
   }
 
-  static const _allowedEmbeddedContentDecorators = ['select', 'ngProjectAs'];
-
   /// Returns and parses an embedded content directive/transclusions.
   EmbeddedContentAst parseEmbeddedContent(
       NgToken beginToken, NgToken elementIdentifierToken) {
-    NgToken selectToken,
-        selectEqualSign,
-        ngProjectAsToken,
-        ngProjectAsEqualSign,
-        endToken;
-    NgAttributeValueToken selectValueToken, ngProjectAsValueToken;
+    NgToken endToken;
+    AttributeAst selectAttribute, ngProjectAsAttribute;
+    ReferenceAst reference;
     var selectAttributeFound = false;
     var ngProjectAsAttributeFound = false;
+    var referenceAttributeFound = false;
     CloseElementAst closeElementAst;
 
-    // Ensure that ng-content has only 'select' attribute, if any. Also
-    // catch for multiple 'select'; if multiple, accept the first one seen.
+    // Ensure that ng-content has only 'select', 'ngProjectAs' and a reference,
+    // if any. Also catch for multiple ones; if multiple, accept the first one
+    // seen.
     while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
-      var startOffset = _reader.next().offset;
-      var nextToken = _reader.next();
-
-      if (nextToken.type != NgTokenType.elementDecorator ||
-          !_allowedEmbeddedContentDecorators.contains(nextToken.lexeme)) {
-        var endOffset = _accumulateInvalidNgContentDecoratorValue(nextToken);
-        var e = AngularParserException(
-          NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT,
-          startOffset,
-          endOffset - startOffset,
-        );
-        exceptionHandler.handle(e);
-      } else {
-        if (nextToken.lexeme == 'select') {
-          if (selectAttributeFound) {
-            var endOffset =
-                _accumulateInvalidNgContentDecoratorValue(nextToken);
-            var e = AngularParserException(
-              NgParserWarningCode.DUPLICATE_SELECT_DECORATOR,
-              startOffset,
-              endOffset - startOffset,
-            );
-            exceptionHandler.handle(e);
-          } else {
-            selectAttributeFound = true;
-            selectToken = nextToken;
-            _consumeWhitespaces();
-            if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
-              selectEqualSign = _reader.next();
-              _consumeWhitespaces();
-              selectValueToken = _reader.next();
-            }
-          }
+      final nextToken = _reader.next();
+      final decorator = parseDecorator(nextToken);
+      final startOffset = decorator.beginToken.offset;
+      final endOffset = decorator.endToken.end;
+      if (decorator is AttributeAst && decorator.name == 'select') {
+        if (selectAttributeFound) {
+          var e = AngularParserException(
+            NgParserWarningCode.DUPLICATE_SELECT_DECORATOR,
+            startOffset,
+            endOffset - startOffset,
+          );
+          exceptionHandler.handle(e);
         } else {
-          if (ngProjectAsAttributeFound) {
-            var endOffset =
-                _accumulateInvalidNgContentDecoratorValue(nextToken);
+          selectAttributeFound = true;
+          selectAttribute = decorator;
+        }
+      } else if (decorator is AttributeAst && decorator.name == 'ngProjectAs') {
+        if (ngProjectAsAttributeFound) {
+          var e = AngularParserException(
+            NgParserWarningCode.DUPLICATE_PROJECT_AS_DECORATOR,
+            startOffset,
+            endOffset - startOffset,
+          );
+          exceptionHandler.handle(e);
+        } else {
+          ngProjectAsAttributeFound = true;
+          ngProjectAsAttribute = decorator;
+        }
+      } else if (decorator is ReferenceAst) {
+        if (referenceAttributeFound) {
+          var e = AngularParserException(
+            NgParserWarningCode.DUPLICATE_REFERENCE_DECORATOR,
+            startOffset,
+            endOffset - startOffset,
+          );
+          exceptionHandler.handle(e);
+        } else {
+          referenceAttributeFound = true;
+          reference = decorator;
+          if (reference.identifier != null) {
             var e = AngularParserException(
-              NgParserWarningCode.DUPLICATE_PROJECT_AS_DECORATOR,
+              NgParserWarningCode.REFERENCE_IDENTIFIER_FOUND,
               startOffset,
               endOffset - startOffset,
             );
             exceptionHandler.handle(e);
-          } else {
-            ngProjectAsAttributeFound = true;
-            ngProjectAsToken = nextToken;
-            _consumeWhitespaces();
-            if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
-              ngProjectAsEqualSign = _reader.next();
-              _consumeWhitespaces();
-              ngProjectAsValueToken = _reader.next();
-            }
           }
         }
+      } else {
+        var e = AngularParserException(
+          NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT,
+          decorator.beginToken.offset,
+          decorator.endToken.end - decorator.beginToken.offset,
+        );
+        exceptionHandler.handle(e);
       }
     }
 
@@ -590,12 +588,9 @@ class RecursiveAstParser {
       elementIdentifierToken,
       endToken,
       closeElementAst,
-      selectToken,
-      selectEqualSign,
-      selectValueToken,
-      ngProjectAsToken,
-      ngProjectAsEqualSign,
-      ngProjectAsValueToken,
+      selectAttribute,
+      ngProjectAsAttribute,
+      reference,
     );
   }
 
@@ -701,32 +696,6 @@ class RecursiveAstParser {
       ));
     }
     return mustaches;
-  }
-
-  /// Helper function that accumulates all parts of attribute-value variant
-  /// and returns the end offset at where it finishes. Should be used to gather
-  /// any non-'select' decorator. Consumes all necessary erroneous tokens.
-  int _accumulateInvalidNgContentDecoratorValue(NgToken nextToken) {
-    NgToken lastConsumedToken;
-    if (nextToken.type == NgTokenType.bananaPrefix ||
-        nextToken.type == NgTokenType.eventPrefix ||
-        nextToken.type == NgTokenType.propertyPrefix) {
-      lastConsumedToken = _reader.next(); // Decorator
-      lastConsumedToken = _reader.next(); // Suffix
-    } else if (nextToken.type == NgTokenType.templatePrefix ||
-        nextToken.type == NgTokenType.referencePrefix) {
-      lastConsumedToken = _reader.next(); // Decorator
-    }
-    if (_reader.peekTypeIgnoringType(NgTokenType.whitespace) ==
-        NgTokenType.beforeElementDecoratorValue) {
-      _consumeWhitespaces();
-      if (_reader.peekType() == NgTokenType.beforeElementDecoratorValue) {
-        lastConsumedToken = _reader.next(); // '=' sign
-      }
-      _consumeWhitespaces();
-      lastConsumedToken = _reader.next(); // Attribute value
-    }
-    return lastConsumedToken?.end ?? nextToken.end;
   }
 
   /// Returns and parses an interpolation AST.

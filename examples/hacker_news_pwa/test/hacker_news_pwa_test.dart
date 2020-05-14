@@ -27,8 +27,9 @@ void main() {
   NgTestFixture<AppComponent> testFixture;
 
   setUp(() async {
-    final testBed = NgTestBed.forComponent(app_template.AppComponentNgFactory)
-        .addInjector(testInjectorFactory);
+    final testBed =
+        NgTestBed.forComponent(app_template.createAppComponentFactory())
+            .addInjector(testInjectorFactory);
     testFixture = await testBed.create();
     final rootElement = testFixture.rootElement;
     final context = HtmlPageLoaderElement.createFromElement(rootElement);

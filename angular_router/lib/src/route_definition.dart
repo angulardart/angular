@@ -38,9 +38,9 @@ abstract class RouteDefinition {
       bool useAsDefault,
       dynamic additionalData,
       RoutePath routePath})
-      : this.path = Url.trimSlashes(path ?? routePath?.path),
-        this.useAsDefault = useAsDefault ?? routePath?.useAsDefault ?? false,
-        this.additionalData = additionalData ?? routePath?.additionalData;
+      : path = Url.trimSlashes(path ?? routePath?.path),
+        useAsDefault = useAsDefault ?? routePath?.useAsDefault ?? false,
+        additionalData = additionalData ?? routePath?.additionalData;
 
   /// Runs a dev-mode assertion that the definition is valid.
   ///
@@ -187,7 +187,7 @@ abstract class RouteDefinition {
 }
 
 /// Returns a future that completes with a component type or factory.
-typedef Future<ComponentFactory<Object>> LoadComponentAsync();
+typedef LoadComponentAsync = Future<ComponentFactory<Object>> Function();
 
 class ComponentRouteDefinition extends RouteDefinition {
   /// Allows creating a component imperatively.
@@ -279,8 +279,8 @@ class RedirectRouteDefinition extends RouteDefinition {
     if (redirectTo == path) {
       throw StateError('Cannot redirect from `redirectTo` to `path');
     }
-    Iterable<String> pathParameters = parameters;
-    Iterable<String> unknownRedirectToParameters = _redirectToParameters.where(
+    var pathParameters = parameters;
+    var unknownRedirectToParameters = _redirectToParameters.where(
         (redirectToParameter) => !pathParameters.contains(redirectToParameter));
     if (unknownRedirectToParameters.isNotEmpty) {
       throw StateError('Parameters in `redirectTo` are not in `path`: '

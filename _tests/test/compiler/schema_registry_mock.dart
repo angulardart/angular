@@ -1,5 +1,5 @@
-import 'package:angular/src/compiler/schema/element_schema_registry.dart';
-import 'package:angular/src/compiler/security.dart';
+import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
+import 'package:angular_compiler/v1/src/compiler/security.dart';
 
 class MockSchemaRegistry implements ElementSchemaRegistry {
   final Map<String, bool> existingProperties;
@@ -12,7 +12,7 @@ class MockSchemaRegistry implements ElementSchemaRegistry {
 
   @override
   String getMappedPropName(String attrName) =>
-      this.attrPropMapping[attrName] ?? attrName;
+      attrPropMapping[attrName] ?? attrName;
 
   @override
   TemplateSecurityContext securityContext(String tagName, String property) {

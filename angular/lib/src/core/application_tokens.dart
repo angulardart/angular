@@ -1,4 +1,4 @@
-import 'di.dart' show OpaqueToken;
+import 'package:angular_compiler/v1/src/metadata.dart';
 
 /// A dependency injection token representing a unique ID for the application.
 ///

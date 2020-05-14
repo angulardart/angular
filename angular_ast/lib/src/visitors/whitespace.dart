@@ -16,8 +16,7 @@ import 'recursive.dart';
 /// ```
 class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   static bool _bailOutToPreserveWhitespace(StandaloneTemplateAst astNode) {
-    List<AnnotationAst> annotations = const [];
-    // TOOD(https://github.com/dart-lang/angular/issues/1460): Refactor.
+    var annotations = const <AnnotationAst>[];
     if (astNode is ContainerAst) {
       annotations = astNode.annotations;
     } else if (astNode is ElementAst) {
@@ -41,7 +40,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   /// Returns [rootNodes], visited, with whitespace removed.
   List<StandaloneTemplateAst> visitAllRoot(
-          List<StandaloneTemplateAst> rootNodes) =>
+    List<StandaloneTemplateAst> rootNodes,
+  ) =>
       visitAll(_visitRemovingWhitespace(rootNodes));
 
   @override
@@ -239,7 +239,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     TemplateAst astNode, {
     bool lastNode = false,
   }) =>
-      // Always collpase adjacent to a non-element-like node.
+      // Always collapse adjacent to a non-element-like node.
       astNode is! StandaloneTemplateAst ||
       // Sometimes collapse adjacent to another element if not inline.
       astNode is ElementAst && !_isPotentiallyInline(astNode) ||
@@ -271,8 +271,6 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       // The immediate child of <template> (in either direction) is a TextAst,
       // but it is just whitespace, so we want to consider the next relevant
       // node.
-      //
-      // TODO(matanl): Refactor this entire function after feature submitted.
       if (checkChild is TextAst && checkChild.value.trim().isEmpty) {
         if (nodes.length == 1) {
           // Another corner-corner case:

@@ -73,7 +73,7 @@ bool checkBinding(
   String location,
 ]) =>
     isDevMode && _debugThrowIfChanged
-        ? !_debugCheckBinding(oldValue, newValue)
+        ? !_debugCheckBinding(oldValue, newValue, expression, location)
         : !identical(oldValue, newValue);
 
 /// Returns `true` if [oldValue] is identical to [newValue].

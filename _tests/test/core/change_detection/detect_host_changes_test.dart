@@ -6,7 +6,7 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'detect_host_changes_test.template.dart' as ng_generated;
+import 'detect_host_changes_test.template.dart' as ng;
 
 /// This is a regression test for instances where a directive on a component
 /// is also a Provider. When checking DirectiveAst's on a CompileElement
@@ -15,14 +15,12 @@ import 'detect_host_changes_test.template.dart' as ng_generated;
 ///
 /// This test will crash if code generation is broken.
 void main() {
-  ng_generated.initReflector();
-
   tearDown(() => disposeAnyRunningTest());
 
   test('Should update bound properties when setState is called', () async {
-    var testBed = NgTestBed<TestContainer>();
+    var testBed = NgTestBed.forComponent(ng.createTestContainerFactory());
     var testRoot = await testBed.create();
-    Element targetElement = testRoot.rootElement.querySelector('.mytarget');
+    var targetElement = testRoot.rootElement.querySelector('.mytarget');
     expect(targetElement.firstChild.text, 'ChildHello');
     expect(targetElement.attributes['data-xyz'], 'abc');
   });

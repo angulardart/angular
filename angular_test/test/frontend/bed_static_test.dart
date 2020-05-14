@@ -10,7 +10,7 @@ void main() {
 
   test('should create a component with a ComponentFactory', () async {
     final testBed = NgTestBed.forComponent(
-      ng_generated.ExampleCompNgFactory,
+      ng_generated.createExampleCompFactory(),
       rootInjector: mathInjector,
     );
     final fixture = await testBed.create();

@@ -1,0 +1,491 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'change_detection_link.dart';
+export 'change_detection_link.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'change_detection_link.template.dart' as _ref0;
+import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/experimental.template.dart' as _ref2;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'change_detection_link.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
+import 'package:angular/src/runtime/queries.dart' as import13;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
+import 'package:angular/src/core/linker/views/render_view.dart' as import15;
+
+final List<dynamic> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  ViewOnPushLink0 _compView_0;
+  import1.OnPushLink _OnPushLink_0_5;
+  static import2.ComponentStyles _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('golden');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewOnPushLink0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._OnPushLink_0_5 = import1.OnPushLink();
+    this._compView_0.create(this._OnPushLink_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<dynamic> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<dynamic> styles$OnPushLink = const [];
+
+class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
+  bool _viewQuery_embeddedContainer_1_isDirty = true;
+  ViewContainer _appEl_0;
+  TemplateRef _TemplateRef_0_8;
+  ViewContainer _appEl_2;
+  NgIf _NgIf_2_9;
+  ViewNestedOnPush0 _compView_3;
+  import1.NestedOnPush _NestedOnPush_3_5;
+  ViewNestedOnPushLink0 _compView_4;
+  import1.NestedOnPushLink _NestedOnPushLink_4_5;
+  ViewContainer _appEl_5;
+  NgIf _NgIf_5_9;
+  static import2.ComponentStyles _componentStyles;
+  ViewOnPushLink0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('on-push-link');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
+  }
+
+  @override
+  void build() {
+    final _ctx = this.ctx;
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _anchor_0 = import12.appendAnchor(parentRenderNode);
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    this._TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_OnPushLink1);
+    final _text_1 = import12.appendText(parentRenderNode, ' ');
+    final _anchor_2 = import12.appendAnchor(parentRenderNode);
+    this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_OnPushLink2);
+    this._NgIf_2_9 = NgIf(this._appEl_2, _TemplateRef_2_8);
+    this._compView_3 = ViewNestedOnPush0(this, 3);
+    final _el_3 = this._compView_3.rootElement;
+    parentRenderNode.append(_el_3);
+    this._NestedOnPush_3_5 = import1.NestedOnPush();
+    this._compView_3.create(this._NestedOnPush_3_5);
+    this._compView_4 = ViewNestedOnPushLink0(this, 4);
+    final _el_4 = this._compView_4.rootElement;
+    parentRenderNode.append(_el_4);
+    this._NestedOnPushLink_4_5 = import1.NestedOnPushLink();
+    this._compView_4.create(this._NestedOnPushLink_4_5);
+    final _anchor_5 = import12.appendAnchor(parentRenderNode);
+    this._appEl_5 = ViewContainer(5, null, this, _anchor_5);
+    TemplateRef _TemplateRef_5_8 = TemplateRef(this._appEl_5, viewFactory_OnPushLink4);
+    this._NgIf_5_9 = NgIf(this._appEl_5, _TemplateRef_5_8);
+    _ctx.container = this._appEl_0;
+  }
+
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+    this._appEl_2.detectChangesInCheckAlwaysViews();
+    this._appEl_5.detectChangesInCheckAlwaysViews();
+    this._compView_4.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    this._NgIf_2_9.ngIf = _ctx.isVisible;
+    this._NgIf_5_9.ngIf = _ctx.isVisible;
+    this._appEl_0.detectChangesInNestedViews();
+    this._appEl_2.detectChangesInNestedViews();
+    this._appEl_5.detectChangesInNestedViews();
+    if ((!import6.debugThrowIfChanged)) {
+      if (this._viewQuery_embeddedContainer_1_isDirty) {
+        _ctx.embeddedContainer = import13.firstOrNull(this._appEl_2.mapNestedViewsWithSingleResult((_ViewOnPushLink2 nestedView) {
+          return nestedView._appEl_0;
+        }));
+        this._viewQuery_embeddedContainer_1_isDirty = false;
+      }
+    }
+    this._compView_3.detectChanges();
+    this._compView_4.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_0.destroyNestedViews();
+    this._appEl_2.destroyNestedViews();
+    this._appEl_5.destroyNestedViews();
+    this._compView_3.destroyInternalState();
+    this._compView_4.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$OnPushLink, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _OnPushLinkNgFactory = ComponentFactory<import1.OnPushLink>('on-push-link', viewFactory_OnPushLinkHost0);
+ComponentFactory<import1.OnPushLink> get OnPushLinkNgFactory {
+  return _OnPushLinkNgFactory;
+}
+
+ComponentFactory<import1.OnPushLink> createOnPushLinkFactory() {
+  return ComponentFactory('on-push-link', viewFactory_OnPushLinkHost0);
+}
+
+class _ViewOnPushLink1 extends import14.EmbeddedView<import1.OnPushLink> {
+  _ViewOnPushLink1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    this.initRootNodesAndSubscriptions(const [], null);
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_OnPushLink1(import15.RenderView parentView, int parentIndex) {
+  return _ViewOnPushLink1(parentView, parentIndex);
+}
+
+class _ViewOnPushLink2 extends import14.EmbeddedView<import1.OnPushLink> {
+  ViewContainer _appEl_0;
+  TemplateRef _TemplateRef_0_8;
+  _ViewOnPushLink2(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final _anchor_0 = import12.createAnchor();
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    this._TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_OnPushLink3);
+    this.initRootNode(this._appEl_0);
+  }
+
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void dirtyParentQueriesInternal() {
+    import6.unsafeCast<ViewOnPushLink0>(this.parentView)._viewQuery_embeddedContainer_1_isDirty = true;
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_0.destroyNestedViews();
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_OnPushLink2(import15.RenderView parentView, int parentIndex) {
+  return _ViewOnPushLink2(parentView, parentIndex);
+}
+
+class _ViewOnPushLink3 extends import14.EmbeddedView<import1.OnPushLink> {
+  _ViewOnPushLink3(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    this.initRootNodesAndSubscriptions(const [], null);
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_OnPushLink3(import15.RenderView parentView, int parentIndex) {
+  return _ViewOnPushLink3(parentView, parentIndex);
+}
+
+class _ViewOnPushLink4 extends import14.EmbeddedView<import1.OnPushLink> {
+  ViewNestedOnPushLink0 _compView_0;
+  import1.NestedOnPushLink _NestedOnPushLink_0_5;
+  _ViewOnPushLink4(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    this._compView_0 = ViewNestedOnPushLink0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    this._NestedOnPushLink_0_5 = import1.NestedOnPushLink();
+    this._compView_0.create(this._NestedOnPushLink_0_5);
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    this._compView_0.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_OnPushLink4(import15.RenderView parentView, int parentIndex) {
+  return _ViewOnPushLink4(parentView, parentIndex);
+}
+
+final List<dynamic> styles$OnPushLinkHost = const [];
+
+class _ViewOnPushLinkHost0 extends import8.HostView<import1.OnPushLink> {
+  @override
+  void build() {
+    this.componentView = ViewOnPushLink0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.OnPushLink();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.OnPushLink> viewFactory_OnPushLinkHost0() {
+  return _ViewOnPushLinkHost0();
+}
+
+final List<dynamic> styles$NestedOnPush = const [];
+
+class ViewNestedOnPush0 extends import0.ComponentView<import1.NestedOnPush> {
+  static import2.ComponentStyles _componentStyles;
+  ViewNestedOnPush0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('nested-on-push');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPush, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _NestedOnPushNgFactory = ComponentFactory<import1.NestedOnPush>('nested-on-push', viewFactory_NestedOnPushHost0);
+ComponentFactory<import1.NestedOnPush> get NestedOnPushNgFactory {
+  return _NestedOnPushNgFactory;
+}
+
+ComponentFactory<import1.NestedOnPush> createNestedOnPushFactory() {
+  return ComponentFactory('nested-on-push', viewFactory_NestedOnPushHost0);
+}
+
+final List<dynamic> styles$NestedOnPushHost = const [];
+
+class _ViewNestedOnPushHost0 extends import8.HostView<import1.NestedOnPush> {
+  @override
+  void build() {
+    this.componentView = ViewNestedOnPush0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.NestedOnPush();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.NestedOnPush> viewFactory_NestedOnPushHost0() {
+  return _ViewNestedOnPushHost0();
+}
+
+final List<dynamic> styles$NestedOnPushLink = const [];
+
+class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLink> {
+  ViewContainer _appEl_0;
+  TemplateRef _TemplateRef_0_8;
+  static import2.ComponentStyles _componentStyles;
+  ViewNestedOnPushLink0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('nested-on-push-link');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
+  }
+
+  @override
+  void build() {
+    final _ctx = this.ctx;
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _anchor_0 = import12.appendAnchor(parentRenderNode);
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    this._TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_NestedOnPushLink1);
+    _ctx.container = this._appEl_0;
+  }
+
+  @override
+  void detectChangesInCheckAlwaysViews() {
+    this._appEl_0.detectChangesInCheckAlwaysViews();
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._appEl_0.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_0.destroyNestedViews();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedOnPushLink, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _NestedOnPushLinkNgFactory = ComponentFactory<import1.NestedOnPushLink>('nested-on-push-link', viewFactory_NestedOnPushLinkHost0);
+ComponentFactory<import1.NestedOnPushLink> get NestedOnPushLinkNgFactory {
+  return _NestedOnPushLinkNgFactory;
+}
+
+ComponentFactory<import1.NestedOnPushLink> createNestedOnPushLinkFactory() {
+  return ComponentFactory('nested-on-push-link', viewFactory_NestedOnPushLinkHost0);
+}
+
+class _ViewNestedOnPushLink1 extends import14.EmbeddedView<import1.NestedOnPushLink> {
+  _ViewNestedOnPushLink1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    this.initRootNodesAndSubscriptions(const [], null);
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_NestedOnPushLink1(import15.RenderView parentView, int parentIndex) {
+  return _ViewNestedOnPushLink1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NestedOnPushLinkHost = const [];
+
+class _ViewNestedOnPushLinkHost0 extends import8.HostView<import1.NestedOnPushLink> {
+  @override
+  void build() {
+    this.componentView = ViewNestedOnPushLink0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.NestedOnPushLink();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.NestedOnPushLink> viewFactory_NestedOnPushLinkHost0() {
+  return _ViewNestedOnPushLinkHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(OnPushLink, createOnPushLinkFactory());
+  _ngRef.registerComponent(NestedOnPush, createNestedOnPushFactory());
+  _ngRef.registerComponent(NestedOnPushLink, createNestedOnPushLinkFactory());
+  _ref0.initReflector();
+  _ref1.initReflector();
+  _ref2.initReflector();
+}

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular/src/compiler/offline_compiler.dart';
-import 'package:angular/src/source_gen/template_compiler/find_components.dart';
-import 'package:angular/src/source_gen/template_compiler/component_visitor_exceptions.dart';
+import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
+import 'package:angular_compiler/v1/src/source_gen/template_compiler/find_components.dart';
+import 'package:angular_compiler/v1/src/source_gen/template_compiler/component_visitor_exceptions.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:source_gen/source_gen.dart';
@@ -15,7 +15,7 @@ final _packageResolverFuture =
     Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH'] != null
         ? PackageResolver.loadConfig(
             Uri.file(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']))
-        : PackageResolver.current;
+        : Future.value(PackageResolver.current);
 
 Future<LibraryElement> resolve(String source,
     [PackageResolver resolver]) async {
@@ -30,7 +30,7 @@ Future<NormalizedComponentWithViewDirectives> resolveAndFindComponent(
 ) async {
   final library = await resolve(
       "import 'package:angular/angular.dart';"
-      "$source",
+      '$source',
       await _packageResolverFuture);
   final artifacts = findComponentsAndDirectives(
       LibraryReader(library), ComponentVisitorExceptionHandler());

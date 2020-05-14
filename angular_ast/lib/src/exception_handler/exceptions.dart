@@ -83,6 +83,12 @@ class NgParserWarningCode extends ErrorCode {
     "Only 1 'ngProjectAs' decorator can exist in <ng-content>, found duplicate",
   );
 
+  static const NgParserWarningCode DUPLICATE_REFERENCE_DECORATOR =
+      NgParserWarningCode(
+    'DUPLICATE_REFERENCE_DECORATOR',
+    'Only 1 reference decorator can exist in <ng-content>, found duplicate',
+  );
+
   static const NgParserWarningCode ELEMENT_DECORATOR = NgParserWarningCode(
     'ELEMENT_DECORATOR',
     'Expected element decorator after whitespace',
@@ -135,7 +141,7 @@ class NgParserWarningCode extends ErrorCode {
 
   static const NgParserWarningCode EXPECTED_TAG_CLOSE = NgParserWarningCode(
     'EXPECTED_TAG_CLOSE',
-    "Expected tag close.",
+    'Expected tag close.',
   );
 
   // 'Catch-all' error code.
@@ -181,12 +187,12 @@ class NgParserWarningCode extends ErrorCode {
       NgParserWarningCode(
           'INVALID_DEFERRED_ON_TEMPLATE',
           "Invalid @deferred annotation on 'template' element",
-          "The @deferred annotation cannot be placed on an element with "
-              "a structural directive (such as *ngIf) or on a <template> tag. "
-              "Consider moving the structural directive as the parent, such as:\n\n"
-              "  <ng-container *ngIf=\"someCondition\">\n"
-              "    <expensive-comp @defered></expensive-comp>\n"
-              "  </ng-container>");
+          'The @deferred annotation cannot be placed on an element with '
+              'a structural directive (such as *ngIf) or on a <template> tag. '
+              'Consider moving the structural directive as the parent, such as:\n\n'
+              '  <ng-container *ngIf=\"someCondition\">\n'
+              '    <expensive-comp @defered></expensive-comp>\n'
+              '  </ng-container>');
 
   static const NgParserWarningCode INVALID_LET_BINDING_IN_NONTEMPLATE =
       NgParserWarningCode('INVALID_LET_BINDING_IN_NONTEMPLATE',
@@ -217,6 +223,12 @@ class NgParserWarningCode extends ErrorCode {
       NgParserWarningCode(
     'PROPERTY_NAME_TOO_MANY_FIXES',
     "Property name can only be in format: 'name[.postfix[.unit]]",
+  );
+
+  static const NgParserWarningCode REFERENCE_IDENTIFIER_FOUND =
+      NgParserWarningCode(
+    'REFERENCE_IDENTIFIER_FOUND',
+    'Reference decorator only supports #<variable> on <ng-content>',
   );
 
   static const NgParserWarningCode SUFFIX_BANANA = NgParserWarningCode(

@@ -14,7 +14,7 @@ void main() {
 
   test('should correctly type an implicit Provider', () async {
     testBed = NgTestBed.forComponent(
-      ng_generated.CompProvidesImplicitTypesNgFactory,
+      ng_generated.createCompProvidesImplicitTypesFactory(),
     );
     fixture = await testBed.create();
 
@@ -28,7 +28,7 @@ void main() {
 
   test('should correctly type an explicit provider', () async {
     testBed = NgTestBed.forComponent(
-      ng_generated.CompProvidesExplicitTypesNgFactory,
+      ng_generated.createCompProvidesExplicitTypesFactory(),
     );
     fixture = await testBed.create();
 

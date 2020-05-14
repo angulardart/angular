@@ -117,12 +117,12 @@ class TestComponent {
   final List<RouteDefinition> routes = [
     RouteDefinition(
       path: 'home',
-      component: ng.HomeComponentNgFactory,
+      component: ng.createHomeComponentFactory(),
       useAsDefault: true,
     ),
     RouteDefinition(
       path: 'destination',
-      component: ng.DestinationComponentNgFactory,
+      component: ng.createDestinationComponentFactory(),
     ),
     RouteDefinition.redirect(
       path: 'redirection',

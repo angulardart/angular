@@ -11,7 +11,8 @@ void main() {
   NgTestFixture<TestComponent> fixture;
 
   setUp(() async {
-    fixture = await NgTestBed.forComponent(ng.TestComponentNgFactory).create();
+    fixture =
+        await NgTestBed.forComponent(ng.createTestComponentFactory()).create();
   });
 
   tearDown(disposeAnyRunningTest);

@@ -103,7 +103,7 @@ class NgSimpleScanner {
       }
       if (_scanner.isDone) {
         _state = _NgSimpleScannerState.text;
-        String substring = _scanner.string.substring(offset);
+        var substring = _scanner.string.substring(offset);
         return _newTextToken(offset, substring);
       }
     }

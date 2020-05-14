@@ -7,7 +7,7 @@ import '1653_nested_view_container_insertion_test.template.dart' as ng;
 
 void main() {
   test('should append after last root node of view container', () async {
-    var testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    var testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     var testFixture = await testBed.create();
     expect(testFixture.text, '1');
     // Appending to the inner view container should work.

@@ -13,7 +13,7 @@ void main() {
         directives: [NgFor]
       )
       class HeroComponent {
-        final callbacks = [() => print("Hello"), () => print("Hi")]
+        final callbacks = [() => print("Hello"), () => print("Hi")];
       }
     """, errors: [
       allOf(contains('Expected method for event binding'),

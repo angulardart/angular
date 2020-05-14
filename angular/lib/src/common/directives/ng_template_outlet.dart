@@ -1,6 +1,5 @@
-import 'package:angular/core.dart' show Directive, DoCheck, Input;
-import 'package:angular/src/core/linker.dart'
-    show EmbeddedViewRef, TemplateRef, ViewContainerRef;
+import 'package:angular/core.dart';
+import 'package:angular/src/core/linker.dart';
 
 /// Inserts an embedded view, created from a [TemplateRef].
 ///
@@ -13,14 +12,17 @@ import 'package:angular/src/core/linker.dart'
 ///     <template #text let-text>
 ///       <span>{{text}}</span>
 ///     </template>
-///     <template #icon let-iconUrl let-width="w" let-height="h">
-///       <img src="{{iconUrl}}" width="{{width}}" height="{{height}}">
+///     <template #icon let-iconUrl let-width="width" let-height="height">
+///       <img [src]="iconUrl" [width]="width" [height]="height">
 ///     </template>
 ///
+///     <!-- An example of providing a single value -->
 ///     <template
 ///         [ngTemplateOutlet]="text"
-///         [ngTemplateOutletContext]="textContext">
+///         [ngTemplateOutletValue]="textContext">
 ///     </template>
+///
+///     <!-- An example of providing a map of key/value pairs -->
 ///     <template
 ///         [ngTemplateOutlet]="icon">
 ///         [ngTemplateOutletContext]="iconContext">
@@ -29,14 +31,12 @@ import 'package:angular/src/core/linker.dart'
 ///   directives: const [NgTemplateOutlet],
 /// )
 /// class ExampleComponent {
-///   Map<String, dynamic> textContext = {
-///     '\$implicit': 'Hello world!',
-///   };
+///   final textContext = 'Hello world!';
 ///
-///   Map<String, dynamic> iconContext = {
+///   final iconContext = {
 ///     '\$implicit': 'icon.png',
-///     'w': '16',
-///     'h': '16',
+///     'width': '16',
+///     'height': '16',
 ///   };
 /// }
 /// ```
@@ -46,7 +46,7 @@ import 'package:angular/src/core/linker.dart'
 class NgTemplateOutlet implements DoCheck {
   final ViewContainerRef _viewContainerRef;
 
-  Map<String, dynamic> _context;
+  Map<String, Object> _context;
   EmbeddedViewRef _insertedViewRef;
 
   NgTemplateOutlet(this._viewContainerRef);
@@ -73,8 +73,18 @@ class NgTemplateOutlet implements DoCheck {
   /// using 'let-' bindings. The variable '$implicit' can be used to set the
   /// default value of any 'let-' binding without an explicit assignment.
   @Input()
-  set ngTemplateOutletContext(Map<String, dynamic> context) {
+  set ngTemplateOutletContext(Map<String, Object> context) {
     _context = context;
+  }
+
+  /// Provides a value to be assigned in scope to the provided template.
+  ///
+  /// Functionally a short-hand for passing a map of `${'\$implicit': value}`;
+  ///
+  /// See [ngTemplateOutletContext] for details.
+  @Input()
+  set ngTemplateOutletValue(Object value) {
+    _context = {'\$implicit': value};
   }
 
   @override

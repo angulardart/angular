@@ -4,7 +4,10 @@
 List<T> flattenNodes<T>(List<List<T>> nodes) {
   final result = <T>[];
   for (var i = 0, l = nodes.length; i < l; i++) {
-    result.addAll(nodes[i]);
+    final items = nodes[i];
+    for (var j = 0, k = items.length; j < k; j++) {
+      result.add(items[j]);
+    }
   }
   return result;
 }

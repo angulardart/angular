@@ -10,7 +10,7 @@ void main() {
 
   test('@deferred should work properly with queries', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.ViewChildTestNgFactory,
+      ng.createViewChildTestFactory(),
     ).create();
     expect(fixture.assertOnlyInstance.child, isNull);
     await fixture.update((c) => c.showChild = true);

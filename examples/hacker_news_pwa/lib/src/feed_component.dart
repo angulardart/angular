@@ -37,13 +37,15 @@ class FeedComponent implements OnActivate {
     final pageNumber = page != null ? int.tryParse(page) ?? 1 : 1;
 
     if (pageNumber < 10) {
-      nextPageUrl =
-          routePath.toUrl(queryParameters: {'p': '${pageNumber + 1}'});
+      nextPageUrl = routePath.toUrl(
+        queryParameters: {'p': '${pageNumber + 1}'},
+      );
     }
 
     if (pageNumber > 1) {
-      previousPageUrl =
-          routePath.toUrl(queryParameters: {'p': '${pageNumber - 1}'});
+      previousPageUrl = routePath.toUrl(
+        queryParameters: {'p': '${pageNumber - 1}'},
+      );
     }
 
     startingRank = itemsPerPage * (pageNumber - 1) + 1;

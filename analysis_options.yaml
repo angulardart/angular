@@ -1,52 +1,27 @@
+# Extend the default sub-set of linter/analyzer rules used in google3.
+include: ../../../dart/analysis_options/lib/default.yaml
+
 analyzer:
   errors:
-    unused_element: error
-    unused_import: error
-    unused_local_variable: error
-    dead_code: error
-
-    # Allow importing .template.dart files without an analyzer error.
+    # Permanent exclusions: Unlikely to removed.
+    # =====================
+    # Allow importing .template.dart files without an [explicit] analyzer error.
     uri_has_not_been_generated: ignore
-
-    # Ignore our own deprecated symbols.
+    # Ignore our own deprecated symbols (too noisy).
     deprecated_member_use_from_same_package: ignore
-  exclude:
-    - .dart_tool/**
-    - build/**
-    # TODO(https://github.com/dart-lang/angular/issues/1508)
-    - examples/hacker_news_pwa/test/**
-  plugins:
-    - angular
+    # Allow having TODOs in the code (too noisy).
+    todo: ignore
 
-linter:
-  rules:
-    - avoid_empty_else
-    - avoid_init_to_null
-    - avoid_null_checks_in_equality_operators
-    - await_only_futures
-    - camel_case_types
-    - cancel_subscriptions
-    - control_flow_in_finally
-    - directives_ordering
-    - empty_catches
-    - empty_constructor_bodies
-    - empty_statements
-    - hash_and_equals
-    - iterable_contains_unrelated_type
-    - library_names
-    - library_prefixes
-    - list_remove_unrelated_type
-    - only_throw_errors
-    - overridden_fields
-    - package_api_docs
-    - package_names
-    - package_prefixed_library_names
-    - prefer_final_fields
-    - prefer_is_not_empty
-    - slash_for_doc_comments
-    - test_types_in_equals
-    - throw_in_finally
-    - type_init_formals
-    - unnecessary_brace_in_string_interps
-    - unrelated_type_equality_checks
-    - valid_regexps
+    # Security exclusions: We are security reviewed separate from these lints.
+    # =====================
+    avoid_bypassing_html_security: ignore
+    avoid_dynamic_execution: ignore
+    avoid_unsafe_apis: ignore
+    unsafe_html: ignore
+
+    # Temporary exclusions: Can be removed in the future.
+    # =====================
+    # Re-enable once we no longer have 200+ analyzer related deprecations.
+    deprecated_member_use: ignore
+    # Re-enable this once unused parameters are exempted (e.g. callback(_) {}).
+    inference_failure_on_untyped_parameter: ignore

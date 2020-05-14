@@ -6,46 +6,50 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/security.dart';
 
-import 'safe_inner_html_test.template.dart' as ng_generated;
+import 'safe_inner_html_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(() => disposeAnyRunningTest());
 
   group('$SafeInnerHtmlDirective', () {
     test('normally, "innerHtml" should be sanitized', () async {
-      var testBed = NgTestBed<NormalInnerHtmlTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createNormalInnerHtmlTestFactory());
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('(Secure)'));
     });
 
     test('"safeInnerHtml" should be trusted', () async {
-      var testBed = NgTestBed<TrustedSafeInnerHtmlTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createTrustedSafeInnerHtmlTestFactory());
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('(Unsafe)'));
     });
 
     test('"innerHtml" should be trusted', () async {
-      var testBed = NgTestBed<TrustedInnerHtmlTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createTrustedInnerHtmlTestFactory());
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('(Unsafe)'));
     });
 
     test('normally, interpolated innerHtml should be sanitized', () async {
-      var testBed = NgTestBed<InterpolatedNormalInnerHtmlTest>();
+      var testBed = NgTestBed.forComponent(
+          ng.createInterpolatedNormalInnerHtmlTestFactory());
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('(Secure)'));
     });
 
     test('SafeHtml should be passed through interpolation', () async {
-      var testBed = NgTestBed<InterpolatedTrustedInnerHtmlTest>();
+      var testBed = NgTestBed.forComponent(
+          ng.createInterpolatedTrustedInnerHtmlTestFactory());
       var testRoot = await testBed.create();
       expect(testRoot.text, contains('(Unsafe)'));
     });
 
     test('unsafe HTML should throw', () async {
-      var testBed = NgTestBed<UntrustedInnerHtmlTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createUntrustedInnerHtmlTestFactory());
       expect(testBed.create(), throwsA(isUnsupportedError));
     });
   });

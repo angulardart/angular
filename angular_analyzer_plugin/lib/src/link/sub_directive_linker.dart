@@ -36,7 +36,7 @@ class SubDirectiveLinker {
     final prefixIdentifier = astFactory.simpleIdentifier(
         StringToken(TokenType.IDENTIFIER, dirUseSum.prefix, 0));
     final element = scope.lookup(
-        dirUseSum.prefix == ""
+        dirUseSum.prefix == ''
             ? nameIdentifier
             : astFactory.prefixedIdentifier(
                 prefixIdentifier, null, nameIdentifier),
@@ -88,12 +88,8 @@ class SubDirectiveLinker {
   void _addDirectivesForDartObject(List<DirectiveBase> directives,
       List<DartObject> values, SourceRange errorRange) {
     for (final listItem in values) {
-      final typeValue = listItem.toTypeValue();
-      final isType =
-          typeValue is InterfaceType && typeValue.element is ClassElement;
-      final isFunction = listItem.type?.element is FunctionElement;
-      final element = isType ? typeValue.element : listItem.type?.element;
-      if (isType || isFunction) {
+      final element = _valueElement(listItem);
+      if (element != null) {
         _addDirectiveFromElement(element, directives, errorRange);
         continue;
       }
@@ -110,5 +106,21 @@ class SubDirectiveLinker {
         errorRange.length,
       );
     }
+  }
+
+  /// If the [object] is a class, or a function reference, return the element.
+  /// Otherwise return `null`.
+  static Element _valueElement(DartObject object) {
+    final type = object.toTypeValue();
+    if (type is InterfaceType && type.element is ClassElement) {
+      return type.element;
+    }
+
+    final functionElement = object.toFunctionValue();
+    if (functionElement != null) {
+      return functionElement;
+    }
+
+    return null;
   }
 }

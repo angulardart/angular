@@ -52,15 +52,21 @@ class RouterImpl extends Router {
           fragment: fragment,
           replace: true);
       _enqueueNavigation(url.path, navigationParams).then((navigationResult) {
-        // If the back navigation was blocked (DeactivateGuard), push the
-        // activeState back into the history.
-        if (navigationResult == NavigationResult.BLOCKED_BY_GUARD) {
+        // If the navigation was blocked by a guard, revert the location change
+        // by pushing the active state's URL. Note this assumes the location
+        // change was triggered by the browser's back button because the browser
+        // provides no mechanism for determining its origin.
+        if (navigationResult == NavigationResult.BLOCKED_BY_GUARD &&
+            // In rare cases where the initial navigation was also blocked, it's
+            // possible for the active state to be null.
+            _activeState != null) {
           _location.go(_activeState.toUrl());
         }
       });
     });
   }
 
+  @override
   RouterState get current => _activeState;
 
   @override
@@ -77,7 +83,7 @@ class RouterImpl extends Router {
     if (_rootOutlet == null) {
       _rootOutlet = routerOutlet;
 
-      Url url = Url.parse(_location.path());
+      var url = Url.parse(_location.path());
       _enqueueNavigation(
           url.path,
           NavigationParams(
@@ -196,7 +202,7 @@ class RouterImpl extends Router {
       return NavigationResult.SUCCESS;
     }
 
-    MutableRouterState nextState = await _resolveState(path, navigationParams);
+    var nextState = await _resolveState(path, navigationParams);
     // In the event that `path` is empty and doesn't match any routes,
     // `_resolveState` will return a state with no routes, instead of null.
     if (nextState == null || nextState.routes.isEmpty) {
@@ -238,7 +244,7 @@ class RouterImpl extends Router {
   String _getAbsolutePath(String path, RouterState state) {
     if (path.startsWith('./')) {
       var currentRoutes = state.routes.take(state.routes.length - 1);
-      String currentPath = currentRoutes.fold(
+      var currentPath = currentRoutes.fold<String>(
           '', (soFar, route) => soFar + route.toUrl(state.parameters));
 
       return Location.joinWithSlash(currentPath, path.substring(2));
@@ -369,7 +375,7 @@ class RouterImpl extends Router {
       return stateSoFar;
     }
 
-    for (RouteDefinition route in nextOutlet.routes) {
+    for (var route in nextOutlet.routes) {
       // There is a default route, so we push it onto the RouterState.
       if (route.useAsDefault) {
         stateSoFar.routes.add(route);
@@ -411,8 +417,8 @@ class RouterImpl extends Router {
   /// The next state is needed since the [CanDeactivate] lifecycle uses the
   /// next state.
   Future<bool> _canDeactivate(MutableRouterState mutableNextState) async {
-    RouterState nextState = mutableNextState.build();
-    for (ComponentRef<Object> componentRef in _activeComponentRefs) {
+    var nextState = mutableNextState.build();
+    for (var componentRef in _activeComponentRefs) {
       final component = componentRef.instance;
       if (component is CanDeactivate &&
           !(await component.canDeactivate(_activeState, nextState))) {
@@ -430,8 +436,8 @@ class RouterImpl extends Router {
 
   /// Returns whether the next state can activate.
   Future<bool> _canActivate(MutableRouterState mutableNextState) async {
-    RouterState nextState = mutableNextState.build();
-    for (ComponentRef<Object> componentRef in mutableNextState.components) {
+    var nextState = mutableNextState.build();
+    for (var componentRef in mutableNextState.components) {
       final component = componentRef.instance;
       if (component is CanActivate &&
           !(await component.canActivate(_activeState, nextState))) {

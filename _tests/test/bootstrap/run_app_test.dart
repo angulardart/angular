@@ -19,7 +19,7 @@ void main() {
   ComponentRef<HelloWorldComponent> component;
   Element rootDomContainer;
 
-  runInApp(dynamic Function() fn) {
+  FutureOr runInApp(dynamic Function() fn) {
     ApplicationRef appRef = component.injector.get(ApplicationRef);
     return appRef.run(fn);
   }
@@ -36,7 +36,7 @@ void main() {
   /// **NOTE**: We will use the JS API, since that is how users access it.
   void verifyTestability() {
     expect(component.injector.get(Testability), isNotNull);
-    JsTestability jsTestability = getAngularTestability(
+    var jsTestability = getAngularTestability(
       rootDomContainer.children.first,
     );
     expect(getAllAngularTestabilities(), isNot(hasLength(0)));
@@ -66,18 +66,18 @@ void main() {
   });
 
   test('runApp should bootstrap from a ComponentFactory', () async {
-    component = runApp(ng.HelloWorldComponentNgFactory);
+    component = runApp(ng.createHelloWorldComponentFactory());
     verifyDomAndStyles();
     verifyTestability();
   });
 
   test('runApp should disallow different SanitizerService instances', () async {
-    component = runApp(ng.HelloWorldComponentNgFactory);
+    component = runApp(ng.createHelloWorldComponentFactory());
 
     expect(
       () {
         return runApp(
-          ng.HelloWorldComponentNgFactory,
+          ng.createHelloWorldComponentFactory(),
           createInjector: ([parent]) {
             return Injector.map({
               SanitizationService: StubSanitizationService(),
@@ -93,7 +93,7 @@ void main() {
 
   test('runApp should allow overriding ExceptionHandler', () async {
     component = runApp(
-      ng.HelloWorldComponentNgFactory,
+      ng.createHelloWorldComponentFactory(),
       createInjector: ([parent]) {
         return Injector.map({
           ExceptionHandler: StubExceptionHandler(),
@@ -107,7 +107,7 @@ void main() {
 
   test('runAppAsync should await a future before bootstrapping', () async {
     component = await runAppAsync(
-      ng.HelloWorldComponentNgFactory,
+      ng.createHelloWorldComponentFactory(),
       beforeComponentCreated: (_) {
         return Future(() {
           HelloWorldComponent.name = 'Async World';
@@ -134,7 +134,7 @@ void main() {
 
   test('runApp should execute beforeComponentCreated in NgZone', () async {
     component = await runAppAsync<HelloWorldComponent>(
-      ng.HelloWorldComponentNgFactory,
+      ng.createHelloWorldComponentFactory(),
       beforeComponentCreated: (_) async {
         // Previously this would not trigger change detection, as this task
         // would not be scheduled inside of NgZone (the callback was not inside

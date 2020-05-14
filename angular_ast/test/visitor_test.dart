@@ -23,10 +23,10 @@ void main() {
 
   test('should humanize a simple template *with* de-sugaring applied', () {
     var template = parse(
-        '<widget *ngIf="someValue" [(value)]="value"></widget>',
-        sourceUrl: '/test/visitor_test.dart#inline',
-        toolFriendlyAst: false,
-        desugar: true);
+      '<widget *ngIf="someValue" [(value)]="value"></widget>',
+      sourceUrl: '/test/visitor_test.dart#inline',
+      desugar: true,
+    );
     expect(
       template.map((t) => t.accept(visitor)).join(''),
       equalsIgnoringWhitespace(r'''

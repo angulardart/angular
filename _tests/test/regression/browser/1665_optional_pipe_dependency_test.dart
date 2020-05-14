@@ -9,7 +9,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('a missing @Optional() pipe dependency does not throw', () async {
-    var testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    var testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     expect(testBed.create(), completes);
   });
 }

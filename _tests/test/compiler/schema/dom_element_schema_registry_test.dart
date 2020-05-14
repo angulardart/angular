@@ -1,8 +1,8 @@
 @TestOn('vm')
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart'
+import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart'
     show DomElementSchemaRegistry;
-import 'package:angular/src/compiler/security.dart';
+import 'package:angular_compiler/v1/src/compiler/security.dart';
 
 void main() {
   group('DOMElementSchema', () {

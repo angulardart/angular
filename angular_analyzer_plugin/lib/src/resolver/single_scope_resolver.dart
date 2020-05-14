@@ -1,12 +1,14 @@
 import 'package:analyzer/dart/ast/ast.dart' hide Directive;
 import 'package:analyzer/dart/ast/token.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type_provider.dart';
+import 'package:analyzer/dart/element/type_system.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:analyzer/error/listener.dart';
 import 'package:analyzer/src/dart/element/inheritance_manager3.dart';
 import 'package:analyzer/src/generated/error_verifier.dart';
-import 'package:analyzer/src/generated/resolver.dart';
 import 'package:analyzer/src/dart/resolver/resolution_visitor.dart';
+import 'package:analyzer/src/dart/resolver/scope.dart';
 import 'package:analyzer/src/generated/source.dart';
 import 'package:angular_analyzer_plugin/ast.dart';
 import 'package:angular_analyzer_plugin/errors.dart';
@@ -68,7 +70,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
   /// with a number.
   /// https://www.w3.org/TR/CSS21/syndata.html#value-def-identifier
   static final RegExp _cssIdentifierRegexp =
-      RegExp(r"^(-?[a-zA-Z_]|\\.)([a-zA-Z0-9\-_]|\\.)*$");
+      RegExp(r'^(-?[a-zA-Z_]|\\.)([a-zA-Z0-9\-_]|\\.)*$');
   final Map<String, Input> standardHtmlAttributes;
   final List<Pipe> pipes;
   List<DirectiveBase> directives;
@@ -116,7 +118,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
         .map((binding) => binding.boundDirective)
         // TODO enable this again for all directives, not just NgIf
         .where((directive) =>
-            directive is Directive && directive.classElement.name == "NgIf")
+            directive is Directive && directive.classElement.name == 'NgIf')
         .any((directive) =>
             directive.inputs.any((input) => input.name == binding.name))) {
       errorListener.onError(AnalysisError(
@@ -254,12 +256,12 @@ class SingleScopeResolver extends AngularScopeVisitor {
       return true;
     }
 
-    errorListener.onError(AnalysisError(
-        templateSource,
-        attribute.valueOffset,
-        attribute.value.length,
-        AngularWarningCode.UNSAFE_BINDING,
-        [securityContext.safeTypes.join(' or ')]));
+    errorListener.onError(AnalysisError(templateSource, attribute.valueOffset,
+        attribute.value.length, AngularWarningCode.UNSAFE_BINDING, [
+      securityContext.safeTypes
+          .map((type) => type.getDisplayString(withNullability: false))
+          .join(' or ')
+    ]));
     return false;
   }
 
@@ -268,10 +270,10 @@ class SingleScopeResolver extends AngularScopeVisitor {
   /// Used to report [OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT].
   String _getOutputStatementErrorDescription(Statement stmt) {
     final potentialToken = stmt.beginToken.keyword.toString().toLowerCase();
-    if (potentialToken != "null") {
+    if (potentialToken != 'null') {
       return "token '$potentialToken'";
     } else {
-      return stmt.runtimeType.toString().replaceFirst("Impl", "");
+      return stmt.runtimeType.toString().replaceFirst('Impl', '');
     }
   }
 
@@ -393,7 +395,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
       ),
     );
 
-    final inheritanceManager = InheritanceManager3(typeSystem);
+    final inheritanceManager = InheritanceManager3();
     final resolver = AngularResolverVisitor(inheritanceManager, library,
         templateSource, typeProvider, errorListener,
         pipes: pipes);
@@ -408,9 +410,9 @@ class SingleScopeResolver extends AngularScopeVisitor {
     // do resolve
     astNode.accept(resolver);
     // verify
-    final verifier = ErrorVerifier(
-        errorReporter, library, typeProvider, inheritanceManager, true)
-      ..enclosingClass = classElement;
+    final verifier =
+        ErrorVerifier(errorReporter, library, typeProvider, inheritanceManager)
+          ..enclosingClass = classElement;
     astNode.accept(verifier);
     // Check for concepts illegal to templates (for instance function literals).
     final angularSubsetChecker = AngularSubsetVisitor(
@@ -549,7 +551,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
 
     for (final directiveBinding in attribute.parent.boundDirectives) {
       for (final output in directiveBinding.boundDirective.outputs) {
-        if (output.name == "${attribute.name}Change") {
+        if (output.name == '${attribute.name}Change') {
           outputMatched = true;
           final eventType = output.eventType;
           directiveBinding.outputBindings.add(OutputBinding(output, attribute));
@@ -565,8 +567,9 @@ class SingleScopeResolver extends AngularScopeVisitor {
                 attribute.valueOffset,
                 attribute.value.length,
                 AngularWarningCode.TWO_WAY_BINDING_OUTPUT_TYPE_ERROR, [
-              output.eventType,
-              attribute.expression.staticType ?? typeProvider.dynamicType
+              output.eventType.getDisplayString(withNullability: false),
+              (attribute.expression.staticType ?? typeProvider.dynamicType)
+                  .getDisplayString(withNullability: false)
             ]));
           }
         }
@@ -579,7 +582,7 @@ class SingleScopeResolver extends AngularScopeVisitor {
           attribute.nameOffset,
           attribute.name.length,
           AngularWarningCode.NONEXIST_TWO_WAY_OUTPUT_BOUND,
-          [attribute.name, "${attribute.name}Change"]));
+          [attribute.name, '${attribute.name}Change']));
     }
 
     _resolveInputBoundAttributeValues(attribute);
@@ -597,23 +600,22 @@ class SingleScopeResolver extends AngularScopeVisitor {
             .any((safeType) => typeSystem.isAssignableTo(attrType, safeType))) {
           return;
         } else if (!securityContext.sanitizationAvailable) {
-          errorListener.onError(AnalysisError(
-              templateSource,
-              attr.valueOffset,
-              attr.value.length,
-              AngularWarningCode.UNSAFE_BINDING,
-              [securityContext.safeTypes.join(' or ')]));
+          errorListener.onError(AnalysisError(templateSource, attr.valueOffset,
+              attr.value.length, AngularWarningCode.UNSAFE_BINDING, [
+            securityContext.safeTypes
+                .map((type) => type.getDisplayString(withNullability: false))
+                .join(' or ')
+          ]));
           return;
         }
       }
 
       if (!typeSystem.isAssignableTo(attrType, inputType)) {
-        errorListener.onError(AnalysisError(
-            templateSource,
-            attr.valueOffset,
-            attr.value.length,
-            AngularWarningCode.INPUT_BINDING_TYPE_ERROR,
-            [attrType, inputType]));
+        errorListener.onError(AnalysisError(templateSource, attr.valueOffset,
+            attr.value.length, AngularWarningCode.INPUT_BINDING_TYPE_ERROR, [
+          attrType.getDisplayString(withNullability: false),
+          inputType.getDisplayString(withNullability: false)
+        ]));
       }
     }
   }

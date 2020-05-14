@@ -4,8 +4,8 @@ import 'dart:async';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/compiler/expression_parser/ast.dart';
+import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
+import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart';
 
 import '../resolve_util.dart';
 
@@ -60,7 +60,7 @@ void main() {
     });
   });
 
-  group("isImmutable", () {
+  group('isImmutable', () {
     test('should support PropertyReads', () async {
       final analyzedClass = await analyzeClass('''
         class AppComponent {

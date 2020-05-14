@@ -2,10 +2,9 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/analysis/session.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart' show LibraryElement;
+import 'package:analyzer/dart/element/type_provider.dart';
 import 'package:analyzer/error/error.dart';
-import 'package:analyzer/src/generated/resolver.dart' show TypeProvider;
 import 'package:analyzer/src/generated/source.dart';
-import 'package:analyzer/src/generated/type_system.dart';
 import 'package:analyzer_plugin/utilities/completion/inherited_reference_contributor.dart';
 import 'package:analyzer_plugin/utilities/completion/type_member_contributor.dart';
 
@@ -21,8 +20,10 @@ class DartResolveResultShell implements ResolvedUnitResult {
   @override
   TypeProvider typeProvider;
 
+  /// TODO(scheglov) Replace with explicit type, when ResolvedUnitResult is
+  /// updated to use API version of TypeSystem. Currently this is a deadlock.
   @override
-  TypeSystem typeSystem;
+  var typeSystem;
 
   @override
   final String path;

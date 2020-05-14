@@ -144,8 +144,7 @@ class SelectorParser with ReportParseErrors {
     final rhs = _parseNested();
     if (rhs is OrSelector) {
       // flatten "a, b, c, d" from (a, (b, (c, d))) into (a, b, c, d)
-      return OrSelector(
-          <Selector>[_andSelectors(selectors)]..addAll(rhs.selectors));
+      return OrSelector(<Selector>[_andSelectors(selectors), ...rhs.selectors]);
     }
 
     return OrSelector(<Selector>[_andSelectors(selectors), rhs]);

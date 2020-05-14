@@ -4,15 +4,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'regression_integration_test.template.dart' as ng_generated;
+import 'regression_integration_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should evaluate conditional operator with right precedence', () async {
-    final testBed = NgTestBed<RightPrecedenceConditionalComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createRightPrecedenceConditionalComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'red');
     await testFixture.update((component) => component.hasBorder = true);
@@ -45,14 +44,16 @@ void main() {
   });
 
   test("should interpolate previous element's class binding", () async {
-    final testBed = NgTestBed<InterpolateClassBindingComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createInterpolateClassBindingComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
   });
 
   test('should support ngClass before a component and transclusion inside ngIf',
       () async {
-    final testBed = NgTestBed<ContentProviderComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createContentProviderComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'ABC');
   });

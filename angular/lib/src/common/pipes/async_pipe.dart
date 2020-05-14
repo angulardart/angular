@@ -7,7 +7,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 class _ObservableStrategy {
   StreamSubscription<Object> createSubscription(
-      Stream<Object> stream, void updateLatestValue(value)) {
+      Stream<Object> stream, void Function(Object) updateLatestValue) {
     return stream.listen(updateLatestValue);
   }
 
@@ -22,7 +22,7 @@ class _ObservableStrategy {
 
 class _PromiseStrategy {
   dynamic createSubscription(
-      Future<dynamic> async, dynamic updateLatestValue(dynamic v)) {
+      Future<dynamic> async, dynamic Function(dynamic) updateLatestValue) {
     return async.then(updateLatestValue);
   }
 
@@ -44,7 +44,7 @@ final _observableStrategy = _ObservableStrategy();
 ///     selector: 'async-greeter',
 ///     template: '''
 ///       <div>
-///         <p>Wait for it ... {{ greeting | async }}</p>
+///         <p>Wait for it ... {{ $pipe.async(greeting) }}</p>
 ///         <button [disabled]="!done" (click)="tryAgain()">Try Again!</button>
 ///       </div>''')
 /// class AsyncGreeterPipe {
@@ -70,7 +70,7 @@ final _observableStrategy = _ObservableStrategy();
 ///
 /// @Component(
 ///     selector: 'async-time',
-///     template: "<p>Time: {{ time | async | date:'mediumTime'}}</p>") //
+///     template: "<p>Time: {{ $pipe.date($pipe.async(time), 'mediumTime') }}</p>") //
 /// class AsyncTimePipe {
 ///   static const _delay = const Duration(seconds: 1);
 ///   final Stream<DateTime> time =

@@ -1,8 +1,8 @@
 @TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/src/compiler/attribute_matcher.dart';
-import 'package:angular/src/compiler/selector.dart'
+import 'package:angular_compiler/v1/src/compiler/attribute_matcher.dart';
+import 'package:angular_compiler/v1/src/compiler/selector.dart'
     show CssSelector, SelectorMatcher;
 
 void main() {
@@ -130,173 +130,173 @@ void main() {
       expect(
           matcher.match(
               CssSelector.parse(
-                  "someOtherTag.someOtherClass[someOtherAttr]")[0],
+                  'someOtherTag.someOtherClass[someOtherAttr]')[0],
               selectableCollector),
           false);
       expect(matched, []);
       expect(
           matcher.match(
-              CssSelector.parse("someTag.someOtherClass[someOtherAttr]")[0],
+              CssSelector.parse('someTag.someOtherClass[someOtherAttr]')[0],
               selectableCollector),
           false);
       expect(matched, []);
       expect(
           matcher.match(
-              CssSelector.parse("someTag.someClass[someOtherAttr]")[0],
+              CssSelector.parse('someTag.someClass[someOtherAttr]')[0],
               selectableCollector),
           false);
       expect(matched, []);
       expect(
-          matcher.match(CssSelector.parse("someTag.someClass[someAttr]")[0],
+          matcher.match(CssSelector.parse('someTag.someClass[someAttr]')[0],
               selectableCollector),
           false);
       expect(matched, []);
       expect(
           matcher.match(
-              CssSelector.parse("someTag.someClass[someAttr=someValue]")[0],
+              CssSelector.parse('someTag.someClass[someAttr=someValue]')[0],
               selectableCollector),
           isTrue);
       expect(matched, [s1[0], 1]);
     });
-    test("should select by many attributes and independent of the value", () {
+    test('should select by many attributes and independent of the value', () {
       matcher.addSelectables(
-          s1 = CssSelector.parse("input[type=text][control]"), 1);
+          s1 = CssSelector.parse('input[type=text][control]'), 1);
       var cssSelector = CssSelector();
-      cssSelector.setElement("input");
-      cssSelector.addAttribute("type", "=", "text");
-      cssSelector.addAttribute("control", "=", "one");
+      cssSelector.setElement('input');
+      cssSelector.addAttribute('type', '=', 'text');
+      cssSelector.addAttribute('control', '=', 'one');
       expect(matcher.match(cssSelector, selectableCollector), true);
       expect(matched, [s1[0], 1]);
     });
-    test("should select independent of the order in the css selector", () {
-      matcher.addSelectables(s1 = CssSelector.parse("[someAttr].someClass"), 1);
-      matcher.addSelectables(s2 = CssSelector.parse(".someClass[someAttr]"), 2);
-      matcher.addSelectables(s3 = CssSelector.parse(".class1.class2"), 3);
-      matcher.addSelectables(s4 = CssSelector.parse(".class2.class1"), 4);
+    test('should select independent of the order in the css selector', () {
+      matcher.addSelectables(s1 = CssSelector.parse('[someAttr].someClass'), 1);
+      matcher.addSelectables(s2 = CssSelector.parse('.someClass[someAttr]'), 2);
+      matcher.addSelectables(s3 = CssSelector.parse('.class1.class2'), 3);
+      matcher.addSelectables(s4 = CssSelector.parse('.class2.class1'), 4);
       expect(
-          matcher.match(CssSelector.parse("[someAttr].someClass")[0],
+          matcher.match(CssSelector.parse('[someAttr].someClass')[0],
               selectableCollector),
           isTrue);
       expect(matched, [s1[0], 1, s2[0], 2]);
       reset();
       expect(
-          matcher.match(CssSelector.parse(".someClass[someAttr]")[0],
+          matcher.match(CssSelector.parse('.someClass[someAttr]')[0],
               selectableCollector),
           isTrue);
       expect(matched, [s1[0], 1, s2[0], 2]);
       reset();
       expect(
           matcher.match(
-              CssSelector.parse(".class1.class2")[0], selectableCollector),
+              CssSelector.parse('.class1.class2')[0], selectableCollector),
           isTrue);
       expect(matched, [s3[0], 3, s4[0], 4]);
       reset();
       expect(
           matcher.match(
-              CssSelector.parse(".class2.class1")[0], selectableCollector),
+              CssSelector.parse('.class2.class1')[0], selectableCollector),
           isTrue);
       expect(matched, [s4[0], 4, s3[0], 3]);
     });
-    test("should not select with a matching :not selector", () {
-      matcher.addSelectables(CssSelector.parse("p:not(.someClass)"), 1);
-      matcher.addSelectables(CssSelector.parse("p:not([someAttr])"), 2);
-      matcher.addSelectables(CssSelector.parse(":not(.someClass)"), 3);
-      matcher.addSelectables(CssSelector.parse(":not(p)"), 4);
-      matcher.addSelectables(CssSelector.parse(":not(p[someAttr])"), 5);
+    test('should not select with a matching :not selector', () {
+      matcher.addSelectables(CssSelector.parse('p:not(.someClass)'), 1);
+      matcher.addSelectables(CssSelector.parse('p:not([someAttr])'), 2);
+      matcher.addSelectables(CssSelector.parse(':not(.someClass)'), 3);
+      matcher.addSelectables(CssSelector.parse(':not(p)'), 4);
+      matcher.addSelectables(CssSelector.parse(':not(p[someAttr])'), 5);
       expect(
-          matcher.match(CssSelector.parse("p.someClass[someAttr]")[0],
+          matcher.match(CssSelector.parse('p.someClass[someAttr]')[0],
               selectableCollector),
           false);
       expect(matched, []);
     });
-    test("should select with a non matching :not selector", () {
-      matcher.addSelectables(s1 = CssSelector.parse("p:not(.someClass)"), 1);
+    test('should select with a non matching :not selector', () {
+      matcher.addSelectables(s1 = CssSelector.parse('p:not(.someClass)'), 1);
       matcher.addSelectables(
-          s2 = CssSelector.parse("p:not(.someOtherClass[someAttr])"), 2);
-      matcher.addSelectables(s3 = CssSelector.parse(":not(.someClass)"), 3);
+          s2 = CssSelector.parse('p:not(.someOtherClass[someAttr])'), 2);
+      matcher.addSelectables(s3 = CssSelector.parse(':not(.someClass)'), 3);
       matcher.addSelectables(
-          s4 = CssSelector.parse(":not(.someOtherClass[someAttr])"), 4);
+          s4 = CssSelector.parse(':not(.someOtherClass[someAttr])'), 4);
       expect(
-          matcher.match(CssSelector.parse("p[someOtherAttr].someOtherClass")[0],
+          matcher.match(CssSelector.parse('p[someOtherAttr].someOtherClass')[0],
               selectableCollector),
           isTrue);
       expect(matched, [s1[0], 1, s2[0], 2, s3[0], 3, s4[0], 4]);
     });
-    test("should match with multiple :not selectors", () {
+    test('should match with multiple :not selectors', () {
       matcher.addSelectables(
-          s1 = CssSelector.parse("div:not([a]):not([b])"), 1);
-      expect(matcher.match(CssSelector.parse("div[a]")[0], selectableCollector),
+          s1 = CssSelector.parse('div:not([a]):not([b])'), 1);
+      expect(matcher.match(CssSelector.parse('div[a]')[0], selectableCollector),
           false);
-      expect(matcher.match(CssSelector.parse("div[b]")[0], selectableCollector),
+      expect(matcher.match(CssSelector.parse('div[b]')[0], selectableCollector),
           false);
-      expect(matcher.match(CssSelector.parse("div[c]")[0], selectableCollector),
+      expect(matcher.match(CssSelector.parse('div[c]')[0], selectableCollector),
           isTrue);
     });
-    test("should select with one match in a list", () {
+    test('should select with one match in a list', () {
       matcher.addSelectables(
-          s1 = CssSelector.parse("input[type=text], textbox"), 1);
+          s1 = CssSelector.parse('input[type=text], textbox'), 1);
       expect(
-          matcher.match(CssSelector.parse("textbox")[0], selectableCollector),
+          matcher.match(CssSelector.parse('textbox')[0], selectableCollector),
           isTrue);
       expect(matched, [s1[1], 1]);
       reset();
       expect(
           matcher.match(
-              CssSelector.parse("input[type=text]")[0], selectableCollector),
+              CssSelector.parse('input[type=text]')[0], selectableCollector),
           isTrue);
       expect(matched, [s1[0], 1]);
     });
-    test("should not select twice with two matches in a list", () {
-      matcher.addSelectables(s1 = CssSelector.parse("input, .someClass"), 1);
+    test('should not select twice with two matches in a list', () {
+      matcher.addSelectables(s1 = CssSelector.parse('input, .someClass'), 1);
       expect(
           matcher.match(
-              CssSelector.parse("input.someclass")[0], selectableCollector),
+              CssSelector.parse('input.someclass')[0], selectableCollector),
           isTrue);
       expect(matched.length, 2);
       expect(matched, [s1[0], 1]);
     });
   });
-  group("CssSelector.parse", () {
-    test("should detect element names", () {
-      var cssSelector = CssSelector.parse("sometag")[0];
-      expect(cssSelector.element, "sometag");
-      expect(cssSelector.toString(), "sometag");
+  group('CssSelector.parse', () {
+    test('should detect element names', () {
+      var cssSelector = CssSelector.parse('sometag')[0];
+      expect(cssSelector.element, 'sometag');
+      expect(cssSelector.toString(), 'sometag');
     });
-    test("should detect class names", () {
-      var cssSelector = CssSelector.parse(".someClass")[0];
-      expect(cssSelector.classNames, ["someclass"]);
-      expect(cssSelector.toString(), ".someclass");
+    test('should detect class names', () {
+      var cssSelector = CssSelector.parse('.someClass')[0];
+      expect(cssSelector.classNames, ['someclass']);
+      expect(cssSelector.toString(), '.someclass');
     });
-    test("should detect attr names", () {
-      var cssSelector = CssSelector.parse("[attrname]")[0];
+    test('should detect attr names', () {
+      var cssSelector = CssSelector.parse('[attrname]')[0];
       expect(cssSelector.attrs, hasLength(1));
       expect(cssSelector.attrs[0], TypeMatcher<SetAttributeMatcher>());
       expect(cssSelector.attrs[0].name, 'attrname');
       expect(cssSelector.attrs[0].value, isNull);
-      expect(cssSelector.toString(), "[attrname]");
+      expect(cssSelector.toString(), '[attrname]');
     });
-    test("should detect attr values", () {
-      var cssSelector = CssSelector.parse("[attrname=attrvalue]")[0];
+    test('should detect attr values', () {
+      var cssSelector = CssSelector.parse('[attrname=attrvalue]')[0];
       expect(cssSelector.attrs, hasLength(1));
       expect(cssSelector.attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(cssSelector.attrs[0].name, 'attrname');
       expect(cssSelector.attrs[0].value, 'attrvalue');
       expect(cssSelector.toString(), '[attrname="attrvalue"]');
     });
-    test("should detect multiple parts", () {
+    test('should detect multiple parts', () {
       var cssSelector =
-          CssSelector.parse("sometag[attrname=attrvalue].someclass")[0];
-      expect(cssSelector.element, "sometag");
+          CssSelector.parse('sometag[attrname=attrvalue].someclass')[0];
+      expect(cssSelector.element, 'sometag');
       expect(cssSelector.attrs, hasLength(1));
       expect(cssSelector.attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(cssSelector.attrs[0].name, 'attrname');
       expect(cssSelector.attrs[0].value, 'attrvalue');
-      expect(cssSelector.classNames, ["someclass"]);
+      expect(cssSelector.classNames, ['someclass']);
       expect(cssSelector.toString(), 'sometag.someclass[attrname="attrvalue"]');
     });
-    test("should detect multiple attributes", () {
-      var cssSelector = CssSelector.parse("input[type=text][control]")[0];
-      expect(cssSelector.element, "input");
+    test('should detect multiple attributes', () {
+      var cssSelector = CssSelector.parse('input[type=text][control]')[0];
+      expect(cssSelector.element, 'input');
       expect(cssSelector.attrs, hasLength(2));
       expect(cssSelector.attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(cssSelector.attrs[0].name, 'type');
@@ -306,10 +306,10 @@ void main() {
       expect(cssSelector.attrs[1].value, isNull);
       expect(cssSelector.toString(), 'input[type="text"][control]');
     });
-    test("should detect :not", () {
+    test('should detect :not', () {
       var cssSelector =
-          CssSelector.parse("sometag:not([attrname=attrvalue].someclass)")[0];
-      expect(cssSelector.element, "sometag");
+          CssSelector.parse('sometag:not([attrname=attrvalue].someclass)')[0];
+      expect(cssSelector.element, 'sometag');
       expect(cssSelector.attrs.length, 0);
       expect(cssSelector.classNames.length, 0);
       var notSelector = cssSelector.notSelectors[0];
@@ -318,57 +318,57 @@ void main() {
       expect(notSelector.attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(notSelector.attrs[0].name, 'attrname');
       expect(notSelector.attrs[0].value, 'attrvalue');
-      expect(notSelector.classNames, ["someclass"]);
+      expect(notSelector.classNames, ['someclass']);
       expect(cssSelector.toString(),
           'sometag:not(.someclass[attrname="attrvalue"])');
     });
-    test("should detect :not without truthy", () {
+    test('should detect :not without truthy', () {
       var cssSelector =
-          CssSelector.parse(":not([attrname=attrvalue].someclass)")[0];
-      expect(cssSelector.element, "*");
+          CssSelector.parse(':not([attrname=attrvalue].someclass)')[0];
+      expect(cssSelector.element, '*');
       var notSelector = cssSelector.notSelectors[0];
       expect(notSelector.attrs, hasLength(1));
       expect(notSelector.attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(notSelector.attrs[0].name, 'attrname');
       expect(notSelector.attrs[0].value, 'attrvalue');
-      expect(notSelector.classNames, ["someclass"]);
+      expect(notSelector.classNames, ['someclass']);
       expect(cssSelector.toString(), '*:not(.someclass[attrname="attrvalue"])');
     });
-    test("should throw when nested :not", () {
+    test('should throw when nested :not', () {
       expect(() {
         CssSelector.parse(
-            "sometag:not(:not([attrname=attrvalue].someclass))")[0];
-      }, throwsWith("Nesting :not is not allowed in a selector"));
+            'sometag:not(:not([attrname=attrvalue].someclass))')[0];
+      }, throwsWith('Nesting :not is not allowed in a selector'));
     });
-    test("should throw when multiple selectors in :not", () {
+    test('should throw when multiple selectors in :not', () {
       expect(() {
-        CssSelector.parse("sometag:not(a,b)");
-      }, throwsWith("Multiple selectors in :not are not supported"));
+        CssSelector.parse('sometag:not(a,b)');
+      }, throwsWith('Multiple selectors in :not are not supported'));
     });
-    test("should detect lists of selectors", () {
+    test('should detect lists of selectors', () {
       var cssSelectors =
-          CssSelector.parse(".someclass,[attrname=attrvalue], sometag");
+          CssSelector.parse('.someclass,[attrname=attrvalue], sometag');
       expect(cssSelectors.length, 3);
-      expect(cssSelectors[0].classNames, ["someclass"]);
+      expect(cssSelectors[0].classNames, ['someclass']);
       expect(cssSelectors[1].attrs, hasLength(1));
       expect(cssSelectors[1].attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(cssSelectors[1].attrs[0].name, 'attrname');
       expect(cssSelectors[1].attrs[0].value, 'attrvalue');
-      expect(cssSelectors[2].element, "sometag");
+      expect(cssSelectors[2].element, 'sometag');
     });
-    test("should detect lists of selectors with :not", () {
+    test('should detect lists of selectors with :not', () {
       var cssSelectors = CssSelector.parse(
-          "input[type=text], :not(textarea), textbox:not(.special)");
+          'input[type=text], :not(textarea), textbox:not(.special)');
       expect(cssSelectors.length, 3);
-      expect(cssSelectors[0].element, "input");
+      expect(cssSelectors[0].element, 'input');
       expect(cssSelectors[0].attrs, hasLength(1));
       expect(cssSelectors[0].attrs[0], TypeMatcher<ExactAttributeMatcher>());
       expect(cssSelectors[0].attrs[0].name, 'type');
       expect(cssSelectors[0].attrs[0].value, 'text');
-      expect(cssSelectors[1].element, "*");
-      expect(cssSelectors[1].notSelectors[0].element, "textarea");
-      expect(cssSelectors[2].element, "textbox");
-      expect(cssSelectors[2].notSelectors[0].classNames, ["special"]);
+      expect(cssSelectors[1].element, '*');
+      expect(cssSelectors[1].notSelectors[0].element, 'textarea');
+      expect(cssSelectors[2].element, 'textbox');
+      expect(cssSelectors[2].notSelectors[0].classNames, ['special']);
     });
     test('should detect hyphen attribute selector', () {
       final cssSelector = CssSelector.parse('[foo|="bar"]').single;
@@ -421,25 +421,25 @@ void main() {
       expect(cssSelector.toString(), r'[foo$="bar"]');
     });
   });
-  group("CssSelector.getMatchingElementTemplate", () {
+  group('CssSelector.getMatchingElementTemplate', () {
     test(
         'should create an element with a tagName, classes, '
         'and attributes with the correct casing', () {
       var selector =
-          CssSelector.parse("Blink.neon.hotpink[Sweet][Dismissable=false]")[0];
+          CssSelector.parse('Blink.neon.hotpink[Sweet][Dismissable=false]')[0];
       var template = selector.getMatchingElementTemplate();
       expect(template,
-          "<Blink class=\"neon hotpink\" Sweet Dismissable=\"false\"></Blink>");
+          '<Blink class=\"neon hotpink\" Sweet Dismissable=\"false\"></Blink>');
     });
-    test("should create an element without a tag name", () {
-      var selector = CssSelector.parse("[fancy]")[0];
+    test('should create an element without a tag name', () {
+      var selector = CssSelector.parse('[fancy]')[0];
       var template = selector.getMatchingElementTemplate();
-      expect(template, "<div fancy></div>");
+      expect(template, '<div fancy></div>');
     });
-    test("should ignore :not selectors", () {
-      var selector = CssSelector.parse("grape:not(.red)")[0];
+    test('should ignore :not selectors', () {
+      var selector = CssSelector.parse('grape:not(.red)')[0];
       var template = selector.getMatchingElementTemplate();
-      expect(template, "<grape></grape>");
+      expect(template, '<grape></grape>');
     });
   });
 }

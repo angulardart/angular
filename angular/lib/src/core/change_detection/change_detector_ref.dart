@@ -54,13 +54,16 @@ abstract class ChangeDetectorRef {
 
   /// Invokes [markForCheck] on [child]'s associated [ChangeDetectorRef].
   ///
-  /// This only works if [child] is a reference obtained from any of the
-  /// following annotations:
+  /// This only works if [child] is a component instance obtained from any of
+  /// the following annotations:
   ///
   ///   * `@ContentChild()`
   ///   * `@ContentChildren()`
   ///   * `@ViewChild()`
   ///   * `@ViewChildren()`
+  ///
+  /// Note that the static type of [child] need not be a component so long as
+  /// the underlying implementation is.
   ///
   /// On any other argument, this method is still safe to call, but has no
   /// effect. This allows the caller to use this method without explicit

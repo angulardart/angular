@@ -24,28 +24,18 @@ import 'location_strategy.dart' show LocationStrategy;
 /// ### Example
 ///
 /// ```
-/// import 'package:angular/angular.dart' show Component;
-/// import 'package:angular_router/angular_router.dart'
-///   show
-///     Location,
-///     RouteConfig,
-///     ROUTER_DIRECTIVES,
-///     ROUTER_PROVIDERS;
+/// import 'package:angular/angular.dart';
+/// import 'package:angular_router/angular_router.dart';
 ///
 /// @Component(
-///   ...
-///   directives: [ROUTER_DIRECTIVES],
+///   // Should only be provided at the root.
+///   providers: [routerProviders],
 /// )
-/// @RouteConfig(const [
-///   ...
-/// ])
 /// class AppComponent {
 ///   AppComponent(Location location) {
 ///     location.go('/foo');
 ///   }
 /// }
-///
-/// bootstrap(AppComponent, [ROUTER_PROVIDERS]);
 /// ```
 @Injectable()
 class Location {
@@ -130,9 +120,9 @@ class Location {
 
   /// Subscribe to the platform's `popState` events.
   Object subscribe(
-    void onNext(dynamic value), [
-    void onThrow(dynamic exception),
-    void onReturn(),
+    void Function(dynamic) onNext, [
+    void Function(dynamic) onThrow,
+    void Function() onReturn,
   ]) {
     return _subject.stream.listen(onNext, onError: onThrow, onDone: onReturn);
   }

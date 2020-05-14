@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:glob/glob.dart';
 import 'package:angular/src/build.dart';
-import 'package:angular_compiler/angular_compiler.dart';
-import 'package:angular_compiler/cli.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:logging/logging.dart';
 import 'package:build/build.dart';
 import 'package:build_resolvers/build_resolvers.dart';
@@ -13,12 +13,7 @@ import 'package:test/test.dart';
 
 /// A 'test' build process (similar to the normal one).
 final Builder _testAngularBuilder = MultiplexingBuilder([
-  templateCompiler(
-    BuilderOptions({}),
-    defaultFlags: const CompilerFlags(
-      ignoreNgPlaceholderForGoldens: true,
-    ),
-  ),
+  templateCompiler(BuilderOptions({})),
   stylesheetCompiler(BuilderOptions({})),
 ]);
 
@@ -32,11 +27,20 @@ final Future<PackageAssetReader> _packageAssets = (() async {
   }
   final root = Platform.environment['PKG_ANGULAR_ROOT'];
   final path = '$runfiles/$root';
-  if (!FileSystemEntity.isFileSync('$path/lib/angular.dart')) {
-    throw StateError('Could not find $path/lib/angular.dart');
+  if (!FileSystemEntity.isFileSync('$path/angular/lib/angular.dart')) {
+    throw StateError('Could not find $path/angular/lib/angular.dart');
   }
+  if (!FileSystemEntity.isFileSync(
+    '$path/angular_compiler/lib/v1/src/metadata.dart',
+  )) {
+    throw StateError(
+      'Could not find $path/angular_compiler/lib/v1/src/metadata.dart',
+    );
+  }
+  print('file://$path/angular/lib');
   return PackageAssetReader.forPackages({
-    ngPackage: '$runfiles/$root',
+    ngPackage: 'file://$path/angular',
+    ngCompiler: 'file://$path/angular_compiler',
   });
 })();
 
@@ -46,6 +50,7 @@ final Future<PackageAssetReader> _packageAssets = (() async {
 // rules as part of open sourcing process to make sure this works both
 // externally and internally.
 const ngPackage = 'angular';
+const ngCompiler = 'angular_compiler';
 const ngImport = 'package:$ngPackage/angular.dart';
 final _ngFiles = Glob('lib/**.dart');
 
@@ -103,7 +108,9 @@ Future<Null> _testBuilder(
       );
     },
     zoneValues: {
-      CompileContext: CompileContext(),
+      CompileContext: CompileContext(
+        policyExceptions: {},
+      ),
     },
   );
   await logSub.cancel();
@@ -199,4 +206,4 @@ Future<Null> compilesNormally(
 /// Match for a source location, but don't require tests to manage package
 /// names.
 Matcher containsSourceLocation(int line, int column) =>
-    contains("line $line, column $column of ");
+    contains('line $line, column $column of ');

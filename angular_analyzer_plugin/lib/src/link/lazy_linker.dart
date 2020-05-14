@@ -45,7 +45,7 @@ class LazyLinker implements TopLevelLinker {
 
   @override
   Component component(SummarizedDirective dirSum, ClassElement classElement) {
-    assert(dirSum.functionName == "");
+    assert(dirSum.functionName == '');
     assert(dirSum.isComponent);
 
     final source = classElement.source;
@@ -62,7 +62,7 @@ class LazyLinker implements TopLevelLinker {
 
   @override
   Directive directive(SummarizedDirective dirSum, ClassElement classElement) {
-    assert(dirSum.functionName == "");
+    assert(dirSum.functionName == '');
     assert(!dirSum.isComponent);
 
     final source = classElement.source;

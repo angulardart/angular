@@ -158,6 +158,12 @@ void main() {
         [EmbeddedContentAst('foo', 'bar')]);
   });
 
+  test('should parse an embedded content directive with a name selector', () {
+    expect(
+        parse('<ng-content select="foo" ngProjectAs="bar" #baz></ng-content>'),
+        [EmbeddedContentAst('foo', 'bar', ReferenceAst('baz'))]);
+  });
+
   test('should parse a <template> directive', () {
     expect(
       parse('<template></template>'),

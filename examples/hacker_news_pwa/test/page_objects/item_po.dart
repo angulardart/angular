@@ -6,6 +6,7 @@ part 'item_po.g.dart';
 abstract class ItemPO {
   ItemPO();
 
+  // ignore: redirect_to_non_class
   factory ItemPO.create(PageLoaderElement context) = $ItemPO.create;
 
   @ByTagName('a')

@@ -5,13 +5,12 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'view_child_regression_test.template.dart' as ng_generated;
+import 'view_child_regression_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   test('$ViewChild#nativeElement should be accessible', () async {
-    final fixture = await NgTestBed<ViewChildTest>().create();
+    final fixture =
+        await NgTestBed.forComponent(ng.createViewChildTestFactory()).create();
     await fixture.update((component) {
       expect(component.portalElement, isNull);
       component.showChildHost = true;

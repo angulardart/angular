@@ -67,7 +67,7 @@ List<TopLevel> linkTopLevels(UnlinkedDartSummary unlinked,
       if (sum.isComponent) {
         return linker.component(sum,
             compilationUnitElement.getType(sum.classAnnotations.className));
-      } else if (sum.functionName != "") {
+      } else if (sum.functionName != '') {
         return linker.functionalDirective(
             sum,
             compilationUnitElement.functions

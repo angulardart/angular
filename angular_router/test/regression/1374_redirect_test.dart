@@ -31,7 +31,7 @@ void main() {
 
   test('redirect on outlet registration should replace URL', () async {
     final testBed =
-        NgTestBed.forComponent(ng.TestInitialRedirectComponentNgFactory)
+        NgTestBed.forComponent(ng.createTestInitialRedirectComponentFactory())
             .addInjector(injector);
     final testFixture = await testBed.create();
     final locationStrategy = testFixture.assertOnlyInstance.locationStrategy;
@@ -43,8 +43,9 @@ void main() {
 ///
 /// Returns any URL changes that occurred due to navigation.
 Future<List<String>> redirect([NavigationParams params]) async {
-  final testBed = NgTestBed.forComponent(ng.TestRedirectComponentNgFactory)
-      .addInjector(injector);
+  final testBed =
+      NgTestBed.forComponent(ng.createTestRedirectComponentFactory())
+          .addInjector(injector);
   final testFixture = await testBed.create();
   final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;
   final router = testFixture.assertOnlyInstance.router;
@@ -66,7 +67,7 @@ class ToComponent {}
 )
 class TestRedirectComponent {
   static final routes = [
-    RouteDefinition(path: '/to', component: ng.ToComponentNgFactory),
+    RouteDefinition(path: '/to', component: ng.createToComponentFactory()),
     RouteDefinition.redirect(path: '/from', redirectTo: '/to'),
   ];
 
@@ -86,7 +87,7 @@ class TestRedirectComponent {
 )
 class TestInitialRedirectComponent {
   static final routes = [
-    RouteDefinition(path: '/to', component: ng.ToComponentNgFactory),
+    RouteDefinition(path: '/to', component: ng.createToComponentFactory()),
     RouteDefinition.redirect(path: '/.*', redirectTo: '/to'),
   ];
 

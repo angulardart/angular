@@ -11,6 +11,7 @@ import 'package:angular_analyzer_plugin/src/model/navigable.dart';
 import 'package:angular_analyzer_plugin/src/resolver/angular_scope_visitor.dart';
 import 'package:angular_analyzer_plugin/src/resolver/dart_variable_manager.dart';
 import 'package:angular_analyzer_plugin/src/resolver/internal_variable.dart';
+import 'package:angular_analyzer_plugin/src/resolver/type_helpers.dart';
 import 'package:angular_analyzer_plugin/src/standard_components.dart';
 
 /// Prepare AST nodes local scopes to be resolved in more detail later.
@@ -142,7 +143,7 @@ class PrepareScopeVisitor extends AngularScopeVisitor {
       final exportAs = directive.exportAs;
       if (exportAs != null && directive is Directive) {
         final name = exportAs.string;
-        final type = directive.classElement.type;
+        final type = instantiateClassElementThis(directive.classElement);
         exportAsMap.putIfAbsent(name, () => <InternalVariable>[]);
         exportAsMap[name].add(InternalVariable(name, exportAs, type));
       }
@@ -250,7 +251,7 @@ class PrepareScopeVisitor extends AngularScopeVisitor {
               if (classElement.name == 'TemplateElement') {
                 classElement = standardAngular.templateRef;
               }
-              type = classElement.type;
+              type = instantiateClassElementThis(classElement);
               angularElement = DartElement(classElement);
               break;
             }

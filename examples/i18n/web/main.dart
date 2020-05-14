@@ -6,5 +6,5 @@ import 'package:intl/intl_browser.dart';
 void main() async {
   final locale = await findSystemLocale();
   await initializeMessages(locale);
-  runApp(app_template.AppComponentNgFactory);
+  runApp(app_template.createAppComponentFactory());
 }

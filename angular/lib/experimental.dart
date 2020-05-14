@@ -10,6 +10,7 @@ library angular.experimental;
 
 import 'package:angular/angular.dart';
 import 'package:angular/src/runtime.dart';
+export 'package:angular_compiler/v1/src/metadata.dart' show changeDetectionLink;
 import 'package:meta/meta.dart';
 
 import 'src/bootstrap/run.dart' show appInjector;
@@ -21,7 +22,6 @@ export 'src/common/directives/ng_for_identity.dart' show NgForIdentity;
 export 'src/core/linker/component_factory.dart'
     show debugUsesDefaultChangeDetection;
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
-export 'src/core/metadata/change_detection_link.dart' show changeDetectionLink;
 export 'src/core/zone/ng_zone.dart' show longestPendingTimer, inAngularZone;
 export 'src/runtime/check_binding.dart' show debugCheckBindings;
 

@@ -181,7 +181,7 @@ class HumanizingTemplateAstVisitor
     context ??= StringBuffer();
     context.write('(${astNode.name}');
     if (astNode.reductions.isNotEmpty) {
-      context.write('.${astNode.reductions.join(".")}');
+      context.write('.${astNode.reductions.join('.')}');
     }
     context.write(')');
     if (astNode.value != null) {

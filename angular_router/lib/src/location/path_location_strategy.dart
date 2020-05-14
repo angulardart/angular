@@ -12,7 +12,7 @@ import 'platform_location.dart' show PlatformLocation;
 /// browser's URL.
 ///
 /// `PathLocationStrategy` is the default binding for [LocationStrategy]
-/// provided in [ROUTER_PROVIDERS].
+/// provided in [routerProviders].
 ///
 /// If you're using `PathLocationStrategy`, you must provide a provider for
 /// [appBaseHref] to a string representing the URL prefix that should
@@ -21,34 +21,6 @@ import 'platform_location.dart' show PlatformLocation;
 /// For instance, if you provide an `appBaseHref` of `'/my/app'` and call
 /// `location.go('/foo')`, the browser's URL will become
 /// `example.com/my/app/foo`.
-///
-/// ### Example
-///
-/// ```
-/// import 'package:angular/angular.dart' show bootstrap, Component, provide;
-/// import 'package:angular_router/angular_router.dart'
-///   show
-///     appBaseHref,
-///     Location,
-///     ROUTER_DIRECTIVES,
-///     ROUTER_PROVIDERS,
-///     RouteConfig;
-///
-/// @Component({directives: [ROUTER_DIRECTIVES]})
-/// @RouteConfig([
-///  {...},
-/// ])
-/// class AppCmp {
-///   constructor(location: Location) {
-///     location.go('/foo');
-///   }
-/// }
-///
-/// bootstrap(AppCmp, [
-///   ROUTER_PROVIDERS, // includes binding to PathLocationStrategy
-///   provide(appBaseHref, {useValue: '/my/app'})
-/// ]);
-/// ```
 @Injectable()
 class PathLocationStrategy extends LocationStrategy {
   final PlatformLocation _platformLocation;
@@ -68,24 +40,30 @@ class PathLocationStrategy extends LocationStrategy {
     _platformLocation.onPopState(fn);
   }
 
+  @override
   String getBaseHref() => _baseHref;
 
+  @override
   String prepareExternalUrl(String internal) {
     return Location.joinWithSlash(_baseHref, internal);
   }
 
+  @override
   String hash() => _platformLocation.hash;
 
+  @override
   String path() =>
       _platformLocation.pathname +
       Location.normalizeQueryParams(_platformLocation.search);
 
+  @override
   void pushState(dynamic state, String title, String url, String queryParams) {
     var externalUrl =
         prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
     _platformLocation.pushState(state, title, externalUrl);
   }
 
+  @override
   void replaceState(
       dynamic state, String title, String url, String queryParams) {
     var externalUrl =
@@ -93,10 +71,12 @@ class PathLocationStrategy extends LocationStrategy {
     _platformLocation.replaceState(state, title, externalUrl);
   }
 
+  @override
   void forward() {
     _platformLocation.forward();
   }
 
+  @override
   void back() {
     _platformLocation.back();
   }
