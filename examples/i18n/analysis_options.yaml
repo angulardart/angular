@@ -1,0 +1,2 @@
+# Do not inherit analysis_options.yaml due to generated code not conforming.
+# TODO(b/155117072): Remove this file.

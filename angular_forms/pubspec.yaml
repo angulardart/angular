@@ -1,12 +1,11 @@
 name: angular_forms
-author: Dart Team <misc@dartlang.org>
 homepage: https://angulardart.dev/
 repository: https://github.com/dart-lang/angular
 description: Forms framework for AngularDart.
 version: 2.1.4
 
 environment:
-  sdk: ">=2.5.0-dev.1.0 <3.0.0"
+  sdk: ">=2.8.1 <3.0.0"
 
 dependencies:
   angular: ^6.0.0-alpha+1
@@ -15,7 +14,7 @@ dependencies:
 dev_dependencies:
   angular_test: ^2.4.0
   build_runner: ^1.0.0
-  build_test: ^0.10.2+5
+  build_test: ^1.0.0
   build_web_compilers: ^2.0.0
   mockito: ^3.0.0
   test: ^1.3.0

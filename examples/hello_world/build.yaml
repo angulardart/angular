@@ -6,6 +6,4 @@ targets:
            - web/main.dart
         release_options:
           dart2js_args:
-            - --minify
-            - --trust-type-annotations
-            - --trust-primitives
+            - -O4

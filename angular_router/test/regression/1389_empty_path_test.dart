@@ -12,7 +12,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('navigation to empty path should fail', () async {
-    final testBed = NgTestBed.forComponent(ng.TestComponentNgFactory);
+    final testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
     final testFixture = await testBed.create();
     final router = testFixture.assertOnlyInstance.router;
     final result = await router.navigate('/');

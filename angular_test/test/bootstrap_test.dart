@@ -20,7 +20,7 @@ void main() {
   test('should create a new component in the DOM', () async {
     final host = Element.div();
     final test = await bootstrapForTest(
-      ng_generated.NewComponentInDomNgFactory,
+      ng_generated.createNewComponentInDomFactory(),
       host,
       _noopInjector,
     );
@@ -31,7 +31,7 @@ void main() {
   test('should call a synchronous handler before initial load', () async {
     final host = Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
-      ng_generated.BeforeChangeDetectionNgFactory,
+      ng_generated.createBeforeChangeDetectionFactory(),
       host,
       _noopInjector,
       beforeChangeDetection: (comp) => comp.users.add('Mati'),
@@ -43,7 +43,7 @@ void main() {
   test('should call an asynchronous handler before initial load', () async {
     final host = Element.div();
     final test = await bootstrapForTest<BeforeChangeDetection>(
-      ng_generated.BeforeChangeDetectionNgFactory,
+      ng_generated.createBeforeChangeDetectionFactory(),
       host,
       _noopInjector,
       beforeChangeDetection: (comp) async => comp.users.add('Mati'),
@@ -55,11 +55,11 @@ void main() {
   test('should include user-specified providers', () async {
     final host = Element.div();
     final test = await bootstrapForTest(
-      ng_generated.AddProvidersNgFactory,
+      ng_generated.createAddProvidersFactory(),
       host,
       ([i]) => Injector.map({TestService: TestService()}, i),
     );
-    AddProviders instance = test.instance;
+    var instance = test.instance;
     expect(instance._testService, isNotNull);
     test.destroy();
   });
@@ -67,8 +67,10 @@ void main() {
   test('should be able to call injector before component creation', () async {
     final host = Element.div();
     TestService testService;
-    final test = await bootstrapForTest(ng_generated.AddProvidersNgFactory,
-        host, ([i]) => Injector.map({TestService: TestService()}, i),
+    final test = await bootstrapForTest(
+        ng_generated.createAddProvidersFactory(),
+        host,
+        ([i]) => Injector.map({TestService: TestService()}, i),
         beforeComponentCreated: (injector) {
       testService = injector.get(TestService);
       testService.count++;
@@ -78,7 +80,7 @@ void main() {
             ' `beforeChangeDetection`, `testService` should not be null.');
       }
     });
-    AddProviders instance = test.instance;
+    var instance = test.instance;
     expect(testService, instance._testService);
     expect(testService.count, 1);
     test.destroy();
@@ -88,8 +90,10 @@ void main() {
       () async {
     final host = Element.div();
     TestService testService;
-    final test = await bootstrapForTest(ng_generated.AddProvidersNgFactory,
-        host, ([i]) => Injector.map({TestService: TestService()}, i),
+    final test = await bootstrapForTest(
+        ng_generated.createAddProvidersFactory(),
+        host,
+        ([i]) => Injector.map({TestService: TestService()}, i),
         beforeComponentCreated: (injector) =>
             Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
               testService = injector.get(TestService);
@@ -101,7 +105,7 @@ void main() {
                 ' `beforeChangeDetection`, `testService` should not be null.');
           }
         });
-    AddProviders instance = test.instance;
+    var instance = test.instance;
     expect(testService, instance._testService);
     expect(testService.count, 1);
     test.destroy();

@@ -42,7 +42,7 @@ class SelectControlValueAccessor extends Object
     implements ControlValueAccessor {
   final SelectElement _element;
   dynamic value;
-  final Map<String, dynamic> _optionMap = Map<String, dynamic>();
+  final Map<String, dynamic> _optionMap = <String, dynamic>{};
   num _idCounter = 0;
 
   SelectControlValueAccessor(HtmlElement element)

@@ -1,17 +1,20 @@
 @TestOn('vm')
 import 'package:test/test.dart';
-import 'package:angular/src/compiler/expression_parser/lexer.dart';
-import 'package:angular/src/compiler/expression_parser/parser.dart';
-import 'package:angular/src/compiler/offline_compiler.dart';
-import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
-import 'package:angular/src/compiler/template_ast.dart';
-import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
-import 'package:angular_compiler/cli.dart';
+import 'package:angular_compiler/v1/src/compiler/expression_parser/lexer.dart';
+import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart';
+import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
+import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart';
+import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
+import 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
 
 import '../resolve_util.dart';
 import 'template_humanizer_util.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   final expressionLexer = Lexer();
   final expressionParser = Parser(expressionLexer);
   final schemaRegistry = DomElementSchemaRegistry();
@@ -26,12 +29,13 @@ void main() {
   ) {
     final componentMetadata = component.component;
     final templateAsts = templateParser.parse(
-        componentMetadata,
-        componentMetadata.template.template,
-        component.directives,
-        [],
-        null,
-        componentMetadata.template.templateUrl);
+      componentMetadata,
+      componentMetadata.template.template,
+      component.directives,
+      [],
+      null,
+      componentMetadata.template.templateUrl,
+    );
     return humanizeTplAst(templateAsts);
   }
 

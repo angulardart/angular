@@ -118,7 +118,7 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   Stream get update => _update.stream;
 
   @override
-  ngAfterChanges() {
+  void ngAfterChanges() {
     // Call model changed before added so that the control already has the
     // correct value at initialization.
     if (_modelChanged) {

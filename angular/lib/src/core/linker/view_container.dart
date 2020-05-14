@@ -114,6 +114,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return viewRef;
   }
 
+  @override
   ComponentRef<T> createComponent<T>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
@@ -197,6 +198,21 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     final result = <T>[];
     for (var i = 0, l = nestedViews.length; i < l; i++) {
       result.addAll(callback(unsafeCast<U>(nestedViews[i])));
+    }
+    return result;
+  }
+
+  /// Like [mapNestedViews], but optimized for views with a single result.
+  List<T> mapNestedViewsWithSingleResult<T, U extends DynamicView>(
+    T Function(U) callback,
+  ) {
+    final nestedViews = this.nestedViews;
+    if (nestedViews == null || nestedViews.isEmpty) {
+      return const <Null>[];
+    }
+    final result = <T>[];
+    for (var i = 0, l = nestedViews.length; i < l; i++) {
+      result.add(callback(unsafeCast<U>(nestedViews[i])));
     }
     return result;
   }

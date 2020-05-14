@@ -14,7 +14,7 @@ void main() {
     NgTestFixture<NgModelTest> fixture;
 
     setUp(() async {
-      final testBed = NgTestBed.forComponent(ng.NgModelTestNgFactory);
+      final testBed = NgTestBed.forComponent(ng.createNgModelTestFactory());
       fixture = await testBed.create();
     });
 
@@ -44,7 +44,7 @@ void main() {
 
   test('throws when violating the checkBinding contract', () async {
     final testBed = NgTestBed.forComponent(
-      ng.NgModelWithCheckBindingTestNgFactory,
+      ng.createNgModelWithCheckBindingTestFactory(),
     );
 
     final fixture = await testBed.create();

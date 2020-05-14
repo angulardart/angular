@@ -114,15 +114,15 @@ class AngularDriverTestBase extends AngularTestBase {
         expectedError.errorArgs,
       );
       expect(
-        realErrors.contains(currentExpectedError),
-        true,
+        realErrors,
+        contains(currentExpectedError),
         reason:
             'Expected error code ${expectedError.errorCode} never occurs at '
             'location $offset of length ${expectedError.length}.',
       );
-      expect(realErrors.length, expectedErrors.length,
-          reason: 'Expected error counts do not  match.');
     }
+    expect(realErrors, hasLength(expectedErrors.length),
+        reason: 'Expected error counts do not  match.');
   }
 
   @override

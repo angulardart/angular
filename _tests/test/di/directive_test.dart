@@ -267,13 +267,13 @@ void main() {
 
   test('should treat an OpaqueToken identical to @Inject', () async {
     final fixture = await NgTestBed<InjectsBaseUrl>().create();
-    final InjectsBaseUrl service = fixture.assertOnlyInstance;
+    final service = fixture.assertOnlyInstance;
     expect(service.url, 'https://site.com/api/');
   });
 
   test('should support a custom OpaqueToken', () async {
     final fixture = await NgTestBed<InjectsXsrfToken>().create();
-    final InjectsXsrfToken service = fixture.assertOnlyInstance;
+    final service = fixture.assertOnlyInstance;
     expect(service.token, 'ABC123');
   });
 
@@ -428,7 +428,7 @@ const usPresidentsToken = OpaqueToken<String>('usPresidents');
       multi: true,
     ),
   ],
-  template: "{{usPresidents}}",
+  template: '{{usPresidents}}',
 )
 class ReifiedMultiGenerics {
   final List<String> usPresidents;

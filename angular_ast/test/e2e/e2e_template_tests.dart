@@ -8,7 +8,7 @@ import 'package:angular_ast/angular_ast.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
-main() {
+void main() {
   var parse = const NgParser().parse;
   var templatesDir = p.join('test', 'e2e', 'templates');
 

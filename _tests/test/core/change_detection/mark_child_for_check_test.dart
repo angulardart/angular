@@ -10,7 +10,8 @@ void main() {
 
   group('markChildForCheck() should update', () {
     test('content child', () async {
-      final testBed = NgTestBed.forComponent(ng.TestContentChildNgFactory);
+      final testBed =
+          NgTestBed.forComponent(ng.createTestContentChildFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.child.update('a'));
@@ -18,7 +19,8 @@ void main() {
     });
 
     test('content children', () async {
-      final testBed = NgTestBed.forComponent(ng.TestContentChildrenNgFactory);
+      final testBed =
+          NgTestBed.forComponent(ng.createTestContentChildrenFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.child.update('a'));
@@ -26,7 +28,7 @@ void main() {
     });
 
     test('view child', () async {
-      final testBed = NgTestBed.forComponent(ng.TestViewChildNgFactory);
+      final testBed = NgTestBed.forComponent(ng.createTestViewChildFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
@@ -34,7 +36,8 @@ void main() {
     });
 
     test('view children', () async {
-      final testBed = NgTestBed.forComponent(ng.TestViewChildrenNgFactory);
+      final testBed =
+          NgTestBed.forComponent(ng.createTestViewChildrenFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
@@ -45,7 +48,7 @@ void main() {
     group('existing provider', () {
       test('content children', () async {
         final testBed = NgTestBed.forComponent(
-            ng.TestExistingProviderContentChildrenNgFactory);
+            ng.createTestExistingProviderContentChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.child.update('a'));
@@ -54,7 +57,7 @@ void main() {
 
       test('view children', () async {
         final testBed = NgTestBed.forComponent(
-            ng.TestExistingProviderViewChildrenNgFactory);
+            ng.createTestExistingProviderViewChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.update('a'));
@@ -64,8 +67,8 @@ void main() {
 
     group('nested', () {
       test('content children', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.TestEmbeddedContentChildrenNgFactory);
+        final testBed = NgTestBed.forComponent(
+            ng.createTestEmbeddedContentChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.child.update('a'));
@@ -84,7 +87,7 @@ void main() {
 
       test('view children', () async {
         final testBed =
-            NgTestBed.forComponent(ng.TestEmbeddedViewChildrenNgFactory);
+            NgTestBed.forComponent(ng.createTestEmbeddedViewChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) {
@@ -246,6 +249,7 @@ abstract class HasValue {
   changeDetection: ChangeDetectionStrategy.OnPush,
 )
 class ChildWithExistingProvider implements HasValue {
+  @override
   var value = '';
 }
 

@@ -49,7 +49,7 @@ void main() {
   template: '',
 )
 class CatchSynchronousErrors {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final fixture = await NgTestBed<CatchSynchronousErrors>().create();
     expect(
       fixture.update((_) => throw StateError('Test')),
@@ -63,7 +63,7 @@ class CatchSynchronousErrors {
   template: '',
 )
 class CatchAsynchronousErrors {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final fixture = await NgTestBed<CatchAsynchronousErrors>().create();
     expect(
       fixture.update((_) => Future.error(StateError('Test'))),
@@ -77,7 +77,7 @@ class CatchAsynchronousErrors {
   template: '',
 )
 class CatchConstructorErrors {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final testBed = NgTestBed<CatchConstructorErrors>();
     expect(
       testBed.create(),
@@ -95,7 +95,7 @@ class CatchConstructorErrors {
   template: '',
 )
 class CatchConstructorAsyncErrors {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final testBed = NgTestBed<CatchConstructorAsyncErrors>();
     expect(
       testBed.create(),
@@ -115,7 +115,7 @@ class CatchConstructorAsyncErrors {
   template: '',
 )
 class CatchOnInitErrors implements OnInit {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final testBed = NgTestBed<CatchOnInitErrors>();
     expect(
       testBed.create(),
@@ -135,7 +135,7 @@ class CatchOnInitErrors implements OnInit {
   directives: [ChildChangeDetectionError],
 )
 class CatchInChangeDetection {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     final fixture = await NgTestBed<CatchInChangeDetection>().create();
     expect(
       fixture.update((c) => c.value = true),
@@ -164,7 +164,7 @@ class ChildChangeDetectionError {
   template: '<h1>Hello {{name}}</h1>',
 )
 class RegressionTest631 {
-  static _runTest() async {
+  static Future<void> _runTest() async {
     // A simple in-memory handler
     final simpleHandler = _SimpleExceptionHandler();
     final fixture = await NgTestBed<RegressionTest631>().addProviders([

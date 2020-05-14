@@ -143,7 +143,7 @@ void main() {
       allOf([
         isNot(contains(
             "The argument type 'int' can't be assigned to the parameter type 'String'")),
-        isNot(contains("neverMentionFour"))
+        isNot(contains('neverMentionFour'))
       ]),
     ]);
   });

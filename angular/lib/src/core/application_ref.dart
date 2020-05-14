@@ -85,7 +85,8 @@ class ApplicationRef extends ChangeDetectionHost {
         document.body.append(component.location);
       }
       final injector = component.injector;
-      final Testability testability = injector.provideTypeOptional(Testability);
+      final testability =
+          injector.provideTypeOptional<Testability>(Testability);
       if (testability != null) {
         final registry = _injector.provideType<TestabilityRegistry>(
           TestabilityRegistry,

@@ -10,7 +10,7 @@ void main() {
 
   test('should support default named arguments', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsWithDefaultValue1>(
-      ng.TestNamedArgsWithDefaultValue1NgFactory,
+      ng.createTestNamedArgsWithDefaultValue1Factory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {
@@ -21,7 +21,7 @@ void main() {
 
   test('should support default named arguments with a tear-off', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsWithDefaultValue2>(
-      ng.TestNamedArgsWithDefaultValue2NgFactory,
+      ng.createTestNamedArgsWithDefaultValue2Factory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {
@@ -32,7 +32,7 @@ void main() {
 
   test('should support passing a component field as positional arg', () async {
     final testBed = NgTestBed.forComponent<TestPositionalArgsFromComponent>(
-      ng.TestPositionalArgsFromComponentNgFactory,
+      ng.createTestPositionalArgsFromComponentFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {
@@ -43,7 +43,7 @@ void main() {
 
   test('should support passing a component field as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromComponentField>(
-      ng.TestNamedArgsFromComponentFieldNgFactory,
+      ng.createTestNamedArgsFromComponentFieldFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {
@@ -54,7 +54,7 @@ void main() {
 
   test('should support passing a literal value as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromLiteralValue>(
-      ng.TestNamedArgsFromLiteralValueNgFactory,
+      ng.createTestNamedArgsFromLiteralValueFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {
@@ -65,7 +65,7 @@ void main() {
 
   test('should support passing a template local variable as an arg', () async {
     final testBed = NgTestBed.forComponent<TestNamedArgsFromLocalValue>(
-      ng.TestNamedArgsFromLocalValueNgFactory,
+      ng.createTestNamedArgsFromLocalValueFactory(),
     );
     final fixture = await testBed.create();
     await fixture.update((_) {

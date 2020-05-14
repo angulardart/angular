@@ -1,16 +1,12 @@
 name: angular_analyzer_plugin
 version: 1.0.0-alpha+1
 description: Dart analyzer plugin for Angular
-authors:
-  - Konstantin Scheglov <scheglov@google.com>
-  - Mike Fairhurst <mfairhurst@google.com>
-  - Max Kim <maxkim@google.com>
 homepage: https://angulardart.dev/
 repository: https://github.com/dart-lang/angular
 environment:
-  sdk: ">=2.5.0-dev.1.0 <3.0.0"
+  sdk: ">=2.8.1 <3.0.0"
 dependencies:
-  analyzer: ^0.38.3
+  analyzer: ^0.39.8
   plugin: ^0.2.0
   analyzer_plugin: '>=0.1.0 <0.3.0'
   angular_ast: '0.5.11'

@@ -11,10 +11,10 @@ void main() {
 
   test('should start and stop a benchmark', () async {
     final testBed = NgTestBed.forComponent(
-      common.BenchmarkComponentNgFactory,
+      common.createBenchmarkComponentFactory(),
       rootInjector: ([i]) {
         return Injector.map(
-          {runBenchmarkOn: ng.ExampleBenchmarkNgFactory},
+          {runBenchmarkOn: ng.createExampleBenchmarkFactory()},
           i,
         );
       },

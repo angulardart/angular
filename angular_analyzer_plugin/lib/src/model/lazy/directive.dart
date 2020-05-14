@@ -56,6 +56,7 @@ class Directive implements resolved.Directive {
       other.source == source &&
       other.classElement == classElement;
 
+  @override
   int get hashCode => classElement.hashCode;
 
   resolved.Directive load() => _linkedDirective ??= linkFn();

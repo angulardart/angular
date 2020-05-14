@@ -40,7 +40,7 @@ class NgZone {
   /// It is highly preferred to use `assert(ngZone.inInnerZone)` instead.
   static void assertInAngularZone() {
     if (!isInAngularZone()) {
-      throw Exception("Expected to be in Angular Zone, but it is not!");
+      throw Exception('Expected to be in Angular Zone, but it is not!');
     }
   }
 
@@ -49,7 +49,7 @@ class NgZone {
   /// It is highly preferred to use `assert(ngZone.inOuterZone)` instead.
   static void assertNotInAngularZone() {
     if (isInAngularZone()) {
-      throw Exception("Expected to not be in Angular Zone, but it is!");
+      throw Exception('Expected to not be in Angular Zone, but it is!');
     }
   }
 
@@ -102,8 +102,8 @@ class NgZone {
   bool get inOuterZone => Zone.current == _outerZone;
 
   Zone _createInnerZone(Zone zone,
-      {void handleUncaughtError(
-          Zone _, ZoneDelegate __, Zone ___, Object ____, StackTrace s)}) {
+      {void Function(Zone, ZoneDelegate, Zone, Object, StackTrace)
+          handleUncaughtError}) {
     return zone.fork(
       specification: ZoneSpecification(
         scheduleMicrotask: _scheduleMicrotask,
@@ -118,7 +118,7 @@ class NgZone {
   }
 
   void _scheduleMicrotask(
-      Zone self, ZoneDelegate parent, Zone zone, void fn()) {
+      Zone self, ZoneDelegate parent, Zone zone, void Function() fn) {
     if (_pendingMicrotasks == 0) {
       _setMicrotask(true);
     }
@@ -137,7 +137,7 @@ class NgZone {
     parent.scheduleMicrotask(zone, safeMicrotask);
   }
 
-  R _run<R>(Zone self, ZoneDelegate parent, Zone zone, R fn()) {
+  R _run<R>(Zone self, ZoneDelegate parent, Zone zone, R Function() fn) {
     return parent.run(zone, () {
       try {
         _onEnter();
@@ -149,7 +149,7 @@ class NgZone {
   }
 
   R _runUnary<R, T>(
-      Zone self, ZoneDelegate parent, Zone zone, R fn(T arg), T arg) {
+      Zone self, ZoneDelegate parent, Zone zone, R Function(T) fn, T arg) {
     return parent.runUnary(zone, (T arg) {
       try {
         _onEnter();
@@ -161,7 +161,7 @@ class NgZone {
   }
 
   R _runBinary<R, T1, T2>(Zone self, ZoneDelegate parent, Zone zone,
-      R fn(T1 arg1, T2 arg2), T1 arg1, T2 arg2) {
+      R Function(T1, T2) fn, T1 arg1, T2 arg2) {
     return parent.runBinary(zone, (T1 arg1, T2 arg2) {
       try {
         _onEnter();
@@ -217,7 +217,7 @@ class NgZone {
         onDone();
       }
     };
-    Timer timer = parent.createTimer(zone, duration, callback);
+    var timer = parent.createTimer(zone, duration, callback);
     wrappedTimer = _WrappedTimer(timer, duration, onDone);
     _pendingTimers.add(wrappedTimer);
     _setMacrotask(true);
@@ -375,18 +375,23 @@ class NgZone {
 
   /// Executes a callback after changes were observed by the zone.
   ///
-  /// Instead of adding arbitrary `Timer.run` and `scheduleMicrotask` calls to
-  /// user-code to try and simulate this event, instead `await` directly from
-  /// the `NgZone`:
+  /// Use this method instead of `Future`, `Timer.run`, and `scheduleMicrotask`
+  /// to execute a [callback] after change detection has run:
   ///
   /// ```
-  /// void example(NgZone zone) async {
+  /// void example(NgZone zone) {
   ///   someValue = true;
   ///   zone.runAfterChangesObserved(() {
   ///     doSomethingDependentOnSomeValueChanging();
   ///   });
   /// }
   /// ```
+  ///
+  /// Note that unlike `Future` and `Timer.run`, this method will execute
+  /// [callback] in the current event loop before yielding to the browser. This
+  /// means that changes made prior to invoking this method, even if reflected
+  /// in the DOM, may not be *visible* until after [callback] returns and the
+  /// browser can render another frame.
   void runAfterChangesObserved(void Function() callback) {
     if (isRunning) {
       onTurnDone.first.whenComplete(() => scheduleMicrotask(callback));
@@ -436,11 +441,13 @@ class _WrappedTimer implements Timer {
 
   _WrappedTimer(this._timer, this._duration, this._onCancel);
 
+  @override
   void cancel() {
     _onCancel();
     _timer.cancel();
   }
 
+  @override
   bool get isActive => _timer.isActive;
 
   @override

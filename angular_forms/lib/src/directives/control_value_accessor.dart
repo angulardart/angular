@@ -32,10 +32,10 @@ const ngValueAccessor = MultiToken<ControlValueAccessor>(
 );
 
 /// Type of the function to be called when the control receives a change event.
-typedef dynamic ChangeFunction<T>(T value, {String rawValue});
+typedef ChangeFunction<T> = dynamic Function(T value, {String rawValue});
 
 /// Type of the function to be called when the control receives a touch event.
-typedef dynamic TouchFunction();
+typedef TouchFunction = dynamic Function();
 
 /// A mixin to add touch support to a [ControlValueAccessor].
 ///

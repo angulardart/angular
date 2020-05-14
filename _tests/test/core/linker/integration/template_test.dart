@@ -6,15 +6,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'template_test.template.dart' as ng_generated;
+import 'template_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support template directives via <template> elements', () async {
-    final testBed = NgTestBed<TemplateDirectiveComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTemplateDirectiveComponentFactory());
     final testFixture = await testBed.create();
     // 1 template + 2 copies.
     expect(testFixture.rootElement.childNodes, hasLength(3));
@@ -23,7 +22,8 @@ void main() {
   });
 
   test('should not detach views when parent is destroyed', () async {
-    final testBed = NgTestBed<DestroyParentViewComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createDestroyParentViewComponentFactory());
     final testFixture = await testBed.create();
     final ngIfElement = testFixture.rootElement.children.first;
     final someViewport = testFixture.assertOnlyInstance.viewport;
@@ -35,7 +35,8 @@ void main() {
   });
 
   test('should use a comment while stamping out <template> elements', () async {
-    final testBed = NgTestBed<EmptyTemplateComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createEmptyTemplateComponentFactory());
     final testFixture = await testBed.create();
     final childNodes = testFixture.rootElement.childNodes;
     expect(childNodes, hasLength(1));
@@ -43,7 +44,8 @@ void main() {
   });
 
   test('should transplant TemplateRef into another ViewContainer', () async {
-    final testBed = NgTestBed<TemplateRefTransplantComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createTemplateRefTransplantComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text,
         'From component,From toolbar,Component with an injected host');

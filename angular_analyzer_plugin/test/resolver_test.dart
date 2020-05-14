@@ -73,9 +73,9 @@ class TestPanel {
   }
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{<}}
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertErrorsWithCodes([
@@ -130,15 +130,15 @@ class NamePanel {
     directives: const [NamePanel])
 class TestPanel {}
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <name-panel name-panel-attr="foo"></name-panel>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("name-panel-attr=")
+    _assertNavigable('name-panel-attr=')
         .angular
         .inFileName('/test_panel.dart')
-        .at("namePanelAttr");
+        .at('namePanelAttr');
   }
 
   // ignore: non_constant_identifier_names
@@ -151,7 +151,7 @@ class TestPanel {
   String bbb; // 2
 }
 ''');
-    _addHtmlSource(r"""<button attr<="value"></button>""");
+    _addHtmlSource(r'''<button attr<="value"></button>''');
     await _resolveSingleTemplate(dartSource);
 
     // no assertion...this throws in the github bug
@@ -170,9 +170,9 @@ class CustomTemplateDirective {
   CustomTemplateDirective(TemplateRef tpl);
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div template="customTemplateDirective"></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -191,15 +191,15 @@ class CustomTemplateDirective {
   CustomTemplateDirective(TemplateRef tpl);
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div customTemplateDirective></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.CUSTOM_DIRECTIVE_MAY_REQUIRE_TEMPLATE,
         code,
-        "<div customTemplateDirective>");
+        '<div customTemplateDirective>');
   }
 
   // ignore: non_constant_identifier_names
@@ -214,13 +214,13 @@ class TestPanel {
 class NotTemplateDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div *notTemplateDirective></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.TEMPLATE_ATTR_NOT_USED, code,
-        "*notTemplateDirective");
+        '*notTemplateDirective');
   }
 
   // ignore: non_constant_identifier_names
@@ -235,9 +235,9 @@ class TestPanel {
 class NotTemplateDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div template="notTemplateDirective"></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -257,9 +257,9 @@ class CustomTemplateDirective {
   CustomTemplateDirective(TemplateRef tpl);
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div *customTemplateDirective></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -298,7 +298,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticTypeWarningCode.UNDEFINED_GETTER, code, "length");
+        StaticTypeWarningCode.UNDEFINED_GETTER, code, 'length');
   }
 
   // ignore: non_constant_identifier_names
@@ -417,7 +417,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INVALID_HTML_CLASSNAME, code, "invalid.class");
+        AngularWarningCode.INVALID_HTML_CLASSNAME, code, 'invalid.class');
   }
 
   // ignore: non_constant_identifier_names
@@ -434,7 +434,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CLASS_BINDING_NOT_BOOLEAN, code, "notBoolean");
+        AngularWarningCode.CLASS_BINDING_NOT_BOOLEAN, code, 'notBoolean');
   }
 
   // ignore: non_constant_identifier_names
@@ -461,13 +461,13 @@ class TestPanel {
   String name = "TestPanel";
 }
 ''');
-    final code = r"""
+    final code = r'''
 <p>{{name...}}</p>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TRAILING_EXPRESSION, code, "...");
+        AngularWarningCode.TRAILING_EXPRESSION, code, '...');
   }
 
   // ignore: non_constant_identifier_names
@@ -479,13 +479,13 @@ class TestPanel {
   int b = 1;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div [class.selected]="a==b..."></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TRAILING_EXPRESSION, code, "...");
+        AngularWarningCode.TRAILING_EXPRESSION, code, '...');
   }
 
   // ignore: non_constant_identifier_names
@@ -497,13 +497,13 @@ class TestPanel {
 }
 ''');
 
-    final code = r"""
+    final code = r'''
 <p>{{name; bad portion}}</p>
- """;
+ ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TRAILING_EXPRESSION, code, "; bad portion");
+        AngularWarningCode.TRAILING_EXPRESSION, code, '; bad portion');
   }
 
   // ignore: non_constant_identifier_names
@@ -516,13 +516,13 @@ class TestPanel {
 }
 ''');
 
-    final code = r"""
+    final code = r'''
 <div [class.selected]="a == b; bad portion"></div>
- """;
+ ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TRAILING_EXPRESSION, code, "; bad portion");
+        AngularWarningCode.TRAILING_EXPRESSION, code, '; bad portion');
   }
 
   // ignore: non_constant_identifier_names
@@ -544,7 +544,7 @@ class TestPanel {
     _assertNavigable('handleClick').dart.method.at('handleClick(MouseEvent');
 
     errorListener.assertNoErrors();
-    final search = ElementSearch((e) => e.localName == "div");
+    final search = ElementSearch((e) => e.localName == 'div');
     template.ast.accept(search);
 
     expect(search.element, isNotNull);
@@ -585,13 +585,13 @@ class GenericComponent<T extends O, O extends String> {
   @Input() T string;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <generic-comp [string]="notString"></generic-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, "notString");
+        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, 'notString');
   }
 
   Future
@@ -608,13 +608,13 @@ class GenericComponent<T extends String> {
   @Input() List<T> stringList;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <generic-comp [stringList]="notStringList"></generic-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, "notStringList");
+        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, 'notStringList');
   }
 
   Future
@@ -794,15 +794,15 @@ class TitleComponent {
 }
 ''');
 
-    final code = r"""
+    final code = r'''
 <title-comp boolInput="foo bar baz"></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.STRING_STYLE_INPUT_BINDING_INVALID,
         code,
-        "boolInput");
+        'boolInput');
   }
 
   // ignore: non_constant_identifier_names
@@ -818,9 +818,9 @@ class TitleComponent {
 }
 ''');
 
-    final code = r"""
+    final code = r'''
 <title-comp boolInput></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -902,7 +902,7 @@ class TitleComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.STRING_STYLE_INPUT_BINDING_INVALID,
         code,
-        "titleInput");
+        'titleInput');
   }
 
   // ignore: non_constant_identifier_names
@@ -935,7 +935,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.NONEXIST_INPUT_BOUND, code, "title");
+        AngularWarningCode.NONEXIST_INPUT_BOUND, code, 'title');
   }
 
   // ignore: non_constant_identifier_names
@@ -1000,13 +1000,13 @@ class TitleComponent {
   @Input() int title;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp [title]=""></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.EMPTY_BINDING, code, "[title]");
+        AngularWarningCode.EMPTY_BINDING, code, '[title]');
   }
 
   Future
@@ -1023,13 +1023,13 @@ class GenericComponent<T extends String> {
   @Input() T string;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <generic-comp [string]="notString"></generic-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, "notString");
+        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, 'notString');
   }
 
   // ignore: non_constant_identifier_names
@@ -1057,10 +1057,10 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div hidden="allowed because becomes addAttribute() rather than .hidden="></div>
 <img width="allowed because becomes addAttribute() rather than .width=" />
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -1073,14 +1073,14 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="$event">
 </h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.UNDEFINED_IDENTIFIER, code, r"$event");
+        StaticWarningCode.UNDEFINED_IDENTIFIER, code, r'$event');
   }
 
   // ignore: non_constant_identifier_names
@@ -1096,13 +1096,13 @@ class TitleComponent {
   @Input() int title;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp [title]></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.EMPTY_BINDING, code, "[title]");
+        AngularWarningCode.EMPTY_BINDING, code, '[title]');
   }
 
   // ignore: non_constant_identifier_names
@@ -1163,7 +1163,7 @@ class TitleComponent {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, "text");
+        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, 'text');
   }
 
   // ignore: non_constant_identifier_names
@@ -1221,7 +1221,7 @@ class TitleComponent {
     await _resolveSingleTemplate(dartSource);
 
     errorListener.assertNoErrors();
-    final search = ElementSearch((e) => e.localName == "span");
+    final search = ElementSearch((e) => e.localName == 'span');
     template.ast.accept(search);
 
     expect(search.element, isNotNull);
@@ -1267,13 +1267,13 @@ class TestPanel {
   Function f;
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{str = (f)()}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "str = (f)()");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'str = (f)()');
   }
 
   // ignore: non_constant_identifier_names
@@ -1318,13 +1318,13 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1>{{$event}}</h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.UNDEFINED_IDENTIFIER, code, r"$event");
+        StaticWarningCode.UNDEFINED_IDENTIFIER, code, r'$event');
   }
 
   // ignore: non_constant_identifier_names
@@ -1387,7 +1387,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.NONEXIST_OUTPUT_BOUND, code, "title");
+        AngularWarningCode.NONEXIST_OUTPUT_BOUND, code, 'title');
   }
 
   Future
@@ -1405,13 +1405,13 @@ class GenericComponent<T extends String> {
   @Output() Stream<T> string;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <generic-comp (string)="takeInt($event)"></generic-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.ARGUMENT_TYPE_NOT_ASSIGNABLE, code, r"$event");
+        StaticWarningCode.ARGUMENT_TYPE_NOT_ASSIGNABLE, code, r'$event');
   }
 
   // ignore: non_constant_identifier_names
@@ -1428,13 +1428,13 @@ class TitleComponent {
   @Output() Stream<int> title;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp (title)></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.EMPTY_BINDING, code, "(title)");
+        AngularWarningCode.EMPTY_BINDING, code, '(title)');
   }
 
   // ignore: non_constant_identifier_names
@@ -1457,7 +1457,7 @@ class TitleComponent {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.ARGUMENT_TYPE_NOT_ASSIGNABLE, code, r"$event");
+        StaticWarningCode.ARGUMENT_TYPE_NOT_ASSIGNABLE, code, r'$event');
   }
 
   // ignore: non_constant_identifier_names
@@ -1495,9 +1495,9 @@ class Pipe1 extends PipeTransform {
   String transform(int x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 <p>{{((1 | pipe1:(2+2):(5 | pipe1:1:2)) + (2 | pipe1:4:2))}}</p>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -1521,9 +1521,9 @@ class AmbiguousPipe2 extends PipeTransform {
   String transform(String x => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{"" | ambiguous}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -1542,13 +1542,13 @@ class StringPipe extends PipeTransform {
   String transform(String x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{"" | stringPipe: "extra"}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.EXTRA_POSITIONAL_ARGUMENTS, code, '"extra"');
+        CompileTimeErrorCode.EXTRA_POSITIONAL_ARGUMENTS, code, '"extra"');
   }
 
   @failingTest
@@ -1563,13 +1563,13 @@ class StringPipe extends PipeTransform {
   String transform(String x, [String y]) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{"" | stringPipe: "": "extra"}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.EXTRA_POSITIONAL_ARGUMENTS, code, '"extra"');
+        CompileTimeErrorCode.EXTRA_POSITIONAL_ARGUMENTS, code, '"extra"');
   }
 
   // ignore: non_constant_identifier_names
@@ -1579,9 +1579,9 @@ class StringPipe extends PipeTransform {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{1 | noSuchPipe}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -1599,9 +1599,9 @@ class StringPipe extends PipeTransform {
   String transform(String x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{1 | stringPipe}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -1620,9 +1620,9 @@ class StringPipe extends PipeTransform {
   String transform(String x, [String y]) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{"" | stringPipe: 1}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -1641,9 +1641,9 @@ class StringPipe extends PipeTransform {
   String transform(String x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{takeInt("" | stringPipe)}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(StaticWarningCode.ARGUMENT_TYPE_NOT_ASSIGNABLE,
@@ -1662,13 +1662,13 @@ class Pipe1 extends PipeTransform {
   int transform(int x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 <p>{{((1 | pipe1:(2+2):(5 | pipe1:1:2)) + (error1 | pipe1:4:2))}}</p>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.UNDEFINED_IDENTIFIER, code, "error1");
+        StaticWarningCode.UNDEFINED_IDENTIFIER, code, 'error1');
   }
 
   @failingTest
@@ -1683,13 +1683,13 @@ class Pipe1 extends PipeTransform {
   String transform(String x) => "";
 }
 ''');
-    final code = r"""
+    final code = r'''
 <p>{{1 | pipe1:error1}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticWarningCode.UNDEFINED_IDENTIFIER, code, "error1");
+        StaticWarningCode.UNDEFINED_IDENTIFIER, code, 'error1');
   }
 
   // ignore: non_constant_identifier_names
@@ -1747,7 +1747,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticTypeWarningCode.UNDEFINED_GETTER, code, "length");
+        StaticTypeWarningCode.UNDEFINED_GETTER, code, 'length');
   }
 
   // ignore: non_constant_identifier_names
@@ -1877,7 +1877,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INVALID_CSS_UNIT_NAME, code, "%");
+        AngularWarningCode.INVALID_CSS_UNIT_NAME, code, '%');
   }
 
   // ignore: non_constant_identifier_names
@@ -1894,7 +1894,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CSS_UNIT_BINDING_NOT_NUMBER, code, "notNumber");
+        AngularWarningCode.CSS_UNIT_BINDING_NOT_NUMBER, code, 'notNumber');
   }
 
   // ignore: non_constant_identifier_names
@@ -1921,13 +1921,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="#symbol()"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "#symbol",
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '#symbol',
         additionalErrorCodes: [
           StaticTypeWarningCode.INVOCATION_OF_NON_FUNCTION_EXPRESSION
         ]);
@@ -1949,13 +1949,13 @@ class GenericComponent<T extends String> {
   @Input() dynamic string;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <generic-comp [(string)]="anInt"></generic-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TWO_WAY_BINDING_OUTPUT_TYPE_ERROR, code, "anInt");
+        AngularWarningCode.TWO_WAY_BINDING_OUTPUT_TYPE_ERROR, code, 'anInt');
   }
 
   // ignore: non_constant_identifier_names
@@ -1979,7 +1979,7 @@ class TitleComponent {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, "text");
+        AngularWarningCode.INPUT_BINDING_TYPE_ERROR, code, 'text');
   }
 
   // ignore: non_constant_identifier_names
@@ -1997,13 +1997,13 @@ class TitleComponent {
   @Output() Stream<String> twoWayChange;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <span titled [(twoWay)]></span>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.EMPTY_BINDING, code, "[(twoWay)]");
+        AngularWarningCode.EMPTY_BINDING, code, '[(twoWay)]');
   }
 
   // ignore: non_constant_identifier_names
@@ -2020,13 +2020,13 @@ class TitleComponent {
   @Output() Stream<String> noInputChange;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp [(noInput)]="text"></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.NONEXIST_INPUT_BOUND, code, "noInput");
+        AngularWarningCode.NONEXIST_INPUT_BOUND, code, 'noInput');
   }
 
   // ignore: non_constant_identifier_names
@@ -2042,13 +2042,13 @@ class TitleComponent {
   @Input() String inputOnly;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp [(inputOnly)]="text"></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.NONEXIST_TWO_WAY_OUTPUT_BOUND, code, "inputOnly");
+        AngularWarningCode.NONEXIST_TWO_WAY_OUTPUT_BOUND, code, 'inputOnly');
   }
 
   // ignore: non_constant_identifier_names
@@ -2066,15 +2066,15 @@ class TitleComponent {
   @Output() Stream<String> titleChange;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <title-comp [(title)]="text.toUpperCase()"></title-comp>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.TWO_WAY_BINDING_NOT_ASSIGNABLE,
         code,
-        "text.toUpperCase()");
+        'text.toUpperCase()');
   }
 
   // ignore: non_constant_identifier_names
@@ -2098,7 +2098,7 @@ class TitleComponent {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TWO_WAY_BINDING_OUTPUT_TYPE_ERROR, code, "text");
+        AngularWarningCode.TWO_WAY_BINDING_OUTPUT_TYPE_ERROR, code, 'text');
   }
 
   // ignore: non_constant_identifier_names
@@ -2121,7 +2121,7 @@ class TitleComponent {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    final search = ElementSearch((e) => e.localName == "span");
+    final search = ElementSearch((e) => e.localName == 'span');
     template.ast.accept(search);
 
     expect(search.element, isNotNull);
@@ -2141,9 +2141,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{-x}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -2157,9 +2157,9 @@ class TestPanel {
   bool x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{!x}}
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -2173,13 +2173,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1>{{str as String}}</h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "str as String");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'str as String');
   }
 
   // ignore: non_constant_identifier_names
@@ -2190,9 +2190,9 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="await str"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     //This actually gets parsed as an identifier, which is OK. Still fails!
@@ -2210,13 +2210,13 @@ class TestPanel {
   bool val;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="val..toString"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "val..toString");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'val..toString');
   }
 
   // ignore: non_constant_identifier_names
@@ -2227,13 +2227,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="(){} == null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "(){}");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '(){}');
   }
 
   // ignore: non_constant_identifier_names
@@ -2244,13 +2244,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="null == ()=>null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "()=>null");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '()=>null');
   }
 
   // ignore: non_constant_identifier_names
@@ -2261,13 +2261,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="str is int"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "str is int");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'str is int');
   }
 
   // ignore: non_constant_identifier_names
@@ -2278,9 +2278,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="x -= 1"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2311,13 +2311,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1>{{(str.isEmpty as String).isEmpty}}</h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.DISALLOWED_EXPRESSION, code,
-        "str.isEmpty as String");
+        'str.isEmpty as String');
   }
 
   // ignore: non_constant_identifier_names
@@ -2328,13 +2328,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="new TestPanel() != null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "new TestPanel()");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'new TestPanel()');
   }
 
   Future test_expressionNotAllowed_plusEq() async {
@@ -2344,9 +2344,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="x += 1"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2360,9 +2360,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="x--"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2377,9 +2377,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="x++"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2394,9 +2394,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="--x"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2411,9 +2411,9 @@ class TestPanel {
   int x;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 (click)="++x"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2428,13 +2428,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
     <h1 #h1 [hidden]="(h1 = null) == null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "h1 = null");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'h1 = null');
   }
 
   // ignore: non_constant_identifier_names
@@ -2445,13 +2445,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="rethrow"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        CompileTimeErrorCode.RETHROW_OUTSIDE_CATCH, code, "rethrow");
+        CompileTimeErrorCode.RETHROW_OUTSIDE_CATCH, code, 'rethrow');
   }
 
   // ignore: non_constant_identifier_names
@@ -2479,13 +2479,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 #h1 (click)="h1 = null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "h1 = null");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'h1 = null');
   }
 
   // ignore: non_constant_identifier_names
@@ -2496,13 +2496,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="super.x"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        CompileTimeErrorCode.SUPER_IN_INVALID_CONTEXT, code, "super");
+        CompileTimeErrorCode.SUPER_IN_INVALID_CONTEXT, code, 'super');
   }
 
   // ignore: non_constant_identifier_names
@@ -2513,13 +2513,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="#symbol == null"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "#symbol");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '#symbol');
   }
 
   // ignore: non_constant_identifier_names
@@ -2530,13 +2530,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="this"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        CompileTimeErrorCode.INVALID_REFERENCE_TO_THIS, code, "this");
+        CompileTimeErrorCode.INVALID_REFERENCE_TO_THIS, code, 'this');
   }
 
   // ignore: non_constant_identifier_names
@@ -2547,13 +2547,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="throw str"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "throw str");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, 'throw str');
   }
 
   // ignore: non_constant_identifier_names
@@ -2564,13 +2564,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="<String>[].isEmpty"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "<String>[]");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '<String>[]');
   }
 
   // ignore: non_constant_identifier_names
@@ -2581,13 +2581,13 @@ class TestPanel {
   String str;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <h1 [hidden]="<String, String>{}.keys.isEmpty"></h1>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.DISALLOWED_EXPRESSION, code, "<String, String>{}");
+        AngularWarningCode.DISALLOWED_EXPRESSION, code, '<String, String>{}');
   }
 
   // ignore: non_constant_identifier_names
@@ -2605,10 +2605,10 @@ class FutureOrApis {
   int justInt;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <future-or-apis [futureOrInt]="futureInt"></future-or-apis>
 <future-or-apis [futureOrInt]="justInt"></future-or-apis>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -2627,10 +2627,10 @@ class HasTemplateInputComponent {
   TemplateRef myTemplate;
 }
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <template #someTemplate></template>
 <has-template-input [myTemplate]="someTemplate"></has-template-input>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
     _assertNavigable('someTemplate"').local.at('someTemplate>');
@@ -2649,14 +2649,14 @@ class TestPanel extends BaseComponent {
   }
 }
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <div>
   Hello {{text}}!
 </div>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     expect(ranges, hasLength(1));
-    _assertNavigable("text}}").dart.getter.at('text; // 1');
+    _assertNavigable('text}}').dart.getter.at('text; // 1');
     errorListener.assertNoErrors();
   }
 
@@ -2680,10 +2680,10 @@ class TestPanel {}
 <name-panel aaa='1' [bbb]='2' bind-ccc='3' id="someid"></name-panel>
 """);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("aaa=").input.at("aaa;");
-    _assertNavigable("bbb]=").input.at("bbb;");
-    _assertNavigable("ccc=").input.at("ccc;");
-    _assertNavigable("id=").input.inCoreHtml;
+    _assertNavigable('aaa=').input.at('aaa;');
+    _assertNavigable('bbb]=').input.at('bbb;');
+    _assertNavigable('ccc=').input.at('ccc;');
+    _assertNavigable('id=').input.inCoreHtml;
   }
 
   // ignore: non_constant_identifier_names
@@ -2707,16 +2707,16 @@ class FoobarDirective {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("ngFor let").selector.inFileName('ng_for.dart');
-    _assertNavigable("item [").local.declaration.type('String');
-    _assertSelectorElement("ngForOf]")
+    _assertNavigable('ngFor let').selector.inFileName('ng_for.dart');
+    _assertNavigable('item [').local.declaration.type('String');
+    _assertSelectorElement('ngForOf]')
         .selector
         .string('ngForOf')
         .inFileName('ng_for.dart');
-    _assertInput("ngForOf]").name('ngForOf').inFileName('ng_for.dart');
+    _assertInput('ngForOf]').name('ngForOf').inFileName('ng_for.dart');
     _assertNavigable("items'").dart.getter.at('items = []');
     _assertNavigable("i='index").local.declaration.type('int');
-    _assertNavigable("item").local.at('item [');
+    _assertNavigable('item').local.at('item [');
   }
 
   // ignore: non_constant_identifier_names
@@ -2756,9 +2756,9 @@ class MyDivComponent {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("myTargetElement.someString)")
+    _assertNavigable('myTargetElement.someString)')
         .local
-        .at("myTargetElement>");
+        .at('myTargetElement>');
   }
 
   // ignore: non_constant_identifier_names
@@ -2779,11 +2779,11 @@ class TestPanel {}
 </div>
 """);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("myDirective #").selector.at("myDirective]");
-    _assertNavigable("value=").local.declaration.type('MyDirective');
+    _assertNavigable('myDirective #').selector.at('myDirective]');
+    _assertNavigable('value=').local.declaration.type('MyDirective');
     _assertNavigable("exportedValue'>").angular.at("exportedValue')");
-    _assertNavigable("value.aaa").local.at("value=");
-    _assertNavigable("aaa}}").dart.getter.at('aaa; // 1');
+    _assertNavigable('value.aaa').local.at('value=');
+    _assertNavigable('aaa}}').dart.getter.at('aaa; // 1');
   }
 
   // ignore: non_constant_identifier_names
@@ -2799,9 +2799,9 @@ class Directive1 {}
 @Directive(selector: '[dir2]', exportAs: 'ambiguous')
 class Directive2 {}
 ''');
-    final code = r"""
+    final code = r'''
 <div dir1 dir2 #value="ambiguous"></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2826,7 +2826,7 @@ class TestPanel {}
     assertErrorInCodeAtPosition(
         AngularWarningCode.NO_DIRECTIVE_EXPORTED_BY_SPECIFIED_NAME,
         code,
-        "noSuchExportedValue");
+        'noSuchExportedValue');
   }
 
   // ignore: non_constant_identifier_names
@@ -2855,7 +2855,7 @@ class TestPanel {}
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("handle'>").local.at("handle></bbb>").type('ComponentB');
+    _assertNavigable("handle'>").local.at('handle></bbb>').type('ComponentB');
   }
 
   // ignore: non_constant_identifier_names
@@ -2883,9 +2883,9 @@ class TestPanel {
 @Component(selector: 'test-panel', templateUrl: 'test_panel.html')
 class TestPanel {}
 ''');
-    final htmlCode = r"""
+    final htmlCode = r'''
 <ng-container *foo></ng-container>>
-""";
+''';
     _addHtmlSource(htmlCode);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -2898,9 +2898,9 @@ class TestPanel {}
 @Component(selector: 'test-panel', templateUrl: 'test_panel.html')
 class TestPanel {}
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <ng-content></ng-content>>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
   }
@@ -2921,7 +2921,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.UNEXPECTED_HASH_IN_TEMPLATE, code, "#");
+        AngularWarningCode.UNEXPECTED_HASH_IN_TEMPLATE, code, '#');
   }
 
   // ignore: non_constant_identifier_names
@@ -2945,8 +2945,8 @@ class MyIterable<T> extends BaseIterable<T> {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("item.").local.at('item of').type('String');
-    _assertNavigable("length}}").dart.getter;
+    _assertNavigable('item.').local.at('item of').type('String');
+    _assertNavigable('length}}').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -2967,7 +2967,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.STRUCTURAL_DIRECTIVES_REQUIRE_TEMPLATE,
         code,
-        "ngFor");
+        'ngFor');
   }
 
   // ignore: non_constant_identifier_names
@@ -2987,11 +2987,11 @@ class TestPanel {
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
     expect(template.ranges, hasLength(7));
-    _assertNavigable("ngFor=").selector.inFileName('ng_for.dart');
-    _assertNavigable("operator of").local.declaration.type('String');
-    _assertNavigable("length}}").dart.getter;
+    _assertNavigable('ngFor=').selector.inFileName('ng_for.dart');
+    _assertNavigable('operator of').local.declaration.type('String');
+    _assertNavigable('length}}').dart.getter;
     errorListener.assertNoErrors();
-    final search = ElementSearch((e) => e.localName == "li");
+    final search = ElementSearch((e) => e.localName == 'li');
     template.ast.accept(search);
 
     expect(search.element, isNotNull);
@@ -3020,9 +3020,9 @@ class TestPanel {
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
     expect(template.ranges, hasLength(7));
-    _assertNavigable("ngFor=").selector.inFileName('ng_for.dart');
-    _assertNavigable("operator of").local.declaration.type('String');
-    _assertNavigable("length}}").dart.getter;
+    _assertNavigable('ngFor=').selector.inFileName('ng_for.dart');
+    _assertNavigable('operator of').local.declaration.type('String');
+    _assertNavigable('length}}').dart.getter;
     errorListener.assertNoErrors();
   }
 
@@ -3044,26 +3044,26 @@ class TestPanel {
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
     expect(template.ranges, hasLength(22));
-    _assertNavigable("ngFor=").selector.inFileName('ng_for.dart');
-    _assertNavigable("item of").local.declaration.type('String');
-    _assertSelectorElement("of items")
+    _assertNavigable('ngFor=').selector.inFileName('ng_for.dart');
+    _assertNavigable('item of').local.declaration.type('String');
+    _assertSelectorElement('of items')
         .selector
         .string('ngForOf')
         .inFileName('ng_for.dart');
-    _assertInput("of items").name('ngForOf').inFileName('ng_for.dart');
-    _assertNavigable("items;").dart.getter.at('items = []');
-    _assertNavigable("i = index").local.declaration.type('int');
-    _assertNavigable("i}}").local.at('i = index');
-    _assertNavigable("item.").local.at('item of');
-    _assertNavigable("length}}").dart.getter;
-    _assertNavigable("e = even").local.declaration.type('bool');
-    _assertNavigable("e}}").local.at('e = even');
-    _assertNavigable("o = odd").local.declaration.type('bool');
-    _assertNavigable("o}}").local.at('o = odd');
-    _assertNavigable("f = first").local.declaration.type('bool');
-    _assertNavigable("f}}").local.at('f = first');
-    _assertNavigable("l = last").local.declaration.type('bool');
-    _assertNavigable("l}}").local.at('l = last');
+    _assertInput('of items').name('ngForOf').inFileName('ng_for.dart');
+    _assertNavigable('items;').dart.getter.at('items = []');
+    _assertNavigable('i = index').local.declaration.type('int');
+    _assertNavigable('i}}').local.at('i = index');
+    _assertNavigable('item.').local.at('item of');
+    _assertNavigable('length}}').dart.getter;
+    _assertNavigable('e = even').local.declaration.type('bool');
+    _assertNavigable('e}}').local.at('e = even');
+    _assertNavigable('o = odd').local.declaration.type('bool');
+    _assertNavigable('o}}').local.at('o = odd');
+    _assertNavigable('f = first').local.declaration.type('bool');
+    _assertNavigable('f}}').local.at('f = first');
+    _assertNavigable('l = last').local.declaration.type('bool');
+    _assertNavigable('l}}').local.at('l = last');
   }
 
   // ignore: non_constant_identifier_names
@@ -3081,7 +3081,7 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("item == null").local.at('item of items');
+    _assertNavigable('item == null').local.at('item of items');
   }
 
   // ignore: non_constant_identifier_names
@@ -3100,18 +3100,18 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("ngFor let").selector.inFileName('ng_for.dart');
-    _assertNavigable("item of").local.declaration.type('String');
-    _assertSelectorElement("of items")
+    _assertNavigable('ngFor let').selector.inFileName('ng_for.dart');
+    _assertNavigable('item of').local.declaration.type('String');
+    _assertSelectorElement('of items')
         .selector
         .string('ngForOf')
         .inFileName('ng_for.dart');
-    _assertInput("of items").name('ngForOf').inFileName('ng_for.dart');
-    _assertNavigable("items;").dart.getter.at('items = []');
-    _assertNavigable("i = index").local.declaration.type('int');
-    _assertNavigable("i}}").local.at('i = index');
-    _assertNavigable("item.").local.at('item of');
-    _assertNavigable("length}}").dart.getter;
+    _assertInput('of items').name('ngForOf').inFileName('ng_for.dart');
+    _assertNavigable('items;').dart.getter.at('items = []');
+    _assertNavigable('i = index').local.declaration.type('int');
+    _assertNavigable('i}}').local.at('i = index');
+    _assertNavigable('item.').local.at('item of');
+    _assertNavigable('length}}').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3130,18 +3130,18 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("ngFor:").selector.inFileName('ng_for.dart');
-    _assertNavigable("item, of").local.declaration.type('String');
-    _assertSelectorElement("of = items,")
+    _assertNavigable('ngFor:').selector.inFileName('ng_for.dart');
+    _assertNavigable('item, of').local.declaration.type('String');
+    _assertSelectorElement('of = items,')
         .selector
         .string('ngForOf')
         .inFileName('ng_for.dart');
-    _assertInput("of = items,").name('ngForOf').inFileName('ng_for.dart');
-    _assertNavigable("items,").dart.getter.at('items = []');
-    _assertNavigable("i=index").local.declaration.type('int');
-    _assertNavigable("i}}").local.at('i=index');
-    _assertNavigable("item.").local.at('item, of');
-    _assertNavigable("length}}").dart.getter;
+    _assertInput('of = items,').name('ngForOf').inFileName('ng_for.dart');
+    _assertNavigable('items,').dart.getter.at('items = []');
+    _assertNavigable('i=index').local.declaration.type('int');
+    _assertNavigable('i}}').local.at('i=index');
+    _assertNavigable('item.').local.at('item, of');
+    _assertNavigable('length}}').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3160,18 +3160,18 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertNavigable("ngFor let").selector.inFileName('ng_for.dart');
-    _assertNavigable("item [").local.declaration.type('String');
-    _assertSelectorElement("ngForOf]")
+    _assertNavigable('ngFor let').selector.inFileName('ng_for.dart');
+    _assertNavigable('item [').local.declaration.type('String');
+    _assertSelectorElement('ngForOf]')
         .selector
         .string('ngForOf')
         .inFileName('ng_for.dart');
-    _assertInput("ngForOf]").name('ngForOf').inFileName('ng_for.dart');
+    _assertInput('ngForOf]').name('ngForOf').inFileName('ng_for.dart');
     _assertNavigable("items'").dart.getter.at('items = []');
     _assertNavigable("i='index").local.declaration.type('int');
-    _assertNavigable("i}}").local.at("i='index");
-    _assertNavigable("item.").local.at('item [');
-    _assertNavigable("length}}").dart.getter;
+    _assertNavigable('i}}').local.at("i='index");
+    _assertNavigable('item.').local.at('item [');
+    _assertNavigable('length}}').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3184,14 +3184,14 @@ class TestPanel {
   int unused;
 }
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <li template="ngFor let item1 of getItems(unused + 5); let i=index">
   {{item1.length}}
 </li>
 <li *ngFor="let item2 of getItems(unused + 5); let i=index">
   {{item2.length}}
 </li>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
   }
@@ -3265,7 +3265,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.STRUCTURAL_DIRECTIVES_REQUIRE_TEMPLATE,
         code,
-        "ngIf");
+        'ngIf');
   }
 
   // ignore: non_constant_identifier_names
@@ -3282,10 +3282,10 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertSelectorElement("ngIf=").selector.inFileName('ng_if.dart');
-    _assertInput("ngIf=").inFileName('ng_if.dart');
-    _assertNavigable("text.").dart.getter.at('text; // 1');
-    _assertNavigable("length != 0").dart.getter;
+    _assertSelectorElement('ngIf=').selector.inFileName('ng_if.dart');
+    _assertInput('ngIf=').inFileName('ng_if.dart');
+    _assertNavigable('text.').dart.getter.at('text; // 1');
+    _assertNavigable('length != 0').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3319,10 +3319,10 @@ class TestPanel {
 """);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
-    _assertSelectorElement("ngIf text").selector.inFileName('ng_if.dart');
-    _assertInput("ngIf text").inFileName('ng_if.dart');
-    _assertNavigable("text.").dart.getter.at('text; // 1');
-    _assertNavigable("length != 0").dart.getter;
+    _assertSelectorElement('ngIf text').selector.inFileName('ng_if.dart');
+    _assertInput('ngIf text').inFileName('ng_if.dart');
+    _assertNavigable('text.').dart.getter.at('text; // 1');
+    _assertNavigable('length != 0').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3338,10 +3338,10 @@ class TestPanel {
 <template [ngIf]='text.length != 0'></template>
 """);
     await _resolveSingleTemplate(dartSource);
-    _assertSelectorElement("ngIf]").selector.inFileName('ng_if.dart');
-    _assertInput("ngIf]").inFileName('ng_if.dart');
-    _assertNavigable("text.").dart.getter.at('text; // 1');
-    _assertNavigable("length != 0").dart.getter;
+    _assertSelectorElement('ngIf]').selector.inFileName('ng_if.dart');
+    _assertInput('ngIf]').inFileName('ng_if.dart');
+    _assertNavigable('text.').dart.getter.at('text; // 1');
+    _assertNavigable('length != 0').dart.getter;
   }
 
   // ignore: non_constant_identifier_names
@@ -3362,9 +3362,9 @@ class TestPanel {}
 <name-panel aaa='1' (bbb)='2' on-ccc='3'></name-panel>
 """);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("bbb)=").output.at("bbb;");
-    _assertNavigable("ccc=").output.at("ccc;");
-    final search = ElementSearch((e) => e.localName == "name-panel");
+    _assertNavigable('bbb)=').output.at('bbb;');
+    _assertNavigable('ccc=').output.at('ccc;');
+    final search = ElementSearch((e) => e.localName == 'name-panel');
     template.ast.accept(search);
 
     expect(search.element, isNotNull);
@@ -3389,9 +3389,9 @@ class TestPanel {
 class MyTag {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <my-tag my-prop></my-tag>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -3411,15 +3411,15 @@ class TestPanel {
 class MyTag {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <my-tag red-herring unrelated></my-tag>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("my-tag")
+    _assertNavigable('my-tag')
         .selector
-        .inFileName("test_panel.dart")
-        .at("my-tag");
+        .inFileName('test_panel.dart')
+        .at('my-tag');
     errorListener.assertNoErrors();
   }
 
@@ -3435,10 +3435,10 @@ class TestPanel {
   void acceptInt(int x) {}
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div (custom-event)="acceptInt($event)">
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -3459,10 +3459,10 @@ class TestPanel {
   void acceptInt(int x) {}
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div (custom-event)="acceptInt($event.foo)">
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -3502,7 +3502,7 @@ class TestPanel {
   String foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <my-first-custom-tag [unknownInput]="foo" (unknownOutput)="foo" #first str="val">
   <my-second-custom-tag [unknownInput]="foo" (unknownOutput)="foo" #second str="val">
   </my-second-custom-tag>
@@ -3510,7 +3510,7 @@ class TestPanel {
 
 {{first.foo}} should be treated as "dynamic" and pass this check
 {{first.bar}} should be treated as "dynamic" and pass this check
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -3525,7 +3525,7 @@ class TestPanel {
   String aString;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <my-first-custom-tag
     [input]="nosuchgetter"
     #foo="nosuchexport"
@@ -3536,7 +3536,7 @@ class TestPanel {
   {{aString + 1}}
   <other-unknown-tag></other-unknown-tag>
 </my-first-custom-tag>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertErrorsWithCodes([
@@ -3735,11 +3735,11 @@ class TestPanel {
 class TranscludeAllAndKnowsTag {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <nodashes>
   <custom-tag></custom-tag>
 </nodashes>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -3838,15 +3838,15 @@ class HasContentChild {
 class SomeComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><some-component #contentChild></some-component></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<some-component #contentChild></some-component>");
+        '<some-component #contentChild></some-component>');
   }
 
   Future
@@ -3866,15 +3866,15 @@ class HasContentChild {
 class SomeComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><some-component #contentChild></some-component></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<some-component #contentChild></some-component>");
+        '<some-component #contentChild></some-component>');
   }
 
   Future
@@ -3894,15 +3894,15 @@ class HasContentChild {
 class SomeComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><some-component #contentChild></some-component></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<some-component #contentChild></some-component>");
+        '<some-component #contentChild></some-component>');
   }
 
   Future
@@ -3923,15 +3923,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div some-directive #contentChild="theDirective"></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-directive #contentChild=\"theDirective\"></div>");
+        '<div some-directive #contentChild=\"theDirective\"></div>');
   }
 
   Future
@@ -3952,7 +3952,7 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child>
   <div>
     <span>
@@ -3962,13 +3962,13 @@ class SomeDirective {
     </span>
   </div>
 </has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-directive #contentChild=\"theDirective\"></div>");
+        '<div some-directive #contentChild=\"theDirective\"></div>');
   }
 
   Future
@@ -3988,15 +3988,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div some-directive #contentChild="theDirective"></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-directive #contentChild=\"theDirective\"></div>");
+        '<div some-directive #contentChild=\"theDirective\"></div>');
   }
 
   Future
@@ -4016,15 +4016,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div some-directive #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-directive #contentChild></div>");
+        '<div some-directive #contentChild></div>');
   }
 
   Future
@@ -4044,15 +4044,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div some-directive #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-directive #contentChild></div>");
+        '<div some-directive #contentChild></div>');
   }
 
   Future
@@ -4072,15 +4072,15 @@ class HasContentChild {
 class SomeComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div #contentChild></div>");
+        '<div #contentChild></div>');
   }
 
   Future
@@ -4100,15 +4100,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div #contentChild></div>");
+        '<div #contentChild></div>');
   }
 
   Future
@@ -4125,15 +4125,15 @@ class HasContentChild {
   TemplateRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div #contentChild></div>");
+        '<div #contentChild></div>');
   }
 
   Future
@@ -4150,9 +4150,9 @@ class HasContentChild {
   ViewContainerRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div #contentChild></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4175,15 +4175,15 @@ class HasContentChild {
 class SomeComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><template #contentChild></template></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<template #contentChild></template>");
+        '<template #contentChild></template>');
   }
 
   Future
@@ -4203,15 +4203,15 @@ class HasContentChild {
 class SomeDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><template #contentChild></template></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<template #contentChild></template>");
+        '<template #contentChild></template>');
   }
 
   Future
@@ -4229,15 +4229,15 @@ class HasContentChild {
   Element foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><template #contentChild></template></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<template #contentChild></template>");
+        '<template #contentChild></template>');
   }
 
   Future
@@ -4254,15 +4254,15 @@ class HasContentChild {
   ElementRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><template #contentChild></template></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<template #contentChild></template>");
+        '<template #contentChild></template>');
   }
 
   Future
@@ -4286,15 +4286,15 @@ class SomeComponent {
 class SomeOtherComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><some-other-component #contentChild></some-other-component></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<some-other-component #contentChild></some-other-component>");
+        '<some-other-component #contentChild></some-other-component>');
   }
 
   Future
@@ -4317,15 +4317,15 @@ class SomeDirective {
 class SomeOtherDirective {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child><div some-other-directive #contentChild="wrong"></div></has-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
         AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
         code,
-        "<div some-other-directive #contentChild=\"wrong\"></div>");
+        '<div some-other-directive #contentChild=\"wrong\"></div>');
   }
 
   // ignore: non_constant_identifier_names
@@ -4339,10 +4339,10 @@ class TestPanel {
 class NoTransclude {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <no-transclude>
 </no-transclude>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4367,17 +4367,17 @@ class TranscludeAllWithContentChild {
   Element foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-all-with-content-child>
   <transclude-none>
     <div #contentChildOfHigherComponent></div>
   </transclude-none>
 </transclude-all-with-content-child>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
-        code, "<div #contentChildOfHigherComponent></div>");
+        code, '<div #contentChildOfHigherComponent></div>');
   }
 
   // ignore: non_constant_identifier_names
@@ -4392,9 +4392,9 @@ class TestPanel {
 class TranscludeSome {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div transclude-me></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4415,11 +4415,11 @@ class TestPanel {
 class TranscludeAllAndKnowsTag {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-all-and-knows-tag>
   <transclude-me></transclude-me>
 </transclude-all-and-knows-tag>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4437,9 +4437,9 @@ class TestPanel {
 class TranscludeSome {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><transclude-me></transclude-me></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4458,13 +4458,13 @@ class TestPanel {
 class TranscludeSome {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><unknown-tag transclude-me></unknown-tag></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.UNRESOLVED_TAG, code, "unknown-tag");
+        AngularWarningCode.UNRESOLVED_TAG, code, 'unknown-tag');
   }
 
   // ignore: non_constant_identifier_names
@@ -4478,9 +4478,9 @@ class TestPanel {
 class TranscludeAll {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-all>belongs</transclude-all>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4498,9 +4498,9 @@ class TestPanel {
 class TranscludeAll {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-all>belongs</transclude-all>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4518,13 +4518,13 @@ class TestPanel {
 class TranscludeSome {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, "<div></div>");
+        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, '<div></div>');
   }
 
   Future
@@ -4543,9 +4543,9 @@ class TranscludeSome {
   Element foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4566,9 +4566,9 @@ class TranscludeSome {
   ElementRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4590,9 +4590,9 @@ class TranscludeSome {
   HtmlElement foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4613,9 +4613,9 @@ class TranscludeNone {
   TemplateRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><template></template></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4637,13 +4637,13 @@ class TranscludeSome {
   Element foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><template></template></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
-        code, "<template></template>");
+        code, '<template></template>');
   }
 
   Future
@@ -4661,13 +4661,13 @@ class TranscludeSome {
   ElementRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><template></template></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
-        code, "<template></template>");
+        code, '<template></template>');
   }
 
   Future
@@ -4685,13 +4685,13 @@ class TranscludeNone {
   TemplateRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-some><div></div></transclude-some>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, "<div></div>");
+        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, '<div></div>');
   }
 
   Future
@@ -4711,9 +4711,9 @@ class TranscludeNone {
 class ContentChildComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><content-child-comp></content-child-comp></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4744,9 +4744,9 @@ class ContentChildComponent extends Superclass {
 
 class Superclass {}
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><content-child-comp #contentChild></content-child-comp></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4777,9 +4777,9 @@ class ContentChildDirective extends Superclass {
 
 class Superclass {}
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><div content-child #contentChild="contentChild"></div></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4806,9 +4806,9 @@ class TranscludeNone {
   Object fooObjectShouldBeOk;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><div #contentChild></div></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4832,9 +4832,9 @@ class TranscludeNone {
   Object fooObjectShouldBeOk;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><template #contentChild></template></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4854,9 +4854,9 @@ class TranscludeNone {
   TemplateRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><template></template></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -4877,13 +4877,13 @@ class TranscludeNone {
   Element foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><template></template></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
-        code, "<template></template>");
+        code, '<template></template>');
   }
 
   Future
@@ -4900,13 +4900,13 @@ class TranscludeNone {
   ElementRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><template></template></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
-        code, "<template></template>");
+        code, '<template></template>');
   }
 
   Future
@@ -4926,13 +4926,13 @@ class TranscludeNone {
 class ContentChildComponent {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><div></div></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, "<div></div>");
+        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, '<div></div>');
   }
 
   Future
@@ -4949,13 +4949,13 @@ class TranscludeNone {
   TemplateRef foo;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <transclude-none><div></div></transclude-none>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, "<div></div>");
+        AngularWarningCode.CONTENT_NOT_TRANSCLUDED, code, '<div></div>');
   }
 
   // ignore: non_constant_identifier_names
@@ -4991,12 +4991,12 @@ class HasContentChildElementRef {
   ElementRef theElement;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child-element-ref>
   <div first></div>
   <div second></div>
 </has-content-child-element-ref>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertMultipleErrorsExplicit(htmlSource, code, [
@@ -5027,13 +5027,13 @@ class HasContentChildElement {
   Element theElement;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child-element>
   <div first>
     <div second></div>
   </div>
 </has-content-child-element>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -5053,12 +5053,12 @@ class HasContentChildrenElement {
   List<Element> theElement;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-children-element>
   <div first></div>
   <div second></div>
 </has-content-children-element>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertNoErrors();
@@ -5082,13 +5082,13 @@ class HasContentChildrenElement {
 @Component(selector: 'no-transcludes', template: '')
 class NoTranscludes {}
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-children>
   <no-transcludes>
     <no-transcludes> <!-- should be error --></no-transcludes>
   </no-transcludes>
 </has-content-children>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(AngularWarningCode.CONTENT_NOT_TRANSCLUDED,
@@ -5148,7 +5148,7 @@ class HasContentChildTemplateRef {
   TemplateRef theTemplate;
 }
 ''');
-    final code = r"""
+    final code = r'''
 <has-content-child-template-ref>
   <div>
     <template first></template>
@@ -5157,7 +5157,7 @@ class HasContentChildTemplateRef {
     <template second></template>
   </div>
 </has-content-child-template-ref>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertMultipleErrorsExplicit(htmlSource, code, [
@@ -5181,16 +5181,16 @@ class HasContentChildTemplateRef {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content select=""></ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     expect(template.component.ngContents, hasLength(0));
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, "\"\"");
+        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, '\"\"');
   }
 
   // ignore: non_constant_identifier_names
@@ -5200,11 +5200,11 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content>with content</ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertMultipleErrorsExplicit(htmlSource, code, [
@@ -5222,11 +5222,11 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content></ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     expect(template.component.ngContents, hasLength(1));
@@ -5240,16 +5240,16 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content select></ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     expect(template.component.ngContents, hasLength(0));
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, "select");
+        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, 'select');
   }
 
   // ignore: non_constant_identifier_names
@@ -5259,16 +5259,16 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content select="foo+bar"></ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     expect(template.component.ngContents, hasLength(0));
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, "+");
+        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, '+');
   }
 
   // ignore: non_constant_identifier_names
@@ -5278,11 +5278,11 @@ class TestPanel {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div>
   <ng-content select="foo"></ng-content>
 </div>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     expect(template.component.ngContents, hasLength(1));
@@ -5359,13 +5359,13 @@ class MyStarDirective {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div *foo></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.TEMPLATE_ATTR_NOT_USED, code, "*foo");
+        AngularWarningCode.TEMPLATE_ATTR_NOT_USED, code, '*foo');
   }
 
   // ignore: non_constant_identifier_names
@@ -5422,7 +5422,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT,
         code,
-        "String s");
+        'String s');
   }
 
   // ignore: non_constant_identifier_names
@@ -5441,7 +5441,7 @@ class TestPanel {
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
-        StaticTypeWarningCode.UNDEFINED_METHOD, code, "unknownFunction");
+        StaticTypeWarningCode.UNDEFINED_METHOD, code, 'unknownFunction');
   }
 
   // ignore: non_constant_identifier_names
@@ -5460,7 +5460,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT,
         code,
-        "if(true){}");
+        'if(true){}');
   }
 
   // ignore: non_constant_identifier_names
@@ -5479,7 +5479,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT,
         code,
-        "if(true){}");
+        'if(true){}');
   }
 
   // ignore: non_constant_identifier_names
@@ -5498,7 +5498,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT,
         code,
-        "return 5");
+        'return 5');
   }
 
   Future
@@ -5518,7 +5518,7 @@ class TestPanel {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_STATEMENT_REQUIRES_EXPRESSION_STATEMENT,
         code,
-        "return 5");
+        'return 5');
   }
 
   // ignore: non_constant_identifier_names
@@ -5715,9 +5715,9 @@ class HasStatic {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 {{[1,2,3].add("five")}}
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     errorListener.assertErrorsWithCodes(
@@ -5738,9 +5738,9 @@ class DeferredContentDirective {
     directives: const [DeferredContentDirective])
 class TestPanel {}
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <div *deferred>Deferred content</div>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     _assertNavigable('deferred>').selector.at("deferred]')");
     errorListener.assertNoErrors();
@@ -5774,9 +5774,9 @@ class MyStarDirective {
 class TestPanel {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <div template="foo"></div>
-""";
+''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
     assertErrorInCodeAtPosition(
@@ -5814,11 +5814,11 @@ class TestPanel {
   String bbb; // 2
 }
 ''');
-    _addHtmlSource(r"""
+    _addHtmlSource(r'''
 <div>
   Hello {{aaa}} and {{bbb}}!
 </div>
-""");
+''');
     await _resolveSingleTemplate(dartSource);
     expect(ranges, hasLength(2));
     _assertNavigable('aaa}}').dart.getter.at('aaa; // 1');
@@ -5860,7 +5860,7 @@ class TestPanel {
 <name-panel [(value)]='value'></name-panel>
 """);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("value)]").input.at("value;");
+    _assertNavigable('value)]').input.at('value;');
   }
 
   // ignore: non_constant_identifier_names
@@ -5877,17 +5877,17 @@ class TestPanel {
 class MyTag {
 }
 ''');
-    final code = r"""
+    final code = r'''
 <my-tag my-prop></my-tag>
-    """;
+    ''';
     _addHtmlSource(code);
     await _resolveSingleTemplate(dartSource);
-    _assertNavigable("my-prop")
+    _assertNavigable('my-prop')
         .selector
-        .inFileName("test_panel.dart")
-        .at("my-prop");
+        .inFileName('test_panel.dart')
+        .at('my-prop');
     assertErrorInCodeAtPosition(
-        AngularWarningCode.UNRESOLVED_TAG, code, "my-tag");
+        AngularWarningCode.UNRESOLVED_TAG, code, 'my-tag');
   }
 
   void _addDartSource(final code) {

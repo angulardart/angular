@@ -4,16 +4,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'ng_switch_test.template.dart' as ng_generated;
+import 'ng_switch_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group('ngSwitch', () {
     tearDown(() => disposeAnyRunningTest());
 
     test('should switch amongst when values', () async {
-      var testBed = NgTestBed<SwitchWhenTest>();
+      var testBed = NgTestBed.forComponent(ng.createSwitchWhenTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.text.trim(), '');
       await testFixture.update((SwitchWhenTest component) {
@@ -26,7 +24,7 @@ void main() {
       expect(testFixture.text.trim(), 'when b');
     });
     test('should switch among when-values with fallback to default', () async {
-      var testBed = NgTestBed<SwitchDefaultTest>();
+      var testBed = NgTestBed.forComponent(ng.createSwitchDefaultTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'when default');
       await testFixture.update((SwitchDefaultTest component) {
@@ -43,7 +41,8 @@ void main() {
       expect(testFixture.text.trim(), 'when default');
     });
     test('should support multiple whens with the same value', () async {
-      var testBed = NgTestBed<SwitchMultipleWhenTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createSwitchMultipleWhenTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.text,
           allOf(contains('when default1;'), contains('when default2;')));
@@ -59,7 +58,8 @@ void main() {
           testFixture.text, allOf(contains('when b1;'), contains('when b2;')));
     });
     test('should change after when-values change', () async {
-      var testBed = NgTestBed<SwitchWhenValueTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createSwitchWhenValueTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((SwitchWhenValueTest component) {
         component.when1 = 'a';
@@ -85,7 +85,8 @@ void main() {
       expect(testFixture.text.trim(), 'when default;');
     });
     test('should match equal, but not identical, string cases', () async {
-      final testBed = NgTestBed<SwitchEqualStringsTest>();
+      final testBed =
+          NgTestBed.forComponent(ng.createSwitchEqualStringsTestFactory());
       final testFixture = await testBed.create(beforeChangeDetection: (comp) {
         comp.switchCase = 'one';
       });

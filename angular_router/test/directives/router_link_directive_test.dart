@@ -145,7 +145,7 @@ class FakeRouter implements Router {
   }
 
   @override
-  noSuchMethod(i) => super.noSuchMethod(i);
+  dynamic noSuchMethod(i) => super.noSuchMethod(i);
 }
 
 const _createKeyboardEventName = '__dart_createKeyboardEvent';

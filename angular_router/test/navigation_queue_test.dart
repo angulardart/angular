@@ -65,19 +65,19 @@ class TestComponent {
   final List<RouteDefinition> routes = [
     RouteDefinition(
       path: '/first',
-      component: ng.FirstComponentNgFactory,
+      component: ng.createFirstComponentFactory(),
     ),
     RouteDefinition(
       path: '/second',
-      component: ng.SecondComponentNgFactory,
+      component: ng.createSecondComponentFactory(),
     ),
     RouteDefinition(
       path: '/third',
-      component: ng.ThirdComponentNgFactory,
+      component: ng.createThirdComponentFactory(),
     ),
     RouteDefinition(
       path: '/',
-      component: ng.DefaultComponentNgFactory,
+      component: ng.createDefaultComponentFactory(),
       useAsDefault: true,
     ),
   ];

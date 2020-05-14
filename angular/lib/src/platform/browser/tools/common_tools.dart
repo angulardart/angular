@@ -1,7 +1,7 @@
 import 'dart:html';
 
-import "package:angular/src/core/application_ref.dart" show ApplicationRef;
-import "package:angular/src/core/linker/component_factory.dart"
+import 'package:angular/src/core/application_ref.dart' show ApplicationRef;
+import 'package:angular/src/core/linker/component_factory.dart'
     show ComponentRef;
 
 class ChangeDetectionPerfRecord {
@@ -42,7 +42,7 @@ class AngularProfiler {
   /// ```
   ChangeDetectionPerfRecord timeChangeDetection(dynamic config) {
     // ignore: non_bool_operand
-    var record = config != null && config["record"];
+    var record = config != null && config['record'];
     var profileName = 'Change Detection';
     // Profiler is not available in Android browsers, nor in IE 9
     // without dev tools opened

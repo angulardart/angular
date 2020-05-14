@@ -45,7 +45,7 @@ analyzer:
 
   String optionsSection(String key, {List<String> extraOptions = const []}) =>
       '''
-    $key:${extraOptions.map((option) => "\n      $option").join('')}\n
+    $key:${extraOptions.map((option) => '\n      $option').join('')}\n
 ''';
 
   void setOptionsFileContent(String content) {
@@ -172,7 +172,7 @@ class PluginCreateDriverTest extends AnalysisOptionsUtilsBase {
     expect(driver.dartDriver, isNotNull);
     expect(driver.dartDriver.analysisOptions, isNotNull);
     expect(driver.dartDriver.fsState, isNotNull);
-    expect(driver.dartDriver.name, equals("/test"));
+    expect(driver.dartDriver.name, equals('/test'));
     expect(driver.dartDriver.sourceFactory, isNotNull);
     expect(driver.dartDriver.contextRoot, isNotNull);
   }
@@ -227,7 +227,7 @@ class PluginIntegrationTest extends PluginIntegrationTestBase {
   void setUp() async {
     super.setUp();
 
-    addAngularSources((filename, [contents = ""]) =>
+    addAngularSources((filename, [contents = '']) =>
         resourceProvider.newFile(filename, contents));
     resourceProvider.newFile('/test/.packages', 'angular:/angular/');
     plugin.start(mockChannel);
@@ -298,9 +298,9 @@ class PluginIntegrationTestBase {
     MockSdk(resourceProvider: resourceProvider);
     plugin = AngularAnalyzerPlugin(resourceProvider);
     final versionCheckParams = protocol.PluginVersionCheckParams(
-        "~/.dartServer/.analysis-driver", "/sdk", "1.0.0");
+        '~/.dartServer/.analysis-driver', '/sdk', '1.0.0');
     plugin.handlePluginVersionCheck(versionCheckParams);
-    root = protocol.ContextRoot("/test", [],
+    root = protocol.ContextRoot('/test', [],
         optionsFile: '/test/analysis_options.yaml');
     mockChannel = MockPluginCommunicationChannel();
   }

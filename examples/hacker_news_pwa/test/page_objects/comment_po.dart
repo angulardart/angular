@@ -6,6 +6,7 @@ part 'comment_po.g.dart';
 abstract class CommentPO {
   CommentPO();
 
+  // ignore: redirect_to_non_class
   factory CommentPO.create(PageLoaderElement context) = $CommentPO.create;
 
   @ByCss('.content')

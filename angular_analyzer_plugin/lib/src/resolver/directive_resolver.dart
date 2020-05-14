@@ -9,6 +9,7 @@ import 'package:angular_analyzer_plugin/errors.dart';
 import 'package:angular_analyzer_plugin/src/model.dart';
 import 'package:angular_analyzer_plugin/src/model/resolved/content_child.dart';
 import 'package:angular_analyzer_plugin/src/resolver/element_view_impl.dart';
+import 'package:angular_analyzer_plugin/src/resolver/type_helpers.dart';
 import 'package:angular_analyzer_plugin/src/selector.dart';
 import 'package:angular_analyzer_plugin/src/standard_components.dart';
 
@@ -72,8 +73,8 @@ class DirectiveResolver extends AngularAstVisitor {
         if (directive.looksLikeTemplate &&
             !element.isTemplate &&
             directive is Directive &&
-            directive.classElement.name != "NgIf" &&
-            directive.classElement.name != "NgFor") {
+            directive.classElement.name != 'NgIf' &&
+            directive.classElement.name != 'NgFor') {
           _reportErrorForRange(
               element.openingSpan,
               AngularWarningCode.CUSTOM_DIRECTIVE_MAY_REQUIRE_TEMPLATE,
@@ -256,7 +257,7 @@ class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
     // instead of a single value for most and then have some exceptional code.
     final matchTypes = <DartType>[];
 
-    if (attr.value != "" && attr.value != null) {
+    if (attr.value != '' && attr.value != null) {
       final possibleDirectives = List<Directive>.from(element.directives.where(
           (d) =>
               d.exportAs.string == attr.value &&
@@ -265,10 +266,13 @@ class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
         // Don't validate based on an invalid state (that's reported as such).
         return;
       }
-      // TODO instantiate this type to bounds
-      matchTypes.add(possibleDirectives.first.classElement.type);
+      matchTypes.add(
+        instantiateClassElementToBounds(
+          possibleDirectives.first.classElement,
+        ),
+      );
     } else if (element.localName == 'template') {
-      matchTypes.add(standardAngular.templateRef.type);
+      matchTypes.add(standardAngular.templateRefType);
     } else {
       final possibleComponents = List<Component>.from(
           element.directives.where((d) => d is Component && !d.isHtml));
@@ -280,12 +284,15 @@ class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
       if (possibleComponents.isEmpty) {
         // TODO differentiate between SVG (Element) and HTML (HtmlElement)
         matchTypes
-          ..add(standardAngular.elementRef.type)
-          ..add(standardHtml.elementClass.type)
-          ..add(standardHtml.htmlElementClass.type);
+          ..add(standardAngular.elementRefType)
+          ..add(standardHtml.elementClassType)
+          ..add(standardHtml.htmlElementClassType);
       } else {
-        // TODO instantiate this type to bounds
-        matchTypes.add(possibleComponents.first.classElement.type);
+        matchTypes.add(
+          instantiateClassElementToBounds(
+            possibleComponents.first.classElement,
+          ),
+        );
       }
     }
 
@@ -295,8 +302,13 @@ class _MatchContentChildQueryVisitor implements QueriedChildTypeVisitor<bool> {
       errorReporter.reportErrorForOffset(
           AngularWarningCode.MATCHED_LET_BINDING_HAS_WRONG_TYPE,
           element.offset,
-          element.length,
-          [query.letBoundName, query.containerType, matchTypes]);
+          element.length, [
+        query.letBoundName,
+        query.containerType.getDisplayString(withNullability: false),
+        matchTypes
+            .map((type) => type.getDisplayString(withNullability: false))
+            .toList()
+      ]);
     }
   }
 

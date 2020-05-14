@@ -12,7 +12,7 @@ import '1354_routing_state_crash_test.template.dart' as ng;
 void main() {
   test('should not crash entire app when a routed component throws', () async {
     final appComponent = runApp<AppComponent>(
-      ng.AppComponentNgFactory,
+      ng.createAppComponentFactory(),
       createInjector: ([parent]) {
         return Injector.map({
           ExceptionHandler: LoggingExceptionHandler(),
@@ -112,15 +112,15 @@ class AppComponent {
     RouteDefinition(
       path: 'home',
       useAsDefault: true,
-      component: ng.HomeComponentNgFactory,
+      component: ng.createHomeComponentFactory(),
     ),
     RouteDefinition(
       path: 'another',
-      component: ng.AnotherComponentNgFactory,
+      component: ng.createAnotherComponentFactory(),
     ),
     RouteDefinition(
       path: 'throws',
-      component: ng.ThrowingComponentNgFactory,
+      component: ng.createThrowingComponentFactory(),
     ),
   ];
 

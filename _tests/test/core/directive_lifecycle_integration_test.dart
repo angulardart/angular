@@ -8,14 +8,14 @@ import 'package:angular/angular.dart';
 import 'directive_lifecycle_integration_test.template.dart' as ng;
 
 void main() {
-  group("directive lifecycle integration spec", () {
+  group('directive lifecycle integration spec', () {
     Log log;
     var fixture;
 
     setUp(() async {
       log = Log();
 
-      var testBed = NgTestBed.forComponent(ng.MyCompNgFactory,
+      var testBed = NgTestBed.forComponent(ng.createMyCompFactory(),
           rootInjector: ([parent]) => Injector.map({Log: log}, parent));
       fixture = await testBed.create();
     });
@@ -23,7 +23,7 @@ void main() {
     test(
         'should invoke lifecycle methods '
         'ngOnInit > ngDoCheck > ngAfterContentChecked', () async {
-      String startUp = log.toString();
+      var startUp = log.toString();
       expect(
           startUp.startsWith('ngAfterChanges; ngOnInit; ngDoCheck; '
               'ngAfterContentInit; '
@@ -59,18 +59,19 @@ class Log {
 }
 
 @Directive(
-  selector: "[lifecycle-dir]",
+  selector: '[lifecycle-dir]',
 )
 class LifecycleDir implements DoCheck {
   final Log _log;
   LifecycleDir(this._log);
-  ngDoCheck() {
-    _log.add("child_ngDoCheck");
+  @override
+  void ngDoCheck() {
+    _log.add('child_ngDoCheck');
   }
 }
 
 @Component(
-  selector: "lifecycle",
+  selector: 'lifecycle',
   template: '<div lifecycle-dir></div>',
   directives: [LifecycleDir],
 )
@@ -89,37 +90,44 @@ class LifecycleCmp
 
   LifecycleCmp(this._log);
 
-  ngOnInit() {
-    _log.add("ngOnInit");
+  @override
+  void ngOnInit() {
+    _log.add('ngOnInit');
   }
 
-  ngDoCheck() {
-    _log.add("ngDoCheck");
+  @override
+  void ngDoCheck() {
+    _log.add('ngDoCheck');
   }
 
-  ngAfterChanges() {
-    _log.add("ngAfterChanges");
+  @override
+  void ngAfterChanges() {
+    _log.add('ngAfterChanges');
   }
 
-  ngAfterContentInit() {
-    _log.add("ngAfterContentInit");
+  @override
+  void ngAfterContentInit() {
+    _log.add('ngAfterContentInit');
   }
 
-  ngAfterContentChecked() {
-    _log.add("ngAfterContentChecked");
+  @override
+  void ngAfterContentChecked() {
+    _log.add('ngAfterContentChecked');
   }
 
-  ngAfterViewInit() {
-    _log.add("ngAfterViewInit");
+  @override
+  void ngAfterViewInit() {
+    _log.add('ngAfterViewInit');
   }
 
-  ngAfterViewChecked() {
-    _log.add("ngAfterViewChecked");
+  @override
+  void ngAfterViewChecked() {
+    _log.add('ngAfterViewChecked');
   }
 }
 
 @Component(
-  selector: "my-comp",
+  selector: 'my-comp',
   template: '<lifecycle [field]="123"></lifecycle>',
   directives: [LifecycleCmp],
 )

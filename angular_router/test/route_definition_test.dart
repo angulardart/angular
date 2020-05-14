@@ -19,17 +19,18 @@ void main() {
   group('$RouteDefinition', () {
     group(':$ComponentRouteDefinition', () {
       test('should create a route to an `@Component` type', () {
+        final factory = ng.createHeroesComponentFactory();
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
-          component: ng.HeroesComponentNgFactory,
+          component: factory,
         );
-        expect(def.component, ng.HeroesComponentNgFactory);
+        expect(def.component, factory);
       });
 
       test('should fail "assertValid" with a null or empty path', () {
         final def1 = RouteDefinition(
           path: null,
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
         expect(def1.assertValid, throwsStateError);
       });
@@ -75,7 +76,7 @@ void main() {
       test('should prefix match to only strings with same start', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
         expect(def.toRegExp().matchAsPrefix('/heroes'), isNotNull);
         expect(def.toRegExp().matchAsPrefix('/heroes/path1/path2'), isNotNull);
@@ -87,9 +88,9 @@ void main() {
       test('should match url params', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
-        Match match =
+        var match =
             def.toRegExp().matchAsPrefix('/heroes/jack%20daniel/id-123');
         expect(match, isNotNull);
         expect(match[1], 'jack%20daniel');
@@ -99,9 +100,9 @@ void main() {
       test('should not match url params that are invalid url encodings', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
-        Match match =
+        var match =
             def.toRegExp().matchAsPrefix('/heroes/jack%2Hdaniel/id-123');
         expect(match, isNull);
       });
@@ -111,7 +112,7 @@ void main() {
       test('should throw if params values is null', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
         expect(() => def.toUrl(null), throwsArgumentError);
       });
@@ -119,7 +120,7 @@ void main() {
       test('should return the path when there are no params', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
         expect(def.toUrl(), '/heroes');
       });
@@ -127,7 +128,7 @@ void main() {
       test('should populate url params', () {
         ComponentRouteDefinition def = RouteDefinition(
           path: '/heroes/:heroId/:heroName',
-          component: ng.HeroesComponentNgFactory,
+          component: ng.createHeroesComponentFactory(),
         );
         expect(def.toUrl({'heroId': 'id-123', 'heroName': 'jack daniel'}),
             '/heroes/id-123/jack%20daniel');
@@ -152,6 +153,6 @@ class VillainsComponent {}
 //
 // In real code, `loadLibrary` would be used before referencing the type.
 Future<ComponentFactory> loadHeroesComponent() async =>
-    ng.HeroesComponentNgFactory;
+    ng.createHeroesComponentFactory();
 Future<ComponentFactory> loadVillainsComponent() async =>
-    ng.VillainsComponentNgFactory;
+    ng.createVillainsComponentFactory();

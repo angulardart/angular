@@ -22,6 +22,6 @@ AnalysisError prefixErrorFromPath(
       originalError.offset,
       originalError.length,
       originalError.errorCode,
-      "In $classname: ${originalError.message} (from $fromSourcePath)",
+      'In $classname: ${originalError.message} (from $fromSourcePath)',
       originalError.correction);
 }

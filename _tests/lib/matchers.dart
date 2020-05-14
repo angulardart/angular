@@ -15,11 +15,14 @@ class _HasTextContent extends Matcher {
 
   const _HasTextContent(this.expectedText);
 
+  @override
   bool matches(item, Map matchState) => _elementText(item) == expectedText;
 
+  @override
   Description describe(Description description) =>
       description.add('$expectedText');
 
+  @override
   Description describeMismatch(
       item, Description mismatchDescription, Map matchState, bool verbose) {
     mismatchDescription.add('Text content of element: '
@@ -30,7 +33,7 @@ class _HasTextContent extends Matcher {
 
 String _elementText(n) {
   if (n is Iterable) {
-    return n.map(_elementText).join("");
+    return n.map(_elementText).join('');
   }
 
   if (n is! Node) return '$n';

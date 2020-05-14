@@ -55,7 +55,7 @@ void main() {
       test('should not dispose of existing subscription when Streams are equal',
           () async {
         // See https://github.com/dart-lang/angular2/issues/260
-        StreamController _ctrl = StreamController.broadcast();
+        var _ctrl = StreamController.broadcast();
         expect(pipe.transform(_ctrl.stream), isNull);
         _ctrl.add(message);
         Timer.run(expectAsync0(() {

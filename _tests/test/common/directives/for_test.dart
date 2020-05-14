@@ -2,66 +2,63 @@
 library angular2.test.common.directives.for_test;
 
 import 'dart:async';
-import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'for_test.template.dart' as ng_generated;
+import 'for_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group('ngFor', () {
     tearDown(() => disposeAnyRunningTest());
 
-    test("should reflect initial elements", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
+    test('should reflect initial elements', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent('1;2;3;'));
     });
 
-    test("should reflect added elements", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect added elements', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.add(4);
       });
       expect(testFixture.rootElement, hasTextContent('1;2;3;4;'));
     });
 
-    test("should reflect removed elements - first", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect removed elements - first', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.removeAt(0);
       });
       expect(testFixture.rootElement, hasTextContent('2;3;'));
     });
 
-    test("should reflect removed elements - middle", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect removed elements - middle', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.removeAt(1);
       });
       expect(testFixture.rootElement, hasTextContent('1;3;'));
     });
 
-    test("should reflect removed elements - last", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect removed elements - last', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.removeAt(2);
       });
       expect(testFixture.rootElement, hasTextContent('1;2;'));
     });
 
-    test("should reflect move to end", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect move to end', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.removeAt(0);
         component.items.add(1);
@@ -69,9 +66,9 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('2;3;1;'));
     });
 
-    test("should reflect move to start", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should reflect move to start', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items.removeAt(1);
         component.items.insert(0, 2);
@@ -79,10 +76,10 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('2;1;3;'));
     });
 
-    test("should reflect a mix of all changes (additions/removals/moves)",
+    test('should reflect a mix of all changes (additions/removals/moves)',
         () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForItemsTest component) {
         component.items = <int>[0, 1, 2, 3, 4, 5];
       });
@@ -92,19 +89,19 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('6;2;7;0;4;8;'));
     });
 
-    test("should iterate over an array of objects", () async {
-      var testBed = NgTestBed<NgForOptionsTest>();
-      NgTestFixture<NgForOptionsTest> testFixture = await testBed.create();
+    test('should iterate over an array of objects', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForOptionsTestFactory());
+      var testFixture = await testBed.create();
       await testFixture.update((NgForOptionsTest component) {
         component.items = [
-          {"name": "misko"},
-          {"name": "shyam"}
+          {'name': 'misko'},
+          {'name': 'shyam'}
         ];
       });
       expect(testFixture.rootElement, hasTextContent('misko;shyam;'));
       // Add new object.
       await testFixture.update((NgForOptionsTest component) {
-        component.items.add({"name": "adam"});
+        component.items.add({'name': 'adam'});
       });
       expect(testFixture.rootElement, hasTextContent('misko;shyam;adam;'));
       // Remove.
@@ -115,15 +112,15 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('shyam;'));
     });
 
-    test("should gracefully handle nulls", () async {
-      var testBed = NgTestBed<NgForNullTest>();
-      NgTestFixture<NgForNullTest> testFixture = await testBed.create();
+    test('should gracefully handle nulls', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForNullTestFactory());
+      var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent(''));
     });
 
-    test("should gracefully handle ref changing to null and back", () async {
-      var testBed = NgTestBed<NgForItemsTest>();
-      NgTestFixture<NgForItemsTest> testFixture = await testBed.create();
+    test('should gracefully handle ref changing to null and back', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForItemsTestFactory());
+      var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent('1;2;3;'));
 
       await testFixture.update((NgForItemsTest component) {
@@ -136,17 +133,19 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('5;6;'));
     });
 
-    test("should throw on non-iterable ref and suggest using an array",
+    test('should throw on non-iterable ref and suggest using an array',
         () async {
-      final testBed = NgTestBed<NgForOptionsTest>();
+      final testBed =
+          NgTestBed.forComponent(ng.createNgForOptionsTestFactory());
       final testFixture = await testBed.create();
       expect(testFixture.update((component) {
         component.items = 'this is not iterable';
       }), throwsA(const TypeMatcher<TypeError>()));
     });
 
-    test("should work with duplicates", () async {
-      var testBed = NgTestBed<NgForObjectItemInstanceTest>();
+    test('should work with duplicates', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgForObjectItemInstanceTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForObjectItemInstanceTest component) {
         var a = Foo('titleA');
@@ -155,20 +154,20 @@ void main() {
       expect(testFixture.rootElement, hasTextContent('titleA;titleA;'));
     });
 
-    test("should repeat over nested arrays", () async {
-      var testBed = NgTestBed<NgForNestedTest>();
+    test('should repeat over nested arrays', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForNestedTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForNestedTest component) {
         component.items = [
-          ["a", "b"],
-          ["c"]
+          ['a', 'b'],
+          ['c']
         ];
       });
       expect(testFixture.rootElement, hasTextContent('a-2;b-2;|c-1;|'));
       await testFixture.update((NgForNestedTest component) {
         component.items = [
-          ["e"],
-          ["f", "g"]
+          ['e'],
+          ['f', 'g']
         ];
       });
       expect(testFixture.rootElement, hasTextContent('e-1;|f-2;g-2;|'));
@@ -177,19 +176,20 @@ void main() {
     test(
         'should repeat over nested arrays with no intermediate '
         'element', () async {
-      var testBed = NgTestBed<NgForNestedTemplateTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createNgForNestedTemplateTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForNestedTemplateTest component) {
         component.items = [
-          ["a", "b"],
-          ["c"]
+          ['a', 'b'],
+          ['c']
         ];
       });
       expect(testFixture.rootElement, hasTextContent('a-2;b-2;|c-1;|'));
       await testFixture.update((NgForNestedTemplateTest component) {
         component.items = [
-          ["e"],
-          ["f", "g"]
+          ['e'],
+          ['f', 'g']
         ];
       });
       expect(testFixture.rootElement, hasTextContent('e-1;|f-2;g-2;|'));
@@ -198,173 +198,177 @@ void main() {
     test(
         'should repeat over nested ngIf that are the last node in '
         'the ngFor temlate', () async {
-      var testBed = NgTestBed<NgForNestedLastIfTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createNgForNestedLastIfTestFactory());
       var testFixture = await testBed.create();
       var el = testFixture.rootElement;
       await testFixture.update((NgForNestedLastIfTest component) {
         component.items = [1];
       });
-      expect(el, hasTextContent("0|even|"));
+      expect(el, hasTextContent('0|even|'));
 
       await testFixture.update((NgForNestedLastIfTest component) {
         component.items.add(1);
       });
-      expect(el, hasTextContent("0|even|1|"));
+      expect(el, hasTextContent('0|even|1|'));
 
       await testFixture.update((NgForNestedLastIfTest component) {
         component.items.add(1);
       });
-      expect(el, hasTextContent("0|even|1|2|even|"));
+      expect(el, hasTextContent('0|even|1|2|even|'));
     });
 
-    test("should display indices correctly", () async {
-      var testBed = NgTestBed<NgForIndexTest>();
+    test('should display indices correctly', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForIndexTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForIndexTest component) {
         component.items = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
       });
-      expect(testFixture.rootElement, hasTextContent("0123456789"));
+      expect(testFixture.rootElement, hasTextContent('0123456789'));
       await testFixture.update((NgForIndexTest component) {
         component.items = [1, 2, 6, 7, 4, 3, 5, 8, 9, 0];
       });
-      expect(testFixture.rootElement, hasTextContent("0123456789"));
+      expect(testFixture.rootElement, hasTextContent('0123456789'));
     });
 
-    test("should display first item correctly", () async {
-      var testBed = NgTestBed<NgForFirstTest>();
+    test('should display first item correctly', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForFirstTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForFirstTest component) {
         component.items = [0, 1, 2];
       });
-      expect(testFixture.rootElement, hasTextContent("truefalsefalse"));
+      expect(testFixture.rootElement, hasTextContent('truefalsefalse'));
       await testFixture.update((NgForFirstTest component) {
         component.items = [2, 1];
       });
-      expect(testFixture.rootElement, hasTextContent("truefalse"));
+      expect(testFixture.rootElement, hasTextContent('truefalse'));
     });
 
-    test("should display last item correctly", () async {
-      var testBed = NgTestBed<NgForLastTest>();
+    test('should display last item correctly', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForLastTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForLastTest component) {
         component.items = [0, 1, 2];
       });
-      expect(testFixture.rootElement, hasTextContent("falsefalsetrue"));
+      expect(testFixture.rootElement, hasTextContent('falsefalsetrue'));
       await testFixture.update((NgForLastTest component) {
         component.items = [2, 1];
       });
-      expect(testFixture.rootElement, hasTextContent("falsetrue"));
+      expect(testFixture.rootElement, hasTextContent('falsetrue'));
     });
 
-    test("should display even items correctly", () async {
-      var testBed = NgTestBed<NgForEvenTest>();
+    test('should display even items correctly', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForEvenTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForEvenTest component) {
         component.items = [0, 1, 2];
       });
-      expect(testFixture.rootElement, hasTextContent("truefalsetrue"));
+      expect(testFixture.rootElement, hasTextContent('truefalsetrue'));
       await testFixture.update((NgForEvenTest component) {
         component.items = [2, 1];
       });
-      expect(testFixture.rootElement, hasTextContent("truefalse"));
+      expect(testFixture.rootElement, hasTextContent('truefalse'));
     });
 
-    test("should display odd items correctly", () async {
-      var testBed = NgTestBed<NgForOddTest>();
+    test('should display odd items correctly', () async {
+      var testBed = NgTestBed.forComponent(ng.createNgForOddTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForOddTest component) {
         component.items = [0, 1, 2, 3];
       });
-      expect(testFixture.rootElement, hasTextContent("falsetruefalsetrue"));
+      expect(testFixture.rootElement, hasTextContent('falsetruefalsetrue'));
       await testFixture.update((NgForOddTest component) {
         component.items = [2, 1];
       });
-      expect(testFixture.rootElement, hasTextContent("falsetrue"));
+      expect(testFixture.rootElement, hasTextContent('falsetrue'));
     });
 
-    test("should allow using a custom template", () async {
-      var testBed = NgTestBed<NgForCustomTemplateTest>();
+    test('should allow using a custom template', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgForCustomTemplateTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((component) {
-        component.child.items = ["a", "b", "c"];
+        component.child.items = ['a', 'b', 'c'];
       });
-      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent('0: a;1: b;2: c;'));
     });
 
-    test("should use a default template if a custom one is null", () async {
-      var testBed = NgTestBed<NgForCustomTemplateNullTest>();
+    test('should use a default template if a custom one is null', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createNgForCustomTemplateNullTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForCustomTemplateNullTest component) {
-        component.child.items = ["a", "b", "c"];
+        component.child.items = ['a', 'b', 'c'];
       });
-      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent('0: a;1: b;2: c;'));
     });
 
     test(
         'should use a custom template (precedence) when both default and a '
         'custom one are present', () async {
-      var testBed = NgTestBed<NgForCustomTemplatePrecedenceTest>();
+      var testBed = NgTestBed.forComponent(
+          ng.createNgForCustomTemplatePrecedenceTestFactory());
       var testFixture = await testBed.create();
       await testFixture.update((NgForCustomTemplatePrecedenceTest component) {
-        component.child.items = ["a", "b", "c"];
+        component.child.items = ['a', 'b', 'c'];
       });
-      expect(testFixture.text, hasTextContent("0: a;1: b;2: c;"));
+      expect(testFixture.text, hasTextContent('0: a;1: b;2: c;'));
     });
 
-    group("track by", () {
-      test("should not replace tracked items", () async {
-        var testBed = NgTestBed<TrackByIdTest>();
+    group('track by', () {
+      test('should not replace tracked items', () async {
+        var testBed = NgTestBed.forComponent(ng.createTrackByIdTestFactory());
         var testFixture = await testBed.create();
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "a", "color": "blue"}
+            {'id': 'a', 'color': 'blue'}
           ];
         });
-        Element startElement = testFixture.rootElement.querySelector('p');
+        var startElement = testFixture.rootElement.querySelector('p');
         // Set items to new list instance (same trackBy identity).
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "a", "color": "red"}
+            {'id': 'a', 'color': 'red'}
           ];
         });
-        Element endElement = testFixture.rootElement.querySelector('p');
+        var endElement = testFixture.rootElement.querySelector('p');
         // Since ids are identical element should have stayed stable.
         expect(startElement, endElement);
       });
 
-      test("should update implicit local variable on view", () async {
-        var testBed = NgTestBed<TrackByIdTest>();
+      test('should update implicit local variable on view', () async {
+        var testBed = NgTestBed.forComponent(ng.createTrackByIdTestFactory());
         var testFixture = await testBed.create();
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "a", "color": "blue"}
+            {'id': 'a', 'color': 'blue'}
           ];
         });
-        Element startElement = testFixture.rootElement.querySelector('p');
-        expect(startElement, hasTextContent("{id: a, color: blue}"));
+        var startElement = testFixture.rootElement.querySelector('p');
+        expect(startElement, hasTextContent('{id: a, color: blue}'));
         // Set items to new list instance (same trackBy identity).
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "a", "color": "red"}
+            {'id': 'a', 'color': 'red'}
           ];
         });
-        expect(startElement, hasTextContent("{id: a, color: red}"));
+        expect(startElement, hasTextContent('{id: a, color: red}'));
       });
 
-      test("should move items around and updated (reorder)", () async {
-        var testBed = NgTestBed<TrackByIdTest>();
+      test('should move items around and updated (reorder)', () async {
+        var testBed = NgTestBed.forComponent(ng.createTrackByIdTestFactory());
         var testFixture = await testBed.create();
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "a", "color": "blue"},
-            {"id": "b", "color": "yellow"}
+            {'id': 'a', 'color': 'blue'},
+            {'id': 'b', 'color': 'yellow'}
           ];
         });
         var startElements = testFixture.rootElement.querySelectorAll('p');
         await testFixture.update((TrackByIdTest component) {
           component.items = [
-            {"id": "b", "color": "red"},
-            {"id": "a", "color": "orange"}
+            {'id': 'b', 'color': 'red'},
+            {'id': 'a', 'color': 'orange'}
           ];
         });
         var endElements = testFixture.rootElement.querySelectorAll('p');
@@ -375,24 +379,26 @@ void main() {
       test(
           'should handle added and removed items properly when tracking '
           'by index', () async {
-        var testBed = NgTestBed<TrackByIndexTest>();
+        var testBed =
+            NgTestBed.forComponent(ng.createTrackByIndexTestFactory());
         var testFixture = await testBed.create();
         await testFixture.update((TrackByIndexTest component) {
-          component.items = ["a", "b", "c", "d"];
+          component.items = ['a', 'b', 'c', 'd'];
         });
         await testFixture.update((TrackByIndexTest component) {
-          component.items = ["e", "f", "g", "h"];
+          component.items = ['e', 'f', 'g', 'h'];
         });
         await testFixture.update((TrackByIndexTest component) {
-          component.items = ["e", "f", "h"];
+          component.items = ['e', 'f', 'h'];
         });
-        expect(testFixture.rootElement, hasTextContent("efh"));
+        expect(testFixture.rootElement, hasTextContent('efh'));
       });
 
       test(
           'should remove by index when list item or '
           'it\'s hash changes', () async {
-        var testBed = NgTestBed<ObjectEditorComponent>();
+        var testBed =
+            NgTestBed.forComponent(ng.createObjectEditorComponentFactory());
         var testFixture = await testBed.create();
         await testFixture.update((ObjectEditorComponent component) {
           component.entities = ['a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1'];
@@ -413,10 +419,11 @@ void main() {
       });
 
       test(
-          "should remove item if hash code is changed before "
-          "removing element from list", () async {
-        var testBed = NgTestBed<NgForHashcodeTest>();
-        NgTestFixture<NgForHashcodeTest> testFixture = await testBed.create();
+          'should remove item if hash code is changed before '
+          'removing element from list', () async {
+        var testBed =
+            NgTestBed.forComponent(ng.createNgForHashcodeTestFactory());
+        var testFixture = await testBed.create();
         var testItems = [
           HashcodeTestItem(1),
           HashcodeTestItem(2),
@@ -432,7 +439,7 @@ void main() {
         expect(testFixture.rootElement, hasTextContent('1;2;3;4;5;'));
 
         await testFixture.update((NgForHashcodeTest component) async {
-          Completer completer = Completer();
+          var completer = Completer();
           scheduleMicrotask(() {
             testItems[2].hashMultiplier = 3;
             completer.complete();
@@ -455,7 +462,7 @@ class BaseTestComponent {
     items = <int>[1, 2, 3];
   }
   String trackById(int index, dynamic item) {
-    return '${item["id"]}';
+    return '${item['id']}';
   }
 
   int trackByIndex(int index, dynamic item) {
@@ -497,7 +504,7 @@ class NgForOptionsTest {
     items = [];
   }
   String trackById(int index, dynamic item) {
-    return item["id"];
+    return item['id'];
   }
 
   int trackByIndex(int index, dynamic item) {
@@ -723,7 +730,7 @@ class Foo {
   final String title;
   Foo(this.title);
   @override
-  toString() => title;
+  String toString() => title;
 }
 
 @Component(
@@ -737,7 +744,7 @@ class Foo {
 class TrackByIdTest {
   List items;
   String trackById(num index, dynamic item) {
-    return item["id"];
+    return item['id'];
   }
 
   String colorOfItem(Map item) => item['color'];
@@ -823,5 +830,5 @@ class HashcodeTestItem {
   int get hashCode => value * hashMultiplier;
 
   @override
-  toString() => '${value * hashMultiplier}';
+  String toString() => '${value * hashMultiplier}';
 }

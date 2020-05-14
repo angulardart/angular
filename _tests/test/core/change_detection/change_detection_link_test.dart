@@ -43,7 +43,7 @@ void main() {
     //                CheckAlways component
     //
     test('in a @changeDetectionLink OnPush component', () {
-      return testComponent(ng.LoadInOnPushNgFactory);
+      return testComponent(ng.createLoadInOnPushFactory());
     });
 
     // CheckAlways component -------.
@@ -63,7 +63,7 @@ void main() {
     //                CheckAlways component
     //
     test('through multiple @changeDetectionLink OnPush components', () {
-      return testComponent(ng.LoadInOnPushDescendantNgFactory);
+      return testComponent(ng.createLoadInOnPushDescendantFactory());
     });
 
     // CheckAlways component -------.
@@ -82,7 +82,7 @@ void main() {
     //                CheckAlways component
     //
     test('in an embedded view of a @changeDetectionLink OnPush component', () {
-      return testComponent(ng.LoadInOnPushEmbeddedViewNgFactory);
+      return testComponent(ng.createLoadInOnPushEmbeddedViewFactory());
     });
   });
 }
@@ -130,7 +130,7 @@ class OnPushContainerComponent {
   directives: [OnPushContainerComponent],
 )
 class LoadInOnPush {
-  static final defaultComponentFactory = ng.DefaultComponentNgFactory;
+  static final defaultComponentFactory = ng.createDefaultComponentFactory();
 }
 
 @changeDetectionLink
@@ -157,7 +157,7 @@ class OnPushAncestorComponent {
   directives: [OnPushAncestorComponent],
 )
 class LoadInOnPushDescendant {
-  static final defaultComponentFactory = ng.DefaultComponentNgFactory;
+  static final defaultComponentFactory = ng.createDefaultComponentFactory();
 }
 
 @changeDetectionLink
@@ -204,5 +204,5 @@ class OnPushEmbeddedContainerComponent {
   directives: [OnPushEmbeddedContainerComponent],
 )
 class LoadInOnPushEmbeddedView {
-  static final defaultComponentFactory = ng.DefaultComponentNgFactory;
+  static final defaultComponentFactory = ng.createDefaultComponentFactory();
 }

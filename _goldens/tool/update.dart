@@ -14,8 +14,8 @@ import 'package:path/path.dart' as p;
 /// dart tool/update.dart
 /// ```
 void main() {
-  final output = p.join(p.current, 'test', '_files');
-  final input = p.join(p.current, 'build', 'test', '_files');
+  final output = p.join(p.current, 'test', 'files');
+  final input = p.join(p.current, 'build', 'test', 'files');
   _copyPathSync(input, output);
 }
 

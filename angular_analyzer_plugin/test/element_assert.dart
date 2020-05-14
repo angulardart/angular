@@ -199,7 +199,7 @@ class _AbstractElementAssert {
   void _at(int actualOffset, String search) {
     _code ??= _source.contents.data;
     final offset = _code.indexOf(search);
-    expect(offset, isNonNegative, reason: "|$search| in |$_code|");
+    expect(offset, isNonNegative, reason: '|$search| in |$_code|');
     expect(actualOffset, offset);
   }
 

@@ -4,36 +4,37 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'dependency_injection_test.template.dart' as ng_generated;
+import 'dependency_injection_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support bindings', () async {
-    final testBed = NgTestBed<ProvideConsumeInjectableComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createProvideConsumeInjectableComponentFactory());
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
     expect(consumer.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support viewProviders', () async {
-    final testBed = NgTestBed<ProvidesInjectableInViewComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createProvidesInjectableInViewComponentFactory());
     final testFixture = await testBed.create();
     final consumer = testFixture.assertOnlyInstance.consumer;
     expect(consumer.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support unbounded lookup', () async {
-    final testBed = NgTestBed<ProvidesInjectableUnboundedComponent>();
+    final testBed = NgTestBed.forComponent(
+        ng.createProvidesInjectableUnboundedComponentFactory());
     final testFixture = await testBed.create();
     final dir = testFixture.assertOnlyInstance.container;
     expect(dir.directive.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support the event-bus scenario', () async {
-    final testBed = NgTestBed<EventBusComponent>();
+    final testBed = NgTestBed.forComponent(ng.createEventBusComponentFactory());
     final testFixture = await testBed.create();
     final grandParent = testFixture.assertOnlyInstance.grandParent;
     final parent = testFixture.assertOnlyInstance.parent;
@@ -45,7 +46,8 @@ void main() {
   });
 
   test('should instantiate bindings lazily', () async {
-    final testBed = NgTestBed<LazyBindingsComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createLazyBindingsComponentFactory());
     final testFixture = await testBed.create();
     final providing = testFixture.assertOnlyInstance.providing;
     expect(providing.created, false);
@@ -54,7 +56,8 @@ void main() {
   });
 
   test('should inject @Host', () async {
-    final testBed = NgTestBed<InjectsHostComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createInjectsHostComponentFactory());
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
     expect(cmp.myHost, TypeMatcher<SomeDirective>());
@@ -62,7 +65,8 @@ void main() {
 
   test('should create a component that injects @Host through ViewContainer',
       () async {
-    final testBed = NgTestBed<InjectsHostThroughViewContainer>();
+    final testBed = NgTestBed.forComponent(
+        ng.createInjectsHostThroughViewContainerFactory());
     final testFixture = await testBed.create();
     final cmp = testFixture.assertOnlyInstance.compWithHost;
     expect(cmp.myHost, TypeMatcher<SomeDirective>());

@@ -4,16 +4,14 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'ng_style_test.template.dart' as ng_generated;
+import 'ng_style_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group('ngStyle', () {
     tearDown(() => disposeAnyRunningTest());
 
     test('should update styles specified in an map literal', () async {
-      var testBed = NgTestBed<MapUpdateTest>();
+      var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateTest component) {
@@ -27,7 +25,7 @@ void main() {
     });
 
     test('should remove styles when deleting a key in a map literal', () async {
-      var testBed = NgTestBed<MapUpdateTest>();
+      var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateTest component) {
@@ -41,7 +39,8 @@ void main() {
     });
 
     test('should cooperate with the style attribute', () async {
-      var testBed = NgTestBed<MapUpdateWithDefaultTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createMapUpdateWithDefaultTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateWithDefaultTest component) {
@@ -58,7 +57,8 @@ void main() {
 
     test('should cooperate with the style.[styleName]="expr" special-case',
         () async {
-      var testBed = NgTestBed<MapUpdateWithStyleExprTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createMapUpdateWithStyleExprTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
       await testFixture.update((MapUpdateWithStyleExprTest component) {

@@ -1,0 +1,301 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'on_push.dart';
+export 'on_push.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'on_push.template.dart' as _ref0;
+import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'on_push.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import5;
+import 'package:angular/src/runtime.dart' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/runtime/text_binding.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
+
+final List<dynamic> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  ViewChild0 _compView_0;
+  import1.Child _Child_0_5;
+  ViewChildWithDoCheck0 _compView_1;
+  import1.ChildWithDoCheck _ChildWithDoCheck_1_5;
+  var _expr_0;
+  var _expr_1;
+  static import2.ComponentStyles _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('golden');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewChild0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._Child_0_5 = import1.Child();
+    this._compView_0.create(this._Child_0_5);
+    this._compView_1 = ViewChildWithDoCheck0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._ChildWithDoCheck_1_5 = import1.ChildWithDoCheck();
+    this._compView_1.create(this._ChildWithDoCheck_1_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    bool changed = false;
+    changed = false;
+    final currVal_0 = _ctx.name;
+    if (import6.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
+      this._Child_0_5.name = currVal_0;
+      changed = true;
+      this._expr_0 = currVal_0;
+    }
+    if (changed) {
+      this._compView_0.markAsCheckOnce();
+    }
+    changed = false;
+    final currVal_1 = _ctx.name;
+    if (import6.checkBinding(this._expr_1, currVal_1, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
+      this._ChildWithDoCheck_1_5.name = currVal_1;
+      changed = true;
+      this._expr_1 = currVal_1;
+    }
+    if (changed) {
+      this._compView_1.markAsCheckOnce();
+    }
+    if ((!import6.debugThrowIfChanged)) {
+      this._ChildWithDoCheck_1_5.ngDoCheck();
+    }
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<dynamic> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<dynamic> styles$Child = const [];
+
+class ViewChild0 extends import0.ComponentView<import1.Child> {
+  final import9.TextBinding _textBinding_1 = import9.TextBinding();
+  static import2.ComponentStyles _componentStyles;
+  ViewChild0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('child');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import10.appendText(parentRenderNode, 'Name: ');
+    parentRenderNode.append(this._textBinding_1.element);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.name));
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$Child, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _ChildNgFactory = ComponentFactory<import1.Child>('child', viewFactory_ChildHost0);
+ComponentFactory<import1.Child> get ChildNgFactory {
+  return _ChildNgFactory;
+}
+
+ComponentFactory<import1.Child> createChildFactory() {
+  return ComponentFactory('child', viewFactory_ChildHost0);
+}
+
+final List<dynamic> styles$ChildHost = const [];
+
+class _ViewChildHost0 extends import8.HostView<import1.Child> {
+  @override
+  void build() {
+    this.componentView = ViewChild0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.Child();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool changed = false;
+    if (changed) {
+      this.componentView.markAsCheckOnce();
+    }
+    this.componentView.detectChanges();
+  }
+}
+
+import8.HostView<import1.Child> viewFactory_ChildHost0() {
+  return _ViewChildHost0();
+}
+
+final List<dynamic> styles$ChildWithDoCheck = const [];
+
+class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoCheck> {
+  final import9.TextBinding _textBinding_1 = import9.TextBinding();
+  static import2.ComponentStyles _componentStyles;
+  ViewChildWithDoCheck0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
+    this.initComponentStyles();
+    this.rootElement = import5.document.createElement('child-with-do-check');
+  }
+  static String get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import5.HtmlElement parentRenderNode = this.initViewRoot();
+    final _text_0 = import10.appendText(parentRenderNode, 'Name: ');
+    parentRenderNode.append(this._textBinding_1.element);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    this._textBinding_1.updateText(import11.interpolateString0(_ctx.name));
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ChildWithDoCheck, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _ChildWithDoCheckNgFactory = ComponentFactory<import1.ChildWithDoCheck>('child-with-do-check', viewFactory_ChildWithDoCheckHost0);
+ComponentFactory<import1.ChildWithDoCheck> get ChildWithDoCheckNgFactory {
+  return _ChildWithDoCheckNgFactory;
+}
+
+ComponentFactory<import1.ChildWithDoCheck> createChildWithDoCheckFactory() {
+  return ComponentFactory('child-with-do-check', viewFactory_ChildWithDoCheckHost0);
+}
+
+final List<dynamic> styles$ChildWithDoCheckHost = const [];
+
+class _ViewChildWithDoCheckHost0 extends import8.HostView<import1.ChildWithDoCheck> {
+  @override
+  void build() {
+    this.componentView = ViewChildWithDoCheck0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.ChildWithDoCheck();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool changed = false;
+    if (changed) {
+      this.componentView.markAsCheckOnce();
+    }
+    if ((!import6.debugThrowIfChanged)) {
+      this.component.ngDoCheck();
+    }
+    this.componentView.detectChanges();
+  }
+}
+
+import8.HostView<import1.ChildWithDoCheck> viewFactory_ChildWithDoCheckHost0() {
+  return _ViewChildWithDoCheckHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(Child, createChildFactory());
+  _ngRef.registerComponent(ChildWithDoCheck, createChildWithDoCheckFactory());
+  _ref0.initReflector();
+  _ref1.initReflector();
+}

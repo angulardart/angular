@@ -320,7 +320,7 @@ class MyComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.INPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "immutable");
+        'immutable');
   }
 
   // ignore: non_constant_identifier_names
@@ -338,7 +338,7 @@ class MyNonDirective {
     assertErrorInCodeAtPosition(
         AngularWarningCode.INPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "immutable");
+        'immutable');
   }
 
   // ignore: non_constant_identifier_names
@@ -399,8 +399,8 @@ class ContentChildComp {}
     expect(childFields, hasLength(0));
     // validate
     errorListener.assertErrorsWithCodes([
-      CompileTimeErrorCode.NOT_ENOUGH_REQUIRED_ARGUMENTS,
-      CompileTimeErrorCode.NOT_ENOUGH_REQUIRED_ARGUMENTS
+      CompileTimeErrorCode.NOT_ENOUGH_POSITIONAL_ARGUMENTS,
+      CompileTimeErrorCode.NOT_ENOUGH_POSITIONAL_ARGUMENTS
     ]);
   }
 
@@ -427,23 +427,23 @@ class ContentChildComp {}
     final childFields = component.contentChildFields;
     expect(childFields, hasLength(1));
     final child = childFields.first;
-    expect(child.fieldName, equals("contentChild"));
+    expect(child.fieldName, equals('contentChild'));
     expect(
-        child.nameRange.offset, equals(code.indexOf("ContentChildComp) // 1")));
-    expect(child.nameRange.length, equals("ContentChildComp".length));
-    expect(child.typeRange.offset, equals(code.indexOf("ContentChildComp ")));
-    expect(child.typeRange.length, equals("ContentChildComp".length));
+        child.nameRange.offset, equals(code.indexOf('ContentChildComp) // 1')));
+    expect(child.nameRange.length, equals('ContentChildComp'.length));
+    expect(child.typeRange.offset, equals(code.indexOf('ContentChildComp ')));
+    expect(child.typeRange.length, equals('ContentChildComp'.length));
 
     final childrenFields = component.contentChildrenFields;
     expect(childrenFields, hasLength(1));
     final children = childrenFields.first;
-    expect(children.fieldName, equals("contentChildren"));
+    expect(children.fieldName, equals('contentChildren'));
     expect(children.nameRange.offset,
-        equals(code.indexOf("ContentChildComp) // 2")));
-    expect(children.nameRange.length, equals("ContentChildComp".length));
+        equals(code.indexOf('ContentChildComp) // 2')));
+    expect(children.nameRange.length, equals('ContentChildComp'.length));
     expect(children.typeRange.offset,
-        equals(code.indexOf("List<ContentChildComp>")));
-    expect(children.typeRange.length, equals("List<ContentChildComp>".length));
+        equals(code.indexOf('List<ContentChildComp>')));
+    expect(children.typeRange.length, equals('List<ContentChildComp>'.length));
 
     errorListener.assertNoErrors();
   }
@@ -468,11 +468,11 @@ class ContentChildComp {}
     final childFields = component.contentChildFields;
     expect(childFields, hasLength(1));
     final child = childFields.first;
-    expect(child.fieldName, equals("contentChild"));
-    expect(child.nameRange.offset, equals(code.indexOf("ContentChildComp)")));
-    expect(child.nameRange.length, equals("ContentChildComp".length));
-    expect(child.typeRange.offset, equals(code.indexOf("ContentChildComp ")));
-    expect(child.typeRange.length, equals("ContentChildComp".length));
+    expect(child.fieldName, equals('contentChild'));
+    expect(child.nameRange.offset, equals(code.indexOf('ContentChildComp)')));
+    expect(child.nameRange.length, equals('ContentChildComp'.length));
+    expect(child.typeRange.offset, equals(code.indexOf('ContentChildComp ')));
+    expect(child.typeRange.length, equals('ContentChildComp'.length));
     // validate
     errorListener.assertNoErrors();
   }
@@ -497,13 +497,13 @@ class ContentChildComp {}
     final childrenFields = component.contentChildrenFields;
     expect(childrenFields, hasLength(1));
     final children = childrenFields.first;
-    expect(children.fieldName, equals("contentChildren"));
+    expect(children.fieldName, equals('contentChildren'));
     expect(
-        children.nameRange.offset, equals(code.indexOf("ContentChildComp)")));
-    expect(children.nameRange.length, equals("ContentChildComp".length));
+        children.nameRange.offset, equals(code.indexOf('ContentChildComp)')));
+    expect(children.nameRange.length, equals('ContentChildComp'.length));
     expect(children.typeRange.offset,
-        equals(code.indexOf("List<ContentChildComp>")));
-    expect(children.typeRange.length, equals("List<ContentChildComp>".length));
+        equals(code.indexOf('List<ContentChildComp>')));
+    expect(children.typeRange.length, equals('List<ContentChildComp>'.length));
     // validate
     errorListener.assertNoErrors();
   }
@@ -535,7 +535,7 @@ class ComponentA {
     await getDirectives(source);
     // validate
     assertErrorInCodeAtPosition(
-        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, "+");
+        AngularWarningCode.CANNOT_PARSE_SELECTOR, code, '+');
   }
 
   // ignore: non_constant_identifier_names
@@ -686,7 +686,8 @@ class MyComponent extends BaseComponent {
       final input = compInputs[0];
       expect(input.name, 'input');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     final compOutputs = component.outputs;
@@ -695,7 +696,8 @@ class MyComponent extends BaseComponent {
       final output = compOutputs[0];
       expect(output.name, 'output');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("String"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     final compChildrenFields = component.contentChildrenFields;
@@ -744,14 +746,16 @@ class ImproperlyDefinedComponent extends BaseComponent {
       final input = compInputs[0];
       expect(input.name, 'someInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("int"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     expect(compOutputs, hasLength(1));
     {
       final input = compOutputs[0];
       expect(input.name, 'someOutput');
       expect(input.eventType, isNotNull);
-      expect(input.eventType.toString(), equals("int"));
+      expect(input.eventType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     errorListener.assertErrorsWithCodes(
         [StaticWarningCode.NON_ABSTRACT_CLASS_INHERITS_ABSTRACT_MEMBER_TWO]);
@@ -788,14 +792,16 @@ class VarianceComponent extends BaseComponent {
       final input = compInputs[0];
       expect(input.name, 'someInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("Object"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('Object'));
     }
     expect(compOutputs, hasLength(1));
     {
       final input = compOutputs[0];
       expect(input.name, 'someOutput');
       expect(input.eventType, isNotNull);
-      expect(input.eventType.toString(), equals("int"));
+      expect(input.eventType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     errorListener.assertNoErrors();
   }
@@ -852,7 +858,8 @@ class MyComponent {
       final input = compInputs[0];
       expect(input.name, 'input');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     final compOutputs = component.outputs;
@@ -861,7 +868,8 @@ class MyComponent {
       final output = compOutputs[0];
       expect(output.name, 'output');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("String"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     final compChildren = component.contentChildrenFields;
@@ -908,7 +916,8 @@ class FinalComponent
       final input = compInputs[0];
       expect(input.name, 'someInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("int"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('int'));
     }
   }
 
@@ -974,7 +983,7 @@ class MyComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.INPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "@Input()");
+        '@Input()');
   }
 
   // ignore: non_constant_identifier_names
@@ -1009,7 +1018,8 @@ class MyComponent {
       expect(input.setter, isNotNull);
       expect(input.setter.isSetter, isTrue);
       expect(input.setter.displayName, 'firstField');
-      expect(input.setterType.toString(), equals("bool"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('bool'));
     }
     {
       final input = inputs[1];
@@ -1020,7 +1030,8 @@ class MyComponent {
       expect(input.setter, isNotNull);
       expect(input.setter.isSetter, isTrue);
       expect(input.setter.displayName, 'secondField');
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final input = inputs[2];
@@ -1031,7 +1042,8 @@ class MyComponent {
       expect(input.setter, isNotNull);
       expect(input.setter.isSetter, isTrue);
       expect(input.setter.displayName, 'someSetter');
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     // assert no syntax errors, etc
@@ -1064,7 +1076,7 @@ class MyComponent {
     assertErrorInCodeAtPosition(
         AngularWarningCode.OUTPUT_ANNOTATION_PLACEMENT_INVALID,
         code,
-        "@Output()");
+        '@Output()');
   }
 
   // ignore: non_constant_identifier_names
@@ -1101,7 +1113,8 @@ class MyComponent {
       expect(output.getter.isGetter, isTrue);
       expect(output.getter.displayName, 'outputOne');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("int"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     {
       final output = compOutputs[1];
@@ -1181,7 +1194,8 @@ class MyComponent {
     {
       final output = compOutputs[0];
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("dynamic"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
   }
 
@@ -1209,7 +1223,8 @@ class MyComponent {
     {
       final output = compOutputs[0];
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("int"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('int'));
     }
   }
 
@@ -1237,7 +1252,8 @@ class MyComponent {
     {
       final output = compOutputs[0];
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("dynamic"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
   }
 
@@ -1257,7 +1273,7 @@ class MyComponent {
     final source = newSource('/test.dart', code);
     await getDirectives(source);
     assertErrorInCodeAtPosition(
-        AngularWarningCode.OUTPUT_MUST_BE_STREAM, code, "badOutput");
+        AngularWarningCode.OUTPUT_MUST_BE_STREAM, code, 'badOutput');
   }
 
   // ignore: non_constant_identifier_names
@@ -1282,7 +1298,8 @@ class MyComponent {
     {
       final output = compOutputs[0];
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("int"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('int'));
     }
   }
 
@@ -1313,7 +1330,8 @@ class MyComponent extends Generic {
           compInputs.singleWhere((i) => i.name == 'inputViaParentDecl');
       expect(input, isNotNull);
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("dynamic"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
 
     final compOutputs = component.outputs;
@@ -1323,7 +1341,8 @@ class MyComponent extends Generic {
           compOutputs.singleWhere((o) => o.name == 'outputViaParentDecl');
       expect(output, isNotNull);
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("dynamic"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
   }
 
@@ -1354,7 +1373,8 @@ class MyComponent extends Generic<String> {
           compInputs.singleWhere((i) => i.name == 'inputViaParentDecl');
       expect(input, isNotNull);
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
 
     final compOutputs = component.outputs;
@@ -1364,7 +1384,8 @@ class MyComponent extends Generic<String> {
           compOutputs.singleWhere((o) => o.name == 'outputViaParentDecl');
       expect(output, isNotNull);
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("String"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('String'));
     }
   }
 
@@ -1399,25 +1420,29 @@ class MyComponent<T, A extends String, B extends A> {
       final input = compInputs[0];
       expect(input.name, 'dynamicInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("dynamic"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
     {
       final input = compInputs[1];
       expect(input.name, 'stringInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final input = compInputs[2];
       expect(input.name, 'stringInput2');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("String"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final input = compInputs[3];
       expect(input.name, 'listInput');
       expect(input.setterType, isNotNull);
-      expect(input.setterType.toString(), equals("List<String>"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('List<String>'));
     }
 
     final compOutputs = component.outputs;
@@ -1426,25 +1451,29 @@ class MyComponent<T, A extends String, B extends A> {
       final output = compOutputs[0];
       expect(output.name, 'dynamicOutput');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("dynamic"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('dynamic'));
     }
     {
       final output = compOutputs[1];
       expect(output.name, 'stringOutput');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("String"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final output = compOutputs[2];
       expect(output.name, 'stringOutput2');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("String"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final output = compOutputs[3];
       expect(output.name, 'listOutput');
       expect(output.eventType, isNotNull);
-      expect(output.eventType.toString(), equals("List<String>"));
+      expect(output.eventType.getDisplayString(withNullability: false),
+          equals('List<String>'));
     }
 
     // assert no syntax errors, etc
@@ -1475,8 +1504,10 @@ class PipeB extends PipeTransform {
       expect(pipeName, isA<String>());
       expect(pipeName, 'pipeA');
 
-      expect(pipe.requiredArgumentType.toString(), 'int');
-      expect(pipe.transformReturnType.toString(), 'int');
+      expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+          'int');
+      expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+          'int');
       expect(pipe.optionalArgumentTypes, hasLength(0));
     }
     {
@@ -1486,13 +1517,15 @@ class PipeB extends PipeTransform {
       expect(pipeName, isA<String>());
       expect(pipeName, 'pipeB');
 
-      expect(pipe.requiredArgumentType.toString(), 'int');
-      expect(pipe.transformReturnType.toString(), 'String');
+      expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+          'int');
+      expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+          'String');
 
       final opArgs = pipe.optionalArgumentTypes;
       expect(opArgs, hasLength(2));
-      expect(opArgs[0].toString(), 'String');
-      expect(opArgs[1].toString(), 'bool');
+      expect(opArgs[0].getDisplayString(withNullability: false), 'String');
+      expect(opArgs[1].getDisplayString(withNullability: false), 'bool');
     }
     errorListener.assertNoErrors();
   }
@@ -1552,8 +1585,10 @@ class PipeA extends Trouble{
     expect(pipeName, isA<String>());
     expect(pipeName, 'pipeA');
 
-    expect(pipe.transformReturnType.toString(), 'int');
-    expect(pipe.requiredArgumentType.toString(), 'int');
+    expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+        'int');
+    expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+        'int');
     expect(pipe.optionalArgumentTypes, hasLength(0));
 
     errorListener.assertErrorsWithCodes(
@@ -1597,8 +1632,10 @@ class PipeA {
     expect(pipeName, isA<String>());
     expect(pipeName, 'pipeA');
 
-    expect(pipe.transformReturnType.toString(), 'int');
-    expect(pipe.requiredArgumentType.toString(), 'int');
+    expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+        'int');
+    expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+        'int');
     expect(pipe.optionalArgumentTypes, hasLength(0));
 
     errorListener.assertErrorsWithCodes(
@@ -1651,8 +1688,10 @@ abstract class PipeA extends PipeTransform{
     expect(pipeName, isA<String>());
     expect(pipeName, 'pipeA');
 
-    expect(pipe.transformReturnType.toString(), 'int');
-    expect(pipe.requiredArgumentType.toString(), 'int');
+    expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+        'int');
+    expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+        'int');
     expect(pipe.optionalArgumentTypes, hasLength(0));
 
     errorListener
@@ -1681,8 +1720,10 @@ class MyPipe extends BasePipe {
       expect(pipeName, isA<String>());
       expect(pipeName, 'pipe');
 
-      expect(pipe.requiredArgumentType.toString(), 'int');
-      expect(pipe.transformReturnType.toString(), 'int');
+      expect(pipe.requiredArgumentType.getDisplayString(withNullability: false),
+          'int');
+      expect(pipe.transformReturnType.getDisplayString(withNullability: false),
+          'int');
       expect(pipe.optionalArgumentTypes, hasLength(0));
     }
 
@@ -1765,37 +1806,49 @@ class BuildStandardAngularTest extends AngularDriverTestBase {
 
     final imgSrcSecurity = ng.securitySchema.lookup('img', 'src');
     expect(imgSrcSecurity, isNotNull);
-    expect(imgSrcSecurity.safeTypes[0].toString(), 'SafeUrl');
+    expect(imgSrcSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeUrl');
     expect(imgSrcSecurity.sanitizationAvailable, true);
 
     final aHrefSecurity = ng.securitySchema.lookup('a', 'href');
     expect(aHrefSecurity, isNotNull);
-    expect(aHrefSecurity.safeTypes[0].toString(), 'SafeUrl');
+    expect(aHrefSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeUrl');
     expect(aHrefSecurity.sanitizationAvailable, true);
 
     final innerHtmlSecurity = ng.securitySchema.lookupGlobal('innerHTML');
     expect(innerHtmlSecurity, isNotNull);
-    expect(innerHtmlSecurity.safeTypes[0].toString(), 'SafeHtml');
+    expect(
+        innerHtmlSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeHtml');
     expect(innerHtmlSecurity.sanitizationAvailable, true);
 
     final iframeSrcdocSecurity = ng.securitySchema.lookup('iframe', 'srcdoc');
     expect(iframeSrcdocSecurity, isNotNull);
-    expect(iframeSrcdocSecurity.safeTypes[0].toString(), 'SafeHtml');
+    expect(
+        iframeSrcdocSecurity.safeTypes[0]
+            .getDisplayString(withNullability: false),
+        'SafeHtml');
     expect(iframeSrcdocSecurity.sanitizationAvailable, true);
 
     final styleSecurity = ng.securitySchema.lookupGlobal('style');
     expect(styleSecurity, isNotNull);
-    expect(styleSecurity.safeTypes[0].toString(), 'SafeStyle');
+    expect(styleSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeStyle');
     expect(styleSecurity.sanitizationAvailable, true);
 
     final iframeSrcSecurity = ng.securitySchema.lookup('iframe', 'src');
     expect(iframeSrcSecurity, isNotNull);
-    expect(iframeSrcSecurity.safeTypes[0].toString(), 'SafeResourceUrl');
+    expect(
+        iframeSrcSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeResourceUrl');
     expect(iframeSrcSecurity.sanitizationAvailable, false);
 
     final scriptSrcSecurity = ng.securitySchema.lookup('script', 'src');
     expect(scriptSrcSecurity, isNotNull);
-    expect(scriptSrcSecurity.safeTypes[0].toString(), 'SafeResourceUrl');
+    expect(
+        scriptSrcSecurity.safeTypes[0].getDisplayString(withNullability: false),
+        'SafeResourceUrl');
     expect(scriptSrcSecurity.sanitizationAvailable, false);
   }
 }
@@ -1811,22 +1864,28 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
       final input = inputElements['tabIndex'];
       expect(input, isNotNull);
       expect(input.setter, isNotNull);
-      expect(input.setterType.toString(), equals("int"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     {
       final input = inputElements['hidden'];
       expect(input, isNotNull);
       expect(input.setter, isNotNull);
-      expect(input.setterType.toString(), equals("bool"));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('bool'));
     }
     {
       final input = inputElements['innerHtml'];
       expect(input, isNotNull);
       expect(identical(input, inputElements['innerHTML']), true);
       expect(input.setter, isNotNull);
-      expect(input.setterType.toString(), equals('String'));
+      expect(input.setterType.getDisplayString(withNullability: false),
+          equals('String'));
       expect(input.securityContext, isNotNull);
-      expect(input.securityContext.safeTypes[0].toString(), equals('SafeHtml'));
+      expect(
+          input.securityContext.safeTypes[0]
+              .getDisplayString(withNullability: false),
+          equals('SafeHtml'));
       expect(input.securityContext.sanitizationAvailable, equals(true));
     }
   }
@@ -1863,7 +1922,8 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
       expect(outputElement, isNotNull);
       expect(outputElement.getter, isNotNull);
       expect(outputElement.eventType, isNotNull);
-      expect(outputElement.eventType.toString(), 'MouseEvent');
+      expect(outputElement.eventType.getDisplayString(withNullability: false),
+          'MouseEvent');
     }
     {
       final outputElement = outputElements['change'];
@@ -1886,14 +1946,16 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
       final outputElement = outputElements['focusin'];
       expect(outputElement, isNotNull);
       expect(outputElement.eventType, isNotNull);
-      expect(outputElement.eventType.toString(), 'FocusEvent');
+      expect(outputElement.eventType.getDisplayString(withNullability: false),
+          'FocusEvent');
     }
     {
       // missing from dart:html, and supplied manually (with no getter)
       final outputElement = outputElements['focusout'];
       expect(outputElement, isNotNull);
       expect(outputElement.eventType, isNotNull);
-      expect(outputElement.eventType.toString(), 'FocusEvent');
+      expect(outputElement.eventType.getDisplayString(withNullability: false),
+          'FocusEvent');
     }
   }
 
@@ -1915,10 +1977,13 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
         final input = inputs.singleWhere((i) => i.name == 'href');
         expect(input, isNotNull);
         expect(input.setter, isNotNull);
-        expect(input.setterType.toString(), equals("String"));
+        expect(input.setterType.getDisplayString(withNullability: false),
+            equals('String'));
         expect(input.securityContext, isNotNull);
         expect(
-            input.securityContext.safeTypes[0].toString(), equals('SafeUrl'));
+            input.securityContext.safeTypes[0]
+                .getDisplayString(withNullability: false),
+            equals('SafeUrl'));
         expect(input.securityContext.sanitizationAvailable, equals(true));
       }
       expect(outputElements, hasLength(0));
@@ -1936,7 +2001,8 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
         final input = inputs.singleWhere((i) => i.name == 'autofocus');
         expect(input, isNotNull);
         expect(input.setter, isNotNull);
-        expect(input.setterType.toString(), equals("bool"));
+        expect(input.setterType.getDisplayString(withNullability: false),
+            equals('bool'));
         expect(input.securityContext, isNull);
       }
       expect(outputElements, hasLength(0));
@@ -1952,9 +2018,12 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
         final input = inputs.singleWhere((i) => i.name == 'src');
         expect(input, isNotNull);
         expect(input.setter, isNotNull);
-        expect(input.setterType.toString(), equals("String"));
+        expect(input.setterType.getDisplayString(withNullability: false),
+            equals('String'));
         expect(input.securityContext, isNotNull);
-        expect(input.securityContext.safeTypes[0].toString(),
+        expect(
+            input.securityContext.safeTypes[0]
+                .getDisplayString(withNullability: false),
             equals('SafeResourceUrl'));
         expect(input.securityContext.sanitizationAvailable, equals(false));
       }
@@ -1978,7 +2047,7 @@ class BuildStandardHtmlComponentsTest extends AngularDriverTestBase {
       expect(outputElements, hasLength(1));
       {
         final output = outputElements[0];
-        expect(output.name, equals("unload"));
+        expect(output.name, equals('unload'));
         expect(output.getter, isNotNull);
         expect(output.eventType, isNotNull);
       }
@@ -2043,7 +2112,8 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'String');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'String');
       expect(
           event.eventType.element.source.fullName, '/sdk/lib/core/core.dart');
     }
@@ -2052,7 +2122,8 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'String');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'String');
       expect(
           event.eventType.element.source.fullName, '/sdk/lib/core/core.dart');
     }
@@ -2061,7 +2132,7 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'bool');
+      expect(event.eventType.getDisplayString(withNullability: false), 'bool');
       expect(
           event.eventType.element.source.fullName, '/sdk/lib/core/core.dart');
     }
@@ -2070,7 +2141,7 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'bool');
+      expect(event.eventType.getDisplayString(withNullability: false), 'bool');
       expect(
           event.eventType.element.source.fullName, '/sdk/lib/core/core.dart');
     }
@@ -2104,7 +2175,8 @@ enum EnumType {}
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'EnumType');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'EnumType');
       expect(event.eventType.element.source.fullName, '/enum.dart');
     }
   }
@@ -2137,7 +2209,8 @@ class Generic<T> {}
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'Generic<dynamic>');
+      expect(event.eventType.getDisplayString(withNullability: false),
+          'Generic<dynamic>');
       expect(event.eventType.element.source.fullName, '/generic.dart');
     }
   }
@@ -2165,7 +2238,8 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'dynamic');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'dynamic');
     }
   }
 
@@ -2198,7 +2272,8 @@ class NotTheCorrectEvent {}
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'dynamic');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'dynamic');
     }
   }
 
@@ -2230,7 +2305,8 @@ class BarEvent {}
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'BarEvent');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'BarEvent');
       expect(event.eventType.element.source.fullName, '/bar.dart');
     }
   }
@@ -2264,9 +2340,8 @@ typedef TypeDef = int Function<T>();
       expect(event.getter, isNull);
       final eventType = event.eventType as FunctionType;
       expect(eventType, isNotNull);
-      expect(eventType.returnType.toString(), 'int');
-      expect(eventType.typeFormals, isEmpty);
-      expect(eventType.parameters, isEmpty);
+      expect(eventType.getDisplayString(withNullability: false),
+          'int Function<T>()');
       expect(eventType.element.source.fullName, '/typedef.dart');
     }
   }
@@ -2299,7 +2374,8 @@ int foo;
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'dynamic');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'dynamic');
     }
   }
 
@@ -2326,14 +2402,16 @@ analyzer:
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'dynamic');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'dynamic');
     }
     {
       final event = html.customEvents['bar'];
       expect(event, isNotNull);
       expect(event.getter, isNull);
       expect(event.eventType, isNotNull);
-      expect(event.eventType.toString(), 'dynamic');
+      expect(
+          event.eventType.getDisplayString(withNullability: false), 'dynamic');
     }
   }
 
@@ -2840,46 +2918,55 @@ class ContentChildComp {}
     expect(childs, hasLength(6));
 
     final childDirective = childs
-        .singleWhere((c) => c.fieldName == "contentChildDirective")
+        .singleWhere((c) => c.fieldName == 'contentChildDirective')
         .query as LetBoundQueriedChildType;
     expect(childDirective, isA<LetBoundQueriedChildType>());
-    expect(childDirective.letBoundName, equals("foo"));
-    expect(childDirective.containerType.toString(), equals("ContentChildComp"));
+    expect(childDirective.letBoundName, equals('foo'));
+    expect(
+        childDirective.containerType.getDisplayString(withNullability: false),
+        equals('ContentChildComp'));
 
     final childTemplate = childs
-        .singleWhere((c) => c.fieldName == "contentChildTpl")
+        .singleWhere((c) => c.fieldName == 'contentChildTpl')
         .query as LetBoundQueriedChildType;
     expect(childTemplate, isA<LetBoundQueriedChildType>());
-    expect(childTemplate.letBoundName, equals("fooTpl"));
-    expect(childTemplate.containerType.toString(), equals("TemplateRef"));
+    expect(childTemplate.letBoundName, equals('fooTpl'));
+    expect(childTemplate.containerType.getDisplayString(withNullability: false),
+        equals('TemplateRef'));
 
     final childElement = childs
-        .singleWhere((c) => c.fieldName == "contentChildElem")
+        .singleWhere((c) => c.fieldName == 'contentChildElem')
         .query as LetBoundQueriedChildType;
     expect(childElement, isA<LetBoundQueriedChildType>());
-    expect(childElement.letBoundName, equals("fooElem"));
-    expect(childElement.containerType.toString(), equals("Element"));
+    expect(childElement.letBoundName, equals('fooElem'));
+    expect(childElement.containerType.getDisplayString(withNullability: false),
+        equals('Element'));
 
     final childHtmlElement = childs
-        .singleWhere((c) => c.fieldName == "contentChildHtmlElem")
+        .singleWhere((c) => c.fieldName == 'contentChildHtmlElem')
         .query as LetBoundQueriedChildType;
     expect(childHtmlElement, isA<LetBoundQueriedChildType>());
-    expect(childHtmlElement.letBoundName, equals("fooHtmlElem"));
-    expect(childHtmlElement.containerType.toString(), equals("HtmlElement"));
+    expect(childHtmlElement.letBoundName, equals('fooHtmlElem'));
+    expect(
+        childHtmlElement.containerType.getDisplayString(withNullability: false),
+        equals('HtmlElement'));
 
     final childElementRef = childs
-        .singleWhere((c) => c.fieldName == "contentChildElemRef")
+        .singleWhere((c) => c.fieldName == 'contentChildElemRef')
         .query as LetBoundQueriedChildType;
     expect(childElementRef, isA<LetBoundQueriedChildType>());
-    expect(childElementRef.letBoundName, equals("fooElemRef"));
-    expect(childElementRef.containerType.toString(), equals("ElementRef"));
+    expect(childElementRef.letBoundName, equals('fooElemRef'));
+    expect(
+        childElementRef.containerType.getDisplayString(withNullability: false),
+        equals('ElementRef'));
 
     final childDynamic = childs
-        .singleWhere((c) => c.fieldName == "contentChildDynamic")
+        .singleWhere((c) => c.fieldName == 'contentChildDynamic')
         .query as LetBoundQueriedChildType;
     expect(childDynamic, isA<LetBoundQueriedChildType>());
-    expect(childDynamic.letBoundName, equals("fooDynamic"));
-    expect(childDynamic.containerType.toString(), equals("dynamic"));
+    expect(childDynamic.letBoundName, equals('fooDynamic'));
+    expect(childDynamic.containerType.getDisplayString(withNullability: false),
+        equals('dynamic'));
 
     // validate
     errorListener.assertNoErrors();
@@ -3116,7 +3203,8 @@ class ContentChildComp {}
     expect(childrens.first.query, isA<LetBoundQueriedChildType>());
     final children = childrens.first.query as LetBoundQueriedChildType;
     expect(children.containerType, isNotNull);
-    expect(children.containerType.toString(), 'dynamic');
+    expect(children.containerType.getDisplayString(withNullability: false),
+        'dynamic');
 
     // validate
     errorListener.assertNoErrors();
@@ -3137,7 +3225,7 @@ class ComponentA {
 @Component(selector: 'foo', template: '')
 class ContentChildComp {}
 
-abstract class CannotSubtypeList extends List {}
+abstract class CannotSubtypeList implements List {}
 ''';
     final source = newSource('/test.dart', code);
     await getTemplates(source);
@@ -3176,10 +3264,12 @@ class ContentChildComp {}
     final component = directives.first;
     final childrens = component.contentChildrenFields;
     expect(childrens, hasLength(1));
-    expect(childrens.first.read.toString(), equals('ViewContainerRef'));
+    expect(childrens.first.read.getDisplayString(withNullability: false),
+        equals('ViewContainerRef'));
     final childs = component.contentChildrenFields;
     expect(childs, hasLength(1));
-    expect(childs.first.read.toString(), equals('ViewContainerRef'));
+    expect(childs.first.read.getDisplayString(withNullability: false),
+        equals('ViewContainerRef'));
     // validate
     errorListener.assertNoErrors();
   }
@@ -3260,47 +3350,61 @@ class ContentChildComp {}
     expect(childrens, hasLength(6));
 
     final childrenDirective = childrens
-        .singleWhere((c) => c.fieldName == "contentChildDirective")
+        .singleWhere((c) => c.fieldName == 'contentChildDirective')
         .query as LetBoundQueriedChildType;
     expect(childrenDirective, isA<LetBoundQueriedChildType>());
-    expect(childrenDirective.letBoundName, equals("foo"));
+    expect(childrenDirective.letBoundName, equals('foo'));
     expect(
-        childrenDirective.containerType.toString(), equals("ContentChildComp"));
+        childrenDirective.containerType
+            .getDisplayString(withNullability: false),
+        equals('ContentChildComp'));
 
     final childrenTemplate = childrens
-        .singleWhere((c) => c.fieldName == "contentChildTpl")
+        .singleWhere((c) => c.fieldName == 'contentChildTpl')
         .query as LetBoundQueriedChildType;
     expect(childrenTemplate, isA<LetBoundQueriedChildType>());
-    expect(childrenTemplate.letBoundName, equals("fooTpl"));
-    expect(childrenTemplate.containerType.toString(), equals("TemplateRef"));
+    expect(childrenTemplate.letBoundName, equals('fooTpl'));
+    expect(
+        childrenTemplate.containerType.getDisplayString(withNullability: false),
+        equals('TemplateRef'));
 
     final childrenElement = childrens
-        .singleWhere((c) => c.fieldName == "contentChildElem")
+        .singleWhere((c) => c.fieldName == 'contentChildElem')
         .query as LetBoundQueriedChildType;
     expect(childrenElement, isA<LetBoundQueriedChildType>());
-    expect(childrenElement.letBoundName, equals("fooElem"));
-    expect(childrenElement.containerType.toString(), equals("Element"));
+    expect(childrenElement.letBoundName, equals('fooElem'));
+    expect(
+        childrenElement.containerType.getDisplayString(withNullability: false),
+        equals('Element'));
 
     final childrenHtmlElement = childrens
-        .singleWhere((c) => c.fieldName == "contentChildHtmlElem")
+        .singleWhere((c) => c.fieldName == 'contentChildHtmlElem')
         .query as LetBoundQueriedChildType;
     expect(childrenHtmlElement, isA<LetBoundQueriedChildType>());
-    expect(childrenHtmlElement.letBoundName, equals("fooHtmlElem"));
-    expect(childrenHtmlElement.containerType.toString(), equals("HtmlElement"));
+    expect(childrenHtmlElement.letBoundName, equals('fooHtmlElem'));
+    expect(
+        childrenHtmlElement.containerType
+            .getDisplayString(withNullability: false),
+        equals('HtmlElement'));
 
     final childrenElementRef = childrens
-        .singleWhere((c) => c.fieldName == "contentChildElemRef")
+        .singleWhere((c) => c.fieldName == 'contentChildElemRef')
         .query as LetBoundQueriedChildType;
     expect(childrenElementRef, isA<LetBoundQueriedChildType>());
-    expect(childrenElementRef.letBoundName, equals("fooElemRef"));
-    expect(childrenElementRef.containerType.toString(), equals("ElementRef"));
+    expect(childrenElementRef.letBoundName, equals('fooElemRef'));
+    expect(
+        childrenElementRef.containerType
+            .getDisplayString(withNullability: false),
+        equals('ElementRef'));
 
     final childrenDynamic = childrens
-        .singleWhere((c) => c.fieldName == "contentChildDynamic")
+        .singleWhere((c) => c.fieldName == 'contentChildDynamic')
         .query as LetBoundQueriedChildType;
     expect(childrenDynamic, isA<LetBoundQueriedChildType>());
-    expect(childrenDynamic.letBoundName, equals("fooDynamic"));
-    expect(childrenDynamic.containerType.toString(), equals("dynamic"));
+    expect(childrenDynamic.letBoundName, equals('fooDynamic'));
+    expect(
+        childrenDynamic.containerType.getDisplayString(withNullability: false),
+        equals('dynamic'));
 
     // validate
     errorListener.assertNoErrors();
@@ -3394,21 +3498,27 @@ class ComponentA {
         .query as LetBoundQueriedChildType;
     expect(objectNotElem, isA<LetBoundQueriedChildType>());
     expect(objectNotElem.letBoundName, equals('el'));
-    expect(objectNotElem.containerType.toString(), equals('Element'));
+    expect(objectNotElem.containerType.getDisplayString(withNullability: false),
+        equals('Element'));
 
     final elemNotHtmlElem = children
         .singleWhere((c) => c.fieldName == 'elemNotHtmlElem')
         .query as LetBoundQueriedChildType;
     expect(elemNotHtmlElem, isA<LetBoundQueriedChildType>());
     expect(elemNotHtmlElem.letBoundName, equals('el'));
-    expect(elemNotHtmlElem.containerType.toString(), equals('HtmlElement'));
+    expect(
+        elemNotHtmlElem.containerType.getDisplayString(withNullability: false),
+        equals('HtmlElement'));
 
     final objectNotHtmlElem = children
         .singleWhere((c) => c.fieldName == 'objectNotHtmlElem')
         .query as LetBoundQueriedChildType;
     expect(objectNotHtmlElem, isA<LetBoundQueriedChildType>());
     expect(objectNotHtmlElem.letBoundName, equals('el'));
-    expect(objectNotHtmlElem.containerType.toString(), equals('HtmlElement'));
+    expect(
+        objectNotHtmlElem.containerType
+            .getDisplayString(withNullability: false),
+        equals('HtmlElement'));
 
     errorListener.assertNoErrors();
   }
@@ -4016,13 +4126,13 @@ class ContentChildComp {}
     final childrenFields = component.contentChildrenFields;
     expect(childrenFields, hasLength(1));
     final children = childrenFields.first;
-    expect(children.fieldName, equals("contentChildren"));
+    expect(children.fieldName, equals('contentChildren'));
     expect(
-        children.nameRange.offset, equals(code.indexOf("ContentChildComp)")));
-    expect(children.nameRange.length, equals("ContentChildComp".length));
+        children.nameRange.offset, equals(code.indexOf('ContentChildComp)')));
+    expect(children.nameRange.length, equals('ContentChildComp'.length));
     expect(children.typeRange.offset,
-        equals(code.indexOf("List<ContentChildComp>")));
-    expect(children.typeRange.length, equals("List<ContentChildComp>".length));
+        equals(code.indexOf('List<ContentChildComp>')));
+    expect(children.typeRange.length, equals('List<ContentChildComp>'.length));
     // validate
     errorListener.assertNoErrors();
   }
@@ -4066,8 +4176,8 @@ class MyComponent {
       final attribute = attributes[0];
       expect(attribute.string, 'my-attr');
       // TODO better offsets here. But its really not that critical
-      expect(attribute.navigationRange.offset, code.indexOf("foo"));
-      expect(attribute.navigationRange.length, "foo".length);
+      expect(attribute.navigationRange.offset, code.indexOf('foo'));
+      expect(attribute.navigationRange.length, 'foo'.length);
     }
     assertErrorInCodeAtPosition(
         AngularWarningCode.ATTRIBUTE_PARAMETER_MUST_BE_STRING, code, 'foo');
@@ -4092,8 +4202,8 @@ class MyComponent {
       final attribute = attributes[0];
       expect(attribute.string, 'my-attr');
       // TODO better offsets here. But its really not that critical
-      expect(attribute.navigationRange.offset, code.indexOf("foo"));
-      expect(attribute.navigationRange.length, "foo".length);
+      expect(attribute.navigationRange.offset, code.indexOf('foo'));
+      expect(attribute.navigationRange.length, 'foo'.length);
     }
     errorListener.assertNoErrors();
   }
@@ -4301,7 +4411,8 @@ class ComponentA {
       final element = export.element as PropertyAccessorElement;
       expect(element.isGetter, isTrue);
       expect(element.name, equals('foo'));
-      expect(element.returnType.toString(), equals('String'));
+      expect(element.returnType.getDisplayString(withNullability: false),
+          equals('String'));
     }
     {
       final export = component.exports[1];
@@ -4312,7 +4423,8 @@ class ComponentA {
       final element = export.element as FunctionElement;
       expect(element.name, equals('bar'));
       expect(element.parameters, isEmpty);
-      expect(element.returnType.toString(), equals('int'));
+      expect(element.returnType.getDisplayString(withNullability: false),
+          equals('int'));
     }
     {
       final export = component.exports[2];
@@ -4605,7 +4717,8 @@ class ComponentA {
       final element = export.element as PropertyAccessorElement;
       expect(element.isGetter, isTrue);
       expect(element.name, equals('foo'));
-      expect(element.returnType.toString(), equals('double'));
+      expect(element.returnType.getDisplayString(withNullability: false),
+          equals('double'));
     }
     {
       final export = component.exports[1];
@@ -4616,7 +4729,8 @@ class ComponentA {
       final element = export.element as PropertyAccessorElement;
       expect(element.isGetter, isTrue);
       expect(element.name, equals('foo'));
-      expect(element.returnType.toString(), equals('int'));
+      expect(element.returnType.getDisplayString(withNullability: false),
+          equals('int'));
     }
 
     // validate
@@ -4913,11 +5027,11 @@ class TextPanelB {
   String text; // B
 }
 ''';
-    final htmlCode = r"""
+    final htmlCode = r'''
 <div>
   {{text}}
 </div>
-""";
+''';
     final dartSourceOne = newSource('/test1.dart', dartCodeOne);
     final dartSourceTwo = newSource('/test2.dart', dartCodeTwo);
     final htmlSource = newSource('/text_panel.html', htmlCode);
@@ -4998,7 +5112,7 @@ class WeirdComponent {
 ''';
     final dartSource = newSource('/weird.dart', code);
     final htmlSource =
-        newSource('/test.html', "<unresolved-tag></unresolved-tag>");
+        newSource('/test.html', '<unresolved-tag></unresolved-tag>');
     await getDirectives(htmlSource, dartSource);
     final errors = errorListener.errors;
     expect(errors, hasLength(1));
@@ -5061,11 +5175,11 @@ class TextPanel {
   String text; // 1
 }
 ''';
-    final htmlCode = r"""
+    final htmlCode = r'''
 <div>
   {{text}}
 </div>
-""";
+''';
     final dartSource = newSource('/test.dart', dartCode);
     final htmlSource = newSource('/text_panel.html', htmlCode);
     // compute
@@ -5116,9 +5230,9 @@ class NotNecessaryToResolveDirective {
 @Pipe('notNecessary')
 class NotNecessaryToResolvePipe {}
 ''');
-    final htmlSource = newSource('/test_panel.html', r"""
+    final htmlSource = newSource('/test_panel.html', r'''
 <div></div>
-    """);
+    ''');
 
     await getDirectives(dartSource, htmlSource);
     await angularDriver.requestHtmlResult('/test_panel.html');

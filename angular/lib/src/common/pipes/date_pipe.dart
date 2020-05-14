@@ -17,7 +17,7 @@ import 'invalid_pipe_argument_exception.dart';
 ///
 /// ## Usage
 ///
-///     expression | date[:format]
+///     $pipe.date(expression, [format])
 ///
 /// where `expression` is a date object or a number (milliseconds since UTC
 /// epoch) and `format` indicates which date/time components to include:
@@ -63,10 +63,10 @@ import 'invalid_pipe_argument_exception.dart';
 /// Assuming `dateObj` is (year: 2015, month: 6, day: 15, hour: 21, minute: 43,
 /// second: 11) in the _local_ time and locale is 'en-US':
 ///
-///     {{ dateObj | date }}             // output is 'Jun 15, 2015'
-///     {{ dateObj | date:'medium' }}    // output is 'Jun 15, 2015, 9:43:11 PM'
-///     {{ dateObj | date:'shortTime' }} // output is '9:43 PM'
-///     {{ dateObj | date:'mmss' }}      // output is '43:11'
+///     {{ $pipe.date(dateObj) }}             // output is 'Jun 15, 2015'
+///     {{ $pipe.date(dateObj, 'medium') }}    // output is 'Jun 15, 2015, 9:43:11 PM'
+///     {{ $pipe.date(dateObj, 'shortTime') }} // output is '9:43 PM'
+///     {{ $pipe.date(dateObj, 'mmss') }}      // output is '43:11'
 @Pipe('date', pure: true)
 class DatePipe implements PipeTransform {
   static final Map<String, String> _ALIASES = {
@@ -81,7 +81,7 @@ class DatePipe implements PipeTransform {
   };
   String transform(dynamic value, [String pattern = 'mediumDate']) {
     if (value == null) return null;
-    if (!this.supports(value)) {
+    if (!supports(value)) {
       throw InvalidPipeArgumentException(DatePipe, value);
     }
     if (value is num) {

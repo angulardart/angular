@@ -93,7 +93,7 @@ String generateHtmlString() {
   var state = State.text;
   var sb = StringBuffer();
   var identifierCount = 0;
-  for (int i = 0; i < generationCount; i++) {
+  for (var i = 0; i < generationCount; i++) {
     var type = generateRandomSimple(state);
     switch (state) {
       case State.comment:
@@ -155,14 +155,14 @@ String generateHtmlString() {
   return sb.toString();
 }
 
-main() async {
+void main() async {
   var exceptionHandler = RecoveringExceptionHandler();
 
   var totalIncorrectLength = 0;
   var totalLexerTime = 0;
   var totalParserTime = 0;
 
-  for (int i = 0; i < iterationCount; i++) {
+  for (var i = 0; i < iterationCount; i++) {
     print('Iteration $i of $iterationCount ...');
     var stopwatch = Stopwatch();
 

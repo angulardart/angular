@@ -11,7 +11,7 @@ void main() {
 
   test('should ignore extra spaces after a let assignment', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.LetAssignmentSpacingTestNgFactory,
+      ng.createLetAssignmentSpacingTestFactory(),
     ).create();
     expect(fixture.text, '012');
   });

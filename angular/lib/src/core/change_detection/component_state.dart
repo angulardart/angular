@@ -3,6 +3,10 @@ import 'package:meta/meta.dart';
 
 /// An experimental change detection mixin/base class for specific use cases.
 ///
+/// **WARNING**: This class is soft deprecated. It's now just an alias for
+/// `ChangeDetectionStrategy.OnPush`, which should be preferred when writing new
+/// components over extending this class.
+///
 /// Instead of setting `changeDetection: ChangeDetectionStrategy.*`, you may
 /// extend or mixin [ComponentState]. By doing so, the [setState] instance
 /// method becomes the only mechanism in which the component will be checked
@@ -11,12 +15,6 @@ import 'package:meta/meta.dart';
 /// Unlike `ChangeDetectionStrategy.OnPush`:
 /// * You may override `@Input`-annotated setters and call [setState].
 /// * Some lifecycle events (such as `AfterChanges`, `OnChanges`) are rejected.
-///
-/// **WARNING**: It is currently undefined behavior to mix a component that is
-/// using  [ComponentState] with children that use another change detection
-/// type, and as such it is highly suggested to only use [ComponentState] on
-/// components that represent a low-level repeated component, such as a cell in
-/// a table, and in other cases to use `ChangeDetectionStrategy.OnPush`.
 ///
 /// It is not valid to use `implements` with this class.
 @experimental
@@ -52,11 +50,11 @@ abstract class ComponentState {
     deliverStateChanges();
   }
 
-  /// Semantically identical to calling `setState((){})`.
+  /// Semantically identical to calling `setState(() {})`.
   ///
   /// **DEPRECATED**: Due to changes in the testing framework, it is no longer
-  /// necessary to override or invoke this method at all in order to reflect
-  /// changes to the DOM, and it will be removed at a future point in time.
+  /// necessary to override or invoke this method to reflect changes to the
+  /// DOM, and it will be removed in the future. Call `setState(() {})` instead.
   @Deprecated('Do not override this method. It will be removed')
   @protected
   void deliverStateChanges() {

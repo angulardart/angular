@@ -1,0 +1,198 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'view_encapsulation.dart';
+export 'view_encapsulation.dart';
+import 'package:angular/src/di/reflector.dart' as _ngRef;
+import 'package:angular/angular.template.dart' as _ref0;
+import 'view_encapsulated_styles.css.shim.dart' as import0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import1;
+import 'view_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import5;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'dart:html' as import7;
+import 'package:angular/src/runtime.dart' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import12;
+import 'package:angular/src/core/linker/views/render_view.dart' as import13;
+import 'package:angular/src/core/linker/views/host_view.dart' as import14;
+import 'view_encapsulated_styles.css.dart' as import15;
+
+final List<dynamic> styles$EmulatedComponent = [import0.styles, '._nghost-%ID%{border:1px solid black}', 'div._ngcontent-%ID%{color:red}'];
+
+class ViewEmulatedComponent0 extends import1.ComponentView<import2.EmulatedComponent> {
+  ViewContainer _appEl_2;
+  static import4.ComponentStyles _componentStyles;
+  ViewEmulatedComponent0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import7.document.createElement('Emulated');
+  }
+  static String get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:_goldens/test/files/view_encapsulation.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import7.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
+    this.addShimC(_el_0);
+    final _text_1 = import9.appendText(_el_0, 'Emulated in Component');
+    final _anchor_2 = import9.appendAnchor(parentRenderNode);
+    this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_7 = TemplateRef(this._appEl_2, viewFactory_EmulatedComponent1);
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import4.ComponentStyles.scoped(styles$EmulatedComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _EmulatedComponentNgFactory = ComponentFactory<import2.EmulatedComponent>('Emulated', viewFactory_EmulatedComponentHost0);
+ComponentFactory<import2.EmulatedComponent> get EmulatedComponentNgFactory {
+  return _EmulatedComponentNgFactory;
+}
+
+ComponentFactory<import2.EmulatedComponent> createEmulatedComponentFactory() {
+  return ComponentFactory('Emulated', viewFactory_EmulatedComponentHost0);
+}
+
+class _ViewEmulatedComponent1 extends import12.EmbeddedView<import2.EmulatedComponent> {
+  _ViewEmulatedComponent1(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import7.document;
+    final _el_0 = doc.createElement('div');
+    this.addShimC(_el_0);
+    final _text_1 = import9.appendText(_el_0, 'Emulated in Template');
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.EmbeddedView<void> viewFactory_EmulatedComponent1(import13.RenderView parentView, int parentIndex) {
+  return _ViewEmulatedComponent1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$EmulatedComponentHost = const [];
+
+class _ViewEmulatedComponentHost0 extends import14.HostView<import2.EmulatedComponent> {
+  @override
+  void build() {
+    this.componentView = ViewEmulatedComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import2.EmulatedComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import14.HostView<import2.EmulatedComponent> viewFactory_EmulatedComponentHost0() {
+  return _ViewEmulatedComponentHost0();
+}
+
+final List<dynamic> styles$NoneComponent = [import15.styles, ':host { border: 1px solid #000; } ', 'div { color: red; }'];
+
+class ViewNoneComponent0 extends import1.ComponentView<import2.NoneComponent> {
+  ViewContainer _appEl_2;
+  static import4.ComponentStyles _componentStyles;
+  ViewNoneComponent0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import7.document.createElement('None');
+  }
+  static String get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:_goldens/test/files/view_encapsulation.dart' : null);
+  }
+
+  @override
+  void build() {
+    final import7.HtmlElement parentRenderNode = this.initViewRoot();
+    final doc = import7.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final _text_1 = import9.appendText(_el_0, 'Emulated in Component');
+    final _anchor_2 = import9.appendAnchor(parentRenderNode);
+    this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    TemplateRef _TemplateRef_2_7 = TemplateRef(this._appEl_2, viewFactory_NoneComponent1);
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if (identical(styles, null)) {
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$NoneComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _NoneComponentNgFactory = ComponentFactory<import2.NoneComponent>('None', viewFactory_NoneComponentHost0);
+ComponentFactory<import2.NoneComponent> get NoneComponentNgFactory {
+  return _NoneComponentNgFactory;
+}
+
+ComponentFactory<import2.NoneComponent> createNoneComponentFactory() {
+  return ComponentFactory('None', viewFactory_NoneComponentHost0);
+}
+
+class _ViewNoneComponent1 extends import12.EmbeddedView<import2.NoneComponent> {
+  _ViewNoneComponent1(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import7.document;
+    final _el_0 = doc.createElement('div');
+    final _text_1 = import9.appendText(_el_0, 'Emulated in Template');
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.EmbeddedView<void> viewFactory_NoneComponent1(import13.RenderView parentView, int parentIndex) {
+  return _ViewNoneComponent1(parentView, parentIndex);
+}
+
+final List<dynamic> styles$NoneComponentHost = const [];
+
+class _ViewNoneComponentHost0 extends import14.HostView<import2.NoneComponent> {
+  @override
+  void build() {
+    this.componentView = ViewNoneComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import2.NoneComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import14.HostView<import2.NoneComponent> viewFactory_NoneComponentHost0() {
+  return _ViewNoneComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(EmulatedComponent, createEmulatedComponentFactory());
+  _ngRef.registerComponent(NoneComponent, createNoneComponentFactory());
+  _ref0.initReflector();
+}

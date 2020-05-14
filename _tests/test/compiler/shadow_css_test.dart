@@ -1,7 +1,7 @@
 @TestOn('vm')
 import 'dart:async';
 
-import 'package:angular/src/compiler/stylesheet_compiler/shadow_css.dart';
+import 'package:angular_compiler/v1/src/compiler/stylesheet_compiler/shadow_css.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
 
@@ -42,7 +42,7 @@ RegExp _normalizerExp1,
 String normalizeCSS(String css) {
   _normalizerExp1 ??= RegExp(r'\s+');
   _normalizerExp2 ??= RegExp(r':\s');
-  _normalizerExp3 ??= RegExp('' + "'" + r'');
+  _normalizerExp3 ??= RegExp('' "'" r'');
   _normalizerExp4 ??= RegExp(r'{');
   _normalizerExp5 ??= RegExp(r'}(?!}|$)');
   _normalizerExp6 ??= RegExp(r'url\((\"|\s)(.+)(\"|\s)\)(\s*)');
@@ -324,7 +324,7 @@ void main() {
     });
 
     test('should support multiple instances polyfill-unscoped-rule', () {
-      var css = 'polyfill-unscoped-rule {content: "foo";color: blue;}' +
+      var css = 'polyfill-unscoped-rule {content: "foo";color: blue;}'
           'polyfill-unscoped-rule {content: "bar";color: red;}';
       legacyShimAndExpect(css, 'foo {color:blue} bar {color:red}');
     });

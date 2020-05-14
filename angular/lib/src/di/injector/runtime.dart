@@ -1,11 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:angular/src/runtime.dart';
+import 'package:angular_compiler/v1/src/metadata.dart';
 
-import '../../core/di/decorators.dart';
-import '../../core/di/opaque_token.dart';
 import '../errors.dart' as errors;
-import '../module.dart';
-import '../providers.dart';
 import '../reflector.dart' as reflector;
 
 import 'empty.dart';
@@ -13,7 +10,7 @@ import 'hierarchical.dart';
 import 'injector.dart';
 
 /// An injector that resolves [Provider] instances with runtime information.
-abstract class ReflectiveInjector implements HierarchicalInjector {
+abstract class ReflectiveInjector implements Injector {
   /// Creates a new [Injector] that resolves `Provider` instances at runtime.
   ///
   /// This is an **expensive** operation without any sort of caching or

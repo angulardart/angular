@@ -10,7 +10,7 @@ void main() {
 
   test('should support top-level methods tear-offs for events', () async {
     final testBed = NgTestBed.forComponent<TestTopLevelMethods>(
-      ng.TestTopLevelMethodsNgFactory,
+      ng.createTestTopLevelMethodsFactory(),
     );
     final fixture = await testBed.create();
     overrideTopLevelDoCapture = expectAsync0(() {});
@@ -21,7 +21,7 @@ void main() {
 
   test('should support top-level methods invoked for events', () async {
     final testBed = NgTestBed.forComponent<TestTopLevelMethodsDirect>(
-      ng.TestTopLevelMethodsDirectNgFactory,
+      ng.createTestTopLevelMethodsDirectFactory(),
     );
     final fixture = await testBed.create();
     overrideTopLevelDoCapture = expectAsync0(() {});
@@ -32,7 +32,7 @@ void main() {
 
   test('should support static methods tear-offs for events', () async {
     final testBed = NgTestBed.forComponent<TestStaticMethods>(
-      ng.TestStaticMethodsNgFactory,
+      ng.createTestStaticMethodsFactory(),
     );
     final fixture = await testBed.create();
     TestStaticMethods.overrideDoCapture = expectAsync0(() {});
@@ -43,7 +43,7 @@ void main() {
 
   test('should support static methods invoked for events', () async {
     final testBed = NgTestBed.forComponent<TestStaticMethodsDirect>(
-      ng.TestStaticMethodsDirectNgFactory,
+      ng.createTestStaticMethodsDirectFactory(),
     );
     final fixture = await testBed.create();
     TestStaticMethodsDirect.overrideDoCapture = expectAsync0(() {});
@@ -54,7 +54,7 @@ void main() {
 
   test('should support chained method tear-offs for events', () async {
     final testBed = NgTestBed.forComponent<TestChainedMethods>(
-      ng.TestChainedMethodsNgFactory,
+      ng.createTestChainedMethodsFactory(),
     );
     final fixture = await testBed.create();
     fixture.assertOnlyInstance.bar.overrideDoCapture = expectAsync0(() {});
@@ -65,7 +65,7 @@ void main() {
 
   test('should support chained method invoked for events', () async {
     final testBed = NgTestBed.forComponent<TestChainedMethodsDirect>(
-      ng.TestChainedMethodsDirectNgFactory,
+      ng.createTestChainedMethodsDirectFactory(),
     );
     final fixture = await testBed.create();
     fixture.assertOnlyInstance.bar.overrideDoCapture = expectAsync0(() {});

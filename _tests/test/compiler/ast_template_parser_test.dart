@@ -5,27 +5,28 @@ import 'package:logging/logging.dart';
 import 'package:term_glyph/term_glyph.dart' as term_glyph;
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
-import 'package:angular/src/compiler/analyzed_class.dart';
-import 'package:angular/src/compiler/compile_metadata.dart';
-import 'package:angular/src/compiler/expression_parser/lexer.dart';
-import 'package:angular/src/compiler/expression_parser/parser.dart';
-import 'package:angular/src/compiler/identifiers.dart'
+import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/expression_parser/lexer.dart';
+import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart';
+import 'package:angular_compiler/v1/src/compiler/identifiers.dart'
     show identifierToken, Identifiers;
-import 'package:angular/src/compiler/output/output_ast.dart' as o;
-import 'package:angular/src/compiler/schema/dom_element_schema_registry.dart';
-import 'package:angular/src/compiler/schema/element_schema_registry.dart'
+import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
+import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart';
+import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
-import 'package:angular/src/compiler/template_ast.dart';
-import 'package:angular/src/compiler/template_parser/ast_template_parser.dart';
-import 'package:angular/src/facade/lang.dart' show jsSplit;
-import 'package:angular_compiler/cli.dart';
+import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
+import 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart';
+import 'package:angular_compiler/v1/src/compiler/js_split_facade.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
 
 import 'schema_registry_mock.dart' show MockSchemaRegistry;
 import 'template_humanizer_util.dart';
 
 const someModuleUrl = 'package:someModule';
 
-typedef List<TemplateAst> ParseTemplate(
+typedef ParseTemplate = List<TemplateAst> Function(
   String template,
   List<CompileDirectiveMetadata> directives, [
   List<CompilePipeMetadata> pipes,
@@ -46,11 +47,11 @@ class ArrayConsole {
   }
 
   void log(String msg) {
-    this.logs.add(msg);
+    logs.add(msg);
   }
 
   void warn(String msg) {
-    this.warnings.add(msg);
+    warnings.add(msg);
   }
 
   void clear() {
@@ -60,6 +61,8 @@ class ArrayConsole {
 }
 
 void main() {
+  CompileContext.overrideForTesting();
+
   setUpAll(() {
     term_glyph.ascii = true;
   });
@@ -77,7 +80,7 @@ void main() {
   ParseTemplate _parse;
 
   // TODO(matanl): Add common log testing functionality to lib/.
-  parse(
+  List<TemplateAst> parse(
     String template, [
     List<CompileDirectiveMetadata> directive,
     List<CompilePipeMetadata> pipes,
@@ -87,21 +90,29 @@ void main() {
     });
   }
 
-  void setUpParser({ElementSchemaRegistry elementSchemaRegistry}) {
+  void setUpParser({
+    ElementSchemaRegistry elementSchemaRegistry,
+    CompilerFlags compilerFlags,
+  }) {
     elementSchemaRegistry ??= MockSchemaRegistry(
-        {'invalidProp': false}, {'mappedAttr': 'mappedProp'});
+      {'invalidProp': false},
+      {'mappedAttr': 'mappedProp'},
+    );
     final parser = AstTemplateParser(
       elementSchemaRegistry,
       Parser(Lexer()),
-      CompilerFlags(),
+      compilerFlags ?? CompilerFlags(),
     );
-    _parse = (template, [directives, pipes]) => parser.parse(
+    _parse = (template, [directives, pipes]) {
+      return parser.parse(
         component,
         template,
         directives ?? [],
         pipes ?? [],
         'TestComp',
-        'path://to/test-comp');
+        'path://to/test-comp',
+      );
+    };
   }
 
   group('TemplateParser', () {
@@ -153,8 +164,8 @@ void main() {
 
       test('should parse svg', () {
         expect(humanizeTplAst(parse('<svg:use xlink:href="#id"/>', [])), [
-          [ElementAst, "@svg:use"],
-          [AttrAst, "@xlink:href", "#id"],
+          [ElementAst, '@svg:use'],
+          [AttrAst, '@xlink:href', '#id'],
         ]);
       });
 
@@ -684,8 +695,7 @@ void main() {
 
         test('should provide a component', () {
           var comp = createDir('my-comp');
-          ElementAst elAst =
-              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
+          var elAst = parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providerType, ProviderAstType.Component);
           expect(elAst.providers[0].providers[0].useClass, comp.type);
@@ -693,7 +703,7 @@ void main() {
 
         test('should provide a directive', () {
           var dirA = createDir('[dirA]');
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providerType, ProviderAstType.Directive);
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
@@ -702,7 +712,7 @@ void main() {
         test('should use the public providers of a directive', () {
           var provider = createProvider('service');
           var dirA = createDir('[dirA]', providers: [provider]);
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PublicService);
@@ -712,8 +722,7 @@ void main() {
         test('should use the private providers of a component', () {
           var provider = createProvider('service');
           var comp = createDir('my-comp', viewProviders: [provider]);
-          ElementAst elAst =
-              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
+          var elAst = parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(2));
           expect(
               elAst.providers[1].providerType, ProviderAstType.PrivateService);
@@ -726,7 +735,7 @@ void main() {
           var provider2 = createProvider('service0', multi: true);
           var dirA = createDir('[dirA]', providers: [provider0, provider1]);
           var dirB = createDir('[dirB]', providers: [provider2]);
-          ElementAst elAst =
+          var elAst =
               parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers,
@@ -740,7 +749,7 @@ void main() {
           var provider3 = createProvider('service0');
           var dirA = createDir('[dirA]', providers: [provider1, provider2]);
           var dirB = createDir('[dirB]', providers: [provider3]);
-          ElementAst elAst =
+          var elAst =
               parse('<div dirA dirB></div>', [dirA, dirB])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[2].providers, orderedEquals([provider3]));
@@ -752,7 +761,7 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', providers: [compProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst =
+          var elAst =
               parse('<my-comp dirA></my-comp>', [dirA, comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
@@ -763,7 +772,7 @@ void main() {
           var dirProvider = createProvider('service0');
           var comp = createDir('my-comp', viewProviders: [viewProvider]);
           var dirA = createDir('[dirA]', providers: [dirProvider]);
-          ElementAst elAst =
+          var elAst =
               parse('<my-comp dirA></my-comp>', [dirA, comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[2].providers, orderedEquals([dirProvider]));
@@ -772,8 +781,7 @@ void main() {
         test('should overwrite directives by providers', () {
           var dirProvider = createProvider('type:my-comp');
           var comp = createDir('my-comp', providers: [dirProvider]);
-          ElementAst elAst =
-              parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
+          var elAst = parse('<my-comp></my-comp>', [comp])[0] as ElementAst;
           expect(elAst.providers, hasLength(1));
           expect(elAst.providers[0].providers, orderedEquals([dirProvider]));
         });
@@ -798,7 +806,7 @@ void main() {
           var provider1 = createProvider('service1');
           var dir2 = createDir('[dir2]', deps: ['service1']);
           var comp = createDir('my-comp', providers: [provider0, provider1]);
-          ElementAst elAst =
+          var elAst =
               parse('<my-comp dir2></my-comp>', [comp, dir2])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.providers[0].providers[0].useClass, comp.type);
@@ -812,7 +820,7 @@ void main() {
           var dir1 = createDir('[dir1]', deps: ['type:[dir0]']);
           var dir2 = createDir('[dir2]', deps: ['type:[dir1]']);
           var comp = createDir('my-comp');
-          ElementAst elAst = parse('<my-comp dir2 dir0 dir1></my-comp>',
+          var elAst = parse('<my-comp dir2 dir0 dir1></my-comp>',
               [comp, dir2, dir0, dir1])[0] as ElementAst;
           expect(elAst.providers, hasLength(4));
           expect(elAst.directives[0].directive, comp);
@@ -827,7 +835,7 @@ void main() {
           var provider1 = createProvider('service1');
           var dirA = createDir('[dirA]',
               providers: [provider0, provider1], deps: ['service0']);
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers, orderedEquals([provider0]));
           expect(elAst.providers[0].eager, true);
@@ -842,9 +850,8 @@ void main() {
           var provider1 = createProvider('service1');
           var dirA = createDir('[dirA]', providers: [provider0, provider1]);
           var dirB = createDir('[dirB]', deps: ['service0']);
-          ElementAst elAst =
-              parse('<div dirA><div dirB></div></div>', [dirA, dirB])[0]
-                  as ElementAst;
+          var elAst = parse('<div dirA><div dirB></div></div>', [dirA, dirB])[0]
+              as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
@@ -859,7 +866,7 @@ void main() {
           var provider1 = createProvider('service1');
           var dirA = createDir('[dirA]',
               providers: [provider0, provider1], queries: ['service0']);
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers, hasLength(3));
           expect(elAst.providers[0].providers[0].useClass, dirA.type);
           expect(elAst.providers[0].eager, true);
@@ -874,7 +881,7 @@ void main() {
           var provider0 = createProvider('service0');
           var dirA = createDir('[dirA]', providers: [provider0]);
           var dirB = createDir('[dirB]', deps: ['service0']);
-          ElementAst elAst =
+          var elAst =
               parse('<div dirA><div *ngIf dirB></div></div>', [dirA, dirB])[0]
                   as ElementAst;
           expect(elAst.providers, hasLength(2));
@@ -898,7 +905,7 @@ void main() {
 
         test('should change missing @Self() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:self:provider0']);
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers[0].providers[0].deps[0].isValue, true);
           expect(elAst.providers[0].providers[0].deps[0].value, isNull);
         });
@@ -917,7 +924,7 @@ void main() {
 
         test('should change missing @Host() that are optional to nulls', () {
           var dirA = createDir('[dirA]', deps: ['optional:host:provider0']);
-          ElementAst elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
+          var elAst = parse('<div dirA></div>', [dirA])[0] as ElementAst;
           expect(elAst.providers[0].providers[0].deps[0].isValue, true);
           expect(elAst.providers[0].providers[0].deps[0].value, isNull);
         });
@@ -1442,6 +1449,23 @@ void main() {
           ]);
         });
       });
+
+      // TODO(b/155218654): Remove once implemented properly.
+      test('TemplateParser w/ removeDebugAttributes removes debug-id', () {
+        setUpParser(
+          compilerFlags: CompilerFlags(removeDebugAttributes: true),
+        );
+        expect(
+          humanizeTplAstSourceSpans(
+            parse('<span class="1" debug-id="2" debugId="3"></span>'),
+          ),
+          [
+            [ElementAst, 'span', '<span class="1" debug-id="2" debugId="3">'],
+            // This is the important one, which shows attributes that stick.
+            [AttrAst, 'class', '1', 'class="1"'],
+          ],
+        );
+      });
     });
 
     group('content projection', () {
@@ -1727,7 +1751,7 @@ void main() {
         expect(
             () => parse('<div [prop]="a b"></div>', []),
             throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in <FileLocation: 5 path://to/test-comp:1:6>\n'
+                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in path://to/test-comp\n'
                 '  ,\n'
                 '1 | <div [prop]="a b"></div>\n'
                 '  |      ^^^^^^^^^^^^\n'
@@ -1907,14 +1931,14 @@ void main() {
       test('should report error and suggested fix for [ngForIn]', () {
         expect(
             () => parse('<div *ngFor="let item in items"></div>', []),
-            throwsWith("Template parse errors:\n"
+            throwsWith('Template parse errors:\n'
                 "line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Can't "
                 "bind to 'ngForIn' since it isn't an input of any bound "
-                "directive. Please check that the spelling is correct, and "
-                "that the intended directive is included in the host "
+                'directive. Please check that the spelling is correct, and '
+                'that the intended directive is included in the host '
                 "component's list of directives.\n"
-                "\n"
-                "This is a common mistake when using *ngFor; did you mean to "
+                '\n'
+                'This is a common mistake when using *ngFor; did you mean to '
                 "write 'of' instead of 'in'?\n"
                 '  ,\n'
                 '1 | <div *ngFor="let item in items"></div>\n'

@@ -13,7 +13,7 @@ void main() {
   NgTestBed<AppComponent> testBed;
 
   setUp(() {
-    testBed = NgTestBed.forComponent(ng.AppComponentNgFactory)
+    testBed = NgTestBed.forComponent(ng.createAppComponentFactory())
         .addInjector(appInjector);
   });
 
@@ -23,7 +23,7 @@ void main() {
     AppComponent.routes = [
       RouteDefinition.defer(
         path: '/',
-        loader: () async => ng.EmptyComponentNgFactory,
+        loader: () async => ng.createEmptyComponentFactory(),
         prefetcher: expectAsync1((_) {}),
       ),
     ];
@@ -36,7 +36,7 @@ void main() {
     AppComponent.routes = [
       RouteDefinition.defer(
         path: '/',
-        loader: () async => ng.EmptyComponentNgFactory,
+        loader: () async => ng.createEmptyComponentFactory(),
         prefetcher: (_) {
           prefetcherWasCalled = true;
           return prefetcherCompleter.future;
@@ -60,13 +60,13 @@ void main() {
     AppComponent.routes = [
       RouteDefinition(
         path: '/foo/:fooId',
-        component: ng.FooComponentNgFactory,
+        component: ng.createFooComponentFactory(),
       ),
     ];
     FooComponent.routes = [
       RouteDefinition.defer(
         path: '/bar/:barId',
-        loader: () async => ng.BarComponentNgFactory,
+        loader: () async => ng.createBarComponentFactory(),
         prefetcher: expectAsync1((state) {
           // The prefetcher is called while matching this route, so we only know
           // what routes have matched so far (from the root matching route to
@@ -85,7 +85,8 @@ void main() {
       ),
     ];
     BarComponent.routes = [
-      RouteDefinition(path: '/baz', component: ng.EmptyComponentNgFactory),
+      RouteDefinition(
+          path: '/baz', component: ng.createEmptyComponentFactory()),
     ];
     return testBed.create(beforeComponentCreated: (injector) {
       injector.provideType<Location>(Location).go('/foo/1/bar/2/baz?x=12#qux');

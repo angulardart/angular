@@ -1,0 +1,149 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'generated_injector_large.dart';
+export 'generated_injector_large.dart';
+import 'generated_injectors_large.template.dart' as _ref0;
+import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/src/di/injector/injector.dart' as _i1;
+import 'package:angular/src/di/injector/hierarchical.dart' as _i2;
+import 'generated_injector_large.dart' as _i3;
+
+_i1.Injector doGenerate$Injector([_i1.Injector parent]) => _Injector$doGenerate._(parent);
+
+class _Injector$doGenerate extends _i2.HierarchicalInjector implements _i1.Injector {
+  _Injector$doGenerate._([_i1.Injector parent]) : super(parent);
+
+  _i3.BaseUtil _field0;
+
+  _i3.AppUtil _field1;
+
+  _i3.UtilA9 _field12;
+
+  _i3.UtilA8 _field13;
+
+  _i3.UtilA7 _field14;
+
+  _i3.UtilA6 _field15;
+
+  _i3.UtilA5 _field16;
+
+  _i3.UtilA4 _field17;
+
+  _i3.UtilA3 _field18;
+
+  _i3.UtilA2 _field19;
+
+  _i3.UtilA1 _field20;
+
+  _i3.UtilA0 _field21;
+
+  _i3.BaseUtil _getBaseUtil$0() => _field0 ??= _i3.BaseUtil();
+  _i3.AppUtil _getAppUtil$1() => _field1 ??= _i3.AppUtil(this.get(_i3.UtilB0), this.get(_i3.UtilB1), this.get(_i3.UtilB2), this.get(_i3.UtilB3), this.get(_i3.UtilB4), this.get(_i3.UtilB5), this.get(_i3.UtilB6), this.get(_i3.UtilB7), this.get(_i3.UtilB8), this.get(_i3.UtilB9));
+  dynamic _getExisting$2() => this.get(_i3.UtilA9);
+  dynamic _getExisting$3() => this.get(_i3.UtilA8);
+  dynamic _getExisting$4() => this.get(_i3.UtilA7);
+  dynamic _getExisting$5() => this.get(_i3.UtilA6);
+  dynamic _getExisting$6() => this.get(_i3.UtilA5);
+  dynamic _getExisting$7() => this.get(_i3.UtilA4);
+  dynamic _getExisting$8() => this.get(_i3.UtilA3);
+  dynamic _getExisting$9() => this.get(_i3.UtilA2);
+  dynamic _getExisting$10() => this.get(_i3.UtilA1);
+  dynamic _getExisting$11() => this.get(_i3.UtilA0);
+  _i3.UtilA9 _getUtilA9$12() => _field12 ??= _i3.UtilA9();
+  _i3.UtilA8 _getUtilA8$13() => _field13 ??= _i3.UtilA8();
+  _i3.UtilA7 _getUtilA7$14() => _field14 ??= _i3.UtilA7();
+  _i3.UtilA6 _getUtilA6$15() => _field15 ??= _i3.UtilA6();
+  _i3.UtilA5 _getUtilA5$16() => _field16 ??= _i3.UtilA5();
+  _i3.UtilA4 _getUtilA4$17() => _field17 ??= _i3.UtilA4();
+  _i3.UtilA3 _getUtilA3$18() => _field18 ??= _i3.UtilA3();
+  _i3.UtilA2 _getUtilA2$19() => _field19 ??= _i3.UtilA2();
+  _i3.UtilA1 _getUtilA1$20() => _field20 ??= _i3.UtilA1();
+  _i3.UtilA0 _getUtilA0$21() => _field21 ??= _i3.UtilA0();
+  _i1.Injector _getInjector$22() => this;
+  @override
+  Object injectFromSelfOptional(Object token, [Object orElse = _i1.throwIfNotFound]) {
+    if (identical(token, _i3.BaseUtil)) {
+      return _getBaseUtil$0();
+    }
+    if (identical(token, _i3.AppUtil)) {
+      return _getAppUtil$1();
+    }
+    if (identical(token, _i3.UtilB9)) {
+      return _getExisting$2();
+    }
+    if (identical(token, _i3.UtilB8)) {
+      return _getExisting$3();
+    }
+    if (identical(token, _i3.UtilB7)) {
+      return _getExisting$4();
+    }
+    if (identical(token, _i3.UtilB6)) {
+      return _getExisting$5();
+    }
+    if (identical(token, _i3.UtilB5)) {
+      return _getExisting$6();
+    }
+    if (identical(token, _i3.UtilB4)) {
+      return _getExisting$7();
+    }
+    if (identical(token, _i3.UtilB3)) {
+      return _getExisting$8();
+    }
+    if (identical(token, _i3.UtilB2)) {
+      return _getExisting$9();
+    }
+    if (identical(token, _i3.UtilB1)) {
+      return _getExisting$10();
+    }
+    if (identical(token, _i3.UtilB0)) {
+      return _getExisting$11();
+    }
+    if (identical(token, _i3.UtilA9)) {
+      return _getUtilA9$12();
+    }
+    if (identical(token, _i3.UtilA8)) {
+      return _getUtilA8$13();
+    }
+    if (identical(token, _i3.UtilA7)) {
+      return _getUtilA7$14();
+    }
+    if (identical(token, _i3.UtilA6)) {
+      return _getUtilA6$15();
+    }
+    if (identical(token, _i3.UtilA5)) {
+      return _getUtilA5$16();
+    }
+    if (identical(token, _i3.UtilA4)) {
+      return _getUtilA4$17();
+    }
+    if (identical(token, _i3.UtilA3)) {
+      return _getUtilA3$18();
+    }
+    if (identical(token, _i3.UtilA2)) {
+      return _getUtilA2$19();
+    }
+    if (identical(token, _i3.UtilA1)) {
+      return _getUtilA1$20();
+    }
+    if (identical(token, _i3.UtilA0)) {
+      return _getUtilA0$21();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$22();
+    }
+    return orElse;
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ref0.initReflector();
+  _ref1.initReflector();
+}

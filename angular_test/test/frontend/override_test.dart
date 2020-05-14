@@ -8,15 +8,15 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'override_test.template.dart' as ng_generated;
+import 'override_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support overriding providers', () async {
-    final fixture = await NgTestBed<TestViewComponent>().create();
+    final fixture =
+        await NgTestBed.forComponent(ng.createTestViewComponentFactory())
+            .create();
     expect(fixture.text, 'Hello World');
   });
 }
@@ -34,7 +34,7 @@ class ViewComponent implements OnInit {
   ViewComponent(this._service);
 
   @override
-  ngOnInit() async => value = await _service.fetch();
+  Future<String> ngOnInit() async => value = await _service.fetch();
 }
 
 @Component(

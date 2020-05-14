@@ -28,7 +28,7 @@ void main() {
   test('View.injectorGet() should handle a null nodeIndex argument', () async {
     final testValue = 'Hello world!';
     final testBed = NgTestBed.forComponent(
-      ng.TestComponentNgFactory,
+      ng.createTestComponentFactory(),
       rootInjector: ([parent]) => Injector.map({testToken: testValue}, parent),
     );
     final testFixture = await testBed.create();

@@ -2,7 +2,7 @@ name: analyzed_angular_plugin_loader
 version: 1.0.0-alpha+1
 description: This pubspec determines the version of the analyzer plugin to load
 environment:
-  sdk: ">=2.5.0-dev.1.0 <3.0.0"
+  sdk: ">=2.8.1 <3.0.0"
 dependencies:
   angular_analyzer_plugin: '1.0.0-alpha+1'
 

@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 import 'package:angular/src/core/zone/ng_zone.dart';
 
 // Schedules a microtasks (using a resolved promise .then())
-void microTask(void fn()) {
+void microTask(void Function() fn) {
   scheduleMicrotask(() {
     // We do double dispatch so that we  can wait for scheduleMicrotasks in
     // the Testability when NgZone becomes stable.
@@ -45,11 +45,11 @@ class TestZone implements NgZone {
   }
 
   void unstable() {
-    this._onUnstableStream.add(null);
+    _onUnstableStream.add(null);
   }
 
   void stable() {
-    this._onStableStream.add(null);
+    _onStableStream.add(null);
   }
 
   @override

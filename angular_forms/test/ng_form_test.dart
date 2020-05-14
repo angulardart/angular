@@ -17,7 +17,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed = NgTestBed.forComponent(ng.NgFormTestNgFactory);
+      var testBed = NgTestBed.forComponent(ng.createNgFormTestFactory());
       fixture = await testBed.create();
     });
 
@@ -119,7 +119,7 @@ class DummyControlValueAccessor implements ControlValueAccessor {
 
   @override
   void writeValue(dynamic obj) {
-    this.writtenValue = obj;
+    writtenValue = obj;
   }
 
   @override

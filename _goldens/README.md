@@ -1,13 +1,14 @@
-# Angular Golden Files
+# AngularDart Golden Files
 
-This package contains golden files for the AngularDart compiler. It allows both
-Angular developers and users to see the generated output of the angular compiler
-for various features, as well be notified (via testing) if the files would
-change.
+This package contains checked-in generated files ("goldens") representing the
+output of the AngularDart compiler, allowing both developers and users to
+compare the generated output over time - for example when updating dependencies
+or the compiler itself.
 
-All of the files are located in `test/_files`. Alongside each `.dart` file are
-three `.golden` files, one for the `debug` and `release` versions, as well as an
-`outline` version used to optimize bazel-based builds.
+All of the files are located in `test/files`. Given a `test/files/**.dart` file:
+
+*   `*.outline.golden`: The output of the _outliner_ (API-only view)
+*   `*.template.golden`: The output of the _compiler_ (actual emitted code)
 
 # Updating goldens
 
@@ -22,5 +23,5 @@ In order to update the goldens, do the following:
 
 # Adding a new golden
 
-* Add `.dart` file to `test/_files`.
-* Update the golden files as described above.
+*   Add `.dart` file to `test/files`.
+*   Update the golden files as described above.

@@ -29,7 +29,7 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
   void visitAsExpression(AsExpression exp) {
     // An offset of 0 means we generated this in a pipe, and its OK.
     if (exp.asOperator.offset != 0) {
-      _reportDisallowedExpression(exp, "As expression", visitChildren: false);
+      _reportDisallowedExpression(exp, 'As expression', visitChildren: false);
     }
 
     // Don't visit the TypeName or it may suggest exporting it, which is not
@@ -58,15 +58,15 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
 
   @override
   void visitAwaitExpression(AwaitExpression exp) =>
-      _reportDisallowedExpression(exp, "Await");
+      _reportDisallowedExpression(exp, 'Await');
 
   @override
   void visitCascadeExpression(CascadeExpression exp) =>
-      _reportDisallowedExpression(exp, "Cascades");
+      _reportDisallowedExpression(exp, 'Cascades');
 
   @override
   void visitFunctionExpression(FunctionExpression exp) =>
-      _reportDisallowedExpression(exp, "Anonymous functions");
+      _reportDisallowedExpression(exp, 'Anonymous functions');
 
   /// Check that an identifier is valid in an angular template.
   ///
@@ -160,7 +160,7 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
 
   @override
   void visitInstanceCreationExpression(InstanceCreationExpression exp) {
-    _reportDisallowedExpression(exp, "Usage of new", visitChildren: false);
+    _reportDisallowedExpression(exp, 'Usage of new', visitChildren: false);
     // Don't visit the TypeName or it may suggest exporting it, which is not
     // possible.
 
@@ -169,7 +169,7 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
 
   @override
   void visitIsExpression(IsExpression exp) {
-    _reportDisallowedExpression(exp, "Is expression", visitChildren: false);
+    _reportDisallowedExpression(exp, 'Is expression', visitChildren: false);
     // Don't visit the TypeName or it may suggest exporting it, which is not
     // possible.
 
@@ -179,7 +179,7 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
   @override
   void visitListLiteral(ListLiteral list) {
     if (list.typeArguments != null) {
-      _reportDisallowedExpression(list, "Typed list literals",
+      _reportDisallowedExpression(list, 'Typed list literals',
           visitChildren: false);
       // Don't visit the TypeName or it may suggest exporting it, which is not
       // possible.
@@ -209,7 +209,7 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
   @override
   void visitSetOrMapLiteral(SetOrMapLiteral map) {
     if (map.typeArguments != null) {
-      _reportDisallowedExpression(map, "Typed map literals",
+      _reportDisallowedExpression(map, 'Typed map literals',
           visitChildren: false);
       // Don't visit the TypeName or it may suggest exporting it, which is not
       // possible.
@@ -225,11 +225,11 @@ class AngularSubsetVisitor extends RecursiveAstVisitor<Object> {
 
   @override
   void visitSymbolLiteral(SymbolLiteral exp) =>
-      _reportDisallowedExpression(exp, "Symbol literal");
+      _reportDisallowedExpression(exp, 'Symbol literal');
 
   @override
   void visitThrowExpression(ThrowExpression exp) =>
-      _reportDisallowedExpression(exp, "Throw");
+      _reportDisallowedExpression(exp, 'Throw');
 
   void _reportDisallowedExpression(Expression node, String description,
       {bool visitChildren = true}) {

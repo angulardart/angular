@@ -140,17 +140,11 @@ class NgParser {
     'vkern',
   ];
 
-  final bool _toolFriendlyAstOrigin;
-
   @literal
-  const factory NgParser({
-    bool toolFriendlyAstOrigin,
-  }) = NgParser._;
+  const factory NgParser() = NgParser._;
 
   // Prevent inheritance.
-  const NgParser._({
-    bool toolFriendlyAstOrigin = false,
-  }) : _toolFriendlyAstOrigin = toolFriendlyAstOrigin;
+  const NgParser._();
 
   /// Return a series of tokens by incrementally scanning [template].
   ///
@@ -162,8 +156,8 @@ class NgParser {
     @deprecated bool parseExpressions,
     ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
   }) {
-    var tokens = const NgLexer().tokenize(template, exceptionHandler);
-    var parser = RecursiveAstParser(
+    final tokens = const NgLexer().tokenize(template, exceptionHandler);
+    final parser = RecursiveAstParser(
       SourceFile.fromString(
         template,
         url: sourceUrl,
@@ -175,10 +169,7 @@ class NgParser {
     );
     var asts = parser.parse();
     if (desugar) {
-      var desugarVisitor = DesugarVisitor(
-        toolFriendlyAstOrigin: _toolFriendlyAstOrigin,
-        exceptionHandler: exceptionHandler,
-      );
+      final desugarVisitor = DesugarVisitor(exceptionHandler: exceptionHandler);
       asts = asts
           .map((t) => t.accept(desugarVisitor))
           .cast<StandaloneTemplateAst>()

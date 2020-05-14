@@ -11,12 +11,16 @@ void main() {
   // Note that `NgTestFixture.dipose()` invokes `debugClearComponentStyles()`.
   group('debugClearComponentStyles()', () {
     test('should clear component styles from DOM', () async {
-      await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
-      await expectTextFontStyle(ng.NormalTextComponentNgFactory, 'normal');
+      await expectTextFontStyle(
+          ng.createItalicTextComponentFactory(), 'italic');
+      await expectTextFontStyle(
+          ng.createNormalTextComponentFactory(), 'normal');
     });
     test('should allow reloading the same component styles', () async {
-      await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
-      await expectTextFontStyle(ng.ItalicTextComponentNgFactory, 'italic');
+      await expectTextFontStyle(
+          ng.createItalicTextComponentFactory(), 'italic');
+      await expectTextFontStyle(
+          ng.createItalicTextComponentFactory(), 'italic');
     });
   });
 }

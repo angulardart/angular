@@ -63,22 +63,22 @@ class NgClass implements DoCheck, OnDestroy {
 
   @Input('class')
   set initialClasses(String v) {
-    this._applyInitialClasses(true);
-    this._initialClasses = v is String ? v.split(' ') : [];
-    this._applyInitialClasses(false);
-    this._applyClasses(this._rawClass, false);
+    _applyInitialClasses(true);
+    _initialClasses = v is String ? v.split(' ') : [];
+    _applyInitialClasses(false);
+    _applyClasses(_rawClass, false);
   }
 
   @Input('ngClass')
   set rawClass(
       dynamic /* String | List < String > | Set< String > | Map < String , dynamic > */ v) {
-    this._cleanupClasses(this._rawClass);
+    _cleanupClasses(_rawClass);
     if (v is String) {
       v = v.split(' ');
     }
-    this._rawClass = v;
-    this._iterableDiffer = null;
-    this._keyValueDiffer = null;
+    _rawClass = v;
+    _iterableDiffer = null;
+    _keyValueDiffer = null;
     if (v != null) {
       if (v is Iterable<Object>) {
         _iterableDiffer = DefaultIterableDiffer();
@@ -151,7 +151,7 @@ class NgClass implements DoCheck, OnDestroy {
   void _applyClasses(dynamic /* Iterable | Map */ rawClassVal, bool isCleanup) {
     if (rawClassVal != null) {
       if (rawClassVal is List<Object>) {
-        for (int i = 0, len = rawClassVal.length; i < len; i++) {
+        for (var i = 0, len = rawClassVal.length; i < len; i++) {
           _toggleClass(unsafeCast(rawClassVal[i]), !isCleanup);
         }
       } else if (rawClassVal is Iterable<Object>) {
@@ -171,7 +171,7 @@ class NgClass implements DoCheck, OnDestroy {
   void _toggleClass(String className, bool enabled) {
     className = className.trim();
     if (className.isEmpty) return;
-    Element el = _ngEl;
+    var el = _ngEl;
     var classList = el.classes;
     if (className.contains(' ')) {
       _separator ??= RegExp(r'\s+');

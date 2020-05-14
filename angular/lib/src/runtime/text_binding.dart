@@ -3,6 +3,8 @@ import 'dart:html';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/runtime.dart';
 
+import 'interpolate.dart';
+
 /// Wraps an HTML [Text] node, implementing change detection to make updating
 /// the node's text property very fast.
 /// This class is used in place of code-generated change detection in
@@ -10,7 +12,7 @@ import 'package:angular/src/runtime.dart';
 ///    - avoids code duplication
 ///    - creates a hot function which JS engines (e.g. V8) can optimize.
 class TextBinding {
-  String _currentValue = '';
+  Object _currentValue = '';
   final Text element = Text('');
 
   // This is a size optimization. dart2js will hoist the element field
@@ -24,6 +26,15 @@ class TextBinding {
   void updateText(String newValue) {
     if (checkBinding(_currentValue, newValue)) {
       element.text = newValue;
+      _currentValue = newValue;
+    }
+  }
+
+  /// Updates the [Text] node if [newValue]'s type is bool, num, int, or double
+  /// and differs from the previous value.
+  void updateTextWithPrimitive(Object newValue) {
+    if (checkBinding(_currentValue, newValue)) {
+      element.text = toStringWithNull(newValue);
       _currentValue = newValue;
     }
   }

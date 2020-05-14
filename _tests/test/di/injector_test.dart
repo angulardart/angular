@@ -39,10 +39,8 @@ void main() {
     });
 
     group('.empty', () {
-      HierarchicalInjector i;
-
       test('should throw by default', () {
-        i = Injector.empty();
+        final i = Injector.empty();
         expect(
           () => i.get(ExampleService),
           throwsNoProviderError,
@@ -92,7 +90,7 @@ void main() {
       });
 
       test('should use orElse if provided', () {
-        i = Injector.empty();
+        final i = Injector.empty();
         expect(i.get(ExampleService, 123), 123);
         expect(i.injectFromSelfOptional(ExampleService, 123), 123);
         expect(i.injectFromAncestryOptional(ExampleService, 123), 123);
@@ -102,7 +100,7 @@ void main() {
       test('should fallback to the parent injector if provided', () {
         final instance = ExampleService();
         final parent = Injector.map({ExampleService: instance});
-        i = Injector.empty(parent);
+        final i = Injector.empty(parent);
         expect(i.get(ExampleService), instance);
         expect(i.provideType<ExampleService>(ExampleService), instance);
         expect(
@@ -114,17 +112,15 @@ void main() {
       });
 
       test('should return itself if Injector is passed', () {
-        i = Injector.empty();
+        final i = Injector.empty();
         expect(i.get(Injector), i);
       });
     });
 
     group('.map', () {
-      HierarchicalInjector i;
-
       test('should return a provided key-value pair', () {
         final instance = ExampleService();
-        i = Injector.map({ExampleService: instance});
+        final i = Injector.map({ExampleService: instance});
         expect(i.get(ExampleService), instance);
         expect(i.provideType<ExampleService>(ExampleService), instance);
         expect(i.injectFromSelf(ExampleService), instance);
@@ -139,6 +135,7 @@ void main() {
       });
 
       test('should return itself if Injector is passed', () {
+        final i = Injector.map({});
         expect(i.get(Injector), i);
       });
 
@@ -156,8 +153,6 @@ void main() {
     });
 
     group('ReflectiveInjector', () {
-      Injector i;
-
       setUpAll(() {
         reflector.registerFactory(ExampleService, () => ExampleService());
         reflector.registerFactory(ExampleService2, () => ExampleService2());
@@ -167,19 +162,19 @@ void main() {
       });
 
       test('should resolve a Type', () {
-        i = ReflectiveInjector.resolveAndCreate([ExampleService]);
+        final i = ReflectiveInjector.resolveAndCreate([ExampleService]);
         expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService),
         ]);
         expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider.useClass', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService, useClass: ExampleService2),
         ]);
         expect(i.get(ExampleService), const TypeMatcher<ExampleService2>());
@@ -187,21 +182,21 @@ void main() {
 
       test('should resolve a Provider.useValue', () {
         final serviceValue = ExampleService();
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService, useValue: serviceValue),
         ]);
         expect(i.get(ExampleService), serviceValue);
       });
 
       test('should resolve a Provider.useFactory', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService, useFactory: createExampleService),
         ]);
         expect(i.get(ExampleService), const TypeMatcher<ExampleService>());
       });
 
       test('should resolve a Provider.useFactory with deps', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(String, useValue: 'Hello World'),
           Provider(List, useFactory: createListWith),
         ]);
@@ -209,7 +204,7 @@ void main() {
       });
 
       test('should resolve a Provider.useFactory with manual deps', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(#fooBar, useValue: 'Hello World'),
           Provider(List, useFactory: createListWith, deps: [#fooBar]),
         ]);
@@ -217,7 +212,7 @@ void main() {
       });
 
       test('should resolve a Provider.useExisting', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(ExampleService2),
           Provider(ExampleService, useExisting: ExampleService2),
         ]);
@@ -225,7 +220,7 @@ void main() {
       });
 
       test('should resolve a multi binding', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(#fooBar, useValue: 1, multi: true),
           Provider(#fooBar, useValue: 2, multi: true),
         ]);
@@ -233,14 +228,14 @@ void main() {
       });
 
       test('should resolve @Optional', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(List, useFactory: createListWithOptional),
         ]);
         expect(i.get(List), [null]);
       });
 
       test('should inject things in order of most-recently added', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(#a, useValue: 1),
           Provider(#a, useValue: 2),
         ]);
@@ -248,14 +243,14 @@ void main() {
       });
 
       test('should return itself for "Injector"', () {
-        i = ReflectiveInjector.resolveAndCreate([
+        final i = ReflectiveInjector.resolveAndCreate([
           Provider(#theInjector, useFactory: (i) => [i], deps: [Injector]),
         ]);
         expect(i.get(#theInjector), [i]);
       });
 
       test('should thrown when a provider was not found', () {
-        i = ReflectiveInjector.resolveAndCreate([]);
+        final i = ReflectiveInjector.resolveAndCreate([]);
         expect(() => i.get(#ABC), throwsNoProviderError);
       });
 
@@ -583,7 +578,7 @@ void main() {
         TestConstNoArgs c1 = injector.get(TestConstNoArgs);
         TestConstPositionalArgs c2 = injector.get(TestConstPositionalArgs);
         TestConstNamedArgs c3 = injector.get(TestConstNamedArgs);
-        TestConstNamedArgs2 c4 = injector.get(ng.TestConstNamedArgs2);
+        TestConstNamedArgs2 c4 = injector.get(TestConstNamedArgs2);
         expect(c1, isNotNull);
         expect(c2, isNotNull);
         expect(c2.name, '$TestConstPositionalArgs');
@@ -603,12 +598,15 @@ void main() {
 }
 
 /// Implementation of [Injector] that captures [lastToken] and [lastOrElse].
-class CaptureInjectInjector extends Injector {
+class CaptureInjectInjector extends HierarchicalInjector implements Injector {
   Object lastToken;
   Object lastOrElse;
 
   @override
-  Object provideUntyped(Object token, [Object orElse]) {
+  Object injectFromSelfOptional(
+    Object token, [
+    Object orElse = throwIfNotFound,
+  ]) {
     lastToken = token;
     lastOrElse = orElse;
     return null;

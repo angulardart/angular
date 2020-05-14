@@ -1,5 +1,5 @@
 class DefaultKeyValueDiffer {
-  final _records = Map<dynamic, KeyValueChangeRecord>();
+  final _records = <dynamic, KeyValueChangeRecord>{};
   KeyValueChangeRecord _mapHead;
 
   KeyValueChangeRecord _appendAfter;
@@ -15,29 +15,29 @@ class DefaultKeyValueDiffer {
   KeyValueChangeRecord _removalsHead;
 
   bool get isDirty {
-    return !identical(this._additionsHead, null) ||
-        !identical(this._changesHead, null) ||
-        !identical(this._removalsHead, null);
+    return !identical(_additionsHead, null) ||
+        !identical(_changesHead, null) ||
+        !identical(_removalsHead, null);
   }
 
-  void forEachChangedItem(void fn(KeyValueChangeRecord value)) {
-    for (var record = this._changesHead;
+  void forEachChangedItem(void Function(KeyValueChangeRecord) fn) {
+    for (var record = _changesHead;
         !identical(record, null);
         record = record._nextChanged) {
       fn(record);
     }
   }
 
-  void forEachAddedItem(void fn(KeyValueChangeRecord value)) {
-    for (var record = this._additionsHead;
+  void forEachAddedItem(void Function(KeyValueChangeRecord) fn) {
+    for (var record = _additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
       fn(record);
     }
   }
 
-  void forEachRemovedItem(void fn(KeyValueChangeRecord value)) {
-    for (var record = this._removalsHead;
+  void forEachRemovedItem(void Function(KeyValueChangeRecord) fn) {
+    for (var record = _removalsHead;
         !identical(record, null);
         record = record._next) {
       fn(record);
@@ -49,7 +49,7 @@ class DefaultKeyValueDiffer {
     if (map is! Map<Object, Object>) {
       throw StateError("Error trying to diff '$map'");
     }
-    if (this.check(map)) {
+    if (check(map)) {
       return this;
     } else {
       return null;
@@ -174,31 +174,31 @@ class DefaultKeyValueDiffer {
   void _reset() {
     _appendAfter = null;
 
-    if (this.isDirty) {
+    if (isDirty) {
       // Map state before changes.
       _previousMapHead = _mapHead;
 
-      for (var record = this._previousMapHead;
+      for (var record = _previousMapHead;
           record != null;
           record = record._next) {
         record._nextPrevious = record._next;
       }
 
-      for (var record = this._changesHead;
+      for (var record = _changesHead;
           record != null;
           record = record._nextChanged) {
         record.previousValue = record.currentValue;
       }
 
-      for (var record = this._additionsHead;
+      for (var record = _additionsHead;
           record != null;
           record = record._nextAdded) {
         record.previousValue = record.currentValue;
       }
 
-      this._changesHead = this._changesTail = null;
-      this._additionsHead = this._additionsTail = null;
-      this._removalsHead = null;
+      _changesHead = _changesTail = null;
+      _additionsHead = _additionsTail = null;
+      _removalsHead = null;
     }
   }
 
@@ -214,11 +214,11 @@ class DefaultKeyValueDiffer {
     // assert(record._nextRemoved == null);
 
     // assert(record._prevRemoved == null);
-    if (identical(this._additionsHead, null)) {
-      this._additionsHead = this._additionsTail = record;
+    if (identical(_additionsHead, null)) {
+      _additionsHead = _additionsTail = record;
     } else {
-      this._additionsTail._nextAdded = record;
-      this._additionsTail = record;
+      _additionsTail._nextAdded = record;
+      _additionsTail = record;
     }
   }
 
@@ -232,60 +232,61 @@ class DefaultKeyValueDiffer {
     // assert(record._nextRemoved == null);
 
     // assert(record._prevRemoved == null);
-    if (identical(this._changesHead, null)) {
-      this._changesHead = this._changesTail = record;
+    if (identical(_changesHead, null)) {
+      _changesHead = _changesTail = record;
     } else {
-      this._changesTail._nextChanged = record;
-      this._changesTail = record;
+      _changesTail._nextChanged = record;
+      _changesTail = record;
     }
   }
 
+  @override
   String toString() {
     var items = <Object>[];
     var previous = <Object>[];
     var changes = <Object>[];
     var additions = <Object>[];
     var removals = <Object>[];
-    for (var record = this._mapHead;
+    for (var record = _mapHead;
         !identical(record, null);
         record = record._next) {
       items.add(record);
     }
-    for (var record = this._previousMapHead;
+    for (var record = _previousMapHead;
         !identical(record, null);
         record = record._nextPrevious) {
       previous.add(record);
     }
-    for (var record = this._changesHead;
+    for (var record = _changesHead;
         !identical(record, null);
         record = record._nextChanged) {
       changes.add(record);
     }
-    for (var record = this._additionsHead;
+    for (var record = _additionsHead;
         !identical(record, null);
         record = record._nextAdded) {
       additions.add(record);
     }
-    for (var record = this._removalsHead;
+    for (var record = _removalsHead;
         !identical(record, null);
         record = record._next) {
       removals.add(record);
     }
-    return "map: " +
-        items.join(", ") +
-        "\n" +
-        "previous: " +
-        previous.join(", ") +
-        "\n" +
-        "additions: " +
-        additions.join(", ") +
-        "\n" +
-        "changes: " +
-        changes.join(", ") +
-        "\n" +
-        "removals: " +
-        removals.join(", ") +
-        "\n";
+    return 'map: ' +
+        items.join(', ') +
+        '\n' +
+        'previous: ' +
+        previous.join(', ') +
+        '\n' +
+        'additions: ' +
+        additions.join(', ') +
+        '\n' +
+        'changes: ' +
+        changes.join(', ') +
+        '\n' +
+        'removals: ' +
+        removals.join(', ') +
+        '\n';
   }
 }
 
@@ -305,6 +306,7 @@ class KeyValueChangeRecord {
   KeyValueChangeRecord _nextChanged;
 
   KeyValueChangeRecord(this.key);
+  @override
   String toString() {
     return identical(previousValue, currentValue)
         ? '$key'

@@ -3,28 +3,28 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
-import 'pipe_test.template.dart' as ng_generated;
+import 'pipe_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support pipes with optional paramters', () async {
-    final fixture = await NgTestBed<Example>().create();
+    final fixture =
+        await NgTestBed.forComponent(ng.createExampleFactory()).create();
     expect(fixture.text, contains('Unpiped: 2014-04-29 06:04:00.000'));
     expect(fixture.text, contains('Piped: Apr 29, 2014'));
   });
 
   test('should support type arguments on transform return and parameter types',
       () async {
-    final testBed = NgTestBed<NopComponent>();
+    final testBed = NgTestBed.forComponent(ng.createNopComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, '[1, 2, 3]');
   });
 
   test('pure pipe should only be invoked when its input changes', () async {
-    final testBed = NgTestBed<TestPurePipeComponent>();
+    final testBed =
+        NgTestBed.forComponent(ng.createTestPurePipeComponentFactory());
     final testFixture = await testBed.create();
     // Initial invocation.
     expect(PurePipe.singleton.invocations, equals(1));

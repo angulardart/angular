@@ -94,6 +94,7 @@ class NgFormModel extends AbstractForm<AbstractControlGroup>
   bool _formChanged = false;
   AbstractControlGroup _form;
 
+  @override
   AbstractControlGroup get form => _form;
 
   @Input('ngFormModel')

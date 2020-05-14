@@ -92,6 +92,7 @@ class NgForm extends AbstractNgForm<ControlGroup> {
 /// that are backed by different types such as protos.
 abstract class AbstractNgForm<T extends AbstractControlGroup>
     extends AbstractForm<T> {
+  @override
   T form;
 
   @Input('ngDisabled')

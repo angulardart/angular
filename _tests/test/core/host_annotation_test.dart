@@ -20,14 +20,14 @@ void main() {
   group('@HostBinding', () {
     test('should assign "title" based on a static', () async {
       final element = await rootElementOf(
-        ng.HostBindingStaticTitleNgFactory,
+        ng.createHostBindingStaticTitleFactory(),
       );
       expect(element.title, 'Hello World');
     });
 
     test('should assign "title" based on an instance member', () async {
       final element = await rootElementOf(
-        ng.HostBindingInstanceTitleNgFactory,
+        ng.createHostBindingInstanceTitleFactory(),
       );
       expect(element.title, 'Hello World');
     });
@@ -42,49 +42,49 @@ void main() {
       //
       // https://github.com/dart-lang/angular/issues/1272
       final element = await rootElementOf(
-        ng.HostBindingStaticTitleNotInheritedNgFactory,
+        ng.createHostBindingStaticTitleNotInheritedFactory(),
       );
       expect(element.title, isEmpty);
     });
 
     test('should assign "title" based on an inherited instance', () async {
       final element = await rootElementOf(
-        ng.HostBindingInstanceTitleInheritedNgFactory,
+        ng.createHostBindingInstanceTitleInheritedFactory(),
       );
       expect(element.title, 'Hello World');
     });
 
     test('should support tabIndex of 0', () async {
       final element = await rootElementOf(
-        ng.HostBindingTabIndex0NgFactory,
+        ng.createHostBindingTabIndex0Factory(),
       );
       expect(element.tabIndex, 0);
     });
 
     test('should support tabIndex of 0', () async {
       final element = await rootElementOf(
-        ng.HostBindingTabIndexNegative1NgFactory,
+        ng.createHostBindingTabIndexNegative1Factory(),
       );
       expect(element.tabIndex, -1);
     });
 
     test('should support class [static]', () async {
       final element = await rootElementOf(
-        ng.HostBindingStaticClassNgFactory,
+        ng.createHostBindingStaticClassFactory(),
       );
       expect(element.className, 'themeable');
     });
 
     test('should support class [instance]', () async {
       final element = await rootElementOf(
-        ng.HostBindingInstanceClassNgFactory,
+        ng.createHostBindingInstanceClassFactory(),
       );
       expect(element.className, 'themeable');
     });
 
     test('should support conditional attributes', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostBindingConditionalAttributeNgFactory,
+        ng.createHostBindingConditionalAttributeFactory(),
       );
       final fixture = await testBed.create();
       final element = fixture.rootElement;
@@ -102,7 +102,7 @@ void main() {
 
     test('should support conditional attributes on static members', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostBindingConditionalStaticsNgFactory,
+        ng.createHostBindingConditionalStaticsFactory(),
       );
       final fixture = await testBed.create();
       final element = fixture.rootElement;
@@ -112,7 +112,7 @@ void main() {
 
     test('should support conditional classes', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostBindingConditionalClassNgFactory,
+        ng.createHostBindingConditionalClassFactory(),
       );
       final fixture = await testBed.create();
       final element = fixture.rootElement;
@@ -126,7 +126,7 @@ void main() {
     });
 
     test('should support multiple annotations on a single field', () async {
-      final element = await rootElementOf(ng.HostBindingMultiNgFactory);
+      final element = await rootElementOf(ng.createHostBindingMultiFactory());
       expect(element.className, 'hello');
       expect(element.title, 'hello');
     });
@@ -135,7 +135,7 @@ void main() {
   group('@HostListener', () {
     test('should support click', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostListenerClickNgFactory,
+        ng.createHostListenerClickFactory(),
       );
       final fixture = await testBed.create();
       fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
@@ -144,7 +144,7 @@ void main() {
 
     test('should support click through inheritance', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostListenerInheritedClickNgFactory,
+        ng.createHostListenerInheritedClickFactory(),
       );
       final fixture = await testBed.create();
       fixture.assertOnlyInstance.clickHandler = expectAsync0(() {});
@@ -153,7 +153,7 @@ void main() {
 
     test('should support multiple annotations on a single field', () async {
       final testBed = NgTestBed.forComponent(
-        ng.HostListenerMultiNgFactory,
+        ng.createHostListenerMultiFactory(),
       );
       final fixture = await testBed.create();
       fixture.assertOnlyInstance.blurOrFocusHandler = expectAsync0(

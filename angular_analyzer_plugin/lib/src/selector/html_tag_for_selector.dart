@@ -43,9 +43,9 @@ class HtmlTagForSelector {
     }
   }
 
-  bool get _classAttrValid => _classes.isEmpty || _attributes["class"] == null
+  bool get _classAttrValid => _classes.isEmpty || _attributes['class'] == null
       ? true
-      : _classes.length == 1 && _classes.first == _attributes["class"];
+      : _classes.length == 1 && _classes.first == _attributes['class'];
 
   /// Constrain the classes of this tag by adding a required class.
   void addClass(String classname) {
@@ -90,7 +90,7 @@ class HtmlTagForSelector {
     final attrStrs = <String>[];
     _attributes.forEach((k, v) {
       // in the case of [class].myclass don't create multiple class attrs
-      if (k != "class" || keepClassAttr) {
+      if (k != 'class' || keepClassAttr) {
         attrStrs.add(v == null ? k : '$k="$v"');
       }
     });
@@ -102,6 +102,6 @@ class HtmlTagForSelector {
 
     attrStrs.sort();
 
-    return (['<$_name']..addAll(attrStrs)).join(' ');
+    return (['<$_name', ...attrStrs]).join(' ');
   }
 }

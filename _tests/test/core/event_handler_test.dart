@@ -15,7 +15,7 @@ void main() {
 
   group('Event handler', () {
     setUp(() async {
-      final testBed = NgTestBed.forComponent(ng.ClickHandlerNgFactory);
+      final testBed = NgTestBed.forComponent(ng.createClickHandlerFactory());
       fixture = await testBed.create();
     });
 

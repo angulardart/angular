@@ -116,7 +116,7 @@ class AngularNavigation implements NavigationContributor {
       }
 
       final lineInfo =
-          LineInfo.fromContent(_contentOverlay[element.source.fullName] ?? "");
+          LineInfo.fromContent(_contentOverlay[element.source.fullName] ?? '');
 
       if (lineInfo == null) {
         continue;

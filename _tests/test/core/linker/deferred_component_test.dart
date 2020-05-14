@@ -2,7 +2,6 @@
 library angular2.test.core.linker.deferred_component_test;
 
 import 'dart:async';
-import 'dart:html';
 
 import 'package:angular_test/angular_test.dart';
 import 'package:angular/angular.dart';
@@ -16,7 +15,7 @@ void main() {
 
   test('should load a @deferred component', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.SimpleContainerTestNgFactory,
+      ng.createSimpleContainerTestFactory(),
     ).create();
 
     // We only test this in DDC so a new macro-task is sufficient.
@@ -28,9 +27,9 @@ void main() {
 
   test('should load a @deferred component nested in an *ngIf', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.NestedContainerTestNgFactory,
+      ng.createNestedContainerTestFactory(),
     ).create();
-    Element view = fixture.rootElement.querySelector('my-deferred-view');
+    var view = fixture.rootElement.querySelector('my-deferred-view');
     expect(view, isNull);
 
     await fixture.update((c) => c.show = true);
@@ -40,14 +39,14 @@ void main() {
 
   test('should pass property values to an @deferred component', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.PropertyContainerTestNgFactory,
+      ng.createPropertyContainerTestFactory(),
     ).create();
     expect(fixture.text, contains('Title: Hello World'));
   });
 
   test('should listen to events from an @deferred component', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.EventContainerTestNgFactory,
+      ng.createEventContainerTestFactory(),
     ).create();
     final div = fixture.rootElement.querySelector('my-deferred-view > button');
     expect(fixture.text, contains('Events: 0'));
@@ -59,7 +58,7 @@ void main() {
 
   test('should be notified when a deferred component is loaded', () async {
     final fixture = await NgTestBed.forComponent(
-      ng.LoadNotifierTestNgFactory,
+      ng.createLoadNotifierTestFactory(),
     ).create(beforeChangeDetection: expectAsync1((comp) {
       expect(comp.child1, isNull);
       expect(comp.child2, isNull);

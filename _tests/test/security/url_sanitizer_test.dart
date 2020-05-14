@@ -25,7 +25,7 @@ void main() {
         'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/',
         'data:video/webm;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/',
       ];
-      for (String testValue in validUrls) {
+      for (var testValue in validUrls) {
         expect(internalSanitizeUrl(testValue), testValue);
       }
     });
@@ -50,7 +50,7 @@ void main() {
         'data:application/x-msdownload;base64,'
             'iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/',
       ];
-      for (String testValue in invalidUrls) {
+      for (var testValue in invalidUrls) {
         expect(internalSanitizeUrl(testValue), contains('unsafe'));
       }
     });

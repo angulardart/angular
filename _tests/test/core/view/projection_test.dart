@@ -6,54 +6,57 @@ import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:_tests/matchers.dart';
 
-import 'projection_test.template.dart' as ng_generated;
+import 'projection_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   group('projection', () {
     tearDown(() => disposeAnyRunningTest());
 
     test('should support simple html elements', () async {
-      var testBed = NgTestBed<ContainerWithSimpleComponent>();
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerWithSimpleComponentFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
-      Element childElement = element.querySelector('simple');
+      var element = testFixture.rootElement;
+      var childElement = element.querySelector('simple');
       expect(childElement, hasTextContent('SIMPLE(A)'));
     });
 
     test(
         'should support simple components with text interpolation projected'
         'into child', () async {
-      var testBed = NgTestBed<ContainerWithProjectedInterpolation>();
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerWithProjectedInterpolationFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
+      var element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE1))END'));
     });
 
     test(
         'should support simple components with text interpolation projected'
         'into child where ng-content is nested inside an element', () async {
-      var testBed = NgTestBed<ContainerWithProjectedInterpolationNested>();
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerWithProjectedInterpolationNestedFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
+      var element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE2))END'));
     });
 
     test(
         'should support simple components with text interpolation projected'
         'into child with bindings following ng-content', () async {
-      var testBed = NgTestBed<ContainerWithProjectedInterpolationBound>();
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerWithProjectedInterpolationBoundFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
+      var element = testFixture.rootElement;
       expect(element, hasTextContent('START(SIMPLE(VALUE3XY))END'));
     });
 
     test('should redistribute when the shadow dom changes', () async {
-      var testBed = NgTestBed<ContainerABCWithConditionalComponent>();
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerABCWithConditionalComponentFactory());
       var testFixture = await testBed.create();
-      Element element = testFixture.rootElement;
-      expect(element, hasTextContent("(, BC)"));
+      var element = testFixture.rootElement;
+      expect(element, hasTextContent('(, BC)'));
 
       final viewportDirective =
           testFixture.assertOnlyInstance.child.manualViewportDirective;
@@ -67,24 +70,26 @@ void main() {
       expect(element, hasTextContent('(, BC)'));
     });
 
-    test("should support non emulated styles", () async {
-      var testBed = NgTestBed<ContainerWithStyleNotEmulated>();
+    test('should support non emulated styles', () async {
+      var testBed = NgTestBed.forComponent(
+          ng.createContainerWithStyleNotEmulatedFactory());
       var testFixture = await testBed.create();
-      Element mainEl = testFixture.rootElement;
+      var mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
-      Element div2 = document.createElement('div');
+      var div2 = document.createElement('div');
       div2.className = 'redStyle';
       mainEl.append(div2);
       expect(div1.getComputedStyle().color, 'rgb(255, 0, 0)');
       expect(div2.getComputedStyle().color, 'rgb(255, 0, 0)');
     });
 
-    test("should support emulated style encapsulation", () async {
-      var testBed = NgTestBed<ContainerWithStyleEmulated>();
+    test('should support emulated style encapsulation', () async {
+      var testBed =
+          NgTestBed.forComponent(ng.createContainerWithStyleEmulatedFactory());
       var testFixture = await testBed.create();
-      Element mainEl = testFixture.rootElement;
+      var mainEl = testFixture.rootElement;
       Element div1 = mainEl.childNodes.first;
-      Element div2 = document.createElement('div');
+      var div2 = document.createElement('div');
       div2.className = 'blueStyle';
       mainEl.append(div2);
       expect(div1.getComputedStyle().color, 'rgb(0, 0, 255)');
@@ -92,13 +97,15 @@ void main() {
     });
 
     test('should project ng-content using select query', () async {
-      var testBed = NgTestBed<MyListUserProjectionTest>();
+      var testBed =
+          NgTestBed.forComponent(ng.createMyListUserProjectionTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.rootElement, hasTextContent('item1item2TheEnd'));
     });
 
     test('should support exact attribute selector', () async {
-      final testBed = NgTestBed<SelectExactAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectExactAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -106,7 +113,8 @@ void main() {
     });
 
     test('should support hypen attribute selector', () async {
-      final testBed = NgTestBed<SelectHyphenAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectHyphenAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -114,7 +122,8 @@ void main() {
     });
 
     test('should support list attribute selector', () async {
-      final testBed = NgTestBed<SelectListAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectListAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -122,7 +131,8 @@ void main() {
     });
 
     test('should support prefix attribute selector', () async {
-      final testBed = NgTestBed<SelectPrefixAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectPrefixAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -130,7 +140,8 @@ void main() {
     });
 
     test('should support set attribute selector', () async {
-      final testBed = NgTestBed<SelectSetAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectSetAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -138,7 +149,8 @@ void main() {
     });
 
     test('should support substring attribute selector', () async {
-      final testBed = NgTestBed<SelectSubstringAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectSubstringAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -146,7 +158,8 @@ void main() {
     });
 
     test('should support suffix attribute selector', () async {
-      final testBed = NgTestBed<SelectSuffixAttributeTestComponent>();
+      final testBed = NgTestBed.forComponent(
+          ng.createSelectSuffixAttributeTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -154,7 +167,8 @@ void main() {
     });
 
     test('should support multiple levels with ngProjectAs', () async {
-      final testBed = NgTestBed<NgProjectAsTestComponent>();
+      final testBed =
+          NgTestBed.forComponent(ng.createNgProjectAsTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
       expect(select('.selected').text.trim(), 'Should be selected.');
@@ -180,7 +194,7 @@ class ContainerWithSimpleComponent {}
   directives: [SimpleComponent],
 )
 class ContainerWithProjectedInterpolation {
-  String testValue = "VALUE1";
+  String testValue = 'VALUE1';
 }
 
 @Component(
@@ -197,7 +211,7 @@ class SimpleComponent {}
   directives: [SimpleComponent2],
 )
 class ContainerWithProjectedInterpolationNested {
-  String testValue = "VALUE2";
+  String testValue = 'VALUE2';
 }
 
 @Component(
@@ -214,7 +228,7 @@ class SimpleComponent2 {}
   directives: [SimpleComponentWithBinding],
 )
 class ContainerWithProjectedInterpolationBound {
-  String testValue = "VALUE3";
+  String testValue = 'VALUE3';
 }
 
 @Component(
@@ -237,7 +251,7 @@ class ContainerABCWithConditionalComponent {
 }
 
 @Component(
-  selector: "conditional-content",
+  selector: 'conditional-content',
   template: '<div>(<div *manual><ng-content select=".left"></ng-content></div>'
       ', <ng-content></ng-content>)</div>',
   directives: [ManualViewportDirective],
@@ -248,7 +262,7 @@ class ConditionalContentComponent {
 }
 
 @Directive(
-  selector: "[manual]",
+  selector: '[manual]',
 )
 class ManualViewportDirective {
   ViewContainerRef vc;
@@ -267,7 +281,7 @@ class ManualViewportDirective {
 @Component(
   selector: 'container-with-style-emu',
   template: '<div class=\"blueStyle\"></div>',
-  styles: [".blueStyle { color: blue}"],
+  styles: ['.blueStyle { color: blue}'],
   encapsulation: ViewEncapsulation.Emulated,
   directives: [SimpleComponent],
 )
@@ -276,7 +290,7 @@ class ContainerWithStyleEmulated {}
 @Component(
   selector: 'container-with-style-not-emu',
   template: '<div class=\"redStyle\"></div>',
-  styles: [".redStyle { color: red}"],
+  styles: ['.redStyle { color: red}'],
   encapsulation: ViewEncapsulation.None,
   directives: [SimpleComponent],
 )

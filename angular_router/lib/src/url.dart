@@ -45,9 +45,9 @@ class Url {
   final Map<String, String> queryParameters;
 
   Url(String path, {String fragment = '', Map<String, String> queryParameters})
-      : this.path = path ?? '',
-        this.fragment = fragment ?? '',
-        this.queryParameters = Map.unmodifiable(queryParameters ?? {});
+      : path = path ?? '',
+        fragment = fragment ?? '',
+        queryParameters = Map.unmodifiable(queryParameters ?? {});
 
   /// Returns as a URL string that could be used for navigation/link sharing.
   String toUrl() {

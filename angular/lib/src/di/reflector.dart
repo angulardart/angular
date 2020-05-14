@@ -12,8 +12,8 @@
 //
 // **DO NOT USE**: The API of this library can and will change at any time.
 import 'package:angular/src/runtime.dart';
-export '../core/di/decorators.dart' show Host, Inject, Optional, Self, SkipSelf;
-export '../core/di/opaque_token.dart' show OpaqueToken;
+export 'package:angular_compiler/v1/src/metadata.dart'
+    show Host, Inject, Optional, Self, SkipSelf, OpaqueToken, MultiToken;
 
 // This would ideally be typed, but the lib/di.dart is used by some users in a
 // VM environment where dart:html cannot be imported. Since the reflector is

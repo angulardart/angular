@@ -10,11 +10,10 @@
 library angular.builder;
 
 import 'package:build/build.dart';
-import 'package:angular_compiler/angular_compiler.dart';
-import 'package:angular_compiler/cli.dart';
-
-import 'compiler/stylesheet_compiler/builder.dart';
-import 'source_gen/template_compiler/generator.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v1/src/compiler/stylesheet_compiler/builder.dart';
+import 'package:angular_compiler/v1/src/source_gen/template_compiler/generator.dart';
 
 /// An option to generate a lighter-weight output for complex build systems.
 ///
@@ -47,7 +46,7 @@ Builder templateCompiler(
   String templateExtension = _templateExtension,
   String outlineExtension = _outlineExtension,
 }) {
-  final config = <String, dynamic>{}..addAll(options.config);
+  final config = Map.of(options.config);
   // We may just run in outliner mode.
   //
   // In Bazel execution, whether or not we use "real" codegen or outlines is
@@ -69,16 +68,24 @@ Builder templateCompiler(
     generate,
     {
       CompileContext: CompileContext(
-        allowedTypeDefs: flags.allowedTypeDefs,
+        policyExceptions: flags.policyExceptions,
       ),
     },
   ).asBuilder(extension: templateExtension);
+}
+
+/// Generates `.css.dart` files that are imported by the template compiler.
+Builder stylesheetCompiler(BuilderOptions options) {
+  final flags = CompilerFlags.parseRaw(options.config, _defaultFlags);
+  return StylesheetCompiler(flags);
 }
 
 /// Generates an outline (API skeleton) instead of fully-generated code.
 ///
 /// * [defaultFlags]: Default compiler flags before merged with [options].
 /// * [extension]: Extension to use when compiling.
+///
+/// **NOTE**: Unused in google3. See [templateBuilder] instead.
 Builder outlineCompiler(
   BuilderOptions options, {
   CompilerFlags defaultFlags = _defaultFlags,
@@ -90,22 +97,24 @@ Builder outlineCompiler(
   );
 }
 
-/// Generates `.css.dart` files that are imported by the template compiler.
-Builder stylesheetCompiler(BuilderOptions options) {
-  final flags = CompilerFlags.parseRaw(options.config, _defaultFlags);
-  return StylesheetCompiler(flags);
+/// Removes outputted `.ng_placeholder` files.
+///
+/// **NOTE**: Unused in google3.
+PostProcessBuilder placeholderCleanup(_) {
+  return const FileDeletingBuilder(['.ng_placeholder']);
 }
 
-/// Removes the `.ng_placeholder` files which are only necessary during the
-/// build.
-PostProcessBuilder placeholderCleanup(_) =>
-    const FileDeletingBuilder(['.ng_placeholder']);
-
-/// Removes`.html` and `.css` files in `lib/` since they are likely sources for
-/// angular templates.
+/// Removes`.html` and `.css` files in `lib/`.
 ///
 /// HTML or CSS files that are required at runtime can be exlcuded by glob.
-PostProcessBuilder componentSourceCleanup(BuilderOptions options) =>
-    FileDeletingBuilder.withExcludes(const ['.html', '.css'],
-        (options.config['exclude'] as List<Object>)?.cast<String>() ?? const [],
-        isEnabled: (options.config['enabled'] as bool) ?? false);
+///
+/// **NOTE**: Unused in google3.
+PostProcessBuilder componentSourceCleanup(BuilderOptions options) {
+  return FileDeletingBuilder.withExcludes(
+    const ['.html', '.css'],
+    List<String>.from(
+      options.config['exclude'] as List ?? const [],
+    ),
+    isEnabled: options.config['enabled'] == true,
+  );
+}
