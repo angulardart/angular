@@ -71,12 +71,6 @@ echo "Analyzing dev..."
 PKG=dev tool/travis.sh analyze
 echo "Running tests in dev in (nobuild)"
 PKG=dev tool/travis.sh test:nobuild
-echo "Analyzing examples/github_issues..."
-PKG=examples/github_issues tool/travis.sh analyze
-echo "Building examples/github_issues in debug mode..."
-PKG=examples/github_issues tool/travis.sh build
-echo "Running tests in examples/github_issues in debug mode"
-PKG=examples/github_issues tool/travis.sh test
 echo "Analyzing examples/hacker_news_pwa..."
 PKG=examples/hacker_news_pwa tool/travis.sh analyze
 echo "Building examples/hacker_news_pwa in debug mode..."
@@ -93,7 +87,3 @@ echo "Building examples/i18n in debug mode..."
 PKG=examples/i18n tool/travis.sh build
 echo "Running tests in examples/i18n in debug mode"
 PKG=examples/i18n tool/travis.sh test
-echo "Analyzing examples/registration_form..."
-PKG=examples/registration_form tool/travis.sh analyze
-echo "Building examples/registration_form in debug mode..."
-PKG=examples/registration_form tool/travis.sh build
