@@ -5,9 +5,6 @@
 language: dart
 
 dart:
-  # Normally we want `dev`, but the latest dev release (2.5.0-dev.2.1) does not work
-  # while the stable (2.5.0) does. We will move back to `dev` once we have a 2.6.0-dev
-  # that we want to test.
   - stable
 
 # Gives more resources on Travis (8GB Ram, 2CPUs).
@@ -264,29 +261,6 @@ jobs:
 
     - stage: presubmit
       script: ./tool/travis.sh analyze
-      env: PKG="examples/github_issues"
-
-    - stage: building
-      script: ./tool/travis.sh build
-      env: PKG="examples/github_issues"
-      cache:
-        directories:
-          - $HOME/.pub-cache
-          - examples/github_issues/.dart_tool
-
-    - stage: testing
-      script: ./tool/travis.sh test
-      env: PKG="examples/github_issues"
-      cache:
-        directories:
-          - $HOME/.pub-cache
-          - examples/github_issues/.dart_tool
-
-      addons:
-        chrome: stable
-
-    - stage: presubmit
-      script: ./tool/travis.sh analyze
       env: PKG="examples/hacker_news_pwa"
 
     - stage: building
@@ -342,18 +316,6 @@ jobs:
 
       addons:
         chrome: stable
-
-    - stage: presubmit
-      script: ./tool/travis.sh analyze
-      env: PKG="examples/registration_form"
-
-    - stage: building
-      script: ./tool/travis.sh build
-      env: PKG="examples/registration_form"
-      cache:
-        directories:
-          - $HOME/.pub-cache
-          - examples/registration_form/.dart_tool
 
     # Deploy the PWA application to Firebase.
     # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.
