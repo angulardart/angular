@@ -386,8 +386,8 @@ void main() {
     expect(
       dartfmt(emitter.emitImports()),
       dartfmt('''
-        import '$libReflection' as _ngRef;
         import 'a_data.dart' as _i1;
+        import '$libReflection' as _ngRef;
       '''),
     );
     expect(
