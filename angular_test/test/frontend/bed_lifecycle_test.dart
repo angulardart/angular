@@ -15,6 +15,8 @@ void main() {
   Element docRoot;
   Element testRoot;
 
+  ng.initReflector();
+
   setUp(() {
     docRoot = Element.tag('doc-root');
     testRoot = Element.tag('ng-test-bed-example-test');
