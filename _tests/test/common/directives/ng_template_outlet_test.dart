@@ -26,7 +26,7 @@ void main() {
       var element = testFixture.rootElement;
       expect(element, hasTextContent(''));
       var refs = testFixture.assertOnlyInstance.refs;
-      await testFixture.update((TestInsertContentComponent componentInstance) {
+      await testFixture.update((componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
       expect(element, hasTextContent('foo'));
@@ -38,11 +38,11 @@ void main() {
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       var refs = testFixture.assertOnlyInstance.refs;
-      await testFixture.update((TestClearContentComponent componentInstance) {
+      await testFixture.update((componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
       expect(element, hasTextContent('foo'));
-      await testFixture.update((TestClearContentComponent componentInstance) {
+      await testFixture.update((componentInstance) {
         // Set it back to null.
         componentInstance.currentTplRef = null;
       });
@@ -55,11 +55,11 @@ void main() {
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       var refs = testFixture.assertOnlyInstance.refs;
-      await testFixture.update((TestChangeContentComponent componentInstance) {
+      await testFixture.update((componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.first;
       });
       expect(element, hasTextContent('foo'));
-      await testFixture.update((TestChangeContentComponent componentInstance) {
+      await testFixture.update((componentInstance) {
         componentInstance.currentTplRef = refs.tplRefs.last;
       });
       expect(element, hasTextContent('bar'));

@@ -14,11 +14,11 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((MapUpdateTest component) {
+      await testFixture.update((component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
-      await testFixture.update((MapUpdateTest component) {
+      await testFixture.update((component) {
         component.map['max-width'] = '30%';
       });
       expect(content.style.maxWidth, '30%');
@@ -28,11 +28,11 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((MapUpdateTest component) {
+      await testFixture.update((component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
-      await testFixture.update((MapUpdateTest component) {
+      await testFixture.update((component) {
         component.map.remove('max-width');
       });
       expect(content.style.maxWidth, '');
@@ -43,12 +43,12 @@ void main() {
           NgTestBed.forComponent(ng.createMapUpdateWithDefaultTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((MapUpdateWithDefaultTest component) {
+      await testFixture.update((component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
       expect(content.style.fontSize, '12px');
-      await testFixture.update((MapUpdateWithDefaultTest component) {
+      await testFixture.update((component) {
         component.map.remove('max-width');
       });
       expect(content.style.maxWidth, '');
@@ -61,12 +61,12 @@ void main() {
           NgTestBed.forComponent(ng.createMapUpdateWithStyleExprTestFactory());
       var testFixture = await testBed.create();
       var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((MapUpdateWithStyleExprTest component) {
+      await testFixture.update((component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
       expect(content.style.fontSize, '12px');
-      await testFixture.update((MapUpdateWithStyleExprTest component) {
+      await testFixture.update((component) {
         component.map.remove('max-width');
       });
       expect(content.style.maxWidth, '');

@@ -80,11 +80,11 @@ void main() {
         var testFixture = await testBed.create();
         var el = testFixture.rootElement;
         var mutable = <num>[1, 2];
-        await testFixture.update((TestComp comp) {
+        await testFixture.update((comp) {
           comp.data = mutable;
         });
         expect(el, hasTextContent('2'));
-        await testFixture.update((TestComp comp) {
+        await testFixture.update((comp) {
           mutable.add(3);
         });
         expect(el, hasTextContent('2,3'));

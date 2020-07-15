@@ -14,11 +14,11 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createSwitchWhenTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.text.trim(), '');
-      await testFixture.update((SwitchWhenTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'a';
       });
       expect(testFixture.text.trim(), 'when a');
-      await testFixture.update((SwitchWhenTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'b';
       });
       expect(testFixture.text.trim(), 'when b');
@@ -27,15 +27,15 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createSwitchDefaultTestFactory());
       var testFixture = await testBed.create();
       expect(testFixture.text.trim(), 'when default');
-      await testFixture.update((SwitchDefaultTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'a';
       });
       expect(testFixture.text.trim(), 'when a');
-      await testFixture.update((SwitchDefaultTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'b';
       });
       expect(testFixture.text.trim(), 'when default');
-      await testFixture.update((SwitchDefaultTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'c';
       });
       expect(testFixture.text.trim(), 'when default');
@@ -46,12 +46,12 @@ void main() {
       var testFixture = await testBed.create();
       expect(testFixture.text,
           allOf(contains('when default1;'), contains('when default2;')));
-      await testFixture.update((SwitchMultipleWhenTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'a';
       });
       expect(
           testFixture.text, allOf(contains('when a1;'), contains('when a2;')));
-      await testFixture.update((SwitchMultipleWhenTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'b';
       });
       expect(
@@ -61,25 +61,25 @@ void main() {
       var testBed =
           NgTestBed.forComponent(ng.createSwitchWhenValueTestFactory());
       var testFixture = await testBed.create();
-      await testFixture.update((SwitchWhenValueTest component) {
+      await testFixture.update((component) {
         component.when1 = 'a';
         component.when2 = 'b';
         component.switchValue = 'a';
       });
       expect(testFixture.text.trim(), 'when 1;');
-      await testFixture.update((SwitchWhenValueTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'b';
       });
       expect(testFixture.text.trim(), 'when 2;');
-      await testFixture.update((SwitchWhenValueTest component) {
+      await testFixture.update((component) {
         component.switchValue = 'c';
       });
       expect(testFixture.text.trim(), 'when default;');
-      await testFixture.update((SwitchWhenValueTest component) {
+      await testFixture.update((component) {
         component.when1 = 'c';
       });
       expect(testFixture.text.trim(), 'when 1;');
-      await testFixture.update((SwitchWhenValueTest component) {
+      await testFixture.update((component) {
         component.when1 = 'd';
       });
       expect(testFixture.text.trim(), 'when default;');

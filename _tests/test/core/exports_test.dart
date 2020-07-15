@@ -82,7 +82,7 @@ void main() {
       var fixture = await testBed.create();
       var div = fixture.rootElement.querySelector('div');
       var listArg;
-      await fixture.update((StaticEventHandlerArgTest component) {
+      await fixture.update((component) {
         component.clickHandler = (list) {
           listArg = list;
         };

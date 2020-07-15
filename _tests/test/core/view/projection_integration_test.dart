@@ -17,7 +17,7 @@ void main() {
       var testBed =
           NgTestBed.forComponent(ng.createNonBoundInterpolationTestFactory());
       var fixture = await testBed.create();
-      await fixture.update((NonBoundInterpolationTest component) {
+      await fixture.update((component) {
         component.text = 'A';
       });
       expect(fixture.text, 'SIMPLE(AEL)');
@@ -53,11 +53,11 @@ void main() {
           NgTestBed.forComponent(ng.createLightDomChangeTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, '(, B)');
-      await fixture.update((LightDomChangeTest component) {
+      await fixture.update((component) {
         component.viewports.forEach((d) => d.show());
       });
       expect(fixture.text, '(A1, B)');
-      await fixture.update((LightDomChangeTest component) {
+      await fixture.update((component) {
         component.viewports.forEach((d) => d.hide());
       });
       expect(fixture.text, '(, B)');
@@ -75,7 +75,7 @@ void main() {
           NgTestBed.forComponent(ng.createNestedDirectChildTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'OUTER(INNER(INNERINNER(,BC)))');
-      await fixture.update((NestedDirectChildTest component) {
+      await fixture.update((component) {
         component.viewport.show();
       });
       expect(fixture.text, 'OUTER(INNER(INNERINNER(A,BC)))');
@@ -85,11 +85,11 @@ void main() {
           NgTestBed.forComponent(ng.createShadowDomChangeTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, '(, BC)');
-      await fixture.update((ShadowDomChangeTest component) {
+      await fixture.update((component) {
         component.conditional.viewport.show();
       });
       expect(fixture.text, '(A, BC)');
-      await fixture.update((ShadowDomChangeTest component) {
+      await fixture.update((component) {
         component.conditional.viewport.hide();
       });
       expect(fixture.text, '(, BC)');
@@ -110,7 +110,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createMoveLightDomTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'START()END');
-      await fixture.update((MoveLightDomTest component) {
+      await fixture.update((component) {
         component.projectDirective
             .show(component.manualViewportDirective.templateRef);
       });
@@ -121,7 +121,7 @@ void main() {
           NgTestBed.forComponent(ng.createMoveProjectedLightDomTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'SIMPLE()START()END');
-      await fixture.update((MoveProjectedLightDomTest component) {
+      await fixture.update((component) {
         component.projectDirective.show(component.viewport.templateRef);
       });
       expect(fixture.text, 'SIMPLE()START(A)END');
@@ -130,14 +130,14 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createMoveNgContentTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, '(, B)START()END');
-      await fixture.update((MoveNgContentTest component) {
+      await fixture.update((component) {
         component.projectDirective
             .show(component.conditional.viewport.templateRef);
       });
       expect(fixture.text, '(, B)START(A)END');
       // Stamping ng-content multiple times should not produce the content
       // multiple times.
-      await fixture.update((MoveNgContentTest component) {
+      await fixture.update((component) {
         component.projectDirective
             .show(component.conditional.viewport.templateRef);
       });
@@ -150,7 +150,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createRecursiveTreeTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'TREE(0:)');
-      await fixture.update((RecursiveTreeTest component) {
+      await fixture.update((component) {
         component.tree.viewport.show();
       });
       expect(fixture.text, 'TREE(0:TREE(1:))');
@@ -162,11 +162,11 @@ void main() {
           ng.createRecursiveTreeMultipleComponentTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'TREE(0:)');
-      await fixture.update((RecursiveTreeMultipleComponentTest component) {
+      await fixture.update((component) {
         component.tree.viewport.show();
       });
       expect(fixture.text, 'TREE(0:TREE2(1:))');
-      await fixture.update((RecursiveTreeMultipleComponentTest component) {
+      await fixture.update((component) {
         component.tree.tree2.viewport.show();
       });
       expect(fixture.text, 'TREE(0:TREE2(1:TREE(2:)))');
@@ -177,11 +177,11 @@ void main() {
           NgTestBed.forComponent(ng.createNestedConditionalTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, 'MAIN()');
-      await fixture.update((NestedConditionalTest component) {
+      await fixture.update((component) {
         component.conditional.viewports.first.show();
       });
       expect(fixture.text, 'MAIN(FIRST())');
-      await fixture.update((NestedConditionalTest component) {
+      await fixture.update((component) {
         component.conditional.viewports[1].show();
       });
       expect(fixture.text, 'MAIN(FIRST(SECOND(a)))');
@@ -209,15 +209,15 @@ void main() {
           NgTestBed.forComponent(ng.createNestedProjectionTestFactory());
       var fixture = await testBed.create();
       expect(fixture.text, '(, D)');
-      await fixture.update((NestedProjectionTest component) {
+      await fixture.update((component) {
         component.conditional.viewport.show();
       });
       expect(fixture.text, '(AC, D)');
-      await fixture.update((NestedProjectionTest component) {
+      await fixture.update((component) {
         component.viewport.show();
       });
       expect(fixture.text, '(ABC, D)');
-      await fixture.update((NestedProjectionTest component) {
+      await fixture.update((component) {
         component.conditional.viewport.hide();
       });
       expect(fixture.text, '(, D)');
