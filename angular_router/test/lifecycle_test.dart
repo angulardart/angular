@@ -11,6 +11,8 @@ import 'package:angular_test/angular_test.dart';
 import 'lifecycle_test.template.dart' as ng;
 
 void main() {
+  ng.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   // /first-child -> /second-child
