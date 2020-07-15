@@ -17,6 +17,7 @@ dependencies:
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.1.4
   path: ^1.6.1
+  package_config: ^1.9.3
   source_gen: ">=0.9.1 <0.10.0"
   source_span: ^1.4.0
   stack_trace: ^1.9.1

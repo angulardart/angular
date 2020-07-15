@@ -371,7 +371,7 @@ void main() {
         ''',
       },
       (r) => r.libraryFor(AssetId('a', 'test/a_test.dart')),
-      resolver: await packageResolverFuture,
+      packageConfig: await packageConfigFuture,
     );
     final library = LibraryReader(pkgATest);
     final reflector = ReflectableReader.noLinking();
