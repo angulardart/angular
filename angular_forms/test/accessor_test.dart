@@ -18,7 +18,7 @@ void main() {
           NgTestBed.forComponent(ng.createAccessorTestComponentFactory());
       var fixture = await testBed.create();
 
-      await fixture.update((AccessorTestComponent c) {
+      await fixture.update((c) {
         (c.model.valueAccessor as IntValueAccessor).onChange('aaa');
 
         expect(c.model.value, null);
@@ -33,7 +33,7 @@ void main() {
           NgTestBed.forComponent(ng.createAccessorTestComponentFactory());
       var fixture = await testBed.create();
 
-      await fixture.update((AccessorTestComponent c) {
+      await fixture.update((c) {
         (c.model.valueAccessor as IntValueAccessor).onChange('5');
 
         expect(c.value, 5);

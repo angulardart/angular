@@ -20,7 +20,7 @@ void main() {
     test('should initialze DOM elements with the given form object', () async {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = ControlGroup({'login': Control('loginValue')});
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -29,10 +29,10 @@ void main() {
     test('should throw if a form is not passed into ngFormModel', () async {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = ControlGroup({'login': Control('loginValue')});
       });
-      var update = fixture.update((InputFormTest component) {
+      var update = fixture.update((component) {
         component.form = null;
       });
       expect(
@@ -46,7 +46,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('oldValue')});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       await fixture.update((_) {
@@ -60,7 +60,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('oldValue')});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -75,7 +75,7 @@ void main() {
     test('should emit ngSubmit event on submit', () async {
       var testBed = NgTestBed.forComponent(ng.createSubmitFormTestFactory());
       var fixture = await testBed.create(
-          beforeChangeDetection: (SubmitFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = ControlGroup({});
         component.name = 'old';
       });
@@ -90,7 +90,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createSingleControlTestFactory());
       var control = Control('loginValue');
       var fixture = await testBed.create(
-          beforeChangeDetection: (SingleControlTest component) {
+          beforeChangeDetection: (component) {
         component.form = control;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -105,10 +105,10 @@ void main() {
         () async {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = ControlGroup({'login': Control('oldValue')});
       });
-      await fixture.update((InputFormTest component) {
+      await fixture.update((component) {
         component.form = ControlGroup({'login': Control('newValue')});
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -120,7 +120,7 @@ void main() {
       var login = Control('oldValue');
       var form = ControlGroup({'login': login});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       await fixture.update((_) {
@@ -136,7 +136,7 @@ void main() {
       var login = Control('oldValue');
       var form = ControlGroup({'login': login});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       expect(login.touched, false);
@@ -150,12 +150,12 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
       var form = ControlGroup({'login': Control('old')});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputFormTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
       expect(input.value, 'old');
-      await fixture.update((InputFormTest component) {
+      await fixture.update((component) {
         input.value = 'new';
         dispatchEvent(input, 'input');
       });
@@ -166,12 +166,12 @@ void main() {
           NgTestBed.forComponent(ng.createInputWithoutTypeTestFactory());
       var form = ControlGroup({'text': Control('old')});
       var fixture = await testBed.create(
-          beforeChangeDetection: (InputWithoutTypeTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
       expect(input.value, 'old');
-      await fixture.update((InputWithoutTypeTest component) {
+      await fixture.update((component) {
         input.value = 'new';
         dispatchEvent(input, 'input');
       });
@@ -181,7 +181,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createTextAreaTestFactory());
       var form = ControlGroup({'text': Control('old')});
       var fixture =
-          await testBed.create(beforeChangeDetection: (TextAreaTest component) {
+          await testBed.create(beforeChangeDetection: (component) {
         component.form = form;
       });
       var textarea =
@@ -197,7 +197,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createCheckboxTestFactory());
       var form = ControlGroup({'checkbox': Control(true)});
       var fixture =
-          await testBed.create(beforeChangeDetection: (CheckboxTest component) {
+          await testBed.create(beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -212,7 +212,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createNumberTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture =
-          await testBed.create(beforeChangeDetection: (NumberTest component) {
+          await testBed.create(beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -229,7 +229,7 @@ void main() {
           NgTestBed.forComponent(ng.createNumberRequiredTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture = await testBed.create(
-          beforeChangeDetection: (NumberRequiredTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -251,7 +251,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createNumberModelTestFactory());
       var form = ControlGroup({'num': Control(10)});
       var fixture = await testBed.create(
-          beforeChangeDetection: (NumberModelTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
         component.data = '';
       });
@@ -265,7 +265,7 @@ void main() {
         'foodFish': Control(RadioButtonState(true, 'fish'))
       });
       var fixture =
-          await testBed.create(beforeChangeDetection: (RadioTest component) {
+          await testBed.create(beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -295,7 +295,7 @@ void main() {
         var sfOption =
             fixture.rootElement.querySelector('option') as OptionElement;
         expect(sfOption.value, '0');
-        await fixture.update((SelectForTest component) {
+        await fixture.update((component) {
           component.cities.first['id'] = '2';
         });
         expect(sfOption.value, '2');
@@ -305,7 +305,7 @@ void main() {
             NgTestBed.forComponent(ng.createSelectControlTestFactory());
         var form = ControlGroup({'city': Control('SF')});
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectControlTest component) {
+            beforeChangeDetection: (component) {
           component.form = form;
         });
         var select =
@@ -333,7 +333,7 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create();
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           component.selectedCity = component.cities[1];
         });
         var select =
@@ -346,7 +346,7 @@ void main() {
           select.value = '2: Object';
           dispatchEvent(select, 'change');
         });
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           expect(component.selectedCity['name'], 'Buffalo');
         });
       });
@@ -354,14 +354,14 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectOptionValueMapTest component) {
+            beforeChangeDetection: (component) {
           component.cities = [
             {'name': 'SF'},
             {'name': 'NYC'}
           ];
           component.selectedCity = component.cities[1];
         });
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           component.cities.add({'name': 'Buffalo'});
           component.selectedCity = component.cities[2];
         });
@@ -376,7 +376,7 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectOptionValueMapTest component) {
+            beforeChangeDetection: (component) {
           component.cities = [
             {'name': 'SF'},
             {'name': 'NYC'}
@@ -386,7 +386,7 @@ void main() {
         var select =
             fixture.rootElement.querySelector('select') as SelectElement;
         expect(select.value, '1: Object');
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           component.cities.removeLast();
         });
         expect(select.value, isNot('1: Object'));
@@ -396,10 +396,10 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectTrackByTestFactory());
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectTrackByTest component) {
+            beforeChangeDetection: (component) {
           component.selectedCity = component.cities.first;
         });
-        await fixture.update((SelectTrackByTest component) {
+        await fixture.update((component) {
           component.cities[1] = 'Buffalo';
           component.selectedCity = component.cities[1];
         });
@@ -414,7 +414,7 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectOptionValueMapTest component) {
+            beforeChangeDetection: (component) {
           component.cities = [
             {'name': 'NYC'},
             {'name': 'SF'},
@@ -422,7 +422,7 @@ void main() {
           ];
           component.selectedCity = component.cities.first;
         });
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           component.selectedCity = component.cities[1];
         });
         var select =
@@ -437,7 +437,7 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createSelectOptionValueMapTestFactory());
         var fixture = await testBed.create(
-            beforeChangeDetection: (SelectOptionValueMapTest component) {
+            beforeChangeDetection: (component) {
           component.cities = [
             {'name': 'SF'},
             {'name': 'NYC'},
@@ -445,7 +445,7 @@ void main() {
           ];
           component.selectedCity = component.cities.first;
         });
-        await fixture.update((SelectOptionValueMapTest component) {
+        await fixture.update((component) {
           component.selectedCity = component.cities[2];
         });
         var select =
@@ -461,7 +461,7 @@ void main() {
           NgTestBed.forComponent(ng.createCustomAccessorTestFactory());
       var form = ControlGroup({'name': Control('aa')});
       var fixture = await testBed.create(
-          beforeChangeDetection: (CustomAccessorTest component) {
+          beforeChangeDetection: (component) {
         component.form = form;
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -479,7 +479,7 @@ void main() {
       var testBed = NgTestBed.forComponent(ng.createMyInputTestFactory());
       var fixture = await testBed.create();
       MyInput myInput;
-      await fixture.update((MyInputTest component) {
+      await fixture.update((component) {
         myInput = component.myInput;
         expect(myInput.value, '!aa!');
         myInput.value = '!bb!';
@@ -496,7 +496,7 @@ void main() {
         var form = ControlGroup(
             {'login': Control(''), 'min': Control(''), 'max': Control('')});
         var fixture = await testBed.create(
-            beforeChangeDetection: (SyncValidatorsHtmlTest component) {
+            beforeChangeDetection: (component) {
           component.form = form;
         });
         var required =
@@ -531,7 +531,7 @@ void main() {
         var testBed = NgTestBed.forComponent(ng.createInputFormTestFactory());
         var form = ControlGroup({'login': Control('aa', Validators.required)});
         var fixture = await testBed.create(
-            beforeChangeDetection: (InputFormTest component) {
+            beforeChangeDetection: (component) {
           component.form = form;
         });
         expect(form.valid, true);
@@ -556,7 +556,7 @@ void main() {
         var fixture = await testBed.create();
         var input = fixture.rootElement.querySelector('input') as InputElement;
         var form;
-        await fixture.update((NestedFormTest component) {
+        await fixture.update((component) {
           input.value = 'updatedValue';
           dispatchEvent(input, 'input');
           form = component.form;
@@ -572,13 +572,13 @@ void main() {
       var testBed =
           NgTestBed.forComponent(ng.createComplexNgModelTestFactory());
       var fixture = await testBed.create();
-      await fixture.update((ComplexNgModelTest component) {
+      await fixture.update((component) {
         component.name = 'oldValue';
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
       expect(input.value, 'oldValue');
       ComplexNgModelTest comp;
-      await fixture.update((ComplexNgModelTest component) {
+      await fixture.update((component) {
         input.value = 'updatedValue';
         dispatchEvent(input, 'input');
         comp = component;
@@ -589,14 +589,14 @@ void main() {
       var testBed =
           NgTestBed.forComponent(ng.createSingleFieldNgModelTestFactory());
       var fixture = await testBed.create();
-      await fixture.update((SingleFieldNgModelTest component) {
+      await fixture.update((component) {
         component.name = 'oldValue';
       });
       var input = fixture.rootElement.querySelector('input') as InputElement;
       expect(input.value, 'oldValue');
 
       SingleFieldNgModelTest comp;
-      await fixture.update((SingleFieldNgModelTest component) {
+      await fixture.update((component) {
         input.value = 'updatedValue';
         dispatchEvent(input, 'input');
         comp = component;
@@ -609,7 +609,7 @@ void main() {
             NgTestBed.forComponent(ng.createTemplateFormTestFactory());
         var fixture = await testBed.create();
         NgForm form;
-        await fixture.update((TemplateFormTest component) {
+        await fixture.update((component) {
           form = component.form;
         });
         expect(form.controls, contains('user'));
@@ -620,11 +620,11 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createTemplateSubmitTestFactory());
         var fixture = await testBed.create();
-        await fixture.update((TemplateSubmitTest component) {
+        await fixture.update((component) {
           component.name = 'old';
         });
         TemplateSubmitTest comp;
-        await fixture.update((TemplateSubmitTest component) {
+        await fixture.update((component) {
           var form = fixture.rootElement.querySelector('form');
           dispatchEvent(form, 'submit');
           comp = component;
@@ -644,12 +644,12 @@ void main() {
             NgTestBed.forComponent(ng.createRemoveControlsTestFactory());
         var fixture = await testBed.create();
         NgForm form;
-        await fixture.update((RemoveControlsTest component) {
+        await fixture.update((component) {
           component.name = 'show';
           form = component.myForm;
         });
         expect(form.controls, contains('login'));
-        await fixture.update((RemoveControlsTest component) {
+        await fixture.update((component) {
           component.name = 'hide';
         });
         expect(form, isNot(contains('login')));
@@ -659,12 +659,12 @@ void main() {
             NgTestBed.forComponent(ng.createRemoveControlGroupTestFactory());
         var fixture = await testBed.create();
         NgForm form;
-        await fixture.update((RemoveControlGroupTest component) {
+        await fixture.update((component) {
           component.name = 'show';
           form = component.myForm;
         });
         expect(form.controls, contains('user'));
-        await fixture.update((RemoveControlGroupTest component) {
+        await fixture.update((component) {
           component.name = 'hide';
         });
         expect(form.controls, isNot(contains('user')));
@@ -673,13 +673,13 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createNgModelComplexTestFactory());
         var fixture = await testBed.create();
-        await fixture.update((NgModelComplexTest component) {
+        await fixture.update((component) {
           component.name = 'oldValue';
         });
         var input = fixture.rootElement.querySelector('input') as InputElement;
         expect(input.value, 'oldValue');
         NgModelComplexTest comp;
-        await fixture.update((NgModelComplexTest component) {
+        await fixture.update((component) {
           input.value = 'updatedValue';
           dispatchEvent(input, 'input');
           comp = component;
@@ -690,13 +690,13 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createNgModelSingleFieldTestFactory());
         var fixture = await testBed.create();
-        await fixture.update((NgModelSingleFieldTest component) {
+        await fixture.update((component) {
           component.name = 'oldValue';
         });
         var input = fixture.rootElement.querySelector('input') as InputElement;
         expect(input.value, 'oldValue');
         NgModelSingleFieldTest comp;
-        await fixture.update((NgModelSingleFieldTest component) {
+        await fixture.update((component) {
           input.value = 'updatedValue';
           dispatchEvent(input, 'input');
           comp = component;
@@ -713,7 +713,7 @@ void main() {
           'fish2': RadioButtonState(true, 'fish'),
         };
         var fixture = await testBed.create(
-            beforeChangeDetection: (TemplateRadioTest component) {
+            beforeChangeDetection: (component) {
           component.data = data;
         });
         var input = fixture.rootElement.querySelector('input') as InputElement;
@@ -752,23 +752,23 @@ void main() {
         var testBed =
             NgTestBed.forComponent(ng.createNgModelRevertViewTestFactory());
         var fixture = await testBed.create();
-        await fixture.update((NgModelRevertViewTest component) {
+        await fixture.update((component) {
           component.name = '';
         });
         var input = fixture.rootElement.querySelector('input') as InputElement;
         NgModelRevertViewTest comp;
-        await fixture.update((NgModelRevertViewTest component) {
+        await fixture.update((component) {
           input.value = 'aa';
           input.selectionStart = 1;
           dispatchEvent(input, 'input');
           comp = component;
         });
         expect(comp.name, 'aa');
-        await fixture.update((NgModelRevertViewTest component) {
+        await fixture.update((component) {
           component.name = 'bb';
         });
         expect(input.value, 'bb');
-        await fixture.update((NgModelRevertViewTest component) {
+        await fixture.update((component) {
           component.name = 'aa';
         });
         expect(input.value, 'aa');
