@@ -60,11 +60,11 @@ void main() {
 
       final viewportDirective =
           testFixture.assertOnlyInstance.child.manualViewportDirective;
-      await testFixture.update((ContainerABCWithConditionalComponent comp) {
+      await testFixture.update((comp) {
         viewportDirective.show();
       });
       expect(element, hasTextContent('(A, BC)'));
-      await testFixture.update((ContainerABCWithConditionalComponent comp) {
+      await testFixture.update((comp) {
         viewportDirective.hide();
       });
       expect(element, hasTextContent('(, BC)'));

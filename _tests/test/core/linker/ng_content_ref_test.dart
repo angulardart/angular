@@ -74,7 +74,7 @@ void main() {
       test('hasContent is false when value of *ngIf is false', () async {
         var testBed = NgTestBed.forComponent(ng.createNgIfComponentFactory());
         var testFixture = await testBed.create();
-        await testFixture.update((NgIfComponent component) {
+        await testFixture.update((component) {
           component.flag = false;
         });
         var element = testFixture.rootElement;
@@ -95,7 +95,7 @@ void main() {
       test('hasContent is true when list of *ngFor has items', () async {
         var testBed = NgTestBed.forComponent(ng.createNgForComponentFactory());
         var testFixture = await testBed.create();
-        await testFixture.update((NgForComponent component) {
+        await testFixture.update((component) {
           component.items = [1];
         });
         var element = testFixture.rootElement;

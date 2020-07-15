@@ -17,7 +17,7 @@ void main() {
             .create();
     final view = fixture.rootElement.querySelector('my-deferred-input');
     expect(view.attributes['data-xyz'], 'testValue');
-    await fixture.update((TestContainerComponent component) {
+    await fixture.update((component) {
       component.testValue = 'testValue2';
     });
     expect(view, isNotNull);
