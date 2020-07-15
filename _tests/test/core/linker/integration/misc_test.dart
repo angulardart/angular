@@ -84,12 +84,14 @@ class ChildCompNoTemplate {
 
 @Component(
   selector: 'var-in-loop',
-  template: '<template ngFor [ngForOf]="[1]" let-i>'
+  template: '<template ngFor [ngForOf]="list" let-i>'
       '<child-cmp-no-template #cmp></child-cmp-no-template>'
       '{{i}}-{{cmp.ctxProp}}</template>',
   directives: [ChildCompNoTemplate, NgFor],
 )
-class VarInLoopComponent {}
+class VarInLoopComponent {
+  static const list = [1];
+}
 
 @Directive(
   selector: '[update-host-attributes]',

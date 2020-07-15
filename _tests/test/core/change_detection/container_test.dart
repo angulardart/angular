@@ -33,27 +33,6 @@ void main() {
     }));
   });
 
-  test('should not recreate literal lists unless content changes', () async {
-    List boundList;
-    final fixture =
-        await NgTestBed.forComponent(ng.createBoundListTestFactory()).create(
-      beforeChangeDetection: (comp) {
-        comp.value = 'bar';
-      },
-    );
-    await fixture.update(expectAsync1((comp) {
-      boundList = comp.child.value;
-      expect(boundList, ['bar']);
-    }));
-    await fixture.update(expectAsync1((comp) {
-      expect(boundList, same(comp.child.value), reason: 'Should be identical');
-      comp.value = 'foo';
-    }));
-    await fixture.update(expectAsync1((comp) {
-      expect(comp.child.value, ['foo']);
-    }));
-  });
-
   test('should support interpolation', () async {
     final fixture =
         await NgTestBed.forComponent(ng.createBoundValueTestFactory()).create(
@@ -93,18 +72,6 @@ class ChildComponent {
 )
 class BoundValueTest {
   var boundValue;
-
-  @ViewChild(ChildComponent)
-  ChildComponent child;
-}
-
-@Component(
-  selector: 'test',
-  directives: [ChildComponent],
-  template: r'''<child [value]="[value]"></child>''',
-)
-class BoundListTest {
-  var value;
 
   @ViewChild(ChildComponent)
   ChildComponent child;

@@ -120,13 +120,6 @@ void main() {
       expect(content.classes, equals(['foo', 'bar', 'baz']));
     });
 
-    test('should add classes specified in a list literal', () async {
-      var testBed = NgTestBed.forComponent(ng.createListLiteralTestFactory());
-      var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      expect(content.classes, equals(['foo', 'bar', 'foo-bar', 'fooBar']));
-    });
-
     test('should update classes based on changes to the list', () async {
       var testBed = NgTestBed.forComponent(ng.createListUpdateTestFactory());
       var testFixture = await testBed.create();
@@ -465,14 +458,6 @@ class ConditionMapTest extends Base {
   template: '<div [ngClass]="map"></div>',
 )
 class MapUpdateTest extends Base {}
-
-@Component(
-  selector: 'string-literal-test',
-  directives: [NgClass],
-  template:
-      '<div [ngClass]="[\'foo\', \'bar\', \'foo-bar\', \'fooBar\']"></div>',
-)
-class ListLiteralTest {}
 
 @Component(
   selector: 'list-update-test',
