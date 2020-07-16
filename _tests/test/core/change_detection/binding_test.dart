@@ -5,7 +5,11 @@ import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
+import 'binding_test.template.dart' as ng;
+
 void main() {
+  ng.initReflector();
+
   tearDown(disposeAnyRunningTest);
 
   test('should support literals', () async {
