@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/v1/src/compiler/ast_directive_normalizer.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
@@ -25,12 +26,14 @@ class AngularCompiler {
   final DirectiveConverter _directiveConverter;
   final TemplateCompiler _templateCompiler;
   final TemplateParser _templateParser;
+  final Resolver _resolver;
 
   AngularCompiler(
     this._templateCompiler,
     this._directiveNormalizer,
     this._directiveConverter,
     this._templateParser,
+    this._resolver,
   );
 
   /// Given a `.dart` library target [element], returns `.template.dart`.
@@ -51,7 +54,7 @@ class AngularCompiler {
     // and let those be resolved and emitted before continuing. If at least one
     // error occurs, this function will throw and not continue further in the
     // compiler.
-    await exceptionHandler.maybeReportErrors();
+    await exceptionHandler.maybeReportErrors(_resolver);
 
     final noRelevantAnnotationsFound = compileComponentsData.isEmpty;
     if (noRelevantAnnotationsFound) return null;

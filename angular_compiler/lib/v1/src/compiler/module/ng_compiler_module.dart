@@ -36,6 +36,7 @@ AngularCompiler createTemplateCompiler(
     AstDirectiveNormalizer(NgAssetReader.fromBuildStep(buildStep)),
     DirectiveConverter(schemaRegistry),
     AstTemplateParser(schemaRegistry, parser, flags),
+    buildStep.resolver,
   );
 }
 
