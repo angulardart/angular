@@ -17,6 +17,7 @@ import 'directive_wrapper.dart';
 import 'dart:async';
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class TestFooComponent.
 external List<dynamic> get styles$TestFooComponent;

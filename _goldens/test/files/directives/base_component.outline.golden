@@ -17,6 +17,7 @@ import 'base_component.dart';
 import 'package:angular/angular.dart';
 import 'components.dart';
 import 'directives.dart' as directive;
+import 'dart:core';
 
 // For @Component class TestFooComponent.
 external List<dynamic> get styles$TestFooComponent;

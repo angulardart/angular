@@ -5,8 +5,7 @@
 import 'container_component.dart';
 export 'container_component.dart';
 import 'package:angular/src/di/reflector.dart' as _ngRef;
-import 'package:_goldens/component.template.dart' as _ref0;
-import 'package:angular/angular.template.dart' as _ref1;
+import 'package:angular/angular.template.dart' as _ref0;
 import 'package:angular/src/core/linker/views/component_view.dart' as import0;
 import 'container_component.dart' as import1;
 import 'package:angular/src/core/linker/view_container.dart';
@@ -476,5 +475,4 @@ void initReflector() {
 
   _ngRef.registerComponent(TestContainerComponent, createTestContainerComponentFactory());
   _ref0.initReflector();
-  _ref1.initReflector();
 }

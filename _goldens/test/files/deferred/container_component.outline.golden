@@ -17,6 +17,7 @@ import 'container_component.dart';
 import 'package:angular/angular.dart';
 import 'package:_goldens/component.dart';
 import 'deferred_component.dart';
+import 'dart:core';
 
 // For @Component class TestContainerComponent.
 external List<dynamic> get styles$TestContainerComponent;

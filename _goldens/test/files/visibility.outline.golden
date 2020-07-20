@@ -15,6 +15,7 @@ import 'visibility.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class Dependent.
 external List<dynamic> get styles$Dependent;

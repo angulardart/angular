@@ -15,6 +15,7 @@ import 'inlined_ngif.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class InlinedNgIfComponent.
 external List<dynamic> get styles$InlinedNgIfComponent;

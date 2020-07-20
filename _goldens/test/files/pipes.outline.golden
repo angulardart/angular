@@ -15,6 +15,7 @@ import 'pipes.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class Comp.
 external List<dynamic> get styles$Comp;

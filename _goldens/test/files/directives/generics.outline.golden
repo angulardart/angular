@@ -15,6 +15,7 @@ import 'generics.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class UntypedComp.
 external List<dynamic> get styles$UntypedComp;

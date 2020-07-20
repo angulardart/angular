@@ -15,6 +15,7 @@ import 'intl_component.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class CompWithoutFinal.
 external List<dynamic> get styles$CompWithoutFinal;

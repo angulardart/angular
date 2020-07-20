@@ -18,6 +18,7 @@ import 'package:angular/angular.dart' as angular;
 import 'import_prefixes.dart' as prefixed;
 import 'import_prefixes.dart' as prefixed2 show ChildComponent;
 import 'import_prefixes.dart' as prefixed3 hide ChildComponent;
+import 'dart:core';
 
 // For @Component class ParentComponent.
 external List<dynamic> get styles$ParentComponent;

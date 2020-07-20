@@ -15,6 +15,7 @@ import 'text.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class I18nTextComponent.
 external List<dynamic> get styles$I18nTextComponent;
