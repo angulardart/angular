@@ -48,22 +48,6 @@ class Comp3 {
   num b = 1;
 }
 
-// Dynamic :(
-//
-// Compiles to:
-//   "List<dynamic> Function(dynamic, dynamic) _arr_0;"
-//   "_arr_0 = import6.pureProxy2((p0, p1) => [p0, p1])"
-// ...
-//   "_arr_0(_ctx.a, _ctx.b).first.inMilliseconds"
-@Component(
-  selector: 'comp-4',
-  template: '{{[a, b].first.inMilliseconds}}',
-)
-class Comp4 {
-  var a = Duration(seconds: 1);
-  var b = Duration(seconds: 2);
-}
-
 // OK!
 //
 // Compiles to:
