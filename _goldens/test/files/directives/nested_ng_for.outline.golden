@@ -15,6 +15,7 @@ import 'nested_ng_for.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class NestedNgForComponent.
 external List<dynamic> get styles$NestedNgForComponent;

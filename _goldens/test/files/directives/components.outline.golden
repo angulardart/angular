@@ -15,6 +15,7 @@ import 'components.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class TestSubComponent.
 external List<dynamic> get styles$TestSubComponent;

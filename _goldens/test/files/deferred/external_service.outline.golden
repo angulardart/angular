@@ -3,6 +3,7 @@
 export 'external_service.dart';
 
 // Required for "type inference" (scoping).
+import 'dart:core';
 
 
 external void initReflector();

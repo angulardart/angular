@@ -15,6 +15,7 @@ import 'dynamic_expressions.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class Comp1.
 external List<dynamic> get styles$Comp1;
@@ -43,13 +44,6 @@ external _ng.ComponentFactory<Comp3> get Comp3NgFactory;
 external _ng.ComponentFactory<Comp3> createComp3Factory();
 class ViewComp30 extends _ng.ComponentView<Comp3> {
   external ViewComp30(_ng.View parentView, int parentIndex);
-}
-// For @Component class Comp4.
-external List<dynamic> get styles$Comp4;
-external _ng.ComponentFactory<Comp4> get Comp4NgFactory;
-external _ng.ComponentFactory<Comp4> createComp4Factory();
-class ViewComp40 extends _ng.ComponentView<Comp4> {
-  external ViewComp40(_ng.View parentView, int parentIndex);
 }
 // For @Component class Comp6.
 external List<dynamic> get styles$Comp6;

@@ -15,6 +15,7 @@ import 'on_push_queries.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class Child.
 external List<dynamic> get styles$Child;

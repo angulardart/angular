@@ -16,6 +16,7 @@ import 'queries.dart';
 // Required for "type inference" (scoping).
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class QueriesComponent.
 external List<dynamic> get styles$QueriesComponent;

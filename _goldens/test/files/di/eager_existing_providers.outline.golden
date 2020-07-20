@@ -15,6 +15,7 @@ import 'eager_existing_providers.dart';
 
 // Required for "type inference" (scoping).
 import 'package:angular/angular.dart';
+import 'dart:core';
 
 // For @Component class AppComponent.
 external List<dynamic> get styles$AppComponent;

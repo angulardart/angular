@@ -18,6 +18,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:js/js.dart';
 import 'dart2js_golden.template.dart' as ng;
+import 'dart:core';
 
 // For @Component class RootComponent.
 external List<dynamic> get styles$RootComponent;
