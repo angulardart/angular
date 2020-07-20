@@ -5,7 +5,7 @@ targets:
       "angular|angular":
         enabled: false
       "|goldens":
-        generate_for: ["test/_files/**"]
+        generate_for: ["test/files/**"]
         options:
           extensions:
             template: ".template.check"
