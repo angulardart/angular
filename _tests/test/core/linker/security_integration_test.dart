@@ -13,15 +13,16 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should escape unsafe attributes', () async {
+    const unsafeUrl = 'javascript:alert(1)';
     final testBed =
         NgTestBed.forComponent(ng.createUnsafeAttributeComponentFactory());
     final testFixture = await testBed.create();
     final a = testFixture.rootElement.querySelector('a') as AnchorElement;
     expect(a.href, matches(r'.*/hello$'));
     await testFixture.update((component) {
-      component.href = 'javascript:alert(1)';
+      component.href = unsafeUrl;
     });
-    expect(a.href, isNot(contains('javascript')));
+    expect(a.href, equals('unsafe:$unsafeUrl'));
   });
 
   test('should not escape values marked as trusted', () async {

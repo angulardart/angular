@@ -80,7 +80,7 @@ void main() {
     });
 
     test('rejects unsafe URLs', () {
-      expect(sanitizer.sanitizeUrl(unsafeUrl), isNot(contains('javascript')));
+      expect(sanitizer.sanitizeUrl(unsafeUrl), equals('unsafe:$unsafeUrl'));
     });
 
     test('passes SafeUrl through untouched', () {
