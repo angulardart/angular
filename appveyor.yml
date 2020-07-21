@@ -10,7 +10,7 @@ install:
   - cmd: 7z x dart-sdk.zip -o"C:\tools" -y > nul
   - set PATH=%PATH%;C:\tools\dart-sdk\bin
   - set PATH=%PATH%;%APPDATA%\Pub\Cache\bin
-  - cd examples/github_issues
+  - cd examples/hacker_news_pwa
   - pub get && exit 0
 
 build: off
@@ -19,5 +19,5 @@ test_script:
   - pub run build_runner test --fail-on-severe
 
 cache:
-  - examples\github_issues\.dart_tool
+  - examples\hacker_news_pwa\.dart_tool
   - C:\Users\appveyor\AppData\Roaming\Pub\Cache
