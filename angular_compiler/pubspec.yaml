@@ -2,17 +2,19 @@ name: angular_compiler
 homepage: https://angulardart.dev/
 repository: https://github.com/dart-lang/angular
 description: Compiler for AngularDart.
-version: 0.4.5
+version: 0.5.0-dev
 
 environment:
   sdk: ">=2.8.1 <3.0.0"
 
 dependencies:
   analyzer: ^0.39.8
+  angular_ast: ^0.6.0
   args: ^1.3.0
   build: '>=1.1.0 <2.0.0'
   code_builder: ^3.3.0
   collection: ^1.14.5
+  csslib: ^0.16.1
   dart_style: ^1.0.9
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.1.4
