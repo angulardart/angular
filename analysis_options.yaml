@@ -1,6 +1,3 @@
-# Extend the default sub-set of linter/analyzer rules used in google3.
-include: ../../../dart/analysis_options/lib/default.yaml
-
 analyzer:
   errors:
     # Permanent exclusions: Unlikely to removed.
