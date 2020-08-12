@@ -1,5 +1,4 @@
 name: angular_test
-homepage: https://angulardart.dev/
 repository: https://github.com/dart-lang/angular
 description: Testing runner and library for AngularDart
 version: 3.0.0-dev
