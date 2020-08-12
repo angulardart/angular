@@ -42,7 +42,7 @@ import 'invalid_pipe_argument_exception.dart';
 /// on the locale.
 /// On the other hand in Dart version, you can also include quoted text as well
 /// as some extra date/time components such as quarter. For more information see:
-/// https://api.dartlang.org/apidocs/channels/stable/dartdoc-viewer/intl/intl.DateFormat.
+/// https://api.pub.dev/documentation/intl/latest/intl/DateFormat-class.html.
 ///
 /// `format` can also be one of the following predefined formats:
 ///
