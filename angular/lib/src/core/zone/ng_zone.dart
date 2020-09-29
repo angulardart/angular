@@ -30,7 +30,7 @@ class NgZone {
   /// It is highly preferred to use [inInnerZone] and [inOuterZone] instead.
   ///
   /// See the [Zone] documentation for details:
-  /// https://www.dartlang.org/articles/libraries/zones
+  /// https://dart.dev/articles/archive/zones
   static bool isInAngularZone() {
     return identical(Zone.current[_anyZoneKey], true);
   }
