@@ -49,6 +49,7 @@ jobs:
     # 1. Verify that .travis.yml is not out of date.
     # 2. Verify that pubspec.yaml is updated for all packages.
     - stage: presubmit
+      name: Check travis config and pubspecs
       script:
         - pub get
         - pub run dev:travis -d
