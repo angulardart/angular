@@ -19,7 +19,7 @@ dependencies:
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 1.0.0
-  angular_compiler: 0.5.0
+  angular_compiler: 1.0.0
   ##########################################################################
 
   build: '>=1.1.0 <2.0.0'
