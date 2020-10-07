@@ -1,4 +1,6 @@
-*   Release for `0.6.0`.
+## 1.0.0
+
+* Stable release.
 
 ## 0.5.11
 
