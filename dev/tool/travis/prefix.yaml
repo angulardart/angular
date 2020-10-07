@@ -7,10 +7,6 @@ language: dart
 dart:
   - dev
 
-# Gives more resources on Travis (8GB Ram, 2CPUs).
-# Do not remove without verifying w/ Travis.
-sudo: required
-
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only: [master]
