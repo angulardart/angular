@@ -15,8 +15,7 @@ and many more projects.
  * Pub packages:
    [angular], [angular_components], [angular_forms], [angular_router],
    [angular_test]
- * Community/support:
-   [Gitter chat room](https://gitter.im/dart-lang/angular)
+ * Community/support: [Gitter chat room]
 
 [ad_sense]: http://news.dartlang.org/2016/10/google-adsense-angular-dart.html
 [ad_words]: http://news.dartlang.org/2016/03/the-new-adwords-ui-uses-dart-we-asked.html
@@ -27,4 +26,4 @@ and many more projects.
 [angular_forms]: https://pub.dev/packages/angular_forms
 [angular_router]: https://pub.dev/packages/angular_router
 [angular_test]: https://pub.dev/packages/angular_test
-[Gitter chat room]:(https://gitter.im/dart-lang/angular)
+[Gitter chat room]: https://gitter.im/dart-lang/angular
