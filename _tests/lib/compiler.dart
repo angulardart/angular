@@ -174,9 +174,19 @@ void expectLogRecords(List<LogRecord> logs, matcher, String reasonPrefix) {
     return;
   }
   logs ??= [];
-  expect(logs.map(formattedLogMessage), matcher,
-      reason:
-          '$reasonPrefix: \n${logs.map((l) => '${formattedLogMessage(l)} at:\n ${l.stackTrace}')}');
+  expect(
+    logs
+        // Ignore cases where the SDK is ahead of pkg:analyzer
+        .where(
+          (record) => !record.message.startsWith(
+            'Your current `analyzer` version may not fully support your current SDK version.',
+          ),
+        )
+        .map(formattedLogMessage),
+    matcher,
+    reason:
+        '$reasonPrefix: \n${logs.map((l) => '${formattedLogMessage(l)} at:\n ${l.stackTrace}')}',
+  );
 }
 
 String formattedLogMessage(LogRecord record) {
