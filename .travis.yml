@@ -7,10 +7,6 @@ language: dart
 dart:
   - dev
 
-# Gives more resources on Travis (8GB Ram, 2CPUs).
-# Do not remove without verifying w/ Travis.
-sudo: required
-
 # Only building master means that we don't run two builds for each pull request.
 branches:
   only: [master]
@@ -47,9 +43,6 @@ jobs:
   # See https://github.com/dart-lang/angular/issues/1114.
   allow_failures:
     - env: PKG="examples/hacker_news_pwa"
-    - env: PKG="examples/github_issues"
-    - env: PKG="examples/registration_form"
-    - env: PKG="examples/i18n"
 
   include:
 
