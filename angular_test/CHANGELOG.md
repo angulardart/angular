@@ -1,3 +1,5 @@
+## 3.0.0
+
 ### New Features
 
 *   `NgTestFixture.dispose()` now resets and clears all component styles from
