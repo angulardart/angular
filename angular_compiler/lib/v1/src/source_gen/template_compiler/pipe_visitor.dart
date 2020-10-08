@@ -40,7 +40,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   CompilePipeMetadata _createPipeMetadata(
     AnnotationInformation<ClassElement> annotation,
   ) {
-    var elementType = annotation.element.type;
+    var elementType = annotation.element.thisType;
     FunctionType transformType;
     final transformMethod = elementType.lookUpInheritedMethod('transform');
     if (transformMethod != null) {

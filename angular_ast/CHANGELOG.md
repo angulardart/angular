@@ -1,3 +1,7 @@
+## 1.0.1-dev
+
+* Update `package:analyzer` dependency to `^0.40.0`.
+
 ## 1.0.0
 
 * Stable release.

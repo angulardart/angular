@@ -104,9 +104,9 @@ void main() {
       expect(
         reader.parseProvider(providers[0]),
         UseClassProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
-          linkTypeOf($Example.type),
+          linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
@@ -119,9 +119,9 @@ void main() {
       expect(
         reader.parseProvider(providers[1]),
         UseClassProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
-          linkTypeOf($Example.type),
+          linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],
@@ -134,9 +134,9 @@ void main() {
       expect(
         reader.parseProvider(providers[2]),
         UseClassProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
-          linkTypeOf($ExamplePrime.type),
+          linkTypeOf($ExamplePrime.thisType),
           dependencies: DependencyInvocation(
             $ExamplePrime.unnamedConstructor,
             const [],
@@ -149,14 +149,14 @@ void main() {
       expect(
         reader.parseProvider(providers[3]),
         UseFactoryProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
           urlOf($createExample),
           dependencies: DependencyInvocation(
             $createExample,
             [
               DependencyElement(
-                TypeTokenElement(linkTypeOf($DependencyA.type)),
+                TypeTokenElement(linkTypeOf($DependencyA.thisType)),
               ),
             ],
           ),
@@ -168,14 +168,14 @@ void main() {
       expect(
         reader.parseProvider(providers[4]),
         UseFactoryProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
           urlOf($createExample),
           dependencies: DependencyInvocation(
             $createExample,
             [
               DependencyElement(
-                TypeTokenElement(linkTypeOf($DependencyB.type)),
+                TypeTokenElement(linkTypeOf($DependencyB.thisType)),
               ),
             ],
           ),
@@ -187,14 +187,14 @@ void main() {
       expect(
         reader.parseProvider(providers[11]),
         UseFactoryProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
           urlOf($Example_create),
           dependencies: DependencyInvocation(
             $Example_create,
             [
               DependencyElement(
-                TypeTokenElement(linkTypeOf($DependencyA.type)),
+                TypeTokenElement(linkTypeOf($DependencyA.thisType)),
               ),
             ],
           ),
@@ -208,14 +208,14 @@ void main() {
       expect(
         reader.parseProvider(providers[12]),
         UseFactoryProviderElement(
-          TypeTokenElement(linkTypeOf($Example.type)),
+          TypeTokenElement(linkTypeOf($Example.thisType)),
           null,
           urlOf($Example_create),
           dependencies: DependencyInvocation(
             $Example_create,
             [
               DependencyElement(
-                TypeTokenElement(linkTypeOf($DependencyB.type)),
+                TypeTokenElement(linkTypeOf($DependencyB.thisType)),
               ),
             ],
           ),
@@ -263,7 +263,7 @@ void main() {
             ),
           ),
           null,
-          linkTypeOf($Example.type),
+          linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
             $Example.unnamedConstructor,
             const [],

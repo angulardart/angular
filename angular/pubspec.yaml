@@ -1,5 +1,5 @@
 name: angular
-version: 6.0.0
+version: 6.0.1-dev
 description: Fast and productive web framework
 repository: https://github.com/dart-lang/angular
 environment:
@@ -15,7 +15,7 @@ dependencies:
   stack_trace: ^1.9.1
 
   # Compiler. Eventually we want to move these to angular_compiler.
-  analyzer: ">=0.39.8 <0.39.17"
+  analyzer: ^0.40.0
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 1.0.0

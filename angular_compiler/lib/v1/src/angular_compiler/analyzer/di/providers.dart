@@ -122,7 +122,7 @@ class ProviderReader {
     return UseClassProviderElement(
       token,
       _actualProviderType(provider.type, typeArgumentOf(provider), token),
-      linkTypeOf(clazz.type),
+      linkTypeOf(clazz.thisType),
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
   }
@@ -181,7 +181,7 @@ class ProviderReader {
     final reader = ConstantReader(o);
     final element = reader.typeValue.element;
     if (element is ClassElement) {
-      final token = linkTypeOf(element.type);
+      final token = linkTypeOf(element.thisType);
       return UseClassProviderElement(
         TypeTokenElement(token),
         linkTypeOf(typeArgumentOf(o)),

@@ -47,7 +47,7 @@ DartType inferProviderType(DartObject provider, DartObject token) {
   if (providerOfTArgs.isNotEmpty) {
     final genericType = providerOfTArgs.first;
     // If type inference fails it might resolve to dynamic or Object.
-    if (!genericType.isDynamic && !genericType.isObject) {
+    if (!genericType.isDynamic && !genericType.isDartCoreObject) {
       return genericType;
     }
   }
