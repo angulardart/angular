@@ -1,4 +1,6 @@
-*   Release for `3.0.0`.
+## 3.0.0
+
+* Stable release
 
 ## 2.1.4
 
