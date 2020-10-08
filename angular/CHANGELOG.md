@@ -1,3 +1,5 @@
+## 6.0.0
+
 ### New features
 
 *   Added `debugClearComponentStyles()`. This top-level function resets all
