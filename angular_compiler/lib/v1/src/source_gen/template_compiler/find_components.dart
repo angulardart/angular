@@ -361,7 +361,7 @@ class _ComponentVisitor
         if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
           // Resolves specified generic type parameters.
-          final setter = _directiveClassElement.type
+          final setter = _directiveClassElement.thisType
               .lookUpInheritedSetter(element.displayName);
           if (setter.parameters.isEmpty) {
             _exceptionHandler.handle(ErrorMessageForElement(
@@ -578,7 +578,7 @@ class _ComponentVisitor
   void _collectInheritableMetadataOn(ClassElement element) {
     // Skip 'Object' since it can't have metadata and we only want to record
     // whether a user type implements 'noSuchMethod'.
-    if (element.type.isObject) return;
+    if (element.isDartCoreObject) return;
     if (element.getMethod('noSuchMethod') != null) {
       _implementsNoSuchMethod = true;
     }

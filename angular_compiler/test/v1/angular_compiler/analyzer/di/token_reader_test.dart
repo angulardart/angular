@@ -114,52 +114,52 @@ void main() {
     });
 
     test('should fail on an abstract class', () {
-      final type = library.getType('InvalidOpaqueToken_IsAbstract').type;
+      final type = library.getType('InvalidOpaqueToken_IsAbstract').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a private class', () {
-      final type = library.getType('_InvalidOpaqueToken_IsPrivate').type;
+      final type = library.getType('_InvalidOpaqueToken_IsPrivate').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a non-const class', () {
-      final type = library.getType('InvalidOpaqueToken_NotConst').type;
+      final type = library.getType('InvalidOpaqueToken_NotConst').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class without a default constructor', () {
-      final type = library.getType('InvalidOpaqueToken_NoUnnammed').type;
+      final type = library.getType('InvalidOpaqueToken_NoUnnammed').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class with type parameters', () {
-      final type = library.getType('InvalidOpaqueToken_HasTypeParameters').type;
+      final type = library.getType('InvalidOpaqueToken_HasTypeParameters').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class with constructor parameters', () {
-      final type = library.getType('InvalidOpaqueToken_HasParameters').type;
+      final type = library.getType('InvalidOpaqueToken_HasParameters').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class not directly extending Opaque/MultiToken', () {
-      final type = library.getType('InvalidOpaqueToken_InvalidSubType').type;
+      final type = library.getType('InvalidOpaqueToken_InvalidSubType').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class implementing another class', () {
-      final type = library.getType('InvalidOpaquetoken_Implements').type;
+      final type = library.getType('InvalidOpaquetoken_Implements').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should fail on a class mixing in another class', () {
-      final type = library.getType('InvalidOpaqueToken_Mixins').type;
+      final type = library.getType('InvalidOpaqueToken_Mixins').thisType;
       expect(() => linkToOpaqueToken(type), throwsBuildError);
     });
 
     test('should succeed on a class that directly extends OpaqueToken', () {
-      final type = library.getType('ValidOpaqueToken').type;
+      final type = library.getType('ValidOpaqueToken').thisType;
       final link = linkToOpaqueToken(type);
       expect(link.symbol, 'ValidOpaqueToken');
       expect(link.generics, isEmpty);

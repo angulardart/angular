@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:analyzer/src/generated/resolver.dart';
+import 'package:analyzer/dart/element/type_provider.dart';
 
 import 'expression_parser/ast.dart' as ast;
 
@@ -183,7 +183,7 @@ ast.ASTWithSource rewriteTearOff(
 
   if (unwrappedExpression is ast.PropertyRead) {
     // Find the method, either on "this." or "super.".
-    final method = analyzedClass._classElement.type.lookUpInheritedMethod(
+    final method = analyzedClass._classElement.thisType.lookUpInheritedMethod(
       unwrappedExpression.name,
     );
 
@@ -247,7 +247,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   _TypeResolver(ClassElement classElement, this._variables)
       : _dynamicType = classElement.library.typeProvider.dynamicType,
         _stringType = classElement.library.typeProvider.stringType,
-        _implicitReceiverType = classElement.type;
+        _implicitReceiverType = classElement.thisType;
 
   @override
   DartType visitBinary(ast.Binary ast, _) {
@@ -349,7 +349,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitStaticRead(ast.StaticRead ast, _) =>
       ast.id.analyzedClass == null
           ? _dynamicType
-          : ast.id.analyzedClass._classElement.type;
+          : ast.id.analyzedClass._classElement.thisType;
 
   @override
   DartType visitVariableRead(ast.VariableRead ast, _) => _dynamicType;
