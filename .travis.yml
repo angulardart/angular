@@ -7,7 +7,7 @@ language: dart
 dart:
   - dev
 
-after_script:
+after_failure:
   - tool/report_failure.sh
 
 # Only building master means that we don't run two builds for each pull request.
@@ -58,6 +58,253 @@ jobs:
         - pub run dev:travis -d
         - pub run dev:pubspec -d
         - pub run dev:deps
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="_benchmarks"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="_benchmarks"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _benchmarks/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="_benchmarks"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _benchmarks/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="_goldens"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="_goldens"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _goldens/.dart_tool
+
+    - stage: testing
+      script:
+        - cd _goldens
+        - ./tool/test.sh
+      env: PKG="_goldens"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _goldens/.dart_tool
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="_tests"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="_tests"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _tests/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="_tests"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - _tests/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular"
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_ast"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="angular_ast"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_ast/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="angular_ast"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_ast/.dart_tool
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_compiler"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="angular_compiler"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_compiler/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="angular_compiler"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_compiler/.dart_tool
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_forms"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="angular_forms"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_forms/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="angular_forms"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_forms/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_router"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="angular_router"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_router/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="angular_router"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_router/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="angular_test"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="angular_test"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_test/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="angular_test"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - angular_test/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="dev"
+
+    - stage: testing
+      script: ./tool/travis.sh test:nobuild
+      env: PKG="dev"
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/hacker_news_pwa"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="examples/hacker_news_pwa"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/hacker_news_pwa/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="examples/hacker_news_pwa"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/hacker_news_pwa/.dart_tool
+
+      addons:
+        chrome: stable
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/hello_world"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="examples/hello_world"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/hello_world/.dart_tool
+
+    - stage: presubmit
+      script: ./tool/travis.sh analyze
+      env: PKG="examples/i18n"
+
+    - stage: building
+      script: ./tool/travis.sh build
+      env: PKG="examples/i18n"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/i18n/.dart_tool
+
+    - stage: testing
+      script: ./tool/travis.sh test
+      env: PKG="examples/i18n"
+      cache:
+        directories:
+          - $HOME/.pub-cache
+          - examples/i18n/.dart_tool
+
+      addons:
+        chrome: stable
 
     # Deploy the PWA application to Firebase.
     # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.
