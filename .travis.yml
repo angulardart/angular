@@ -7,7 +7,7 @@ language: dart
 dart:
   - dev
 
-after_failure:
+after_script:
   - tool/report_failure.sh
 
 # Only building master means that we don't run two builds for each pull request.
