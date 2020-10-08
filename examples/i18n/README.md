@@ -149,9 +149,10 @@ containing the message translations for each locale. In addition to the Dart
 files containing `Intl.message()` calls, you must also specify the ARB files
 containing translations you produced in the previous step.
 
-```
-find . -name '*.dart' -print0 | xargs -0 \
-  pub run intl_translation:generate_from_arb \
+```console
+> pub global activate intl_translation
+> find . -name '*.dart' -print0 | xargs -0 \
+    pub global run intl_translation:generate_from_arb \
     --output-dir lib/messages \
     messages/intl_messages.arb
 ```
