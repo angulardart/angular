@@ -9,6 +9,10 @@ applications.
 It's built on [Dart] and is used by [Google Ads], [Google AdSense],
 [Google Fiber], [Google Play Console] and many more projects.
 
+**IMPORTANT:** read the
+[announcement](https://groups.google.com/a/dartlang.org/g/announce/c/Kz84KNBcf3U)
+about how we plan to update and maintain these packages going forward!
+
 ## Resources
 
  * Packages:
