@@ -18,9 +18,4 @@ class $Messages extends Messages {
 
   @override
   final urlFileBugs = '$_github/issues/new';
-
-  @override
-  final urlOnPushCompatibility =
-      '$_github/blob/master/doc/advanced/on-push-change-detection.md'
-      '#compatibility-with-default-change-detection';
 }
