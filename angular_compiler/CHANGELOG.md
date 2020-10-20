@@ -1,6 +1,6 @@
 ## 1.0.1-dev
 
-*   Removed invalid link from the OnPush compatibility warning.
+* Removed invalid link from the OnPush compatibility warning.
 
 ## 1.0.0
 
