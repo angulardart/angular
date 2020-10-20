@@ -42,7 +42,7 @@ void main() {
       @Component(
         selector: 'bad-comp',
         directives:  [
-          const UndeclaredIdentifier,
+          const UndeclaredIdentifier(),
         ],
         template: '',
       )
@@ -85,27 +85,6 @@ void main() {
     ]);
   });
 
-  test('should error gracefully on a bad setter', () async {
-    await compilesExpecting('''
-      import '$ngImport';
-
-      @Component(
-        selector: 'bad-input',
-        template: '',
-      )
-      class BadInputSetter {
-        @Input()
-        set noMethodBody;
-      }
-    ''', errors: [
-      allOf([
-        contains('@Input setter has no parameters'),
-        contains('noMethodBody'),
-        containsSourceLocation(9, 13)
-      ])
-    ]);
-  });
-
   test('should error on incorrect function annotations', () async {
     await compilesExpecting('''
       import '$ngImport';
@@ -114,13 +93,14 @@ void main() {
         selector: 'badProvider',
         providers: [OopsProvider]
       )
-      bool functionDirective() {};
+      bool functionDirective() {}
 
 
     ''', errors: [
       allOf(
           contains('Compiling annotation @Directive'),
-          contains('Undefined name \'OopsProvider\''),
+          contains('Invalid constant value.'),
+          contains('providers: [OopsProvider]'),
           containsSourceLocation(5, 21)), // pointing at OopsProvider
     ]);
   });
@@ -157,7 +137,7 @@ void main() {
         template: '',
       )
       class BadConstructor {
-        BadConstructor(@HuhWhatIsThis);
+        BadConstructor(@HuhWhatIsThis foo);
       }
     ''', errors: [
       // TODO(b/124524346): Only print one error.
@@ -368,7 +348,7 @@ void main() {
         template: '',
         providers: [ClassProvider(tokenRef)]
       )
-      class BadComponent {};
+      class BadComponent {}
     ''', errors: [
         allOf(contains('A provider\'s token field failed to compile'),
             containsSourceLocation(5, 7)), // pointing at @Component
@@ -385,7 +365,7 @@ void main() {
         template: '',
         providers: [Compare]
       )
-      class BadComponent {};
+      class BadComponent {}
     ''', errors: [], warnings: [
         allOf(contains('Expected to find class in provider list'),
             containsSourceLocation(4, 7)), // pointing at @Component
@@ -404,7 +384,7 @@ void main() {
         template: '',
         providers: [ClassProvider(ToProvide, useClass: Compare)]
       )
-      class BadComponent {};
+      class BadComponent {}
     ''', errors: [
         allOf(contains('Provider.useClass can only be used with a class'),
             containsSourceLocation(6, 7)) // pointing at @Component
@@ -422,7 +402,7 @@ void main() {
         template: '',
         providers: [FactoryProvider(ToProvide, ToProvide)]
       )
-      class BadComponent {};
+      class BadComponent {}
     ''', errors: [allOf(contains('ToProvide'), containsSourceLocation(8, 48))]);
     });
   });

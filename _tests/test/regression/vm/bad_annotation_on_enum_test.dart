@@ -6,7 +6,9 @@ void main() {
   test('should warn on a bad enum annotation', () async {
     await compilesExpecting('''
       @undefinedAnnotation
-      enum SomeEnum {}
+      enum SomeEnum {
+        cool,
+      }
     ''', errors: [], warnings: [
       allOf(contains('@undefinedAnnotation'), containsSourceLocation(1, 7))
     ]);
