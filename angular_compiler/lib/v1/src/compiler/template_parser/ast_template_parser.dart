@@ -1118,11 +1118,7 @@ class _OnPushValidator extends InPlaceRecursiveTemplateVisitor<void> {
     if (componentAst != null && !componentAst.directive.isOnPush) {
       final componentName = _name(componentAst.directive);
       logWarning(componentAst.sourceSpan.message(
-        '"$componentName" doesn\'t use "ChangeDetectionStrategy.OnPush", but '
-        'is used by a component that does. This is unsupported and unlikely to '
-        'work as expected.'
-        '\n\n'
-        'See ${messages.urlOnPushCompatibility}.',
+        messages.warningForOnPushCompatibility(componentName),
       ));
     }
     super.visitElement(ast, null);

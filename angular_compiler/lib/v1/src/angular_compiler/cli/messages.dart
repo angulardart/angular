@@ -30,8 +30,13 @@ abstract class Messages {
     return buffer.toString();
   }
 
-  /// What URL should be used for OnPush compatibility documentation.
-  String get urlOnPushCompatibility;
+  /// What message should be used for OnPush compatibility warnings.
+  String warningForOnPushCompatibility(String name) {
+    return ''
+        '"$name" doesn\'t use "ChangeDetectionStrategy.OnPush", but '
+        'is used by a component that does. This is unsupported and unlikely '
+        'to work as expected.';
+  }
 
   /// What URL should be used for filing bugs when the compiler fails.
   String get urlFileBugs;
