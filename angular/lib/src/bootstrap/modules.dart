@@ -17,6 +17,7 @@ import 'package:angular/src/security/dom_sanitization_service.dart';
 import 'package:angular/src/security/dom_sanitization_service_impl.dart';
 import 'package:angular/src/security/sanitization_service.dart';
 
+// ignore: uri_has_not_been_generated
 import 'modules.template.dart' as ng;
 
 /// Implementation of [SlowComponentLoader] that throws [UnsupportedError].
