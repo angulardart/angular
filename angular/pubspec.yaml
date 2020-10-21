@@ -1,5 +1,5 @@
 name: angular
-version: 6.0.1-dev
+version: 6.0.1
 description: Fast and productive web framework
 repository: https://github.com/dart-lang/angular
 environment:
