@@ -1,4 +1,4 @@
-## 1.0.1-dev
+## 1.0.1
 
 * Removed invalid link from the OnPush compatibility warning.
 * Update `package:analyzer` dependency to `^0.40.0`.

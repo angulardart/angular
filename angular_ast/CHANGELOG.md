@@ -1,4 +1,4 @@
-## 1.0.1-dev
+## 1.0.1
 
 * Update `package:analyzer` dependency to `^0.40.0`.
 
