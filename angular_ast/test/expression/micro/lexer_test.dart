@@ -14,7 +14,7 @@ void main() {
 
   // Returns the html parsed as a series of tokens, then back to html.
   String untokenize(Iterable<NgMicroToken> tokens) => tokens
-      .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+      .fold<StringBuffer>(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
       .toString();
 
   test('should tokenize a single let', () {

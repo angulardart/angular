@@ -10,7 +10,7 @@ void main() {
   Iterable<NgSimpleToken> tokenize(String html) =>
       const NgSimpleTokenizer().tokenize(html);
   String untokenize(Iterable<NgSimpleToken> tokens) => tokens
-      .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+      .fold<StringBuffer>(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
       .toString();
 
   test('should tokenize plain text', () {

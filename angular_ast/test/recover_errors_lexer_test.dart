@@ -26,7 +26,7 @@ void unwrapAll(Iterator<NgToken> it) {
 }
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold<StringBuffer>(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
     .toString();
 
 void testRecoverySolution(
