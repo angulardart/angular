@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:test/test.dart';

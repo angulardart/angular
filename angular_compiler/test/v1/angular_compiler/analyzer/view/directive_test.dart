@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 import 'dart:async';
 
 import 'package:angular_compiler/v1/angular_compiler.dart';
