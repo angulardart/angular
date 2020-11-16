@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart';
 
 class Unparser implements AstVisitor {

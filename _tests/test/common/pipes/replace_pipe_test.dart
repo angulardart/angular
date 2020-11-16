@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 import 'package:test/test.dart';
 import 'package:angular/src/common/pipes/invalid_pipe_argument_exception.dart';
 import 'package:angular/src/common/pipes/replace_pipe.dart';

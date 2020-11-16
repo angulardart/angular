@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 @TestOn('!js')
 library angular2.test.di.provider_test;
 

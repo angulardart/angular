@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 @TestOn('vm')
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';

@@ -1,3 +1,5 @@
+// @dart = 2.9
+
 @TestOn('vm')
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart'
