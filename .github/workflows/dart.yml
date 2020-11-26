@@ -3,10 +3,9 @@ name: Dart CI
 on:
   push:
     branches:
+      - main
       - master
   pull_request:
-    branches:
-      - master
 defaults:
   run:
     shell: bash

@@ -1,6 +1,5 @@
 github:
-  on: push
 
 self_validate: analyze
 merge_stages:
-  - analyze
+- analyze
