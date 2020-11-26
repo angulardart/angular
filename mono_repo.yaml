@@ -1,11 +1,5 @@
 github:
-  on:
-    push:
-      branches:
-        - master
-    pull_request:
-      branches:
-        - master
+  on: push
 
 self_validate: analyze
 merge_stages:
