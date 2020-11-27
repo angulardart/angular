@@ -34,23 +34,23 @@ jobs:
       - run: pub global activate mono_repo 3.3.0
       - run: pub global run mono_repo generate --validate
   job_002:
-    name: "OS: linux; SDK: 2.9.3; PKGS: _tests, angular_ast, angular_compiler, angular_forms, angular_router, angular_test; TASKS: `dartanalyzer --fatal-warnings .`"
+    name: "OS: linux; SDK: stable; PKGS: _tests, angular_ast, angular_compiler, angular_forms, angular_router, angular_test; TASKS: `dartanalyzer --fatal-warnings .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests-angular_ast-angular_compiler-angular_forms-angular_router-angular_test;commands:dartanalyzer"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests-angular_ast-angular_compiler-angular_forms-angular_router-angular_test;commands:dartanalyzer"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests-angular_ast-angular_compiler-angular_forms-angular_router-angular_test
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests-angular_ast-angular_compiler-angular_forms-angular_router-angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -81,23 +81,23 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh dartanalyzer
   job_004:
-    name: "OS: linux; SDK: 2.9.3; PKG: _tests; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: _tests; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -109,23 +109,23 @@ jobs:
       - job_002
       - job_003
   job_005:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_ast; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: angular_ast; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_ast;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_ast;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_ast
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -137,23 +137,23 @@ jobs:
       - job_002
       - job_003
   job_006:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_compiler; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: angular_compiler; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_compiler;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_compiler;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_compiler
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -165,23 +165,23 @@ jobs:
       - job_002
       - job_003
   job_007:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_forms; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: angular_forms; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_forms;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_forms;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_forms
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -193,23 +193,23 @@ jobs:
       - job_002
       - job_003
   job_008:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_router; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: angular_router; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_router;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_router;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_router
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -221,23 +221,23 @@ jobs:
       - job_002
       - job_003
   job_009:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_test; TASKS: `pub run build_runner build --fail-on-severe`"
+    name: "OS: linux; SDK: stable; PKG: angular_test; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_test;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_test;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_test
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -411,23 +411,23 @@ jobs:
       - job_002
       - job_003
   job_016:
-    name: "OS: linux; SDK: 2.9.3; PKG: _tests; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: _tests; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:_tests
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -448,23 +448,23 @@ jobs:
       - job_014
       - job_015
   job_017:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_ast; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: angular_ast; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_ast;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_ast;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_ast
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -485,23 +485,23 @@ jobs:
       - job_014
       - job_015
   job_018:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_compiler; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: angular_compiler; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_compiler;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_compiler;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_compiler
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -522,23 +522,23 @@ jobs:
       - job_014
       - job_015
   job_019:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_forms; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: angular_forms; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_forms;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_forms;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_forms
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -559,23 +559,23 @@ jobs:
       - job_014
       - job_015
   job_020:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_router; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: angular_router; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_router;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_router;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_router
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
@@ -596,23 +596,23 @@ jobs:
       - job_014
       - job_015
   job_021:
-    name: "OS: linux; SDK: 2.9.3; PKG: angular_test; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "OS: linux; SDK: stable; PKG: angular_test; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_test;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_test;commands:command_1"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3;packages:angular_test
-            os:ubuntu-latest;pub-cache-hosted;dart:2.9.3
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: cedx/setup-dart@v2
         with:
           release-channel: stable
-          version: "2.9.3"
+          version: latest
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
