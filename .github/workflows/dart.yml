@@ -34,16 +34,16 @@ jobs:
       - run: pub global activate mono_repo 3.3.0
       - run: pub global run mono_repo generate --validate
   job_002:
-    name: "OS: linux; SDK: stable; PKGS: _benchmarks, _goldens, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world; TASKS: `dartanalyzer --fatal-warnings .`"
+    name: "OS: linux; SDK: stable; PKGS: _benchmarks, _goldens, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world, examples/i18n; TASKS: `dartanalyzer --fatal-warnings .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world;commands:dartanalyzer"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world-examples/i18n;commands:dartanalyzer"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world-examples/i18n
             os:ubuntu-latest;pub-cache-hosted;dart:stable
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -54,20 +54,20 @@ jobs:
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
-          PKGS: _benchmarks _goldens _tests angular angular_ast angular_compiler angular_forms angular_router angular_test examples/hello_world
+          PKGS: _benchmarks _goldens _tests angular angular_ast angular_compiler angular_forms angular_router angular_test examples/hello_world examples/i18n
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh dartanalyzer
   job_003:
-    name: "OS: linux; SDK: dev; PKGS: _benchmarks, _goldens, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world; TASKS: `dartanalyzer --fatal-warnings .`"
+    name: "OS: linux; SDK: dev; PKGS: _benchmarks, _goldens, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world, examples/i18n; TASKS: `dartanalyzer --fatal-warnings .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world;commands:dartanalyzer"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world-examples/i18n;commands:dartanalyzer"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks-_goldens-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_router-angular_test-examples/hello_world-examples/i18n
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -77,20 +77,20 @@ jobs:
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
-          PKGS: _benchmarks _goldens _tests angular angular_ast angular_compiler angular_forms angular_router angular_test examples/hello_world
+          PKGS: _benchmarks _goldens _tests angular angular_ast angular_compiler angular_forms angular_router angular_test examples/hello_world examples/i18n
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh dartanalyzer
-  job_013:
-    name: "OS: linux; SDK: dev; PKG: _benchmarks; TASKS: `pub run build_runner build --fail-on-severe`"
+  job_015:
+    name: "OS: linux; SDK: dev; PKG: _goldens; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_goldens;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_goldens
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
       - run: dart --version
       - uses: actions/checkout@v2
       - env:
-          PKGS: _benchmarks
+          PKGS: _goldens
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_0
     needs:
@@ -331,6 +331,61 @@ jobs:
       - job_001
       - job_002
       - job_003
+  job_013:
+    name: "OS: linux; SDK: stable; PKG: examples/i18n; TASKS: `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:examples/i18n;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:examples/i18n
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: cedx/setup-dart@v2
+        with:
+          release-channel: stable
+          version: latest
+      - run: dart --version
+      - uses: actions/checkout@v2
+      - env:
+          PKGS: examples/i18n
+          TRAVIS_OS_NAME: linux
+        run: tool/ci.sh command_0
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_014:
+    name: "OS: linux; SDK: dev; PKG: _benchmarks; TASKS: `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_benchmarks
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: cedx/setup-dart@v2
+        with:
+          release-channel: dev
+      - run: dart --version
+      - uses: actions/checkout@v2
+      - env:
+          PKGS: _benchmarks
+          TRAVIS_OS_NAME: linux
+        run: tool/ci.sh command_0
+    needs:
+      - job_001
+      - job_002
+      - job_003
   job_004:
     name: "OS: linux; SDK: stable; PKG: _benchmarks; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
@@ -359,34 +414,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_014:
-    name: "OS: linux; SDK: dev; PKG: _goldens; TASKS: `pub run build_runner build --fail-on-severe`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_goldens;commands:command_0"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_goldens
-            os:ubuntu-latest;pub-cache-hosted;dart:dev
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
-        with:
-          release-channel: dev
-      - run: dart --version
-      - uses: actions/checkout@v2
-      - env:
-          PKGS: _goldens
-          TRAVIS_OS_NAME: linux
-        run: tool/ci.sh command_0
-    needs:
-      - job_001
-      - job_002
-      - job_003
-  job_015:
+  job_016:
     name: "OS: linux; SDK: dev; PKG: _tests; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -413,7 +441,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_016:
+  job_017:
     name: "OS: linux; SDK: dev; PKG: angular_ast; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -440,7 +468,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_017:
+  job_018:
     name: "OS: linux; SDK: dev; PKG: angular_compiler; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -467,7 +495,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_018:
+  job_019:
     name: "OS: linux; SDK: dev; PKG: angular_forms; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -494,7 +522,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_019:
+  job_020:
     name: "OS: linux; SDK: dev; PKG: angular_router; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -521,7 +549,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_020:
+  job_021:
     name: "OS: linux; SDK: dev; PKG: angular_test; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -548,7 +576,7 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_021:
+  job_022:
     name: "OS: linux; SDK: dev; PKG: examples/hello_world; TASKS: `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -575,7 +603,34 @@ jobs:
       - job_001
       - job_002
       - job_003
-  job_022:
+  job_023:
+    name: "OS: linux; SDK: dev; PKG: examples/i18n; TASKS: `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/i18n;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/i18n
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: cedx/setup-dart@v2
+        with:
+          release-channel: dev
+      - run: dart --version
+      - uses: actions/checkout@v2
+      - env:
+          PKGS: examples/i18n
+          TRAVIS_OS_NAME: linux
+        run: tool/ci.sh command_0
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_024:
     name: "OS: linux; SDK: stable; PKG: _benchmarks; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -600,7 +655,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -609,16 +664,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_023:
+      - job_022
+      - job_023
+  job_025:
     name: "OS: linux; SDK: stable; PKG: _tests; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -643,7 +700,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -652,16 +709,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_024:
+      - job_022
+      - job_023
+  job_026:
     name: "OS: linux; SDK: stable; PKG: angular_ast; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -686,7 +745,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -695,16 +754,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_037:
+      - job_022
+      - job_023
+  job_041:
     name: "OS: linux; SDK: dev; PKG: _goldens; TASKS: `./tool/test.sh`"
     runs-on: ubuntu-latest
     steps:
@@ -728,7 +789,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_2
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -737,16 +798,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_026:
+      - job_022
+      - job_023
+  job_028:
     name: "OS: linux; SDK: stable; PKG: angular_forms; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -771,7 +834,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -780,16 +843,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_027:
+      - job_022
+      - job_023
+  job_029:
     name: "OS: linux; SDK: stable; PKG: angular_router; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -814,7 +879,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -823,16 +888,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_028:
+      - job_022
+      - job_023
+  job_030:
     name: "OS: linux; SDK: stable; PKG: angular_test; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -857,7 +924,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -866,16 +933,63 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_029:
+      - job_022
+      - job_023
+  job_031:
+    name: "OS: linux; SDK: stable; PKG: examples/i18n; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:examples/i18n;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:stable;packages:examples/i18n
+            os:ubuntu-latest;pub-cache-hosted;dart:stable
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: cedx/setup-dart@v2
+        with:
+          release-channel: stable
+          version: latest
+      - run: dart --version
+      - uses: actions/checkout@v2
+      - env:
+          PKGS: examples/i18n
+          TRAVIS_OS_NAME: linux
+        run: tool/ci.sh command_1
+    needs:
+      - job_015
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_004
+      - job_016
+      - job_017
+      - job_018
+      - job_019
+      - job_020
+      - job_021
+      - job_022
+      - job_023
+  job_032:
     name: "OS: linux; SDK: dev; PKG: _benchmarks; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -899,7 +1013,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -908,16 +1022,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_030:
+      - job_022
+      - job_023
+  job_033:
     name: "OS: linux; SDK: dev; PKG: _tests; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -941,7 +1057,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -950,16 +1066,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_031:
+      - job_022
+      - job_023
+  job_034:
     name: "OS: linux; SDK: dev; PKG: angular_ast; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -983,7 +1101,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -992,16 +1110,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_032:
+      - job_022
+      - job_023
+  job_035:
     name: "OS: linux; SDK: dev; PKG: angular_compiler; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -1025,7 +1145,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1034,16 +1154,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_033:
+      - job_022
+      - job_023
+  job_036:
     name: "OS: linux; SDK: dev; PKG: angular_forms; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -1067,7 +1189,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1076,16 +1198,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_034:
+      - job_022
+      - job_023
+  job_037:
     name: "OS: linux; SDK: dev; PKG: angular_router; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -1109,7 +1233,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1118,16 +1242,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_035:
+      - job_022
+      - job_023
+  job_038:
     name: "OS: linux; SDK: dev; PKG: angular_test; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -1151,7 +1277,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1160,16 +1286,62 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_036:
+      - job_022
+      - job_023
+  job_039:
+    name: "OS: linux; SDK: dev; PKG: examples/i18n; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/i18n;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/i18n
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: cedx/setup-dart@v2
+        with:
+          release-channel: dev
+      - run: dart --version
+      - uses: actions/checkout@v2
+      - env:
+          PKGS: examples/i18n
+          TRAVIS_OS_NAME: linux
+        run: tool/ci.sh command_1
+    needs:
+      - job_015
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_004
+      - job_016
+      - job_017
+      - job_018
+      - job_019
+      - job_020
+      - job_021
+      - job_022
+      - job_023
+  job_040:
     name: "OS: linux; SDK: stable; PKG: _goldens; TASKS: `./tool/test.sh`"
     runs-on: ubuntu-latest
     steps:
@@ -1194,7 +1366,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_2
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1203,16 +1375,18 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
-  job_025:
+      - job_022
+      - job_023
+  job_027:
     name: "OS: linux; SDK: stable; PKG: angular_compiler; TASKS: `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -1237,7 +1411,7 @@ jobs:
           TRAVIS_OS_NAME: linux
         run: tool/ci.sh command_1
     needs:
-      - job_013
+      - job_015
       - job_005
       - job_006
       - job_007
@@ -1246,12 +1420,14 @@ jobs:
       - job_010
       - job_011
       - job_012
-      - job_004
+      - job_013
       - job_014
-      - job_015
+      - job_004
       - job_016
       - job_017
       - job_018
       - job_019
       - job_020
       - job_021
+      - job_022
+      - job_023
