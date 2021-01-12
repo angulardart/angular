@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -12,10 +11,10 @@ import 'order_test.template.dart' as ng;
 /// is deferred, but it also means styling can be dependent on the order in
 /// which components first appear in an app.
 void main() {
-  NgTestBed<TestComponent> testBed;
+  late NgTestBed<TestComponent> testBed;
 
   setUp(() {
-    testBed = NgTestBed.forComponent(ng.createTestComponentFactory());
+    testBed = NgTestBed(ng.createTestComponentFactory());
   });
 
   tearDown(disposeAnyRunningTest);
@@ -29,7 +28,7 @@ void main() {
         },
       );
       // Styles from Child are applied because they load second.
-      final secondChild = testFixture.rootElement.querySelector('.test');
+      final secondChild = testFixture.rootElement.querySelector('.test')!;
       expect(secondChild.getComputedStyle().margin, '16px');
     });
 
@@ -43,7 +42,7 @@ void main() {
         },
       );
       // Styles from Parent are applied because they load second.
-      final secondChild = testFixture.rootElement.querySelector('.test');
+      final secondChild = testFixture.rootElement.querySelector('.test')!;
       expect(secondChild.getComputedStyle().margin, '8px');
     });
   });

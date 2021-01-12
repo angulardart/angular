@@ -1,15 +1,13 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
 import 'package:test/test.dart';
+import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
+
+import 'route_path_test.template.dart' as ng;
 
 void main() {
   group('$RoutePath', () {
     test('should set all properties', () {
-      var parent = RoutePath();
+      var parent = RoutePath(path: '');
       var routePath = RoutePath(
           path: 'path',
           useAsDefault: true,
@@ -25,7 +23,11 @@ void main() {
       test('should set all properties from routes', () {
         var routePath = RoutePath.fromRoutes([
           RouteDefinition(
-              path: 'path', useAsDefault: true, additionalData: 'data')
+            path: 'path',
+            useAsDefault: true,
+            additionalData: 'data',
+            component: ng.createTestComponentFactory(),
+          )
         ]);
         expect(routePath.path, 'path');
         expect(routePath.useAsDefault, true);
@@ -35,9 +37,16 @@ void main() {
 
       test('should take properties from last route', () {
         var routePath = RoutePath.fromRoutes([
-          RouteDefinition(),
           RouteDefinition(
-              path: 'path', useAsDefault: true, additionalData: 'data')
+            path: '',
+            component: ng.createTestComponentFactory(),
+          ),
+          RouteDefinition(
+            path: 'path',
+            useAsDefault: true,
+            additionalData: 'data',
+            component: ng.createTestComponentFactory(),
+          )
         ]);
         expect(routePath.path, 'path');
         expect(routePath.useAsDefault, true);
@@ -55,14 +64,23 @@ void main() {
 
       test('should chain libraries', () {
         var routePath = RoutePath.fromRoutes([
-          RouteDefinition(path: 'path1'),
-          RouteDefinition(path: 'path2'),
-          RouteDefinition(path: 'path3')
+          RouteDefinition(
+            path: 'path1',
+            component: ng.createTestComponentFactory(),
+          ),
+          RouteDefinition(
+            path: 'path2',
+            component: ng.createTestComponentFactory(),
+          ),
+          RouteDefinition(
+            path: 'path3',
+            component: ng.createTestComponentFactory(),
+          )
         ]);
         expect(routePath.path, 'path3');
-        expect(routePath.parent.path, 'path2');
-        expect(routePath.parent.parent.path, 'path1');
-        expect(routePath.parent.parent.parent, isNull);
+        expect(routePath.parent!.path, 'path2');
+        expect(routePath.parent!.parent!.path, 'path1');
+        expect(routePath.parent!.parent!.parent, isNull);
       });
     });
 
@@ -70,13 +88,18 @@ void main() {
       test('should return a slash-trimmed version of the path', () {
         var routePath = RoutePath(path: '/path/');
         expect(routePath.path, 'path');
-        routePath = RoutePath.fromRoutes([RouteDefinition(path: '/path/')]);
+        routePath = RoutePath.fromRoutes([
+          RouteDefinition(
+            path: '/path/',
+            component: ng.createTestComponentFactory(),
+          ),
+        ]);
         expect(routePath.path, 'path');
       });
     });
 
     group('toUrl()', () {
-      RoutePath routePath;
+      late RoutePath routePath;
 
       setUpAll(() {
         var parentParentPath = RoutePath(path: 'path1/:param1');
@@ -131,3 +154,9 @@ void main() {
     });
   });
 }
+
+@Component(
+  selector: 'test',
+  template: '',
+)
+class TestComponent {}

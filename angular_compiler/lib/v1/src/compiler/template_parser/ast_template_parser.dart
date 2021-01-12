@@ -1,4 +1,6 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular_ast/angular_ast.dart' as ast;
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/chars.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart';
@@ -15,11 +17,10 @@ import 'package:angular_compiler/v1/src/compiler/style_url_resolver.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart' as ng;
 import 'package:angular_compiler/v1/src/compiler/template_optimize.dart';
 import 'package:angular_compiler/v1/src/compiler/template_parser.dart';
-import 'package:angular_ast/angular_ast.dart' as ast;
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
+import 'missing_directives_validator.dart';
 import 'recursive_template_visitor.dart';
-import 'remove_debug_visitor.dart';
 
 const _ngContentSelectAttr = 'select';
 const _ngContentElement = 'ng-content';
@@ -28,19 +29,20 @@ const _linkStyleHrefAttr = 'href';
 const _styleElement = 'style';
 const _scriptElement = 'script';
 const _templateElement = 'template';
-final CssSelector _textCssSelector = CssSelector.parse('*')[0];
+final _textCssSelector = CssSelector.parse('*')[0];
 
 /// A [TemplateParser] which uses the `angular_ast` package to parse angular
 /// templates.
-class AstTemplateParser implements TemplateParser {
-  final CompilerFlags flags;
+class AstTemplateParser {
+  final CompilerFlags _flags;
+  final ElementSchemaRegistry _schemaRegistry;
+  final ExpressionParser _parser;
 
-  @override
-  final ElementSchemaRegistry schemaRegistry;
-
-  final Parser parser;
-
-  AstTemplateParser(this.schemaRegistry, this.parser, this.flags);
+  AstTemplateParser(
+    this._schemaRegistry,
+    this._parser,
+    this._flags,
+  );
 
   /// Parses the template into a structured tree of [ng.TemplateAst] nodes.
   ///
@@ -53,7 +55,6 @@ class AstTemplateParser implements TemplateParser {
   ///
   /// We will collect parse errors for each phase, and only continue to the next
   /// phase if no errors have occurred.
-  @override
   List<ng.TemplateAst> parse(
     CompileDirectiveMetadata compMeta,
     String template,
@@ -62,87 +63,91 @@ class AstTemplateParser implements TemplateParser {
     String name,
     String templateSourceUrl,
   ) {
-    final exceptionHandler = AstExceptionHandler(template, templateSourceUrl);
-
-    var parsedAst = _parseTemplate(
+    // This is a specific error handler that we pass to angular_ast that in turn
+    // uses mechanics similar to CompileContext; it is intentionally separate in
+    // order ot avoid a dependency on angular_compiler from angular_ast.
+    final exceptionHandler = AstExceptionHandler(
       template,
+      templateSourceUrl,
       name,
-      exceptionHandler,
-      templateSourceUrl ?? name,
     );
-    exceptionHandler.maybeReportExceptions();
+    final parsedAst = ast.parse(
+      template,
+      exceptionHandler: exceptionHandler,
+      sourceUrl: templateSourceUrl,
+    );
+    exceptionHandler.throwErrorsIfAny();
     if (parsedAst.isEmpty) return const [];
 
-    var filteredAst = _processRawTemplateNodes(
+    final filteredAst = _processRawTemplateNodes(
       parsedAst,
       template: template,
       name: name,
-      exceptionHandler: exceptionHandler,
       preserveWhitespace: compMeta.template.preserveWhitespace ?? false,
     );
-    if (flags.removeDebugAttributes) {
-      final removeDebug = const RemoveDebugAttributesVisitor();
-      parsedAst = removeDebug.visitAll(parsedAst);
-      filteredAst = removeDebug.visitAll(filteredAst);
-    }
-    exceptionHandler.maybeReportExceptions();
+    CompileContext.current.throwRecoverableErrors();
 
     // TODO(b/155416570): Should it be filteredAst.first.sourceSpan?
-    final providedAsts = _bindDirectivesAndProviders(directives, compMeta,
-        filteredAst, exceptionHandler, parsedAst.first.sourceSpan);
-    exceptionHandler.maybeReportExceptions();
+    final providedAsts = _bindDirectivesAndProviders(
+      directives,
+      compMeta,
+      filteredAst,
+      parsedAst.first.sourceSpan,
+    );
+    CompileContext.current.throwRecoverableErrors();
 
-    var processedAsts = _processBoundTemplateNodes(
-        compMeta, providedAsts, pipes, exceptionHandler);
-    exceptionHandler.maybeReportExceptions();
+    final processedAsts = _processBoundTemplateNodes(
+      compMeta,
+      providedAsts,
+      pipes,
+    );
+    CompileContext.current.throwRecoverableErrors();
 
     return processedAsts;
   }
-
-  List<ast.TemplateAst> _parseTemplate(String template, String name,
-          AstExceptionHandler exceptionHandler, String templateSourceUrl) =>
-      ast.parse(template,
-          sourceUrl: templateSourceUrl,
-          parseExpressions: false,
-          exceptionHandler: exceptionHandler);
 
   List<ast.TemplateAst> _processRawTemplateNodes(
     List<ast.TemplateAst> parsedAst, {
     String template,
     String name,
-    AstExceptionHandler exceptionHandler,
     bool preserveWhitespace = false,
   }) {
-    if (flags.forceMinifyWhitespace) {
+    if (_flags.forceMinifyWhitespace) {
       logWarning('FORCING MINIFICATION');
       preserveWhitespace = false;
     }
     final implicNamespace = _applyImplicitNamespace(parsedAst);
     var filterElements = _filterElements(implicNamespace, preserveWhitespace);
-    _validateTemplate(filterElements, exceptionHandler);
+    _validateTemplate(filterElements);
     return filterElements;
   }
 
   List<ng.TemplateAst> _bindDirectivesAndProviders(
-      List<CompileDirectiveMetadata> directives,
-      CompileDirectiveMetadata compMeta,
-      List<ast.TemplateAst> filteredAst,
-      AstExceptionHandler exceptionHandler,
-      SourceSpan span) {
-    final boundAsts =
-        _bindDirectives(directives, compMeta, filteredAst, exceptionHandler);
-    _validateBoundDirectives(boundAsts, compMeta, exceptionHandler);
-    return _bindProviders(compMeta, boundAsts, span, exceptionHandler);
+    List<CompileDirectiveMetadata> directives,
+    CompileDirectiveMetadata compMeta,
+    List<ast.TemplateAst> filteredAst,
+    SourceSpan span,
+  ) {
+    final boundAsts = _bindDirectives(
+      directives,
+      compMeta,
+      filteredAst,
+    );
+    _validateBoundDirectives(
+      boundAsts,
+      compMeta,
+    );
+    return _bindProviders(compMeta, boundAsts, span);
   }
 
   List<ng.TemplateAst> _processBoundTemplateNodes(
-      CompileDirectiveMetadata compMeta,
-      List<ng.TemplateAst> providedAsts,
-      List<CompilePipeMetadata> pipes,
-      AstExceptionHandler exceptionHandler) {
+    CompileDirectiveMetadata compMeta,
+    List<ng.TemplateAst> providedAsts,
+    List<CompilePipeMetadata> pipes,
+  ) {
     final optimizedAsts = _optimize(compMeta, providedAsts);
     final sortedAsts = _sortInputs(optimizedAsts);
-    _validatePipeNames(sortedAsts, pipes, exceptionHandler);
+    _validatePipeNames(sortedAsts, pipes);
     return sortedAsts;
   }
 
@@ -158,17 +163,16 @@ class AstTemplateParser implements TemplateParser {
   }
 
   List<ng.TemplateAst> _bindDirectives(
-      List<CompileDirectiveMetadata> directives,
-      CompileDirectiveMetadata compMeta,
-      List<ast.TemplateAst> filteredAst,
-      AstExceptionHandler exceptionHandler) {
+    List<CompileDirectiveMetadata> directives,
+    CompileDirectiveMetadata compMeta,
+    List<ast.TemplateAst> filteredAst,
+  ) {
     final visitor = _BindDirectivesVisitor();
     final templateContext = TemplateContext(
-      parser: parser,
-      schemaRegistry: schemaRegistry,
+      parser: _parser,
+      schemaRegistry: _schemaRegistry,
+      component: compMeta,
       directives: removeDuplicates(directives),
-      exports: compMeta.exports,
-      exceptionHandler: exceptionHandler,
     );
     final context = _ParseContext.forRoot(templateContext);
     return visitor._visitAll(filteredAst, context);
@@ -177,24 +181,32 @@ class AstTemplateParser implements TemplateParser {
   void _validateBoundDirectives(
     List<ng.TemplateAst> boundAsts,
     CompileDirectiveMetadata componentMetadata,
-    AstExceptionHandler exceptionHandler,
   ) {
     if (componentMetadata.isOnPush) {
-      _OnPushValidator(exceptionHandler).visitAll(boundAsts);
+      _OnPushValidator().visitAll(boundAsts);
     }
   }
 
   List<ng.TemplateAst> _bindProviders(
-      CompileDirectiveMetadata compMeta,
-      List<ng.TemplateAst> visitedAsts,
-      SourceSpan sourceSpan,
-      AstExceptionHandler exceptionHandler) {
+    CompileDirectiveMetadata compMeta,
+    List<ng.TemplateAst> visitedAsts,
+    SourceSpan sourceSpan,
+  ) {
     var providerViewContext = ProviderViewContext(compMeta, sourceSpan);
     final providerVisitor = _ProviderVisitor(providerViewContext);
     final providerContext = ProviderElementContext(
-        providerViewContext, null, false, [], [], [], null);
+      providerViewContext,
+      null,
+      false,
+      [],
+      [],
+      [],
+      null,
+    );
     final providedAsts = providerVisitor.visitAll(visitedAsts, providerContext);
-    exceptionHandler.handleAll(providerViewContext.errors);
+    if (CompileContext.current.validateMissingDirectives) {
+      MissingDirectiveValidator(_schemaRegistry).visitAll(providedAsts);
+    }
     return providedAsts;
   }
 
@@ -209,19 +221,21 @@ class AstTemplateParser implements TemplateParser {
           List<ast.TemplateAst> parsedAst) =>
       parsedAst.map((asNode) => asNode.accept(_NamespaceVisitor())).toList();
 
-  void _validatePipeNames(List<ng.TemplateAst> parsedAsts,
-      List<CompilePipeMetadata> pipes, AstExceptionHandler exceptionHandler) {
-    var pipeValidator =
-        _PipeValidator(removeDuplicates(pipes), exceptionHandler);
+  void _validatePipeNames(
+    List<ng.TemplateAst> parsedAsts,
+    List<CompilePipeMetadata> pipes,
+  ) {
+    var pipeValidator = _PipeValidator(removeDuplicates(pipes));
     for (final ast in parsedAsts) {
       ast.visit(pipeValidator, null);
     }
   }
 
-  void _validateTemplate(
-      List<ast.TemplateAst> parsedAst, AstExceptionHandler exceptionHandler) {
+  static void _validateTemplate(
+    List<ast.TemplateAst> parsedAst,
+  ) {
     for (final ast in parsedAst) {
-      ast.accept(_TemplateValidator(exceptionHandler));
+      ast.accept(_TemplateValidator());
     }
   }
 }
@@ -242,26 +256,71 @@ class _BindDirectivesVisitor
   ng.TemplateAst visitElement(ast.ElementAst astNode,
       [_ParseContext parentContext]) {
     final elementContext = _ParseContext.forElement(astNode, parentContext);
+
+    var skipSchemaValidationForSelector = '';
+    var skipOnPushValidation = false;
+    for (final annotation in astNode.annotations) {
+      switch (annotation.name) {
+        case 'skipOnPushValidation':
+          _validateSkipOnPushValidation(annotation, elementContext);
+          skipOnPushValidation = true;
+          break;
+        case 'skipSchemaValidationFor':
+          skipSchemaValidationForSelector = annotation.value;
+          break;
+      }
+    }
+
     // Note: We rely on the fact that attributes are visited before properties
     // in order to ensure that properties take precedence over attributes with
     // the same name.
     return ng.ElementAst(
-        astNode.name,
-        _visitAll(astNode.attributes, elementContext),
-        _visitProperties(
-            astNode.properties, astNode.attributes, elementContext),
-        _visitEvents(
-          astNode.events,
-          elementContext.boundHostListeners,
-          elementContext,
-        ),
-        _visitAll(astNode.references, elementContext),
-        elementContext.boundDirectives,
-        [] /* providers */,
-        null /* elementProviderUsage */,
-        _visitChildren(astNode, elementContext),
-        _findNgContentIndexForElement(astNode, parentContext),
-        astNode.sourceSpan);
+      astNode.name,
+      _visitAll(astNode.attributes, elementContext),
+      _visitProperties(astNode.properties, astNode.attributes, elementContext),
+      _visitEvents(
+        astNode.events,
+        elementContext.boundHostListeners,
+        elementContext,
+      ),
+      _visitAll(astNode.references, elementContext),
+      elementContext.boundDirectives,
+      [] /* providers */,
+      null /* elementProviderUsage */,
+      _visitChildren(astNode, elementContext),
+      _findNgContentIndexForElement(astNode, parentContext),
+      astNode.sourceSpan,
+      parentContext.matchedNgContentSelectors,
+      skipOnPushValidation: skipOnPushValidation,
+      skipSchemaValidationForSelector: skipSchemaValidationForSelector,
+    );
+  }
+
+  /// Validates that a `@skipOnPushValidation` is used in the correct context.
+  void _validateSkipOnPushValidation(
+    ast.AnnotationAst annotation,
+    _ParseContext context,
+  ) {
+    if (!context.templateContext.component.isOnPush) {
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        annotation.sourceSpan,
+        'Can only be used in the template of a component using '
+        '"ChangeDetectionStrategy.OnPush"',
+      ));
+    }
+    var componentAst = _ParseContext._firstComponent(context.boundDirectives);
+    if (componentAst == null) {
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        annotation.sourceSpan,
+        'Can only be applied to a component element',
+      ));
+    } else if (componentAst.directive.isOnPush) {
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        annotation.sourceSpan,
+        'Can only be applied to a component using '
+        '"ChangeDetectionStrategy.Default"',
+      ));
+    }
   }
 
   List<ng.BoundElementPropertyAst> _visitProperties(
@@ -294,15 +353,17 @@ class _BindDirectivesVisitor
         return null;
       }
       return createElementPropertyAst(
-          elementContext.elementName,
-          attribute.name,
-          boundValue,
-          attribute.sourceSpan,
-          elementContext.templateContext.schemaRegistry,
-          elementContext.templateContext.reportError);
+        elementContext.elementName,
+        attribute.name,
+        boundValue,
+        attribute.sourceSpan,
+        elementContext.templateContext.schemaRegistry,
+      );
     } on ParseException catch (e) {
-      elementContext.templateContext
-          .reportError(e.message, attribute.sourceSpan);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        attribute.sourceSpan,
+        e.toString(),
+      ));
       return null;
     }
   }
@@ -356,16 +417,17 @@ class _BindDirectivesVisitor
       embeddedContext,
     );
     return ng.EmbeddedTemplateAst(
-        _visitAll(astNode.attributes, embeddedContext),
-        _visitAll(astNode.references, embeddedContext),
-        _visitAll(astNode.letBindings, embeddedContext),
-        embeddedContext.boundDirectives,
-        [] /* providers */,
-        null /* elementProviderUsage */,
-        _visitChildren(astNode, embeddedContext),
-        _findNgContentIndexForTemplate(astNode, parentContext),
-        astNode.sourceSpan,
-        hasDeferredComponent: astNode.hasDeferredComponent);
+      _visitAll(astNode.attributes, embeddedContext),
+      _visitAll(astNode.references, embeddedContext),
+      _visitAll(astNode.letBindings, embeddedContext),
+      embeddedContext.boundDirectives,
+      [] /* providers */,
+      null /* elementProviderUsage */,
+      _visitChildren(astNode, embeddedContext),
+      _findNgContentIndexForTemplate(astNode, parentContext),
+      astNode.sourceSpan,
+      parentContext.matchedNgContentSelectors,
+    );
   }
 
   static int _findNgContentIndexForTemplate(
@@ -383,7 +445,7 @@ class _BindDirectivesVisitor
 
   /// Returns whether [astNode] is a synthetic single-child `<template>` node.
   ///
-  /// Some examples include the use of a `*directive` or `@deferred`.
+  /// Some examples include the use of a `*directive`.
   static bool _singleChildTemplate(ast.EmbeddedTemplateAst astNode) {
     final Object upcast = astNode;
     if (upcast is ast.SyntheticTemplateAst) {
@@ -398,12 +460,14 @@ class _BindDirectivesVisitor
 
   @override
   ng.TemplateAst visitEmbeddedContent(ast.EmbeddedContentAst astNode,
-          [_ParseContext context]) =>
-      ng.NgContentAst(
-          ngContentCount++,
-          _findNgContentIndexForEmbeddedContent(context, astNode),
-          astNode.sourceSpan,
-          astNode.reference?.accept(this, context) as ng.ReferenceAst);
+      [_ParseContext parentContext]) {
+    final context = _ParseContext.forNgContent(astNode, parentContext);
+    return ng.NgContentAst(
+        ngContentCount++,
+        _findNgContentIndexForEmbeddedContent(context, astNode),
+        astNode.sourceSpan,
+        astNode.reference?.accept(this, context) as ng.ReferenceAst);
+  }
 
   int _findNgContentIndexForEmbeddedContent(
           _ParseContext context, ast.EmbeddedContentAst astNode) =>
@@ -432,7 +496,10 @@ class _BindDirectivesVisitor
       return ng.BoundEventAst(
           _getEventName(astNode), handler, astNode.sourceSpan);
     } on ParseException catch (e) {
-      context.templateContext.reportError(e.message, astNode.sourceSpan);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        e.toString(),
+      ));
       return null;
     }
   }
@@ -465,7 +532,10 @@ class _BindDirectivesVisitor
         hostListener.sourceSpan,
       );
     } on ParseException catch (e) {
-      context.templateContext.reportError(e.message, hostListener.sourceSpan);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        hostListener.sourceSpan,
+        e.toString(),
+      ));
       return null;
     }
   }
@@ -517,19 +587,25 @@ class _BindDirectivesVisitor
           message = '$message\n\nThis is a common mistake when using *ngFor; '
               "did you mean to write 'of' instead of 'in'?";
         }
-        context.templateContext.reportError(message, astNode.sourceSpan);
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          astNode.sourceSpan,
+          message,
+        ));
         return null;
       }
       // Attempt binding to an HTML element property.
       return createElementPropertyAst(
-          context.elementName,
-          _getPropertyName(astNode),
-          boundValue,
-          astNode.sourceSpan,
-          context.templateContext.schemaRegistry,
-          context.templateContext.reportError);
+        context.elementName,
+        _getPropertyName(astNode),
+        boundValue,
+        astNode.sourceSpan,
+        context.templateContext.schemaRegistry,
+      );
     } on ParseException catch (e) {
-      context.templateContext.reportError(e.message, astNode.sourceSpan);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        e.toString(),
+      ));
       return null;
     }
   }
@@ -563,7 +639,10 @@ class _BindDirectivesVisitor
       return ng.BoundTextAst(element,
           context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
     } on ParseException catch (e) {
-      context.templateContext.reportError(e.message, astNode.sourceSpan);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        e.toString(),
+      ));
       return null;
     }
   }
@@ -618,7 +697,6 @@ class _BindDirectivesVisitor
         parent,
         context.i18nMetadata.forChildren,
         context.findNgContentIndex(_textCssSelector),
-        context.templateContext,
       );
     }
     return _visitAll(parent.childNodes, context);
@@ -634,6 +712,8 @@ class _ParseContext {
   final bool isTemplate;
   final SelectorMatcher<int> _ngContentIndexMatcher;
   final int _wildcardNgContentIndex;
+  final bool hasReferenceInNgContent;
+  final List<CssSelector> matchedNgContentSelectors;
 
   _ParseContext._(
       this.templateContext,
@@ -643,7 +723,9 @@ class _ParseContext {
       this.i18nMetadata,
       this.isTemplate,
       this._ngContentIndexMatcher,
-      this._wildcardNgContentIndex);
+      this._wildcardNgContentIndex,
+      this.matchedNgContentSelectors,
+      {this.hasReferenceInNgContent = false});
 
   _ParseContext.forRoot(this.templateContext)
       : elementName = '',
@@ -652,12 +734,14 @@ class _ParseContext {
         i18nMetadata = null,
         isTemplate = false,
         _ngContentIndexMatcher = null,
-        _wildcardNgContentIndex = null;
+        _wildcardNgContentIndex = null,
+        matchedNgContentSelectors = [],
+        hasReferenceInNgContent = false;
 
   factory _ParseContext.forContainer(
       ast.ContainerAst element, _ParseContext parent) {
     var templateContext = parent.templateContext;
-    var i18nMetadata = parseI18nMetadata(element.annotations, templateContext);
+    var i18nMetadata = parseI18nMetadata(element.annotations);
     _reportMissingI18nAttributesOrProperties(i18nMetadata, templateContext);
     return _ParseContext._(
       templateContext,
@@ -668,8 +752,24 @@ class _ParseContext {
       false,
       parent._ngContentIndexMatcher,
       parent._wildcardNgContentIndex,
+      parent.matchedNgContentSelectors,
     );
   }
+
+  factory _ParseContext.forNgContent(
+          ast.EmbeddedContentAst element, _ParseContext parent) =>
+      _ParseContext._(
+        parent.templateContext,
+        'ng-content',
+        [],
+        [],
+        null,
+        false,
+        parent._ngContentIndexMatcher,
+        parent._wildcardNgContentIndex,
+        parent.matchedNgContentSelectors,
+        hasReferenceInNgContent: element.reference != null,
+      );
 
   factory _ParseContext.forElement(
       ast.ElementAst element, _ParseContext parent) {
@@ -681,7 +781,7 @@ class _ParseContext {
         _location(element),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
-    var i18nMetadata = parseI18nMetadata(element.annotations, templateContext);
+    var i18nMetadata = parseI18nMetadata(element.annotations);
     _reportMissingI18nAttributesOrProperties(
       i18nMetadata,
       templateContext,
@@ -703,7 +803,8 @@ class _ParseContext {
         i18nMetadata,
         false,
         _createSelector(firstComponent),
-        _findWildcardIndex(firstComponent));
+        _findWildcardIndex(firstComponent),
+        parent.matchedNgContentSelectors);
   }
 
   factory _ParseContext.forTemplate(
@@ -716,7 +817,7 @@ class _ParseContext {
         _location(template),
         templateContext);
     var firstComponent = _firstComponent(boundDirectives);
-    var i18nMetadata = parseI18nMetadata(template.annotations, templateContext);
+    var i18nMetadata = parseI18nMetadata(template.annotations);
     _reportMissingI18nAttributesOrProperties(
       i18nMetadata,
       templateContext,
@@ -739,7 +840,8 @@ class _ParseContext {
         i18nMetadata,
         true,
         _createSelector(firstComponent),
-        _findWildcardIndex(firstComponent));
+        _findWildcardIndex(firstComponent),
+        parent.matchedNgContentSelectors);
   }
 
   CompileTokenMetadata identifierForReference(String identifier) {
@@ -749,14 +851,23 @@ class _ParseContext {
         return identifierToken(directive.directive.type);
       }
     }
-    return isTemplate ? identifierToken(Identifiers.TemplateRef) : null;
+    if (isTemplate) {
+      return Identifiers.TemplateRefToken;
+    } else if (hasReferenceInNgContent) {
+      return Identifiers.NgContentRefToken;
+    } else {
+      return null;
+    }
   }
 
   void bindLiteralToDirective(ast.AttributeAst astNode) {
     final parsedValue = astNode.value == null
         ? ASTWithSource.missingSource(EmptyExpr())
-        : templateContext.parser
-            .wrapLiteralPrimitive(astNode.value, _location(astNode));
+        : ASTWithSource(
+            LiteralPrimitive(astNode.value),
+            astNode.value,
+            _location(astNode),
+          );
     final boundValue =
         createBoundValue(astNode.name, parsedValue, astNode.sourceSpan);
     _bindToDirective(
@@ -828,7 +939,10 @@ class _ParseContext {
     if (i18nMetadata.forAttributes.containsKey(name)) {
       final metadata = i18nMetadata.forAttributes[name];
       final message = i18nMessageFromPropertyBinding(
-          value, metadata, sourceSpan, templateContext);
+        value,
+        metadata,
+        sourceSpan,
+      );
       return ng.BoundI18nMessage(message);
     } else {
       return ng.BoundExpression(value);
@@ -851,6 +965,7 @@ class _ParseContext {
     if (_ngContentIndexMatcher == null) return _wildcardNgContentIndex;
     var ngContentIndices = <int>[];
     _ngContentIndexMatcher.match(selector, (selector, ngContentIndex) {
+      matchedNgContentSelectors.add(selector);
       ngContentIndices.add(ngContentIndex);
     });
     ngContentIndices.sort();
@@ -1010,10 +1125,11 @@ class _ParseContext {
       ..removeAll(attributes.map((a) => a.name))
       ..removeAll(properties.map((p) => p.name));
     for (final name in unmatched) {
-      templateContext.reportError(
-          'Attempted to internationalize "$name", but no matching attribute or '
-          'property found',
-          i18nMetadata.forAttributes[name].origin);
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        i18nMetadata.forAttributes[name].origin,
+        'Attempted to internationalize "$name", but no matching attribute or '
+        'property found',
+      ));
     }
   }
 }
@@ -1110,28 +1226,19 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<void> {
 
 /// Validates that all bound components use `ChangeDetectionStrategy.OnPush`.
 class _OnPushValidator extends InPlaceRecursiveTemplateVisitor<void> {
-  _OnPushValidator(AstExceptionHandler exceptionHandler);
-
   @override
   void visitElement(ng.ElementAst ast, [_]) {
-    var componentAst = _firstComponent(ast.directives);
-    if (componentAst != null && !componentAst.directive.isOnPush) {
-      final componentName = _name(componentAst.directive);
-      logWarning(componentAst.sourceSpan.message(
-        '"$componentName" doesn\'t use "ChangeDetectionStrategy.OnPush", but '
-        'is used by a component that does. This is unsupported and unlikely to '
-        'work as expected.'
-        '\n\n'
-        'See ${messages.urlOnPushCompatibility}.',
-      ));
+    if (!ast.skipOnPushValidation) {
+      final componentAst = _ParseContext._firstComponent(ast.directives);
+      if (componentAst != null && !componentAst.directive.isOnPush) {
+        final name = componentAst.directive.type.name;
+        logWarning(componentAst.sourceSpan.message(
+          messages.warningForOnPushCompatibility(name),
+        ));
+      }
     }
     super.visitElement(ast, null);
   }
-
-  static ng.DirectiveAst _firstComponent(List<ng.DirectiveAst> asts) =>
-      asts.firstWhere((ast) => ast.directive.isComponent, orElse: () => null);
-
-  static String _name(CompileDirectiveMetadata metadata) => metadata.type.name;
 }
 
 /// Visitor which binds providers to element nodes.
@@ -1149,7 +1256,9 @@ class _ProviderVisitor
   // exactly when the children are visited.
   // ignore: MUST_CALL_SUPER
   ng.ElementAst visitElement(
-      ng.ElementAst ast, ProviderElementContext context) {
+    ng.ElementAst ast,
+    ProviderElementContext context,
+  ) {
     var elementContext = ProviderElementContext(_rootContext, context, false,
         ast.directives, ast.attrs, ast.references, ast.sourceSpan);
     var children = <ng.TemplateAst>[];
@@ -1158,17 +1267,22 @@ class _ProviderVisitor
     }
     elementContext.afterElement();
     return ng.ElementAst(
-        ast.name,
-        ast.attrs,
-        ast.inputs,
-        ast.outputs,
-        ast.references,
-        elementContext.transformedDirectiveAsts,
-        elementContext.transformProviders,
-        elementContext,
-        children,
-        ast.ngContentIndex,
-        ast.sourceSpan);
+      ast.name,
+      ast.attrs,
+      ast.inputs,
+      ast.outputs,
+      ast.references,
+      elementContext.transformedDirectiveAsts,
+      elementContext.transformProviders,
+      elementContext,
+      children,
+      ast.ngContentIndex,
+      ast.sourceSpan,
+      ast.matchedNgContentSelectors,
+      skipOnPushValidation: ast.skipOnPushValidation,
+      skipSchemaValidationForSelector: ast.skipSchemaValidationForSelector,
+      attributeDeps: elementContext.attributeDeps,
+    );
   }
 
   @override
@@ -1176,7 +1290,9 @@ class _ProviderVisitor
   // exactly when the children are visited.
   // ignore: MUST_CALL_SUPER
   ng.EmbeddedTemplateAst visitEmbeddedTemplate(
-      ng.EmbeddedTemplateAst ast, ProviderElementContext context) {
+    ng.EmbeddedTemplateAst ast,
+    ProviderElementContext context,
+  ) {
     var elementContext = ProviderElementContext(_rootContext, context, true,
         ast.directives, ast.attrs, ast.references, ast.sourceSpan);
     var children = <ng.TemplateAst>[];
@@ -1186,16 +1302,17 @@ class _ProviderVisitor
     elementContext.afterElement();
     ast.providers.addAll(elementContext.transformProviders);
     return ng.EmbeddedTemplateAst(
-        ast.attrs,
-        ast.references,
-        ast.variables,
-        elementContext.transformedDirectiveAsts,
-        elementContext.transformProviders,
-        elementContext,
-        children,
-        ast.ngContentIndex,
-        ast.sourceSpan,
-        hasDeferredComponent: ast.hasDeferredComponent);
+      ast.attrs,
+      ast.references,
+      ast.variables,
+      elementContext.transformedDirectiveAsts,
+      elementContext.transformProviders,
+      elementContext,
+      children,
+      ast.ngContentIndex,
+      ast.sourceSpan,
+      ast.matchedNgContentSelectors,
+    );
   }
 }
 
@@ -1248,11 +1365,7 @@ class _NamespaceVisitor extends ast.RecursiveTemplateAstVisitor<String> {
   }
 }
 
-class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
-  final AstExceptionHandler exceptionHandler;
-
-  _TemplateValidator(this.exceptionHandler);
-
+class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
   @override
   ast.TemplateAst visitElement(ast.ElementAst astNode, [_]) {
     _findDuplicateAttributes(astNode.attributes);
@@ -1274,59 +1387,61 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     if ((astNode.name == i18nDescription ||
             astNode.name.startsWith(i18nDescriptionPrefix)) &&
         (astNode.value == null || astNode.value.trim().isEmpty)) {
-      _reportError(astNode,
-          'Requires a value describing the message to help translators');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'Requires a value describing the message to help translators',
+      ));
     }
     if ((astNode.name == i18nLocale ||
             astNode.name.startsWith(i18nLocalePrefix)) &&
         (astNode.value == null || astNode.value.trim().isEmpty)) {
-      _reportError(astNode, 'Requires a value to specify a locale');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'Requires a value to specify a locale',
+      ));
     }
     if ((astNode.name == i18nMeaning ||
             astNode.name.startsWith(i18nMeaningPrefix)) &&
         (astNode.value == null || astNode.value.trim().isEmpty)) {
-      _reportError(
-          astNode,
-          'While optional, when specified the meaning must be non-empty to '
-          'disambiguate from other equivalent messages');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'While optional, when specified the meaning must be non-empty to '
+        'disambiguate from other equivalent messages',
+      ));
+    }
+    if (astNode.name == 'skipSchemaValidationFor' &&
+        (astNode.value == null || astNode.value.trim().isEmpty)) {
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'Requires a CSS selector value that is used to allow custom tags, '
+        'attributes, and events',
+      ));
+    }
+    if (!(i18nRegExp.matchAsPrefix(astNode.name) != null ||
+        astNode.name == 'preserveWhitespace' ||
+        astNode.name == 'skipOnPushValidation' ||
+        astNode.name == 'skipSchemaValidationFor')) {
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'Invalid annotation',
+      ));
     }
     return super.visitAnnotation(astNode);
   }
 
   @override
-  ast.TemplateAst visitAttribute(ast.AttributeAst astNode, [_]) {
-    // warnings
-    if (astNode.name.startsWith('bindon-')) {
-      _reportError(
-          astNode,
-          '"bindon-" for properties/events is no longer supported. Use "[()]" '
-          'instead!',
-          ParseErrorLevel.WARNING);
-    }
-    if (astNode.name.startsWith('ref-')) {
-      _reportError(
-          astNode,
-          '"ref-" for references is no longer supported. Use "#" instead!',
-          ParseErrorLevel.WARNING);
-    }
-    if (astNode.name.startsWith('var-')) {
-      _reportError(
-          astNode,
-          '"var-" for references is no longer supported. Use "#" instead!',
-          ParseErrorLevel.WARNING);
-    }
-    return super.visitAttribute(astNode);
-  }
-
-  @override
   ast.TemplateAst visitEvent(ast.EventAst astNode, [_]) {
     if (_getEventName(astNode).contains(':')) {
-      _reportError(astNode,
-          '":" is not allowed in event names: ${_getEventName(astNode)}');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        '":" is not allowed in event names: ${_getEventName(astNode)}',
+      ));
     }
     if (astNode.value == null || astNode.value.isEmpty) {
-      _reportError(astNode,
-          'events must have a bound expresssion: ${_getEventName(astNode)}');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'events must have a bound expresssion: ${_getEventName(astNode)}',
+      ));
     }
     return super.visitEvent(astNode);
   }
@@ -1334,30 +1449,22 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
   @override
   ast.TemplateAst visitReference(ast.ReferenceAst astNode, [_]) {
     if (astNode.variable.contains('-')) {
-      _reportError(astNode, '"-" is not allowed in reference names');
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        '"-" is not allowed in reference names',
+      ));
     }
     return super.visitReference(astNode);
-  }
-
-  @override
-  ast.TemplateAst visitProperty(ast.PropertyAst astNode, [_]) {
-    if (astNode.value?.startsWith('#') ?? false) {
-      _reportError(astNode,
-          '"#" inside of expressions is no longer supported. Use "let" instead!');
-    }
-    if (astNode.value?.startsWith('var ') ?? false) {
-      _reportError(astNode,
-          '"var" inside of expressions is no longer supported. Use "let" instead!');
-    }
-    return super.visitProperty(astNode);
   }
 
   void _findDuplicateAttributes(List<ast.AttributeAst> attributes) {
     final seenAttributes = <String>{};
     for (final attribute in attributes) {
       if (seenAttributes.contains(attribute.name)) {
-        _reportError(attribute,
-            'Found multiple attributes with the same name: ${attribute.name}.');
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          attribute.sourceSpan,
+          'Found multiple attributes with the same name: ${attribute.name}.',
+        ));
       } else {
         seenAttributes.add(attribute.name);
       }
@@ -1369,8 +1476,10 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     for (final property in properties) {
       final propertyName = _getPropertyName(property);
       if (seenProperties.contains(propertyName)) {
-        _reportError(property,
-            'Found multiple properties with the same name: $propertyName.');
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          property.sourceSpan,
+          'Found multiple properties with the same name: $propertyName.',
+        ));
       } else {
         seenProperties.add(propertyName);
       }
@@ -1382,20 +1491,15 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
     for (final event in events) {
       final eventName = _getEventName(event);
       if (seenEvents.contains(eventName)) {
-        _reportError(
-            event,
-            'Found multiple events with the same name: $eventName. You should '
-            'merge the handlers into a single statement.');
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          event.sourceSpan,
+          'Found multiple events with the same name: $eventName. You should '
+          'merge the handlers into a single statement.',
+        ));
       } else {
         seenEvents.add(eventName);
       }
     }
-  }
-
-  void _reportError(ast.TemplateAst astNode, String message,
-      [ParseErrorLevel level = ParseErrorLevel.FATAL]) {
-    exceptionHandler.handleParseError(
-        TemplateParseError(message, astNode.sourceSpan, level));
   }
 }
 
@@ -1405,22 +1509,20 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<Null> {
 /// template. Then we verify that each pipe is defined by a
 /// [CompilePipeMetadata] entry, and invoked with the correct number of
 /// arguments.
-class _PipeValidator extends RecursiveTemplateVisitor<Null> {
+class _PipeValidator extends RecursiveTemplateVisitor<void> {
   final Map<String, CompilePipeMetadata> _pipesByName;
-  final AstExceptionHandler _exceptionHandler;
 
   factory _PipeValidator(
     List<CompilePipeMetadata> pipes,
-    AstExceptionHandler exceptionHandler,
   ) {
     final pipesByName = <String, CompilePipeMetadata>{};
     for (var pipe in pipes) {
       pipesByName[pipe.name] = pipe;
     }
-    return _PipeValidator._(pipesByName, exceptionHandler);
+    return _PipeValidator._(pipesByName);
   }
 
-  _PipeValidator._(this._pipesByName, this._exceptionHandler);
+  _PipeValidator._(this._pipesByName);
 
   void _validatePipes(ASTWithSource ast, SourceSpan sourceSpan) {
     if (ast == null) return;
@@ -1429,20 +1531,20 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
     for (var pipeName in collector.pipeInvocations.keys) {
       final pipe = _pipesByName[pipeName];
       if (pipe == null) {
-        _exceptionHandler.handleParseError(TemplateParseError(
-            "The pipe '$pipeName' could not be found.",
-            sourceSpan,
-            ParseErrorLevel.FATAL));
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          "The pipe '$pipeName' could not be found.",
+        ));
       } else {
         for (var numArgs in collector.pipeInvocations[pipeName]) {
           // Don't include the required parameter to the left of the pipe name.
           final numParams = pipe.transformType.paramTypes.length - 1;
           if (numArgs > numParams) {
-            _exceptionHandler.handleParseError(TemplateParseError(
-                "The pipe '$pipeName' was invoked with too many arguments: "
-                '$numParams expected, but $numArgs found.',
-                sourceSpan,
-                ParseErrorLevel.FATAL));
+            CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+              sourceSpan,
+              "The pipe '$pipeName' was invoked with too many arguments: "
+              '$numParams expected, but $numArgs found.',
+            ));
           }
         }
       }
@@ -1480,7 +1582,7 @@ class _PipeValidator extends RecursiveTemplateVisitor<Null> {
   }
 }
 
-class _PipeCollector extends RecursiveAstVisitor<Object> {
+class _PipeCollector extends RecursiveAstVisitor<void> {
   /// Records the number of arguments of each pipe invocation by name.
   ///
   /// Note this is the number of arguments specified to the right-hand side of
@@ -1489,11 +1591,10 @@ class _PipeCollector extends RecursiveAstVisitor<Object> {
   final Map<String, List<int>> pipeInvocations = {};
 
   @override
-  Null visitPipe(BindingPipe ast, dynamic context) {
+  void visitPipe(BindingPipe ast, dynamic context) {
     (pipeInvocations[ast.name] ??= []).add(ast.args.length);
     ast.exp.visit(this);
     visitAll(ast.args, context);
-    return null;
   }
 }
 
@@ -1545,7 +1646,7 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<void> {
   }
 }
 
-class _SortInputsVisitor extends RecursiveTemplateVisitor<Null> {
+class _SortInputsVisitor extends RecursiveTemplateVisitor<void> {
   @override
   ng.DirectiveAst visitDirective(ng.DirectiveAst ast, _) {
     ast.inputs.sort(_orderingOf(ast.directive.inputs));

@@ -1,14 +1,13 @@
 @JS()
-@TestOn('browser')
+
 library angular.test.bootstrap.run_app_test;
 
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular/angular.dart';
-import 'package:angular/security.dart';
 import 'package:js/js.dart';
 import 'package:test/test.dart';
+import 'package:angular/angular.dart';
 
 import 'run_app_test.template.dart' as ng;
 
@@ -16,11 +15,13 @@ import 'run_app_test.template.dart' as ng;
 void main() {
   ng.initReflector();
 
-  ComponentRef<HelloWorldComponent> component;
-  Element rootDomContainer;
+  late ComponentRef<HelloWorldComponent> component;
+  late Element rootDomContainer;
 
-  FutureOr runInApp(dynamic Function() fn) {
-    ApplicationRef appRef = component.injector.get(ApplicationRef);
+  FutureOr<T> runInApp<T>(T Function() fn) {
+    final appRef = component.injector.provideType<ApplicationRef>(
+      ApplicationRef,
+    );
     return appRef.run(fn);
   }
 
@@ -28,7 +29,7 @@ void main() {
   void verifyDomAndStyles({String innerText = 'Hello World!'}) {
     expect(rootDomContainer.text, innerText);
     final h1 = rootDomContainer.querySelector('h1');
-    expect(h1.getComputedStyle().height, '100px');
+    expect(h1!.getComputedStyle().height, '100px');
   }
 
   /// Verify the `Testability` interface is working for this application.
@@ -42,7 +43,7 @@ void main() {
     expect(getAllAngularTestabilities(), isNot(hasLength(0)));
     expect(jsTestability.isStable(), isTrue, reason: 'Expected stability');
     jsTestability.whenStable(allowInterop(expectAsync1((didWork) {
-      expect(didWork, isTrue);
+      expect(didWork, isFalse, reason: 'Immediate invocation (no work)');
 
       // TODO(matanl): As part of documenting Testability, figure this out.
       Future(expectAsync0(() {
@@ -52,16 +53,40 @@ void main() {
     runInApp(() => HelloWorldComponent.doAsyncTaskAndThenRename('Universe'));
   }
 
+  /// Verifies that [SlowComponentLoader] is usable.
+  void verifySlowComponentLoaderIsUsable() {
+    final componentLoader = component.injector.provideType<SlowComponentLoader>(
+      SlowComponentLoader,
+    );
+    expect(
+      () => componentLoader.load(HelloWorldComponent, Injector.empty()),
+      returnsNormally,
+    );
+  }
+
+  /// Verifies that [SlowComponentLoader] is available but disabled.
+  void verifySlowComponentLoaderIsDisabled() {
+    final componentLoader = component.injector.provideType<SlowComponentLoader>(
+      SlowComponentLoader,
+    );
+    expect(
+      () => componentLoader.load(HelloWorldComponent, Injector.empty()),
+      throwsUnsupportedError,
+    );
+  }
+
   setUp(() {
     rootDomContainer = DivElement()..id = 'test-root-dom';
     rootDomContainer.append(Element.tag('hello-world'));
-    document.body.append(rootDomContainer);
+    document.body!.append(rootDomContainer);
     HelloWorldComponent.name = 'World';
   });
 
   tearDown(() {
     rootDomContainer.remove();
-    final ApplicationRef appRef = component.injector.get(ApplicationRef);
+    final appRef = component.injector.provideType<ApplicationRef>(
+      ApplicationRef,
+    );
     return appRef.dispose;
   });
 
@@ -69,32 +94,13 @@ void main() {
     component = runApp(ng.createHelloWorldComponentFactory());
     verifyDomAndStyles();
     verifyTestability();
-  });
-
-  test('runApp should disallow different SanitizerService instances', () async {
-    component = runApp(ng.createHelloWorldComponentFactory());
-
-    expect(
-      () {
-        return runApp(
-          ng.createHelloWorldComponentFactory(),
-          createInjector: ([parent]) {
-            return Injector.map({
-              SanitizationService: StubSanitizationService(),
-            }, parent);
-          },
-        );
-      },
-      throwsA(predicate(
-        (e) => e is AssertionError,
-      )),
-    );
+    verifySlowComponentLoaderIsDisabled();
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
     component = runApp(
       ng.createHelloWorldComponentFactory(),
-      createInjector: ([parent]) {
+      createInjector: (parent) {
         return Injector.map({
           ExceptionHandler: StubExceptionHandler(),
         }, parent);
@@ -122,6 +128,20 @@ void main() {
     component = runAppLegacy<HelloWorldComponent>(HelloWorldComponent);
     verifyDomAndStyles();
     verifyTestability();
+    verifySlowComponentLoaderIsUsable();
+  });
+
+  test('runAppLegacyAsync should bootstrap from a Type', () async {
+    component = await runAppLegacyAsync<HelloWorldComponent>(
+      HelloWorldComponent,
+      beforeComponentCreated: (_) {
+        return Future(() {
+          HelloWorldComponent.name = 'Async World';
+        });
+      },
+    );
+    verifyDomAndStyles(innerText: 'Hello Async World!');
+    verifySlowComponentLoaderIsUsable();
   });
 
   test('ApplicationRef should be injectable in a user-application', () async {
@@ -135,11 +155,12 @@ void main() {
   test('runApp should execute beforeComponentCreated in NgZone', () async {
     component = await runAppAsync<HelloWorldComponent>(
       ng.createHelloWorldComponentFactory(),
-      beforeComponentCreated: (_) async {
+      beforeComponentCreated: (injector) async {
         // Previously this would not trigger change detection, as this task
         // would not be scheduled inside of NgZone (the callback was not inside
         // of the zone).
-        expect(NgZone.isInAngularZone(), isTrue);
+        final ngZone = injector.provideType<NgZone>(NgZone);
+        expect(ngZone.inInnerZone, isTrue);
         HelloWorldComponent.doAsyncTaskAndThenRename('Galaxy');
       },
     );
@@ -182,7 +203,7 @@ class IntentionalError extends Error {}
 final isIntentionalError = const TypeMatcher<IntentionalError>();
 
 class StubExceptionHandler implements ExceptionHandler {
-  static Object lastCaughtException;
+  static Object? lastCaughtException;
   static bool instanceWasCreated = false;
 
   StubExceptionHandler() {
@@ -190,23 +211,9 @@ class StubExceptionHandler implements ExceptionHandler {
   }
 
   @override
-  void call(exception, [stackTrace, String reason]) {
+  void call(exception, [stackTrace, String? reason]) {
     lastCaughtException = exception;
   }
-}
-
-class StubSanitizationService implements SanitizationService {
-  @override
-  String sanitizeHtml(value) => '';
-
-  @override
-  String sanitizeStyle(value) => '';
-
-  @override
-  String sanitizeUrl(value) => '';
-
-  @override
-  String sanitizeResourceUrl(value) => '';
 }
 
 // TODO(matanl): Refactor testability, and re-use a JS interface.

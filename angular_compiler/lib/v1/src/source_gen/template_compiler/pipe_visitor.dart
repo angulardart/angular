@@ -5,6 +5,7 @@ import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'annotation_information.dart';
 import 'compile_metadata.dart';
@@ -29,8 +30,12 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       return null;
     }
     if (element.isPrivate) {
-      _exceptionHandler
-          .handle(ErrorMessageForElement(element, 'Pipes must be public'));
+      CompileContext.current.reportAndRecover(
+        BuildError.forElement(
+          element,
+          'Pipes must be public',
+        ),
+      );
       return null;
     }
 
@@ -40,7 +45,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   CompilePipeMetadata _createPipeMetadata(
     AnnotationInformation<ClassElement> annotation,
   ) {
-    var elementType = annotation.element.type;
+    var elementType = annotation.element.thisType;
     FunctionType transformType;
     final transformMethod = elementType.lookUpInheritedMethod('transform');
     if (transformMethod != null) {
@@ -56,14 +61,19 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
       }
     }
     if (transformType == null) {
-      _exceptionHandler.handle(ErrorMessageForElement(
-          annotation.element, 'Pipes must implement a "transform" method'));
+      CompileContext.current.reportAndRecover(
+        BuildError.forElement(
+          annotation.element,
+          'Pipes must implement a "transform" method',
+        ),
+      );
       return null;
     }
     final value = annotation.constantValue;
     return CompilePipeMetadata(
       type: annotation.element.accept(
-          CompileTypeMetadataVisitor(_library, _exceptionHandler, annotation)),
+        CompileTypeMetadataVisitor(_library, annotation, _exceptionHandler),
+      ),
       transformType: fromFunctionType(transformType),
       name: coerceString(value, 'name'),
       pure: coerceBool(value, 'pure', defaultTo: true),

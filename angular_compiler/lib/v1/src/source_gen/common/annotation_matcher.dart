@@ -2,8 +2,8 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
 
 // See internal bug b/35319372 for details.
 
@@ -54,7 +54,7 @@ bool matchAnnotation(Type type, ElementAnnotation annotation) {
   annotation.computeConstantValue();
   // TODO(b/123715184) Surface the constantEvaluationErrors.
   try {
-    return matchTypeExactly(type, annotation.constantValue);
+    return matchTypeExactly(type, annotation.computeConstantValue());
   } catch (_) {
     var message = ''
         'Could not determine type of annotation. It resolved to '

@@ -1,10 +1,9 @@
 import 'dart:html';
 
-import 'package:angular/core.dart' show DoCheck, Directive, Input;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/utilities.dart';
 
-import '../../core/change_detection/differs/default_keyvalue_differ.dart'
-    show DefaultKeyValueDiffer, KeyValueChangeRecord;
+import '../../core/change_detection/differs/default_keyvalue_differ.dart';
 
 /// The `NgStyle` directive changes an element's style based on the bound style
 /// expression:
@@ -54,19 +53,19 @@ import '../../core/change_detection/differs/default_keyvalue_differ.dart'
 /// in the binding to `setStyle()` above.
 ///
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngStyle
-/// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngStyle
+/// [ex]: https://angulardart.dev/examples/template-syntax#ngStyle
 @Directive(
   selector: '[ngStyle]',
 )
 class NgStyle implements DoCheck {
   final Element _ngElement;
-  Map<String, String> _rawStyle;
-  DefaultKeyValueDiffer _differ;
+  Map<String, String?>? _rawStyle;
+  DefaultKeyValueDiffer? _differ;
 
   NgStyle(this._ngElement);
 
   @Input('ngStyle')
-  set rawStyle(Map<String, String> v) {
+  set rawStyle(Map<String, String?>? v) {
     _rawStyle = v;
     if (_differ == null && v != null) {
       _differ = DefaultKeyValueDiffer();
@@ -75,10 +74,11 @@ class NgStyle implements DoCheck {
 
   @override
   void ngDoCheck() {
-    if (_differ == null) return;
-    var changes = _differ.diff(_rawStyle);
-    if (changes == null) return;
-    changes
+    final differ = _differ;
+    if (differ == null || !differ.diff(_rawStyle)) {
+      return;
+    }
+    differ
       ..forEachAddedItem(_setProperty)
       ..forEachChangedItem(_setProperty)
       ..forEachRemovedItem(_setProperty);

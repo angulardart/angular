@@ -1,12 +1,14 @@
+<!-- TODO(b/171230953): Remove null assertions if able. -->
+
 <!-- Loading view -->
 <div *ngIf="item == null" class="notice">Loading...</div>
 
 <!-- Loaded view -->
 <template [ngIf]="item != null">
-  <item [item]="item"></item>
-  <div *ngIf="item['comments'].isEmpty">There are no comments yet.</div>
+  <item [item]="item!"></item>
+  <div *ngIf="readCommentsAsIterable().isEmpty">There are no comments yet.</div>
   <comment
-      *ngForIdentity="let comment of item['comments']"
+      *ngForIdentity="let comment of readCommentsAsIterable()"
       [comment]="comment">
   </comment>
 </template>

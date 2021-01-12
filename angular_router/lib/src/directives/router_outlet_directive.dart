@@ -1,11 +1,7 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/utilities.dart';
 
 import '../lifecycle.dart';
 import '../route_definition.dart';
@@ -35,19 +31,19 @@ import '../router_hook.dart';
 class RouterOutlet implements OnInit, OnDestroy {
   final ViewContainerRef _viewContainerRef;
   final Router _router;
-  final RouterHook _routerHook;
+  final RouterHook? _routerHook;
 
   // A mapping of {ComponentFactory} -> created {ComponentRef}.
   final _loadedComponents = <ComponentFactory<Object>, ComponentRef<Object>>{};
 
   // Factory that was used to create the active component.
-  ComponentFactory<Object> _activeComponentFactory;
+  ComponentFactory<Object>? _activeComponentFactory;
 
   // Route definitions registered with this outlet.
   List<RouteDefinition> _routes = const [];
 
   RouterOutlet(
-    @Optional() RouterOutletToken token,
+    @Optional() RouterOutletToken? token,
     this._viewContainerRef,
     this._router,
     @Optional() this._routerHook,
@@ -55,7 +51,7 @@ class RouterOutlet implements OnInit, OnDestroy {
     token?.routerOutlet = this;
   }
 
-  ComponentRef<Object> get _activeComponent {
+  ComponentRef<Object>? get _activeComponent {
     return _loadedComponents[_activeComponentFactory];
   }
 
@@ -95,7 +91,7 @@ class RouterOutlet implements OnInit, OnDestroy {
   }
 
   /// Route definitions registered with this outlet.
-  List<RouteDefinition> get routes => _routes ?? [];
+  List<RouteDefinition> get routes => _routes;
 
   @override
   void ngOnInit() {
@@ -130,16 +126,16 @@ class RouterOutlet implements OnInit, OnDestroy {
   ///
   /// If the component has already been activated and is reusable, a cached
   /// instance will be reused instead of creating a new one.
-  Future<Null> activate(
+  Future<void> activate(
     ComponentFactory<Object> componentFactory,
-    RouterState oldState,
+    RouterState? oldState,
     RouterState newState,
   ) async {
     final activeComponent = _activeComponent;
     if (activeComponent != null) {
       final shouldReuse = await _shouldReuse(
         activeComponent.instance,
-        oldState,
+        oldState!,
         newState,
       );
       if (shouldReuse) {
@@ -172,8 +168,9 @@ class RouterOutlet implements OnInit, OnDestroy {
     if (instance is CanReuse) {
       return instance.canReuse(oldState, newState);
     }
-    if (_routerHook != null) {
-      return _routerHook.canReuse(instance, oldState, newState);
+    final routerHook = _routerHook;
+    if (routerHook != null) {
+      return routerHook.canReuse(instance, oldState, newState);
     }
     return false;
   }

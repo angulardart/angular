@@ -1,8 +1,9 @@
 import 'dart:html';
-import 'package:angular/core.dart' show DoCheck, Input, OnDestroy, Directive;
+
 import 'package:angular/src/core/change_detection/differs/default_iterable_differ.dart';
 import 'package:angular/src/core/change_detection/differs/default_keyvalue_differ.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/utilities.dart';
 
 /// The [NgClass] directive conditionally adds and removes CSS classes on an
 /// HTML element based on an expression's evaluation result.
@@ -45,7 +46,7 @@ import 'package:angular/src/runtime.dart';
 /// For details, see the [`ngClass` discussion in the Template Syntax][guide]
 /// page.
 ///
-/// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngClass
+/// [ex]: https://angulardart.dev/examples/template-syntax#ngClass
 /// [guide]: https://webdev.dartlang.org/angular/guide/template-syntax.html#ngClass
 @Directive(
   selector: '[ngClass]',
@@ -53,16 +54,18 @@ import 'package:angular/src/runtime.dart';
 class NgClass implements DoCheck, OnDestroy {
   // Separator used to split string to parts - can be any number of
   // whitespaces, new lines or tabs.
-  static RegExp _separator;
+  static final _separator = RegExp(r'\s+');
   final Element _ngEl;
-  DefaultIterableDiffer _iterableDiffer;
-  DefaultKeyValueDiffer _keyValueDiffer;
+
+  DefaultIterableDiffer? _iterableDiffer;
+  DefaultKeyValueDiffer? _keyValueDiffer;
+
   List<String> _initialClasses = [];
-  dynamic _rawClass;
+  Object? _rawClass;
   NgClass(this._ngEl);
 
   @Input('class')
-  set initialClasses(String v) {
+  set initialClasses(String? v) {
     _applyInitialClasses(true);
     _initialClasses = v is String ? v.split(' ') : [];
     _applyInitialClasses(false);
@@ -70,17 +73,16 @@ class NgClass implements DoCheck, OnDestroy {
   }
 
   @Input('ngClass')
-  set rawClass(
-      dynamic /* String | List < String > | Set< String > | Map < String , dynamic > */ v) {
+  set rawClass(Object? stringOrIterableOrMap) {
     _cleanupClasses(_rawClass);
-    if (v is String) {
-      v = v.split(' ');
+    if (stringOrIterableOrMap is String) {
+      stringOrIterableOrMap = stringOrIterableOrMap.split(' ');
     }
-    _rawClass = v;
+    _rawClass = stringOrIterableOrMap;
     _iterableDiffer = null;
     _keyValueDiffer = null;
-    if (v != null) {
-      if (v is Iterable<Object>) {
+    if (stringOrIterableOrMap != null) {
+      if (stringOrIterableOrMap is Iterable<Object?>) {
         _iterableDiffer = DefaultIterableDiffer();
       } else {
         _keyValueDiffer = DefaultKeyValueDiffer();
@@ -90,17 +92,16 @@ class NgClass implements DoCheck, OnDestroy {
 
   @override
   void ngDoCheck() {
-    if (_iterableDiffer != null) {
-      var changes = _iterableDiffer.diff(unsafeCast(_rawClass));
+    final iterableDiffer = _iterableDiffer;
+    if (iterableDiffer != null) {
+      var changes = iterableDiffer.diff(unsafeCast(_rawClass));
       if (changes != null) {
         _applyIterableChanges(changes);
       }
     }
-    if (_keyValueDiffer != null) {
-      var changes = _keyValueDiffer.diff(unsafeCast(_rawClass));
-      if (changes != null) {
-        _applyKeyValueChanges(changes);
-      }
+    final keyValueDiffer = _keyValueDiffer;
+    if (keyValueDiffer != null && keyValueDiffer.diff(unsafeCast(_rawClass))) {
+      _applyKeyValueChanges(keyValueDiffer);
     }
   }
 
@@ -109,7 +110,7 @@ class NgClass implements DoCheck, OnDestroy {
     _cleanupClasses(_rawClass);
   }
 
-  void _cleanupClasses(dynamic /* Iterable | Map */ rawClassVal) {
+  void _cleanupClasses(Object? /* Iterable | Map */ rawClassVal) {
     _applyClasses(rawClassVal, true);
     _applyInitialClasses(false);
   }
@@ -148,18 +149,18 @@ class NgClass implements DoCheck, OnDestroy {
   /// Iterable<Object> since we need to walk it in this method anyway.
   ///
   /// Likewise, if [rawClassVal] is a Map, its keys should all be strings.
-  void _applyClasses(dynamic /* Iterable | Map */ rawClassVal, bool isCleanup) {
+  void _applyClasses(Object? /* Iterable | Map */ rawClassVal, bool isCleanup) {
     if (rawClassVal != null) {
-      if (rawClassVal is List<Object>) {
+      if (rawClassVal is List<Object?>) {
         for (var i = 0, len = rawClassVal.length; i < len; i++) {
           _toggleClass(unsafeCast(rawClassVal[i]), !isCleanup);
         }
-      } else if (rawClassVal is Iterable<Object>) {
+      } else if (rawClassVal is Iterable<Object?>) {
         for (var className in rawClassVal) {
           _toggleClass(unsafeCast(className), !isCleanup);
         }
       } else {
-        (rawClassVal as Map<Object, Object>).forEach((className, expVal) {
+        (rawClassVal as Map<Object, Object?>).forEach((className, expVal) {
           if (expVal != null) {
             _toggleClass(unsafeCast(className), !isCleanup);
           }
@@ -174,7 +175,6 @@ class NgClass implements DoCheck, OnDestroy {
     var el = _ngEl;
     var classList = el.classes;
     if (className.contains(' ')) {
-      _separator ??= RegExp(r'\s+');
       var classes = className.split(_separator);
       for (var i = 0, len = classes.length; i < len; i++) {
         if (enabled) {

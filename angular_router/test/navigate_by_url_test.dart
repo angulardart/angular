@@ -1,13 +1,12 @@
-@TestOn('browser')
-import 'dart:async';
+// @dart=2.9
 
+import 'package:collection/collection.dart';
+import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/src/router/router_impl.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:collection/collection.dart';
-import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
 
 void main() {
   tearDown(disposeAnyRunningTest);
@@ -125,7 +124,7 @@ class NavigationParamsMatcher extends Matcher {
   NavigationParamsMatcher(this.navigationParams);
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(item, void _) {
     return item is NavigationParams &&
         const MapEquality()
             .equals(item.queryParameters, navigationParams.queryParameters) &&
@@ -143,12 +142,20 @@ class NavigationParamsMatcher extends Matcher {
 
   @override
   Description describeMismatch(
-      item, Description mismatchDescription, Map matchState, bool verbose) {
+    item,
+    Description mismatchDescription,
+    Map<Object, Object> matchState,
+    bool verbose,
+  ) {
     if (item is NavigationParams) {
       return _describeNavigationParams(mismatchDescription.add('has '), item);
     }
-    return super
-        .describeMismatch(item, mismatchDescription, matchState, verbose);
+    return super.describeMismatch(
+      item,
+      mismatchDescription,
+      matchState,
+      verbose,
+    );
   }
 
   Description _describeNavigationParams(

@@ -2,8 +2,7 @@ import 'package:source_gen/source_gen.dart';
 
 /// Most metadata is now in this sub-directory.
 const _compilerMetadata = ''
-    'package:angular_compiler'
-    '/v1/src/metadata';
+    'package:angular/src/meta';
 const _directives = '$_compilerMetadata/directives.dart';
 const _diArguments = '$_compilerMetadata/di_arguments.dart';
 const _diGeneratedInjector = '$_compilerMetadata/di_generate_injector.dart';
@@ -13,17 +12,10 @@ const _diTokens = '$_compilerMetadata/di_tokens.dart';
 const _typed = '$_compilerMetadata/typed.dart';
 const _changeDetectionLink = '$_compilerMetadata/change_detection_link.dart';
 
-/// For legacy reasons some metadata-like classes are not in the compiler.
-const _runtimeMetadata = ''
-    'package:angular';
-const _componentState =
-    '$_runtimeMetadata/src/core/change_detection/component_state.dart';
-
 // Class metadata.
 const $Directive = TypeChecker.fromUrl('$_directives#Directive');
 const $Component = TypeChecker.fromUrl('$_directives#Component');
 const $Injectable = TypeChecker.fromUrl('$_diArguments#Injectable');
-const $ComponentState = TypeChecker.fromUrl('$_componentState#ComponentState');
 
 // Parameter metadata.
 const $Inject = TypeChecker.fromUrl('$_diArguments#Inject');

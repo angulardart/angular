@@ -1,15 +1,16 @@
-import 'dart:async';
+// @dart=2.9
+
 import 'dart:io';
 
-import 'package:glob/glob.dart';
-import 'package:angular/src/build.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
-import 'package:logging/logging.dart';
 import 'package:build/build.dart';
+import 'package:build/experiments.dart';
 import 'package:build_resolvers/build_resolvers.dart';
 import 'package:build_test/build_test.dart' hide testBuilder;
+import 'package:glob/glob.dart';
+import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+import 'package:angular/src/build.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 /// A 'test' build process (similar to the normal one).
 final Builder _testAngularBuilder = MultiplexingBuilder([
@@ -30,17 +31,14 @@ final Future<PackageAssetReader> _packageAssets = (() async {
   if (!FileSystemEntity.isFileSync('$path/angular/lib/angular.dart')) {
     throw StateError('Could not find $path/angular/lib/angular.dart');
   }
-  if (!FileSystemEntity.isFileSync(
-    '$path/angular_compiler/lib/v1/src/metadata.dart',
-  )) {
-    throw StateError(
-      'Could not find $path/angular_compiler/lib/v1/src/metadata.dart',
-    );
+  final pathToMeta = '$path/angular/lib/src/meta.dart';
+  if (!FileSystemEntity.isFileSync(pathToMeta)) {
+    throw StateError('Could not find $pathToMeta');
   }
   print('file://$path/angular/lib');
   return PackageAssetReader.forPackages({
-    ngPackage: 'file://$path/angular',
-    ngCompiler: 'file://$path/angular_compiler',
+    ngPackage: '$path/angular/',
+    ngCompiler: '$path/angular_compiler/',
   });
 })();
 
@@ -55,9 +53,10 @@ const ngImport = 'package:$ngPackage/angular.dart';
 final _ngFiles = Glob('lib/**.dart');
 
 /// Modeled after `package:build_test/build_test.dart#testBuilder`.
-Future<Null> _testBuilder(
+Future<void> _testBuilder(
   Builder builder,
   Map<String, String> sourceAssets, {
+  List<AssetId> runBuilderOn,
   void Function(LogRecord) onLog,
   String rootPackage,
 }) async {
@@ -76,11 +75,13 @@ Future<Null> _testBuilder(
 
   // Load user sources.
   final writer = InMemoryAssetWriter();
-  final inputIds = <AssetId>[];
+  final inputIds = runBuilderOn ?? [];
   sourceAssets.forEach((serializedId, contents) {
     final id = makeAssetId(serializedId);
     sources.cacheStringAsset(id, contents);
-    inputIds.add(id);
+    if (runBuilderOn == null) {
+      inputIds.add(id);
+    }
   });
 
   if (inputIds.isEmpty) {
@@ -96,21 +97,22 @@ Future<Null> _testBuilder(
 
   final logger = Logger('_testBuilder');
   final logSub = logger.onRecord.listen(onLog);
-  await runBuildZoned(
+  await runWithContext(
+    // This is test-only code (just not in "test/").
+    // ignore: invalid_use_of_visible_for_testing_member
+    CompileContext.forTesting(),
     () {
-      return runBuilder(
-        builder,
-        inputIds,
-        reader,
-        writer,
-        AnalyzerResolvers(),
-        logger: logger,
+      return withEnabledExperiments(
+        () => runBuilder(
+          builder,
+          inputIds,
+          reader,
+          writer,
+          AnalyzerResolvers(),
+          logger: logger,
+        ),
+        ['non-nullable'],
       );
-    },
-    zoneValues: {
-      CompileContext: CompileContext(
-        policyExceptions: {},
-      ),
     },
   );
   await logSub.cancel();
@@ -131,9 +133,10 @@ Future<Null> _testBuilder(
 /// ```
 ///
 /// Note that `package:angular/**.dart` is always included.
-Future<Null> compilesExpecting(
+Future<void> compilesExpecting(
   String input, {
   String inputSource,
+  Set<AssetId> runBuilderOn,
   Map<String, String> include,
   Object /*Matcher|Iterable<Matcher>*/ errors,
   Object /*Matcher|Iterable<Matcher>*/ warnings,
@@ -155,9 +158,14 @@ Future<Null> compilesExpecting(
 
   // Run the builder.
   final records = <Level, List<LogRecord>>{};
-  await _testBuilder(_testAngularBuilder, sources, onLog: (record) {
-    records.putIfAbsent(record.level, () => []).add(record);
-  });
+  await _testBuilder(
+    _testAngularBuilder,
+    sources,
+    runBuilderOn: runBuilderOn?.toList(),
+    onLog: (record) {
+      records.putIfAbsent(record.level, () => []).add(record);
+    },
+  );
 
   expectLogRecords(records[Level.SEVERE], errors, 'Errors');
   expectLogRecords(records[Level.WARNING], warnings, 'Warnings');
@@ -190,14 +198,16 @@ String formattedLogMessage(LogRecord record) {
 /// Returns a future that completes, asserting no errors or warnings occur.
 ///
 /// An alias [compilesExpecting] with `errors` and `warnings` asserting empty.
-Future<Null> compilesNormally(
+Future<void> compilesNormally(
   String input, {
   String inputSource,
   Map<String, String> include,
+  Set<AssetId> runBuilderOn,
 }) =>
     compilesExpecting(
       input,
       inputSource: inputSource,
+      runBuilderOn: runBuilderOn,
       include: include,
       errors: isEmpty,
       warnings: isEmpty,

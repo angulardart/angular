@@ -1,0 +1,14 @@
+name: examples.angular_components_integration
+
+environment:
+  sdk: ">=2.9.0 <3.0.0"
+
+dependencies:
+  args: ^1.6.0
+  path: ^1.7.0
+  git: ^1.1.0
+  logging: ^0.11.0
+  yaml: ^2.2.1
+
+dev_dependencies:
+  pedantic: ^1.0.0

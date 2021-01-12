@@ -1,46 +1,23 @@
-# angular_test
-
 [![Pub package](https://img.shields.io/pub/v/angular_test.svg)][pub_angular_test]
 
-Testing infrastructure [AngularDart][webdev_angular],
-used with the [`build_runner` package][build_runner].
+Testing infrastructure for [AngularDart][webdev_angular], used with the
+[`build_runner` package][build_runner].
 
 Documentation and examples:
 
 * [`_tests/test/`][test_folder] (tests for the main dart-lang/angular package)
-* [AngularDart component testing documentation][webdev_testing]:
-  * [Running Component Tests](https://angulardart.dev/guide/testing/component/running-tests)
-  * [Component Testing: Basics](https://angulardart.dev/guide/testing/component/basics)
-  * Pages for individual topics, such as
-    [page objects](https://angulardart.dev/guide/testing/component/page-objects)
-    and
-    [user actions](https://angulardart.dev/guide/testing/component/simulating-user-action)
-
-**NOTE**: Some of the guides above are out of date the for the latest `angular_test` versions.
 
 [pub_angular_test]: https://pub.dev/packages/angular_test
 [pub_test]: https://pub.dev/packages/test
 [build_runner]: https://pub.dev/packages/build_runner
 [test_folder]: https://github.com/dart-lang/angular/tree/master/_tests/test
-[webdev_angular]: https://angulardart.dev/
-[webdev_testing]: https://angulardart.dev/guide/testing/component
+[webdev_angular]: https://pub.dev/packages/angular
 
 Additional resources:
 
-* [API reference][dartdoc]
-* Community/support:
-  [mailing list][],
-  [Gitter chat room][]
-* GitHub repo (dart-lang/angular):
-  [source code](https://github.com/dart-lang/angular),
-  [test issues][]
-* Pub packages: [angular_test][pub_angular_test], [build_runner][build_runner], [test][pub_test]
+*   Community/support: [Gitter chat room]
 
-[dartdoc]: https://www.dartdocs.org/documentation/angular_test/latest
 [Gitter chat room]: https://gitter.im/dart-lang/angular
-[mailing list]: https://groups.google.com/a/dartlang.org/forum/#!forum/web
-[test issues]: https://github.com/dart-lang/angular/issues?q=is%3Aopen+is%3Aissue+label%3A%22package%3A+angular_test%22
-[source code]: https://github.com/dart-lang/angular
 
 ## Overview
 

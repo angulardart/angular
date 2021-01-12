@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 /// A light-weight representation of a browser URL.
 ///
 /// This class primarily exists to avoid a direct dependency on [Uri].
@@ -28,7 +24,6 @@ class Url {
   }
 
   static String trimSlashes(String path) {
-    if (path == null) return null;
     if (path.startsWith('/')) path = path.substring(1);
     if (path.endsWith('/')) path = path.substring(0, path.length - 1);
 
@@ -44,16 +39,15 @@ class Url {
   /// Query parameters.
   final Map<String, String> queryParameters;
 
-  Url(String path, {String fragment = '', Map<String, String> queryParameters})
-      : path = path ?? '',
-        fragment = fragment ?? '',
+  Url(this.path, {String? fragment, Map<String, String>? queryParameters})
+      : fragment = fragment ?? '',
         queryParameters = Map.unmodifiable(queryParameters ?? {});
 
   /// Returns as a URL string that could be used for navigation/link sharing.
   String toUrl() {
     final buffer = StringBuffer();
     buffer.write(path);
-    if (queryParameters?.isNotEmpty == true) {
+    if (queryParameters.isNotEmpty) {
       buffer
         ..write('?')
         ..writeAll(queryParameters.keys.map((k) {
@@ -62,7 +56,7 @@ class Url {
           return v != null ? '$k=${Uri.encodeComponent(v)}' : k;
         }), '&');
     }
-    if (fragment?.isNotEmpty == true) {
+    if (fragment.isNotEmpty) {
       buffer..write('#')..write(fragment);
     }
     return buffer.toString();

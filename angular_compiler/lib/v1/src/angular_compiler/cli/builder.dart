@@ -1,11 +1,11 @@
-import 'dart:async';
-
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v1/src/angular_compiler/cli/messages.dart';
+import 'package:angular_compiler/v2/asset.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'flags.dart';
-import 'logging.dart';
 
 /// Compiles `.dart` files and `.html`, `.css` files for AngularDart.
 ///
@@ -23,18 +23,41 @@ class Compiler implements Generator {
   //
   // Once we're able to remove this parameter, we should.
   final Future<String> Function(LibraryReader, BuildStep, CompilerFlags) _build;
+
   final CompilerFlags _flags;
-  final Map<Object, Object> _context;
 
   /// Create a new [Compiler] instance that uses the provided flag and builder.
-  const Compiler(this._flags, this._build, [this._context = const {}]);
+  const Compiler(this._flags, this._build);
 
   @override
   Future<String> generate(LibraryReader library, BuildStep buildStep) {
-    return runBuildZoned(
-      () => _build(library, buildStep, _flags),
-      zoneValues: _context,
+    final isNullSafe = library.element.isNonNullableByDefault;
+    return runWithContext(
+      CompileContext(
+        buildStep.inputId,
+        policyExceptions: _flags.policyExceptions,
+        policyExceptionsInPackages: _flags.policyExceptionInPackages,
+        isNullSafe: isNullSafe,
+        enableDevTools: _flags.enableDevTools,
+      ),
+      () {
+        if (isNullSafe && !CompileContext.current.emitNullSafeCode) {
+          _refuseToCompileNullSafeCodeWithoutAllowList(
+            buildStep.inputId.toRelativeUrl(),
+          );
+        }
+        return _build(library, buildStep, _flags);
+      },
     );
+  }
+
+  static void _refuseToCompileNullSafeCodeWithoutAllowList(
+    String asset,
+  ) {
+    // TODO(b/155658157): Once the bootstrap script is removed, remove this.
+    if (asset.endsWith('.dart.browser_test.dart')) {
+      return;
+    }
   }
 
   /// Returns the compiler wrapped as a [Builder].

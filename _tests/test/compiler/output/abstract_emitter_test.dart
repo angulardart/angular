@@ -1,4 +1,5 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/src/compiler/output/abstract_emitter.dart'
     show escapeSingleQuoteString;

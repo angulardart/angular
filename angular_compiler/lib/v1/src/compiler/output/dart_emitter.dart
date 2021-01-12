@@ -14,9 +14,14 @@ import 'path_util.dart' show getImportModulePath;
 var _debugModuleUrl = 'asset://debug/lib';
 var _METADATA_MAP_VAR = '_METADATA';
 String debugOutputAstAsDart(
-    dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast) {
-  var converter = _DartEmitterVisitor(_debugModuleUrl);
-  var ctx = EmitterVisitorContext.createRoot({});
+  dynamic /* o . Statement | o . Expression | o . Type | List < dynamic > */ ast, {
+  bool emitNullSafeSyntax = false,
+}) {
+  var converter = _DartEmitterVisitor(
+    _debugModuleUrl,
+    emitNullSafeSyntax: emitNullSafeSyntax,
+  );
+  var ctx = EmitterVisitorContext.createRoot();
   List<Object> asts;
   if (ast is! List<Object>) {
     asts = [ast];
@@ -36,27 +41,30 @@ String debugOutputAstAsDart(
 }
 
 class DartEmitter implements OutputEmitter {
+  /// Whether to emit null-safe syntax (i.e. it would be valid to do so).
+  final bool emitNullSafeSyntax;
+
+  DartEmitter({
+    this.emitNullSafeSyntax = false,
+  });
+
   @override
   String emitStatements(
     String moduleUrl,
     List<o.Statement> stmts,
-    Map<String, String> deferredModules,
   ) {
     final srcParts = <String>[];
-    // Note: We are not creating a library here as Dart does not need it.
-    // Dart analyzer might complain about it though.
-    final converter = _DartEmitterVisitor(moduleUrl);
-    final ctx = EmitterVisitorContext.createRoot(deferredModules);
+    final converter = _DartEmitterVisitor(
+      moduleUrl,
+      emitNullSafeSyntax: emitNullSafeSyntax,
+    );
+    final ctx = EmitterVisitorContext.createRoot();
     converter.visitAllStatements(stmts, ctx);
     converter.importsWithPrefixes.forEach((importedModuleUrl, prefix) {
       var importPath = getImportModulePath(moduleUrl, importedModuleUrl);
       srcParts.add(prefix.isEmpty
           ? "import '$importPath';"
           : "import '$importPath' as $prefix;");
-    });
-    deferredModules.forEach((importedModuleUrl, prefix) {
-      var importPath = getImportModulePath(moduleUrl, importedModuleUrl);
-      srcParts.add("import '$importPath' deferred as $prefix;");
     });
     srcParts.add(ctx.toSource());
     return srcParts.join('\n');
@@ -102,7 +110,13 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   /// Whether this is currently emitting a new instance of a class.
   var _inInvokeOrNewInstance = false;
 
-  _DartEmitterVisitor(this._moduleUrl) : super(true);
+  _DartEmitterVisitor(
+    this._moduleUrl, {
+    @required bool emitNullSafeSyntax,
+  }) : super(
+          true,
+          emitNullSafeSyntax: emitNullSafeSyntax,
+        );
 
   @override
   void visitNamedExpr(o.NamedExpr ast, EmitterVisitorContext context) {
@@ -117,11 +131,24 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
 
   @override
   void visitDeclareVarStmt(
-      o.DeclareVarStmt stmt, EmitterVisitorContext context) {
+    o.DeclareVarStmt stmt,
+    EmitterVisitorContext context,
+  ) {
     if (stmt.hasModifier(o.StmtModifier.Static)) {
       context.print('static ');
     }
-    if (stmt.hasModifier(o.StmtModifier.Final)) {
+    if (stmt.hasModifier(o.StmtModifier.Late)) {
+      var modifier = 'late';
+      if (stmt.hasModifier(o.StmtModifier.Final)) {
+        modifier = '${modifier} final';
+      }
+      if (!emitNullSafeSyntax) {
+        modifier = '/*$modifier*/ ';
+      } else {
+        modifier = '$modifier ';
+      }
+      context.print(modifier);
+    } else if (stmt.hasModifier(o.StmtModifier.Final)) {
       context.print('final ');
     } else if (stmt.hasModifier(o.StmtModifier.Const)) {
       _inConstContext = true;
@@ -203,7 +230,18 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (field.hasModifier(o.StmtModifier.Static)) {
       context.print('static ');
     }
-    if (field.hasModifier(o.StmtModifier.Final)) {
+    if (field.hasModifier(o.StmtModifier.Late)) {
+      var modifier = 'late';
+      if (field.hasModifier(o.StmtModifier.Final)) {
+        modifier = '${modifier} final';
+      }
+      if (!emitNullSafeSyntax) {
+        modifier = '/*$modifier*/ ';
+      } else {
+        modifier = '$modifier ';
+      }
+      context.print(modifier);
+    } else if (field.hasModifier(o.StmtModifier.Final)) {
       context.print('final ');
     } else if (field.type == null) {
       context.print('var ');
@@ -454,6 +492,14 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     }
     if (ast.type == o.DYNAMIC_TYPE) {
       context.print('<dynamic>');
+    } else if (ast.type == o.OBJECT_TYPE) {
+      context.print('<Object>');
+    } else {
+      // TODO(b/171268745): Remove one-off hack for a const <Object>[].
+      final type = ast.type;
+      if (type is o.ArrayType && type.of == o.OBJECT_TYPE) {
+        context.print('<Object>');
+      }
     }
     super.visitLiteralArrayExpr(ast, context);
     _inConstContext = wasInConstContext;
@@ -532,6 +578,9 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinTypeName.Dynamic:
         typeStr = 'dynamic';
         break;
+      case o.BuiltinTypeName.Object:
+        typeStr = 'Object';
+        break;
       case o.BuiltinTypeName.Function:
         typeStr = 'Function';
         break;
@@ -550,18 +599,31 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       case o.BuiltinTypeName.Null:
         typeStr = 'Null';
         break;
+      case o.BuiltinTypeName.Never:
+        typeStr = emitNullSafeSyntax ? 'Never' : 'Null /*Never*/';
+        break;
       case o.BuiltinTypeName.Void:
         typeStr = 'void';
         break;
       default:
         throw StateError('Unsupported builtin type ${type.name}');
     }
+    if (type.modifiers.contains(o.TypeModifier.Nullable)) {
+      final suffix = emitNullSafeSyntax ? '?' : '/*?*/';
+      typeStr = '$typeStr$suffix';
+    }
     context.print(typeStr);
   }
 
   @override
   void visitExternalType(o.ExternalType ast, EmitterVisitorContext context) {
-    _visitIdentifier(ast.value, ast.typeParams, context);
+    final nullable = ast.modifiers.contains(o.TypeModifier.Nullable);
+    _visitIdentifier(
+      ast.value,
+      ast.typeParams,
+      context,
+      nullable: nullable,
+    );
   }
 
   @override
@@ -576,6 +638,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       param.visitType(this, context);
     }, type.paramTypes, context, ',');
     context.print(')');
+    if (type.modifiers.contains(o.TypeModifier.Nullable)) {
+      final postfix = emitNullSafeSyntax ? '?' : '/*?*/';
+      context.print(postfix);
+    }
   }
 
   @override
@@ -587,6 +653,10 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       context.print('dynamic');
     }
     context.print('>');
+    if (type.modifiers.contains(o.TypeModifier.Nullable)) {
+      final postfix = emitNullSafeSyntax ? '?' : '/*?*/';
+      context.print(postfix);
+    }
   }
 
   @override
@@ -613,30 +683,32 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _visitIdentifier(
     CompileIdentifierMetadata value,
     List<o.OutputType> typeParams,
-    EmitterVisitorContext context,
-  ) {
+    EmitterVisitorContext context, {
+    bool nullable = false,
+  }) {
     final prefix = _computeModulePrefix(
       value,
       context,
-      isDeferredAndNewInstance: _inInvokeOrNewInstance &&
-          context.deferredModules.containsKey(value.moduleUrl),
     );
-    _emitIdentifier(value.name, typeParams, context, prefix);
+    String postfix;
+    if (nullable) {
+      postfix = emitNullSafeSyntax ? '?' : '/*?*/';
+    }
+    _emitIdentifier(
+      value.name,
+      typeParams,
+      context,
+      prefix: prefix,
+      postfix: postfix,
+    );
   }
 
   /// Determines the import prefix for accessing symbols for [value].
   String _computeModulePrefix(
     CompileIdentifierMetadata value,
-    EmitterVisitorContext context, {
-    @required bool isDeferredAndNewInstance,
-  }) {
+    EmitterVisitorContext context,
+  ) {
     final moduleUrl = value.moduleUrl;
-    // Deferred prefixes can't be referenced in const contexts. This covers a
-    // rare edge case where a component is used @deferred by a component in the
-    // same defining library.
-    if (!_inConstContext && isDeferredAndNewInstance) {
-      return context.deferredModules[moduleUrl];
-    }
     var prefix = '';
     if (moduleUrl != null && moduleUrl != _moduleUrl) {
       prefix = importsWithPrefixes[moduleUrl];
@@ -650,8 +722,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       }
     }
     // The naming is unfortunate, but this usually (but not always) refers to
-    // static members or other accessors (such as the "loadLibrary" call for
-    // deferred libraries).
+    // static members or other accessors.
     if (value.emitPrefix && value.prefix?.isNotEmpty == true) {
       if (prefix.isNotEmpty) {
         prefix = '$prefix.';
@@ -665,14 +736,18 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
   void _emitIdentifier(
     String identifier,
     List<o.OutputType> typeParams,
-    EmitterVisitorContext context, [
+    EmitterVisitorContext context, {
     String prefix,
-  ]) {
+    String postfix,
+  }) {
     if (prefix?.isNotEmpty == true) {
       context.print(identifier.isEmpty ? prefix : '$prefix.');
     }
     context.print(identifier);
     _visitTypeArguments(typeParams, context);
+    if (postfix?.isNotEmpty == true) {
+      context.print(postfix);
+    }
   }
 }
 

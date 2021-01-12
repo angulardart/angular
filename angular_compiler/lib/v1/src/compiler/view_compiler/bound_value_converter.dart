@@ -5,7 +5,7 @@ import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_view.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/constants.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'expression_converter.dart' show NameResolver, convertCdExpressionToIr;
 
@@ -83,7 +83,9 @@ abstract class BoundValueConverter
       return _wrapHandler(tearOff, handler.numArgs);
     }
     final message = 'Expected method for event binding.';
-    throwFailure(handler.sourceSpan?.message(message) ?? message);
+    throw BuildError.withoutContext(
+      handler.sourceSpan?.message(message) ?? message,
+    );
   }
 
   /// Converts a [method] invocation to a tear-off.

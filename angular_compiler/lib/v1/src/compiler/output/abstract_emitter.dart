@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 import 'output_ast.dart' as o;
 
 final _singleQuoteEscape = RegExp(r'' "'" r'|\\|\n|\r|\$');
@@ -5,11 +7,7 @@ final catchErrorVar = o.variable('error');
 final catchStackVar = o.variable('stack');
 
 abstract class OutputEmitter {
-  String emitStatements(
-    String moduleUrl,
-    List<o.Statement> stmts,
-    Map<String, String> deferredModules,
-  );
+  String emitStatements(String moduleUrl, List<o.Statement> stmts);
 }
 
 class _EmittedLine {
@@ -19,19 +17,17 @@ class _EmittedLine {
 }
 
 class EmitterVisitorContext {
-  final Map<String, String> deferredModules;
   int _indent;
   int _outputPos = 0;
 
   final List<_EmittedLine> _lines;
   final List<o.ClassStmt> _classes = [];
 
-  static EmitterVisitorContext createRoot(Map<String, String> deferredModules) {
-    return EmitterVisitorContext(0, deferredModules);
+  static EmitterVisitorContext createRoot() {
+    return EmitterVisitorContext(0);
   }
 
-  EmitterVisitorContext(this._indent, this.deferredModules)
-      : _lines = [_EmittedLine(_indent)];
+  EmitterVisitorContext(this._indent) : _lines = [_EmittedLine(_indent)];
 
   _EmittedLine get _currentLine {
     return _lines[_lines.length - 1];
@@ -111,8 +107,12 @@ abstract class AbstractEmitterVisitor
         o.StatementVisitor<void, EmitterVisitorContext>,
         o.ExpressionVisitor<void, EmitterVisitorContext> {
   final bool _escapeDollarInStrings;
+  final bool emitNullSafeSyntax;
 
-  AbstractEmitterVisitor(this._escapeDollarInStrings);
+  AbstractEmitterVisitor(
+    this._escapeDollarInStrings, {
+    @required this.emitNullSafeSyntax,
+  });
 
   @override
   void visitExpressionStmt(
@@ -418,6 +418,13 @@ abstract class AbstractEmitterVisitor
   }
 
   @override
+  void visitNotNullExpr(o.NotNullExpr ast, EmitterVisitorContext context) {
+    context.print('(');
+    ast.value.visitExpression(this, context);
+    context.print(emitNullSafeSyntax ? '!)' : '/*!*/)');
+  }
+
+  @override
   void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context);
 
   @override
@@ -487,6 +494,9 @@ abstract class AbstractEmitterVisitor
   @override
   void visitReadPropExpr(o.ReadPropExpr ast, EmitterVisitorContext context) {
     ast.receiver.visitExpression(this, context);
+    if (ast.checked) {
+      context.print('?');
+    }
     context.print('.');
     context.print(ast.name);
   }

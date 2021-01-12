@@ -61,12 +61,6 @@ class DetectChangesVars {
   static final cachedCtx = o.variable('_ctx');
   static final changed = o.variable('changed');
   static final firstCheck = o.variable('firstCheck');
-  static final internalSetStateChanged = o.importExpr(
-    CompileIdentifierMetadata(
-        name: 'internalSetStateChanged',
-        moduleUrl: 'asset:angular/lib/src/core/'
-            'change_detection/component_state.dart'),
-  );
 }
 
 class Lifecycles {

@@ -1,9 +1,8 @@
-@TestOn('vm')
-import 'package:dev/repository.dart';
 import 'package:path/path.dart' as p;
 import 'package:pub_semver/pub_semver.dart';
 import 'package:test/test.dart';
 import 'package:test_descriptor/test_descriptor.dart' as d;
+import 'package:dev/repository.dart';
 
 void main() {
   group('Repository', () {

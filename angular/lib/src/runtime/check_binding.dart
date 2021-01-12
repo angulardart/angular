@@ -1,9 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:meta/meta.dart';
-
-import 'messages.dart';
-import 'optimizations.dart';
+import 'package:angular/src/utilities.dart';
 
 /// Whether [_debugCheckBinding] should throw if the values are different.
 var _debugThrowIfChanged = false;
@@ -41,20 +39,11 @@ var _debugCheckAllExpressionsAndReportExpressionContext = false;
 /// debug.
 ///
 /// Context (expression and source location) is also reported when available.
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
 void debugCheckBindings([bool enabled = true]) {
   _debugCheckAllExpressionsAndReportExpressionContext = enabled;
-  if (isDevMode && enabled) {
-    _warnAboutExperimentalFeature();
-  }
 }
 
-void _warnAboutExperimentalFeature() {
-  print('WARNING: debugCheckBindings() is an experimental feature.');
-  print('${runtimeMessages.unstableExpressionReadMore}');
-}
+const _goLink = 'go/angular-dart/advanced/debugging.md#debugCheckBindings';
 
 /// Returns whether [oldValue] is considered "changed" compared to [newValue].
 ///
@@ -67,10 +56,10 @@ void _warnAboutExperimentalFeature() {
 /// to the failure.
 @dart2js.tryInline
 bool checkBinding(
-  Object oldValue,
-  Object newValue, [
-  String expression,
-  String location,
+  Object? oldValue,
+  Object? newValue, [
+  String? expression,
+  String? location,
 ]) =>
     isDevMode && _debugThrowIfChanged
         ? !_debugCheckBinding(oldValue, newValue, expression, location)
@@ -83,10 +72,10 @@ bool checkBinding(
 /// signifying that the binding should not have changed the provided value in
 /// the middle of a change detection cycle.
 bool _debugCheckBinding(
-  Object oldValue,
-  Object newValue, [
-  String expression,
-  String location,
+  Object? oldValue,
+  Object? newValue, [
+  String? expression,
+  String? location,
 ]) {
   final isIdentical = _debugCheckAllExpressionsAndReportExpressionContext
       ? identical(oldValue, newValue)
@@ -113,16 +102,16 @@ bool _debugCheckBinding(
 /// **WARNING**: Do _not_ attempt to catch or handle this (or any) [Error].
 class UnstableExpressionError extends Error {
   /// Contextual expression that was evaluated to result in [newValue].
-  final String expression;
+  final String? expression;
 
   /// Location in the underlying template that [expression] was within.
-  final String location;
+  final String? location;
 
   /// Previous value of evaluating [expression].
-  final Object oldValue;
+  final Object? oldValue;
 
   /// Current value of evaluating [expression].
-  final Object newValue;
+  final Object? newValue;
 
   UnstableExpressionError._({
     @required this.oldValue,
@@ -138,10 +127,11 @@ class UnstableExpressionError extends Error {
           'An expression bound in an AngularDart template returned a different '
           'value the second time it was evaluated.\n\n';
       return '$message'
-          '${expression ?? 'UNKNOWN'} in ${location ?? 'UNKNOWN'}:\n'
+          'Unstable expression ${expression ?? 'UNKNOWN'} '
+          'in ${location ?? 'UNKNOWN'}:\n'
           '  Previous: $oldValue\n'
           '  Current:  $newValue\n\n'
-          '${runtimeMessages.unstableExpressionReadMore}';
+          '$_goLink';
     }
     return ''
         'Expression has changed after it was checked. '
@@ -156,22 +146,17 @@ class _DevModeEquality extends DefaultEquality<Object> {
   const _DevModeEquality();
 
   @override
-  bool equals(Object a, Object b) {
+  bool equals(Object? a, Object? b) {
     if (a is Iterable<Object> && b is Iterable<Object>) {
       return const IterableEquality(_DevModeEquality()).equals(a, b);
     } else if (a is! Iterable<Object> &&
-        !_isPrimitive(a) &&
+        !a.isPrimitive &&
         b is! Iterable<Object> &&
-        !_isPrimitive(b)) {
+        !b.isPrimitive) {
       // Code inlined from TS facade.
       return true;
     } else {
       return identical(a, b);
     }
   }
-}
-
-/// Returns whether [a] is a "primitive" type ([Null], [String], [num], [bool]).
-bool _isPrimitive(Object a) {
-  return a == null || a is String || a is num || a is bool;
 }

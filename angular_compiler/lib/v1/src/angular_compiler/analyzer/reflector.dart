@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'di/dependencies.dart';
 import 'types.dart';
@@ -116,8 +116,10 @@ class ReflectableReader {
     DependencyInvocation<ConstructorElement> factory;
     if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
-        throw BuildError.throwForElement(
-            element, 'Private classes can not be @Injectable');
+        throw BuildError.forElement(
+          element,
+          'Private classes can not be @Injectable',
+        );
       }
       factory = dependencyReader.parseDependencies(element);
     }
@@ -138,21 +140,17 @@ class ReflectableReader {
     if ($Injectable.firstAnnotationOfExact(element) == null) {
       return null;
     }
-    if (element.parameters.isNotEmpty) {
-      // In principle, only public top-level functions or public static class
-      // methods should ever be @Injectable. Without the following explicit
-      // checks the build would fail on an attempt to compile the generated
-      // template file--just with a less helpful message. However, historically
-      // it happened to go unnoticed for parameterless functions, so many
-      // violations already exist. Therfore, we skip the checks for these cases.
-      if (!element.isStatic) {
-        throw BuildError.throwForElement(
-            element, 'Non-static functions can not be @Injectable');
-      }
-      if (element.isPrivate) {
-        throw BuildError.throwForElement(
-            element, 'Private functions can not be @Injectable');
-      }
+    if (!element.isStatic) {
+      throw BuildError.forElement(
+        element,
+        'Non-static functions can not be @Injectable',
+      );
+    }
+    if (element.isPrivate) {
+      throw BuildError.forElement(
+        element,
+        'Private functions can not be @Injectable',
+      );
     }
     return dependencyReader.parseDependencies(element);
   }

@@ -12,7 +12,7 @@ import 'view.dart';
 /// rather one of its specializations.
 abstract class DynamicView implements View, ViewRef {
   /// Tracks the root DOM nodes or view containers of this view.
-  ViewFragment get viewFragment;
+  ViewFragment? get viewFragment;
 
   /// Appends this view's root DOM nodes as siblings after [node].
   // TODO(b/132109599): replace with single static method or function.
@@ -46,10 +46,10 @@ abstract class DynamicViewData implements ViewData {
   /// The container in which this view is currently inserted.
   ///
   /// Null if this view is currently detached.
-  ViewContainer get viewContainer;
+  ViewContainer? get viewContainer;
 
   /// Storage for [DynamicView.viewFragment].
-  ViewFragment get viewFragment;
+  ViewFragment? get viewFragment;
 
   /// Registers a [callback] to be invoked by [destroy].
   void addOnDestroyCallback(void Function() callback);

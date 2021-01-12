@@ -39,7 +39,7 @@ class HashLocationStrategy extends LocationStrategy {
 
   HashLocationStrategy(
     this._platformLocation, [
-    @Optional() @Inject(appBaseHref) String baseHref,
+    @Optional() @Inject(appBaseHref) String? baseHref,
   ]) : _baseHref = baseHref ?? '';
 
   @override
@@ -61,7 +61,11 @@ class HashLocationStrategy extends LocationStrategy {
   String path() {
     // the hash value is always prefixed with a `#`
     // and if it is empty then it will stay empty
-    var path = _platformLocation.hash ?? '';
+    var path = _platformLocation.hash;
+    // TODO(b/169792422): Even though `PlatformLocation.hash` is non-null, mocks
+    // in tests that haven't opted into null-safety yet can still return null
+    // here, so we're keeping the null check to avoid a breaking change.
+    if ((path as dynamic) == null) path = '';
     // Dart will complain if a call to substring is
     // executed with a position value that extends the
     // length of string.
@@ -81,7 +85,7 @@ class HashLocationStrategy extends LocationStrategy {
   }
 
   @override
-  void pushState(dynamic state, String title, String path, String queryParams) {
+  void pushState(Object? state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     _platformLocation.pushState(state, title, url);
@@ -89,7 +93,7 @@ class HashLocationStrategy extends LocationStrategy {
 
   @override
   void replaceState(
-      dynamic state, String title, String path, String queryParams) {
+      Object? state, String title, String path, String queryParams) {
     var url =
         prepareExternalUrl(path + Location.normalizeQueryParams(queryParams));
     _platformLocation.replaceState(state, title, url);

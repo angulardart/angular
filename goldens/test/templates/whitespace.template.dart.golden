@@ -1,0 +1,252 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'whitespace.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'whitespace.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'whitespace.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:intl/intl.dart' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewPreserveWhitespace0 _compView_0;
+  late final import1.PreserveWhitespace _PreserveWhitespace_0_5;
+  late final ViewMinifyWhitespace0 _compView_1;
+  late final import1.MinifyWhitespace _MinifyWhitespace_1_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewPreserveWhitespace0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._PreserveWhitespace_0_5 = import1.PreserveWhitespace();
+    this._compView_0.create(this._PreserveWhitespace_0_5);
+    this._compView_1 = ViewMinifyWhitespace0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._MinifyWhitespace_1_5 = import1.MinifyWhitespace();
+    this._compView_1.create(this._MinifyWhitespace_1_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$PreserveWhitespace = const [];
+
+class ViewPreserveWhitespace0 extends import0.ComponentView<import1.PreserveWhitespace> {
+  static final String _message_0 = import9.Intl.message('\n      Default i18n text\n    ', desc: 'i18n description');
+  static import2.ComponentStyles? _componentStyles;
+  ViewPreserveWhitespace0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('preserve-whitespace-true'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final _text_0 = import10.appendText(parentRenderNode, '    ');
+    final doc = import6.document;
+    final _el_1 = import10.appendDiv(doc, parentRenderNode);
+    final _text_2 = import10.appendText(_el_1, '\n      Welcome...\n      To...\n      ');
+    final _el_3 = import10.appendElement<import6.HtmlElement>(doc, _el_1, 'strong');
+    final _text_4 = import10.appendText(_el_3, 'Jurassic...');
+    final _text_5 = import10.appendText(_el_1, '\n      Park!\n    ');
+    final _text_6 = import10.appendText(parentRenderNode, '\n    ');
+    final _el_7 = import10.appendDiv(doc, parentRenderNode);
+    final _text_8 = import10.appendText(_el_7, _message_0);
+    final _text_9 = import10.appendText(parentRenderNode, '\n  ');
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$PreserveWhitespace, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _PreserveWhitespaceNgFactory = ComponentFactory<import1.PreserveWhitespace>('preserve-whitespace-true', viewFactory_PreserveWhitespaceHost0);
+ComponentFactory<import1.PreserveWhitespace> get PreserveWhitespaceNgFactory {
+  return _PreserveWhitespaceNgFactory;
+}
+
+ComponentFactory<import1.PreserveWhitespace> createPreserveWhitespaceFactory() {
+  return ComponentFactory('preserve-whitespace-true', viewFactory_PreserveWhitespaceHost0);
+}
+
+final List<Object> styles$PreserveWhitespaceHost = const [];
+
+class _ViewPreserveWhitespaceHost0 extends import8.HostView<import1.PreserveWhitespace> {
+  @override
+  void build() {
+    this.componentView = ViewPreserveWhitespace0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.PreserveWhitespace();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.PreserveWhitespace> viewFactory_PreserveWhitespaceHost0() {
+  return _ViewPreserveWhitespaceHost0();
+}
+
+final List<Object> styles$MinifyWhitespace = const [];
+
+class ViewMinifyWhitespace0 extends import0.ComponentView<import1.MinifyWhitespace> {
+  static final String _message_0 = import9.Intl.message('Default i18n text', desc: 'i18n description');
+  static import2.ComponentStyles? _componentStyles;
+  ViewMinifyWhitespace0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('preserve-whitespace-false'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    final _el_0 = import10.appendDiv(doc, parentRenderNode);
+    final _text_1 = import10.appendText(_el_0, 'Welcome... To... ');
+    final _el_2 = import10.appendElement<import6.HtmlElement>(doc, _el_0, 'strong');
+    final _text_3 = import10.appendText(_el_2, 'Jurassic...');
+    final _text_4 = import10.appendText(_el_0, ' Park!');
+    final _el_5 = import10.appendDiv(doc, parentRenderNode);
+    final _text_6 = import10.appendText(_el_5, _message_0);
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MinifyWhitespace, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _MinifyWhitespaceNgFactory = ComponentFactory<import1.MinifyWhitespace>('preserve-whitespace-false', viewFactory_MinifyWhitespaceHost0);
+ComponentFactory<import1.MinifyWhitespace> get MinifyWhitespaceNgFactory {
+  return _MinifyWhitespaceNgFactory;
+}
+
+ComponentFactory<import1.MinifyWhitespace> createMinifyWhitespaceFactory() {
+  return ComponentFactory('preserve-whitespace-false', viewFactory_MinifyWhitespaceHost0);
+}
+
+final List<Object> styles$MinifyWhitespaceHost = const [];
+
+class _ViewMinifyWhitespaceHost0 extends import8.HostView<import1.MinifyWhitespace> {
+  @override
+  void build() {
+    this.componentView = ViewMinifyWhitespace0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.MinifyWhitespace();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.MinifyWhitespace> viewFactory_MinifyWhitespaceHost0() {
+  return _ViewMinifyWhitespaceHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(PreserveWhitespace, createPreserveWhitespaceFactory());
+  _ngRef.registerComponent(MinifyWhitespace, createMinifyWhitespaceFactory());
+  _ref0.initReflector();
+}

@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'dart:async' show Completer;
 import 'dart:html' show window;
 
@@ -10,16 +9,16 @@ import 'package:angular_test/angular_test.dart';
 import 'revert_popstate_test.template.dart' as ng;
 
 void main() {
-  Location location;
-  NgTestFixture<TestComponent> testFixture;
-  Router router;
-  TestRouterHook routerHook;
+  late Location location;
+  late NgTestFixture<TestComponent> testFixture;
+  late Router router;
+  late TestRouterHook routerHook;
 
   setUp(() async {
     routerHook = TestRouterHook();
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng.createTestComponentFactory(),
-      rootInjector: ([parent]) {
+      rootInjector: (parent) {
         return createInjector(Injector.map({RouterHook: routerHook}, parent));
       },
     );

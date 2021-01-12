@@ -1,8 +1,8 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 void main() {
+  // ignore: prefer_function_declarations_over_variables
   var validator = (String key, dynamic error) {
     return (AbstractControl c) {
       var r = <String, dynamic>{};
@@ -81,20 +81,20 @@ void main() {
       test('should collect errors from all the validators', () {
         var c =
             Validators.compose([validator('a', true), validator('b', true)]);
-        expect(c(Control('')), {'a': true, 'b': true});
+        expect(c!(Control('')), {'a': true, 'b': true});
       });
       test('should run validators left to right', () {
         var c = Validators.compose([validator('a', 1), validator('a', 2)]);
-        expect(c(Control('')), {'a': 2});
+        expect(c!(Control('')), {'a': 2});
       });
       test('should return null when no errors', () {
         var c = Validators.compose(
             [Validators.nullValidator, Validators.nullValidator]);
-        expect(c(Control('')), null);
+        expect(c!(Control('')), null);
       });
       test('should ignore nulls', () {
         var c = Validators.compose([null, Validators.required]);
-        expect(c(Control('')), {'required': true});
+        expect(c!(Control('')), {'required': true});
       });
     });
   });

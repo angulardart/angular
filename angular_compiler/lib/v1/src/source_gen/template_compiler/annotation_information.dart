@@ -1,12 +1,12 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart';
 
 import 'component_visitor_exceptions.dart';
 
-/// Manages an annotation giving sane error handling behaviour.
+/// Manages an annotation giving straight forward error handling behaviour.
 ///
 /// Users who want to ignore errors, skipping bad annotations, will call the is*
 /// getters directly. This class will issue one warning to the exception\

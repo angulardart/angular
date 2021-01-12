@@ -1,6 +1,7 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
+import 'package:angular_compiler/v1/src/compiler/selector.dart';
 
 import 'compile_metadata.dart'
     show
@@ -211,18 +212,39 @@ class ElementAst implements TemplateAst {
   @override
   final SourceSpan sourceSpan;
 
+  /// Selectors from `select` or `ngProjectAs` on an `<ng-content>` into which
+  /// this element is projected.
+  final List<CssSelector> matchedNgContentSelectors;
+
+  /// Whether this element is annotated with `@skipOnPushValidation`.
+  ///
+  /// If annotated, it prevents the compiler from emitting a warning if a
+  /// component on this element uses the Default change detection strategy in an
+  /// OnPush context. Note that this does not cause [children] to be skipped.
+  final bool skipOnPushValidation;
+
+  final String skipSchemaValidationForSelector;
+
+  /// A container for all @Attribute dependencies in the Element.
+  final Set<String> attributeDeps;
+
   ElementAst(
-      this.name,
-      this.attrs,
-      this.inputs,
-      this.outputs,
-      this.references,
-      this.directives,
-      this.providers,
-      this.elementProviderUsage,
-      this.children,
-      this.ngContentIndex,
-      this.sourceSpan);
+    this.name,
+    this.attrs,
+    this.inputs,
+    this.outputs,
+    this.references,
+    this.directives,
+    this.providers,
+    this.elementProviderUsage,
+    this.children,
+    this.ngContentIndex,
+    this.sourceSpan,
+    this.matchedNgContentSelectors, {
+    this.skipOnPushValidation = false,
+    this.skipSchemaValidationForSelector = '',
+    this.attributeDeps = const {},
+  });
 
   bool get hasViewContainer =>
       elementProviderUsage?.requiresViewContainer ?? false;
@@ -254,32 +276,29 @@ class EmbeddedTemplateAst implements TemplateAst {
   final List<ProviderAst> providers;
   final List<TemplateAst> children;
   final ElementProviderUsage elementProviderUsage;
-  final bool hasDeferredComponent;
   final int ngContentIndex;
+
+  /// Selectors from `select` or `ngProjectAs` on an `<ng-content>` into which
+  /// this embedded element is projected.
+  final List<CssSelector> matchedNgContentSelectors;
+
   @override
   final SourceSpan sourceSpan;
 
   EmbeddedTemplateAst(
-      this.attrs,
-      this.references,
-      this.variables,
-      this.directives,
-      this.providers,
-      this.elementProviderUsage,
-      this.children,
-      this.ngContentIndex,
-      this.sourceSpan,
-      {this.hasDeferredComponent = false});
+    this.attrs,
+    this.references,
+    this.variables,
+    this.directives,
+    this.providers,
+    this.elementProviderUsage,
+    this.children,
+    this.ngContentIndex,
+    this.sourceSpan,
+    this.matchedNgContentSelectors,
+  );
 
-  bool get hasViewContainer =>
-      elementProviderUsage.requiresViewContainer ||
-      // The view compiler tries to optimize when it sees a `<template>` tag
-      // without `ViewContainerRef` being accessed (i.e. either via a query or
-      // via injection in a directive). This behaves badly with `@deferred`,
-      // which is more or less a compiler-based directive.
-      //
-      // See https://github.com/dart-lang/angular/issues/1539.
-      hasDeferredComponent;
+  bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
 
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>
@@ -407,7 +426,7 @@ class DirectiveAst implements TemplateAst {
 class ProviderAst implements TemplateAst {
   final CompileTokenMetadata token;
 
-  /// Whether the provider is `multi: true`.
+  /// Whether the provider's [token] is a [MultiToken].
   final bool multiProvider;
 
   /// The type provided by this provider.
@@ -480,9 +499,6 @@ enum ProviderAstType {
 
   /// A provider that represents a Directive type.
   Directive,
-
-  /// A provider for a functional directive only visible within a template.
-  FunctionalDirective,
 
   /// Provider that is used by compiled code itself such as TemplateRef.
   Builtin

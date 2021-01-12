@@ -1,9 +1,8 @@
 import 'dart:html';
 
-import 'package:angular/core.dart';
+import 'package:angular/src/core/zone/ng_zone.dart';
 
 /// Provides a runtime implementation for "native" DOM events on elements.
-@Injectable()
 class EventManager {
   /// Plugin layers that are supported.
   static final _keyEvents = _KeyEventsHandler();
@@ -42,7 +41,7 @@ class _KeyEventsHandler {
   /// Memoized cache for parsing events.
   ///
   /// A value of `null` means the event is not supported.
-  static final _cache = <String, _ParsedEvent>{};
+  static final _cache = <String, _ParsedEvent?>{};
 
   const _KeyEventsHandler();
 
@@ -93,7 +92,7 @@ class _KeyEventsHandler {
     });
   }
 
-  static _ParsedEvent _parse(String name) {
+  static _ParsedEvent? _parse(String name) {
     assert(_supports(name));
     final parts = name.toLowerCase().split(_delimiter);
     final domEventName = parts.removeAt(0);
@@ -146,7 +145,8 @@ class _ParsedEvent {
     for (final modifier in _modifiers.keys) {
       if (modifier != key) {
         final check = _modifiers[modifier];
-        if (check(event)) {
+        // We already checked it was in the map above (iterating over keys).
+        if (check!(event)) {
           modifiers = '$modifiers.$modifier';
         }
       }

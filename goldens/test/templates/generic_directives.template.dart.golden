@@ -1,0 +1,1858 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'generic_directives.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'generic_directives.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'generic_directives.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/runtime/check_binding.dart' as import9;
+import 'dart:core';
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import12;
+import 'package:angular/src/runtime/dom_helpers.dart' as import13;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
+import 'package:angular/src/core/linker/views/render_view.dart' as import16;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import17;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewUsesUntypedComp0 _compView_0;
+  late final import1.UsesUntypedComp _UsesUntypedComp_0_5;
+  late final ViewUsesGenericComp0 _compView_1;
+  late final import1.UsesGenericComp _UsesGenericComp_1_5;
+  late final ViewUsesGenericCompGeneric0 _compView_2;
+  late final import1.UsesGenericCompGeneric _UsesGenericCompGeneric_2_5;
+  late final ViewUsesMappingComp10 _compView_3;
+  late final import1.UsesMappingComp1 _UsesMappingComp1_3_5;
+  late final ViewUsesMappingComp20 _compView_4;
+  late final import1.UsesMappingComp2 _UsesMappingComp2_4_5;
+  late final ViewUsesBoundCompWithBounds0 _compView_5;
+  late final import1.UsesBoundCompWithBounds _UsesBoundCompWithBounds_5_5;
+  late final ViewUsesFunctionTypeComp0 _compView_6;
+  late final import1.UsesFunctionTypeComp _UsesFunctionTypeComp_6_5;
+  late final ViewUsesNestedParentComp0 _compView_7;
+  late final import1.UsesNestedParentComp _UsesNestedParentComp_7_5;
+  late final ViewUsesMultipleTypesComp0 _compView_8;
+  late final import1.UsesMultipleTypesComp _UsesMultipleTypesComp_8_5;
+  late final ViewUsesGenericChangeDetector0 _compView_9;
+  late final import1.UsesGenericChangeDetector _UsesGenericChangeDetector_9_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewUsesUntypedComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._UsesUntypedComp_0_5 = import1.UsesUntypedComp();
+    this._compView_0.create(this._UsesUntypedComp_0_5);
+    this._compView_1 = ViewUsesGenericComp0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._UsesGenericComp_1_5 = import1.UsesGenericComp();
+    this._compView_1.create(this._UsesGenericComp_1_5);
+    this._compView_2 = ViewUsesGenericCompGeneric0(this, 2);
+    final _el_2 = this._compView_2.rootElement;
+    parentRenderNode.append(_el_2);
+    this._UsesGenericCompGeneric_2_5 = import1.UsesGenericCompGeneric();
+    this._compView_2.create(this._UsesGenericCompGeneric_2_5);
+    this._compView_3 = ViewUsesMappingComp10(this, 3);
+    final _el_3 = this._compView_3.rootElement;
+    parentRenderNode.append(_el_3);
+    this._UsesMappingComp1_3_5 = import1.UsesMappingComp1();
+    this._compView_3.create(this._UsesMappingComp1_3_5);
+    this._compView_4 = ViewUsesMappingComp20(this, 4);
+    final _el_4 = this._compView_4.rootElement;
+    parentRenderNode.append(_el_4);
+    this._UsesMappingComp2_4_5 = import1.UsesMappingComp2();
+    this._compView_4.create(this._UsesMappingComp2_4_5);
+    this._compView_5 = ViewUsesBoundCompWithBounds0(this, 5);
+    final _el_5 = this._compView_5.rootElement;
+    parentRenderNode.append(_el_5);
+    this._UsesBoundCompWithBounds_5_5 = import1.UsesBoundCompWithBounds();
+    this._compView_5.create(this._UsesBoundCompWithBounds_5_5);
+    this._compView_6 = ViewUsesFunctionTypeComp0(this, 6);
+    final _el_6 = this._compView_6.rootElement;
+    parentRenderNode.append(_el_6);
+    this._UsesFunctionTypeComp_6_5 = import1.UsesFunctionTypeComp();
+    this._compView_6.create(this._UsesFunctionTypeComp_6_5);
+    this._compView_7 = ViewUsesNestedParentComp0(this, 7);
+    final _el_7 = this._compView_7.rootElement;
+    parentRenderNode.append(_el_7);
+    this._UsesNestedParentComp_7_5 = import1.UsesNestedParentComp();
+    this._compView_7.create(this._UsesNestedParentComp_7_5);
+    this._compView_8 = ViewUsesMultipleTypesComp0(this, 8);
+    final _el_8 = this._compView_8.rootElement;
+    parentRenderNode.append(_el_8);
+    this._UsesMultipleTypesComp_8_5 = import1.UsesMultipleTypesComp();
+    this._compView_8.create(this._UsesMultipleTypesComp_8_5);
+    this._compView_9 = ViewUsesGenericChangeDetector0(this, 9);
+    final _el_9 = this._compView_9.rootElement;
+    parentRenderNode.append(_el_9);
+    this._UsesGenericChangeDetector_9_5 = import1.UsesGenericChangeDetector();
+    this._compView_9.create(this._UsesGenericChangeDetector_9_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+    this._compView_2.detectChanges();
+    this._compView_3.detectChanges();
+    this._compView_4.detectChanges();
+    this._compView_5.detectChanges();
+    this._compView_6.detectChanges();
+    this._compView_7.detectChanges();
+    this._compView_8.detectChanges();
+    this._compView_9.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._compView_2.destroyInternalState();
+    this._compView_3.destroyInternalState();
+    this._compView_4.destroyInternalState();
+    this._compView_5.destroyInternalState();
+    this._compView_6.destroyInternalState();
+    this._compView_7.destroyInternalState();
+    this._compView_8.destroyInternalState();
+    this._compView_9.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$UntypedComp = const [];
+
+class ViewUntypedComp0 extends import0.ComponentView<import1.UntypedComp> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewUntypedComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UntypedComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UntypedCompNgFactory = ComponentFactory<import1.UntypedComp>('comp', viewFactory_UntypedCompHost0);
+ComponentFactory<import1.UntypedComp> get UntypedCompNgFactory {
+  return _UntypedCompNgFactory;
+}
+
+ComponentFactory<import1.UntypedComp> createUntypedCompFactory() {
+  return ComponentFactory('comp', viewFactory_UntypedCompHost0);
+}
+
+final List<Object> styles$UntypedCompHost = const [];
+
+class _ViewUntypedCompHost0 extends import8.HostView<import1.UntypedComp> {
+  @override
+  void build() {
+    this.componentView = ViewUntypedComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UntypedComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UntypedComp> viewFactory_UntypedCompHost0() {
+  return _ViewUntypedCompHost0();
+}
+
+final List<Object> styles$UsesUntypedComp = const [];
+
+class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp> {
+  late final ViewUntypedComp0 _compView_0;
+  late final import1.UntypedComp _UntypedComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesUntypedComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-unyped-comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewUntypedComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._UntypedComp_0_5 = import1.UntypedComp();
+    this._compView_0.create(this._UntypedComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._UntypedComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesUntypedComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesUntypedCompNgFactory = ComponentFactory<import1.UsesUntypedComp>('uses-unyped-comp', viewFactory_UsesUntypedCompHost0);
+ComponentFactory<import1.UsesUntypedComp> get UsesUntypedCompNgFactory {
+  return _UsesUntypedCompNgFactory;
+}
+
+ComponentFactory<import1.UsesUntypedComp> createUsesUntypedCompFactory() {
+  return ComponentFactory('uses-unyped-comp', viewFactory_UsesUntypedCompHost0);
+}
+
+final List<Object> styles$UsesUntypedCompHost = const [];
+
+class _ViewUsesUntypedCompHost0 extends import8.HostView<import1.UsesUntypedComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesUntypedComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesUntypedComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesUntypedComp> viewFactory_UsesUntypedCompHost0() {
+  return _ViewUsesUntypedCompHost0();
+}
+
+final List<Object> styles$GenericComp = const [];
+
+class ViewGenericComp0<T> extends import0.ComponentView<import1.GenericComp<T>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewGenericComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GenericComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GenericCompNgFactory = ComponentFactory<import1.GenericComp>('comp', viewFactory_GenericCompHost0);
+ComponentFactory<import1.GenericComp> get GenericCompNgFactory {
+  return _GenericCompNgFactory;
+}
+
+ComponentFactory<import1.GenericComp<T>> createGenericCompFactory<T>() {
+  return ComponentFactory('comp', viewFactory_GenericCompHost0);
+}
+
+final List<Object> styles$GenericCompHost = const [];
+
+class _ViewGenericCompHost0<T> extends import8.HostView<import1.GenericComp<T>> {
+  @override
+  void build() {
+    this.componentView = ViewGenericComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GenericComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GenericComp<T>> viewFactory_GenericCompHost0<T>() {
+  return _ViewGenericCompHost0();
+}
+
+final List<Object> styles$UsesGenericComp = const [];
+
+class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp> {
+  late final ViewGenericComp0<int> _compView_0;
+  late final import1.GenericComp<int> _GenericComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesGenericComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create(this._GenericComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesGenericCompNgFactory = ComponentFactory<import1.UsesGenericComp>('uses-generic-comp', viewFactory_UsesGenericCompHost0);
+ComponentFactory<import1.UsesGenericComp> get UsesGenericCompNgFactory {
+  return _UsesGenericCompNgFactory;
+}
+
+ComponentFactory<import1.UsesGenericComp> createUsesGenericCompFactory() {
+  return ComponentFactory('uses-generic-comp', viewFactory_UsesGenericCompHost0);
+}
+
+final List<Object> styles$UsesGenericCompHost = const [];
+
+class _ViewUsesGenericCompHost0 extends import8.HostView<import1.UsesGenericComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesGenericComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesGenericComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesGenericComp> viewFactory_UsesGenericCompHost0() {
+  return _ViewUsesGenericCompHost0();
+}
+
+final List<Object> styles$UsesGenericCompGeneric = const [];
+
+class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesGenericCompGeneric<E>> {
+  late final ViewGenericComp0<List<E>> _compView_0;
+  late final import1.GenericComp<List<E>> _GenericComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesGenericCompGeneric0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-comp-generic'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create(this._GenericComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericCompGeneric, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesGenericCompGenericNgFactory = ComponentFactory<import1.UsesGenericCompGeneric>('uses-generic-comp-generic', viewFactory_UsesGenericCompGenericHost0);
+ComponentFactory<import1.UsesGenericCompGeneric> get UsesGenericCompGenericNgFactory {
+  return _UsesGenericCompGenericNgFactory;
+}
+
+ComponentFactory<import1.UsesGenericCompGeneric<E>> createUsesGenericCompGenericFactory<E>() {
+  return ComponentFactory('uses-generic-comp-generic', viewFactory_UsesGenericCompGenericHost0);
+}
+
+final List<Object> styles$UsesGenericCompGenericHost = const [];
+
+class _ViewUsesGenericCompGenericHost0<E> extends import8.HostView<import1.UsesGenericCompGeneric<E>> {
+  @override
+  void build() {
+    this.componentView = ViewUsesGenericCompGeneric0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesGenericCompGeneric();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesGenericCompGeneric<E>> viewFactory_UsesGenericCompGenericHost0<E>() {
+  return _ViewUsesGenericCompGenericHost0();
+}
+
+final List<Object> styles$MappingComp1 = const [];
+
+class ViewMappingComp10<K, V> extends import0.ComponentView<import1.MappingComp1<K, V>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewMappingComp10(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp1, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _MappingComp1NgFactory = ComponentFactory<import1.MappingComp1>('comp', viewFactory_MappingComp1Host0);
+ComponentFactory<import1.MappingComp1> get MappingComp1NgFactory {
+  return _MappingComp1NgFactory;
+}
+
+ComponentFactory<import1.MappingComp1<K, V>> createMappingComp1Factory<K, V>() {
+  return ComponentFactory('comp', viewFactory_MappingComp1Host0);
+}
+
+final List<Object> styles$MappingComp1Host = const [];
+
+class _ViewMappingComp1Host0<K, V> extends import8.HostView<import1.MappingComp1<K, V>> {
+  @override
+  void build() {
+    this.componentView = ViewMappingComp10(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.MappingComp1();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.MappingComp1<K, V>> viewFactory_MappingComp1Host0<K, V>() {
+  return _ViewMappingComp1Host0();
+}
+
+final List<Object> styles$UsesMappingComp1 = const [];
+
+class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingComp1> {
+  late final ViewMappingComp10<int, String> _compView_0;
+  late final import1.MappingComp1<int, String> _MappingComp1_0_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesMappingComp10(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-mapping-comp-1'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewMappingComp10(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._MappingComp1_0_5 = import1.MappingComp1();
+    this._compView_0.create(this._MappingComp1_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.bindKey;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'bindKey', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._MappingComp1_0_5.key = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.bindValue;
+    if (import9.checkBinding(this._expr_1, currVal_1, 'bindValue', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._MappingComp1_0_5.value = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp1, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesMappingComp1NgFactory = ComponentFactory<import1.UsesMappingComp1>('uses-mapping-comp-1', viewFactory_UsesMappingComp1Host0);
+ComponentFactory<import1.UsesMappingComp1> get UsesMappingComp1NgFactory {
+  return _UsesMappingComp1NgFactory;
+}
+
+ComponentFactory<import1.UsesMappingComp1> createUsesMappingComp1Factory() {
+  return ComponentFactory('uses-mapping-comp-1', viewFactory_UsesMappingComp1Host0);
+}
+
+final List<Object> styles$UsesMappingComp1Host = const [];
+
+class _ViewUsesMappingComp1Host0 extends import8.HostView<import1.UsesMappingComp1> {
+  @override
+  void build() {
+    this.componentView = ViewUsesMappingComp10(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesMappingComp1();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesMappingComp1> viewFactory_UsesMappingComp1Host0() {
+  return _ViewUsesMappingComp1Host0();
+}
+
+final List<Object> styles$MappingComp2 = const [];
+
+class ViewMappingComp20<K, V> extends import0.ComponentView<import1.MappingComp2<K, V>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewMappingComp20(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$MappingComp2, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _MappingComp2NgFactory = ComponentFactory<import1.MappingComp2>('comp', viewFactory_MappingComp2Host0);
+ComponentFactory<import1.MappingComp2> get MappingComp2NgFactory {
+  return _MappingComp2NgFactory;
+}
+
+ComponentFactory<import1.MappingComp2<K, V>> createMappingComp2Factory<K, V>() {
+  return ComponentFactory('comp', viewFactory_MappingComp2Host0);
+}
+
+final List<Object> styles$MappingComp2Host = const [];
+
+class _ViewMappingComp2Host0<K, V> extends import8.HostView<import1.MappingComp2<K, V>> {
+  @override
+  void build() {
+    this.componentView = ViewMappingComp20(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.MappingComp2();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.MappingComp2<K, V>> viewFactory_MappingComp2Host0<K, V>() {
+  return _ViewMappingComp2Host0();
+}
+
+final List<Object> styles$UsesMappingComp2 = const [];
+
+class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingComp2> {
+  late final ViewMappingComp20<int, String> _compView_0;
+  late final import1.MappingComp2<int, String> _MappingComp2_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesMappingComp20(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-mapping-comp-2'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewMappingComp20(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._MappingComp2_0_5 = import1.MappingComp2();
+    this._compView_0.create(this._MappingComp2_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._MappingComp2_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMappingComp2, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesMappingComp2NgFactory = ComponentFactory<import1.UsesMappingComp2>('uses-mapping-comp-2', viewFactory_UsesMappingComp2Host0);
+ComponentFactory<import1.UsesMappingComp2> get UsesMappingComp2NgFactory {
+  return _UsesMappingComp2NgFactory;
+}
+
+ComponentFactory<import1.UsesMappingComp2> createUsesMappingComp2Factory() {
+  return ComponentFactory('uses-mapping-comp-2', viewFactory_UsesMappingComp2Host0);
+}
+
+final List<Object> styles$UsesMappingComp2Host = const [];
+
+class _ViewUsesMappingComp2Host0 extends import8.HostView<import1.UsesMappingComp2> {
+  @override
+  void build() {
+    this.componentView = ViewUsesMappingComp20(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesMappingComp2();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesMappingComp2> viewFactory_UsesMappingComp2Host0() {
+  return _ViewUsesMappingComp2Host0();
+}
+
+final List<Object> styles$BoundComp = const [];
+
+class ViewBoundComp0<T extends num> extends import0.ComponentView<import1.BoundComp<T>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewBoundComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$BoundComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _BoundCompNgFactory = ComponentFactory<import1.BoundComp>('comp', viewFactory_BoundCompHost0);
+ComponentFactory<import1.BoundComp> get BoundCompNgFactory {
+  return _BoundCompNgFactory;
+}
+
+ComponentFactory<import1.BoundComp<T>> createBoundCompFactory<T extends num>() {
+  return ComponentFactory('comp', viewFactory_BoundCompHost0);
+}
+
+final List<Object> styles$BoundCompHost = const [];
+
+class _ViewBoundCompHost0<T extends num> extends import8.HostView<import1.BoundComp<T>> {
+  @override
+  void build() {
+    this.componentView = ViewBoundComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.BoundComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.BoundComp<T>> viewFactory_BoundCompHost0<T extends num>() {
+  return _ViewBoundCompHost0();
+}
+
+final List<Object> styles$UsesBoundCompWithBounds = const [];
+
+class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBoundCompWithBounds> {
+  late final ViewBoundComp0 _compView_0;
+  late final import1.BoundComp _BoundComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesBoundCompWithBounds0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-bound-comp-with-bounds'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._BoundComp_0_5 = import1.BoundComp();
+    this._compView_0.create(this._BoundComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._BoundComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundCompWithBounds, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesBoundCompWithBoundsNgFactory = ComponentFactory<import1.UsesBoundCompWithBounds>('uses-bound-comp-with-bounds', viewFactory_UsesBoundCompWithBoundsHost0);
+ComponentFactory<import1.UsesBoundCompWithBounds> get UsesBoundCompWithBoundsNgFactory {
+  return _UsesBoundCompWithBoundsNgFactory;
+}
+
+ComponentFactory<import1.UsesBoundCompWithBounds> createUsesBoundCompWithBoundsFactory() {
+  return ComponentFactory('uses-bound-comp-with-bounds', viewFactory_UsesBoundCompWithBoundsHost0);
+}
+
+final List<Object> styles$UsesBoundCompWithBoundsHost = const [];
+
+class _ViewUsesBoundCompWithBoundsHost0 extends import8.HostView<import1.UsesBoundCompWithBounds> {
+  @override
+  void build() {
+    this.componentView = ViewUsesBoundCompWithBounds0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesBoundCompWithBounds();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesBoundCompWithBounds> viewFactory_UsesBoundCompWithBoundsHost0() {
+  return _ViewUsesBoundCompWithBoundsHost0();
+}
+
+final List<Object> styles$UsesBoundComp = const [];
+
+class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
+  late final ViewBoundComp0 _compView_0;
+  late final import1.BoundComp _BoundComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesBoundComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._BoundComp_0_5 = import1.BoundComp();
+    this._compView_0.create(this._BoundComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._BoundComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesBoundComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesBoundCompNgFactory = ComponentFactory<import1.UsesBoundComp>('comp', viewFactory_UsesBoundCompHost0);
+ComponentFactory<import1.UsesBoundComp> get UsesBoundCompNgFactory {
+  return _UsesBoundCompNgFactory;
+}
+
+ComponentFactory<import1.UsesBoundComp> createUsesBoundCompFactory() {
+  return ComponentFactory('comp', viewFactory_UsesBoundCompHost0);
+}
+
+final List<Object> styles$UsesBoundCompHost = const [];
+
+class _ViewUsesBoundCompHost0 extends import8.HostView<import1.UsesBoundComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesBoundComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesBoundComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesBoundComp> viewFactory_UsesBoundCompHost0() {
+  return _ViewUsesBoundCompHost0();
+}
+
+final List<Object> styles$SelfBoundComp = const [];
+
+class ViewSelfBoundComp0<A, B extends A> extends import0.ComponentView<import1.SelfBoundComp<A, B>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewSelfBoundComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$SelfBoundComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _SelfBoundCompNgFactory = ComponentFactory<import1.SelfBoundComp>('comp', viewFactory_SelfBoundCompHost0);
+ComponentFactory<import1.SelfBoundComp> get SelfBoundCompNgFactory {
+  return _SelfBoundCompNgFactory;
+}
+
+ComponentFactory<import1.SelfBoundComp<A, B>> createSelfBoundCompFactory<A, B extends A>() {
+  return ComponentFactory('comp', viewFactory_SelfBoundCompHost0);
+}
+
+final List<Object> styles$SelfBoundCompHost = const [];
+
+class _ViewSelfBoundCompHost0<A, B extends A> extends import8.HostView<import1.SelfBoundComp<A, B>> {
+  @override
+  void build() {
+    this.componentView = ViewSelfBoundComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.SelfBoundComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.SelfBoundComp<A, B>> viewFactory_SelfBoundCompHost0<A, B extends A>() {
+  return _ViewSelfBoundCompHost0();
+}
+
+final List<Object> styles$UsesSelfBoundComp = const [];
+
+class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBoundComp> {
+  late final ViewSelfBoundComp0 _compView_0;
+  late final import1.SelfBoundComp _SelfBoundComp_0_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesSelfBoundComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewSelfBoundComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._SelfBoundComp_0_5 = import1.SelfBoundComp();
+    this._compView_0.create(this._SelfBoundComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.bindA;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'bindA', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._SelfBoundComp_0_5.a = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.bindB;
+    if (import9.checkBinding(this._expr_1, currVal_1, 'bindB', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._SelfBoundComp_0_5.b = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesSelfBoundComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesSelfBoundCompNgFactory = ComponentFactory<import1.UsesSelfBoundComp>('comp', viewFactory_UsesSelfBoundCompHost0);
+ComponentFactory<import1.UsesSelfBoundComp> get UsesSelfBoundCompNgFactory {
+  return _UsesSelfBoundCompNgFactory;
+}
+
+ComponentFactory<import1.UsesSelfBoundComp> createUsesSelfBoundCompFactory() {
+  return ComponentFactory('comp', viewFactory_UsesSelfBoundCompHost0);
+}
+
+final List<Object> styles$UsesSelfBoundCompHost = const [];
+
+class _ViewUsesSelfBoundCompHost0 extends import8.HostView<import1.UsesSelfBoundComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesSelfBoundComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesSelfBoundComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesSelfBoundComp> viewFactory_UsesSelfBoundCompHost0() {
+  return _ViewUsesSelfBoundCompHost0();
+}
+
+final List<Object> styles$FunctionTypeComp = const [];
+
+class ViewFunctionTypeComp0<F> extends import0.ComponentView<import1.FunctionTypeComp<F>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewFunctionTypeComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$FunctionTypeComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _FunctionTypeCompNgFactory = ComponentFactory<import1.FunctionTypeComp>('comp', viewFactory_FunctionTypeCompHost0);
+ComponentFactory<import1.FunctionTypeComp> get FunctionTypeCompNgFactory {
+  return _FunctionTypeCompNgFactory;
+}
+
+ComponentFactory<import1.FunctionTypeComp<F>> createFunctionTypeCompFactory<F>() {
+  return ComponentFactory('comp', viewFactory_FunctionTypeCompHost0);
+}
+
+final List<Object> styles$FunctionTypeCompHost = const [];
+
+class _ViewFunctionTypeCompHost0<F> extends import8.HostView<import1.FunctionTypeComp<F>> {
+  @override
+  void build() {
+    this.componentView = ViewFunctionTypeComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.FunctionTypeComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.FunctionTypeComp<F>> viewFactory_FunctionTypeCompHost0<F>() {
+  return _ViewFunctionTypeCompHost0();
+}
+
+final List<Object> styles$UsesFunctionTypeComp = const [];
+
+class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFunctionTypeComp> {
+  late final ViewFunctionTypeComp0<String> _compView_0;
+  late final import1.FunctionTypeComp<String> _FunctionTypeComp_0_5;
+  Object? _expr_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesFunctionTypeComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-function-type-comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewFunctionTypeComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._FunctionTypeComp_0_5 = import1.FunctionTypeComp();
+    this._compView_0.create(this._FunctionTypeComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._FunctionTypeComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesFunctionTypeComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesFunctionTypeCompNgFactory = ComponentFactory<import1.UsesFunctionTypeComp>('uses-function-type-comp', viewFactory_UsesFunctionTypeCompHost0);
+ComponentFactory<import1.UsesFunctionTypeComp> get UsesFunctionTypeCompNgFactory {
+  return _UsesFunctionTypeCompNgFactory;
+}
+
+ComponentFactory<import1.UsesFunctionTypeComp> createUsesFunctionTypeCompFactory() {
+  return ComponentFactory('uses-function-type-comp', viewFactory_UsesFunctionTypeCompHost0);
+}
+
+final List<Object> styles$UsesFunctionTypeCompHost = const [];
+
+class _ViewUsesFunctionTypeCompHost0 extends import8.HostView<import1.UsesFunctionTypeComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesFunctionTypeComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesFunctionTypeComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesFunctionTypeComp> viewFactory_UsesFunctionTypeCompHost0() {
+  return _ViewUsesFunctionTypeCompHost0();
+}
+
+final List<Object> styles$NestedParentComp = const [];
+
+class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParentComp<T>> {
+  late final ViewNestedChildComp0<T> _compView_0;
+  late final import1.NestedChildComp<T> _NestedChildComp_0_5;
+  late final ViewNestedChildComp0<T> _compView_1;
+  late final import1.NestedChildComp<T> _NestedChildComp_1_5;
+  late final ViewContainer _appEl_2;
+  late final import12.NgFor _NgFor_2_9;
+  Object? _expr_0;
+  Object? _expr_1;
+  Object? _expr_2;
+  static import2.ComponentStyles? _componentStyles;
+  ViewNestedParentComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('parent'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewNestedChildComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._NestedChildComp_0_5 = import1.NestedChildComp();
+    this._compView_0.create(this._NestedChildComp_0_5);
+    this._compView_1 = ViewNestedChildComp0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._NestedChildComp_1_5 = import1.NestedChildComp();
+    this._compView_1.create(this._NestedChildComp_1_5);
+    final _anchor_2 = import13.appendAnchor(parentRenderNode);
+    this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
+    var _TemplateRef_2_8 = TemplateRef(this._appEl_2, (parentView, parentIndex) {
+      return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
+    });
+    this._NgFor_2_9 = import12.NgFor(this._appEl_2, _TemplateRef_2_8);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.input1;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'input1', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedChildComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.input2;
+    if (import9.checkBinding(this._expr_1, currVal_1, 'input2', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedChildComp_1_5.input = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.moreInputs;
+    if (import9.checkBinding(this._expr_2, currVal_2, 'moreInputs', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NgFor_2_9.ngForOf = currVal_2;
+      this._expr_2 = currVal_2;
+    }
+    if ((!import9.debugThrowIfChanged)) {
+      this._NgFor_2_9.ngDoCheck();
+    }
+    this._appEl_2.detectChangesInNestedViews();
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_2.destroyNestedViews();
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedParentComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _NestedParentCompNgFactory = ComponentFactory<import1.NestedParentComp>('parent', viewFactory_NestedParentCompHost0);
+ComponentFactory<import1.NestedParentComp> get NestedParentCompNgFactory {
+  return _NestedParentCompNgFactory;
+}
+
+ComponentFactory<import1.NestedParentComp<T>> createNestedParentCompFactory<T>() {
+  return ComponentFactory('parent', viewFactory_NestedParentCompHost0);
+}
+
+class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedParentComp<T>> {
+  late final ViewNestedChildComp0<T> _compView_0;
+  late final import1.NestedChildComp<T> _NestedChildComp_0_5;
+  Object? _expr_0;
+  _ViewNestedParentComp1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    this._compView_0 = ViewNestedChildComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    this._NestedChildComp_0_5 = import1.NestedChildComp();
+    this._compView_0.create(this._NestedChildComp_0_5);
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_input = import5.unsafeCast<T>(this.locals['\$implicit']);
+    final currVal_0 = local_input;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'input', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedChildComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+}
+
+import15.EmbeddedView<void> viewFactory_NestedParentComp1<T>(import16.RenderView parentView, int parentIndex) {
+  return _ViewNestedParentComp1<T>(parentView, parentIndex);
+}
+
+final List<Object> styles$NestedParentCompHost = const [];
+
+class _ViewNestedParentCompHost0<T> extends import8.HostView<import1.NestedParentComp<T>> {
+  @override
+  void build() {
+    this.componentView = ViewNestedParentComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.NestedParentComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.NestedParentComp<T>> viewFactory_NestedParentCompHost0<T>() {
+  return _ViewNestedParentCompHost0();
+}
+
+final List<Object> styles$NestedChildComp = const [];
+
+class ViewNestedChildComp0<T> extends import0.ComponentView<import1.NestedChildComp<T>> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewNestedChildComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('child'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$NestedChildComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _NestedChildCompNgFactory = ComponentFactory<import1.NestedChildComp>('child', viewFactory_NestedChildCompHost0);
+ComponentFactory<import1.NestedChildComp> get NestedChildCompNgFactory {
+  return _NestedChildCompNgFactory;
+}
+
+ComponentFactory<import1.NestedChildComp<T>> createNestedChildCompFactory<T>() {
+  return ComponentFactory('child', viewFactory_NestedChildCompHost0);
+}
+
+final List<Object> styles$NestedChildCompHost = const [];
+
+class _ViewNestedChildCompHost0<T> extends import8.HostView<import1.NestedChildComp<T>> {
+  @override
+  void build() {
+    this.componentView = ViewNestedChildComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.NestedChildComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.NestedChildComp<T>> viewFactory_NestedChildCompHost0<T>() {
+  return _ViewNestedChildCompHost0();
+}
+
+final List<Object> styles$UsesNestedParentComp = const [];
+
+class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNestedParentComp> {
+  late final ViewNestedParentComp0<int> _compView_0;
+  late final import1.NestedParentComp<int> _NestedParentComp_0_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  Object? _expr_2;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesNestedParentComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-nested-parent-comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewNestedParentComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._NestedParentComp_0_5 = import1.NestedParentComp();
+    this._compView_0.create(this._NestedParentComp_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.binding1;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'binding1', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedParentComp_0_5.input1 = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.binding2;
+    if (import9.checkBinding(this._expr_1, currVal_1, 'binding2', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedParentComp_0_5.input2 = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.moreBindings;
+    if (import9.checkBinding(this._expr_2, currVal_2, 'moreBindings', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._NestedParentComp_0_5.moreInputs = currVal_2;
+      this._expr_2 = currVal_2;
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesNestedParentComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesNestedParentCompNgFactory = ComponentFactory<import1.UsesNestedParentComp>('uses-nested-parent-comp', viewFactory_UsesNestedParentCompHost0);
+ComponentFactory<import1.UsesNestedParentComp> get UsesNestedParentCompNgFactory {
+  return _UsesNestedParentCompNgFactory;
+}
+
+ComponentFactory<import1.UsesNestedParentComp> createUsesNestedParentCompFactory() {
+  return ComponentFactory('uses-nested-parent-comp', viewFactory_UsesNestedParentCompHost0);
+}
+
+final List<Object> styles$UsesNestedParentCompHost = const [];
+
+class _ViewUsesNestedParentCompHost0 extends import8.HostView<import1.UsesNestedParentComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesNestedParentComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesNestedParentComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesNestedParentComp> viewFactory_UsesNestedParentCompHost0() {
+  return _ViewUsesNestedParentCompHost0();
+}
+
+final List<Object> styles$UsesMultipleTypesComp = const [];
+
+class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMultipleTypesComp> {
+  late final ViewGenericComp0<String> _compView_0;
+  late final import1.GenericComp<String> _GenericComp_0_5;
+  late final ViewGenericComp0<int> _compView_1;
+  late final import1.GenericComp<int> _GenericComp_1_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesMultipleTypesComp0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-multiple-types-comp'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewGenericComp0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._GenericComp_0_5 = import1.GenericComp();
+    this._compView_0.create(this._GenericComp_0_5);
+    this._compView_1 = ViewGenericComp0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._GenericComp_1_5 = import1.GenericComp();
+    this._compView_1.create(this._GenericComp_1_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.name;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._GenericComp_0_5.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.index;
+    if (import9.checkBinding(this._expr_1, currVal_1, 'index', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._GenericComp_1_5.input = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesMultipleTypesComp, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesMultipleTypesCompNgFactory = ComponentFactory<import1.UsesMultipleTypesComp>('uses-multiple-types-comp', viewFactory_UsesMultipleTypesCompHost0);
+ComponentFactory<import1.UsesMultipleTypesComp> get UsesMultipleTypesCompNgFactory {
+  return _UsesMultipleTypesCompNgFactory;
+}
+
+ComponentFactory<import1.UsesMultipleTypesComp> createUsesMultipleTypesCompFactory() {
+  return ComponentFactory('uses-multiple-types-comp', viewFactory_UsesMultipleTypesCompHost0);
+}
+
+final List<Object> styles$UsesMultipleTypesCompHost = const [];
+
+class _ViewUsesMultipleTypesCompHost0 extends import8.HostView<import1.UsesMultipleTypesComp> {
+  @override
+  void build() {
+    this.componentView = ViewUsesMultipleTypesComp0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesMultipleTypesComp();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesMultipleTypesComp> viewFactory_UsesMultipleTypesCompHost0() {
+  return _ViewUsesMultipleTypesCompHost0();
+}
+
+final List<Object> styles$UsesGenericChangeDetector = const [];
+
+class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesGenericChangeDetector> {
+  late final GenericDirectiveNgCd<String> _GenericDirective_0_5;
+  Object? _expr_0;
+  late final import6.DivElement _el_0;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesGenericChangeDetector0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-change-detector'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    this._el_0 = import13.appendDiv(doc, parentRenderNode);
+    import13.setAttribute(this._el_0, 'generic', '');
+    this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.value;
+    if (import9.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/templates/generic_directives.dart')) {
+      this._GenericDirective_0_5.instance.input = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    this._GenericDirective_0_5.detectHostChanges(this, this._el_0);
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesGenericChangeDetector, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesGenericChangeDetectorNgFactory = ComponentFactory<import1.UsesGenericChangeDetector>('uses-generic-change-detector', viewFactory_UsesGenericChangeDetectorHost0);
+ComponentFactory<import1.UsesGenericChangeDetector> get UsesGenericChangeDetectorNgFactory {
+  return _UsesGenericChangeDetectorNgFactory;
+}
+
+ComponentFactory<import1.UsesGenericChangeDetector> createUsesGenericChangeDetectorFactory() {
+  return ComponentFactory('uses-generic-change-detector', viewFactory_UsesGenericChangeDetectorHost0);
+}
+
+final List<Object> styles$UsesGenericChangeDetectorHost = const [];
+
+class _ViewUsesGenericChangeDetectorHost0 extends import8.HostView<import1.UsesGenericChangeDetector> {
+  @override
+  void build() {
+    this.componentView = ViewUsesGenericChangeDetector0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesGenericChangeDetector();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChangeDetectorHost0() {
+  return _ViewUsesGenericChangeDetectorHost0();
+}
+
+class GenericDirectiveNgCd<T extends String> extends import17.DirectiveChangeDetector {
+  final import1.GenericDirective<T> instance;
+  Object? _expr_0;
+  GenericDirectiveNgCd(this.instance);
+  void detectHostChanges(import16.RenderView view, import6.Element el) {
+    final currVal_0 = this.instance.input;
+    if (import9.checkBinding(this._expr_0, currVal_0, null, null)) {
+      import13.updateAttribute(el, 'a', currVal_0);
+      this._expr_0 = currVal_0;
+    }
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(UntypedComp, createUntypedCompFactory());
+  _ngRef.registerComponent(UsesUntypedComp, createUsesUntypedCompFactory());
+  _ngRef.registerComponent(GenericComp, createGenericCompFactory());
+  _ngRef.registerComponent(UsesGenericComp, createUsesGenericCompFactory());
+  _ngRef.registerComponent(UsesGenericCompGeneric, createUsesGenericCompGenericFactory());
+  _ngRef.registerComponent(MappingComp1, createMappingComp1Factory());
+  _ngRef.registerComponent(UsesMappingComp1, createUsesMappingComp1Factory());
+  _ngRef.registerComponent(MappingComp2, createMappingComp2Factory());
+  _ngRef.registerComponent(UsesMappingComp2, createUsesMappingComp2Factory());
+  _ngRef.registerComponent(BoundComp, createBoundCompFactory());
+  _ngRef.registerComponent(UsesBoundCompWithBounds, createUsesBoundCompWithBoundsFactory());
+  _ngRef.registerComponent(UsesBoundComp, createUsesBoundCompFactory());
+  _ngRef.registerComponent(SelfBoundComp, createSelfBoundCompFactory());
+  _ngRef.registerComponent(UsesSelfBoundComp, createUsesSelfBoundCompFactory());
+  _ngRef.registerComponent(FunctionTypeComp, createFunctionTypeCompFactory());
+  _ngRef.registerComponent(UsesFunctionTypeComp, createUsesFunctionTypeCompFactory());
+  _ngRef.registerComponent(NestedParentComp, createNestedParentCompFactory());
+  _ngRef.registerComponent(NestedChildComp, createNestedChildCompFactory());
+  _ngRef.registerComponent(UsesNestedParentComp, createUsesNestedParentCompFactory());
+  _ngRef.registerComponent(UsesMultipleTypesComp, createUsesMultipleTypesCompFactory());
+  _ngRef.registerComponent(UsesGenericChangeDetector, createUsesGenericChangeDetectorFactory());
+  _ref0.initReflector();
+}

@@ -16,7 +16,7 @@ class MockLocationStrategy extends LocationStrategy {
   List<String> urlChanges = [];
 
   final _subject = StreamController<PopStateEvent>();
-  MockLocationStrategy();
+
   void simulatePopState(String url) {
     internalPath = url;
     _subject.add(PopStateEvent('popstate'));
@@ -37,7 +37,7 @@ class MockLocationStrategy extends LocationStrategy {
   }
 
   @override
-  void pushState(dynamic ctx, String title, String path, String query) {
+  void pushState(Object? ctx, String title, String path, String query) {
     internalTitle = title;
     var url = path + (query.isNotEmpty ? ('?' + query) : '');
     internalPath = url;
@@ -46,7 +46,7 @@ class MockLocationStrategy extends LocationStrategy {
   }
 
   @override
-  void replaceState(dynamic ctx, String title, String path, String query) {
+  void replaceState(Object? ctx, String title, String path, String query) {
     internalTitle = title;
     var url = path + (query.isNotEmpty ? ('?' + query) : '');
     internalPath = url;

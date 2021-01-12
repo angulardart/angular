@@ -1,22 +1,23 @@
-@TestOn('browser')
 library angular2.test.core.directive_lifecycle_integration_test;
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'directive_lifecycle_integration_test.template.dart' as ng;
 
 void main() {
   group('directive lifecycle integration spec', () {
-    Log log;
+    late Log log;
     var fixture;
 
     setUp(() async {
       log = Log();
 
-      var testBed = NgTestBed.forComponent(ng.createMyCompFactory(),
-          rootInjector: ([parent]) => Injector.map({Log: log}, parent));
+      var testBed = NgTestBed(
+        ng.createMyCompFactory(),
+        rootInjector: (parent) => Injector.map({Log: log}, parent),
+      );
       fixture = await testBed.create();
     });
 

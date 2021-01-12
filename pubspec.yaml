@@ -3,10 +3,12 @@
 # For example, now its possible at the root of this package, to execute:
 #   pub run dev:<command>
 name: repository
+publish_to: none
 
 environment:
-  sdk: ">=2.5.0-dev.1.0 <3.0.0"
+  sdk: ">=2.10.0 <2.12.0"
 
 dev_dependencies:
+  pedantic: ^1.0.0
   dev:
     path: dev

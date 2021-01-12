@@ -58,10 +58,6 @@ class TemplateCompiler {
   final DirectiveCompiler _directiveCompiler;
   final OutputEmitter _outputEmitter;
 
-  /// Maps a moduleUrl to a library prefix. Deferred modules have defer###
-  /// prefixes. The moduleUrl has asset: scheme or is a relative url.
-  final Map<String, String> _deferredModules = {};
-
   TemplateCompiler(
     this._directiveCompiler,
     this._styleCompiler,
@@ -85,7 +81,7 @@ class TemplateCompiler {
       }
     }
 
-    return _createSourceModule(moduleUrl, statements, _deferredModules);
+    return _createSourceModule(moduleUrl, statements);
   }
 
   void _compileComponent(ir.Component component, List<o.Statement> statements) {
@@ -108,7 +104,6 @@ class TemplateCompiler {
     final viewResult = _viewCompiler.compileComponent(
       view,
       o.variable(styleResult.stylesVar),
-      _deferredModules,
       registerComponentFactory: view is ir.ComponentView,
     );
     statements.addAll(styleResult.statements);
@@ -140,18 +135,15 @@ class TemplateCompiler {
 
   DartSourceOutput _createSourceModule(
     String moduleUrl,
-    List<o.Statement> statements, [
-    Map<String, String> deferredModules = const {},
-  ]) {
+    List<o.Statement> statements,
+  ) {
     final sourceCode = _outputEmitter.emitStatements(
       moduleUrl,
       statements,
-      deferredModules,
     );
     return DartSourceOutput(
       outputUrl: moduleUrl,
       sourceCode: sourceCode,
-      deferredModules: deferredModules,
     );
   }
 }

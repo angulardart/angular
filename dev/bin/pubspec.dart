@@ -1,9 +1,8 @@
 import 'dart:io';
 
-import 'package:yaml/yaml.dart';
-
 import 'package:dev/dry.dart';
 import 'package:dev/find.dart';
+import 'package:yaml/yaml.dart';
 
 /// What Dart SDK version to require for all pub packages.
 ///

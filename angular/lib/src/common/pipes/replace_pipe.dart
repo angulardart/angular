@@ -1,4 +1,4 @@
-import 'package:angular/core.dart' show PipeTransform, Pipe;
+import 'package:angular/src/meta.dart';
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -27,7 +27,7 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 /// Make sure to escape the string properly if you are matching for regular
 /// expression special characters like parenthesis, brackets etc.
 @Pipe('replace')
-class ReplacePipe implements PipeTransform {
+class ReplacePipe {
   const ReplacePipe();
 
   dynamic transform(dynamic value, dynamic /* String | RegExp */ pattern,

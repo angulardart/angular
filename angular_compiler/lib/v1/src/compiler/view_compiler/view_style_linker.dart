@@ -1,6 +1,7 @@
+import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 
 import 'compile_view.dart';
 
@@ -61,7 +62,7 @@ class _ViewStyleLinker {
             ),
           ),
         ],
-        o.BuiltinType(o.BuiltinTypeName.String),
+        o.BuiltinType(o.BuiltinTypeName.String, [o.TypeModifier.Nullable]),
         [
           o.StmtModifier.Static,
         ],
@@ -71,7 +72,11 @@ class _ViewStyleLinker {
 
   static final _componentStyles = o.ClassField(
     _componentStylesStatic,
-    outputType: o.importType(StyleEncapsulation.componentStyles),
+    outputType: o.importType(
+      StyleEncapsulation.componentStyles,
+      [],
+      [o.TypeModifier.Nullable],
+    ),
     modifiers: const [o.StmtModifier.Static],
   );
 
@@ -115,7 +120,7 @@ class _ViewStyleLinker {
     //   }
     // }
     final ifStylesNullInit = o.IfStmt(
-      readStyles.identical(o.NULL_EXPR),
+      readStyles.equals(o.NULL_EXPR),
       [
         o.WriteStaticMemberExpr(
           _componentStylesStatic,

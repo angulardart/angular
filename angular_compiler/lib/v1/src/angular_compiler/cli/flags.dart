@@ -1,15 +1,16 @@
 import 'package:args/args.dart';
 import 'package:meta/meta.dart';
 
-const _argProfileFor = 'profile';
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 
 // Experimental flags (not published).
-const _argRemoveDebugAttributes = 'remove-debug-attributes';
+const _argEnableDevTools = 'enable_devtools';
+// TODO(b/160883079): Use underscores everywhere.
 const _argForceMinifyWhitespace = 'force-minify-whitespace';
 const _argNoEmitComponentFactories = 'no-emit-component-factories';
 const _argNoEmitInjectableFactories = 'no-emit-injectable-factories';
 const _argPolicyExceptions = 'policy-exception';
+const _argPolicyExceptionInPackages = 'policy-exception-in-packages';
 
 /// Compiler-wide configuration (flags) to allow opting in/out.
 ///
@@ -27,16 +28,8 @@ class CompilerFlags {
           'cause shadow host selectors to prevent a series of selectors '
           'from being properly scoped to their component',
     )
-    ..addOption(
-      _argProfileFor,
-      valueHelp: '"build"',
-      defaultsTo: null,
-      help: ''
-          'Whether to emit additional code that may be used by tooling '
-          'in order to profile performance or other runtime information.',
-    )
     ..addFlag(
-      _argRemoveDebugAttributes,
+      _argEnableDevTools,
       defaultsTo: false,
       hide: true,
     )
@@ -56,7 +49,15 @@ class CompilerFlags {
     ..addMultiOption(
       _argPolicyExceptions,
       hide: true,
+    )
+    ..addMultiOption(
+      _argPolicyExceptionInPackages,
+      hide: true,
     );
+
+  /// Whether to emit code that supports developer tooling.
+  @experimental
+  final bool enableDevTools;
 
   /// Whether to opt-in to supporting a legacy mode of style encapsulation.
   ///
@@ -85,24 +86,21 @@ class CompilerFlags {
   @experimental
   final bool exportUserCodeFromTemplate;
 
-  /// Removes all HTML attributes starting `debug`.
-  ///
-  /// The current implementation _always_ removes these attributes (regardless
-  /// of whether `assert` is enabled) in order to estimate code-size benefits
-  /// to our larger apps.
+  /// Exceptions keyed by `PolicyName` => `Packages`.
   @experimental
-  final bool removeDebugAttributes;
+  final Map<String, Set<String>> policyExceptionInPackages;
 
   /// Exceptions keyed by `Name` -> `Paths`.
   final Map<String, Set<String>> policyExceptions;
 
   const CompilerFlags({
+    this.enableDevTools = false,
     this.useLegacyStyleEncapsulation = false,
     this.forceMinifyWhitespace = false,
     this.emitComponentFactories = true,
     this.emitInjectableFactories = true,
-    this.exportUserCodeFromTemplate = true,
-    this.removeDebugAttributes = false,
+    this.exportUserCodeFromTemplate = false,
+    this.policyExceptionInPackages = const {},
     this.policyExceptions = const {},
   });
 
@@ -131,13 +129,13 @@ class CompilerFlags {
     // Check for invalid (unknown) arguments when possible.
     if (options is Map<Object, Object>) {
       final knownArgs = const {
-        _argProfileFor,
+        _argEnableDevTools,
         _argLegacyStyle,
         _argForceMinifyWhitespace,
         _argNoEmitComponentFactories,
         _argNoEmitInjectableFactories,
         _argPolicyExceptions,
-        _argRemoveDebugAttributes,
+        _argPolicyExceptionInPackages,
       };
       final unknownArgs = options.keys.toSet().difference(knownArgs);
       if (unknownArgs.isNotEmpty) {
@@ -148,23 +146,25 @@ class CompilerFlags {
       }
     }
 
+    final enableDevTools = options[_argEnableDevTools];
     final useLegacyStyle = options[_argLegacyStyle];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
     final noEmitComponentFactories = options[_argNoEmitComponentFactories];
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
     final policyExceptions = options[_argPolicyExceptions];
-    final removeDebugAttributes = options[_argRemoveDebugAttributes];
+    final policyExceptionInPackages = options[_argPolicyExceptionInPackages];
 
     return CompilerFlags(
+      enableDevTools: enableDevTools as bool ?? defaultTo.enableDevTools,
       useLegacyStyleEncapsulation:
-          useLegacyStyle ?? defaultTo.useLegacyStyleEncapsulation,
+          useLegacyStyle as bool ?? defaultTo.useLegacyStyleEncapsulation,
       forceMinifyWhitespace:
-          forceMinifyWhitespace ?? defaultTo.forceMinifyWhitespace,
+          forceMinifyWhitespace as bool ?? defaultTo.forceMinifyWhitespace,
       emitComponentFactories: noEmitComponentFactories != true,
       emitInjectableFactories: noEmitInjectableFactories != true,
       policyExceptions: _buildPolicyExceptions(policyExceptions),
-      removeDebugAttributes:
-          removeDebugAttributes ?? defaultTo.removeDebugAttributes,
+      policyExceptionInPackages:
+          _buildPolicyExceptions(policyExceptionInPackages),
     );
   }
 
@@ -175,12 +175,15 @@ class CompilerFlags {
     }
     // Single policy exception is parsed a String.
     if (arguments is String) {
-      arguments = <String>[arguments];
+      arguments = <String>[arguments as String];
     }
     // Process policy exceptions.
-    if (arguments is List<String>) {
+    //
+    // This nested format is what is supported by _bazel_codegen (b/169775556).
+    // --policy-exception=["A:file.dart", "B:file.dart"]
+    if (arguments is List<Object>) {
       final output = <String, Set<String>>{};
-      for (final argument in arguments) {
+      for (final argument in arguments.cast<String>()) {
         final split = argument.split(':');
         final policy = split.first;
         final files = split.last.split(',');

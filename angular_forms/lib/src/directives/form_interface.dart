@@ -13,7 +13,7 @@ abstract class Form {
   void removeControl(NgControl dir);
 
   /// Look up the [Control] associated with a particular [NgControl].
-  Control getControl(NgControl dir);
+  Control? getControl(NgControl dir);
 
   /// Add a group of controls to this form.
   void addControlGroup(NgControlGroup dir);
@@ -23,7 +23,7 @@ abstract class Form {
 
   /// Look up the [AbstractControlGroup] associated with a particular
   /// [NgControlGroup].
-  AbstractControlGroup getControlGroup(NgControlGroup dir);
+  AbstractControlGroup? getControlGroup(NgControlGroup dir);
 
   /// Update the model for a particular control with a new value.
   void updateModel(NgControl dir, dynamic value);

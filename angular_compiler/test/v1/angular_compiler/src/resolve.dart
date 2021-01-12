@@ -1,31 +1,42 @@
-import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
+import 'package:build/experiments.dart';
 import 'package:build_test/build_test.dart';
-import 'package:package_resolver/package_resolver.dart';
+import 'package:package_config/package_config.dart';
 
 const angular = 'package:angular/angular.dart';
 
 /// A custom package resolver for Angular sources.
 ///
 /// This is needed to resolve sources that import Angular.
-final packageResolverFuture =
-    Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH'] != null
-        ? PackageResolver.loadConfig(
-            Uri.file(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']))
-        : Future.value(PackageResolver.current);
+final packageConfigFuture = Platform
+            .environment['ANGULAR_PACKAGE_CONFIG_PATH'] !=
+        null
+    ? loadPackageConfigUri(
+        Uri.base.resolve(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']))
+    : Isolate.packageConfig.then(loadPackageConfigUri);
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
 /// Returns the resolved library as `package:test_lib/test_lib.dart`.
-Future<LibraryElement> resolveLibrary(String source) async => resolveSource('''
+Future<LibraryElement> resolveLibrary(String source) async {
+  final packageConfig = await packageConfigFuture;
+  return withEnabledExperiments(
+    () => resolveSource(
+      '''
       library _test;
-      import '$angular';\n\n$source''',
-    (resolver) => resolver.findLibraryByName('_test'),
-    inputId: AssetId('test_lib', 'lib/test_lib.dart'),
-    resolver: await packageResolverFuture);
+      import '$angular';\n\n$source
+    ''',
+      (resolver) => resolver.findLibraryByName('_test'),
+      inputId: AssetId('test_lib', 'lib/test_lib.dart'),
+      packageConfig: packageConfig,
+    ),
+    ['non-nullable'],
+  );
+}
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///

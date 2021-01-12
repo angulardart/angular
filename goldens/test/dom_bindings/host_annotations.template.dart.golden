@@ -1,0 +1,237 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'host_annotations.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'host_annotations.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'host_annotations.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime/dom_helpers.dart' as import7;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
+import 'package:angular/src/runtime/check_binding.dart' as import9;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import11;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewHasOutput0 _compView_0;
+  late final import1.HasOutput _HasOutput_0_5;
+  late final import1.ListensToOutput _ListensToOutput_0_6;
+  Object? _expr_0;
+  Object? _expr_1;
+  Object? _expr_2;
+  Object? _expr_3;
+  Object? _expr_4;
+  Object? _expr_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('host'));
+    import7.updateAttribute(this.rootElement, 'const-add-attr-bool', (import1.GoldenComponent.constAddAttributeBool ? '' : null));
+    import7.updateAttribute(this.rootElement, 'final-add-attr-bool', (import1.GoldenComponent.finalAddAttributeBool ? '' : null));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
+  }
+
+  @override
+  void build() {
+    final _ctx = this.ctx;
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewHasOutput0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    import7.setAttribute(_el_0, 'listens-to-output', '');
+    this._HasOutput_0_5 = import1.HasOutput();
+    this._ListensToOutput_0_6 = import1.ListensToOutput();
+    this._compView_0.create(this._HasOutput_0_5);
+    final subscription_0 = this._HasOutput_0_5.fooEvents.listen(this.eventHandler0(this._ListensToOutput_0_6.onCustomEvent));
+    this.initSubscriptions([subscription_0]);
+    parentRenderNode.addEventListener('click', this.eventHandler0(_ctx.onClickNoArguments));
+    parentRenderNode.addEventListener('dblclick', this.eventHandler1(_ctx.onDblClickInferArgument));
+    parentRenderNode.addEventListener('mousedown', this.eventHandler1(_ctx.onMouseDownManualArgument));
+    parentRenderNode.addEventListener('mouseup', this.eventHandler1(this._handleEvent_0));
+    import8.appViewUtils.eventManager.addEventListener(parentRenderNode, 'keydown.space', this.eventHandler0(_ctx.onSpecialKeyHandler));
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  void _handleEvent_0($event) {
+    final _ctx = this.ctx;
+    _ctx.onMouseUpMultipleArguments($event, _ctx.multiBindTitle);
+  }
+
+  void detectHostChanges(bool firstCheck) {
+    final _ctx = this.ctx;
+    if (firstCheck) {
+      if ((import1.GoldenComponent.constAddClass != null)) {
+        import7.updateClassBindingNonHtml(this.rootElement, 'const-add-class', import1.GoldenComponent.constAddClass);
+      }
+      if ((import1.GoldenComponent.constAddStyleColor != null)) {
+        this.rootElement.style.setProperty('color', import1.GoldenComponent.constAddStyleColor);
+      }
+    }
+    final currVal_0 = import1.GoldenComponent.getterAddAttributeBool;
+    if (import9.checkBinding(this._expr_0, currVal_0, null, null)) {
+      import7.updateAttribute(this.rootElement, 'getter-add-attr-bool', (currVal_0 ? '' : null));
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = import1.GoldenComponent.getterAddAttributeString;
+    if (import9.checkBinding(this._expr_1, currVal_1, null, null)) {
+      import7.updateAttribute(this.rootElement, 'getter-add-attr-string', currVal_1);
+      this._expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.multiBindTitle;
+    if (import9.checkBinding(this._expr_2, currVal_2, null, null)) {
+      import7.setProperty(this.rootElement, 'title', currVal_2);
+      this._expr_2 = currVal_2;
+    }
+    final currVal_3 = _ctx.multiBindTitle;
+    if (import9.checkBinding(this._expr_3, currVal_3, null, null)) {
+      import7.updateAttribute(this.rootElement, 'aria-title', currVal_3);
+      this._expr_3 = currVal_3;
+    }
+    final currVal_4 = _ctx.multiBindDisabled;
+    if (import9.checkBinding(this._expr_4, currVal_4, null, null)) {
+      import7.updateAttribute(this.rootElement, 'aria-disabled', (currVal_4 ? '' : null));
+      this._expr_4 = currVal_4;
+    }
+    final currVal_5 = _ctx.multiBindDisabled;
+    if (import9.checkBinding(this._expr_5, currVal_5, null, null)) {
+      import7.updateClassBindingNonHtml(this.rootElement, 'is-disabled', currVal_5);
+      this._expr_5 = currVal_5;
+    }
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('host', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('host', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import11.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = this.firstCheck;
+    this.componentView.detectHostChanges(firstCheck);
+    this.componentView.detectChanges();
+  }
+}
+
+import11.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$HasOutput = const [];
+
+class ViewHasOutput0 extends import0.ComponentView<import1.HasOutput> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewHasOutput0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('has-output'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasOutput, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasOutputNgFactory = ComponentFactory<import1.HasOutput>('has-output', viewFactory_HasOutputHost0);
+ComponentFactory<import1.HasOutput> get HasOutputNgFactory {
+  return _HasOutputNgFactory;
+}
+
+ComponentFactory<import1.HasOutput> createHasOutputFactory() {
+  return ComponentFactory('has-output', viewFactory_HasOutputHost0);
+}
+
+final List<Object> styles$HasOutputHost = const [];
+
+class _ViewHasOutputHost0 extends import11.HostView<import1.HasOutput> {
+  @override
+  void build() {
+    this.componentView = ViewHasOutput0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasOutput();
+    this.initRootNode(_el_0);
+  }
+}
+
+import11.HostView<import1.HasOutput> viewFactory_HasOutputHost0() {
+  return _ViewHasOutputHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(HasOutput, createHasOutputFactory());
+  _ref0.initReflector();
+}

@@ -1,6 +1,5 @@
-@TestOn('browser')
-import 'package:angular/angular.dart';
 import 'package:test/test.dart';
+import 'package:angular/angular.dart';
 
 import 'injector_use_value_test.template.dart' as ng;
 
@@ -8,9 +7,9 @@ import 'injector_use_value_test.template.dart' as ng;
 //
 // These tend to be complicated and more isolated than other code.
 void main() {
-  Injector injector;
+  late Injector injector;
 
-  setUp(() => injector = example());
+  setUp(() => injector = example(Injector.empty()));
 
   group('should resolve useValue: targeting a', () {
     test('class with a const constructor', () {
@@ -56,17 +55,17 @@ void main() {
     });
 
     test('top-level function', () {
-      IntIdentityFn fn = injector.get(intIdentityToken);
+      final fn = injector.provideToken(intIdentityToken);
       expect(fn(1), 1);
     });
 
     test('static-level method', () {
-      StringIdentityFn fn = injector.get(stringIdentityToken);
+      final fn = injector.provideToken(stringIdentityToken);
       expect(fn('a'), 'a');
     });
 
     test('raw string', () {
-      String raw = injector.get(stringRawToken);
+      final raw = injector.provideToken(stringRawToken);
       expect(raw, r'$5.00 USD');
     });
   });

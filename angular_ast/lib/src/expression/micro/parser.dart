@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:meta/meta.dart';
 
 import '../../ast.dart';
@@ -147,7 +143,7 @@ class _RecursiveMicroAstParser {
   AngularParserException _unexpected([NgMicroToken token]) {
     token ??= _tokens.current;
     return AngularParserException(
-      NgParserWarningCode.INVALID_MICRO_EXPRESSION,
+      ParserErrorCode.INVALID_MICRO_EXPRESSION,
       _expressionOffset,
       _expressionLength,
     );

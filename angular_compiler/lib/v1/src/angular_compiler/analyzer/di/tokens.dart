@@ -3,7 +3,7 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../link.dart';
 import '../types.dart';
@@ -34,7 +34,7 @@ class TokenReader {
             'Consider using an OpaqueToken with a description instead:\n'
             '  typedef $name = Function(...);\n'
             '  const ${name}Token = OpaqueToken<$name>(\'uniqueName\');';
-        BuildError.throwForElement(on, error);
+        throw BuildError.forElement(on, error);
       }
     }
   }
@@ -47,7 +47,7 @@ class TokenReader {
     if (constant.isNull) {
       final errorMsg = 'Annotation on element has errors and was unresolvable.';
       if (element != null) {
-        BuildError.throwForElement(element, errorMsg);
+        throw BuildError.forElement(element, errorMsg);
       }
       throw FormatException(errorMsg);
     }
@@ -68,9 +68,10 @@ class TokenReader {
         'extending "OpaqueToken" or "MultiToken".\n\n'
         'However: $typeStr was passed, which is not supported';
     if (element != null) {
-      BuildError.throwForElement(element, error);
+      throw BuildError.forElement(element, error);
+    } else {
+      throw BuildError.withoutContext(error);
     }
-    throw BuildError(error);
   }
 
   /// Returns [constant] parsed into an [OpaqueTokenElement].
@@ -104,20 +105,20 @@ class TokenReader {
   /// generation.
   TypeLink linkToOpaqueToken(DartType type) {
     if (!$OpaqueToken.isAssignableFromType(type)) {
-      BuildError.throwForElement(type.element, 'Must implement OpaqueToken.');
+      throw BuildError.forElement(type.element, 'Must implement OpaqueToken.');
     }
     if ($OpaqueToken.isExactlyType(type) || $MultiToken.isExactlyType(type)) {
       return linkTypeOf(type);
     }
     final clazz = type.element as ClassElement;
     if (clazz.interfaces.isNotEmpty || clazz.mixins.isNotEmpty) {
-      BuildError.throwForElement(
+      throw BuildError.forElement(
         type.element,
         'A sub-type of OpaqueToken cannot implement or mixin any interfaces.',
       );
     }
     if (clazz.isPrivate || clazz.isAbstract) {
-      BuildError.throwForElement(
+      throw BuildError.forElement(
         type.element,
         'Must not be abstract or a private (i.e. prefixed with `_`) class.',
       );
@@ -129,7 +130,7 @@ class TokenReader {
         clazz.typeParameters.isNotEmpty) {
       var supertypeName =
           clazz.supertype.getDisplayString(withNullability: false);
-      BuildError.throwForElement(
+      throw BuildError.forElement(
         type.element,
         ''
         'A sub-type of OpaqueToken must have a single unnamed const '
@@ -144,7 +145,7 @@ class TokenReader {
     }
     if (!$OpaqueToken.isExactlyType(clazz.supertype) &&
         !$MultiToken.isExactlyType(clazz.supertype)) {
-      BuildError.throwForElement(
+      throw BuildError.forElement(
         type.element,
         ''
         'A sub-type of OpaqueToken must directly extend OpaqueToken or '
@@ -191,7 +192,12 @@ abstract class TokenElement {}
 /// A statically parsed `Type` used as an identifier for injection.
 class TypeTokenElement implements TokenElement {
   /// References the type `dynamic`.
-  static const TypeTokenElement $dynamic = TypeTokenElement(TypeLink.$dynamic);
+  static const $dynamic = TypeTokenElement(TypeLink.$dynamic);
+
+  /// References the type `Object`.
+  ///
+  /// In null-safe opted-in code, this does not allow the sub-type `null`.
+  static const $object = TypeTokenElement(TypeLink.$object);
 
   /// Canonical URL of the source location and class name being referenced.
   final TypeLink link;
@@ -213,8 +219,6 @@ class TypeTokenElement implements TokenElement {
 
 /// A statically parsed `OpaqueToken` used as an identifier for injection.
 class OpaqueTokenElement implements TokenElement {
-  static final _dynamic = Uri.parse('dart:core#dynamic');
-
   /// Canonical name of an `OpaqueToken`.
   final String identifier;
 
@@ -227,32 +231,25 @@ class OpaqueTokenElement implements TokenElement {
   /// created class that _extends_ either built-in token type.
   final TypeLink classUrl;
 
-  /// What the type argument of the token is, or `null` if it is `dynamic`.
+  /// What the type argument of the token is.
   final TypeLink typeUrl;
 
   @visibleForTesting
   const OpaqueTokenElement(
     this.identifier, {
     @required this.classUrl,
-    this.typeUrl,
+    this.typeUrl = TypeLink.$object,
     @required this.isMultiToken,
   });
 
   @override
   bool operator ==(Object o) {
-    if (o is OpaqueTokenElement) {
-      return identifier == o.identifier &&
-              classUrl == o.classUrl &&
-              isMultiToken == o.isMultiToken &&
-              typeUrl == o.typeUrl ||
-          _bothTypesDynamic(typeUrl, o.typeUrl);
-    }
-    return false;
+    return o is OpaqueTokenElement &&
+        identifier == o.identifier &&
+        classUrl == o.classUrl &&
+        isMultiToken == o.isMultiToken &&
+        typeUrl == o.typeUrl;
   }
-
-  static bool _bothTypesDynamic(TypeLink a, TypeLink b) =>
-      (a == null || a == TypeLink.$dynamic) ==
-      (b == null || b == TypeLink.$dynamic);
 
   @override
   int get hashCode {
@@ -264,6 +261,6 @@ class OpaqueTokenElement implements TokenElement {
 
   @override
   String toString() {
-    return '${classUrl.symbol} {$identifier:${typeUrl ?? _dynamic}}';
+    return '${classUrl} {$identifier:${typeUrl}}';
   }
 }

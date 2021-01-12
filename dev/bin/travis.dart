@@ -1,9 +1,9 @@
 import 'dart:io' show exitCode, stderr, stdout, File;
 
+import 'package:path/path.dart' as p;
 import 'package:dev/dry.dart';
 import 'package:dev/repository.dart';
 import 'package:dev/travis.dart';
-import 'package:path/path.dart' as p;
 
 /// Writes `<root>/.travis.yml` based on the configuration in this file.
 void main(List<String> args) {

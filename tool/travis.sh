@@ -40,8 +40,8 @@ EXIT_CODE=1
 case $TASK in
   analyze)
     echo -e '\033[1mTASK: Dart Analyzer [analyzer]\033[22m'
-    echo -e 'dartanalyzer --fatal-warnings .'
-    ${SDK}dartanalyzer --fatal-warnings .
+    echo -e 'dart analyze .'
+    ${SDK}dart analyze .
     ;;
 
   build)

@@ -5,9 +5,10 @@ import 'package:meta/dart2js.dart' as dart2js;
 import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/devtools.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'render_view.dart';
 import 'view.dart';
@@ -31,26 +32,35 @@ import 'view.dart';
 /// or [createAndProject]. This is necessary to implement certain hierarchical
 /// dependency injection semantics.
 abstract class ComponentView<T> extends RenderView {
-  ComponentView(View parentView, int parentIndex, int changeDetectionMode)
-      : _data =
-            _ComponentViewData(parentView, parentIndex, changeDetectionMode);
+  ComponentView(
+    View parentView,
+    int parentIndex,
+    int changeDetectionMode,
+  ) : _data = _ComponentViewData(
+          parentView,
+          parentIndex,
+          changeDetectionMode,
+        );
 
   @override
-  T ctx;
+  late final T ctx;
 
   @override
-  ComponentStyles componentStyles;
+  late final ComponentStyles componentStyles;
 
   /// The root element of this component, created from its selector.
-  HtmlElement rootElement;
+  late final HtmlElement rootElement;
 
   final _ComponentViewData _data;
 
+  // While projectNodes can _start_ null, it is never null by the time we access
+  // it (nor do we query to check whether it is null). Getters cannot be late,
+  // so this is effectively the same thing.
   @override
   List<Object> get projectedNodes => _data.projectedNodes;
 
   @override
-  View get parentView => _data.parentView;
+  View? get parentView => _data.parentView;
 
   @override
   int get parentIndex => _data.parentIndex;
@@ -84,6 +94,11 @@ abstract class ComponentView<T> extends RenderView {
   void createAndProject(T component, List<Object> projectedNodes) {
     ctx = component;
     _data.projectedNodes = projectedNodes;
+
+    if (isDevToolsEnabled) {
+      ComponentInspector.instance.registerComponentView(unsafeCast(this));
+    }
+
     build();
   }
 
@@ -126,7 +141,7 @@ abstract class ComponentView<T> extends RenderView {
       _data.changeDetectorState == ChangeDetectorState.NeverChecked;
 
   @override
-  void detectChanges() {
+  void detectChangesDeprecated() {
     if (_data.shouldSkipChangeDetection) {
       if (_data.changeDetectionMode == ChangeDetectionStrategy.Checked) {
         detectChangesInCheckAlwaysViews();
@@ -157,8 +172,8 @@ abstract class ComponentView<T> extends RenderView {
   }
 
   /// Generated code that is called by hosts.
-  /// This is needed since deferred components don't allow call sites
-  /// to use the explicit AppView type but require base class.
+  ///
+  /// TODO(b/161929180): Can this be refactored and/or removed.
   void detectHostChanges(bool firstCheck) {}
 
   @override
@@ -184,16 +199,16 @@ abstract class ComponentView<T> extends RenderView {
     if (changeDetectionMode == ChangeDetectionStrategy.Checked) {
       markAsCheckOnce();
     }
-    parentView.markForCheck();
+    parentView!.markForCheck();
   }
 
   @override
-  void detach() {
+  void detachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.Detached;
   }
 
   @override
-  void reattach() {
+  void reattachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.CheckAlways;
     markForCheck();
   }
@@ -218,12 +233,16 @@ abstract class ComponentView<T> extends RenderView {
 
   @dart2js.noInline
   @override
-  void updateChildClassNonHtml(Element element, String newClass) {
-    if (element == rootElement) {
+  void updateChildClassNonHtml(Element element, String? newClass) {
+    newClass ??= '';
+    if (identical(element, rootElement)) {
       final styles = componentStyles;
       final shim = styles.usesStyleEncapsulation;
       updateAttribute(
-          element, 'class', shim ? '$newClass ${styles.hostPrefix}' : newClass);
+        element,
+        'class',
+        shim ? '$newClass ${styles.hostPrefix}' : newClass,
+      );
       final parent = parentView;
       if (parent is RenderView) {
         parent.addShimE(element);
@@ -259,10 +278,10 @@ class _ComponentViewData implements RenderViewData {
   final int parentIndex;
 
   @override
-  List<Object> projectedNodes;
+  late final List<Object> projectedNodes;
 
   @override
-  List<StreamSubscription<void>> subscriptions;
+  List<StreamSubscription<void>>? subscriptions;
 
   @override
   int get changeDetectionMode => _changeDetectionMode;
@@ -295,6 +314,7 @@ class _ComponentViewData implements RenderViewData {
   @override
   void destroy() {
     _destroyed = true;
+    final subscriptions = this.subscriptions;
     if (subscriptions != null) {
       for (var i = 0, length = subscriptions.length; i < length; ++i) {
         subscriptions[i].cancel();

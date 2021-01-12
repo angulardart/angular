@@ -10,14 +10,12 @@ import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
-import 'package:angular_compiler/v1/src/compiler/output/convert.dart'
-    show typeArgumentsFrom;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/binding_converter.dart'
     show convertAllToBinding, convertHostAttributeToBinding;
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart'
     show ElementAst;
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 
 import 'compile_view.dart' show CompileView, ReadNodeReferenceExpr;
 import 'constants.dart';
@@ -62,6 +60,7 @@ o.Expression getPropertyInView(
       viewProp = viewProp == null
           ? o.ReadClassMemberExpr('parentView')
           : viewProp.prop('parentView');
+      viewProp = viewProp.notNull();
     }
     if (!identical(currView, definedView)) {
       throw StateError('Internal error: Could not calculate a property '
@@ -120,7 +119,7 @@ o.Expression injectFromViewParentInjector(
 ) {
   final viewExpr = (view.viewType == ViewType.host)
       ? o.THIS_EXPR
-      : o.ReadClassMemberExpr('parentView');
+      : o.ReadClassMemberExpr('parentView').notNull();
   return viewExpr.callMethod(optional ? 'injectorGetOptional' : 'injectorGet', [
     createDiTokenExpression(token),
     o.ReadClassMemberExpr('parentIndex'),
@@ -182,7 +181,7 @@ o.Expression getViewFactory(
     o.ReturnStatement(o.InvokeFunctionExpr(
       viewFactoryVar,
       arguments,
-      typeArgumentsFrom(component.originType.typeParameters),
+      component.originType.typeParameters.map((t) => t.toType()).toList(),
     )),
   ]);
 }
@@ -220,43 +219,48 @@ o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
   }
 }
 
-o.Expression createFlatArray(List<o.Expression> expressions,
-    {bool constForEmpty = true}) {
+/// Do not use this function outside of projectedNodes.
+o.Expression createFlatArrayForProjectNodes(
+  List<o.Expression> expressions, {
+  bool constForEmpty = true,
+}) {
   // Simplify: No items.
   if (expressions.isEmpty) {
     return o.literalArr(
       const [],
       o.ArrayType(
-          null, constForEmpty ? const [o.TypeModifier.Const] : const []),
+        o.OBJECT_TYPE,
+        constForEmpty ? const [o.TypeModifier.Const] : const [],
+      ),
     );
   }
   // Check for [].addAll([x,y,z]) case and optimize.
   if (expressions.length == 1) {
-    if (expressions[0].type is o.ArrayType) {
-      return expressions[0];
+    final expression = expressions.first;
+    if (expression.type is o.ArrayType) {
+      return expression;
     } else {
-      return o.literalArr([expressions[0]]);
+      return o.literalArr([expression], o.OBJECT_TYPE);
     }
   }
   var lastNonArrayExpressions = <o.Expression>[];
-  o.Expression result = o.literalArr([]);
+  o.Expression result = o.literalArr([], o.OBJECT_TYPE);
   var initialEmptyArray = true;
-  for (var i = 0; i < expressions.length; i++) {
-    var expr = expressions[i];
+  for (final expr in expressions) {
     if (expr.type is o.ArrayType) {
       if (lastNonArrayExpressions.isNotEmpty) {
         if (initialEmptyArray) {
-          result = o.literalArr(lastNonArrayExpressions, o.DYNAMIC_TYPE);
+          result = o.literalArr(lastNonArrayExpressions, o.OBJECT_TYPE);
           initialEmptyArray = false;
         } else {
           result = result.callMethod(o.BuiltinMethod.ConcatArray,
-              [o.literalArr(lastNonArrayExpressions)]);
+              [o.literalArr(lastNonArrayExpressions, o.OBJECT_TYPE)]);
         }
         lastNonArrayExpressions = [];
       }
       result = initialEmptyArray
-          ? o.literalArr([expr], o.DYNAMIC_TYPE)
-          : result.callMethod(o.BuiltinMethod.ConcatArray, [expr]);
+          ? o.literalArr([expr], o.OBJECT_TYPE)
+          : result.callMethod(o.BuiltinMethod.ConcatArray, [unsafeCast(expr)]);
       initialEmptyArray = false;
     } else {
       lastNonArrayExpressions.add(expr);
@@ -264,10 +268,10 @@ o.Expression createFlatArray(List<o.Expression> expressions,
   }
   if (lastNonArrayExpressions.isNotEmpty) {
     if (initialEmptyArray) {
-      result = o.literalArr(lastNonArrayExpressions);
+      result = o.literalArr(lastNonArrayExpressions, o.OBJECT_TYPE);
     } else {
-      result = result.callMethod(
-          o.BuiltinMethod.ConcatArray, [o.literalArr(lastNonArrayExpressions)]);
+      result = result.callMethod(o.BuiltinMethod.ConcatArray,
+          [o.literalArr(lastNonArrayExpressions, o.OBJECT_TYPE)]);
     }
   }
   return result;
@@ -479,7 +483,6 @@ final Map<String, CompileIdentifierMetadata> _tagNameToIdentifier = {
   'row': Identifiers.HTML_TABLE_ROW_ELEMENT,
   'select': Identifiers.HTML_SELECT_ELEMENT,
   'table': Identifiers.HTML_TABLE_ELEMENT,
-  'text': Identifiers.HTML_TEXT_NODE,
   'textarea': Identifiers.HTML_TEXTAREA_ELEMENT,
   'ul': Identifiers.HTML_ULIST_ELEMENT,
   'svg': Identifiers.SVG_SVG_ELEMENT,
@@ -487,7 +490,10 @@ final Map<String, CompileIdentifierMetadata> _tagNameToIdentifier = {
 
 /// Returns strongly typed html elements to improve code generation.
 CompileIdentifierMetadata identifierFromTagName(String name) =>
-    _tagNameToIdentifier[name.toLowerCase()] ?? Identifiers.HTML_ELEMENT;
+    _tagNameToIdentifier[name.toLowerCase()] ??
+    (detectHtmlElementFromTagName(name)
+        ? Identifiers.HTML_HTML_ELEMENT
+        : Identifiers.HTML_ELEMENT);
 
 const _htmlTagNames = <String>{
   'a',

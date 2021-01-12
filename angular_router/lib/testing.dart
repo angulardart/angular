@@ -18,9 +18,13 @@ export 'src/route_definition.dart'
 /// components with dependencies on the router.
 ///
 /// ```
-/// final testBed = NgTestBed<TestComponent>().addProviders([
-///   routerProvidersTest,
-/// ]);
+/// @Component(
+///   selector: '...',
+///   providers: [
+///     routerProvidersTest,
+///   ],
+/// )
+/// class TestComponent {}
 /// ```
 const routerProvidersTest = [
   ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
@@ -37,7 +41,7 @@ const routerProvidersTest = [
 /// @GenerateInjector.fromModules([routerTestModule])
 /// final InjectorFactory testInjector = ng.testInjector$Injector;
 /// ...
-/// final testBed = NgTestBed.forComponent(
+/// final testBed = NgTestBed(
 ///     ng.TestComponentNgFactory,
 ///     rootInjector: testInjector);
 /// ```

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:angular_compiler/v1/src/compiler/output/dart_emitter.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
 
@@ -17,7 +19,7 @@ List<dynamic> humanizeTplAstSourceSpans(List<TemplateAst> templateAsts) {
   return humanizer.result;
 }
 
-class _TemplateHumanizer implements TemplateAstVisitor<void, Null> {
+class _TemplateHumanizer implements TemplateAstVisitor<void, void> {
   final bool includeSourceSpan;
   final List<dynamic> result = [];
   _TemplateHumanizer(this.includeSourceSpan);
@@ -201,13 +203,13 @@ String sourceInfo(TemplateAst ast) {
 }
 
 List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {
-  var humanizer = TemplateContentProjectionHumanizer();
+  var humanizer = _TemplateContentProjectionHumanizer();
   templateVisitAll(humanizer, templateAsts);
   return humanizer.result;
 }
 
-class TemplateContentProjectionHumanizer
-    implements TemplateAstVisitor<void, Null> {
+class _TemplateContentProjectionHumanizer
+    implements TemplateAstVisitor<void, void> {
   List<dynamic> result = [];
 
   @override

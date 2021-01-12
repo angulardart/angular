@@ -1,7 +1,6 @@
+import 'package:safe_html/safe_html.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
-
-import 'package:safe_html/safe_html.dart';
 
 @Component(
   selector: 'comment',
@@ -16,15 +15,19 @@ import 'package:safe_html/safe_html.dart';
 )
 class CommentComponent {
   @Input()
-  Map<String, dynamic> comment;
+  late Map<String, Object?> comment;
 
   bool hidden = false;
 
-  SafeHtml get content => SafeHtml.sanitize(comment['content']);
+  SafeHtml get content => SafeHtml.sanitize(comment['content'] as String);
 
   String get showCommentText => '+${comment['comments_count']}';
 
   void toggleVisibility() {
     hidden = !hidden;
   }
+
+  // TODO(b/171232371): Use `as` in the template instead?
+  Iterable<Object?> readCommentsAsIterable() =>
+      comment['comments'] as Iterable<Object?>;
 }

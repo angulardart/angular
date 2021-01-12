@@ -1,7 +1,7 @@
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
 
 void main() {
   final dartfmt = DartFormatter();
@@ -18,7 +18,7 @@ void main() {
     expect(
       Library((b) => b.body.add(emitter.createFactory())),
       equalsDart(r'''
-        Injector fooInjector([Injector parent]) => FooInjector._(parent);
+        Injector fooInjector(Injector parent) => FooInjector._(parent);
       '''),
     );
   });
@@ -29,7 +29,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           @override
           Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
@@ -60,7 +60,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           FooImpl _field0;
 
@@ -91,7 +91,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           Foo _getExisting$0() => this.get(Foo);
           @override
@@ -124,7 +124,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           Foo _field0;
 
@@ -155,7 +155,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           Foo _getFoo$0() => const Foo();
           @override
@@ -171,8 +171,6 @@ void main() {
     });
 
     test('should support a MultiToken', () {
-      // provide(someToken, useValue: 1, multi: true)
-      // provide(someToken, useValue: 2, multi: true)
       final someToken = OpaqueTokenElement(
         'someToken',
         isMultiToken: true,
@@ -203,7 +201,7 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
         class FooInjector extends HierarchicalInjector implements Injector {
-          FooInjector._([Injector parent]) : super(parent);
+          FooInjector._(Injector parent) : super(parent);
 
           int _getint$0() => 1;
           int _getint$1() => 2;

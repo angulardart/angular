@@ -1,7 +1,6 @@
-import 'package:angular/core.dart' show Directive, Input;
-import 'package:angular/src/core/linker.dart'
-    show ViewContainerRef, TemplateRef;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/core/linker.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/runtime/check_binding.dart';
 
 /// Causes an element and its contents to be conditionally added/removed from
 /// the DOM based on the value of the given boolean template expression.

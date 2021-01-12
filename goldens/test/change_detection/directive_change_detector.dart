@@ -8,7 +8,7 @@ import 'directive_change_detector.template.dart' as ng;
 
 /// Avoids Dart2JS thinking something is constant/unchanging.
 @JS()
-external T deopt<T>([Object any]);
+external T deopt<T>([Object? any]);
 
 void main() {
   runApp(ng.createGoldenComponentFactory());

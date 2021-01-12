@@ -23,19 +23,14 @@ import 'dart:html';
 /// class
 /// they are all platform independent.
 abstract class PlatformLocation {
-  String getBaseHrefFromDOM();
+  String? getBaseHrefFromDOM();
   void onPopState(EventListener fn);
   void onHashChange(EventListener fn);
   String get pathname;
   String get search;
   String get hash;
-  void replaceState(dynamic state, String title, String url);
-  void pushState(dynamic state, String title, String url);
+  void replaceState(Object? state, String title, String? url);
+  void pushState(Object? state, String title, String? url);
   void forward();
   void back();
 }
-
-typedef BaseHRefFromDOMProvider = String Function();
-
-/// Returns base href from browser location.
-BaseHRefFromDOMProvider baseHRefFromDOM;

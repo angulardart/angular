@@ -1,14 +1,16 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:meta/meta.dart' hide literal;
 import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../link.dart';
 import '../types.dart';
 import 'dependencies.dart';
+import 'global_singleton_services.dart';
 import 'modules.dart';
 import 'providers.dart';
 import 'tokens.dart';
@@ -16,7 +18,7 @@ import 'tokens.dart';
 /// Determines details for generating code as a result of `@Injector.generate`.
 class InjectorReader {
   static const _package = 'package:angular';
-  static const _runtime = '$_package/src/di/injector/injector.dart';
+  static const _runtime = '$_package/src/di/injector.dart';
   static const _$Injector = Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(TopLevelVariableElement element) {
@@ -77,7 +79,7 @@ class InjectorReader {
     if (message != '') {
       message = '. Additional information: $message';
     }
-    BuildError.throwForElement(
+    throw BuildError.forElement(
       field,
       context == null
           ? 'Unable to parse @GenerateInjector. You may have analysis errors'
@@ -89,7 +91,7 @@ class InjectorReader {
 
   @alwaysThrows
   void _throwFactoryProvider(DartObject context) {
-    BuildError.throwForElement(
+    throw BuildError.forElement(
         field,
         'Invalid provider ($context): an explicit value of `null` was passed in '
         'where a function is expected.');
@@ -98,16 +100,28 @@ class InjectorReader {
   /// Providers that are part of the provided list of the annotation.
   Iterable<ProviderElement> get providers => _providers;
 
-  Iterable<ProviderElement> _computeProviders(
-      ConstantReader annotation, ModuleReader moduleReader) {
+  List<ProviderElement> _computeProviders(
+    ConstantReader annotation,
+    ModuleReader moduleReader,
+  ) {
     final providersOrModules = annotation.read('_providersOrModules');
     if (providersOrModules.isNull) {
       _throwParseError();
     }
 
     try {
-      final module = moduleReader.parseModule(providersOrModules.objectValue);
-      return moduleReader.deduplicateProviders(module.flatten());
+      final module =
+          moduleReader.parseModule(providersOrModules.objectValue).flatten();
+      for (var item in module) {
+        final token = item.token;
+        if (token is TypeTokenElement && isGlobalSingletonService(token.link)) {
+          throw BuildError.forElement(
+            field,
+            messages.removeGlobalSingletonService(token.link.symbol),
+          );
+        }
+      }
+      return moduleReader.deduplicateProviders(module);
     } on UnsupportedProviderException catch (e) {
       _throwParseError(e.constant, e.message);
     } on NullTokenException catch (e) {
@@ -305,7 +319,7 @@ class InjectorReader {
       final privateReference = invocation.accessor?.isNotEmpty == true
           ? '${invocation.source}::${invocation.accessor}'
           : '${invocation.source}';
-      throw BuildError(''
+      throw BuildError.withoutContext(''
           'While attempting to resolve a constant value for a provider '
           '(token = ${provider.token}), there was no way to access '
           '$privateReference.\n\n'
@@ -356,7 +370,7 @@ class InjectorReader {
       // Always emit strings as raw in order to emit valid code.
       // See https://github.com/dart-lang/angular/issues/1591.
       if (reader.isString) {
-        return literalString(reader.literalValue, raw: true);
+        return literalString(reader.literalValue as String, raw: true);
       }
       return literal(reader.literalValue);
     }

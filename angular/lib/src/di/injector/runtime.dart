@@ -1,13 +1,15 @@
 import 'package:meta/meta.dart';
-import 'package:angular/src/runtime.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/reflector.dart' as reflector;
+import 'package:angular/src/utilities.dart';
 
 import '../errors.dart' as errors;
-import '../reflector.dart' as reflector;
+import '../injector.dart';
 
-import 'empty.dart';
-import 'hierarchical.dart';
-import 'injector.dart';
+const _globalSingletonServices = [
+  'ApplicationRef',
+  'NgZone',
+];
 
 /// An injector that resolves [Provider] instances with runtime information.
 abstract class ReflectiveInjector implements Injector {
@@ -23,18 +25,20 @@ abstract class ReflectiveInjector implements Injector {
   /// is provided for legacy compatibility only.
   static ReflectiveInjector resolveAndCreate(
     List<Object> providersOrLists, [
-    Injector parent = const EmptyInjector(),
+    Injector? parent,
   ]) {
     // Return the default implementation.
     final flatProviders = _flattenProviders(providersOrLists);
     if (isDevMode) {
       _assertProviders(flatProviders.providers.values);
       _assertProviders(flatProviders.multiProviders);
+      _assertGlobalSingletonService(flatProviders.providers.values);
+      _assertGlobalSingletonService(flatProviders.multiProviders);
     }
     return _RuntimeInjector(
       flatProviders.providers,
       flatProviders.multiProviders,
-      unsafeCast(parent),
+      parent,
       false,
     );
   }
@@ -63,29 +67,31 @@ abstract class ReflectiveInjector implements Injector {
   @experimental
   static ReflectiveInjector resolveStaticAndCreate(
     List<Object> providersOrLists, [
-    Injector parent = const EmptyInjector(),
+    Injector? parent,
   ]) {
     final flatProviders = _flattenProviders(providersOrLists);
     if (isDevMode) {
       _assertStaticProviders(flatProviders.providers.values);
       _assertStaticProviders(flatProviders.multiProviders);
+      _assertGlobalSingletonService(flatProviders.providers.values);
+      _assertGlobalSingletonService(flatProviders.multiProviders);
     }
     return _RuntimeInjector(
       flatProviders.providers,
       flatProviders.multiProviders,
-      unsafeCast(parent),
+      parent,
       true,
     );
   }
 
   @Deprecated('Unsupported, here for compatibility only. Remove usage.')
-  dynamic resolveAndInstantiate(dynamic providerOrType);
+  dynamic resolveAndInstantiate(Object providerOrType);
 
   /// Creates a new child reflective injector from [providersOrLists].
   ReflectiveInjector resolveAndCreateChild(List<Object> providersOrLists);
 }
 
-bool _isMultiProvider(Provider p) => p.multi == true || p.token is MultiToken;
+bool _isMultiProvider(Provider p) => p.token is MultiToken;
 
 class _RuntimeInjector extends HierarchicalInjector
     implements ReflectiveInjector, RuntimeInjectorBuilder {
@@ -100,19 +106,35 @@ class _RuntimeInjector extends HierarchicalInjector
   _RuntimeInjector(
     this._providers,
     this._multiProviders,
-    HierarchicalInjector parent,
+    Injector? parent,
     this._staticOnlyResolveAndCreate,
   ) : super(parent) {
-    assert(parent != null, 'A parent injector is always required.');
     // Injectors as a contract must return themselves if `Injector` is a token.
     _instances[Injector] = this;
   }
 
+  static const _inDartVM = !identical(1, 1.0);
+
+  /// In the Dart VM, Type instances are not canonicalized across mixed-mode
+  /// (e.g., a reference to a class from a library that is opted-in - and a
+  /// reference to that same class from a library that is _not_ opted-in).
+  ///
+  /// Specifically, the benchpress/latency tests that ACX use, which currently
+  /// run in the Dart VM and use AngularDart dependency injection, try to inject
+  /// the token [Injector], but the types are no longer identical - and across
+  /// DI and AngularDart more broadly we use [identical] and not `Object.==`.
+  ///
+  /// TODO(b/168902085): This is a one-off hack to fix latency tests for now.
+  static Object _canonicalizeInjectorTypeToFixMixedModeVmTests(Object token) {
+    return _inDartVM && Injector == token ? Injector : token;
+  }
+
   @override
-  Object injectFromSelfOptional(
+  Object? injectFromSelfOptional(
     Object token, [
-    Object orElse = throwIfNotFound,
+    Object? orElse = throwIfNotFound,
   ]) {
+    token = _canonicalizeInjectorTypeToFixMixedModeVmTests(token);
     // Look for a previously instantiated instance.
     var instance = _instances[token];
     // If not found (and was truly a cache miss) resolve and create one.
@@ -140,7 +162,7 @@ class _RuntimeInjector extends HierarchicalInjector
   }
 
   @override
-  dynamic resolveAndInstantiate(dynamic providerOrType) {
+  dynamic resolveAndInstantiate(Object providerOrType) {
     final provider = providerOrType is Provider
         ? providerOrType
         : Provider(
@@ -164,31 +186,26 @@ class _RuntimeInjector extends HierarchicalInjector
   /// ```
   ///
   /// If [deps] are provided, they are used, otherwise the reflector is checked.
-  List<Object> _resolveArgs(Object token, [List<Object> deps]) {
+  List<Object?> _resolveArgs(Object token, [List<Object>? deps]) {
     deps ??= reflector.getDependencies(token);
-    final resolved = List<Object>(deps.length);
-    for (var i = 0, l = resolved.length; i < l; i++) {
-      final dep = deps[i];
-      Object result;
-      if (dep is List<Object>) {
-        result = _resolveMeta(dep);
-      } else {
-        errors.debugInjectorEnter(dep);
-        result = get(dep);
-        errors.debugInjectorLeave(dep);
-      }
-      // We don't check to see if this failed otherwise, because this is an
-      // edge case where we just delegate to Function.apply to invoke a factory.
-      if (identical(result, throwIfNotFound)) {
-        return throwsNotFound(this, dep);
-      }
-      resolved[i] = result;
+    return [for (var i = 0, l = deps.length; i < l; i++) _resolveArg(deps[i])];
+  }
+
+  Object? _resolveArg(Object dependency) {
+    if (dependency is List<Object>) {
+      return _resolveMeta(dependency);
     }
-    return resolved;
+    final result = get(dependency);
+    // We don't check to see if this failed otherwise, because this is an
+    // edge case where we just delegate to Function.apply to invoke a factory.
+    if (identical(result, throwIfNotFound)) {
+      return throwsNotFound(this, dependency);
+    }
+    return unsafeCast(result);
   }
 
   List<Object> _resolveMulti(Provider<Object> provider) {
-    final results = listOfMulti(provider);
+    final results = listOfMultiToken(unsafeCast(provider.token));
     for (final other in _multiProviders) {
       if (identical(other.token, provider.token)) {
         results.add(buildAtRuntime(other, this));
@@ -197,8 +214,8 @@ class _RuntimeInjector extends HierarchicalInjector
     return results;
   }
 
-  Object _resolveMeta(List<Object> metadata) {
-    Object token;
+  Object? _resolveMeta(List<Object> metadata) {
+    late final Object token;
     var isOptional = false;
     var isSkipSelf = false;
     var isSelf = false;
@@ -220,7 +237,7 @@ class _RuntimeInjector extends HierarchicalInjector
       }
     }
     // TODO(matanl): Assert that there is no invalid combination.
-    Object result;
+    Object? result;
     errors.debugInjectorEnter(token);
     final orElse = isOptional ? null : throwIfNotFound;
     if (isSkipSelf) {
@@ -240,25 +257,26 @@ class _RuntimeInjector extends HierarchicalInjector
   }
 
   @override
-  Object useClass(Type clazz, {List<Object> deps}) {
+  Object useClass(Type clazz, {List<Object>? deps}) {
     final factory = reflector.getFactory(clazz);
-    return Function.apply(factory, _resolveArgs(clazz, deps));
+    return unsafeCast(Function.apply(factory, _resolveArgs(clazz, deps)));
   }
 
   @override
-  Object useExisting(Object to) => get(to);
+  Object useExisting(Object token) => provideUntyped(token) as Object;
 
   @override
-  Object useFactory(Function factory, {List<Object> deps}) {
+  Object useFactory(Function factory, {List<Object>? deps}) {
     final resolvedArgs = _resolveArgs(factory, deps);
     // This call will fail at runtime (a non-zero arg function w/ 1+ args).
     assert(
-        _functionHasNoRequiredArguments(factory) || resolvedArgs.isNotEmpty,
-        'Could not resolve dependencies for factory function $factory. This '
-        'is is usually a sign of an omitted @Injectable. Consider migrating '
-        'to @GeneratedInjector (and "runApp") or add the missing annotation '
-        'for the time being.');
-    return Function.apply(factory, resolvedArgs);
+      _functionHasNoRequiredArguments(factory) || resolvedArgs.isNotEmpty,
+      'Could not resolve dependencies for factory function $factory. This '
+      'is is usually a sign of an omitted @Injectable. Consider migrating '
+      'to @GeneratedInjector (and "runApp") or add the missing annotation '
+      'for the time being.',
+    );
+    return unsafeCast(Function.apply(factory, resolvedArgs));
   }
 
   static bool _functionHasNoRequiredArguments(Function function) {
@@ -270,7 +288,7 @@ class _RuntimeInjector extends HierarchicalInjector
 }
 
 class _FlatProviders {
-  final Map<dynamic, Provider<Object>> providers;
+  final Map<Object, Provider<Object>> providers;
   final List<Provider<Object>> multiProviders;
 
   const _FlatProviders(this.providers, this.multiProviders);
@@ -282,20 +300,23 @@ class _FlatProviders {
 // all providers), instead of letting teams introduce unresolvable providers.
 void _assertProviders(Iterable<Provider<void>> providers) {
   for (final provider in providers) {
-    if (provider.useClass != null) {
-      reflector.getFactory(provider.useClass);
-    } else if (provider.useFactory != null && provider.deps == null) {
-      reflector.getDependencies(provider.useFactory);
-    } else if (identical(provider.useFactory, noValueProvided) &&
-        provider.useExisting == null &&
-        provider.token is Type) {
-      reflector.getFactory(unsafeCast<Type>(provider.token));
+    final useClass = provider.useClass;
+    if (useClass != null) {
+      reflector.getFactory(useClass);
+    } else {
+      final useFactory = provider.useFactory;
+      if (useFactory != null && provider.deps == null) {
+        reflector.getDependencies(useFactory);
+      } else if (identical(provider.useFactory, noValueProvided) &&
+          provider.useExisting == null &&
+          provider.token is Type) {
+        reflector.getFactory(unsafeCast<Type>(provider.token));
+      }
     }
   }
 }
 
-@alwaysThrows
-void _throwUnsupportedProvider(Provider<void> provider) {
+Never _throwUnsupportedProvider(Provider<void> provider) {
   throw UnsupportedError(
     'Could not create a provider for token "${provider.token}"!\n\n'
     'ReflectiveInjector.resolveStaticAndCreate only supports some providers.\n'
@@ -334,16 +355,40 @@ void _assertStaticProviders(Iterable<Provider<void>> providers) {
   }
 }
 
+void _assertGlobalSingletonService(Iterable<Provider<void>> providers) {
+  for (final provider in providers) {
+    final tokenName = '${provider.token}';
+    if (_globalSingletonServices.contains(tokenName)) {
+      // Error message copied from .../cli/messages/messages.dart to avoid
+      // circular dependency.
+      throw UnsupportedError(
+          '"${tokenName}" is an app-wide, singleton service provided by the '
+          'framework that cannot be overridden or manually provided.\n'
+          '\n'
+          'If you are providing this service to fix a missing provider error, '
+          'you likely have created an injector that is disconnected from the '
+          "app's injector hierarchy. This can occur when instantiating an "
+          'injector and you omit the parent injector argument, or explicitly '
+          'configure an empty parent injector. Please check your injector '
+          "constructors to make sure the current context's injector is passed "
+          'as the parent.\n'
+          '\n'
+          'If you are instead providing this service in order to unit test an '
+          'injector, please see http://go/angulardart/style/testing.');
+    }
+  }
+}
+
 /// Creates a "flattened" linked hash map of all providers, keyed by token.
 ///
 /// Walks [providersOrLists], recursively iterating where needed.
 _FlatProviders _flattenProviders(
   List<Object> providersOrLists, [
-  Map<Object, Provider<Object>> allProviders,
-  List<Provider<Object>> multiProviders,
+  Map<Object, Provider<Object>>? allProviders,
+  List<Provider<Object>>? multiProviders,
 ]) {
-  allProviders ??= Map<Object, Provider<Object>>.identity();
-  multiProviders ??= <Provider<Object>>[];
+  allProviders ??= Map.identity();
+  multiProviders ??= [];
   for (var i = 0, len = providersOrLists.length; i < len; i++) {
     final item = providersOrLists[i];
     if (item is List<Object>) {

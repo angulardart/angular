@@ -1,13 +1,13 @@
-@TestOn('vm')
-import 'dart:async';
-import 'package:angular/core.dart';
-import 'package:angular_compiler/v1/src/compiler/ast_directive_normalizer.dart';
-import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
+// @dart=2.9
+
 import 'package:build_test/build_test.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/src/compiler/ast_directive_normalizer.dart';
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
   CompileDirectiveMetadata metadata;

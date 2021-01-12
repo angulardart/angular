@@ -12,7 +12,7 @@ import 'compile_view.dart' show CompileView, NodeReference;
 import 'constants.dart' show DetectChangesVars;
 import 'interpolation_utils.dart';
 import 'ir/view_storage.dart';
-import 'update_statement_visitor.dart' show bindingToUpdateStatement;
+import 'update_statement_visitor.dart' show bindingToUpdateStatements;
 import 'view_name_resolver.dart';
 
 /// For each binding, creates code to update the binding.
@@ -156,14 +156,14 @@ void _directBinding(
 ) {
   var expression =
       converter.convertSourceToExpression(binding.source, binding.target.type);
-  var updateStatement = bindingToUpdateStatement(
+  var updateStatements = bindingToUpdateStatements(
     binding,
     appViewInstance,
     renderNode,
     isHtmlElement,
     expression,
   );
-  method.addStmt(updateStatement);
+  method.addStmts(updateStatements);
 }
 
 /// For the given binding, creates code to update the binding.
@@ -198,15 +198,13 @@ void _checkBinding(
   var updatedExpr = _maybeOptimizeInterpolation(
       binding.source, currValExpr, converter, binding.target.type);
 
-  var updateStmts = <o.Statement>[
-    bindingToUpdateStatement(
-      binding,
-      appViewInstance,
-      renderNode,
-      isHtmlElement,
-      updatedExpr,
-    )
-  ];
+  var updateStmts = bindingToUpdateStatements(
+    binding,
+    appViewInstance,
+    renderNode,
+    isHtmlElement,
+    updatedExpr,
+  );
 
   if (calcChanged) {
     updateStmts.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
@@ -238,15 +236,17 @@ o.Expression _checkBindingExpr(ir.Binding binding,
 }
 
 class _CheckBindingVisitor
-    implements ir.BindingSourceVisitor<o.Expression, Null> {
+    implements ir.BindingSourceVisitor<o.Expression, void> {
   final o.ReadClassMemberExpr fieldExpr;
   final o.ReadVarExpr currValExpr;
 
   _CheckBindingVisitor(this.fieldExpr, this.currValExpr);
 
   @override
-  o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
-      [Null context]) {
+  o.Expression visitBoundExpression(
+    ir.BoundExpression boundExpression, [
+    void _,
+  ]) {
     return o.importExpr(Runtime.checkBinding).callFn([
       fieldExpr,
       currValExpr,
@@ -256,27 +256,34 @@ class _CheckBindingVisitor
   }
 
   @override
-  o.Expression visitBoundI18nMessage(ir.BoundI18nMessage boundI18nMessage,
-      [Null context]) {
+  o.Expression visitBoundI18nMessage(
+    ir.BoundI18nMessage boundI18nMessage, [
+    void _,
+  ]) {
     return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 
   @override
   o.Expression visitComplexEventHandler(
-      ir.ComplexEventHandler complexEventHandler,
-      [Null context]) {
-    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
+    ir.ComplexEventHandler complexEventHandler, [
+    void _,
+  ]) {
+    throw UnsupportedError('Event handlers are not change detected');
   }
 
   @override
-  o.Expression visitSimpleEventHandler(ir.SimpleEventHandler simpleEventHandler,
-      [Null context]) {
-    return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
+  o.Expression visitSimpleEventHandler(
+    ir.SimpleEventHandler simpleEventHandler, [
+    void _,
+  ]) {
+    throw UnsupportedError('Event handlers are not change detected');
   }
 
   @override
-  o.Expression visitStringLiteral(ir.StringLiteral stringLiteral,
-      [Null context]) {
+  o.Expression visitStringLiteral(
+    ir.StringLiteral stringLiteral, [
+    void _,
+  ]) {
     return o.importExpr(Runtime.checkBinding).callFn([fieldExpr, currValExpr]);
   }
 }
@@ -305,7 +312,6 @@ void _bind(
   CompileMethod literalMethod, {
   o.OutputType fieldType,
   bool isHostComponent = false,
-  o.Expression fieldExprInitializer,
 }) {
   if (isImmutable) {
     // If the expression is immutable, it will never change, so we can run it
@@ -320,18 +326,24 @@ void _bind(
     // e.g. an empty expression was given
     return;
   }
-  var previousValueField = storage.allocate(fieldExpr.name,
-      modifiers: const [o.StmtModifier.Private],
-      initializer: fieldExprInitializer);
-  method.addStmt(currValExpr
-      .set(checkExpression)
-      .toDeclStmt(null, [o.StmtModifier.Final]));
-  method.addStmt(o.IfStmt(
-      checkBindingExpr,
-      List.from(actions)
-        ..addAll([
+  var previousValueField = storage.allocate(
+    fieldExpr.name,
+    modifiers: const [o.StmtModifier.Private],
+    outputType: o.OBJECT_TYPE.asNullable(),
+  );
+  method
+    ..addStmt(
+      currValExpr.set(checkExpression).toDeclStmt(null, [o.StmtModifier.Final]),
+    )
+    ..addStmt(
+      o.IfStmt(
+        checkBindingExpr,
+        [
+          ...actions,
           storage.buildWriteExpr(previousValueField, currValExpr).toStmt()
-        ])));
+        ],
+      ),
+    );
 }
 
 /// The same as [_bind], but we know that [checkExpression] is a literal.
@@ -362,8 +374,9 @@ void _bindLiteral(
       // Replace all 'expr_X' with 'null'
       .map((stmt) => o.replaceVarInStatement(fieldName, o.NULL_EXPR, stmt));
   if (isNullable) {
-    method.addStmt(o.IfStmt(
-        checkExpression.notIdentical(o.NULL_EXPR), mappedActions.toList()));
+    method.addStmt(
+      o.IfStmt(checkExpression.notEquals(o.NULL_EXPR), mappedActions.toList()),
+    );
   } else {
     method.addStmts(mappedActions.toList());
   }

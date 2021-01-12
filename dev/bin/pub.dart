@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:dev/find.dart';
 import 'package:path/path.dart' as p;
+import 'package:dev/find.dart';
 
 /// Finds and runs `pub upgrade` for all sub-packages.
 void main(List<String> args) {

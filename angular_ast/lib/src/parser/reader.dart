@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:collection';
 
 import 'package:source_span/source_span.dart';
@@ -12,7 +8,7 @@ import '../token/tokens.dart';
 /// Can only move forward within token iterable.
 ///
 /// Not compatible with error recovery.
-class NgTokenReader<TokenType> {
+class NgTokenReader<T> {
   final Iterator<NgBaseToken<Object>> _iterator;
 
   NgBaseToken<Object> _peek;
@@ -40,16 +36,16 @@ class NgTokenReader<TokenType> {
 
   /// Returns the next token type without incrementing.
   /// Returns null otherwise.
-  TokenType peekType() {
+  T peekType() {
     _peek = next();
     if (_peek != null) {
-      return _peek.type;
+      return _peek.type as T;
     }
     return null;
   }
 
   /// Returns whether the current token is of [type].
-  bool when(TokenType type) => _iterator.current.type == type;
+  bool when(T type) => _iterator.current.type == type;
 
   /// Returns whether there is any more tokens to return.
   bool get isDone {
@@ -67,7 +63,7 @@ class NgTokenReader<TokenType> {
 /// Can move forward within iterable of Tokens, and put tokens back.
 ///
 /// Compatible with Error Recovery.
-class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
+class NgTokenReversibleReader<T> extends NgTokenReader<T> {
   final Queue<NgBaseToken<Object>> _seen = Queue<NgBaseToken<Object>>();
 
   factory NgTokenReversibleReader(
@@ -87,7 +83,7 @@ class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
   /// for the next type that isn't whitespace.
   /// Returns `null` if there are no further types aside from ignoreType
   /// or iterator is empty.
-  TokenType peekTypeIgnoringType(TokenType ignoreType) {
+  T peekTypeIgnoringType(T ignoreType) {
     var buffer = Queue<NgBaseToken<Object>>();
 
     peek();
@@ -104,7 +100,7 @@ class NgTokenReversibleReader<TokenType> extends NgTokenReader<TokenType> {
     }
     _seen.addAll(buffer);
 
-    return returnType;
+    return returnType as T;
   }
 
   @override

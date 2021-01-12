@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'dart:html';
 import 'dart:js_util' as js_util;
 
@@ -14,32 +13,32 @@ void main() {
     tearDown(disposeAnyRunningTest);
 
     test('should have error on invalid input', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createAccessorTestComponentFactory());
+      var testBed = NgTestBed(ng.createAccessorTestComponentFactory());
       var fixture = await testBed.create();
 
       await fixture.update((AccessorTestComponent c) {
-        (c.model.valueAccessor as IntValueAccessor).onChange('aaa');
+        var model = c.model!;
+        (model.valueAccessor as IntValueAccessor).onChange('aaa');
 
-        expect(c.model.value, null);
-        expect(c.model.control.rawValue, 'aaa');
-        expect(c.model.control.errors.values.single, 'aaa');
-        expect(c.model.control.errors.keys.single, 'int-error');
+        expect(model.value, null);
+        expect(model.control.rawValue, 'aaa');
+        expect(model.control.errors!.values.single, 'aaa');
+        expect(model.control.errors!.keys.single, 'int-error');
       });
     });
 
     test('shouldn\'t have error on valid input', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createAccessorTestComponentFactory());
+      var testBed = NgTestBed(ng.createAccessorTestComponentFactory());
       var fixture = await testBed.create();
 
       await fixture.update((AccessorTestComponent c) {
-        (c.model.valueAccessor as IntValueAccessor).onChange('5');
+        var model = c.model!;
+        (model.valueAccessor as IntValueAccessor).onChange('5');
 
         expect(c.value, 5);
-        expect(c.model.value, 5);
-        expect(c.model.control.rawValue, '5');
-        expect(c.model.control.errors, null,
+        expect(model.value, 5);
+        expect(model.control.rawValue, '5');
+        expect(model.control.errors, null,
             reason: 'Valid value should not have an error');
       });
     });
@@ -53,8 +52,8 @@ void main() {
 )
 class AccessorTestComponent {
   @ViewChild(NgModel)
-  NgModel model;
-  int value = 1;
+  NgModel? model;
+  int? value = 1;
 }
 
 typedef ChangeFunctionSimple = dynamic Function(dynamic value);
@@ -66,12 +65,13 @@ typedef ChangeFunctionSimple = dynamic Function(dynamic value);
     ExistingProvider.forToken(NG_VALIDATORS, IntValueAccessor),
   ],
 )
-class IntValueAccessor implements ControlValueAccessor, Validator {
+class IntValueAccessor implements ControlValueAccessor<dynamic>, Validator {
   final HtmlElement _elementRef;
 
   @HostListener('input')
   void onChangeBinding() => onChange(null);
 
+  // ignore: prefer_function_declarations_over_variables
   ChangeFunctionSimple onChange = (_) {};
 
   @HostListener('blur')
@@ -79,25 +79,22 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
     onTouched();
   }
 
+  // ignore: prefer_function_declarations_over_variables
   TouchFunction onTouched = () {};
 
   IntValueAccessor(this._elementRef);
 
   @override
   void writeValue(dynamic value) {
-    var normalizedValue = value.toString() ?? '';
+    var normalizedValue = value!.toString();
     js_util.setProperty(_elementRef, 'value', normalizedValue);
   }
 
   @override
-  void registerOnChange(ChangeFunction fn) {
-    onChange = (value) {
-      var result;
-      try {
-        result = int.parse(value);
-      } on FormatException {
-        // Catching error will keep the result as null.
-      }
+  void registerOnChange(ChangeFunction<dynamic> fn) {
+    onChange = (input) {
+      final value = input as String;
+      final result = int.tryParse(value);
       fn(result, rawValue: value);
     };
   }
@@ -108,7 +105,7 @@ class IntValueAccessor implements ControlValueAccessor, Validator {
   }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
+  Map<String, dynamic>? validate(AbstractControl c) {
     if (c is Control && c.value == null && c.rawValue != null) {
       // We couldn't parse the input there must have been an error
       return {'int-error': c.rawValue};

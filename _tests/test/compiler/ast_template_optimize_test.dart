@@ -1,13 +1,13 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'package:test/test.dart';
-import 'package:angular_compiler/v1/src/compiler/expression_parser/lexer.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart';
-import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
+import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../resolve_util.dart';
 import 'template_humanizer_util.dart';
@@ -15,8 +15,7 @@ import 'template_humanizer_util.dart';
 void main() {
   CompileContext.overrideForTesting();
 
-  final expressionLexer = Lexer();
-  final expressionParser = Parser(expressionLexer);
+  final expressionParser = ExpressionParser();
   final schemaRegistry = DomElementSchemaRegistry();
   final templateParser = AstTemplateParser(
     schemaRegistry,
@@ -24,7 +23,7 @@ void main() {
     CompilerFlags(),
   );
 
-  List getHumanizedTemplate(
+  List<Object> getHumanizedTemplate(
     NormalizedComponentWithViewDirectives component,
   ) {
     final componentMetadata = component.component;

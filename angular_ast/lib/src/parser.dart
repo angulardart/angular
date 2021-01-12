@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
@@ -153,7 +149,6 @@ class NgParser {
     String template, {
     @required String sourceUrl,
     bool desugar = true,
-    @deprecated bool parseExpressions,
     ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
   }) {
     final tokens = const NgLexer().tokenize(template, exceptionHandler);

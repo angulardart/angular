@@ -1,32 +1,34 @@
-@TestOn('browser')
-
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
-import 'view_creation_test.template.dart' as ng_generated;
+import 'view_creation_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support imperative views', () async {
-    final testBed = NgTestBed<SimpleImperativeViewComponent>();
+    final testBed = NgTestBed(
+      ng.createSimpleImperativeViewComponentFactory(),
+    );
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello imp view');
   });
 
   test('should support moving embedded views', () async {
     final template = TemplateElement()..append(DivElement());
-    final testBed = NgTestBed<MovesEmbeddedViewComponent>().addProviders([
-      provide(ANCHOR_ELEMENT, useValue: template),
-    ]);
+    final testBed = NgTestBed(
+      ng.createMovesEmbeddedViewComponentFactory(),
+    ).addInjector(
+      (i) => Injector.map({
+        ANCHOR_ELEMENT: template,
+      }, i),
+    );
     final testFixture = await testBed.create();
-    final viewport = testFixture.assertOnlyInstance.viewport;
+    final viewport = testFixture.assertOnlyInstance.viewport!;
     expect(viewport.anchor.text, '');
     await testFixture.update((component) => component.ctxBoolProp = true);
     expect(viewport.anchor.text, 'hello');
@@ -36,58 +38,72 @@ void main() {
 
   group('property bindings', () {
     test("shouldn't throw if unknown property exists on directive", () async {
-      final testBed = NgTestBed<UnknownPropertyOnDirectiveComponent>();
+      final testBed = NgTestBed(
+        ng.createUnknownPropertyOnDirectiveComponentFactory(),
+      );
       await testBed.create();
     });
 
     test("shouldn't be created when a directive property has the same name",
         () async {
-      final testBed = NgTestBed<OverriddenPropertyComponent>();
+      final testBed = NgTestBed(
+        ng.createOverriddenPropertyComponentFactory(),
+      );
       final testFixture = await testBed.create();
       final span = testFixture.rootElement.querySelector('span');
-      expect(span.title, isEmpty);
+      expect(span!.title, isEmpty);
     });
 
     test('should allow directive host property to update DOM', () async {
-      final testBed = NgTestBed<DirectiveUpdatesDomComponent>();
+      final testBed = NgTestBed(
+        ng.createDirectiveUpdatesDomComponentFactory(),
+      );
       final testFixture = await testBed.create();
       final span = testFixture.rootElement.querySelector('span');
-      expect(span.title, 'TITLE');
+      expect(span!.title, 'TITLE');
     });
   });
 
   group('property decorators', () {
     test('should support @Input', () async {
-      final testBed = NgTestBed<DecoratorsComponent>();
+      final testBed = NgTestBed(
+        ng.createDecoratorsComponentFactory(),
+      );
       final testFixture = await testBed.create();
       final directive = testFixture.assertOnlyInstance.directive;
-      expect(directive.dirProp, 'foo');
+      expect(directive!.dirProp, 'foo');
     });
 
     test('should support @HostBinding', () async {
-      final testBed = NgTestBed<DecoratorsComponent>();
+      final testBed = NgTestBed(
+        ng.createDecoratorsComponentFactory(),
+      );
       final testFixture = await testBed.create();
       await testFixture.update((component) {
-        component.directive.myAttr = 'bar';
+        component.directive!.myAttr = 'bar';
       });
       final directiveElement = testFixture.rootElement.children.first;
       expect(directiveElement.attributes, containsPair('my-attr', 'bar'));
     });
 
     test('should support @Output', () async {
-      final testBed = NgTestBed<DecoratorsComponent>();
+      final testBed = NgTestBed(
+        ng.createDecoratorsComponentFactory(),
+      );
       final testFixture = await testBed.create();
       await testFixture.update((component) {
         expect(component.value, isNull);
-        component.directive.fireEvent('fired!');
+        component.directive!.fireEvent('fired!');
       });
       expect(testFixture.assertOnlyInstance.value, 'called');
     });
 
     test('should support @HostListener', () async {
-      final testBed = NgTestBed<DecoratorsComponent>();
+      final testBed = NgTestBed(
+        ng.createDecoratorsComponentFactory(),
+      );
       final testFixture = await testBed.create();
-      final directive = testFixture.assertOnlyInstance.directive;
+      final directive = testFixture.assertOnlyInstance.directive!;
       expect(directive.target, isNull);
       final directiveElement = testFixture.rootElement.children.first;
       directiveElement.dispatchEvent(MouseEvent('click'));
@@ -97,33 +113,39 @@ void main() {
   });
 
   test('should support svg elements', () async {
-    final testBed = NgTestBed<SvgElementsComponent>();
+    final testBed = NgTestBed(
+      ng.createSvgElementsComponentFactory(),
+    );
     final testFixture = await testBed.create();
-    final svg = testFixture.rootElement.querySelector('svg');
+    final svg = testFixture.rootElement.querySelector('svg')!;
     expect(svg.namespaceUri, 'http://www.w3.org/2000/svg');
-    final use = testFixture.rootElement.querySelector('use');
+    final use = testFixture.rootElement.querySelector('use')!;
     expect(use.namespaceUri, 'http://www.w3.org/2000/svg');
     final foreignObject =
-        testFixture.rootElement.querySelector('foreignObject');
+        testFixture.rootElement.querySelector('foreignObject')!;
     expect(foreignObject.namespaceUri, 'http://www.w3.org/2000/svg');
-    final div = testFixture.rootElement.querySelector('div');
+    final div = testFixture.rootElement.querySelector('div')!;
     expect(div.namespaceUri, 'http://www.w3.org/1999/xhtml');
-    final p = testFixture.rootElement.querySelector('p');
+    final p = testFixture.rootElement.querySelector('p')!;
     expect(p.namespaceUri, 'http://www.w3.org/1999/xhtml');
   });
 
   group('namespace attributes', () {
     test('should be supported', () async {
-      final testBed = NgTestBed<NamespaceAttributeComponent>();
+      final testBed = NgTestBed(
+        ng.createNamespaceAttributeComponentFactory(),
+      );
       final testFixture = await testBed.create();
-      final use = testFixture.rootElement.querySelector('use');
+      final use = testFixture.rootElement.querySelector('use')!;
       expect(use.getAttributeNS('http://www.w3.org/1999/xlink', 'href'), '#id');
     });
 
     test('should support binding', () async {
-      final testBed = NgTestBed<NamespaceAttributeBindingComponent>();
+      final testBed = NgTestBed(
+        ng.createNamespaceAttributeBindingComponentFactory(),
+      );
       final testFixture = await testBed.create();
-      final use = testFixture.rootElement.querySelector('use');
+      final use = testFixture.rootElement.querySelector('use')!;
       expect(
           use.getAttributeNS('http://www.w3.org/1999/xlink', 'href'), isNull);
       await testFixture.update((component) => component.value = '#id');
@@ -150,7 +172,7 @@ const ANCHOR_ELEMENT = OpaqueToken('AnchorElement');
 class SomeImperativeViewport {
   ViewContainerRef vc;
   TemplateRef templateRef;
-  EmbeddedViewRef view;
+  EmbeddedViewRef? view;
   var anchor;
 
   SomeImperativeViewport(
@@ -164,7 +186,7 @@ class SomeImperativeViewport {
     }
     if (value) {
       view = vc.createEmbeddedView(templateRef);
-      var nodes = view.rootNodes;
+      var nodes = view!.rootNodes;
       for (var i = 0; i < nodes.length; i++) {
         anchor.append(nodes[i]);
       }
@@ -181,7 +203,7 @@ class MovesEmbeddedViewComponent {
   bool ctxBoolProp = false;
 
   @ViewChild(SomeImperativeViewport)
-  SomeImperativeViewport viewport;
+  SomeImperativeViewport? viewport;
 }
 
 @Directive(
@@ -189,7 +211,7 @@ class MovesEmbeddedViewComponent {
 )
 class PropertyDirective {
   @Input('property')
-  String value;
+  String? value;
 }
 
 @Component(
@@ -206,7 +228,7 @@ class UnknownPropertyOnDirectiveComponent {
 )
 class DirectiveWithTitle {
   @Input()
-  String title;
+  String? title;
 }
 
 @Component(
@@ -224,7 +246,7 @@ class OverriddenPropertyComponent {
 class DirectiveWithTitleAndHostProperty {
   @HostBinding()
   @Input()
-  String title;
+  String? title;
 }
 
 @Component(
@@ -244,21 +266,21 @@ class DirectiveWithPropDecorators {
   var target;
 
   @Input('elProp')
-  String dirProp;
+  String? dirProp;
 
   @Output('elEvent')
-  Stream get event => _streamController.stream;
+  Stream<String> get event => _streamController.stream;
 
   @HostBinding('attr.my-attr')
-  String myAttr;
+  String? myAttr;
 
   @HostListener('click', ['\$event.target'])
   void onClick(target) {
     this.target = target;
   }
 
-  void fireEvent(msg) {
-    _streamController.add(msg);
+  void fireEvent(String message) {
+    _streamController.add(message);
   }
 }
 
@@ -270,10 +292,10 @@ class DirectiveWithPropDecorators {
   directives: [DirectiveWithPropDecorators],
 )
 class DecoratorsComponent {
-  String value;
+  String? value;
 
   @ViewChild(DirectiveWithPropDecorators)
-  DirectiveWithPropDecorators directive;
+  DirectiveWithPropDecorators? directive;
 }
 
 @Component(
@@ -304,5 +326,5 @@ class NamespaceAttributeComponent {}
   template: '<svg:use [attr.xlink:href]="value"/>',
 )
 class NamespaceAttributeBindingComponent {
-  String value;
+  String? value;
 }

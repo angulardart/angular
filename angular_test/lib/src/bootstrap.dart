@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 import 'dart:html';
 
@@ -10,12 +6,8 @@ import 'package:angular/src/bootstrap/run.dart';
 import 'package:angular/src/core/application_ref.dart';
 
 /// Returns an application injector factory for [providers], if any.
-InjectorFactory testInjectorFactory(List<dynamic> providers) {
-  // Identity InjectorFactory (No-op).
-  if (providers.isEmpty) {
-    return ([parent]) => parent;
-  }
-  return ([parent]) {
+InjectorFactory testInjectorFactory(List<Object> providers) {
+  return (parent) {
     return ReflectiveInjector.resolveAndCreate([
       providers,
     ], parent);
@@ -37,25 +29,16 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   InjectorFactory userInjector, {
-  FutureOr<void> Function(Injector) beforeComponentCreated,
-  FutureOr<void> Function(E) beforeChangeDetection,
+  FutureOr<void> Function(Injector)? beforeComponentCreated,
+  FutureOr<void> Function(E)? beforeChangeDetection,
   NgZone Function() createNgZone = _createNgZone,
 }) async {
-  if (componentFactory == null) {
-    throw ArgumentError.notNull('componentFactory');
-  }
-  if (hostElement == null) {
-    throw ArgumentError.notNull('hostElement');
-  }
-  if (userInjector == null) {
-    throw ArgumentError.notNull('userInjector');
-  }
   // This should be kept in sync with 'runApp' as much as possible.
   final injector = appInjector(userInjector, createNgZone: createNgZone);
-  final ApplicationRef appRef = injector.get(ApplicationRef);
-  NgZoneError caughtError;
-  final NgZone ngZone = injector.get(NgZone);
-  final onErrorSub = ngZone.onError.listen((e) {
+  final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
+  UncaughtError? caughtError;
+  final ngZone = injector.provideType<NgZone>(NgZone);
+  final onErrorSub = ngZone.onUncaughtError.listen((e) {
     caughtError = e;
   });
 
@@ -87,8 +70,8 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
       await onErrorSub.cancel();
       if (caughtError != null) {
         return Future.error(
-          caughtError.error,
-          StackTrace.fromString(caughtError.stackTrace.join('\n')),
+          caughtError!.error,
+          caughtError!.stackTrace,
         );
       }
       return componentRef;
@@ -101,17 +84,13 @@ Future<ComponentRef<E>> _runAndLoadComponent<E>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   Injector injector, {
-  FutureOr<void> Function(E) beforeChangeDetection,
+  FutureOr<void> Function(E)? beforeChangeDetection,
 }) {
   final componentRef = componentFactory.create(injector);
 
   Future<ComponentRef<E>> loadComponent() {
     hostElement.append(componentRef.location);
-    appRef.registerChangeDetector(componentRef.changeDetectorRef);
-    componentRef.onDestroy(() {
-      appRef.unregisterChangeDetector(componentRef.changeDetectorRef);
-    });
-    appRef.tick();
+    appRef.registerRootComponent(componentRef);
     return Future.value(componentRef);
   }
 

@@ -1,4 +1,3 @@
-@TestOn('browser')
 library angular2.test.core.change_detection.differs.default_iterable_differ_test;
 
 import 'dart:collection';
@@ -9,7 +8,7 @@ import 'package:angular/src/core/change_detection/differs/default_iterable_diffe
 void main() {
   group('iterable differ', () {
     group('DefaultIterableDiffer', () {
-      DefaultIterableDiffer differ;
+      late DefaultIterableDiffer differ;
       setUp(() {
         differ = DefaultIterableDiffer();
       });
@@ -268,7 +267,9 @@ void main() {
     });
     group('trackBy function by id', () {
       var differ;
+      // ignore: prefer_function_declarations_over_variables
       var trackByItemId = (int index, dynamic item) => item.id;
+      // ignore: prefer_function_declarations_over_variables
       var buildItemList = (List<String> list) {
         return list.map((val) {
           return ItemWithId(val);
@@ -374,7 +375,8 @@ void main() {
     });
     group('trackBy function by index', () {
       var differ;
-      var trackByIndex = (int index, Object item) => index;
+      // ignore: prefer_function_declarations_over_variables
+      var trackByIndex = (int index, Object? item) => index;
       setUp(() {
         differ = DefaultIterableDiffer(trackByIndex);
       });
@@ -419,13 +421,14 @@ class TestIterable extends IterableBase<int> {
   Iterator<int> get iterator => list.iterator;
 }
 
-String iterableChangesAsString(
-    {collection = const [],
-    previous = const [],
-    additions = const [],
-    moves = const [],
-    removals = const [],
-    identityChanges = const []}) {
+String iterableChangesAsString({
+  List<Object> collection = const [],
+  List<Object> previous = const [],
+  List<Object> additions = const [],
+  List<Object> moves = const [],
+  List<Object> removals = const [],
+  List<Object> identityChanges = const [],
+}) {
   return 'collection: ' +
       collection.join(', ') +
       '\n' +

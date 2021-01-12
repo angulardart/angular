@@ -1,6 +1,3 @@
-@TestOn('browser')
-import 'dart:async';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -16,10 +13,10 @@ void main() {
   });
 
   group('RouterHook', () {
-    Router router;
+    late Router router;
 
     setUp(() async {
-      final testBed = NgTestBed.forComponent(ng.createTestAppComponentFactory())
+      final testBed = NgTestBed(ng.createTestAppComponentFactory())
           .addInjector(createInjector);
       final testFixture = await testBed.create();
       router = testFixture.assertOnlyInstance.router;
@@ -66,20 +63,20 @@ void main() {
   });
 
   test('can support cyclic dependency with lazy injection', () async {
-    final testBed = NgTestBed.forComponent(ng.createTestAppComponentFactory())
+    final testBed = NgTestBed(ng.createTestAppComponentFactory())
         .addInjector(accumulateQueryHookInjector);
     final testFixture = await testBed.create();
     final router = testFixture.assertOnlyInstance.router;
-    expect(router.current.queryParameters, isEmpty);
+    expect(router.current!.queryParameters, isEmpty);
     var navigationResult = await router.navigate(
         '/foo', NavigationParams(queryParameters: {'a': 'b'}));
     expect(navigationResult, NavigationResult.SUCCESS);
-    expect(router.current.queryParameters, {'a': 'b'});
+    expect(router.current!.queryParameters, {'a': 'b'});
     // Router hook should combine new query parameters with existing ones.
     navigationResult = await router.navigate(
         '/foo', NavigationParams(queryParameters: {'x': 'y'}));
     expect(navigationResult, NavigationResult.SUCCESS);
-    expect(router.current.queryParameters, {'a': 'b', 'x': 'y'});
+    expect(router.current!.queryParameters, {'a': 'b', 'x': 'y'});
   });
 }
 
@@ -129,24 +126,19 @@ class IndexComponent implements OnInit, OnDestroy {
   }
 }
 
-typedef NavigationGuard = Future<bool> Function(
-  Object,
-  RouterState,
-  RouterState,
-);
-
 class TestRouterHook extends RouterHook {
-  NavigationGuard canActivateFn;
-  NavigationGuard canDeactivateFn;
-  Future<bool> Function() canNavigateFn;
-  NavigationGuard canReuseFn;
+  Future<bool> Function(Object, RouterState?, RouterState)? canActivateFn;
+  Future<bool> Function(Object, RouterState, RouterState)? canDeactivateFn;
+  Future<bool> Function()? canNavigateFn;
+  Future<bool> Function(Object, RouterState, RouterState)? canReuseFn;
 
   @override
   Future<bool> canActivate(
     Object componentInstance,
-    RouterState oldState,
+    RouterState? oldState,
     RouterState newState,
   ) {
+    final canActivateFn = this.canActivateFn;
     return canActivateFn != null
         ? canActivateFn(componentInstance, oldState, newState)
         : super.canActivate(componentInstance, oldState, newState);
@@ -158,6 +150,7 @@ class TestRouterHook extends RouterHook {
     RouterState oldState,
     RouterState newState,
   ) {
+    final canDeactivateFn = this.canDeactivateFn;
     return canDeactivateFn != null
         ? canDeactivateFn(componentInstance, oldState, newState)
         : super.canDeactivate(componentInstance, oldState, newState);
@@ -165,6 +158,7 @@ class TestRouterHook extends RouterHook {
 
   @override
   Future<bool> canNavigate() {
+    final canNavigateFn = this.canNavigateFn;
     return canNavigateFn != null ? canNavigateFn() : super.canNavigate();
   }
 
@@ -174,6 +168,7 @@ class TestRouterHook extends RouterHook {
     RouterState oldState,
     RouterState newState,
   ) {
+    final canReuseFn = this.canReuseFn;
     return canReuseFn != null
         ? canReuseFn(componentInstance, oldState, newState)
         : super.canReuse(componentInstance, oldState, newState);
@@ -199,8 +194,7 @@ class AccumulateQueryHook extends RouterHook {
   final Injector _injector;
 
   // Lazily inject `Router` to avoid cyclic dependency.
-  Router _router;
-  Router get router => _router ??= _injector.provideType(Router);
+  late final Router router = _injector.provideType(Router);
 
   @override
   Future<NavigationParams> navigationParams(String _, NavigationParams params) {

@@ -1,0 +1,165 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'pipes.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'pipes.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'pipes.dart' as import1;
+import 'package:angular/src/runtime/text_binding.dart' as import2;
+import 'dart:core';
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import5;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import7;
+import 'dart:html' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/runtime/proxies.dart' as import10;
+import 'package:angular/src/runtime/interpolate.dart' as import11;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import13;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  final import2.TextBinding _textBinding_4 = import2.TextBinding();
+  final import2.TextBinding _textBinding_7 = import2.TextBinding();
+  final import2.TextBinding _textBinding_10 = import2.TextBinding();
+  final import2.TextBinding _textBinding_13 = import2.TextBinding();
+  final import2.TextBinding _textBinding_16 = import2.TextBinding();
+  final import2.TextBinding _textBinding_21 = import2.TextBinding();
+  final import2.TextBinding _textBinding_24 = import2.TextBinding();
+  late final import1.IdentityPurePipe _pipe_identity_0;
+  late final Object Function(Object) _pipe_identity_0_0;
+  late final import1.ConcatPurePipe _pipe_concat_1;
+  late final String Function(String, String) _pipe_concat_1_0;
+  late final import1.MergePurePipe _pipe_merge_2;
+  late final List<dynamic> Function(dynamic, dynamic) _pipe_merge_2_0;
+  late final import1.TypedPurePipe _pipe_typed_3;
+  late final Map<String, int> Function(String, int) _pipe_typed_3_0;
+  late final import1.PureLifecyclePipe _pipe_pureLifecycle_4;
+  late final Object Function(Object) _pipe_pureLifecycle_4_0;
+  late final import1.ImpureTimePipe _pipe_time_5;
+  late final import1.ImpureLifecyclePipe _pipe_impureLifecycle_6;
+  static import4.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import7.unsafeCast(import8.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:goldens/test/templates/pipes.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final doc = import8.document;
+    final _el_0 = import9.appendDiv(doc, parentRenderNode);
+    final _text_1 = import9.appendText(_el_0, 'Using "pure" Pipes:');
+    final _el_2 = import9.appendDiv(doc, _el_0);
+    final _text_3 = import9.appendText(_el_2, 'IDENTITY: ');
+    _el_2.append(this._textBinding_4.element);
+    final _el_5 = import9.appendDiv(doc, _el_0);
+    final _text_6 = import9.appendText(_el_5, 'CONCAT: ');
+    _el_5.append(this._textBinding_7.element);
+    final _el_8 = import9.appendDiv(doc, _el_0);
+    final _text_9 = import9.appendText(_el_8, 'MERGE: ');
+    _el_8.append(this._textBinding_10.element);
+    final _el_11 = import9.appendDiv(doc, _el_0);
+    final _text_12 = import9.appendText(_el_11, 'TYPED: ');
+    _el_11.append(this._textBinding_13.element);
+    final _el_14 = import9.appendDiv(doc, _el_0);
+    final _text_15 = import9.appendText(_el_14, 'LIFECYCLE: ');
+    _el_14.append(this._textBinding_16.element);
+    final _el_17 = import9.appendDiv(doc, parentRenderNode);
+    final _text_18 = import9.appendText(_el_17, 'Using "impure" Pipes:');
+    final _el_19 = import9.appendDiv(doc, _el_17);
+    final _text_20 = import9.appendText(_el_19, 'TIME: ');
+    _el_19.append(this._textBinding_21.element);
+    final _el_22 = import9.appendDiv(doc, _el_17);
+    final _text_23 = import9.appendText(_el_22, 'LIFECYCLE: ');
+    _el_22.append(this._textBinding_24.element);
+    this._pipe_identity_0 = import1.IdentityPurePipe();
+    this._pipe_identity_0_0 = import10.pureProxy1(this._pipe_identity_0.transform);
+    this._pipe_concat_1 = import1.ConcatPurePipe();
+    this._pipe_concat_1_0 = import10.pureProxy2(this._pipe_concat_1.transform);
+    this._pipe_merge_2 = import1.MergePurePipe();
+    this._pipe_merge_2_0 = import10.pureProxy2(this._pipe_merge_2.transform);
+    this._pipe_typed_3 = import1.TypedPurePipe();
+    this._pipe_typed_3_0 = import10.pureProxy2(this._pipe_typed_3.transform);
+    this._pipe_pureLifecycle_4 = import1.PureLifecyclePipe();
+    this._pipe_pureLifecycle_4_0 = import10.pureProxy1(this._pipe_pureLifecycle_4.transform);
+    this._pipe_time_5 = import1.ImpureTimePipe();
+    this._pipe_impureLifecycle_6 = import1.ImpureLifecyclePipe();
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    this._textBinding_4.updateText(import11.interpolate0(this._pipe_identity_0_0(_ctx.a)));
+    this._textBinding_7.updateText(import11.interpolate0(this._pipe_concat_1_0(_ctx.a, _ctx.b)));
+    this._textBinding_10.updateText(import11.interpolate0(this._pipe_merge_2_0(_ctx.a, _ctx.b)));
+    this._textBinding_13.updateText(import11.interpolate0(this._pipe_typed_3_0(_ctx.a, 1)));
+    this._textBinding_16.updateText(import11.interpolate0(this._pipe_pureLifecycle_4_0(_ctx.a)));
+    this._textBinding_21.updateText(import11.interpolate0(this._pipe_time_5.transform('now')));
+    this._textBinding_24.updateText(import11.interpolate0(this._pipe_impureLifecycle_6.transform(_ctx.a)));
+  }
+
+  @override
+  void destroyInternal() {
+    this._pipe_pureLifecycle_4.ngOnDestroy();
+    this._pipe_impureLifecycle_6.ngOnDestroy();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import13.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import13.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

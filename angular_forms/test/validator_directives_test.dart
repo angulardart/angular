@@ -1,6 +1,3 @@
-@TestOn('browser')
-import 'dart:async';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -10,26 +7,25 @@ import 'validator_directives_test.template.dart' as ng;
 
 void main() {
   group('RequiredValidator', () {
-    NgTestFixture<DynamicRequiredComponent> fixture;
+    late NgTestFixture<DynamicRequiredComponent> fixture;
 
     setUp(() async {
-      var testBed =
-          NgTestBed.forComponent(ng.createDynamicRequiredComponentFactory());
+      var testBed = NgTestBed(ng.createDynamicRequiredComponentFactory());
       fixture = await testBed.create();
     });
 
     tearDown(() => disposeAnyRunningTest());
 
-    Future<void> updateRequired({bool required}) async {
+    Future<void> updateRequired({required bool required}) async {
       await fixture.update((cmp) => cmp.required = required);
       // We have to do this in a separate turn, so that new required value has
       // propagated.
-      await fixture
-          .update((cmp) => cmp.dynamicControl.control.updateValueAndValidity());
+      await fixture.update(
+          (cmp) => cmp.dynamicControl!.control!.updateValueAndValidity());
     }
 
     bool dynamicControlValid() =>
-        fixture.assertOnlyInstance.dynamicControl.valid;
+        fixture.assertOnlyInstance.dynamicControl!.valid!;
 
     test('can be triggered dynamically', () async {
       expect(dynamicControlValid(), true);
@@ -52,31 +48,30 @@ void main() {
     });
 
     test('can be set statically', () {
-      expect(fixture.assertOnlyInstance.staticControl.valid, false);
+      expect(fixture.assertOnlyInstance.staticControl!.valid, false);
     });
   });
 
   group('PatternValidator', () {
-    NgTestFixture<DynamicPatternComponent> fixture;
+    late NgTestFixture<DynamicPatternComponent> fixture;
 
     setUp(() async {
-      var testBed =
-          NgTestBed.forComponent(ng.createDynamicPatternComponentFactory());
+      var testBed = NgTestBed(ng.createDynamicPatternComponentFactory());
       fixture = await testBed.create();
     });
 
     tearDown(() => disposeAnyRunningTest());
 
-    Future<void> updatePattern({String pattern}) async {
+    Future<void> updatePattern({required String pattern}) async {
       await fixture.update((cmp) => cmp.pattern = pattern);
       // We have to do this in a separate turn, so that new required value has
       // propagated.
-      await fixture
-          .update((cmp) => cmp.dynamicControl.control.updateValueAndValidity());
+      await fixture.update(
+          (cmp) => cmp.dynamicControl!.control!.updateValueAndValidity());
     }
 
     bool dynamicControlValid() =>
-        fixture.assertOnlyInstance.dynamicControl.valid;
+        fixture.assertOnlyInstance.dynamicControl!.valid!;
 
     test('can be triggered dynamically', () async {
       expect(dynamicControlValid(), true);
@@ -107,7 +102,7 @@ void main() {
     });
 
     test('can be set statically', () {
-      expect(fixture.assertOnlyInstance.staticControl.valid, true);
+      expect(fixture.assertOnlyInstance.staticControl!.valid, true);
     });
   });
 }
@@ -135,10 +130,10 @@ class DynamicRequiredComponent {
   bool required = false;
 
   @ViewChild('dynamicControl')
-  NgControl dynamicControl;
+  NgControl? dynamicControl;
 
   @ViewChild('staticControl')
-  NgControl staticControl;
+  NgControl? staticControl;
 }
 
 @Component(selector: 'dynamic-pattern', template: '''
@@ -160,8 +155,8 @@ class DynamicPatternComponent {
   String pattern = '';
 
   @ViewChild('dynamicControl')
-  NgControl dynamicControl;
+  NgControl? dynamicControl;
 
   @ViewChild('staticControl')
-  NgControl staticControl;
+  NgControl? staticControl;
 }

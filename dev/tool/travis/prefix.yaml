@@ -7,9 +7,8 @@ language: dart
 dart:
   - dev
 
-# Gives more resources on Travis (8GB Ram, 2CPUs).
-# Do not remove without verifying w/ Travis.
-sudo: required
+after_failure:
+  - tool/report_failure.sh
 
 # Only building master means that we don't run two builds for each pull request.
 branches:
@@ -47,15 +46,13 @@ jobs:
   # See https://github.com/dart-lang/angular/issues/1114.
   allow_failures:
     - env: PKG="examples/hacker_news_pwa"
-    - env: PKG="examples/github_issues"
-    - env: PKG="examples/registration_form"
-    - env: PKG="examples/i18n"
 
   include:
 
     # 1. Verify that .travis.yml is not out of date.
     # 2. Verify that pubspec.yaml is updated for all packages.
     - stage: presubmit
+      name: Check travis config and pubspecs
       script:
         - pub get
         - pub run dev:travis -d

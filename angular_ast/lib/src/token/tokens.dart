@@ -1,6 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 library angular_ast.src.token.tokens;
 
 import '../hash.dart';
@@ -8,12 +5,12 @@ import '../hash.dart';
 part 'lexeme.dart';
 part 'token_types.dart';
 
-abstract class NgBaseToken<TokenType> {
+abstract class NgBaseToken<T> {
   int get offset;
   int get end;
   int get length;
   String get lexeme;
-  TokenType get type;
+  T get type;
 }
 
 /// Represents string tokens that are of interest to the parser.
@@ -514,9 +511,16 @@ class NgToken implements NgBaseToken<NgTokenType> {
 
 class NgAttributeValueToken extends NgToken {
   factory NgAttributeValueToken.generate(
-      NgToken leftQuote, NgToken innerValue, NgToken rightQuote) {
+    NgToken leftQuote,
+    NgToken innerValue,
+    NgToken rightQuote,
+  ) {
     return NgAttributeValueToken._(
-        leftQuote.offset, leftQuote, innerValue, rightQuote);
+      leftQuote.offset,
+      leftQuote,
+      innerValue,
+      rightQuote,
+    );
   }
 
   final NgToken leftQuote;
@@ -529,8 +533,14 @@ class NgAttributeValueToken extends NgToken {
       rightQuote.errorSynthetic;
 
   const NgAttributeValueToken._(
-      offset, this.leftQuote, this.innerValue, this.rightQuote)
-      : super._(NgTokenType.elementDecoratorValue, offset);
+    int offset,
+    this.leftQuote,
+    this.innerValue,
+    this.rightQuote,
+  ) : super._(
+          NgTokenType.elementDecoratorValue,
+          offset,
+        );
 
   @override
   bool operator ==(Object o) {

@@ -1,5 +1,5 @@
-import 'package:angular_ast/angular_ast.dart';
 import 'package:test/test.dart';
+import 'package:angular_ast/angular_ast.dart';
 
 void main() {
   group('whitespace-only nodes', () {
@@ -314,7 +314,10 @@ void main() {
 }
 
 String _parseAndMinifiy(String template) {
-  final nodes = parse(template, sourceUrl: 'whitespace_test.dart');
+  final nodes = parse(
+    template,
+    sourceUrl: 'whitespace_test.dart',
+  ) as List<StandaloneTemplateAst>;
   final buffer = StringBuffer();
   for (final node in _minimizing.visitAllRoot(nodes)) {
     buffer.write(_humanize(node));

@@ -9,7 +9,7 @@ import 'change_detection_link.template.dart' as ng;
 
 /// Avoids Dart2JS thinking something is constant/unchanging.
 @JS()
-external T deopt<T>([Object any]);
+external T deopt<T>([Object? any]);
 
 void main() {
   runApp(ng.createGoldenComponentFactory());
@@ -51,10 +51,10 @@ class GoldenComponent {}
 )
 class OnPushLink {
   @ViewChild('container', read: ViewContainerRef)
-  ViewContainerRef container;
+  set container(ViewContainerRef? _) => deopt(_);
 
   @ViewChild('embeddedContainer', read: ViewContainerRef)
-  ViewContainerRef embeddedContainer;
+  set embeddedContainer(ViewContainerRef? _) => deopt(_);
 
   bool isVisible = deopt();
 }
@@ -77,5 +77,5 @@ class NestedOnPush {}
 )
 class NestedOnPushLink {
   @ViewChild('container', read: ViewContainerRef)
-  ViewContainerRef container;
+  set container(ViewContainerRef? _) => deopt(_);
 }

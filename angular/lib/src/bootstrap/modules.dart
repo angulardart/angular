@@ -1,36 +1,25 @@
-/// Contains the internal dependency injection "modules" required for bootstrap.
-library angular.src.bootstrap.modules;
-
-// ignore_for_file: deprecated_member_use
-
+import 'dart:html';
 import 'dart:math';
 
-import 'package:angular_compiler/v1/src/metadata.dart';
 import 'package:angular/src/core/application_tokens.dart';
-import 'package:angular/src/core/di.dart';
+import 'package:angular/src/core/exception_handler.dart';
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/core/linker/component_loader.dart';
 import 'package:angular/src/core/linker/dynamic_component_loader.dart';
-import 'package:angular/src/facade/exception_handler.dart';
-import 'package:angular/src/platform/browser/exceptions.dart';
-import 'package:angular/src/security/dom_sanitization_service.dart';
-import 'package:angular/src/security/dom_sanitization_service_impl.dart';
-import 'package:angular/src/security/sanitization_service.dart';
-
-import 'modules.template.dart' as ng;
+import 'package:angular/src/di/injector.dart';
 
 /// Implementation of [SlowComponentLoader] that throws [UnsupportedError].
 ///
 /// This is to allow a migration path for common components that may need to
 /// inject [SlowComponentLoader] for the legacy `bootstrapStatic` method, but
 /// won't actually use it in apps that called `bootstrapFactory`.
-class ThrowingSlowComponentLoader implements SlowComponentLoader {
+class _ThrowingSlowComponentLoader implements SlowComponentLoader {
   static const _slowComponentLoaderWarning =
       'You are using runApp or runAppAsync, which does not support loading a '
       'component with SlowComponentLoader. Please migrate this code to use '
       'ComponentLoader instead.';
 
-  const ThrowingSlowComponentLoader();
+  const _ThrowingSlowComponentLoader();
 
   @override
   Future<ComponentRef<T>> load<T>(_, __) {
@@ -43,29 +32,49 @@ class ThrowingSlowComponentLoader implements SlowComponentLoader {
   }
 }
 
-/// Strict subset module of AngularDart functionality.
+/// Ideally, this would just be the default [ExceptionHandler].
 ///
-/// Does not support any service that requires the `initReflector()`-based APIs.
-const bootstrapMinimalModule = <Object>[
-  // HTML/DOM sanitization.
-  Provider(ExceptionHandler, useClass: BrowserExceptionHandler),
-  Provider(SanitizationService, useExisting: DomSanitizationService),
-  Provider(DomSanitizationService, useClass: DomSanitizationServiceImpl),
+/// However, due to legacy decisions (b/162087242), most users override the
+/// default exception handler _anyway_, and in practice this is only used by new
+/// apps, playground apps, or smaller apps that don't log exceptions somewhere
+/// on the server.
+///
+/// TODO(b/162087242): Just fold this into [ExceptionHandler].
+class _BrowserExceptionHandler implements ExceptionHandler {
+  const _BrowserExceptionHandler();
 
-  // Core components of the runtime.
-  Provider(APP_ID, useFactory: createRandomAppId, deps: []),
-  Provider(ComponentLoader),
-  Provider(SlowComponentLoader, useClass: ThrowingSlowComponentLoader),
-];
+  @override
+  void call(Object error, [Object? stack, String? reason]) {
+    window.console.error(ExceptionHandler.exceptionToString(
+      error,
+      stack,
+      reason,
+    ));
+  }
+}
 
-/// An experimental application [Injector] that is statically generated.
-// TODO(https://github.com/dart-lang/sdk/issues/34098): Remove ignore.
-@GenerateInjector([bootstrapMinimalModule])
-final InjectorFactory minimalApp =
-    ng.minimalApp$Injector; //ignore: invalid_assignment
+/// Returns a simple application [Injector] that is hand-authored.
+///
+/// Some of the services provided below ([ExceptionHandler], [APP_ID]) may be
+/// overriden by the user-supplied injector - the returned [InjectorFactory] is
+/// used as the "base" application injector.
+///
+/// Previously this used `@GenerateInjector`, but that requires running the
+/// Angular generator _on_ Angular itself, which leads to tricky circular
+/// dependency issues for little value.
+InjectorFactory minimalApp() {
+  return (parent) {
+    return Injector.map({
+      APP_ID: _createRandomAppId(),
+      ExceptionHandler: const _BrowserExceptionHandler(),
+      ComponentLoader: const ComponentLoader(),
+      SlowComponentLoader: const _ThrowingSlowComponentLoader(),
+    }, parent);
+  };
+}
 
 /// Creates a random [APP_ID] for use in CSS encapsulation.
-String createRandomAppId() {
+String _createRandomAppId() {
   final random = Random();
   String char() => String.fromCharCode(97 + random.nextInt(26));
   return '${char()}${char()}${char()}';

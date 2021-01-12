@@ -6,8 +6,8 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_fragment.dart';
-import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'view.dart';
 
@@ -45,7 +45,7 @@ abstract class RenderView extends View {
   /// Implementations should override the type, which is intentionally omitted
   /// here to avoid the cost of reifying this type wherever used (which
   /// dramatically reduces code size).
-  Object get ctx;
+  Object? get ctx;
 
   /// This view's compiled CSS styles and style encapsulation information.
   ComponentStyles get componentStyles;
@@ -65,21 +65,20 @@ abstract class RenderView extends View {
   /// discriminator to determine which parts of the template are mapped to
   /// what parts of the DOM.
   @dart2js.noInline
-  void project(Element target, int index) {
+  void project(Element? target, int index) {
     // TODO(b/132111830): Determine in what case this is `null`.
     if (target == null) {
       return;
     }
 
-    // TODO(b/132111830): Determine why this would be `null` or out of bounds.
+    // TODO(b/132111830): Determine why this would be out of bounds.
     final projectedNodesByContentIndex = projectedNodes;
-    if (projectedNodesByContentIndex == null ||
-        index >= projectedNodesByContentIndex.length) {
+    if (index >= projectedNodesByContentIndex.length) {
       return;
     }
 
     // TODO(b/132111830): Also determine why this might be `null`.
-    final nodesToProjectIntoTarget = unsafeCast<List<Object>>(
+    final nodesToProjectIntoTarget = unsafeCast<List<Object>?>(
       projectedNodesByContentIndex[index],
     );
     if (nodesToProjectIntoTarget == null) {
@@ -98,7 +97,7 @@ abstract class RenderView extends View {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].viewFragment.appendDomNodesInto(target);
+            nestedViews[n].viewFragment!.appendDomNodesInto(target);
           }
         }
       } else if (node is List<Object>) {
@@ -114,8 +113,8 @@ abstract class RenderView extends View {
   // Dependency injection ------------------------------------------------------
 
   @override
-  Object injectFromAncestry(Object token, Object notFoundValue) =>
-      parentView.inject(token, parentIndex, notFoundValue);
+  Object? injectFromAncestry(Object token, Object? notFoundValue) =>
+      parentView!.inject(token, parentIndex, notFoundValue);
 
   // Change detection ----------------------------------------------------------
 
@@ -159,8 +158,9 @@ abstract class RenderView extends View {
         "'($E) => void'");
     return (E event) {
       markForCheck();
-      appViewUtils.eventManager.zone
-          .runGuarded(() => handler(unsafeCast<F>(event)));
+      appViewUtils.eventManager.zone.runGuarded(
+        () => handler(unsafeCast<F>(event)),
+      );
     };
   }
 
@@ -205,11 +205,15 @@ abstract class RenderView extends View {
 
   /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
   @dart2js.noInline
-  void updateChildClassNonHtml(Element element, String newClass) {
+  void updateChildClassNonHtml(Element element, String? newClass) {
+    newClass ??= '';
     final styles = componentStyles;
     final shim = styles.usesStyleEncapsulation;
-    updateAttribute(element, 'class',
-        shim ? '$newClass ${styles.contentPrefix}' : newClass);
+    updateAttribute(
+      element,
+      'class',
+      shim ? '$newClass ${styles.contentPrefix}' : newClass,
+    );
   }
 }
 
@@ -230,5 +234,5 @@ abstract class RenderViewData implements ViewData {
   /// Storage for subscriptions to any outputs in this view.
   ///
   /// These are cancelled when this is [destroyed].
-  List<StreamSubscription<void>> get subscriptions;
+  List<StreamSubscription<void>>? get subscriptions;
 }

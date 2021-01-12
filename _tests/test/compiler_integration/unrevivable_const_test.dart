@@ -1,8 +1,12 @@
-@TestOn('vm')
-import 'package:_tests/compiler.dart';
+// @dart=2.9
+
 import 'package:test/test.dart';
+import 'package:_tests/compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   test('should fail with an error for private constructor', () async {
     await compilesExpecting('''
       import '$ngImport';
@@ -14,7 +18,7 @@ void main() {
       @GenerateInjector([
         ValueProvider(TestClass, TestClass._()),
       ])
-      final InjectorFactory example = null;
+      final example = null;
     ''', errors: [
       allOf([
         contains('While attempting to resolve a constant value for a provider'),
@@ -39,7 +43,7 @@ void main() {
       @GenerateInjector([
         ValueProvider(TestClass, testInstance),
       ])
-      final InjectorFactory example = null;
+      final example = null;
     ''', errors: [
       allOf(
         contains('While attempting to resolve a constant value for a '),
@@ -61,7 +65,7 @@ void main() {
       @GenerateInjector(const [
         badModule,
       ])
-      final InjectorFactory example = null;
+      final example = null;
     ''', errors: [
       allOf([
         contains('Expected list for \'provide\' field of Module'),

@@ -35,7 +35,7 @@ class RadioControlRegistry {
 
   void select(RadioControlValueAccessor accessor) {
     for (var c in _accessors) {
-      if (identical(c[0].control.root, accessor._control.control.root) &&
+      if (identical(c[0].control.root, accessor._control.control?.root) &&
           !identical(c[1], accessor)) {
         c[1].fireUncheck();
       }
@@ -80,23 +80,23 @@ class RadioControlValueAccessor extends Object
   final HtmlElement _element;
   final RadioControlRegistry _registry;
   final Injector _injector;
-  RadioButtonState _state;
-  NgControl _control;
+  RadioButtonState? _state;
+  late NgControl _control;
 
   @Input()
-  String name;
+  String? name;
 
   RadioControlValueAccessor(this._element, this._registry, this._injector);
 
   @HostListener('change')
   void changeHandler() {
-    onChange(RadioButtonState(true, _state.value), rawValue: _state.value);
+    onChange(RadioButtonState(true, _state!.value), rawValue: _state!.value);
     _registry.select(this);
   }
 
   @override
   void ngOnInit() {
-    _control = _injector.get(NgControl);
+    _control = _injector.provideType(NgControl);
     _registry.add(_control, this);
   }
 
@@ -106,7 +106,7 @@ class RadioControlValueAccessor extends Object
   }
 
   @override
-  void writeValue(RadioButtonState value) {
+  void writeValue(RadioButtonState? value) {
     _state = value;
     if (value?.checked ?? false) {
       js_util.setProperty(_element, 'checked', true);
@@ -114,7 +114,7 @@ class RadioControlValueAccessor extends Object
   }
 
   void fireUncheck() {
-    onChange(RadioButtonState(false, _state.value), rawValue: _state.value);
+    onChange(RadioButtonState(false, _state!.value), rawValue: _state!.value);
   }
 
   @override

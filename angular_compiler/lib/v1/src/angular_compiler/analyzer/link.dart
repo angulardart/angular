@@ -1,3 +1,4 @@
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart' show TypeReference;
 import 'package:collection/collection.dart';
@@ -44,15 +45,17 @@ TypeLink linkTypeOf(DartType type) {
   }
   type = _resolveBounds(type);
   // Return dynamic type (no type found) after _resolveBounds.
-  if (type.element.library == null) {
+  // Note: with non_nullable, library is never null: we need to check its name.
+  if (type.element.library == null || getTypeName(type) == null) {
     return TypeLink.$dynamic;
   }
   return TypeLink(
     getTypeName(type),
     getTypeImport(type),
-    type is ParameterizedType
+    generics: type is ParameterizedType
         ? type.typeArguments.map(linkTypeOf).toList()
         : const [],
+    isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
   );
 }
 
@@ -73,6 +76,11 @@ class TypeLink {
   /// Represents the type of `Null`.
   static const $null = TypeLink('Null', 'dart:core');
 
+  /// Represents the type of `Object`.
+  ///
+  /// In null-safe opted-in code, this does not allow `null` as a sub-type.
+  static const $object = TypeLink('Object', 'dart:core');
+
   /// Name of the symbol for the type, such as `String`.
   final String symbol;
 
@@ -82,26 +90,33 @@ class TypeLink {
   /// Generic types, used to represent types such as `List<String>`.
   final List<TypeLink> generics;
 
+  /// Whether this type is suffixed explicitly with `?`.
+  final bool isNullable;
+
   const TypeLink(
     this.symbol,
-    this.import, [
+    this.import, {
     this.generics = const [],
-  ]);
+    this.isNullable = false,
+  });
 
   static const _list = ListEquality();
 
   @override
   bool operator ==(Object o) {
-    if (o is TypeLink) {
-      return symbol == o.symbol &&
-          import == o.import &&
-          _list.equals(generics, o.generics);
-    }
-    return false;
+    return o is TypeLink &&
+        symbol == o.symbol &&
+        import == o.import &&
+        isNullable == o.isNullable &&
+        _list.equals(generics, o.generics);
   }
 
   @override
-  int get hashCode => symbol.hashCode ^ import.hashCode ^ _list.hash(generics);
+  int get hashCode =>
+      symbol.hashCode ^
+      import.hashCode ^
+      isNullable.hashCode ^
+      _list.hash(generics);
 
   /// Whether this is considered `dynamic`.
   bool get isDynamic => this == $dynamic;
@@ -110,7 +125,13 @@ class TypeLink {
   bool get isPrivate => symbol.startsWith('_');
 
   @override
-  String toString() => 'TypeLink {$import:$symbol<$generics>}';
+  String toString() {
+    var output = 'TypeLink {$import:$symbol<$generics>}';
+    if (isNullable) {
+      output = '$output?';
+    }
+    return output;
+  }
 
   /// Returns as the older [Url] format, omitting any [generics].
   ///
@@ -118,5 +139,9 @@ class TypeLink {
   Uri toUrlWithoutGenerics() => Uri.parse('$import#$symbol');
 
   /// Returns as a [TypeLink] without generic type arguments.
-  TypeLink withoutGenerics() => TypeLink(symbol, import);
+  TypeLink withoutGenerics() => TypeLink(
+        symbol,
+        import,
+        isNullable: isNullable,
+      );
 }

@@ -1,5 +1,3 @@
-@TestOn('browser')
-
 import 'package:test/test.dart';
 import 'package:angular_forms/angular_forms.dart';
 
@@ -88,8 +86,8 @@ void main() {
       });
 
       group('updateValue', () {
-        Control c;
-        ControlGroup g;
+        late Control c;
+        late ControlGroup g;
         setUp(() {
           c = Control('oldValue');
           g = ControlGroup({'one': c});
@@ -201,8 +199,8 @@ void main() {
         });
       });
       group('disabled', () {
-        Control control;
-        ControlGroup group;
+        late Control control;
+        late ControlGroup group;
 
         setUp(() {
           control = Control('some value');
@@ -237,7 +235,7 @@ void main() {
       });
 
       group('reset', () {
-        Control control;
+        late Control control;
 
         setUp(() {
           control = Control();
@@ -323,7 +321,7 @@ void main() {
             'one': '111',
             'nested': {'two': '222'}
           });
-          (g.controls['nested'].find('two') as Control).updateValue('333');
+          (g.controls['nested']!.find('two') as Control).updateValue('333');
           expect(g.value, {
             'one': '111',
             'nested': {'two': '333'}
@@ -332,8 +330,8 @@ void main() {
       });
 
       group('updateValue', () {
-        Control control;
-        ControlGroup group;
+        late Control control;
+        late ControlGroup group;
 
         setUp(() {
           control = Control('oldValue');
@@ -376,7 +374,7 @@ void main() {
 
       group('errors', () {
         test('should run the validator when the value changes', () {
-          Map<String, bool> simpleValidator(c) =>
+          Map<String, bool>? simpleValidator(c) =>
               c.controls['one'].value != 'correct' ? {'broken': true} : null;
           var c = Control<String>(null);
           var g = ControlGroup({'one': c}, simpleValidator);
@@ -390,8 +388,8 @@ void main() {
       });
 
       group('dirty', () {
-        Control control;
-        ControlGroup group;
+        late Control control;
+        late ControlGroup group;
 
         setUp(() {
           control = Control('value');
@@ -433,12 +431,11 @@ void main() {
       });
 
       group('touched', () {
-        Control control;
-        ControlGroup group;
+        late Control control;
+        late ControlGroup group;
 
         setUp(() {
           control = Control('value');
-
           group = ControlGroup({'one': control});
         });
 
@@ -477,8 +474,8 @@ void main() {
       });
 
       group('valueChanges', () {
-        Control c1, c2;
-        ControlGroup g;
+        late Control c1, c2;
+        late ControlGroup g;
 
         setUp(() {
           c1 = Control('old1');
@@ -541,8 +538,8 @@ void main() {
       });
 
       group('disabled', () {
-        Control control;
-        ControlGroup group;
+        late Control control;
+        late ControlGroup group;
 
         setUp(() {
           control = Control('some value');
@@ -603,7 +600,7 @@ void main() {
       });
 
       group('reset', () {
-        Control control;
+        late Control control;
 
         setUp(() {
           control = Control();
@@ -670,8 +667,8 @@ void main() {
 
     group('ControlArray', () {
       group('adding/removing', () {
-        ControlArray a;
-        var c1, c2, c3;
+        late ControlArray a;
+        late Control c1, c2, c3;
         setUp(() {
           a = ControlArray([]);
           c1 = Control(1);
@@ -709,8 +706,8 @@ void main() {
       });
 
       group('updateValue', () {
-        Control control;
-        ControlArray array;
+        late Control control;
+        late ControlArray array;
 
         setUp(() {
           control = Control('oldValue');
@@ -748,7 +745,7 @@ void main() {
 
       group('errors', () {
         test('should run the validator when the value changes', () {
-          Map<String, dynamic> simpleValidator(c) =>
+          Map<String, dynamic>? simpleValidator(c) =>
               c.controls[0].value != 'correct' ? {'broken': true} : null;
           var c = Control<String>(null);
           var g = ControlArray([c], simpleValidator);
@@ -761,8 +758,8 @@ void main() {
         });
       });
       group('dirty', () {
-        Control control;
-        ControlArray array;
+        late Control control;
+        late ControlArray array;
         setUp(() {
           control = Control('value');
           array = ControlArray([control]);
@@ -801,8 +798,8 @@ void main() {
       });
 
       group('touched', () {
-        Control control;
-        ControlArray array;
+        late Control control;
+        late ControlArray array;
 
         setUp(() {
           control = Control('value');
@@ -844,8 +841,8 @@ void main() {
       });
 
       group('pending', () {
-        Control c;
-        ControlArray a;
+        late Control c;
+        late ControlArray a;
         setUp(() {
           c = Control('value');
           a = ControlArray([c]);
@@ -866,8 +863,8 @@ void main() {
         });
       });
       group('valueChanges', () {
-        ControlArray a;
-        Control c1, c2;
+        late ControlArray a;
+        late Control c1, c2;
         setUp(() {
           c1 = Control('old1');
           c2 = Control('old2');
@@ -924,22 +921,22 @@ void main() {
             'one': Control('111'),
             'nested': ControlGroup({'two': Control('222')})
           });
-          expect(g.findPath(['nested', 'two']).value, '222');
-          expect(g.findPath(['one']).value, '111');
-          expect(g.find('nested/two').value, '222');
-          expect(g.find('one').value, '111');
+          expect(g.findPath(['nested', 'two'])!.value, '222');
+          expect(g.findPath(['one'])!.value, '111');
+          expect(g.find('nested/two')!.value, '222');
+          expect(g.find('one')!.value, '111');
         });
         test('should return an element of an array', () {
           var g = ControlGroup({
             'array': ControlArray([Control('111')])
           });
-          expect(g.findPath(['array', '0']).value, '111');
+          expect(g.findPath(['array', '0'])!.value, '111');
         });
       });
 
       group('disabled', () {
-        Control control;
-        ControlArray array;
+        late Control control;
+        late ControlArray array;
 
         setUp(() {
           control = Control('some value');
@@ -991,7 +988,7 @@ void main() {
       });
 
       group('reset', () {
-        Control control;
+        late Control control;
 
         setUp(() {
           control = Control();

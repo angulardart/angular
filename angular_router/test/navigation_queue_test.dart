@@ -1,37 +1,37 @@
-@TestOn('browser')
 import 'dart:async';
 
+import 'package:pedantic/pedantic.dart';
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:pedantic/pedantic.dart';
-import 'package:test/test.dart';
 
 // ignore: uri_has_not_been_generated
 import 'navigation_queue_test.template.dart' as ng;
 
-const firstToken = OpaqueToken<Future<Null>>('first');
-const secondToken = OpaqueToken<Future<Null>>('second');
-const thirdToken = OpaqueToken<Future<Null>>('third');
+const firstToken = OpaqueToken<Future<void>>('first');
+const secondToken = OpaqueToken<Future<void>>('second');
+const thirdToken = OpaqueToken<Future<void>>('third');
 
 void main() {
-  ng.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('navigation should complete in requested order', () async {
     // These are used to delay route activation guards.
-    final firstCompleter = Completer<Null>();
-    final secondCompleter = Completer<Null>();
-    final thirdCompleter = Completer<Null>();
+    final firstCompleter = Completer<void>();
+    final secondCompleter = Completer<void>();
+    final thirdCompleter = Completer<void>();
 
-    final testBed = NgTestBed<TestComponent>().addProviders([
-      routerProvidersTest,
-      ValueProvider.forToken(firstToken, firstCompleter.future),
-      ValueProvider.forToken(secondToken, secondCompleter.future),
-      ValueProvider.forToken(thirdToken, thirdCompleter.future),
-    ]);
+    final testBed = NgTestBed(
+      ng.createTestComponentFactory(),
+    ).addInjector(
+      (i) => ReflectiveInjector.resolveStaticAndCreate([
+        ValueProvider.forToken(firstToken, firstCompleter.future),
+        ValueProvider.forToken(secondToken, secondCompleter.future),
+        ValueProvider.forToken(thirdToken, thirdCompleter.future),
+      ], i),
+    );
 
     final testFixture = await testBed.create();
     final router = testFixture.assertOnlyInstance.router;
@@ -58,7 +58,12 @@ void main() {
 @Component(
   selector: 'test',
   template: '<router-outlet [routes]="routes"></router-outlet>',
-  directives: [RouterOutlet],
+  directives: [
+    RouterOutlet,
+  ],
+  providers: [
+    routerProvidersTest,
+  ],
 )
 class TestComponent {
   final Router router;
@@ -89,7 +94,7 @@ class TestComponent {
 class DefaultComponent {}
 
 abstract class DelayedActivation implements CanActivate {
-  final Future<Null> _future;
+  final Future<void> _future;
 
   DelayedActivation(this._future);
 
@@ -99,15 +104,15 @@ abstract class DelayedActivation implements CanActivate {
 
 @Component(selector: 'first', template: 'First')
 class FirstComponent extends DelayedActivation {
-  FirstComponent(@firstToken Future<Null> future) : super(future);
+  FirstComponent(@firstToken Future<void> future) : super(future);
 }
 
 @Component(selector: 'second', template: 'Second')
 class SecondComponent extends DelayedActivation {
-  SecondComponent(@secondToken Future<Null> future) : super(future);
+  SecondComponent(@secondToken Future<void> future) : super(future);
 }
 
 @Component(selector: 'third', template: 'Third')
 class ThirdComponent extends DelayedActivation {
-  ThirdComponent(@thirdToken Future<Null> future) : super(future);
+  ThirdComponent(@thirdToken Future<void> future) : super(future);
 }

@@ -1,6 +1,5 @@
-import 'package:angular/core.dart';
-import 'package:angular/src/core/linker.dart'
-    show ViewContainerRef, TemplateRef;
+import 'package:angular/src/core/linker.dart';
+import 'package:angular/src/meta.dart';
 
 const _WHEN_DEFAULT = Object();
 
@@ -70,7 +69,7 @@ class SwitchView {
 /// Try the [live example][ex].
 /// For details, see the [Structural Directives section on `ngSwitch`][guide].
 ///
-/// [ex]: https://webdev.dartlang.org/examples/template-syntax/#ngSwitch
+/// [ex]: https://angulardart.dev/examples/template-syntax#ngSwitch
 /// [guide]: https://webdev.dartlang.org/angular/guide/structural-directives.html#ngSwitch
 ///
 @Directive(
@@ -131,7 +130,7 @@ class NgSwitch {
     _activeViews = [];
   }
 
-  void _activateViews(List<SwitchView> views) {
+  void _activateViews(List<SwitchView>? views) {
     if (views == null) return;
     for (var i = 0, len = views.length; i < len; i++) {
       views[i].create();
@@ -152,9 +151,8 @@ class NgSwitch {
     // `_WHEN_DEFAULT` is used a marker for non-registered whens
     if (identical(value, _WHEN_DEFAULT)) return;
     var views = _valueViews[value];
-    if (views.length == 1) {
-      _valueViews.containsKey(value) &&
-          (_valueViews.remove(value) != null || true);
+    if (views!.length == 1) {
+      _valueViews.remove(value);
     } else {
       views.remove(view);
     }
@@ -173,16 +171,17 @@ class NgSwitch {
   selector: '[ngSwitchWhen],[ngSwitchCase]',
 )
 class NgSwitchWhen {
+  final NgSwitch _switch;
+  final SwitchView _view;
+
   /// Used as a marker for an uninitialized value.
   dynamic _value = _WHEN_DEFAULT;
-  SwitchView _view;
-  NgSwitch _switch;
 
-  NgSwitchWhen(ViewContainerRef viewContainer, TemplateRef templateRef,
-      @Host() NgSwitch ngSwitch) {
-    _switch = ngSwitch;
-    _view = SwitchView(viewContainer, templateRef);
-  }
+  NgSwitchWhen(
+    ViewContainerRef viewContainer,
+    TemplateRef templateRef,
+    @Host() this._switch,
+  ) : _view = SwitchView(viewContainer, templateRef);
 
   @Input()
   set ngSwitchCase(dynamic value) {

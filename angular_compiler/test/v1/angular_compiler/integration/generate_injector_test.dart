@@ -1,12 +1,14 @@
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../src/resolve.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   group('should generate injector with', () {
     final dartfmt = DartFormatter();
     EqualsDart.format = dartfmt.format;
@@ -19,6 +21,7 @@ void main() {
 
     setUpAll(() async {
       final library = await resolveLibrary(r'''
+        // @dart=2.9
         @GenerateInjector([
           FactoryProvider(Foo, createFooDynamicDependency),
         ])
@@ -40,16 +43,16 @@ void main() {
         emitter.createClass(),
         equalsDart(r'''
           class _Injector$createInjectorDynamicDependency extends HierarchicalInjector implements Injector {
-            _Injector$createInjectorDynamicDependency._([Injector parent]) : super(parent);
+            _Injector$createInjectorDynamicDependency._(Injector parent) : super(parent);
 
-            dynamic _field0;
+            Object _field0;
 
-            dynamic _getdynamic$0() => _field0 ??= createFooDynamicDependency(this.get(dynamic));
+            Object _getObject$0() => _field0 ??= createFooDynamicDependency(this.get(dynamic));
             Injector _getInjector$1() => this;
             @override
             Object injectFromSelfOptional(Object token, [Object orElse = throwIfNotFound]) {
               if (identical(token, Foo)) {
-                return _getdynamic$0();
+                return _getObject$0();
               }
               if (identical(token, Injector)) {
                 return _getInjector$1();
@@ -72,6 +75,7 @@ void main() {
 
     setUpAll(() async {
       final library = await resolveLibrary(r'''
+        // @dart=2.9
         @GenerateInjector([
           ValueProvider(Foo, Foo(Foo)),
         ])
@@ -93,7 +97,7 @@ void main() {
               e.toString(),
               allOf([
                 contains('Reviving Types is not supported'),
-                contains('line 7, column 25 of')
+                contains('line 8, column 25 of')
               ]));
           rethrow;
         }

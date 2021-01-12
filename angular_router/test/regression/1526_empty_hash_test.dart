@@ -1,7 +1,8 @@
-@TestOn('browser')
-import 'package:angular_router/angular_router.dart';
+// @dart=2.9
+
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+import 'package:angular_router/angular_router.dart';
 
 class MockPlatformLocation extends Mock implements PlatformLocation {}
 

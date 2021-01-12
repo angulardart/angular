@@ -5,8 +5,8 @@ import 'model.dart' as model_module;
 
 ///  Providers for validators to be used for [Control]s in a form.
 ///
-///  Provide this using `multi: true` to add validators.
-const NG_VALIDATORS = MultiToken<dynamic>('NgValidators');
+///  Provide this using `ExistingProvider.forToken` to add validators.
+const NG_VALIDATORS = MultiToken<Object>('NgValidators');
 
 ///  Provides a set of validators used by form controls.
 ///
@@ -21,7 +21,7 @@ const NG_VALIDATORS = MultiToken<dynamic>('NgValidators');
 /// ```
 class Validators {
   ///  Validator that requires controls to have a non-empty value.
-  static Map<String, bool> required(model_module.AbstractControl control) {
+  static Map<String, bool>? required(model_module.AbstractControl control) {
     return control.value == null || control.value == ''
         ? {'required': true}
         : null;
@@ -29,10 +29,10 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a minimum length.
   static ValidatorFn minLength(num minLength) {
-    return /* Map < String , dynamic > */ (model_module.AbstractControl
+    return /* Map < String , dynamic >? */ (model_module.AbstractControl
         control) {
       if (Validators.required(control) != null) return null;
-      String v = control.value;
+      final v = control.value as String;
       return v.length < minLength
           ? {
               'minlength': {
@@ -46,10 +46,10 @@ class Validators {
 
   ///  Validator that requires controls to have a value of a maximum length.
   static ValidatorFn maxLength(num maxLength) {
-    return /* Map < String , dynamic > */ (model_module.AbstractControl
+    return /* Map < String , dynamic >? */ (model_module.AbstractControl
         control) {
       if (Validators.required(control) != null) return null;
-      String v = control.value;
+      final v = control.value as String;
       return v.length > maxLength
           ? {
               'maxlength': {
@@ -63,11 +63,11 @@ class Validators {
 
   ///  Validator that requires a control to match a regex to its value.
   static ValidatorFn pattern(String pattern) {
-    return /* Map < String , dynamic > */ (model_module.AbstractControl
+    return /* Map < String , dynamic >? */ (model_module.AbstractControl
         control) {
       if (Validators.required(control) != null) return null;
       var regex = RegExp('^$pattern\$');
-      String v = control.value;
+      final v = control.value as String;
       return regex.hasMatch(v)
           ? null
           : {
@@ -77,12 +77,12 @@ class Validators {
   }
 
   ///  No-op validator.
-  static Map<String, bool> nullValidator(model_module.AbstractControl c) =>
+  static Map<String, bool>? nullValidator(model_module.AbstractControl c) =>
       null;
 
   ///  Compose multiple validators into a single function that returns the union
   ///  of the individual error maps.
-  static ValidatorFn compose(List<ValidatorFn> validators) {
+  static ValidatorFn? compose(List<ValidatorFn?>? validators) {
     if (validators == null) return null;
     final presentValidators = _removeNullValidators(validators);
     if (presentValidators.isEmpty) return null;
@@ -93,7 +93,7 @@ class Validators {
 
   // TODO(tsander): Remove the need to filter the validation. The list of
   // validators should not contain null values.
-  static List<T> _removeNullValidators<T>(List<T> validators) {
+  static List<T> _removeNullValidators<T>(List<T?> validators) {
     final result = <T>[];
     for (var i = 0, len = validators.length; i < len; i++) {
       var validator = validators[i];
@@ -103,12 +103,11 @@ class Validators {
   }
 }
 
-Map<String, dynamic> _executeValidators(
+Map<String, dynamic>? _executeValidators(
     model_module.AbstractControl control, List<ValidatorFn> validators) {
   var result = <String, dynamic>{};
   for (var i = 0, len = validators.length; i < len; i++) {
     final validator = validators[i];
-    assert(validator != null, 'Validator should be non-null');
     final localResult = validator(control);
     if (localResult != null) result.addAll(localResult);
   }

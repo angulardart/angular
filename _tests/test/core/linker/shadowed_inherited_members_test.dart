@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -9,8 +8,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should handle shadowed inherited members', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestShadowedInheritedMembersFactory());
+    final testBed = NgTestBed(ng.createTestShadowedInheritedMembersFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Hello world!');
   });

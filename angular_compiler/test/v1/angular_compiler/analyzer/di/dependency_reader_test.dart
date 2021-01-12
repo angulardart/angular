@@ -1,101 +1,63 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../../src/resolve.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
+  final refersToOpaqueToken = TypeLink(
+    'OpaqueToken',
+    'asset:angular/lib/src/meta/di_tokens.dart',
+    generics: [TypeLink.$object],
+  );
+
   group('should parse dependencies from', () {
     final reader = const DependencyReader();
     LibraryElement library;
 
     setUpAll(() async {
       library = await resolveLibrary(r'''
-        @Injectable()
         external Example createExample0();
-
-        @Injectable()
         external Example createExample1(Engine engine);
-
-        @Injectable()
         external Example createExample2(Engine engine, {Logger logger});
-
-        @Injectable()
         external Example createExampleHost(@Host() Engine engine);
-
-        @Injectable()
         external Example createExampleSelf(@Self() Engine engine);
-
-        @Injectable()
         external Example createExampleSkipSelf(@SkipSelf() Engine engine);
-
-        @Injectable()
-        external Example createExampleOptional(@Optional() Engine engine);
-
-        @Injectable()
         external Example createExampleInject(@Inject(someToken) Engine engine);
-
-        @Injectable()
         external Example createExampleInjectToken(@someToken Engine engine);
-
-        @Injectable()
         external Example createExampleDynamic(@Inject(Engine) engine);
+        external Example createExampleOptional(@Optional() Engine? engine);
 
         class Creator {
-          @Injectable()
           external static Example createExample0();
-
-          @Injectable()
           external static Example createExample1(Engine engine);
-
-          @Injectable()
-          external static Example createExample2(
-              Engine engine, {Logger logger});
-
-          @Injectable()
+          external static Example createExample2(Engine engine, {Logger logger});
           external static Example createExampleHost(@Host() Engine engine);
-
-          @Injectable()
           external static Example createExampleSelf(@Self() Engine engine);
-
-          @Injectable()
-          external static Example createExampleSkipSelf(
-              @SkipSelf() Engine engine);
-
-          @Injectable()
-          external static Example createExampleOptional(
-              @Optional() Engine engine);
-
-          @Injectable()
-          external static Example createExampleInject(
-              @Inject(someToken) Engine engine);
-
-          @Injectable()
-          external static Example createExampleInjectToken(
-              @someToken Engine engine);
-
-          @Injectable()
+          external static Example createExampleSkipSelf(@SkipSelf() Engine engine);
+          external static Example createExampleInject(@Inject(someToken) Engine engine);
+          external static Example createExampleInjectToken(@someToken Engine engine);
           external static Example createExampleDynamic(@Inject(Engine) engine);
+          external static Example createExampleOptional(@Optional() Engine? engine);
         }
 
         const someToken = const OpaqueToken('someToken');
 
-        @Injectable()
         class Example { /* Has a default constructor */ }
 
-        @Injectable()
         abstract class Engine {
           // Has a factory constructor.
           external factory Engine();
         }
 
-        @Injectable()
         class Logger {
           // Has a named constructor.
           Logger.named();
         }
 
-        @Injectable()
         class BadField {
           final String fieldA;
 
@@ -165,7 +127,11 @@ void main() {
       expect(deps.positional, [
         DependencyElement(
           TypeTokenElement(
-            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+            TypeLink(
+              'Engine',
+              'asset:test_lib/lib/test_lib.dart',
+              isNullable: true,
+            ),
           ),
           optional: true,
         ),
@@ -206,12 +172,7 @@ void main() {
           OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: TypeLink(
-              'OpaqueToken',
-              ''
-                  'package:angular'
-                  '/src/core/di/opaque_token.dart',
-            ),
+            classUrl: refersToOpaqueToken,
           ),
           type: TypeTokenElement(
             TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
@@ -228,12 +189,7 @@ void main() {
           OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: TypeLink(
-              'OpaqueToken',
-              ''
-                  'package:angular'
-                  '/src/core/di/opaque_token.dart',
-            ),
+            classUrl: refersToOpaqueToken,
           ),
           type: TypeTokenElement(
             TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
@@ -310,7 +266,11 @@ void main() {
       expect(deps.positional, [
         DependencyElement(
           TypeTokenElement(
-            TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
+            TypeLink(
+              'Engine',
+              'asset:test_lib/lib/test_lib.dart',
+              isNullable: true,
+            ),
           ),
           optional: true,
         ),
@@ -351,12 +311,7 @@ void main() {
           OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: TypeLink(
-              'OpaqueToken',
-              ''
-                  'package:angular'
-                  '/src/core/di/opaque_token.dart',
-            ),
+            classUrl: refersToOpaqueToken,
           ),
           type: TypeTokenElement(
             TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),
@@ -374,12 +329,7 @@ void main() {
           OpaqueTokenElement(
             'someToken',
             isMultiToken: false,
-            classUrl: TypeLink(
-              'OpaqueToken',
-              ''
-                  'package:angular'
-                  '/src/core/di/opaque_token.dart',
-            ),
+            classUrl: refersToOpaqueToken,
           ),
           type: TypeTokenElement(
             TypeLink('Engine', 'asset:test_lib/lib/test_lib.dart'),

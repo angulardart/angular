@@ -1,16 +1,14 @@
-@TestOn('browser')
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'view_child_regression_test.template.dart' as ng;
 
 void main() {
   test('$ViewChild#nativeElement should be accessible', () async {
-    final fixture =
-        await NgTestBed.forComponent(ng.createViewChildTestFactory()).create();
+    final fixture = await NgTestBed(ng.createViewChildTestFactory()).create();
     await fixture.update((component) {
       expect(component.portalElement, isNull);
       component.showChildHost = true;
@@ -40,13 +38,13 @@ void main() {
 )
 class ViewChildTest {
   @ViewChild('portal', read: Element)
-  Element portalElement;
+  Element? portalElement;
 
   @ViewChild('container', read: Element)
-  Element containerElement;
+  Element? containerElement;
 
   @ViewChild('marker', read: ViewContainerRef)
-  ViewContainerRef markerViewContainer;
+  ViewContainerRef? markerViewContainer;
 
   var showChildHost = false;
 }

@@ -1,5 +1,5 @@
-import 'package:angular/core.dart';
 import 'package:angular/src/core/linker.dart';
+import 'package:angular/src/meta.dart';
 
 /// Inserts an embedded view, created from a [TemplateRef].
 ///
@@ -46,8 +46,8 @@ import 'package:angular/src/core/linker.dart';
 class NgTemplateOutlet implements DoCheck {
   final ViewContainerRef _viewContainerRef;
 
-  Map<String, Object> _context;
-  EmbeddedViewRef _insertedViewRef;
+  Map<String, Object?>? _context;
+  EmbeddedViewRef? _insertedViewRef;
 
   NgTemplateOutlet(this._viewContainerRef);
 
@@ -56,9 +56,10 @@ class NgTemplateOutlet implements DoCheck {
   /// Any previously embedded view is removed when [templateRef] changes. If
   /// [templateRef] is null, no embedded view is inserted.
   @Input()
-  set ngTemplateOutlet(TemplateRef templateRef) {
-    if (_insertedViewRef != null) {
-      _viewContainerRef.remove(_viewContainerRef.indexOf(_insertedViewRef));
+  set ngTemplateOutlet(TemplateRef? templateRef) {
+    final insertedViewRef = _insertedViewRef;
+    if (insertedViewRef != null) {
+      _viewContainerRef.remove(_viewContainerRef.indexOf(insertedViewRef));
     }
     if (templateRef != null) {
       _insertedViewRef = _viewContainerRef.createEmbeddedView(templateRef);
@@ -73,7 +74,7 @@ class NgTemplateOutlet implements DoCheck {
   /// using 'let-' bindings. The variable '$implicit' can be used to set the
   /// default value of any 'let-' binding without an explicit assignment.
   @Input()
-  set ngTemplateOutletContext(Map<String, Object> context) {
+  set ngTemplateOutletContext(Map<String, Object?> context) {
     _context = context;
   }
 
@@ -83,17 +84,18 @@ class NgTemplateOutlet implements DoCheck {
   ///
   /// See [ngTemplateOutletContext] for details.
   @Input()
-  set ngTemplateOutletValue(Object value) {
+  set ngTemplateOutletValue(Object? value) {
     _context = {'\$implicit': value};
   }
 
   @override
   void ngDoCheck() {
-    if (_context == null || _insertedViewRef == null) return;
+    final insertedViewRef = _insertedViewRef;
+    if (insertedViewRef == null) return;
     // Local variables are deliberately set every change detection cycle to
     // simplify the design. It's unlikely this is worse than conditionally
     // setting them based on whether they actually changed, since their values
     // are change detected again wherever they're bound.
-    _context.forEach(_insertedViewRef.setLocal);
+    _context?.forEach(insertedViewRef.setLocal);
   }
 }

@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 import 'package:string_scanner/string_scanner.dart';
 
@@ -37,7 +33,7 @@ class RecursiveAstParser {
     // Collects comments, elements, and text.
     //
     // Any other AST structure should be handled by the parseElement case.
-    while ((token = _reader.next()) != null) {
+    while ((token = _reader.next() as NgToken) != null) {
       nodes.add(parseStandalone(token));
     }
 
@@ -50,7 +46,7 @@ class RecursiveAstParser {
     var nameToken = _reader.next();
     if (_voidElements.contains(nameToken.lexeme)) {
       exceptionHandler.handle(AngularParserException(
-        NgParserWarningCode.VOID_ELEMENT_IN_CLOSE_TAG,
+        ParserErrorCode.VOID_ELEMENT_IN_CLOSE_TAG,
         nameToken.offset,
         nameToken.length,
       ));
@@ -63,8 +59,8 @@ class RecursiveAstParser {
     return CloseElementAst.parsed(
       _source,
       beginToken,
-      nameToken,
-      closeElementEnd,
+      nameToken as NgToken,
+      closeElementEnd as NgToken,
     );
   }
 
@@ -74,14 +70,14 @@ class RecursiveAstParser {
     if (_reader.peekType() == NgTokenType.commentEnd) {
       valueToken = NgToken.commentValue(_reader.peek().offset, '');
     } else {
-      valueToken = _reader.next();
+      valueToken = _reader.next() as NgToken;
     }
     var endToken = _reader.next();
     return CommentAst.parsed(
       _source,
       beginToken,
       valueToken,
-      endToken,
+      endToken as NgToken,
     );
   }
 
@@ -97,14 +93,14 @@ class RecursiveAstParser {
 
     while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
       final nextToken = _reader.next();
-      final decorator = parseDecorator(nextToken);
+      final decorator = parseDecorator(nextToken as NgToken);
       if (decorator is AnnotationAst) {
         annotations.add(decorator);
       } else if (decorator is StarAst) {
         _addStarAst(decorator, stars);
       } else {
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTAINER,
+          ParserErrorCode.INVALID_DECORATOR_IN_NGCONTAINER,
           decorator.beginToken.offset,
           decorator.endToken.end - decorator.beginToken.offset,
         ));
@@ -138,16 +134,16 @@ class RecursiveAstParser {
     if (peekType == NgTokenType.bananaPrefix ||
         peekType == NgTokenType.eventPrefix ||
         peekType == NgTokenType.propertyPrefix) {
-      prefixToken = _reader.next();
-      decoratorToken = _reader.next();
-      suffixToken = _reader.next();
+      prefixToken = _reader.next() as NgToken;
+      decoratorToken = _reader.next() as NgToken;
+      suffixToken = _reader.next() as NgToken;
     } else if (peekType == NgTokenType.referencePrefix ||
         peekType == NgTokenType.templatePrefix ||
         peekType == NgTokenType.annotationPrefix) {
-      prefixToken = _reader.next();
-      decoratorToken = _reader.next();
+      prefixToken = _reader.next() as NgToken;
+      decoratorToken = _reader.next() as NgToken;
     } else {
-      decoratorToken = _reader.next();
+      decoratorToken = _reader.next() as NgToken;
     }
 
     NgAttributeValueToken valueToken;
@@ -156,7 +152,7 @@ class RecursiveAstParser {
     if (_reader.peekTypeIgnoringType(NgTokenType.whitespace) ==
         NgTokenType.beforeElementDecoratorValue) {
       _consumeWhitespaces();
-      equalSignToken = _reader.next();
+      equalSignToken = _reader.next() as NgToken;
       _consumeWhitespaces();
       valueToken = _reader.next() as NgAttributeValueToken;
     }
@@ -195,7 +191,7 @@ class RecursiveAstParser {
       } else if (prefixType == NgTokenType.propertyPrefix) {
         if (decoratorToken.lexeme.split('.').length > 3) {
           exceptionHandler.handle(AngularParserException(
-            NgParserWarningCode.PROPERTY_NAME_TOO_MANY_FIXES,
+            ParserErrorCode.PROPERTY_NAME_TOO_MANY_FIXES,
             decoratorToken.offset,
             decoratorToken.length,
           ));
@@ -246,7 +242,7 @@ class RecursiveAstParser {
       );
       if (decoratorToken.lexeme == '') {
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+          ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
           onToken.offset,
           onToken.length,
         ));
@@ -268,7 +264,7 @@ class RecursiveAstParser {
       );
       if (decoratorToken.lexeme == '') {
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+          ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
           bindToken.offset,
           bindToken.length,
         ));
@@ -321,9 +317,9 @@ class RecursiveAstParser {
     // Parse the element identifier.
     var nameToken = _reader.next();
     if (nameToken.lexeme == 'ng-container') {
-      return parseContainer(beginToken, nameToken, tagStack);
+      return parseContainer(beginToken, nameToken as NgToken, tagStack);
     } else if (nameToken.lexeme == 'ng-content') {
-      return parseEmbeddedContent(beginToken, nameToken);
+      return parseEmbeddedContent(beginToken, nameToken as NgToken);
     } else if (nameToken.lexeme.toLowerCase() == 'template') {
       isTemplateElement = true;
     }
@@ -346,7 +342,7 @@ class RecursiveAstParser {
 
     // Start looping and get all of the decorators within the element.
     do {
-      nextToken = _reader.next();
+      nextToken = _reader.next() as NgToken;
       if (nextToken.type == NgTokenType.beforeElementDecorator) {
         var decoratorAst = parseDecorator(nextToken);
         if (decoratorAst is AttributeAst) {
@@ -355,14 +351,14 @@ class RecursiveAstParser {
           if (!isTemplateElement) {
             // 'let-' binding can only exist in <template>.
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.INVALID_LET_BINDING_IN_NONTEMPLATE,
+              ParserErrorCode.INVALID_LET_BINDING_IN_NONTEMPLATE,
               decoratorAst.beginToken.offset,
               decoratorAst.endToken.end - decoratorAst.beginToken.offset,
             ));
           } else if (decoratorAst.name.isEmpty) {
             var letToken = (decoratorAst as ParsedLetBindingAst).prefixToken;
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+              ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
               letToken.offset,
               letToken.length,
             ));
@@ -372,14 +368,14 @@ class RecursiveAstParser {
         } else if (decoratorAst is StarAst) {
           if (isTemplateElement) {
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.INVALID_DECORATOR_IN_TEMPLATE,
+              ParserErrorCode.INVALID_DECORATOR_IN_TEMPLATE,
               decoratorAst.beginToken.offset,
               decoratorAst.endToken.end - decoratorAst.beginToken.offset,
             ));
           } else {
             if (stars.isNotEmpty) {
               exceptionHandler.handle(AngularParserException(
-                NgParserWarningCode.DUPLICATE_STAR_DIRECTIVE,
+                ParserErrorCode.DUPLICATE_STAR_DIRECTIVE,
                 decoratorAst.beginToken.offset,
                 decoratorAst.endToken.end - decoratorAst.beginToken.offset,
               ));
@@ -396,7 +392,7 @@ class RecursiveAstParser {
         } else if (decoratorAst is BananaAst) {
           if (isTemplateElement) {
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.INVALID_DECORATOR_IN_TEMPLATE,
+              ParserErrorCode.INVALID_DECORATOR_IN_TEMPLATE,
               decoratorAst.beginToken.offset,
               decoratorAst.endToken.end - decoratorAst.beginToken.offset,
             ));
@@ -416,7 +412,7 @@ class RecursiveAstParser {
         !isSvgElement &&
         nextToken.type == NgTokenType.openElementEndVoid) {
       exceptionHandler.handle(AngularParserException(
-        NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END,
+        ParserErrorCode.NONVOID_ELEMENT_USING_VOID_END,
         nextToken.offset,
         nextToken.length,
       ));
@@ -432,7 +428,7 @@ class RecursiveAstParser {
     if (!isVoidElement && nextToken.type != NgTokenType.openElementEndVoid) {
       closeElementAst = _parseCloseElement(
         beginToken,
-        nameToken,
+        nameToken as NgToken,
         endToken,
         childNodes,
         tagStack,
@@ -457,7 +453,7 @@ class RecursiveAstParser {
       return ElementAst.parsed(
         _source,
         beginToken,
-        nameToken,
+        nameToken as NgToken,
         endToken,
         annotations: annotations,
         attributes: attributes,
@@ -488,13 +484,13 @@ class RecursiveAstParser {
     // seen.
     while (_reader.peekType() == NgTokenType.beforeElementDecorator) {
       final nextToken = _reader.next();
-      final decorator = parseDecorator(nextToken);
+      final decorator = parseDecorator(nextToken as NgToken);
       final startOffset = decorator.beginToken.offset;
       final endOffset = decorator.endToken.end;
       if (decorator is AttributeAst && decorator.name == 'select') {
         if (selectAttributeFound) {
           var e = AngularParserException(
-            NgParserWarningCode.DUPLICATE_SELECT_DECORATOR,
+            ParserErrorCode.DUPLICATE_SELECT_DECORATOR,
             startOffset,
             endOffset - startOffset,
           );
@@ -506,7 +502,7 @@ class RecursiveAstParser {
       } else if (decorator is AttributeAst && decorator.name == 'ngProjectAs') {
         if (ngProjectAsAttributeFound) {
           var e = AngularParserException(
-            NgParserWarningCode.DUPLICATE_PROJECT_AS_DECORATOR,
+            ParserErrorCode.DUPLICATE_PROJECT_AS_DECORATOR,
             startOffset,
             endOffset - startOffset,
           );
@@ -518,7 +514,7 @@ class RecursiveAstParser {
       } else if (decorator is ReferenceAst) {
         if (referenceAttributeFound) {
           var e = AngularParserException(
-            NgParserWarningCode.DUPLICATE_REFERENCE_DECORATOR,
+            ParserErrorCode.DUPLICATE_REFERENCE_DECORATOR,
             startOffset,
             endOffset - startOffset,
           );
@@ -528,7 +524,7 @@ class RecursiveAstParser {
           reference = decorator;
           if (reference.identifier != null) {
             var e = AngularParserException(
-              NgParserWarningCode.REFERENCE_IDENTIFIER_FOUND,
+              ParserErrorCode.REFERENCE_IDENTIFIER_FOUND,
               startOffset,
               endOffset - startOffset,
             );
@@ -537,7 +533,7 @@ class RecursiveAstParser {
         }
       } else {
         var e = AngularParserException(
-          NgParserWarningCode.INVALID_DECORATOR_IN_NGCONTENT,
+          ParserErrorCode.INVALID_DECORATOR_IN_NGCONTENT,
           decorator.beginToken.offset,
           decorator.endToken.end - decorator.beginToken.offset,
         );
@@ -550,7 +546,7 @@ class RecursiveAstParser {
     // Skip whitespace after <ng-content>.
     if (_reader.peekType() == NgTokenType.text) {
       final textToken = _reader.next();
-      final text = parseText(textToken);
+      final text = parseText(textToken as NgToken);
       if (text.value.trim().isNotEmpty) {
         _reader.putBack(textToken);
       }
@@ -559,7 +555,7 @@ class RecursiveAstParser {
     // Ensure closing </ng-content> exists.
     if (_reader.peekType() != NgTokenType.closeElementStart) {
       var e = AngularParserException(
-        NgParserWarningCode.NGCONTENT_MUST_CLOSE_IMMEDIATELY,
+        ParserErrorCode.NGCONTENT_MUST_CLOSE_IMMEDIATELY,
         beginToken.offset,
         endToken.end - beginToken.offset,
       );
@@ -571,7 +567,7 @@ class RecursiveAstParser {
 
       if (closeElementName != 'ng-content') {
         var e = AngularParserException(
-          NgParserWarningCode.NGCONTENT_MUST_CLOSE_IMMEDIATELY,
+          ParserErrorCode.NGCONTENT_MUST_CLOSE_IMMEDIATELY,
           beginToken.offset,
           endToken.end - beginToken.offset,
         );
@@ -579,7 +575,7 @@ class RecursiveAstParser {
         _reader.putBack(closeElementStart);
         closeElementAst = CloseElementAst('ng-content');
       } else {
-        closeElementAst = parseCloseElement(closeElementStart);
+        closeElementAst = parseCloseElement(closeElementStart as NgToken);
       }
     }
     return EmbeddedContentAst.parsed(
@@ -621,7 +617,7 @@ class RecursiveAstParser {
             // Second '{{' found before '}}' closes it.
             var firstMustacheBegin = absoluteTextOffset + seenOpenMustache;
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.UNTERMINATED_MUSTACHE,
+              ParserErrorCode.UNTERMINATED_MUSTACHE,
               firstMustacheBegin,
               '{{'.length,
             ));
@@ -659,7 +655,7 @@ class RecursiveAstParser {
             var mustacheBegin = absoluteTextOffset + position;
             var mustacheEnd = absoluteTextOffset + matchPosition;
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.UNOPENED_MUSTACHE,
+              ParserErrorCode.UNOPENED_MUSTACHE,
               mustacheEnd,
               '}}'.length,
             ));
@@ -682,7 +678,7 @@ class RecursiveAstParser {
     if (seenOpenMustache != null) {
       var mustacheBegin = absoluteTextOffset + seenOpenMustache;
       exceptionHandler.handle(AngularParserException(
-        NgParserWarningCode.UNTERMINATED_MUSTACHE,
+        ParserErrorCode.UNTERMINATED_MUSTACHE,
         mustacheBegin,
         '{{'.length,
       ));
@@ -705,8 +701,8 @@ class RecursiveAstParser {
     return InterpolationAst.parsed(
       _source,
       beginToken,
-      valueToken,
-      endToken,
+      valueToken as NgToken,
+      endToken as NgToken,
     );
   }
 
@@ -732,7 +728,7 @@ class RecursiveAstParser {
         var danglingCloseIdentifier = _reader.peek().lexeme;
         var closeComplement = parseCloseElement(token);
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.DANGLING_CLOSE_ELEMENT,
+          ParserErrorCode.DANGLING_CLOSE_ELEMENT,
           closeComplement.beginToken.offset,
           closeComplement.endToken.end - closeComplement.beginToken.offset,
         ));
@@ -754,7 +750,7 @@ class RecursiveAstParser {
           throw Exception('Non-standalone starting token found!');
         }
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.EXPECTED_STANDALONE,
+          ParserErrorCode.EXPECTED_STANDALONE,
           token.offset,
           token.length,
         ));
@@ -768,7 +764,7 @@ class RecursiveAstParser {
       starAsts.add(starAst);
     } else {
       exceptionHandler.handle(AngularParserException(
-        NgParserWarningCode.DUPLICATE_STAR_DIRECTIVE,
+        ParserErrorCode.DUPLICATE_STAR_DIRECTIVE,
         starAst.beginToken.offset,
         starAst.beginToken.end - starAst.beginToken.offset,
       ));
@@ -792,7 +788,7 @@ class RecursiveAstParser {
       final nextToken = _reader.next();
       if (nextToken == null) {
         exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
+          ParserErrorCode.CANNOT_FIND_MATCHING_CLOSE,
           beginToken.offset,
           endToken.end - beginToken.offset,
         ));
@@ -811,16 +807,16 @@ class RecursiveAstParser {
             closeElementAst = CloseElementAst(nameToken.lexeme);
             closingTagFound = true;
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.CANNOT_FIND_MATCHING_CLOSE,
+              ParserErrorCode.CANNOT_FIND_MATCHING_CLOSE,
               beginToken.offset,
               endToken.end - beginToken.offset,
             ));
           } else {
             // If the closing tag is not in the stack, create a synthetic
             // [ElementAst] to pair the dangling close and add as child.
-            var closeComplement = parseCloseElement(nextToken);
+            var closeComplement = parseCloseElement(nextToken as NgToken);
             exceptionHandler.handle(AngularParserException(
-              NgParserWarningCode.DANGLING_CLOSE_ELEMENT,
+              ParserErrorCode.DANGLING_CLOSE_ELEMENT,
               closeComplement.beginToken.offset,
               closeComplement.endToken.end - closeComplement.beginToken.offset,
             ));
@@ -843,11 +839,11 @@ class RecursiveAstParser {
             }
           }
         } else {
-          closeElementAst = parseCloseElement(nextToken);
+          closeElementAst = parseCloseElement(nextToken as NgToken);
           closingTagFound = true;
         }
       } else {
-        var childAst = parseStandalone(nextToken, tagStack);
+        var childAst = parseStandalone(nextToken as NgToken, tagStack);
         childNodes.add(childAst);
       }
     }
@@ -861,7 +857,7 @@ class RecursiveAstParser {
     final endToken = _reader.next();
     if (endToken.type == NgTokenType.openElementEndVoid) {
       exceptionHandler.handle(AngularParserException(
-        NgParserWarningCode.NONVOID_ELEMENT_USING_VOID_END,
+        ParserErrorCode.NONVOID_ELEMENT_USING_VOID_END,
         endToken.offset,
         endToken.length,
       ));
@@ -870,7 +866,7 @@ class RecursiveAstParser {
         NgTokenType.openElementEnd,
       );
     }
-    return endToken;
+    return endToken as NgToken;
   }
 
   void _consumeWhitespaces() {

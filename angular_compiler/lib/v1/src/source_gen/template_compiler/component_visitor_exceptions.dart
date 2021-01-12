@@ -2,10 +2,12 @@ import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
+import 'package:build/build.dart';
 import 'package:source_span/source_span.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 class IndexedAnnotation<T extends Element> {
   final T element;
@@ -27,39 +29,62 @@ class ComponentVisitorExceptionHandler {
     _warnings.add(warning);
   }
 
-  Future<void> maybeReportErrors() async {
+  Future<void> maybeReportErrors(Resolver resolver) async {
     if (_warnings.isNotEmpty) {
-      final buildWarnings =
-          await Future.wait(_warnings.map((warning) => warning.resolve()));
-      buildWarnings.forEach((buildWarning) => logWarning(buildWarning.message));
+      final buildWarnings = await Future.wait(
+          _warnings.map((warning) => warning.resolve(resolver)));
+      buildWarnings
+          .forEach((buildWarning) => logWarning(buildWarning.toString()));
     }
     if (_errors.isEmpty) {
       return;
     }
-    final buildErrors =
-        await Future.wait(_errors.map((error) => error.resolve()));
-    throw BuildError(
-        buildErrors.map((buildError) => buildError.message).join('\n\n'));
+    final buildErrors = await Future.wait(
+      _errors.map((error) => error.resolve(resolver)),
+    );
+    throw BuildError.fromMultiple(buildErrors);
   }
 }
 
-Future<ElementDeclarationResult> _resolvedClassResult(Element element) async {
-  var libraryElement = element.library;
-  var libraryResult =
-      await libraryElement.session.getResolvedLibraryByElement(libraryElement);
-  if (libraryResult.state == ResultState.NOT_A_FILE) {
+Future<ElementDeclarationResult> _resolvedClassResult(
+  Resolver resolver,
+  Element element, [
+  String message,
+]) async {
+  var assetId = await resolver.assetIdForElement(element);
+  // A `part of` dart file is not a standalone dart library. Thus,
+  // [library] is null when an error occurs in a `part of` dart file.
+  // It loses all actionable information for clients and returns an unhandled
+  // error. The build error below is to reconstruct sufficient information for
+  // clients.
+  if (!await resolver.isLibrary(assetId)) {
+    throw BuildError.withoutContext('asset $assetId: $message');
+  }
+  final library = await resolver.libraryFor(
+    assetId,
+    allowSyntaxErrors: true,
+  );
+  final result = await element.session.getResolvedLibraryByElement(library);
+  if (result.state == ResultState.NOT_A_FILE) {
     // We don't have access to source information in summarized libraries,
     // but another build step will likely emit the root cause errors.
-    throw BuildError('Analysis errors in summarized library '
-        '${libraryElement.source.fullName}');
+    throw BuildError.withoutContext(
+      'Analysis errors in summarized library '
+      '${library.source.fullName}',
+    );
   }
-  return libraryResult.getElementDeclaration(element);
+  return result.getElementDeclaration(element);
 }
 
-class AsyncBuildError extends BuildError {
-  AsyncBuildError([String message]) : super(message);
+abstract class AsyncBuildError {
+  final String _message;
 
-  Future<BuildError> resolve() => Future.value(this);
+  AsyncBuildError([this._message]);
+
+  Future<BuildError> resolve(Resolver resolver);
+
+  @override
+  String toString() => _message;
 }
 
 class AngularAnalysisError extends AsyncBuildError {
@@ -69,7 +94,7 @@ class AngularAnalysisError extends AsyncBuildError {
   AngularAnalysisError(this.constantEvaluationErrors, this.indexedAnnotation);
 
   @override
-  Future<BuildError> resolve() async {
+  Future<BuildError> resolve(Resolver resolver) async {
     final annotationSource = indexedAnnotation.annotation.toSource();
 
     var hasOffsetInformation =
@@ -86,17 +111,18 @@ class AngularAnalysisError extends AsyncBuildError {
 
     ElementDeclarationResult result;
     try {
-      result = await _resolvedClassResult(indexedAnnotation.element);
+      result = await _resolvedClassResult(resolver, indexedAnnotation.element);
     } on BuildError catch (buildError) {
-      return BuildError(
-          '${buildError.message} while compiling $annotationSource');
+      return BuildError.withoutContext(
+        '$buildError while compiling $annotationSource',
+      );
     }
 
     var resolvedMetadata =
         _metadataWithWorkaround(result.node, indexedAnnotation.element);
 
     if (resolvedMetadata == null) {
-      return BuildError.forElement(indexedAnnotation.element, message);
+      return BuildError.forElement(indexedAnnotation.element, toString());
     }
 
     var resolvedAnnotation =
@@ -123,7 +149,7 @@ class AngularAnalysisError extends AsyncBuildError {
           'Compiling annotation $annnotationSouce on element $element failed.';
     }
 
-    return BuildError(
+    return BuildError.withoutContext(
       messages.unresolvedSource(
         errors.map((e) {
           final sourceUrl = e.source.uri;
@@ -163,7 +189,7 @@ class UnresolvedExpressionError extends AsyncBuildError {
       this.expressions, this.componentType, this.compilationUnit);
 
   @override
-  Future<BuildError> resolve() =>
+  Future<BuildError> resolve(Resolver resolver) =>
       Future.value(_buildErrorForUnresolvedExpressions(
           expressions, componentType, compilationUnit));
 
@@ -172,7 +198,7 @@ class UnresolvedExpressionError extends AsyncBuildError {
   // If we don't see any errors in the wild, delete this code.
   BuildError _buildErrorForUnresolvedExpressions(Iterable<AstNode> expressions,
       ClassElement componentType, CompilationUnitElement compilationUnit) {
-    return BuildError(
+    return BuildError.withoutContext(
       messages.unresolvedSource(
         expressions.map((e) {
           return SourceSpanMessageTuple(
@@ -259,12 +285,13 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
   ) : super(message);
 
   @override
-  Future<BuildError> resolve() async {
+  Future<BuildError> resolve(Resolver resolver) async {
     final annotationIndex = indexedAnnotation.annotationIndex;
 
     ElementDeclarationResult result;
     try {
-      result = await _resolvedClassResult(indexedAnnotation.element);
+      result = await _resolvedClassResult(
+          resolver, indexedAnnotation.element, toString());
     } on BuildError catch (buildError) {
       return buildError;
     }
@@ -273,21 +300,11 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
         _metadataWithWorkaround(result.node, indexedAnnotation.element);
 
     if (resolvedMetadata == null) {
-      return BuildError.forElement(indexedAnnotation.element, message);
+      return BuildError.forElement(indexedAnnotation.element, toString());
     }
 
     var resolvedAnnotation =
         resolvedMetadata[annotationIndex].elementAnnotation;
-    return BuildError.forAnnotation(resolvedAnnotation, message);
+    return BuildError.forAnnotation(resolvedAnnotation, toString());
   }
-}
-
-class ErrorMessageForElement extends AsyncBuildError {
-  final Element element;
-
-  ErrorMessageForElement(this.element, String message) : super(message);
-
-  @override
-  Future<BuildError> resolve() =>
-      Future.value(BuildError.forElement(element, message));
 }

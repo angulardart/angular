@@ -1,8 +1,6 @@
-@TestOn('browser')
-import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
+import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'expect_no_changes_dev_mode_test.template.dart' as ng;
 
@@ -10,7 +8,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should throw during change detection', () async {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng.createIllegalChangeDetectionComponentFactory(),
     );
     expect(
@@ -24,7 +22,7 @@ void main() {
   });
 
   test('misses throwing on a non-primitive expression', () {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng.createNonPrimitiveBindingFactory(),
     );
     expect(testBed.create(), completes);
@@ -40,7 +38,7 @@ void main() {
     });
 
     test('should throw during change detection of a primitive', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createIllegalChangeDetectionComponentFactory(),
       );
       expect(
@@ -54,7 +52,7 @@ void main() {
     });
 
     test('should throw during change detection of a non-primitive', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createNonPrimitiveBindingFactory(),
       );
       expect(
@@ -110,5 +108,5 @@ class NonPrimitiveBinding {
 )
 class BindAnythingComponent {
   @Input()
-  Object value;
+  Object? value;
 }

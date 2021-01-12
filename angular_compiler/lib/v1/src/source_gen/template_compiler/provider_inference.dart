@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 /// Returns the [CompileTypeMetadata] appropriate for `T` in `Provider<T>`.
 DartType inferProviderType(DartObject provider, DartObject token) {
@@ -31,7 +31,7 @@ DartType inferProviderType(DartObject provider, DartObject token) {
       if (!$MultiToken.isExactlyType(tokenTypeClass.supertype)) {
         // TODO(matanl): When we start using angular_compiler to resolve all
         // of the time remove this message, since we already validate there.
-        BuildError.throwForElement(
+        throw BuildError.forElement(
             tokenType.element,
             'A sub-type of OpaqueToken must directly extend OpaqueToken or '
             'MultiToken, and cannot extend another class that in turn extends '
@@ -47,7 +47,7 @@ DartType inferProviderType(DartObject provider, DartObject token) {
   if (providerOfTArgs.isNotEmpty) {
     final genericType = providerOfTArgs.first;
     // If type inference fails it might resolve to dynamic or Object.
-    if (!genericType.isDynamic && !genericType.isObject) {
+    if (!genericType.isDynamic && !genericType.isDartCoreObject) {
       return genericType;
     }
   }

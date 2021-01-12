@@ -1,9 +1,8 @@
-@TestOn('browser')
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'i18n_test.template.dart' as ng;
 
@@ -11,13 +10,13 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should render message', () async {
-    final testBed = NgTestBed.forComponent(ng.createTestI18nNodeFactory());
+    final testBed = NgTestBed(ng.createTestI18nNodeFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'A message.');
   });
 
   test('should render message in attribute', () async {
-    final testBed = NgTestBed.forComponent(ng.createTestI18nAttributeFactory());
+    final testBed = NgTestBed(ng.createTestI18nAttributeFactory());
     final testFixture = await testBed.create();
     final imgElement =
         testFixture.rootElement.querySelector('img') as ImageElement;
@@ -25,90 +24,83 @@ void main() {
   });
 
   test('should render message with HTML', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestI18nNodeWithHtmlFactory());
+    final testBed = NgTestBed(ng.createTestI18nNodeWithHtmlFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'A message with emphasis!');
-    final strongElement = testFixture.rootElement.querySelector('strong');
+    final strongElement = testFixture.rootElement.querySelector('strong')!;
     expect(strongElement.text, 'emphasis!');
   });
 
   test('should render message with unsafe HTML', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestI18nNodeWithUnsafeHtmlFactory());
+    final testBed = NgTestBed(ng.createTestI18nNodeWithUnsafeHtmlFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Click here to file an issue.');
-    final anchorElement = testFixture.rootElement.querySelector('a');
+    final anchorElement = testFixture.rootElement.querySelector('a')!;
     expect(anchorElement.getAttribute('href'), issuesLink);
   });
 
   test('should render message with escaped HTML characters', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createTestI18nNodeWithEscapedHtmlCharactersFactory());
+    final testBed =
+        NgTestBed(ng.createTestI18nNodeWithEscapedHtmlCharactersFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Not <i>italic</i>.');
   });
 
   test('should render message with HTML and escaped HTML characters', () async {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
         ng.createTestI18nNodeWithHtmlAndEscapedHtmlCharactersFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Italic, not <i>italic</i>.');
-    final italicElement = testFixture.rootElement.querySelector('i');
+    final italicElement = testFixture.rootElement.querySelector('i')!;
     expect(italicElement.text, 'Italic');
   });
 
   // This test ensures none of our Intl.message() parameters are invalid.
   test('should render message with i18n parameters', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestI18nParametersFactory());
+    final testBed = NgTestBed(ng.createTestI18nParametersFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'A paragraph.');
-    final imgElement = testFixture.rootElement.querySelector('img');
+    final imgElement = testFixture.rootElement.querySelector('img')!;
     expect(imgElement.getAttribute('alt'), 'An image.');
   });
 
   test('should render a message from a template', () async {
-    final testBed = NgTestBed.forComponent(ng.createTestI18nTemplateFactory());
+    final testBed = NgTestBed(ng.createTestI18nTemplateFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
     await testFixture.update((component) {
-      component.viewContainer.createEmbeddedView(component.messageTemplate);
+      component.viewContainer!.createEmbeddedView(component.messageTemplate!);
     });
     expect(testFixture.text, 'A message in a template!');
   });
 
   test('should inject an i18n attribute', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestInjectI18nAttributeFactory());
+    final testBed = NgTestBed(ng.createTestInjectI18nAttributeFactory());
     final testFixture = await testBed.create();
-    expect(testFixture.assertOnlyInstance.injectsMessage.message,
+    expect(testFixture.assertOnlyInstance.injectsMessage!.message,
         'An internationalized message.');
   });
 
   group('should set internationalized property', () {
     test('explicitly', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestExplicitI18nInputFactory());
+      final testBed = NgTestBed(ng.createTestExplicitI18nInputFactory());
       final testFixture = await testBed.create();
-      expect(testFixture.assertOnlyInstance.greeting.message,
+      expect(testFixture.assertOnlyInstance.greeting!.message,
           'An internationalized property');
     });
 
     test('implicitly', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestImplicitI18nInputFactory());
+      final testBed = NgTestBed(ng.createTestImplicitI18nInputFactory());
       final testFixture = await testBed.create();
-      expect(testFixture.assertOnlyInstance.greeting.message,
+      expect(testFixture.assertOnlyInstance.greeting!.message,
           'An internationalized property');
     });
   });
 
   test('should support internationalized property on <template>', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestI18nInputOnTemplateFactory());
+    final testBed = NgTestBed(ng.createTestI18nInputOnTemplateFactory());
     final testFixture = await testBed.create();
-    expect(testFixture.assertOnlyInstance.message.message,
+    expect(testFixture.assertOnlyInstance.message!.message,
         'An internationalized property');
   });
 }
@@ -199,10 +191,10 @@ class TestI18nParameters {}
 )
 class TestI18nTemplate {
   @ViewChild('message')
-  TemplateRef messageTemplate;
+  TemplateRef? messageTemplate;
 
   @ViewChild('container', read: ViewContainerRef)
-  ViewContainerRef viewContainer;
+  ViewContainerRef? viewContainer;
 }
 
 @Component(
@@ -210,7 +202,7 @@ class TestI18nTemplate {
   template: '',
 )
 class InjectsMessage {
-  final String message;
+  final String? message;
 
   InjectsMessage(@Attribute('message') this.message);
 }
@@ -227,7 +219,7 @@ class InjectsMessage {
 )
 class TestInjectI18nAttribute {
   @ViewChild(InjectsMessage)
-  InjectsMessage injectsMessage;
+  InjectsMessage? injectsMessage;
 }
 
 @Component(
@@ -236,7 +228,7 @@ class TestInjectI18nAttribute {
 )
 class GreetingComponent {
   @Input()
-  String message;
+  String? message;
 }
 
 @Component(
@@ -251,7 +243,7 @@ class GreetingComponent {
 )
 class TestExplicitI18nInput {
   @ViewChild(GreetingComponent)
-  GreetingComponent greeting;
+  GreetingComponent? greeting;
 }
 
 @Component(
@@ -266,7 +258,7 @@ class TestExplicitI18nInput {
 )
 class TestImplicitI18nInput {
   @ViewChild(GreetingComponent)
-  GreetingComponent greeting;
+  GreetingComponent? greeting;
 }
 
 @Directive(selector: '[message]')
@@ -276,7 +268,7 @@ class MessageDirective {
   }
 
   @Input()
-  String message;
+  String? message;
 }
 
 @Component(
@@ -291,5 +283,5 @@ class MessageDirective {
 )
 class TestI18nInputOnTemplate {
   @ViewChild(MessageDirective)
-  MessageDirective message;
+  MessageDirective? message;
 }

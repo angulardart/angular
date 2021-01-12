@@ -8,7 +8,7 @@ import 'default.template.dart' as ng;
 
 /// Avoids Dart2JS thinking something is constant/unchanging.
 @JS()
-external T deopt<T>([Object any]);
+external T deopt<T>([Object? any]);
 
 void main() {
   runApp(ng.createGoldenComponentFactory());
@@ -35,7 +35,7 @@ class GoldenComponent {
 )
 class Child {
   @Input()
-  String name;
+  String? name;
 }
 
 @Component(
@@ -44,7 +44,7 @@ class Child {
 )
 class ChildWithDoCheck implements DoCheck {
   @Input()
-  String name;
+  String? name;
 
   @override
   void ngDoCheck() {}

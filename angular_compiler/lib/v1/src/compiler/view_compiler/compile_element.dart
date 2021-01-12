@@ -1,11 +1,9 @@
-import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/meta.dart';
 
 import '../compile_metadata.dart'
     show
         CompileTokenMap,
         CompileDirectiveMetadata,
-        CompileIdentifierMetadata,
         CompileTokenMetadata,
         CompileQueryMetadata,
         CompileProviderMetadata;
@@ -13,13 +11,12 @@ import '../i18n/message.dart';
 import '../identifiers.dart' show Identifiers, identifierToken;
 import '../output/output_ast.dart' as o;
 import '../template_ast.dart'
-    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst, ElementAst;
+    show TemplateAst, ProviderAst, ProviderAstType, ReferenceAst;
 import 'compile_query.dart' show CompileQuery, addQueryToTokenMap;
 import 'compile_view.dart' show CompileView, NodeReference;
 import 'ir/provider_resolver.dart';
 import 'ir/provider_source.dart';
 import 'provider_forest.dart' show ProviderInstance, ProviderNode;
-import 'view_compiler_utils.dart' show toTemplateExtension;
 
 /// Compiled node in the view (such as text node) that is not an element.
 class CompileNode {
@@ -55,7 +52,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   final bool hasViewContainer;
   final bool hasEmbeddedView;
   final bool hasTemplateRefQuery;
-  final bool isDeferredComponent;
 
   /// Source location in template.
   final TemplateAst sourceAst;
@@ -94,7 +90,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     this.componentView,
     this.hasTemplateRefQuery = false,
     this.isHtmlElement = false,
-    this.isDeferredComponent = false,
   }) : super(parent, view, nodeIndex, renderNode) {
     _providers = ProviderResolver(this, parent?._providers);
     if (references.isNotEmpty) {
@@ -213,24 +208,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       _providers.add(Identifiers.ComponentLoaderToken, appViewContainer);
     }
 
-    // If this element represents a deferred generic component and its type
-    // arguments are specified, forward the type arguments to be used to
-    // instantiate the provider. Normally we rely on the field type of the
-    // provider to specify type arguments, but the field type of deferred
-    // components must be dynamic since the component type is deferred.
-    final deferredComponentTypeArguments = isDeferredComponent
-        ? view.lookupTypeArgumentsOf(component.originType, sourceAst)
-        : <o.OutputType>[];
-    if (deferredComponentTypeArguments.isNotEmpty) {
-      _providers.addDirectiveProviders(
-        _resolvedProvidersArray,
-        _directives,
-        deferredComponent: component.identifier,
-        deferredComponentTypeArguments: deferredComponentTypeArguments,
-      );
-    } else {
-      _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
-    }
+    _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
 
     directiveInstances = <ProviderSource>[];
     for (var directive in _directives) {
@@ -313,15 +291,11 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   ) {
     for (final provider in _resolvedProvidersArray) {
       final token = provider.token;
-
-      // Skip any providers that are backed by a functional directive (these are
-      // never injectable) or are an alias for an existing provider (aliases are
-      // handled by the existing provider).
-      if (provider.providerType == ProviderAstType.FunctionalDirective ||
-          _providers.isAliasedProvider(token)) {
+      // Skip any providers that are an alias for an existing provider (aliases
+      // are handled by the existing provider).
+      if (_providers.isAliasedProvider(token)) {
         continue;
       }
-
       // Aggregate all tokens that this provider statisfies.
       final tokens = <CompileTokenMetadata>[];
       if (provider.visibleForInjection) {
@@ -382,64 +356,12 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   }
 
   void afterChildren(int childNodeCount) {
-    // Add functional directive invocations.
-    for (var resolvedProvider in _resolvedProvidersArray) {
-      if (resolvedProvider.providerType ==
-          ProviderAstType.FunctionalDirective) {
-        var invokeExpression = _providers
-            .createFunctionalDirectiveSource(resolvedProvider)
-            .build();
-        view.callFunctionalDirective(invokeExpression);
-      }
-    }
     for (var queries in _queries.values) {
       for (var query in queries) {
         view.updateQueryAtStartup(query);
         view.updateContentQuery(query);
       }
     }
-  }
-
-  /// Returns code that performs defer loading (i.e. invokes `loadDeferred(..)`.
-  o.Expression writeDeferredLoader(
-    CompileView embeddedView,
-    o.Expression viewContainerExpr,
-  ) {
-    var deferredElement = embeddedView.nodes[0] as CompileElement;
-    var deferredMeta = deferredElement.component;
-    if (deferredMeta == null) {
-      var elemAst = deferredElement.sourceAst as ElementAst;
-      throwFailure('Cannot defer Unknown component type <${elemAst.name}>');
-    }
-    var deferredModuleUrl = deferredMeta.identifier.moduleUrl;
-    var prefix = embeddedView.deferredModules[deferredModuleUrl];
-    String templatePrefix;
-    if (prefix == null) {
-      prefix = 'deflib${embeddedView.deferredModules.length}';
-      embeddedView.deferredModules[deferredModuleUrl] = prefix;
-      templatePrefix = 'deflib${view.deferredModules.length}';
-      embeddedView.deferredModules[toTemplateExtension(deferredModuleUrl)] =
-          templatePrefix;
-    } else {
-      templatePrefix =
-          embeddedView.deferredModules[toTemplateExtension(deferredModuleUrl)];
-    }
-
-    var prefixedId = CompileIdentifierMetadata(
-        name: 'loadLibrary', prefix: prefix, emitPrefix: true);
-    var templatePrefixId = CompileIdentifierMetadata(
-        name: 'loadLibrary', prefix: templatePrefix, emitPrefix: true);
-
-    var templateRefExpr = _providers.get(Identifiers.TemplateRefToken).build();
-
-    final args = [
-      o.importDeferred(prefixedId),
-      o.importDeferred(templatePrefixId),
-      viewContainerExpr,
-      templateRefExpr,
-    ];
-
-    return o.importExpr(Identifiers.loadDeferred).callFn(args);
   }
 
   void addContentNode(int ngContentIndex, o.Expression nodeExpr) {
@@ -466,11 +388,9 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     final providerValueExpressions =
         providerSources.map((s) => s.build()).toList();
 
-    var forceDynamic = false;
     o.Expression changeDetectorRefExpr;
 
     if (resolvedProvider.providerType == ProviderAstType.Component) {
-      forceDynamic = isDeferredComponent;
       if (directiveMetadata.changeDetection == ChangeDetectionStrategy.OnPush) {
         changeDetectorRefExpr = componentView;
       }
@@ -484,7 +404,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       resolvedProvider.multiProvider,
       resolvedProvider.eager,
       this,
-      forceDynamic: forceDynamic,
     );
 
     return ExpressionProviderSource(

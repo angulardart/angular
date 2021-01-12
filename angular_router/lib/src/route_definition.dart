@@ -1,12 +1,7 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart';
-import 'package:meta/meta.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'route_path.dart';
 import 'router/router_state.dart';
@@ -33,27 +28,20 @@ abstract class RouteDefinition {
   /// Useful for using a generic component for multiple [RouteDefinition]s.
   final dynamic additionalData;
 
-  RouteDefinition._(
-      {String path,
-      bool useAsDefault,
-      dynamic additionalData,
-      RoutePath routePath})
-      : path = Url.trimSlashes(path ?? routePath?.path),
+  RouteDefinition._({
+    String? path,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
+  })  : assert(path != null || routePath != null),
+        path = Url.trimSlashes(path ?? routePath!.path),
         useAsDefault = useAsDefault ?? routePath?.useAsDefault ?? false,
         additionalData = additionalData ?? routePath?.additionalData;
 
   /// Runs a dev-mode assertion that the definition is valid.
   ///
   /// When assertions are enabled, throws [StateError]. Otherwise does nothing.
-  @mustCallSuper
-  void assertValid() {
-    if (!isDevMode) {
-      return;
-    }
-    if (path == null) {
-      throw StateError('Must have a non-null `path` string');
-    }
-  }
+  void assertValid() {}
 
   /// Define a route from [path] that loads [component] into an outlet.
   ///
@@ -83,11 +71,11 @@ abstract class RouteDefinition {
   /// );
   /// ```
   factory RouteDefinition({
-    String path,
-    ComponentFactory<Object> component,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    String? path,
+    ComponentFactory<Object>? component,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) = ComponentRouteDefinition._;
 
   /// Define a route from [path] that uses [loader] to resolve a component.
@@ -122,12 +110,12 @@ abstract class RouteDefinition {
   /// automatically inferred to be in use if there are no matching routes for a
   /// given outlet.
   factory RouteDefinition.defer({
-    String path,
-    LoadComponentAsync loader,
-    FutureOr<void> Function(RouterState) prefetcher,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    String? path,
+    required LoadComponentAsync loader,
+    FutureOr<void> Function(RouterState)? prefetcher,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) = DeferredRouteDefinition._;
 
   /// Configures a redirect from a [path] --> [to] another one.
@@ -155,16 +143,16 @@ abstract class RouteDefinition {
   /// ]
   /// ```
   factory RouteDefinition.redirect({
-    String path,
-    String redirectTo,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    String? path,
+    required String redirectTo,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) = RedirectRouteDefinition._;
 
   /// Collection of parameters that are supplied in [path].
   Iterable<String> get parameters {
-    return _findParameters.allMatches(path).map((m) => m[1]);
+    return _findParameters.allMatches(path).map((m) => m[1]!);
   }
 
   /// Returns as a regular expression that matches this route.
@@ -174,13 +162,10 @@ abstract class RouteDefinition {
 
   /// Returns as a valid URL with [paramValues] filled into [parameters].
   String toUrl([Map<String, String> paramValues = const {}]) {
-    if (isDevMode && paramValues == null) {
-      throw ArgumentError.notNull('paramValues');
-    }
     var url = '/' + path;
     for (final parameter in parameters) {
       url = url.replaceFirst(
-          ':$parameter', Uri.encodeComponent(paramValues[parameter]));
+          ':$parameter', Uri.encodeComponent(paramValues[parameter]!));
     }
     return url;
   }
@@ -191,14 +176,14 @@ typedef LoadComponentAsync = Future<ComponentFactory<Object>> Function();
 
 class ComponentRouteDefinition extends RouteDefinition {
   /// Allows creating a component imperatively.
-  final ComponentFactory<Object> component;
+  final ComponentFactory<Object>? component;
 
   ComponentRouteDefinition._({
-    String path,
+    String? path,
     this.component,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) : super._(
           path: path,
           useAsDefault: useAsDefault,
@@ -214,7 +199,6 @@ class ComponentRouteDefinition extends RouteDefinition {
     if (component == null) {
       throw StateError('Must have a non-null `component` factory');
     }
-    super.assertValid();
   }
 }
 
@@ -225,31 +209,20 @@ class DeferredRouteDefinition extends RouteDefinition {
   /// An optional function for prefetching resources before loading this route.
   ///
   /// See [RouteDefinition.defer] for details.
-  final FutureOr<void> Function(RouterState) prefetcher;
+  final FutureOr<void> Function(RouterState)? prefetcher;
 
   DeferredRouteDefinition._({
-    String path,
-    this.loader,
+    String? path,
+    required this.loader,
     this.prefetcher,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) : super._(
             path: path,
             useAsDefault: useAsDefault,
             additionalData: additionalData,
             routePath: routePath);
-
-  @override
-  void assertValid() {
-    if (!isDevMode) {
-      return;
-    }
-    if (loader == null) {
-      throw StateError('Must have a non-null `loader` function');
-    }
-    super.assertValid();
-  }
 }
 
 class RedirectRouteDefinition extends RouteDefinition {
@@ -257,11 +230,11 @@ class RedirectRouteDefinition extends RouteDefinition {
   final String redirectTo;
 
   RedirectRouteDefinition._({
-    String path,
-    this.redirectTo,
-    bool useAsDefault,
-    additionalData,
-    RoutePath routePath,
+    String? path,
+    required this.redirectTo,
+    bool? useAsDefault,
+    dynamic additionalData,
+    RoutePath? routePath,
   }) : super._(
             path: path,
             useAsDefault: useAsDefault,
@@ -272,9 +245,6 @@ class RedirectRouteDefinition extends RouteDefinition {
   void assertValid() {
     if (!isDevMode) {
       return;
-    }
-    if (redirectTo == null) {
-      throw StateError('Must have a non-null `redirectTo` string');
     }
     if (redirectTo == path) {
       throw StateError('Cannot redirect from `redirectTo` to `path');
@@ -286,22 +256,18 @@ class RedirectRouteDefinition extends RouteDefinition {
       throw StateError('Parameters in `redirectTo` are not in `path`: '
           '$unknownRedirectToParameters');
     }
-    super.assertValid();
   }
 
   /// Returns the redirectTo URL with [_redirectToParameters] filled in.
   String redirectToUrl([Map<String, String> paramValues = const {}]) {
-    if (isDevMode && paramValues == null) {
-      throw ArgumentError.notNull('paramValues');
-    }
     var url = redirectTo;
     for (final parameter in _redirectToParameters) {
       url = url.replaceFirst(
-          ':$parameter', Uri.encodeComponent(paramValues[parameter]));
+          ':$parameter', Uri.encodeComponent(paramValues[parameter]!));
     }
     return url;
   }
 
   Iterable<String> get _redirectToParameters =>
-      RouteDefinition._findParameters.allMatches(redirectTo).map((m) => m[1]);
+      RouteDefinition._findParameters.allMatches(redirectTo).map((m) => m[1]!);
 }

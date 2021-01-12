@@ -1,18 +1,12 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
 import 'dart:async';
 
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'bed_error_test.template.dart' as ng_generated;
+import 'bed_error_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
   tearDown(disposeAnyRunningTest);
 
   test('should be able to catch errors that occur synchronously', () {
@@ -31,6 +25,14 @@ void main() {
     return CatchConstructorAsyncErrors._runTest();
   });
 
+  test('should be able to catch asynchronous errors from a native event', () {
+    return CatchNativeEventAsynchronousErrors._runTest();
+  });
+
+  test('should be able to catch synchronously errors from a native event', () {
+    return CatchNativeEventSynchronousErrors._runTest();
+  });
+
   test('should be able to catch errors that occur in `ngOnInit`', () {
     return CatchOnInitErrors._runTest();
   });
@@ -39,8 +41,8 @@ void main() {
     return CatchInChangeDetection._runTest();
   });
 
-  test('should not throw uncaught exceptions to ExceptionHandler', () async {
-    await RegressionTest631._runTest();
+  test('should not have uncaught errors silenty passed', () async {
+    await NoExceptionsSwallowedTest._runTest();
   });
 }
 
@@ -50,7 +52,9 @@ void main() {
 )
 class CatchSynchronousErrors {
   static Future<void> _runTest() async {
-    final fixture = await NgTestBed<CatchSynchronousErrors>().create();
+    final fixture = await NgTestBed(
+      ng.createCatchSynchronousErrorsFactory(),
+    ).create();
     expect(
       fixture.update((_) => throw StateError('Test')),
       throwsA(isStateError),
@@ -64,7 +68,9 @@ class CatchSynchronousErrors {
 )
 class CatchAsynchronousErrors {
   static Future<void> _runTest() async {
-    final fixture = await NgTestBed<CatchAsynchronousErrors>().create();
+    final fixture = await NgTestBed(
+      ng.createCatchAsynchronousErrorsFactory(),
+    ).create();
     expect(
       fixture.update((_) => Future.error(StateError('Test'))),
       throwsA(isStateError),
@@ -78,7 +84,9 @@ class CatchAsynchronousErrors {
 )
 class CatchConstructorErrors {
   static Future<void> _runTest() async {
-    final testBed = NgTestBed<CatchConstructorErrors>();
+    final testBed = NgTestBed(
+      ng.createCatchConstructorErrorsFactory(),
+    );
     expect(
       testBed.create(),
       throwsA(isStateError),
@@ -96,7 +104,9 @@ class CatchConstructorErrors {
 )
 class CatchConstructorAsyncErrors {
   static Future<void> _runTest() async {
-    final testBed = NgTestBed<CatchConstructorAsyncErrors>();
+    final testBed = NgTestBed(
+      ng.createCatchConstructorAsyncErrorsFactory(),
+    );
     expect(
       testBed.create(),
       throwsA(isStateError),
@@ -112,11 +122,57 @@ class CatchConstructorAsyncErrors {
 
 @Component(
   selector: 'test',
+  template: '<button (click)="throwError">Throw</button>',
+)
+class CatchNativeEventSynchronousErrors {
+  static Future<void> _runTest() async {
+    final fixture = await NgTestBed(
+      ng.createCatchNativeEventSynchronousErrorsFactory(),
+    ).create();
+    expect(
+      fixture.update((_) {
+        fixture.rootElement.querySelector('button')!.click();
+      }),
+      throwsA(isStateError),
+    );
+  }
+
+  void throwError() {
+    throw StateError('Test');
+  }
+}
+
+@Component(
+  selector: 'test',
+  template: '<button (click)="throwError">Throw</button>',
+)
+class CatchNativeEventAsynchronousErrors {
+  static Future<void> _runTest() async {
+    final fixture = await NgTestBed(
+      ng.createCatchNativeEventSynchronousErrorsFactory(),
+    ).create();
+    expect(
+      fixture.update((_) {
+        fixture.rootElement.querySelector('button')!.click();
+      }),
+      throwsA(isStateError),
+    );
+  }
+
+  void throwError() async {
+    throw StateError('Test');
+  }
+}
+
+@Component(
+  selector: 'test',
   template: '',
 )
 class CatchOnInitErrors implements OnInit {
   static Future<void> _runTest() async {
-    final testBed = NgTestBed<CatchOnInitErrors>();
+    final testBed = NgTestBed(
+      ng.createCatchOnInitErrorsFactory(),
+    );
     expect(
       testBed.create(),
       throwsA(isStateError),
@@ -136,7 +192,9 @@ class CatchOnInitErrors implements OnInit {
 )
 class CatchInChangeDetection {
   static Future<void> _runTest() async {
-    final fixture = await NgTestBed<CatchInChangeDetection>().create();
+    final fixture = await NgTestBed(
+      ng.createCatchInChangeDetectionFactory(),
+    ).create();
     expect(
       fixture.update((c) => c.value = true),
       throwsA(isStateError),
@@ -163,34 +221,39 @@ class ChildChangeDetectionError {
   selector: 'test',
   template: '<h1>Hello {{name}}</h1>',
 )
-class RegressionTest631 {
+class NoExceptionsSwallowedTest {
   static Future<void> _runTest() async {
-    // A simple in-memory handler
-    final simpleHandler = _SimpleExceptionHandler();
-    final fixture = await NgTestBed<RegressionTest631>().addProviders([
-      Provider(ExceptionHandler, useValue: simpleHandler),
-    ]).create();
+    final simpleHandler = _CapturingExceptionHandler();
+    final fixture = await NgTestBed(
+      ng.createNoExceptionsSwallowedTestFactory(),
+      rootInjector: (i) => Injector.map(
+        {ExceptionHandler: simpleHandler},
+        i,
+      ),
+    ).create();
+
     expect(fixture.text, 'Hello Angular');
     await fixture.update((c) => c.name = 'World');
     expect(fixture.text, 'Hello World');
     final html = fixture.rootElement.innerHtml;
     expect(html, '<h1>Hello World</h1>');
     await fixture.dispose();
+
     expect(
       simpleHandler.exceptions,
       isEmpty,
-      reason: 'No exceptions should have been thrown',
+      reason: 'No exceptions should have been thrown/caught',
     );
   }
 
   var name = 'Angular';
 }
 
-class _SimpleExceptionHandler implements ExceptionHandler {
+class _CapturingExceptionHandler implements ExceptionHandler {
   final exceptions = <String>[];
 
   @override
-  void call(exception, [stackTrace, String reason]) {
+  void call(exception, [stackTrace, String? reason]) {
     exceptions.add('$exception: $stackTrace');
   }
 }

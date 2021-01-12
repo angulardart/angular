@@ -1,12 +1,6 @@
 import 'dart:async';
 
 import 'package:meta/meta.dart';
-import 'package:stack_trace/stack_trace.dart';
-import 'package:angular/src/facade/exception_handler.dart';
-import 'package:angular/src/runtime.dart';
-
-/// **INTERNAL**: Creates [NgZone] with asynchronous stack traces enabled.
-NgZone debugAsyncStackTracesNgZone() => NgZone._debugAsyncStackTraces();
 
 /// Handles and observes the side-effects of executing callbacks in AngularDart.
 ///
@@ -15,79 +9,36 @@ NgZone debugAsyncStackTracesNgZone() => NgZone._debugAsyncStackTraces();
 /// asynchronous actions from AngularDart that occur frequently (such as mouse
 /// movement, or a polling timer) and have a costly impact on change detection.
 class NgZone {
-  /// Private object used to specify whether any [NgZone] is currently running.
-  static final _anyZoneKey = Object();
-
   /// Private object used to specify whether [NgZone] exists in this [NgZone].
   final _thisZoneKey = Object();
-
-  /// Returns whether an instance of [NgZone] is currently executing.
-  ///
-  /// If `true`, the side-effects of executing callbacks are being observed,
-  /// though not necessarily by the current application's [NgZone] in the case
-  /// of multiple applications running at the same time.
-  ///
-  /// It is highly preferred to use [inInnerZone] and [inOuterZone] instead.
-  ///
-  /// See the [Zone] documentation for details:
-  /// https://www.dartlang.org/articles/libraries/zones
-  static bool isInAngularZone() {
-    return identical(Zone.current[_anyZoneKey], true);
-  }
-
-  /// In development mode, throws an error if [isInAngularZone] returns `false`.
-  ///
-  /// It is highly preferred to use `assert(ngZone.inInnerZone)` instead.
-  static void assertInAngularZone() {
-    if (!isInAngularZone()) {
-      throw Exception('Expected to be in Angular Zone, but it is not!');
-    }
-  }
-
-  /// In development mode, throws an error if [isInAngularZone] returns `true`.
-  ///
-  /// It is highly preferred to use `assert(ngZone.inOuterZone)` instead.
-  static void assertNotInAngularZone() {
-    if (isInAngularZone()) {
-      throw Exception('Expected to not be in Angular Zone, but it is!');
-    }
-  }
 
   final _onTurnStart = StreamController<void>.broadcast(sync: true);
   final _onMicrotaskEmpty = StreamController<void>.broadcast(sync: true);
   final _onTurnDone = StreamController<void>.broadcast(sync: true);
-  final _onError = StreamController<NgZoneError>.broadcast(sync: true);
+  final _onUncaughtError =
+      StreamController<UncaughtError>.broadcast(sync: true);
 
-  Zone _outerZone;
-  Zone _innerZone;
-  bool _hasPendingMicrotasks = false;
-  bool _hasPendingMacrotasks = false;
-  bool _isStable = true;
-  int _nesting = 0;
-  bool _isRunning = false;
-  bool _disposed = false;
+  final _outerZone = Zone.current;
+  late final Zone _innerZone;
+
+  var _hasPendingMicrotasks = false;
+  var _hasPendingMacrotasks = false;
+  var _isStable = true;
+  var _nesting = 0;
+  var _isRunning = false;
+  var _disposed = false;
 
   // Number of microtasks pending from _innerZone (& descendants)
-  int _pendingMicrotasks = 0;
+  var _pendingMicrotasks = 0;
   final _pendingTimers = <_WrappedTimer>[];
 
-  factory NgZone() => isDevMode && debugAsyncStackTraces
-      ? NgZone._debugAsyncStackTraces()
-      : NgZone._();
+  factory NgZone() = NgZone._;
 
+  // Prevents inheritance.
   NgZone._() {
-    _outerZone = Zone.current;
     _innerZone = _createInnerZone(
-      Zone.current,
-      handleUncaughtError: _onErrorWithoutLongStackTrace,
-    );
-  }
-
-  NgZone._debugAsyncStackTraces() {
-    _outerZone = Zone.current;
-    _innerZone = Chain.capture(
-      () => _createInnerZone(Zone.current),
-      onError: _onErrorWithLongStackTrace,
+      _outerZone,
+      handleUncaughtError: _handleUncaughtError,
     );
   }
 
@@ -101,9 +52,10 @@ class NgZone {
   /// If `true`, the side-effects of executing callbacks are not being observed.
   bool get inOuterZone => Zone.current == _outerZone;
 
-  Zone _createInnerZone(Zone zone,
-      {void Function(Zone, ZoneDelegate, Zone, Object, StackTrace)
-          handleUncaughtError}) {
+  Zone _createInnerZone(
+    Zone zone, {
+    required HandleUncaughtErrorHandler handleUncaughtError,
+  }) {
     return zone.fork(
       specification: ZoneSpecification(
         scheduleMicrotask: _scheduleMicrotask,
@@ -113,18 +65,21 @@ class NgZone {
         handleUncaughtError: handleUncaughtError,
         createTimer: _createTimer,
       ),
-      zoneValues: {_thisZoneKey: true, _anyZoneKey: true},
+      zoneValues: {_thisZoneKey: true},
     );
   }
 
   void _scheduleMicrotask(
-      Zone self, ZoneDelegate parent, Zone zone, void Function() fn) {
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    void Function() fn,
+  ) {
     if (_pendingMicrotasks == 0) {
       _setMicrotask(true);
     }
     _pendingMicrotasks++;
-    // TODO: optimize using a pool.
-    var safeMicrotask = () {
+    void safeMicrotask() {
       try {
         fn();
       } finally {
@@ -133,11 +88,17 @@ class NgZone {
           _setMicrotask(false);
         }
       }
-    };
+    }
+
     parent.scheduleMicrotask(zone, safeMicrotask);
   }
 
-  R _run<R>(Zone self, ZoneDelegate parent, Zone zone, R Function() fn) {
+  R _run<R>(
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    R Function() fn,
+  ) {
     return parent.run(zone, () {
       try {
         _onEnter();
@@ -149,7 +110,12 @@ class NgZone {
   }
 
   R _runUnary<R, T>(
-      Zone self, ZoneDelegate parent, Zone zone, R Function(T) fn, T arg) {
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    R Function(T) fn,
+    T arg,
+  ) {
     return parent.runUnary(zone, (T arg) {
       try {
         _onEnter();
@@ -160,8 +126,14 @@ class NgZone {
     }, arg);
   }
 
-  R _runBinary<R, T1, T2>(Zone self, ZoneDelegate parent, Zone zone,
-      R Function(T1, T2) fn, T1 arg1, T2 arg2) {
+  R _runBinary<R, T1, T2>(
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    R Function(T1, T2) fn,
+    T1 arg1,
+    T2 arg2,
+  ) {
     return parent.runBinary(zone, (T1 arg1, T2 arg2) {
       try {
         _onEnter();
@@ -186,16 +158,14 @@ class NgZone {
     _checkStable();
   }
 
-  // Called by Chain.capture() on errors when long stack traces are enabled
-  void _onErrorWithLongStackTrace(error, Chain chain) {
-    final traces = chain.terse.traces.map((t) => t.toString()).toList();
-    _onError.add(NgZoneError(error, traces));
-  }
-
-  // Outer zone handleUnchaughtError when long stack traces are not used
-  void _onErrorWithoutLongStackTrace(
-      Zone self, ZoneDelegate parent, Zone zone, error, StackTrace trace) {
-    _onError.add(NgZoneError(error, [trace.toString()]));
+  void _handleUncaughtError(
+    Zone self,
+    ZoneDelegate parent,
+    Zone zone,
+    Object error,
+    StackTrace trace,
+  ) {
+    _onUncaughtError.add(UncaughtError(error, trace));
   }
 
   Timer _createTimer(
@@ -205,19 +175,21 @@ class NgZone {
     Duration duration,
     void Function() fn,
   ) {
-    _WrappedTimer wrappedTimer;
-    final onDone = () {
+    late final _WrappedTimer wrappedTimer;
+    void onDone() {
       _pendingTimers.remove(wrappedTimer);
       _setMacrotask(_pendingTimers.isNotEmpty);
-    };
-    final callback = () {
+    }
+
+    void callback() {
       try {
         fn();
       } finally {
         onDone();
       }
-    };
-    var timer = parent.createTimer(zone, duration, callback);
+    }
+
+    final timer = parent.createTimer(zone, duration, callback);
     wrappedTimer = _WrappedTimer(timer, duration, onDone);
     _pendingTimers.add(wrappedTimer);
     _setMacrotask(true);
@@ -295,7 +267,7 @@ class NgZone {
   /// continue executing from within this zone.
   ///
   /// **NOTE**: If a _synchronous_ error happens it will be rethrown, and not
-  /// reported via the [onError] stream. To opt-in to that behavior, use
+  /// reported via the [onUncaughtError] stream. To opt-in to that behavior, use
   /// [runGuarded].
   R run<R>(R Function() callback) {
     return _innerZone.run(callback);
@@ -304,8 +276,8 @@ class NgZone {
   /// Executes [callback] function synchronously within this zone.
   ///
   /// This API is identical to [run], except that _synchronous_ errors that are
-  /// thrown will _also_ be reported via the [onError] stream (and eventually
-  /// the application exception handler).
+  /// thrown will _also_ be reported via the [onUncaughtError] stream (and
+  /// eventually the application exception handler).
   void runGuarded(void Function() callback) {
     return _innerZone.runGuarded(callback);
   }
@@ -334,10 +306,10 @@ class NgZone {
   /// Whether [onTurnStart] has been triggered and [onTurnDone] has not.
   bool get isRunning => _isRunning;
 
-  /// Notifies that an error has been caught.
+  /// Notifies that an uncaught error was thrown insing of the zone.
   ///
   /// This is the callback hook used by exception handling behind the scenes.
-  Stream<NgZoneError> get onError => _onError.stream;
+  Stream<UncaughtError> get onUncaughtError => _onUncaughtError.stream;
 
   /// Notifies when there are no more microtasks enqueued within this zone.
   ///
@@ -454,16 +426,28 @@ class _WrappedTimer implements Timer {
   int get tick => _timer.tick;
 }
 
-/// Stores error information; delivered via [NgZone.onError] stream.
-class NgZoneError {
-  /// Error object thrown.
-  final error;
-
-  /// Either a single or multiple stack traces.
+/// An uncaught [error] and [stackTrace] emitted by [NgZone.onUncaughtError].
+@sealed
+class UncaughtError {
+  /// An unhandled [Error] or [Exception].
   ///
-  /// For legacy reasons, this is not typed `List<StackTrace>` or `StackTrace`
-  /// at this time. It may be possible to change the typing at a later point.
-  final List<Object> stackTrace;
+  /// In practice it is only necessary to extract message information by using
+  /// [Object.toString], hence the upcast to [Object]. It is possible to check
+  /// for specific errors using the `is` error:
+  ///
+  /// ```
+  /// void handleError(UncaughtError e) {
+  ///   if (e.error is BackendUnavailableError) {
+  ///     // ...
+  ///   } else {
+  ///     // ...
+  ///   }
+  /// }
+  /// ```
+  final Object error;
 
-  NgZoneError(this.error, this.stackTrace);
+  /// The stack trace associated with the uncaught [error].
+  final StackTrace stackTrace;
+
+  UncaughtError(this.error, this.stackTrace);
 }

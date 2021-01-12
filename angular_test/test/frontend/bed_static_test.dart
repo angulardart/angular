@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -9,7 +8,7 @@ void main() {
   // Intentional explicit lack of ng_generated.initReflector().
 
   test('should create a component with a ComponentFactory', () async {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng_generated.createExampleCompFactory(),
       rootInjector: mathInjector,
     );

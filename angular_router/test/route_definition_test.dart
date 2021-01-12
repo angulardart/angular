@@ -1,10 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
-import 'dart:async';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -20,19 +13,11 @@ void main() {
     group(':$ComponentRouteDefinition', () {
       test('should create a route to an `@Component` type', () {
         final factory = ng.createHeroesComponentFactory();
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes',
           component: factory,
-        );
+        ) as ComponentRouteDefinition;
         expect(def.component, factory);
-      });
-
-      test('should fail "assertValid" with a null or empty path', () {
-        final def1 = RouteDefinition(
-          path: null,
-          component: ng.createHeroesComponentFactory(),
-        );
-        expect(def1.assertValid, throwsStateError);
       });
 
       test('should fail "assertValid" with a null component factory', () {
@@ -43,27 +28,21 @@ void main() {
 
     group(':$DeferredRouteDefinition', () {
       test('should create a route to lazy-load a component type', () {
-        DeferredRouteDefinition def =
-            RouteDefinition.defer(path: '/heroes', loader: loadHeroesComponent);
+        final def = RouteDefinition.defer(
+          path: '/heroes',
+          loader: loadHeroesComponent,
+        ) as DeferredRouteDefinition;
         expect(def.loader, loadHeroesComponent);
-      });
-
-      test('should fail "assertValid" with a null loader function', () {
-        var def1 = RouteDefinition.defer(path: '/1', loader: null);
-        expect(def1.assertValid, throwsStateError);
       });
     });
 
     group(':$RedirectRouteDefinition', () {
       test('should create a route to redirect to another definition', () {
-        RedirectRouteDefinition def =
-            RouteDefinition.redirect(path: '/good-guys', redirectTo: '/heroes');
+        final def = RouteDefinition.redirect(
+          path: '/good-guys',
+          redirectTo: '/heroes',
+        ) as RedirectRouteDefinition;
         expect(def.redirectTo, '/heroes');
-      });
-
-      test('should fail "assertValid" with a null `to` path', () {
-        var def1 = RouteDefinition.redirect(path: '/1', redirectTo: null);
-        expect(def1.assertValid, throwsStateError);
       });
 
       test('should fail "assertValid" with unknown parameters', () {
@@ -74,10 +53,10 @@ void main() {
 
     group('toRepExp()', () {
       test('should prefix match to only strings with same start', () {
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes',
           component: ng.createHeroesComponentFactory(),
-        );
+        ) as ComponentRouteDefinition;
         expect(def.toRegExp().matchAsPrefix('/heroes'), isNotNull);
         expect(def.toRegExp().matchAsPrefix('/heroes/path1/path2'), isNotNull);
 
@@ -86,22 +65,22 @@ void main() {
       });
 
       test('should match url params', () {
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
           component: ng.createHeroesComponentFactory(),
-        );
+        ) as ComponentRouteDefinition;
         var match =
             def.toRegExp().matchAsPrefix('/heroes/jack%20daniel/id-123');
         expect(match, isNotNull);
-        expect(match[1], 'jack%20daniel');
+        expect(match![1], 'jack%20daniel');
         expect(match[2], 'id-123');
       });
 
       test('should not match url params that are invalid url encodings', () {
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes/:heroName/:heroId',
           component: ng.createHeroesComponentFactory(),
-        );
+        ) as ComponentRouteDefinition;
         var match =
             def.toRegExp().matchAsPrefix('/heroes/jack%2Hdaniel/id-123');
         expect(match, isNull);
@@ -109,27 +88,19 @@ void main() {
     });
 
     group('toUrl()', () {
-      test('should throw if params values is null', () {
-        ComponentRouteDefinition def = RouteDefinition(
-          path: '/heroes',
-          component: ng.createHeroesComponentFactory(),
-        );
-        expect(() => def.toUrl(null), throwsArgumentError);
-      });
-
       test('should return the path when there are no params', () {
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes',
           component: ng.createHeroesComponentFactory(),
-        );
+        ) as ComponentRouteDefinition;
         expect(def.toUrl(), '/heroes');
       });
 
       test('should populate url params', () {
-        ComponentRouteDefinition def = RouteDefinition(
+        final def = RouteDefinition(
           path: '/heroes/:heroId/:heroName',
           component: ng.createHeroesComponentFactory(),
-        );
+        ) as ComponentRouteDefinition;
         expect(def.toUrl({'heroId': 'id-123', 'heroName': 'jack daniel'}),
             '/heroes/id-123/jack%20daniel');
       });
@@ -143,16 +114,8 @@ void main() {
 )
 class HeroesComponent {}
 
-@Component(
-  selector: 'villains',
-  template: '',
-)
-class VillainsComponent {}
-
 // Examples of a deferred loader function.
 //
 // In real code, `loadLibrary` would be used before referencing the type.
-Future<ComponentFactory> loadHeroesComponent() async =>
+Future<ComponentFactory<HeroesComponent>> loadHeroesComponent() async =>
     ng.createHeroesComponentFactory();
-Future<ComponentFactory> loadVillainsComponent() async =>
-    ng.createVillainsComponentFactory();

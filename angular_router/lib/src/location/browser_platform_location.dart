@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart' show Injectable;
 
-import 'base_href.dart' as base_href;
+import 'base_href.dart';
 import 'platform_location.dart';
 
 /// `PlatformLocation` encapsulates all of the direct calls to platform APIs.
@@ -10,24 +10,15 @@ import 'platform_location.dart';
 /// [Location].
 @Injectable()
 class BrowserPlatformLocation extends PlatformLocation {
-  Location _location;
-  History _history;
+  final Location location;
+  final History _history;
 
-  BrowserPlatformLocation() {
-    baseHRefFromDOM = base_href.baseHrefFromDOM;
-    _init();
-  }
-  // This is moved to its own method so that `MockPlatformLocationStrategy` can overwrite it
-
-  void _init() {
-    _location = window.location;
-    _history = window.history;
-  }
-
-  Location get location => _location;
+  BrowserPlatformLocation()
+      : location = window.location,
+        _history = window.history;
 
   @override
-  String getBaseHrefFromDOM() => baseHRefFromDOM();
+  String? getBaseHrefFromDOM() => baseHrefFromDOM();
 
   @override
   void onPopState(EventListener fn) {
@@ -41,30 +32,30 @@ class BrowserPlatformLocation extends PlatformLocation {
 
   @override
   String get pathname {
-    return _location.pathname;
+    return location.pathname!;
   }
 
   @override
   String get search {
-    return _location.search;
+    return location.search!;
   }
 
   @override
   String get hash {
-    return _location.hash;
+    return location.hash;
   }
 
   set pathname(String newPath) {
-    _location.pathname = newPath;
+    location.pathname = newPath;
   }
 
   @override
-  void pushState(dynamic state, String title, String url) {
+  void pushState(Object? state, String title, String? url) {
     _history.pushState(state, title, url);
   }
 
   @override
-  void replaceState(dynamic state, String title, String url) {
+  void replaceState(Object? state, String title, String? url) {
     _history.replaceState(state, title, url);
   }
 
