@@ -1,4 +1,12 @@
 github:
+  on:
+    push:
+      branches:
+        - master
+        - google
+    pull_request:
+      branches:
+        - master
 
 self_validate: analyze
 merge_stages:
