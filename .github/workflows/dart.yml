@@ -6,6 +6,9 @@ on:
       - main
       - master
   pull_request:
+    branches:
+      - master
+      - google
 defaults:
   run:
     shell: bash
