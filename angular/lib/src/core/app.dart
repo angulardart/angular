@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:html' as html;
 
+import 'package:stream_transform/stream_transform.dart';
 import 'package:angular/src/core/exception_handler.dart';
 
 import '../devtools.dart';
@@ -43,6 +44,27 @@ class App {
   // TODO(b/124374258): replace with formal partitioning API.
   static void setLegacyApp(ApplicationRef appRef) {
     ensureInitialized()._appRef = appRef;
+
+    if (isDevToolsEnabled) {
+      // This code must be run outside of the Angular zone, so we defensively do
+      // it here in case the caller is inside.
+      appRef.zone.runOutsideAngular(() {
+        // Post an event for each zone turn in the app, but no more frequently
+        // than this interval. Despite wanting to signal when the zone turn is
+        // done, we post this event at the *start* of the zone turn because
+        // incoming service extension methods are handled at the end of the zone
+        // turn. This allows clients to respond to this event and receive
+        // updates at the end of the zone turn more quickly than if we posted
+        // the event at the end of the zone turn.
+        const updateInterval = Duration(milliseconds: 500);
+        final onTurnStartSubscription = appRef.zone.onTurnStart
+            .throttle(updateInterval, trailing: true)
+            .listen((_) {
+          postEvent('angular.update', {});
+        });
+        appRef.registerDisposeListener(onTurnStartSubscription.cancel);
+      });
+    }
   }
 
   App._();
