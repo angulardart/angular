@@ -1,10 +1,11 @@
-# Created with package:mono_repo v3.4.3
+# Created with package:mono_repo v3.4.4
 name: Dart CI
 on:
   push:
     branches:
       - master
       - google
+      - mono_repo_test
   pull_request:
     branches:
       - master
@@ -16,27 +17,6 @@ env:
 
 jobs:
   job_001:
-    name: mono_repo self validate
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
-        with:
-          release-channel: stable
-      - run: dart --version
-      - uses: actions/checkout@v2
-      - name: mono_repo self validate
-        run: pub global activate mono_repo 3.4.3
-      - name: mono_repo self validate
-        run: pub global run mono_repo generate --validate
-  job_002:
     name: "analyze; PKGS: _tests, angular, angular_ast, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world; `dartanalyzer --fatal-warnings .`"
     runs-on: ubuntu-latest
     steps:
@@ -54,9 +34,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: _tests_pub_upgrade
         name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
       - name: "_tests; dartanalyzer --fatal-warnings ."
@@ -65,6 +47,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_pub_upgrade
         name: "angular; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular
         run: pub upgrade --no-precompile
       - name: "angular; dartanalyzer --fatal-warnings ."
@@ -73,6 +56,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_ast_pub_upgrade
         name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
       - name: "angular_ast; dartanalyzer --fatal-warnings ."
@@ -81,6 +65,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_compiler_pub_upgrade
         name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
       - name: "angular_compiler; dartanalyzer --fatal-warnings ."
@@ -89,6 +74,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_forms_pub_upgrade
         name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
       - name: "angular_forms; dartanalyzer --fatal-warnings ."
@@ -97,6 +83,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_router_pub_upgrade
         name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
       - name: "angular_router; dartanalyzer --fatal-warnings ."
@@ -105,6 +92,7 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: angular_test_pub_upgrade
         name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
       - name: "angular_test; dartanalyzer --fatal-warnings ."
@@ -113,13 +101,14 @@ jobs:
         run: dartanalyzer --fatal-warnings .
       - id: examples_hello_world_pub_upgrade
         name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade --no-precompile
       - name: "examples/hello_world; dartanalyzer --fatal-warnings ."
         if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
         working-directory: examples/hello_world
         run: dartanalyzer --fatal-warnings .
-  job_003:
+  job_002:
     name: "build; PKG: _tests; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -137,9 +126,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: _tests_pub_upgrade
         name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
       - name: "_tests; pub run build_runner build --fail-on-severe"
@@ -148,8 +139,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_004:
+  job_003:
     name: "build; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -167,9 +157,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_ast_pub_upgrade
         name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
       - name: "angular_ast; pub run build_runner build --fail-on-severe"
@@ -178,8 +170,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_005:
+  job_004:
     name: "build; PKG: angular_compiler; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -197,9 +188,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_compiler_pub_upgrade
         name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
       - name: "angular_compiler; pub run build_runner build --fail-on-severe"
@@ -208,8 +201,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_006:
+  job_005:
     name: "build; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -227,9 +219,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_forms_pub_upgrade
         name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
       - name: "angular_forms; pub run build_runner build --fail-on-severe"
@@ -238,8 +232,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_007:
+  job_006:
     name: "build; PKG: angular_router; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -257,9 +250,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_router_pub_upgrade
         name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
       - name: "angular_router; pub run build_runner build --fail-on-severe"
@@ -268,8 +263,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_008:
+  job_007:
     name: "build; PKG: angular_test; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -287,9 +281,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_test_pub_upgrade
         name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
       - name: "angular_test; pub run build_runner build --fail-on-severe"
@@ -298,8 +294,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_009:
+  job_008:
     name: "build; PKG: examples/hello_world; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
@@ -317,9 +312,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: examples_hello_world_pub_upgrade
         name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade --no-precompile
       - name: "examples/hello_world; pub run build_runner build --fail-on-severe"
@@ -328,8 +325,7 @@ jobs:
         run: pub run build_runner build --fail-on-severe
     needs:
       - job_001
-      - job_002
-  job_010:
+  job_009:
     name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -347,9 +343,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: _tests_pub_upgrade
         name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
       - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis"
@@ -365,8 +363,7 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009
-  job_011:
+  job_010:
     name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -384,9 +381,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_ast_pub_upgrade
         name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
       - name: "angular_ast; pub run build_runner test --fail-on-severe -- -P travis"
@@ -402,8 +401,7 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009
-  job_012:
+  job_011:
     name: "unit_test; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -421,9 +419,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_compiler_pub_upgrade
         name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
       - name: "angular_compiler; pub run build_runner test --fail-on-severe -- -P travis"
@@ -439,8 +439,7 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009
-  job_013:
+  job_012:
     name: "unit_test; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -458,9 +457,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_forms_pub_upgrade
         name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
       - name: "angular_forms; pub run build_runner test --fail-on-severe -- -P travis"
@@ -476,8 +477,7 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009
-  job_014:
+  job_013:
     name: "unit_test; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -495,9 +495,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_router_pub_upgrade
         name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
       - name: "angular_router; pub run build_runner test --fail-on-severe -- -P travis"
@@ -513,8 +515,7 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009
-  job_015:
+  job_014:
     name: "unit_test; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -532,9 +533,11 @@ jobs:
         with:
           release-channel: dev
       - run: dart --version
-      - uses: actions/checkout@v2
+      - id: checkout
+        uses: actions/checkout@v2
       - id: angular_test_pub_upgrade
         name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
       - name: "angular_test; pub run build_runner test --fail-on-severe -- -P travis"
@@ -550,4 +553,3 @@ jobs:
       - job_006
       - job_007
       - job_008
-      - job_009

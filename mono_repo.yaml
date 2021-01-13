@@ -4,10 +4,10 @@ github:
       branches:
         - master
         - google
+        - mono_repo_test
     pull_request:
       branches:
         - master
 
-self_validate: analyze
 merge_stages:
 - analyze
