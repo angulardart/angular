@@ -1,11 +1,6 @@
 # Created with package:mono_repo v3.3.0
-name: Dart CI
-on:
-  push:
-    branches:
-      - main
-      - master
-  pull_request:
+name: Dart CI2
+on: [push, pull_request]
 defaults:
   run:
     shell: bash
