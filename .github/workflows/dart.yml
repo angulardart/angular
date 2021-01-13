@@ -1,14 +1,11 @@
 # Created with package:mono_repo v3.4.3
-name: Dart CI #maybe?
+name: Dart CI
 on:
   push:
     branches:
       - main
       - master
   pull_request:
-    branches:
-      - master
-      - google
 defaults:
   run:
     shell: bash
