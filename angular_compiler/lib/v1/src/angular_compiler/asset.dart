@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:build/build.dart';
 import 'package:source_gen/src/utils.dart';
 

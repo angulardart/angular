@@ -1,8 +1,8 @@
 import 'package:meta/dart2js.dart' as dart2js;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/utilities.dart';
 
 /// Current stack of tokens being requested for an injection.
-List<Object> _tokenStack;
+List<Object>? _tokenStack;
 
 /// In debug mode, trace entering an injection lookup of [token] in [injector].
 ///
@@ -19,11 +19,7 @@ List<Object> _tokenStack;
 void debugInjectorEnter(Object token) {
   // Tree-shake out in Dart2JS.
   if (isDevMode) {
-    if (_tokenStack == null) {
-      _tokenStack = [token];
-    } else {
-      _tokenStack.add(token);
-    }
+    (_tokenStack ??= []).add(token);
   }
 }
 
@@ -32,7 +28,7 @@ void debugInjectorEnter(Object token) {
 void debugInjectorLeave(Object token) {
   // Tree-shake out in Dart2JS.
   if (isDevMode) {
-    final removed = _tokenStack.removeLast();
+    final removed = _tokenStack!.removeLast();
     assert(identical(removed, token));
   }
 }
@@ -72,7 +68,7 @@ abstract class InjectionError extends AssertionError {
 /// Thrown when there is no dependency injection provider found for a [token].
 class NoProviderError extends InjectionError {
   // Transforms: [A, B, B, C, B] ==> [A, B, C, B].
-  static List<Object> _withAdjacentDeduped(List<Object> input, Object token) {
+  static List<Object> _withAdjacentDeduped(List<Object>? input, Object token) {
     if (input == null) {
       return const [];
     }
@@ -96,7 +92,7 @@ class NoProviderError extends InjectionError {
   /// Path of tokens traversed until it resulted in [token] failing.
   final List<Object> path;
 
-  NoProviderError._(this.token, List<Object> stack)
+  NoProviderError._(this.token, List<Object>? stack)
       : path = _withAdjacentDeduped(stack, token),
         super._();
 

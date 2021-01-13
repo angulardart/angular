@@ -1,10 +1,6 @@
-@TestOn('browser')
-
-import 'dart:async';
-
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'misc_test.template.dart' as ng;
 
@@ -12,63 +8,58 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should allow variables in for loops', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createVarInLoopComponentFactory());
+    final testBed = NgTestBed(ng.createVarInLoopComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, '1-hello');
   });
 
   test('should support updating host element via host attribute', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createHostAttributeFromDirectiveComponentFactory());
+    final testBed =
+        NgTestBed(ng.createHostAttributeFromDirectiveComponentFactory());
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     expect(div.attributes, containsPair('role', 'button'));
   });
 
   test('should support updating host element via host properties', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createHostPropertyFromDirectiveComponentFactory());
+    final testBed =
+        NgTestBed(ng.createHostPropertyFromDirectiveComponentFactory());
     final testFixture = await testBed.create();
     final div = testFixture.rootElement.children.first;
     expect(div.id, 'one');
-    await testFixture.update((component) => component.directive.id = 'two');
+    await testFixture.update((component) => component.directive!.id = 'two');
     expect(div.id, 'two');
   });
 
   test('should allow ViewContainerRef at any bound location', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createDynamicChildComponentFactory());
+    final testBed = NgTestBed(ng.createDynamicChildComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'dynamic greet');
   });
 
   test('should support static attributes', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createStaticAttributesComponentFactory());
+    final testBed = NgTestBed(ng.createStaticAttributesComponentFactory());
     final testFixture = await testBed.create();
-    final needsAttribute = testFixture.assertOnlyInstance.needsAttribute;
+    final needsAttribute = testFixture.assertOnlyInstance.needsAttribute!;
     expect(needsAttribute.typeAttribute, 'text');
     expect(needsAttribute.staticAttribute, '');
     expect(needsAttribute.fooAttribute, null);
   });
 
   test('should remove script tags from templates', () async {
-    final testBed = NgTestBed.forComponent(ng.createUnsafeComponentFactory());
+    final testBed = NgTestBed(ng.createUnsafeComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.querySelectorAll('script'), isEmpty);
   });
 
   test('should support named arguments in method calls', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createNamedArgMethodComponentFactory());
+    final testBed = NgTestBed(ng.createNamedArgMethodComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Hello');
   });
 
   test('should support named arguments in exported function calls', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createNamedArgFunctionComponentFactory());
+    final testBed = NgTestBed(ng.createNamedArgFunctionComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'Hello');
   });
@@ -84,12 +75,14 @@ class ChildCompNoTemplate {
 
 @Component(
   selector: 'var-in-loop',
-  template: '<template ngFor [ngForOf]="[1]" let-i>'
+  template: '<template ngFor [ngForOf]="list" let-i>'
       '<child-cmp-no-template #cmp></child-cmp-no-template>'
       '{{i}}-{{cmp.ctxProp}}</template>',
   directives: [ChildCompNoTemplate, NgFor],
 )
-class VarInLoopComponent {}
+class VarInLoopComponent {
+  static const list = [1];
+}
 
 @Directive(
   selector: '[update-host-attributes]',
@@ -121,7 +114,7 @@ class DirectiveUpdatingHostProperties {
 )
 class HostPropertyFromDirectiveComponent {
   @ViewChild(DirectiveUpdatingHostProperties)
-  DirectiveUpdatingHostProperties directive;
+  DirectiveUpdatingHostProperties? directive;
 }
 
 @Injectable()
@@ -134,7 +127,7 @@ class MyService {
   template: '{{ctxProp}}',
 )
 class ChildCompUsingService {
-  String ctxProp;
+  late final String ctxProp;
 
   ChildCompUsingService(MyService service) {
     ctxProp = service.greeting;
@@ -145,7 +138,7 @@ class ChildCompUsingService {
   selector: 'dynamic-vp',
 )
 class DynamicViewport {
-  Future<dynamic> done;
+  late final Future<dynamic> done;
 
   DynamicViewport(ViewContainerRef vc) {
     final myService = MyService()..greeting = 'dynamic greet';
@@ -190,7 +183,7 @@ class NeedsAttribute {
 )
 class StaticAttributesComponent {
   @ViewChild(NeedsAttribute)
-  NeedsAttribute needsAttribute;
+  NeedsAttribute? needsAttribute;
 }
 
 @Component(
@@ -210,10 +203,10 @@ class UnsafeComponent {}
   ''',
 )
 class NamedArgMethodComponent {
-  String getName({String name}) => name;
+  String? getName({String? name}) => name;
 }
 
-String getName({String name}) => name;
+String? getName({String? name}) => name;
 
 @Component(
   selector: 'named-arg-function-component',

@@ -2,30 +2,21 @@
 // of @{Content|View}Child[ren], where the end result is a Iterable or single
 // element that is assigned by the framework.
 
+import 'package:collection/collection.dart';
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
-import 'package:test/test.dart';
 
 /// A mixin for components that receive a list of child elements/directives.
 abstract class HasChildren<T> {
   /// Child elements of type [T].
-  Iterable<T> get children => actualChildren.map((e) => e as T);
-
-  /// Override in concrete classes to provide a collection of child elements.
-  ///
-  /// **NOTE**: This API is used because as-of today `QueryList` is never
-  /// reified as anything but `QueryList<dynamic>`. The new API will have the
-  /// correct reified type arguments, but the test suite needs to work for both.
-  @protected
-  Iterable<Object> get actualChildren;
+  List<T>? get children;
 }
 
 /// An interface for components that receive a single element/directive.
 abstract class HasChild<T> {
   /// Element of type [T].
-  T get child;
+  T? get child;
 }
 
 /// A simple directive that can be created in order to be queried.
@@ -36,7 +27,7 @@ abstract class HasChild<T> {
 )
 class ValueDirective {
   @Input()
-  int value;
+  int? value;
 }
 
 /// Similar to `*ngIf`, but always true.
@@ -56,7 +47,8 @@ class AlwaysShowDirective {
 class NeverShowDirective {}
 
 /// Returns a [Matcher] that looks for [ValueDirective] in a [NgTestFixture].
-Matcher hasChildValues(List<int> values) => _HasChildValues(values);
+Matcher hasChildValues(Iterable<int> values) =>
+    _HasChildValues(values.toList());
 
 class _HasChildValues extends Matcher {
   static final _equality = const IterableEquality();
@@ -73,16 +65,16 @@ class _HasChildValues extends Matcher {
   Description describeMismatch(
     item,
     Description mismatchDescription,
-    Map matchState,
-    bool verbose,
+    void _,
+    void __,
   ) {
-    Iterable<int> children;
+    Iterable<int?>? children;
     if (item is NgTestFixture<HasChild<ValueDirective>>) {
       final child = item.assertOnlyInstance.child;
       children = child != null ? [child.value] : [];
     }
     if (item is NgTestFixture<HasChildren<ValueDirective>>) {
-      children = item.assertOnlyInstance.children.map((v) => v.value);
+      children = item.assertOnlyInstance.children!.map((v) => v.value);
     }
     return mismatchDescription
         .addDescriptionOf(values)
@@ -92,17 +84,17 @@ class _HasChildValues extends Matcher {
   }
 
   @override
-  bool matches(item, Map matchState) {
+  bool matches(item, void _) {
     if (item is NgTestFixture<HasChild<ValueDirective>>) {
       final child = item.assertOnlyInstance.child;
       if (child == null && values.isEmpty) {
         return true;
       }
-      return child.value == values.single;
+      return child!.value == values.single;
     }
     if (item is NgTestFixture<HasChildren<ValueDirective>>) {
       return _equality.equals(
-        item.assertOnlyInstance.children.map((v) => v.value),
+        item.assertOnlyInstance.children!.map((v) => v.value),
         values,
       );
     }
@@ -118,13 +110,13 @@ class TestCase<T> {
 }
 
 void testViewChildren({
-  @required TestCase<HasChildren<ValueDirective>> directViewChildren,
-  TestCase<HasChild<ValueDirective>> directViewChild,
-  @required TestCase<HasChildren<ValueDirective>> viewChildrenAndEmbedded,
-  TestCase<HasChild<ValueDirective>> viewChildEmbedded,
-  TestCase<HasChild<ValueDirective>> viewChildNestedOffOn,
-  TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOn,
-  TestCase<HasChild<ValueDirective>> viewChildNestedNgIfOffOnAsync,
+  required TestCase<HasChildren<ValueDirective>> directViewChildren,
+  TestCase<HasChild<ValueDirective>>? directViewChild,
+  required TestCase<HasChildren<ValueDirective>> viewChildrenAndEmbedded,
+  TestCase<HasChild<ValueDirective>>? viewChildEmbedded,
+  TestCase<HasChild<ValueDirective>>? viewChildNestedOffOn,
+  TestCase<HasChild<ValueDirective>>? viewChildNestedNgIfOffOn,
+  TestCase<HasChild<ValueDirective>>? viewChildNestedNgIfOffOnAsync,
 }) {
   group('@ViewChild[ren](...)', () {
     test('should find direct view children', () async {
@@ -133,7 +125,7 @@ void testViewChildren({
     });
 
     test('should find a direct view child', () async {
-      final fixture = await directViewChild.testBed.create();
+      final fixture = await directViewChild!.testBed.create();
       expect(fixture, hasChildValues(directViewChild.expectValues));
     }, skip: directViewChild == null);
 
@@ -143,23 +135,23 @@ void testViewChildren({
     });
 
     test('should find direct view child in embedded templates', () async {
-      final fixture = await viewChildEmbedded.testBed.create();
+      final fixture = await viewChildEmbedded!.testBed.create();
       expect(fixture, hasChildValues(viewChildEmbedded.expectValues));
     }, skip: viewChildEmbedded == null);
 
     group('should not find embedded view child on', () {
       test('a nested pair of <template> tags (off then on)', () async {
-        final fixture = await viewChildNestedOffOn.testBed.create();
+        final fixture = await viewChildNestedOffOn!.testBed.create();
         expect(fixture, hasChildValues(viewChildNestedOffOn.expectValues));
       }, skip: viewChildNestedOffOn == null);
 
       test('a nested pair of *ngIf usages (true than false)', () async {
-        final fixture = await viewChildNestedNgIfOffOn.testBed.create();
+        final fixture = await viewChildNestedNgIfOffOn!.testBed.create();
         expect(fixture, hasChildValues(viewChildNestedNgIfOffOn.expectValues));
       }, skip: viewChildNestedNgIfOffOn == null);
 
       test('a nested pair of *ngIf usages that becomes true, false', () async {
-        final fixture = await viewChildNestedNgIfOffOnAsync.testBed.create();
+        final fixture = await viewChildNestedNgIfOffOnAsync!.testBed.create();
         expect(
           fixture,
           hasChildValues(viewChildNestedNgIfOffOnAsync.expectValues),
@@ -170,8 +162,8 @@ void testViewChildren({
 }
 
 void testContentChildren({
-  @required TestCase<HasChildren<ValueDirective>> contentChildren,
-  TestCase<HasChild<ValueDirective>> contentChild,
+  required TestCase<HasChildren<ValueDirective>> contentChildren,
+  TestCase<HasChild<ValueDirective>>? contentChild,
 }) {
   group('@ContentChild[ren](...)', () {
     test('should find content children', () async {
@@ -180,7 +172,7 @@ void testContentChildren({
     });
 
     test('should find a content child', () async {
-      final fixture = await contentChild.testBed.create();
+      final fixture = await contentChild!.testBed.create();
       expect(fixture, hasChildValues(contentChild.expectValues));
     }, skip: contentChild == null);
   });

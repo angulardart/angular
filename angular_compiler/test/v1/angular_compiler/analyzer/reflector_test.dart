@@ -1,10 +1,12 @@
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../src/resolve.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   test('should record a no-op', () async {
     final testLib = await resolveLibrary('');
     final output = await ReflectableReader.noLinking().resolve(testLib);
@@ -16,6 +18,7 @@ void main() {
 
   test('should record a factory', () async {
     final testLib = await resolveLibrary(r'''
+      // @dart=2.9
       @Injectable()
       Duration getDuration(DateTime date) => null;
 
@@ -45,6 +48,7 @@ void main() {
 
   test('should record a class', () async {
     final testLib = await resolveLibrary(r'''
+      // @dart=2.9
       @Injectable()
       class Example {
         Example(Duration duration);
@@ -89,6 +93,7 @@ void main() {
 
     test('should always link to an imported .template.dart', () async {
       final testLib = await resolveLibrary(r'''
+        // @dart=2.9
         import 'foo.template.dart';
         export 'bar.template.dart';
       ''');
@@ -105,6 +110,7 @@ void main() {
     test('should link to a file that has a .template.dart on disk', () async {
       _fakeIsLibrary.add('foo.template.dart');
       final testLib = await resolveLibrary(r'''
+        // @dart=2.9
         import 'foo.dart';
         import 'bar.dart';
       ''');
@@ -120,6 +126,7 @@ void main() {
     test('should link to a file that will have a .template.dart', () async {
       _fakeInputs.add('foo.dart');
       final testLib = await resolveLibrary(r'''
+        // @dart=2.9
         import 'foo.dart';
         import 'bar.dart';
       ''');
@@ -150,33 +157,45 @@ void main() {
 
     test('should throw on invalid asset it', () async {
       final testLib = await resolveLibrary('''
+        // @dart=2.9
         import 'package:$pleaseThrow/file.dart';
       ''');
       expect(
-          reader.resolve(testLib),
-          throwsA(allOf([
-            predicate((e) => e is BuildError),
-            predicate((e) =>
-                e.message.contains('Could not parse URI') &&
-                e.message.contains('line 4, column 9')),
-          ])));
+        reader.resolve(testLib),
+        throwsA(
+          TypeMatcher<BuildError>().having(
+            (e) => e.toString(),
+            'toString()',
+            allOf(
+              contains('Could not parse URI'),
+              contains('line 5, column 9'),
+            ),
+          ),
+        ),
+      );
     });
 
     test('should throw on private injectable class', () async {
       final testLib = await resolveLibrary(r'''
-      @Injectable()
-      class _Example {
-        Example(Duration duration);
-      }
-    ''');
+        // @dart=2.9
+        @Injectable()
+        class _Example {
+          Example(Duration duration);
+        }
+      ''');
       expect(
-          reader.resolve(testLib),
-          throwsA(allOf([
-            predicate((e) => e is BuildError),
-            predicate((e) =>
-                e.message.contains('Private classes can not be @Injectable') &&
-                e.message.contains('line 5, column 13')),
-          ])));
+        reader.resolve(testLib),
+        throwsA(
+          TypeMatcher<BuildError>().having(
+            (e) => e.toString(),
+            'toString()',
+            allOf(
+              contains('Private classes can not be @Injectable'),
+              contains('line 6, column 15'),
+            ),
+          ),
+        ),
+      );
     });
   });
 }

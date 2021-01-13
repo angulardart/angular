@@ -2,8 +2,8 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v2/context.dart';
 
-import '../../../../cli.dart';
 import '../types.dart';
 
 /// Utility class for visiting important methods and fields in an `@Directive`.
@@ -40,7 +40,7 @@ class DirectiveVisitor {
     if (element is PropertyAccessorElement && element.isGetter) {
       return;
     }
-    BuildError.throwForElement(element, message);
+    throw BuildError.forElement(element, message);
   }
 
   /// Throws a [BuildError] if [element] is not an instance-level member.
@@ -48,7 +48,7 @@ class DirectiveVisitor {
     if (element is ClassMemberElement && !element.isStatic) {
       return;
     }
-    BuildError.throwForElement(element, message);
+    throw BuildError.forElement(element, message);
   }
 
   /// Throws a [BuildError] if [element] is not a method.
@@ -56,7 +56,7 @@ class DirectiveVisitor {
     if (element is MethodElement) {
       return;
     }
-    BuildError.throwForElement(element, message);
+    throw BuildError.forElement(element, message);
   }
 
   /// Throws a [BuildError] if [element] is not publicly accessible.
@@ -64,7 +64,7 @@ class DirectiveVisitor {
     if (element.isPublic) {
       return;
     }
-    BuildError.throwForElement(element, message);
+    throw BuildError.forElement(element, message);
   }
 
   static bool _isRequired(ParameterElement e) => e.isRequiredPositional;
@@ -74,7 +74,7 @@ class DirectiveVisitor {
     /*
     if (element is MethodElement &&
         element.parameters.where(_isRequired).length > maxArgs) {
-      BuildError.throwForElement(element, message);
+      throw BuildError.forElement(element, message);
     }
     */
   }
@@ -82,7 +82,7 @@ class DirectiveVisitor {
   static void _assertExactArgs(Element element, String message, int exactArgs) {
     if (element is MethodElement &&
         element.parameters.where(_isRequired).length != exactArgs) {
-      BuildError.throwForElement(element, message);
+      throw BuildError.forElement(element, message);
     }
   }
 
@@ -149,6 +149,6 @@ class DirectiveVisitor {
       );
     }
 
-    onHostListener(member, annotation);
+    onHostListener(member as MethodElement, annotation);
   }
 }

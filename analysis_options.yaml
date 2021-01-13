@@ -1,8 +1,17 @@
 # Extend the default sub-set of linter/analyzer rules used in google3.
-include: ../../../dart/analysis_options/lib/default.yaml
+include: package:pedantic/analysis_options.yaml
 
 analyzer:
+  strong-mode:
+    implicit-casts: false
+  language:
+    strict-raw-types: true
   errors:
+    # Permanent inclusions: These are optional hints that are not default on.
+    unused_element: warning
+    unused_field: warning
+    unused_local_variable: warning
+  
     # Permanent exclusions: Unlikely to removed.
     # =====================
     # Allow importing .template.dart files without an [explicit] analyzer error.
@@ -14,7 +23,6 @@ analyzer:
 
     # Security exclusions: We are security reviewed separate from these lints.
     # =====================
-    avoid_bypassing_html_security: ignore
     avoid_dynamic_execution: ignore
     avoid_unsafe_apis: ignore
     unsafe_html: ignore
@@ -25,3 +33,15 @@ analyzer:
     deprecated_member_use: ignore
     # Re-enable this once unused parameters are exempted (e.g. callback(_) {}).
     inference_failure_on_untyped_parameter: ignore
+
+linter:
+  rules:
+    # Permanent inclusions: These are optional lints that are not default true.
+    - hash_and_equals
+    - iterable_contains_unrelated_type
+    - list_remove_unrelated_type
+    - overridden_fields
+    - prefer_function_declarations_over_variables
+    - prefer_initializing_formals
+    - prefer_void_to_null
+    - unnecessary_statements

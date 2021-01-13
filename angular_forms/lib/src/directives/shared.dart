@@ -16,20 +16,19 @@ import 'radio_control_value_accessor.dart' show RadioControlValueAccessor;
 import 'select_control_value_accessor.dart' show SelectControlValueAccessor;
 import 'validators.dart' show ValidatorFn;
 
-List<String> controlPath(String name, ControlContainer parent) =>
-    parent.path.toList()..add(name);
+List<String?> controlPath(String? name, ControlContainer parent) =>
+    <String?>[...parent.path!, name];
 
 void setUpControl(Control control, NgControl dir) {
-  if (control == null) _throwError(dir, 'Cannot find control');
   assert(
       dir.valueAccessor != null,
       'No value accessor for '
-      '(${dir.path.join(' -> ')}) or you may be missing formDirectives in '
+      '(${dir.path!.join(' -> ')}) or you may be missing formDirectives in '
       'your directives list.');
   control.validator = Validators.compose([control.validator, dir.validator]);
-  dir.valueAccessor.writeValue(control.value);
+  dir.valueAccessor!.writeValue(control.value);
   // view -> model
-  dir.valueAccessor.registerOnChange((dynamic newValue, {String rawValue}) {
+  dir.valueAccessor!.registerOnChange((dynamic newValue, {String? rawValue}) {
     dir.viewToModelUpdate(newValue);
     control.updateValue(newValue,
         emitModelToViewChange: false, rawValue: rawValue);
@@ -40,34 +39,34 @@ void setUpControl(Control control, NgControl dir) {
       (dynamic newValue) => dir.valueAccessor?.writeValue(newValue));
   control.disabledChanges.listen(dir.valueAccessor?.onDisabledChanged);
   // touched
-  dir.valueAccessor.registerOnTouched(() => control.markAsTouched());
+  dir.valueAccessor!.registerOnTouched(() => control.markAsTouched());
 }
 
 void setUpControlGroup(AbstractControlGroup control, NgControlGroup dir) {
-  if (control == null) _throwError(dir, 'Cannot find control');
   control.validator = Validators.compose([control.validator, dir.validator]);
 }
 
-void _throwError(AbstractControlDirective dir, String message) {
+void _throwError(AbstractControlDirective? dir, String message) {
   if (dir?.path != null) {
-    message = "$message (${dir.path.join(" -> ")})";
+    message = "$message (${dir!.path!.join(" -> ")})";
   }
   throw ArgumentError(message);
 }
 
-ValidatorFn composeValidators(List<dynamic> validators) {
+ValidatorFn? composeValidators(List<dynamic>? validators) {
   return validators != null
       ? Validators.compose(
           validators.map<ValidatorFn>(normalizeValidator).toList())
       : null;
 }
 
-ControlValueAccessor selectValueAccessor(
-    List<ControlValueAccessor> valueAccessors) {
+ControlValueAccessor<dynamic>? selectValueAccessor(
+  List<ControlValueAccessor<dynamic>>? valueAccessors,
+) {
   if (valueAccessors == null) return null;
-  ControlValueAccessor defaultAccessor;
-  ControlValueAccessor builtinAccessor;
-  ControlValueAccessor customAccessor;
+  ControlValueAccessor<dynamic>? defaultAccessor;
+  ControlValueAccessor<dynamic>? builtinAccessor;
+  ControlValueAccessor<dynamic>? customAccessor;
   for (var v in valueAccessors) {
     if (v is DefaultValueAccessor) {
       defaultAccessor = v;

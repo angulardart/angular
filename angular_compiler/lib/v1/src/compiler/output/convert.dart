@@ -1,8 +1,9 @@
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:source_gen/source_gen.dart';
-
+import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
+
 import '../compile_metadata.dart';
 import 'output_ast.dart' as o;
 
@@ -24,6 +25,9 @@ o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
   }
   if (dartType.isDartCoreNull) {
     return o.NULL_TYPE;
+  }
+  if (dartType is NeverType) {
+    return o.NEVER_TYPE;
   }
   if (dartType is FunctionType) {
     return fromFunctionType(dartType);
@@ -55,7 +59,7 @@ o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
       }
     }
   }
-  return o.ExternalType(
+  var outputType = o.ExternalType(
     CompileIdentifierMetadata(
       name: dartType.name,
       moduleUrl: moduleUrl(dartType.element),
@@ -65,6 +69,10 @@ o.OutputType fromDartType(DartType dartType, {bool resolveBounds = true}) {
     ),
     typeArguments,
   );
+  if (dartType.nullabilitySuffix == NullabilitySuffix.question) {
+    outputType = outputType.asNullable();
+  }
+  return outputType;
 }
 
 /// Creates an AST from code generation from [typeLink].
@@ -80,7 +88,7 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
   final importUrl = typeLink.import != null
       ? library.pathToUrl(typeLink.import).toString()
       : null;
-  return o.ExternalType(
+  var outputType = o.ExternalType(
     CompileIdentifierMetadata(
       name: typeLink.symbol,
       moduleUrl: importUrl,
@@ -88,6 +96,10 @@ o.OutputType fromTypeLink(TypeLink typeLink, LibraryReader library) {
     ),
     typeArguments,
   );
+  if (typeLink.isNullable) {
+    outputType = outputType.asNullable();
+  }
+  return outputType;
 }
 
 /// Creates an AST for code generation from [functionType]
@@ -97,15 +109,9 @@ o.FunctionType fromFunctionType(FunctionType functionType) {
   for (var parameter in functionType.parameters) {
     paramTypes.add(fromDartType(parameter.type));
   }
-  return o.FunctionType(returnType, paramTypes);
-}
-
-/// Creates type argument ASTs to flow [typeParameters].
-List<o.OutputType> typeArgumentsFrom(List<o.TypeParameter> typeParameters) {
-  final typeArguments = <o.OutputType>[];
-  for (final typeParameter in typeParameters) {
-    typeArguments
-        .add(o.importType(CompileIdentifierMetadata(name: typeParameter.name)));
+  var outputType = o.FunctionType(returnType, paramTypes);
+  if (functionType.nullabilitySuffix == NullabilitySuffix.question) {
+    outputType = outputType.asNullable();
   }
-  return typeArguments;
+  return outputType;
 }

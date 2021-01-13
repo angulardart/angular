@@ -1,21 +1,21 @@
 import 'dart:async';
 
-import 'package:angular/core.dart'
-    show ChangeDetectorRef, OnDestroy, Pipe, PipeTransform;
+import 'package:angular/src/core/change_detection/change_detector_ref.dart';
+import 'package:angular/src/meta.dart';
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
 class _ObservableStrategy {
-  StreamSubscription<Object> createSubscription(
-      Stream<Object> stream, void Function(Object) updateLatestValue) {
+  StreamSubscription<Object?> createSubscription(
+      Stream<Object?> stream, void Function(Object?) updateLatestValue) {
     return stream.listen(updateLatestValue);
   }
 
-  void dispose(StreamSubscription<Object> subscription) {
+  void dispose(StreamSubscription<Object?> subscription) {
     subscription.cancel();
   }
 
-  void onDestroy(StreamSubscription<Object> subscription) {
+  void onDestroy(StreamSubscription<Object?> subscription) {
     dispose(subscription);
   }
 }
@@ -79,9 +79,9 @@ final _observableStrategy = _ObservableStrategy();
 /// ```
 ///
 @Pipe('async', pure: false)
-class AsyncPipe implements OnDestroy, PipeTransform {
-  Object _latestValue;
-  Object _subscription;
+class AsyncPipe implements OnDestroy {
+  Object? _latestValue;
+  Object? _subscription;
   dynamic /* Stream | Future | EventEmitter */ _obj;
   dynamic _strategy;
   final ChangeDetectorRef _ref;
@@ -111,13 +111,13 @@ class AsyncPipe implements OnDestroy, PipeTransform {
     _obj = obj;
     _strategy = _selectStrategy(obj);
     _subscription = _strategy.createSubscription(
-        obj, (Object value) => _updateLatestValue(obj, value));
+        obj, (Object? value) => _updateLatestValue(obj, value));
   }
 
   dynamic _selectStrategy(dynamic /* Stream | Future | EventEmitter */ obj) {
-    if (obj is Future<Object>) {
+    if (obj is Future<Object?>) {
       return _promiseStrategy;
-    } else if (obj is Stream<Object>) {
+    } else if (obj is Stream<Object?>) {
       return _observableStrategy;
     } else {
       throw InvalidPipeArgumentException(AsyncPipe, obj);
@@ -131,7 +131,7 @@ class AsyncPipe implements OnDestroy, PipeTransform {
     _obj = null;
   }
 
-  void _updateLatestValue(dynamic async, Object value) {
+  void _updateLatestValue(dynamic async, Object? value) {
     if (identical(async, _obj)) {
       _latestValue = value;
       _ref.markForCheck();
@@ -143,7 +143,7 @@ class AsyncPipe implements OnDestroy, PipeTransform {
   // https://github.com/dart-lang/angular2/issues/260
   static bool _maybeStreamIdentical(a, b) {
     if (!identical(a, b)) {
-      return a is Stream<Object> && b is Stream<Object> && a == b;
+      return a is Stream<Object?> && b is Stream<Object?> && a == b;
     }
     return true;
   }

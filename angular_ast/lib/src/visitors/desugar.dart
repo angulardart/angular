@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import '../ast.dart';
 import '../exception_handler/exception_handler.dart';
 import '../expression/micro.dart';
@@ -34,36 +30,12 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
   @override
   TemplateAst visitElement(ElementAst astNode, [_]) {
     _visitChildren(astNode);
-
     if (astNode.bananas.isNotEmpty) {
       _desugarBananas(astNode);
     }
-
-    if (astNode.annotations.isNotEmpty) {
-      final i = astNode.annotations.indexWhere((ast) => ast.name == 'deferred');
-      if (i != -1) {
-        final deferredAst = astNode.annotations.removeAt(i);
-        // Fail on invalid use (i.e. on a <template> tag):
-        // (https://github.com/dart-lang/angular/issues/1538)
-        if (astNode.stars.isNotEmpty) {
-          exceptionHandler.handle(AngularParserException(
-            NgParserWarningCode.INVALID_DEFERRED_ON_TEMPLATE,
-            deferredAst.sourceSpan.start.offset,
-            deferredAst.sourceSpan.length,
-          ));
-        }
-        return EmbeddedTemplateAst.from(
-          deferredAst,
-          childNodes: [astNode],
-          hasDeferredComponent: true,
-        );
-      }
-    }
-
     if (astNode.stars.isNotEmpty) {
       return _desugarStar(astNode, astNode.stars);
     }
-
     return astNode;
   }
 
@@ -82,19 +54,6 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
 
   @override
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [_]) {
-    if (astNode.annotations.isNotEmpty) {
-      final i = astNode.annotations.indexWhere((ast) => ast.name == 'deferred');
-      if (i != -1) {
-        final deferredAst = astNode.annotations.removeAt(i);
-        // Fail on invalid use (i.e. on a <template> tag):
-        // (https://github.com/dart-lang/angular/issues/1538)
-        exceptionHandler.handle(AngularParserException(
-          NgParserWarningCode.INVALID_DEFERRED_ON_TEMPLATE,
-          deferredAst.sourceSpan.start.offset,
-          deferredAst.sourceSpan.length,
-        ));
-      }
-    }
     _visitChildren(astNode);
     return astNode;
   }
@@ -154,7 +113,7 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
           sourceUrl: astNode.sourceUrl,
           origin: origin,
         );
-      } catch (e) {
+      } on AngularParserException catch (e) {
         exceptionHandler.handle(e);
         return astNode;
       }

@@ -1,8 +1,12 @@
-@TestOn('vm')
-import 'package:_tests/compiler.dart';
+// @dart=2.9
+
 import 'package:test/test.dart';
+import 'package:_tests/compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   group('should fail on @HostBinding', () {
     test('on a method', () {
       return compilesExpecting("""
@@ -35,6 +39,23 @@ void main() {
         }
       """, errors: [
         contains('@HostBinding must be on a field or getter'),
+      ]);
+    });
+
+    test('Invalid value with dot symbol prefix', () {
+      return compilesExpecting("""
+        import '$ngImport';
+
+        @Component(
+          selector: 'bad',
+          template: '',
+        )
+        class BadComp {
+          @HostBinding('.foo')
+          final foo = true;
+        }
+      """, errors: [
+        contains("Invalid property name '.foo'"),
       ]);
     });
   });

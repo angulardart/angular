@@ -18,6 +18,9 @@ String getTypeName(DartType type) {
   // DartType itself no longer has a "name" property (it always returns null).
   if (type is FunctionType) {
     final element = type.element;
+    if (element is FunctionTypeAliasElement) {
+      return element.name;
+    }
     if (element is GenericFunctionTypeElement) {
       return element.enclosingElement.name;
     }

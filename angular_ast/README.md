@@ -1,9 +1,6 @@
-# angular_ast
-
 <!-- Badges -->
 
-[![Pub
-Package](https://img.shields.io/pub/v/angular_ast.svg)](https://pub.dev/packages/angular_ast)
+[![Pub Package](https://img.shields.io/pub/v/angular_ast.svg)](https://pub.dev/packages/angular_ast)
 
 Parser and utilities for [AngularDart][gh_angular_dart] templates.
 
@@ -51,19 +48,8 @@ Additional flags can be passed to change the behavior of the parser:
 
 When using RecoveringExceptionHandler, the accumulated exceptions can be
 accessed through the RecoveringExceptionHandler object. Refer to the following
-example: 
-```dart
-void parse(String content, String sourceUrl) {
-  var exceptionHandler = new RecoveringExceptionHandler();
-  var asts = parse(
-    content,
-    sourceUrl: sourceUrl,
-    desugar: false,
-    parseExpressions: false,
-    exceptionHandler: exceptionHandler,
-  );
-  for (AngularParserException e in exceptionHandler.exceptions) {
-    // Do something with exception.
-  }
-}
-```
+example: `dart void parse(String content, String sourceUrl) { var
+exceptionHandler = new RecoveringExceptionHandler(); var asts = parse( content,
+sourceUrl: sourceUrl, desugar: false, parseExpressions: false, exceptionHandler:
+exceptionHandler, ); for (AngularParserException e in
+exceptionHandler.exceptions) { // Do something with exception. } }`

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 
-import '../model.dart' show ControlGroup, Control;
+import '../model.dart' show AbstractControlGroup, Control, ControlGroup;
 import '../validators.dart' show NG_VALIDATORS;
 import 'control_container.dart' show ControlContainer;
 import 'ng_control.dart' show NgControl;
@@ -22,13 +22,14 @@ import 'shared.dart' show setUpControl, setUpControlGroup;
 )
 class MemorizedForm extends NgForm {
   MemorizedForm(
-      @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators)
-      : super(validators);
+    @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic>? validators,
+    ChangeDetectorRef changeDetectorRef,
+  ) : super(validators, changeDetectorRef);
 
   /// Add a control if it isn't already found in the container.
   @override
   void addControl(NgControl dir) {
-    var container = findContainer(dir.path);
+    var container = findContainer(dir.path!)!;
     var ctrl = container.find(dir.name);
     if (ctrl == null) {
       ctrl = Control();
@@ -38,15 +39,16 @@ class MemorizedForm extends NgForm {
     // Binding values may change of of directive due to adding control value.
     // Perform the update in the next event loop.
     scheduleMicrotask(() {
-      setUpControl(ctrl, dir);
+      setUpControl(ctrl as Control, dir);
       ctrl.updateValueAndValidity(emitEvent: false);
+      changeDetectorRef.markForCheck();
     });
   }
 
   /// Add a control group if it isn't already found in the container.
   @override
   void addControlGroup(NgControlGroup dir) {
-    var container = findContainer(dir.path);
+    var container = findContainer(dir.path)!;
     var group = container.find(dir.name);
     if (group == null) {
       group = ControlGroup({});
@@ -56,20 +58,21 @@ class MemorizedForm extends NgForm {
     // Binding values may change of of directive due to adding control value.
     // Perform the update in the next event loop.
     scheduleMicrotask(() {
-      setUpControlGroup(group, dir);
+      setUpControlGroup(group as AbstractControlGroup, dir);
       group.updateValueAndValidity(emitEvent: false);
+      changeDetectorRef.markForCheck();
     });
   }
 
   @override
-  void removeControl(NgControl ctrl) {
+  void removeControl(NgControl? ctrl) {
     // We will not remove the control if it is dropped, but we need to cleanup
     // any validators that may have been added.
     ctrl?.control?.validator = null;
   }
 
   @override
-  void removeControlGroup(NgControlGroup ctrl) {
+  void removeControlGroup(NgControlGroup? ctrl) {
     // We will not remove the control group if it is dropped, but we need to cleanup
     // any validators that may have been added.
     ctrl?.control?.validator = null;

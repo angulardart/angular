@@ -1,9 +1,32 @@
-/// This library exists for vm targets, which cannot depend on angular.dart.
-/// Other targets should use angular.dart instead.
-/// @nodoc
-
-export 'package:angular_compiler/v1/src/metadata.dart'
-    show Component, Directive, Input, Output, Pipe;
-export 'src/core/change_detection/pipe_transform.dart';
-export 'src/core/di.dart';
-export 'src/core/zone/ng_zone.dart' show NgZone, NgZoneError;
+/// NOTE: As of 2020-08-12, this library is DEPRECATED.
+///
+/// The actual deprecation notice is on the user-visible import located in
+/// //third_party/dart/angular/lib/di.dart, which exports this file.
+///
+/// See go/angular-di.dart-deprecated.
+export 'src/di/injector.dart' show Injector, InjectorFactory;
+export 'src/di/injector/runtime.dart' show ReflectiveInjector;
+export 'src/meta.dart'
+    show
+        ClassProvider,
+        Component,
+        Directive,
+        ExistingProvider,
+        FactoryProvider,
+        GenerateInjector,
+        Host,
+        Input,
+        Inject,
+        Injectable,
+        Module,
+        MultiToken,
+        OpaqueToken,
+        Optional,
+        Output,
+        Pipe,
+        Provider,
+        Self,
+        SkipSelf,
+        ValueProvider,
+        provide,
+        noValueProvided;

@@ -1,9 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
-import 'dart:async';
 import 'dart:html' hide Location;
 import 'dart:js';
 
@@ -13,25 +7,30 @@ import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'router_link_directive_test.template.dart' as ng_generated;
+import 'router_link_directive_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
-  FakeRouter fakeRouter;
+  late FakeRouter fakeRouter;
+  late InjectorFactory addInjector;
 
   setUp(() {
     fakeRouter = FakeRouter();
+    addInjector = (i) {
+      final strategy = MockLocationStrategy();
+      return ReflectiveInjector.resolveStaticAndCreate([
+        FactoryProvider(Location, () => Location(strategy), deps: []),
+        ValueProvider(LocationStrategy, strategy),
+        ValueProvider(Router, fakeRouter),
+      ], i);
+    };
   });
 
   tearDown(disposeAnyRunningTest);
 
   test('should attempt to navigate to the provided link', () async {
-    final fixture = await NgTestBed<TestRouterLink>().addProviders([
-      ClassProvider(Location),
-      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
-      ValueProvider(Router, fakeRouter),
-    ]).create(beforeChangeDetection: (comp) {
+    final fixture = await NgTestBed(
+      ng.createTestRouterLinkFactory(),
+    ).addInjector(addInjector).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob';
     });
     final anchor = fixture.rootElement.querySelector('a') as AnchorElement;
@@ -42,13 +41,11 @@ void main() {
   });
 
   test('should attempt to navigate on Enter key press', () async {
-    final testBed = NgTestBed<TestRouterLinkKeyPress>().addProviders([
-      ClassProvider(Location),
-      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
-      ValueProvider(Router, fakeRouter),
-    ]);
+    final testBed = NgTestBed(
+      ng.createTestRouterLinkKeyPressFactory(),
+    ).addInjector(addInjector);
     final testFixture = await testBed.create();
-    final div = testFixture.rootElement.querySelector('div');
+    final div = testFixture.rootElement.querySelector('div')!;
     final keyboardEvent = createKeyboardEvent('keypress', KeyCode.ENTER);
     expect(fakeRouter.lastNavigatedPath, isNull);
     await testFixture.update((_) => div.dispatchEvent(keyboardEvent));
@@ -56,30 +53,26 @@ void main() {
   });
 
   test('should parse out query params and fragment', () async {
-    final fixture = await NgTestBed<TestRouterLink>().addProviders([
-      ClassProvider(Location),
-      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
-      ValueProvider(Router, fakeRouter),
-    ]).create(beforeChangeDetection: (comp) {
+    final fixture = await NgTestBed(
+      ng.createTestRouterLinkFactory(),
+    ).addInjector(addInjector).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob?param1=one&param2=2#frag';
     });
     final anchor = fixture.rootElement.querySelector('a') as AnchorElement;
     expect(anchor.pathname, '/users/bob');
     await fixture.update((_) => anchor.click());
     expect(fakeRouter.lastNavigatedPath, '/users/bob');
-    expect(fakeRouter.lastNavigatedParams.queryParameters, {
+    expect(fakeRouter.lastNavigatedParams?.queryParameters, {
       'param1': 'one',
       'param2': '2',
     });
-    expect(fakeRouter.lastNavigatedParams.fragment, 'frag');
+    expect(fakeRouter.lastNavigatedParams?.fragment, 'frag');
   });
 
   test('should not use the router when the target is not _self', () async {
-    final fixture = await NgTestBed<TestRouterLinkWithTarget>().addProviders([
-      ClassProvider(Location),
-      ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
-      ValueProvider(Router, fakeRouter),
-    ]).create(beforeChangeDetection: (comp) {
+    final fixture = await NgTestBed(
+      ng.createTestRouterLinkWithTargetFactory(),
+    ).addInjector(addInjector).create(beforeChangeDetection: (comp) {
       comp.routerLink = '/users/bob';
     });
     final anchor = fixture.rootElement.querySelector('a') as AnchorElement;
@@ -100,7 +93,7 @@ void main() {
   ''',
 )
 class TestRouterLink {
-  String routerLink;
+  late String routerLink;
 }
 
 @Component(
@@ -122,7 +115,7 @@ class TestRouterLinkKeyPress {
   ''',
 )
 class TestRouterLinkWithTarget {
-  String routerLink;
+  late String routerLink;
 
   void onClick(MouseEvent event) {
     // Prevent navigating away from test page.
@@ -131,17 +124,17 @@ class TestRouterLinkWithTarget {
 }
 
 class FakeRouter implements Router {
-  String lastNavigatedPath;
-  NavigationParams lastNavigatedParams;
+  String? lastNavigatedPath;
+  NavigationParams? lastNavigatedParams;
 
   @override
   Future<NavigationResult> navigate(
     String routerLink, [
-    NavigationParams navigationParams,
+    NavigationParams? navigationParams,
   ]) async {
     lastNavigatedPath = routerLink;
     lastNavigatedParams = navigationParams;
-    return null;
+    return NavigationResult.SUCCESS;
   }
 
   @override
@@ -185,8 +178,17 @@ Event createKeyboardEvent(
     final script = document.createElement('script')
       ..setAttribute('type', 'text/javascript')
       ..text = _createKeyboardEventScript;
-    document.body.append(script);
+    document.body!.append(script);
   }
-  return context.callMethod(_createKeyboardEventName,
-      [type, keyCode, ctrlKey, altKey, shiftKey, metaKey]);
+  return context.callMethod(
+    _createKeyboardEventName,
+    [
+      type,
+      keyCode,
+      ctrlKey,
+      altKey,
+      shiftKey,
+      metaKey,
+    ],
+  ) as Event;
 }

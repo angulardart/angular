@@ -10,13 +10,15 @@ dart:
   # that we want to test.
   - stable
 
+after_failure:
+- tool/report_failure.sh
+
 # Gives more resources on Travis (8GB Ram, 2CPUs).
 # Do not remove without verifying w/ Travis.
 sudo: required
 
-# Only building master means that we don't run two builds for each pull request.
 branches:
-  only: [master]
+  only: [master, google]
 
 # Re-use downloaded pub packages everywhere.
 cache:
@@ -59,6 +61,7 @@ jobs:
     # 1. Verify that .travis.yml is not out of date.
     # 2. Verify that pubspec.yaml is updated for all packages.
     - stage: presubmit
+      name: Check travis config and pubspecs
       script:
         - pub get
         - pub run dev:travis -d
@@ -354,6 +357,12 @@ jobs:
         directories:
           - $HOME/.pub-cache
           - examples/registration_form/.dart_tool
+
+    - stage: testing
+      script:
+      - cd examples/angular_components_integration
+      - ./tool/test.sh
+      env: PKG="examples/angular_components_integration"
 
     # Deploy the PWA application to Firebase.
     # See https://docs.travis-ci.com/user/build-stages/#Build-Stages-and-Deployments.

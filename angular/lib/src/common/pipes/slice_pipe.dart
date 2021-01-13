@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 
-import 'package:angular/core.dart' show PipeTransform, Pipe;
+import 'package:angular/src/meta.dart';
 
 import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 
@@ -52,12 +52,12 @@ import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
 /// The first example generates two `<li>` elements with text `b` and `c`.
 /// The second example uses the string `'abcdefghij'`.
 @Pipe('slice', pure: false)
-class SlicePipe implements PipeTransform {
-  dynamic transform(dynamic value, int start, [int end]) {
+class SlicePipe {
+  dynamic transform(dynamic value, int start, [int? end]) {
+    if (value == null) return value;
     if (!supports(value)) {
       throw InvalidPipeArgumentException(SlicePipe, value);
     }
-    if (value == null) return value;
     // This used to have JS behavior with TS-transpiled facades. To avoid a
     // breaking change, we inline the behavior here and will cleanup after all
     // facades are removed.
@@ -69,12 +69,12 @@ class SlicePipe implements PipeTransform {
     }
     if (value is String) {
       return value.substring(start, end);
-    } else if (value is List<Object>) {
+    } else if (value is List<Object?>) {
       return value.sublist(start, end);
     } else {
       return null;
     }
   }
 
-  bool supports(dynamic obj) => obj is String || obj is List<Object>;
+  bool supports(dynamic obj) => obj is String || obj is List<Object?>;
 }

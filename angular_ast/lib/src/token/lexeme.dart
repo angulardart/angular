@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 part of angular_ast.src.token.tokens;
 
 /// A [NgSimpleToken] that has a custom lexeme, i.e. not predefined by type.
@@ -34,9 +30,16 @@ class _LexemeNgSimpleToken extends NgSimpleToken {
 ///
 /// For example, an `elementIdentifier` is (almost) any arbitrary string.
 class _LexemeNgToken extends NgToken {
-  const _LexemeNgToken(int offset, this.lexeme, NgTokenType type,
-      {errorSynthetic = false})
-      : super._(type, offset, errorSynthetic: errorSynthetic);
+  const _LexemeNgToken(
+    int offset,
+    this.lexeme,
+    NgTokenType type, {
+    bool errorSynthetic = false,
+  }) : super._(
+          type,
+          offset,
+          errorSynthetic: errorSynthetic,
+        );
 
   @override
   bool operator ==(Object o) {

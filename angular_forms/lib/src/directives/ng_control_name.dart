@@ -90,32 +90,29 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   bool _disabledChanged = false;
 
   NgControlName(
-      @SkipSelf()
-          this._parent,
-      @Optional()
-      @Self()
-      @Inject(NG_VALIDATORS)
-          List validators,
-      @Optional()
-      @Self()
-      @Inject(ngValueAccessor)
-          List<ControlValueAccessor> valueAccessors)
-      : super(valueAccessors, validators);
+    @SkipSelf() this._parent,
+    @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic>? validators,
+    @Optional()
+    @Self()
+    @Inject(ngValueAccessor)
+        List<ControlValueAccessor<dynamic>>? valueAccessors,
+  ) : super(valueAccessors, validators);
 
   @Input('ngControl')
   @override
-  set name(String value) {
+  set name(String? value) {
     super.name = value;
   }
 
   @Input('ngDisabled')
-  set disabled(bool isDisabled) {
-    _isDisabled = isDisabled;
+  set disabled(bool? isDisabled) {
+    _isDisabled = isDisabled!;
     _disabledChanged = true;
   }
 
+  @override
   @Output('ngModelChange')
-  Stream get update => _update.stream;
+  Stream<dynamic> get update => _update.stream;
 
   @override
   void ngAfterChanges() {
@@ -152,10 +149,10 @@ class NgControlName extends NgControl implements AfterChanges, OnDestroy {
   }
 
   @override
-  List<String> get path => controlPath(name, _parent);
+  List<String?> get path => controlPath(name, _parent);
 
   Form get formDirective => _parent.formDirective;
 
   @override
-  Control get control => formDirective.getControl(this);
+  Control? get control => formDirective.getControl(this);
 }

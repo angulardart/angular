@@ -1,12 +1,12 @@
 import 'dart:html' show Element;
 
-import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
+import 'package:meta/meta.dart';
 import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/di/errors.dart';
-import 'package:angular/src/di/injector/element.dart';
-import 'package:angular/src/di/injector/injector.dart';
+import 'package:angular/src/di/injector.dart';
+import 'package:angular/src/utilities.dart';
 
 /// The base implementation of all views.
 ///
@@ -39,7 +39,7 @@ abstract class View implements ChangeDetectorRef {
   /// The index of this view within its [parentView].
   ///
   /// May be null if this view has no [parentView].
-  int get parentIndex;
+  int? get parentIndex;
 
   /// This view's parent view.
   ///
@@ -47,7 +47,7 @@ abstract class View implements ChangeDetectorRef {
   /// the ergonomics of a common pattern used to optimize dependency injection:
   /// when a nested embedded view injects a token provided by a known ancestor
   /// view, it uses chained property access to retrieve it.
-  View get parentView;
+  View? get parentView;
 
   /// Creates the internal state of this view.
   ///
@@ -78,7 +78,7 @@ abstract class View implements ChangeDetectorRef {
   /// not meant to be checked (such as being detached or having a change
   /// detection mode that skips checks conditionally) should immediately return.
   @override
-  void detectChanges();
+  void detectChangesDeprecated();
 
   /// Invokes change detection on views that use default change detection.
   ///
@@ -141,7 +141,7 @@ abstract class View implements ChangeDetectorRef {
   ///   }
   /// }
   /// ```
-  Injector injector(int nodeIndex) => ElementInjector(this, nodeIndex);
+  Injector injector(int? nodeIndex) => _ElementInjector(this, nodeIndex);
 
   /// Finds an object provided for [token] at [nodeIndex] in this view.
   ///
@@ -151,23 +151,27 @@ abstract class View implements ChangeDetectorRef {
   /// If no result is found and [notFoundResult] was specified, this returns
   /// [notFoundResult]. Otherwise, this will throw an error describing that no
   /// provider for [token] could be found.
-  Object injectorGet(
+  T injectorGet<T extends Object>(
     Object token,
-    int nodeIndex, [
-    Object notFoundResult = throwIfNotFound,
+    int? nodeIndex, [
+    Object? notFoundResult = throwIfNotFound,
   ]) {
     debugInjectorEnter(token);
     final result = inject(token, nodeIndex, notFoundResult);
     debugInjectorLeave(token);
-    return result;
+    return unsafeCast(result);
   }
 
   /// Alternative to [injectorGet] that may return `null` if missing.
   ///
   /// Used to reduce code-size for dynamic lookups sourced from `@Optional()`.
   @dart2js.noInline
-  Object injectorGetOptional(Object token, int nodeIndex) =>
-      injectorGet(token, nodeIndex, null);
+  T? injectorGetOptional<T extends Object?>(Object token, int? nodeIndex) {
+    debugInjectorEnter(token);
+    final result = inject(token, nodeIndex, null);
+    debugInjectorLeave(token);
+    return unsafeCast(result);
+  }
 
   /// Backing implementation of [injectorGet] for this view.
   ///
@@ -179,10 +183,10 @@ abstract class View implements ChangeDetectorRef {
   /// Generated views retain some of the information for it's children's
   /// providers, with each child node representing a different [nodeIndex].
   @protected
-  Object injectorGetInternal(
+  Object? injectorGetInternal(
     Object token,
     int nodeIndex,
-    Object notFoundResult,
+    Object? notFoundResult,
   ) =>
       notFoundResult;
 
@@ -191,8 +195,8 @@ abstract class View implements ChangeDetectorRef {
   /// This indirection allows [injectorGet] to wrap the invocation of this
   /// method with [debugInjectorEnter] and [debugInjectorLeave].
   @protected
-  Object inject(Object token, int nodeIndex, Object notFoundResult) {
-    var result = _providerNotFound;
+  Object? inject(Object token, int? nodeIndex, Object? notFoundResult) {
+    Object? result = _providerNotFound;
     // This is null when the requests originates from the `parentInjector` field
     // of a view container declared at the top-level of a template.
     if (nodeIndex != null) {
@@ -211,7 +215,7 @@ abstract class View implements ChangeDetectorRef {
   /// This should be implemented by specific base view types, as each has a
   /// unique way of delegating dependency injection to an ancestor.
   @protected
-  Object injectFromAncestry(Object token, Object notFoundResult);
+  Object? injectFromAncestry(Object token, Object? notFoundResult);
 }
 
 /// The interface for [View] data bundled together as an optimization.
@@ -259,4 +263,43 @@ abstract class ViewData {
 
   /// Destroys this views data and marks this as [destroyed].
   void destroy();
+}
+
+/// **INTERNAL ONLY**: Adapts the [View] interfaces as an injector.
+@Immutable()
+class _ElementInjector extends Injector {
+  final View _view;
+
+  // TODO(b/133253211): Null is a signal to basically skip this view's injector.
+  final int? _nodeIndex;
+
+  _ElementInjector(this._view, this._nodeIndex);
+
+  @override
+  T provideUntyped<T>(
+    Object token, [
+    Object? orElse = throwIfNotFound,
+  ]) =>
+      unsafeCast(_view.inject(token, _nodeIndex, orElse));
+
+  @override
+  Object? injectFromAncestryOptional(
+    Object token, [
+    Object? orElse = throwIfNotFound,
+  ]) =>
+      throw UnimplementedError();
+
+  @override
+  Object? injectFromParentOptional(
+    Object token, [
+    Object? orElse = throwIfNotFound,
+  ]) =>
+      throw UnimplementedError();
+
+  @override
+  Object? injectFromSelfOptional(
+    Object token, [
+    Object? orElse = throwIfNotFound,
+  ]) =>
+      throw UnimplementedError();
 }

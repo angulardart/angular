@@ -1,7 +1,23 @@
 # Include common configuration.
 include: ../dev/tool/test/dart_test_repo.yaml
 
-# This repository has both web and VM tests.
-platforms:
-  - chrome
-  - vm
+presets:
+  travis_browser:
+    platforms:
+    - chrome
+    paths:
+    - test/bootstrap
+    - test/common
+    - test/core
+    - test/di
+    - test/integration
+    - test/platform
+    add_presets: [travis]
+
+  travis_vm:
+    platforms:
+    - vm
+    paths:
+    - test/compiler
+    - test/compiler_integration
+    add_presets: [travis]

@@ -1,12 +1,10 @@
-@TestOn('browser')
-
 import 'dart:async';
 import 'dart:html';
 
+import 'package:test/test.dart';
+import 'package:_tests/query_tests.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:_tests/query_tests.dart';
-import 'package:test/test.dart';
 
 import 'query_view_test.template.dart' as ng;
 
@@ -16,48 +14,46 @@ void main() {
   group('List', () {
     testViewChildren(
       directViewChildren: TestCase(
-        NgTestBed.forComponent(ng.createTestDirectViewChildrenListFactory()),
+        NgTestBed(ng.createTestDirectViewChildrenListFactory()),
         [1, 2, 3],
       ),
       viewChildrenAndEmbedded: TestCase(
-        NgTestBed.forComponent(
-            ng.createTestViewChildrenAndEmbeddedListFactory()),
+        NgTestBed(ng.createTestViewChildrenAndEmbeddedListFactory()),
         [1, 3],
       ),
     );
 
     test('should work even when the property is a setter', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createTestDirectViewChildrenListSetterFactory());
+      final testBed =
+          NgTestBed(ng.createTestDirectViewChildrenListSetterFactory());
       final fixture = await testBed.create();
       expect(fixture, hasChildValues([1, 2, 3]));
     });
 
     test('should work in a multiple nesting scenario', () async {
       // This is a regression case based on internal code.
-      final testBed =
-          NgTestBed.forComponent(ng.createTestNestedNgForQueriesListFactory());
+      final testBed = NgTestBed(ng.createTestNestedNgForQueriesListFactory());
       final fixture = await testBed.create();
       expect(
-        fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
+        fixture.assertOnlyInstance.taggedDivs!.map((e) => e.text),
         ['1', '2', '3'],
       );
     });
 
     test('should work in a multiple nesting+static scenario', () async {
       // This is a regression case based on internal code.
-      final testBed = NgTestBed.forComponent(
-          ng.createTestNestedAndStaticNgForQueriesListFactory());
+      final testBed =
+          NgTestBed(ng.createTestNestedAndStaticNgForQueriesListFactory());
       final fixture = await testBed.create();
       expect(
-        fixture.assertOnlyInstance.taggedDivs.map((e) => e.text),
+        fixture.assertOnlyInstance.taggedDivs!.map((e) => e.text),
         ['1', '2', '3', '4', '5', '6', '7'],
       );
     });
 
     test('should work on type selectors that are not directives', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createTestNonDirectiveChildSelectorFactory());
+      final testBed =
+          NgTestBed(ng.createTestNonDirectiveChildSelectorFactory());
       final fixture = await testBed.create();
       expect(fixture.assertOnlyInstance.children, hasLength(3));
       expect(fixture.assertOnlyInstance.services, hasLength(3));
@@ -79,7 +75,7 @@ void main() {
 class TestDirectViewChildren extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  List actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -94,13 +90,14 @@ class TestDirectViewChildren extends HasChildren<ValueDirective> {
 class TestDirectViewChild extends HasChild<ValueDirective> {
   @override
   @ViewChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
   selector: 'test',
   directives: [
     AlwaysShowDirective,
+    NeverShowDirective,
     ValueDirective,
   ],
   template: r'''
@@ -116,7 +113,7 @@ class TestDirectViewChild extends HasChild<ValueDirective> {
 class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  List actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -134,7 +131,7 @@ class TestViewChildrenAndEmbedded extends HasChildren<ValueDirective> {
 class TestDirectViewChildEmbedded extends HasChild<ValueDirective> {
   @override
   @ViewChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
@@ -155,7 +152,7 @@ class TestDirectViewChildEmbedded extends HasChild<ValueDirective> {
 class TestViewChildNestedOnOff extends HasChild<ValueDirective> {
   @override
   @ViewChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
@@ -178,7 +175,7 @@ class TestViewChildNestedNgIfOffOn extends HasChild<ValueDirective> {
 
   @override
   @ViewChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
@@ -209,7 +206,7 @@ class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
 
   @override
   @ViewChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
@@ -226,7 +223,7 @@ class TestViewChildNestedNgIfOffOnAsync extends HasChild<ValueDirective>
 class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  List<ValueDirective> actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -242,18 +239,19 @@ class TestDirectViewChildrenList extends HasChildren<ValueDirective> {
 )
 class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
   @ViewChildren(ValueDirective)
-  set actualChildrenSetter(List<ValueDirective> actualChildren) {
-    this.actualChildren = actualChildren;
+  set actualChildrenSetter(List<ValueDirective> children) {
+    this.children = children;
   }
 
   @override
-  Iterable actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
   selector: 'test',
   directives: [
     AlwaysShowDirective,
+    NeverShowDirective,
     ValueDirective,
   ],
   template: r'''
@@ -269,7 +267,7 @@ class TestDirectViewChildrenListSetter extends HasChildren<ValueDirective> {
 class TestViewChildrenAndEmbeddedList extends HasChildren<ValueDirective> {
   @override
   @ViewChildren(ValueDirective)
-  List<ValueDirective> actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -290,7 +288,7 @@ class TestNestedNgForQueriesList {
   final items = [1, 2, 3];
 
   @ViewChildren('taggedDiv', read: Element)
-  List<Element> taggedDivs;
+  List<Element>? taggedDivs;
 }
 
 @Component(
@@ -315,7 +313,7 @@ class TestNestedAndStaticNgForQueriesList {
   final items = [4, 5, 6];
 
   @ViewChildren('taggedDiv', read: Element)
-  List<Element> taggedDivs;
+  List<Element>? taggedDivs;
 }
 
 abstract class Queryable {}
@@ -345,10 +343,10 @@ class InjectableService {}
 )
 class TestNonDirectiveChildSelector {
   @ViewChildren(Queryable)
-  List<Queryable> children;
+  List<Queryable>? children;
 
   @ViewChildren(InjectableService)
-  List<InjectableService> services;
+  List<InjectableService>? services;
 
   bool showLastDirective = true;
 }

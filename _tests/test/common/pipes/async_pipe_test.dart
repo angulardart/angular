@@ -1,21 +1,18 @@
-@TestOn('browser')
-
 import 'dart:async';
 
-import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/common/pipes/invalid_pipe_argument_exception.dart';
 
 void main() {
   group('Stream', () {
-    StreamController emitter;
-    AsyncPipe pipe;
-    ChangeDetectorRef ref;
+    late StreamController<Object> emitter;
+    late AsyncPipe pipe;
+    late FakeChangeDetectorRef ref;
     var message = Object();
     setUp(() {
       emitter = StreamController.broadcast();
-      ref = MockChangeDetectorRef();
+      ref = FakeChangeDetectorRef();
       pipe = AsyncPipe(ref);
     });
     group('transform', () {
@@ -67,7 +64,7 @@ void main() {
         pipe.transform(emitter.stream);
         emitter.add(message);
         Timer(const Duration(milliseconds: 10), expectAsync0(() {
-          verify(ref.markForCheck()).called(1);
+          expect(ref.calledMarkForCheck, 1);
         }));
       });
     });
@@ -88,14 +85,14 @@ void main() {
   });
   group('Future', () {
     var message = Object();
-    AsyncPipe pipe;
-    Completer completer;
-    MockChangeDetectorRef ref;
+    late AsyncPipe pipe;
+    late Completer<Object> completer;
+    late FakeChangeDetectorRef ref;
     var timer = 10;
     setUp(() {
       completer = Completer();
-      ref = MockChangeDetectorRef();
-      pipe = AsyncPipe(ref as dynamic);
+      ref = FakeChangeDetectorRef();
+      pipe = AsyncPipe(ref);
     });
     group('transform', () {
       test('should return null when subscribing to a promise', () {
@@ -136,13 +133,10 @@ void main() {
         pipe.transform(completer.future);
         completer.complete(message);
         Timer(Duration(milliseconds: timer), expectAsync0(() {
-          verify(ref.markForCheck()).called(1);
+          expect(ref.calledMarkForCheck, 1);
         }));
       });
       group('ngOnDestroy', () {
-        test('should do nothing when no source', () {
-          () => pipe.ngOnDestroy();
-        });
         test('should dispose of the existing source', () async {
           pipe.transform(completer.future);
           expect(pipe.transform(completer.future), isNull);
@@ -159,17 +153,27 @@ void main() {
   });
   group('null', () {
     test('should return null when given null', () {
-      var pipe = AsyncPipe(null);
+      var pipe = AsyncPipe(FakeChangeDetectorRef());
       expect(pipe.transform(null), isNull);
     });
   });
   group('other types', () {
     test('should throw when given an invalid object', () {
-      var pipe = AsyncPipe(null);
+      var pipe = AsyncPipe(FakeChangeDetectorRef());
       expect(() => pipe.transform('some bogus object'),
           throwsA(TypeMatcher<InvalidPipeArgumentException>()));
     });
   });
 }
 
-class MockChangeDetectorRef extends Mock implements ChangeDetectorRef {}
+class FakeChangeDetectorRef implements ChangeDetectorRef {
+  var calledMarkForCheck = 0;
+
+  @override
+  void markForCheck() {
+    calledMarkForCheck++;
+  }
+
+  @override
+  dynamic noSuchMethod(_) => super.noSuchMethod(_);
+}

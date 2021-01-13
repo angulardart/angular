@@ -1,17 +1,9 @@
-import 'package:angular/core.dart' show PipeTransform, Pipe;
-
-import 'invalid_pipe_argument_exception.dart' show InvalidPipeArgumentException;
+import 'package:angular/src/meta.dart';
 
 /// Implements uppercase transforms to text.
 @Pipe('uppercase')
-class UpperCasePipe implements PipeTransform {
-  String transform(String value) {
-    if (value == null) return value;
-    if (value is! String) {
-      throw InvalidPipeArgumentException(UpperCasePipe, value);
-    }
-    return value.toUpperCase();
-  }
+class UpperCasePipe {
+  String? transform(String? value) => value?.toUpperCase();
 
   const UpperCasePipe();
 }

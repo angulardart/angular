@@ -23,12 +23,12 @@ import 'url.dart';
 /// ```
 class RoutePath {
   final String path;
-  final RoutePath parent;
+  final RoutePath? parent;
   final bool useAsDefault;
   final dynamic additionalData;
 
   RoutePath({
-    String path,
+    String path = '',
     this.parent,
     this.useAsDefault = false,
     this.additionalData,
@@ -43,17 +43,21 @@ class RoutePath {
             : null;
 
   String toUrl({
-    Map<String, String> parameters,
-    Map<String, String> queryParameters,
-    String fragment,
+    Map<String, String>? parameters,
+    Map<String, String>? queryParameters,
+    String? fragment,
   }) {
     // Don't pass parameters to parent URL. These are populated only once the
     // complete URL has been constructed.
+    final parent = this.parent;
     final parentUrl = parent != null ? parent.toUrl() : '/';
     var url = Location.joinWithSlash(parentUrl, path);
     if (parameters != null) {
-      for (final key in parameters.keys) {
-        url = url.replaceFirst(':$key', Uri.encodeComponent(parameters[key]));
+      for (final entry in parameters.entries) {
+        url = url.replaceFirst(
+          ':${entry.key}',
+          Uri.encodeComponent(entry.value),
+        );
       }
     }
     return Url(url, queryParameters: queryParameters, fragment: fragment)

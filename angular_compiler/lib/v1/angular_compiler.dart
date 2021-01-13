@@ -1,6 +1,7 @@
 export 'src/angular_compiler/analyzer.dart'
     show
         getTypeName,
+        isGlobalSingletonService,
         linkToReference,
         linkTypeOf,
         typeArgumentOf,
@@ -29,7 +30,6 @@ export 'src/angular_compiler/analyzer.dart'
         UseValueProviderElement,
         $ChangeDetectionLink,
         $Component,
-        $ComponentState,
         $ContentChild,
         $ContentChildren,
         $Directive,
@@ -49,7 +49,6 @@ export 'src/angular_compiler/analyzer.dart'
         $ViewChild,
         $ViewChildren;
 export 'src/angular_compiler/asset.dart' show NgAssetReader;
-export 'src/angular_compiler/context.dart' show CompileContext;
 export 'src/angular_compiler/emitter/injector.dart' show InjectorEmitter;
 export 'src/angular_compiler/emitter/reflector.dart'
     show ReflectableEmitter, SplitDartEmitter;

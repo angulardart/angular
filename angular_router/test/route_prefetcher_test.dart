@@ -1,20 +1,19 @@
-@TestOn('browser')
 import 'dart:async';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'route_prefetcher_test.template.dart' as ng;
 
 void main() {
-  NgTestBed<AppComponent> testBed;
+  late NgTestBed<AppComponent> testBed;
 
   setUp(() {
-    testBed = NgTestBed.forComponent(ng.createAppComponentFactory())
-        .addInjector(appInjector);
+    testBed =
+        NgTestBed(ng.createAppComponentFactory()).addInjector(appInjector);
   });
 
   tearDown(disposeAnyRunningTest);
@@ -103,7 +102,7 @@ final appInjector = ng.appInjector$Injector;
   directives: [RouterOutlet],
 )
 class AppComponent {
-  static List<RouteDefinition> routes;
+  static late List<RouteDefinition> routes;
 
   final Router router;
 
@@ -122,7 +121,7 @@ class EmptyComponent {}
   directives: [RouterOutlet],
 )
 class BarComponent {
-  static List<RouteDefinition> routes;
+  static late List<RouteDefinition> routes;
 }
 
 @Component(
@@ -131,5 +130,5 @@ class BarComponent {
   directives: [RouterOutlet],
 )
 class FooComponent {
-  static List<RouteDefinition> routes;
+  static late List<RouteDefinition> routes;
 }

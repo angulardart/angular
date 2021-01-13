@@ -2,9 +2,8 @@
 // state that might be expected to move into "AppHost" after a refactor of the
 // current APIs.
 
-import 'package:angular/src/core/di.dart';
-import 'package:angular/src/core/testability/testability.dart';
-import 'package:angular/src/platform/browser/testability.dart';
+import 'package:angular/src/di/injector.dart';
+import 'package:angular/src/testability.dart';
 
 /// Maintains all top-level/static state for AngularDart apps.
 ///
@@ -14,10 +13,8 @@ class TransitionalAppHost {
     // When it is possible to have conditional testability we will want to
     // refactor this code and/or make the root injector no longer necessary,
     // but that is a bigger breaking change.
-    final registry = TestabilityRegistry();
-    registry.setTestabilityGetter(BrowserGetTestability());
     return Injector.map({
-      TestabilityRegistry: registry,
+      TestabilityRegistry: TestabilityRegistry()..initializeEagerly(),
     });
   }
 

@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
@@ -10,16 +9,16 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   group('CheckAlways component should always be checked when loaded', () {
-    MutableState state;
+    late MutableState state;
 
     setUp(() {
       state = MutableState('Initial value');
     });
 
     Future<void> testComponent(ComponentFactory<void> componentFactory) async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         componentFactory,
-        rootInjector: ([parent]) {
+        rootInjector: (parent) {
           return Injector.map({MutableState: state}, parent);
         },
       );
@@ -113,12 +112,12 @@ class DefaultComponent {
 )
 class OnPushContainerComponent {
   @Input()
-  set componentFactory(ComponentFactory<Object> value) {
-    viewContainerRef.createComponent(value);
+  set componentFactory(ComponentFactory<Object>? value) {
+    viewContainerRef!.createComponent(value!);
   }
 
   @ViewChild('container', read: ViewContainerRef)
-  ViewContainerRef viewContainerRef;
+  ViewContainerRef? viewContainerRef;
 }
 
 @Component(
@@ -145,7 +144,7 @@ class LoadInOnPush {
 )
 class OnPushAncestorComponent {
   @Input()
-  ComponentFactory<Object> componentFactory;
+  ComponentFactory<Object>? componentFactory;
 }
 
 @Component(
@@ -180,15 +179,15 @@ class OnPushEmbeddedContainerComponent {
   var isContainerVisible = true;
 
   @Input()
-  ComponentFactory<Object> componentFactory;
+  ComponentFactory<Object>? componentFactory;
 
   @ViewChild('container', read: ViewContainerRef)
-  set viewContainerRef(ViewContainerRef value) {
+  set viewContainerRef(ViewContainerRef? value) {
     if (value != null) {
       _ngZone.runAfterChangesObserved(() {
         value
           ..clear()
-          ..createComponent(componentFactory);
+          ..createComponent(componentFactory!);
         _changeDetectorRef.markForCheck();
       });
     }

@@ -7,7 +7,7 @@ import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as compiler_ast;
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 final _implicitReceiverVal = o.variable('#implicit');
 
@@ -23,12 +23,6 @@ abstract class NameResolver {
 
   /// Returns variable declarations for all locals used in this scope.
   List<o.Statement> getLocalDeclarations();
-
-  /// Creates a closure that returns a list of [type] when [values] change.
-  o.Expression createLiteralList(
-    List<o.Expression> values, {
-    o.OutputType type,
-  });
 
   int createUniqueBindIndex();
 
@@ -72,7 +66,7 @@ R _visit<R>(
     return ast.visit(visitor, true /* visitingRoot */);
   } on BuildError catch (e) {
     if (span == null) rethrow;
-    throwFailure(span.message(e.message));
+    throw BuildError.forSourceSpan(span, e.toString());
   }
 }
 
@@ -100,7 +94,7 @@ class _AstToExpressionVisitor
   @override
   o.Expression visitBinary(compiler_ast.Binary ast, _) {
     o.BinaryOperator op;
-    switch (ast.operation) {
+    switch (ast.operator) {
       case '+':
         op = o.BinaryOperator.Plus;
         break;
@@ -147,7 +141,9 @@ class _AstToExpressionVisitor
         op = o.BinaryOperator.BiggerEquals;
         break;
       default:
-        throwFailure('Unsupported operation "${ast.operation}"');
+        throw BuildError.withoutContext(
+          'Unsupported operation "${ast.operator}"',
+        );
     }
     return o.BinaryOperatorExpr(
       op,
@@ -268,32 +264,29 @@ class _AstToExpressionVisitor
       }
       args.add(o.literal(
           _compressWhitespaceFollowing(ast.strings[ast.strings.length - 1])));
-      return o
-          .importExpr(interpolateIdentifiers[ast.expressions.length])
-          .callFn(args);
+      if (ast.expressions.length < 3) {
+        return o
+            .importExpr(interpolateIdentifiers[ast.expressions.length])
+            .callFn(args);
+      } else {
+        return o
+            .importExpr(Interpolation.interpolateFallback)
+            .callFn([o.literalArr(args)]);
+      }
     }
   }
 
   @override
-  o.Expression visitKeyedRead(compiler_ast.KeyedRead ast, _) => ast.obj
+  o.Expression visitKeyedRead(compiler_ast.KeyedRead ast, _) => ast.receiver
       .visit(this, false /* visitingRoot */)
       .key(ast.key.visit(this, false /* visitingRoot */));
 
   @override
   o.Expression visitKeyedWrite(compiler_ast.KeyedWrite ast, _) {
-    var obj = ast.obj.visit(this, false /* visitingRoot */);
+    var obj = ast.receiver.visit(this, false /* visitingRoot */);
     var key = ast.key.visit(this, false /* visitingRoot */);
     var value = ast.value.visit(this, false /* visitingRoot */);
     return obj.key(key).set(value);
-  }
-
-  @override
-  o.Expression visitLiteralArray(
-      compiler_ast.LiteralArray ast, bool visitingRoot) {
-    return _nameResolver.createLiteralList(
-      _visitAll(ast.expressions, false /*visitingRoot */),
-      type: visitingRoot ? _boundType : null,
-    );
   }
 
   @override
@@ -319,6 +312,10 @@ class _AstToExpressionVisitor
   }
 
   @override
+  o.Expression visitPostfixNotNull(compiler_ast.PostfixNotNull ast, _) =>
+      ast.expression.visit(this, false /*visitingRoot */).notNull();
+
+  @override
   o.Expression visitPrefixNot(compiler_ast.PrefixNot ast, _) =>
       o.not(ast.expression.visit(this, false /*visitingRoot */));
 
@@ -341,7 +338,9 @@ class _AstToExpressionVisitor
     if (identical(receiver, _implicitReceiverVal)) {
       var varExpr = _nameResolver.getLocal(ast.name);
       if (varExpr != null) {
-        throwFailure('Cannot assign to a reference or variable "${ast.name}"');
+        throw BuildError.withoutContext(
+          'Cannot assign to a reference or variable "${ast.name}"',
+        );
       }
       receiver = _getImplicitOrStaticReceiver(ast.name, isStaticSetter);
     }
@@ -353,16 +352,14 @@ class _AstToExpressionVisitor
   @override
   o.Expression visitSafePropertyRead(compiler_ast.SafePropertyRead ast, _) {
     var receiver = ast.receiver.visit(this, false /*visitingRoot */);
-    return receiver.isBlank().conditional(o.NULL_EXPR, receiver.prop(ast.name));
+    return receiver.prop(ast.name, checked: true);
   }
 
   @override
   o.Expression visitSafeMethodCall(compiler_ast.SafeMethodCall ast, _) {
     var receiver = ast.receiver.visit(this, false /*visitingRoot */);
     var args = _visitAll(ast.args, false /*visitingRoot */);
-    return receiver
-        .isBlank()
-        .conditional(o.NULL_EXPR, receiver.callMethod(ast.name, args));
+    return receiver.callMethod(ast.name, args, checked: true);
   }
 
   @override

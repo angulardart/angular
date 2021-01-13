@@ -24,13 +24,16 @@ import 'platform_location.dart' show PlatformLocation;
 @Injectable()
 class PathLocationStrategy extends LocationStrategy {
   final PlatformLocation _platformLocation;
-  String _baseHref;
-  PathLocationStrategy(this._platformLocation,
-      [@Optional() @Inject(appBaseHref) String href]) {
+  late final String _baseHref;
+
+  PathLocationStrategy(
+    this._platformLocation, [
+    @Optional() @Inject(appBaseHref) String? href,
+  ]) {
     href ??= _platformLocation.getBaseHrefFromDOM();
     if (href == null) {
-      throw ArgumentError(
-          'No base href set. Please provide a value for the appBaseHref token or add a base element to the document.');
+      throw ArgumentError('No base href set. Please provide a value for the '
+          'appBaseHref token or add a base element to the document.');
     }
     _baseHref = href;
   }
@@ -57,7 +60,7 @@ class PathLocationStrategy extends LocationStrategy {
       Location.normalizeQueryParams(_platformLocation.search);
 
   @override
-  void pushState(dynamic state, String title, String url, String queryParams) {
+  void pushState(Object? state, String title, String url, String queryParams) {
     var externalUrl =
         prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
     _platformLocation.pushState(state, title, externalUrl);
@@ -65,7 +68,7 @@ class PathLocationStrategy extends LocationStrategy {
 
   @override
   void replaceState(
-      dynamic state, String title, String url, String queryParams) {
+      Object? state, String title, String url, String queryParams) {
     var externalUrl =
         prepareExternalUrl(url + Location.normalizeQueryParams(queryParams));
     _platformLocation.replaceState(state, title, externalUrl);

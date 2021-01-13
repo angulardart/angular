@@ -1,10 +1,8 @@
-@TestOn('browser')
-
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'reference_binding_test.template.dart' as ng;
 
@@ -12,39 +10,39 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should assign a component to a reference', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createComponentReferenceBindingComponentFactory());
+    final testBed =
+        NgTestBed(ng.createComponentReferenceBindingComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.child, TypeMatcher<ChildComponent>());
   });
 
   test('should assign a directive to a reference', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createDirectiveReferenceBindingComponentFactory());
+    final testBed =
+        NgTestBed(ng.createDirectiveReferenceBindingComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.directive, TypeMatcher<ExportDir>());
   });
 
   test('should assign an element to a reference', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createElementReferenceBindingComponentFactory());
+    final testBed =
+        NgTestBed(ng.createElementReferenceBindingComponentFactory());
     final testFixture = await testBed.create();
     expect(
-      testFixture.assertOnlyInstance.captured.reference,
+      testFixture.assertOnlyInstance.captured!.reference,
       const TypeMatcher<DivElement>(),
     );
   });
 
   test('should be accessible in bindings before declaration', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createUseRefBeforeDeclarationComponentFactory());
+    final testBed =
+        NgTestBed(ng.createUseRefBeforeDeclarationComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello|hello|hello');
   });
 
   test('should assign two component instances each with a reference', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createTwoComponentReferencesComponentFactory());
+    final testBed =
+        NgTestBed(ng.createTwoComponentReferencesComponentFactory());
     final testFixture = await testBed.create();
     final alice = testFixture.assertOnlyInstance.alice;
     final bob = testFixture.assertOnlyInstance.bob;
@@ -54,8 +52,7 @@ void main() {
   });
 
   test('should be case sensitive', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createCaseSensitiveRefComponentFactory());
+    final testBed = NgTestBed(ng.createCaseSensitiveRefComponentFactory());
     final testFixture = await testBed.create();
     final caseSensitive = testFixture.assertOnlyInstance.caseSensitive;
     final caseInsensitive = testFixture.assertOnlyInstance.caseInsensitive;
@@ -77,7 +74,7 @@ class MyService {
   ],
 )
 class ChildComponent {
-  String value;
+  late final String value;
 
   ChildComponent(MyService service) {
     value = service.greeting;
@@ -91,7 +88,7 @@ class ChildComponent {
 )
 class ComponentReferenceBindingComponent {
   @ViewChild('alice')
-  ChildComponent child;
+  ChildComponent? child;
 }
 
 @Directive(
@@ -107,7 +104,7 @@ class ExportDir {}
 )
 class DirectiveReferenceBindingComponent {
   @ViewChild('localdir')
-  ExportDir directive;
+  ExportDir? directive;
 }
 
 @Component(
@@ -123,7 +120,7 @@ class DirectiveReferenceBindingComponent {
 )
 class ElementReferenceBindingComponent {
   @ViewChild(CaptureReferenceDirective)
-  CaptureReferenceDirective captured;
+  CaptureReferenceDirective? captured;
 }
 
 @Directive(
@@ -152,10 +149,10 @@ class UseRefBeforeDeclarationComponent {}
 )
 class TwoComponentReferencesComponent {
   @ViewChild('alice')
-  ChildComponent alice;
+  ChildComponent? alice;
 
   @ViewChild('bob')
-  ChildComponent bob;
+  ChildComponent? bob;
 }
 
 @Component(
@@ -165,8 +162,8 @@ class TwoComponentReferencesComponent {
 )
 class CaseSensitiveRefComponent {
   @ViewChild('superAlice')
-  ChildComponent caseSensitive;
+  ChildComponent? caseSensitive;
 
   @ViewChild('superalice')
-  ChildComponent caseInsensitive;
+  ChildComponent? caseInsensitive;
 }

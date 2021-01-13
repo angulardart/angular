@@ -39,7 +39,7 @@ abstract class Validator {
   /// information used by the component to display the error. For instance a
   /// length validator could provide information about how long the current
   /// invalid string is and the max string length for the input to display.
-  Map<String, dynamic> validate(AbstractControl control);
+  Map<String, dynamic>? validate(AbstractControl control);
 }
 
 /// Returns a map of the errors associated with this control.
@@ -49,7 +49,7 @@ abstract class Validator {
 /// information used by the component to display the error. For instance a
 /// length validator could provide information about how long the current
 /// invalid string is and the max string length for the input to display.
-typedef ValidatorFn = Map<String, dynamic> Function(AbstractControl c);
+typedef ValidatorFn = Map<String, dynamic>? Function(AbstractControl c);
 
 /// A [Directive] adding a required validator to controls with `required`:
 ///
@@ -72,7 +72,7 @@ class RequiredValidator implements Validator {
   bool required = true;
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) =>
+  Map<String, dynamic>? validate(AbstractControl c) =>
       required ? Validators.required(c) : null;
 }
 
@@ -92,20 +92,20 @@ class RequiredValidator implements Validator {
 )
 class MinLengthValidator implements Validator {
   @HostBinding('attr.minlength')
-  String minLengthAttr;
+  late String minLengthAttr;
 
-  int _minLength;
+  late int _minLength;
   int get minLength => _minLength;
 
   @Input('minlength')
   set minLength(int value) {
     _minLength = value;
-    minLengthAttr = value?.toString();
+    minLengthAttr = value.toString();
   }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
-    final v = c?.value?.toString();
+  Map<String, dynamic>? validate(AbstractControl c) {
+    final v = c.value?.toString();
     if (v == null || v == '') return null;
     return v.length < minLength
         ? {
@@ -131,20 +131,20 @@ class MinLengthValidator implements Validator {
 )
 class MaxLengthValidator implements Validator {
   @HostBinding('attr.maxlength')
-  String maxLengthAttr;
+  late String maxLengthAttr;
 
-  int _maxLength;
+  late int _maxLength;
   int get maxLength => _maxLength;
 
   @Input('maxlength')
   set maxlength(int value) {
     _maxLength = value;
-    maxLengthAttr = value?.toString();
+    maxLengthAttr = value.toString();
   }
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) {
-    final v = c?.value?.toString();
+  Map<String, dynamic>? validate(AbstractControl c) {
+    final v = c.value?.toString();
     if (v == null || v == '') return null;
     return v.length > maxLength
         ? {
@@ -174,9 +174,9 @@ class MaxLengthValidator implements Validator {
 class PatternValidator implements Validator {
   @HostBinding('attr.pattern')
   @Input()
-  String pattern;
+  late String pattern;
 
   @override
-  Map<String, dynamic> validate(AbstractControl c) =>
+  Map<String, dynamic>? validate(AbstractControl c) =>
       Validators.pattern(pattern)(c);
 }

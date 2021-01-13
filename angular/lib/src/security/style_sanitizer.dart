@@ -1,7 +1,3 @@
-import 'dart:html';
-
-import 'package:angular/src/runtime.dart';
-
 import 'url_sanitizer.dart';
 
 /// Regular expression for safe style values.
@@ -77,11 +73,13 @@ String internalSanitizeStyle(String value) {
   if (value.isEmpty) return '';
   // Single url(...) values are supported, but only for URLs that sanitize
   // cleanly. See above for reasoning behind this.
-  Match urlMatch = _urlRe.firstMatch(value);
+  Match? urlMatch = _urlRe.firstMatch(value);
   if (urlMatch != null) {
     var input = urlMatch.group(0);
-    if (internalSanitizeUrl(input) == input) {
-      return value; // Safe style values.
+    if (input != null) {
+      if (internalSanitizeUrl(input) == input) {
+        return value; // Safe style values.
+      }
     }
   } else if (_safeStyleValue.hasMatch(value) && _hasBalancedQuotes(value)) {
     return value;
@@ -90,12 +88,14 @@ String internalSanitizeStyle(String value) {
     var parts = value.split(';');
     var failed = false;
     for (var part in parts) {
-      Match urlMatch = _urlRe.firstMatch(part);
+      Match? urlMatch = _urlRe.firstMatch(part);
       if (urlMatch != null) {
         var input = urlMatch.group(0);
-        if (internalSanitizeUrl(input) != input) {
-          failed = true;
-          break;
+        if (input != null) {
+          if (internalSanitizeUrl(input) != input) {
+            failed = true;
+            break;
+          }
         }
       } else if (!(_safeStyleValue.hasMatch(part) == true &&
           _hasBalancedQuotes(part))) {
@@ -104,10 +104,6 @@ String internalSanitizeStyle(String value) {
       }
     }
     if (!failed) return value;
-  }
-  if (isDevMode) {
-    window.console.warn('Sanitizing unsafe style value $value '
-        '(see http://g.co/ng/security#xss).');
   }
   return 'unsafe';
 }

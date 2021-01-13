@@ -13,7 +13,7 @@ import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_element.d
 import 'package:angular_compiler/v1/src/compiler/view_compiler/ir/provider_source.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/parse_utils.dart'
     show HandlerType, handlerTypeFromExpression;
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 /// Converts a list of [ast.TemplateAst] nodes into [ir.Binding] instances.
 ///
@@ -146,7 +146,10 @@ class _ToBindingVisitor
         source: _boundValueToIr(
             input.value, input.sourceSpan, context.analyzedClass),
         target: ir.InputBinding(
-            input.memberName, _inputType(context.directive, input)),
+          input.memberName,
+          input.templateName,
+          _inputType(context.directive, input),
+        ),
         isDirect: _isDirectBinding(context.directive, input.memberName),
       );
 
@@ -290,7 +293,7 @@ ir.BindingTarget _attributeName(String name) {
 void _throwIfConditional(bool isConditional, String name) {
   if (isConditional) {
     // TODO(b/128689252): Move to validation phase.
-    throw BuildError('$name.if is not supported');
+    throw BuildError.withoutContext('$name.if is not supported');
   }
 }
 
@@ -328,4 +331,5 @@ expression_ast.ASTWithSource _handlerExpression(
   );
 }
 
-bool _isTearOff(ASTWithSource handler) => handler.ast is PropertyRead;
+bool _isTearOff(expression_ast.ASTWithSource handler) =>
+    handler.ast is PropertyRead;

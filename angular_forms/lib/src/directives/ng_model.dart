@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart';
 import 'package:meta/dart2js.dart' as dart2js;
+import 'package:angular/angular.dart';
 
 import '../model.dart' show Control;
 import '../validators.dart' show NG_VALIDATORS;
@@ -56,8 +56,8 @@ import 'shared.dart' show setUpControl;
   visibility: Visibility.all,
 )
 class NgModel extends NgControl implements AfterChanges, OnInit {
-  Control _control;
-  StreamController _update;
+  late Control _control;
+  late StreamController<dynamic> _update;
   dynamic _model;
   bool _modelChanged = false;
 
@@ -80,14 +80,17 @@ class NgModel extends NgControl implements AfterChanges, OnInit {
       @Optional()
       @Self()
       @Inject(NG_VALIDATORS)
-          List validators,
+          List<dynamic>? validators,
       @Optional()
       @Self()
       @Inject(ngValueAccessor)
-          List<ControlValueAccessor> valueAccessors)
+          List<ControlValueAccessor<dynamic>>? valueAccessors)
       : super(valueAccessors, validators) {
     _init(valueAccessors);
   }
+
+  @override
+  bool get disabled => super.disabled!;
 
   @Input('ngDisabled')
   set disabled(bool isDisabled) {
@@ -97,14 +100,15 @@ class NgModel extends NgControl implements AfterChanges, OnInit {
   // This function prevents constructor inlining for smaller code size since
   // NgModel is constructed for majority of form components.
   @dart2js.noInline
-  void _init(List<ControlValueAccessor> valueAccessors) {
+  void _init(List<ControlValueAccessor<dynamic>>? valueAccessors) {
     _control = Control();
     _update = StreamController.broadcast(sync: true);
     // ! Please don't remove, the multiple return paths prevent inlining.
   }
 
+  @override
   @Output('ngModelChange')
-  Stream get update => _update.stream;
+  Stream<dynamic> get update => _update.stream;
 
   @override
   void ngAfterChanges() {

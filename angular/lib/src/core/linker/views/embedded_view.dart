@@ -8,9 +8,9 @@ import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_fragment.dart';
 import 'package:angular/src/core/linker/view_ref.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'dynamic_view.dart';
 import 'render_view.dart';
@@ -41,8 +41,11 @@ abstract class EmbeddedView<T> extends RenderView
   @override
   ComponentStyles get componentStyles => _data.componentStyles;
 
+  // This is never null, but matching the return type of our base classes make
+  // the compiler's work much easier (we _always_ use `parentView!.` instead of
+  // conditionally).
   @override
-  RenderView get parentView => _data.parentView;
+  RenderView? get parentView => _data.parentView;
 
   @override
   int get parentIndex => _data.parentIndex;
@@ -57,10 +60,10 @@ abstract class EmbeddedView<T> extends RenderView
   Map<String, dynamic> get locals => _data.locals;
 
   @override
-  List<Node> get rootNodes => viewFragment.flattenDomNodes();
+  List<Node> get rootNodes => viewFragment!.flattenDomNodes();
 
   @override
-  ViewFragment get viewFragment => _data.viewFragment;
+  ViewFragment? get viewFragment => _data.viewFragment;
 
   @override
   bool hasLocal(String name) => locals.containsKey(name);
@@ -91,7 +94,7 @@ abstract class EmbeddedView<T> extends RenderView
   @dart2js.noInline
   void initRootNodesAndSubscriptions(
     List<Object> rootNodesOrViewContainers,
-    List<StreamSubscription<void>> subscriptions,
+    List<StreamSubscription<void>>? subscriptions,
   ) {
     _data
       ..viewFragment = ViewFragment(rootNodesOrViewContainers)
@@ -103,7 +106,7 @@ abstract class EmbeddedView<T> extends RenderView
   @override
   void destroy() {
     final viewContainer = _data.viewContainer;
-    viewContainer?.detachView(viewContainer.nestedViews.indexOf(this));
+    viewContainer?.detachView(viewContainer.nestedViews!.indexOf(this));
     destroyInternalState();
   }
 
@@ -128,7 +131,7 @@ abstract class EmbeddedView<T> extends RenderView
       _data.changeDetectorState == ChangeDetectorState.NeverChecked;
 
   @override
-  void detectChanges() {
+  void detectChangesDeprecated() {
     if (_data.shouldSkipChangeDetection) return;
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
@@ -162,12 +165,12 @@ abstract class EmbeddedView<T> extends RenderView
   }
 
   @override
-  void detach() {
+  void detachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.Detached;
   }
 
   @override
-  void reattach() {
+  void reattachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.CheckAlways;
     markForCheck();
   }
@@ -249,16 +252,16 @@ class _EmbeddedViewData<T> implements DynamicViewData, RenderViewData {
   final locals = <String, dynamic>{};
 
   @override
-  ViewFragment viewFragment;
+  ViewFragment? viewFragment;
 
   @override
-  ViewContainer viewContainer;
+  ViewContainer? viewContainer;
 
   @override
-  List<StreamSubscription<void>> subscriptions;
+  List<StreamSubscription<void>>? subscriptions;
 
   /// Storage for any callbacks registered with [addOnDestroyCallback].
-  List<void Function()> _onDestroyCallbacks;
+  List<void Function()>? _onDestroyCallbacks;
 
   @override
   int get changeDetectionMode => _changeDetectionMode;
@@ -290,18 +293,19 @@ class _EmbeddedViewData<T> implements DynamicViewData, RenderViewData {
 
   @override
   void addOnDestroyCallback(void Function() callback) {
-    _onDestroyCallbacks ??= [];
-    _onDestroyCallbacks.add(callback);
+    (_onDestroyCallbacks ??= []).add(callback);
   }
 
   @override
   void destroy() {
     _destroyed = true;
-    if (_onDestroyCallbacks != null) {
-      for (var i = 0, length = _onDestroyCallbacks.length; i < length; ++i) {
-        _onDestroyCallbacks[i]();
+    final onDestroyCallbacks = _onDestroyCallbacks;
+    if (onDestroyCallbacks != null) {
+      for (var i = 0, length = onDestroyCallbacks.length; i < length; ++i) {
+        onDestroyCallbacks[i]();
       }
     }
+    final subscriptions = this.subscriptions;
     if (subscriptions != null) {
       for (var i = 0, length = subscriptions.length; i < length; ++i) {
         subscriptions[i].cancel();

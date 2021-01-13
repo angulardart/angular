@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:build/build.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/module/ng_compiler_module.dart';
 import 'package:angular_compiler/v1/src/compiler/source_module.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
-import 'package:angular_compiler/v1/cli.dart';
 
 Future<Map<AssetId, String>> processStylesheet(
   BuildStep buildStep,

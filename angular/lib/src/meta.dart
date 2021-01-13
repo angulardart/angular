@@ -1,6 +1,19 @@
 // **DO NOT CHANGE**. The analyzer looks for this _specific name_.
 library angular.meta;
 
+export 'meta/change_detection_constants.dart';
+export 'meta/change_detection_link.dart';
+export 'meta/di_arguments.dart';
+export 'meta/di_generate_injector.dart';
+export 'meta/di_modules.dart';
+export 'meta/di_providers.dart';
+export 'meta/di_tokens.dart';
+export 'meta/directives.dart';
+export 'meta/lifecycle_hooks.dart';
+export 'meta/typed.dart';
+export 'meta/view.dart';
+export 'meta/visibility.dart';
+
 /// Used to annotate a class, field, or method that is public for template use.
 ///
 /// An annotated element may be referenced in the _same_ Dart library, or in

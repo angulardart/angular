@@ -1,11 +1,8 @@
-@TestOn('browser')
-import 'dart:async';
-
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import '1374_redirect_test.template.dart' as ng;
 
@@ -30,9 +27,8 @@ void main() {
   });
 
   test('redirect on outlet registration should replace URL', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestInitialRedirectComponentFactory())
-            .addInjector(injector);
+    final testBed = NgTestBed(ng.createTestInitialRedirectComponentFactory())
+        .addInjector(injector);
     final testFixture = await testBed.create();
     final locationStrategy = testFixture.assertOnlyInstance.locationStrategy;
     expect(locationStrategy.urlChanges, ['replace: /to']);
@@ -42,10 +38,9 @@ void main() {
 /// Performs a navigation that should be redirected with [params].
 ///
 /// Returns any URL changes that occurred due to navigation.
-Future<List<String>> redirect([NavigationParams params]) async {
+Future<List<String>> redirect([NavigationParams? params]) async {
   final testBed =
-      NgTestBed.forComponent(ng.createTestRedirectComponentFactory())
-          .addInjector(injector);
+      NgTestBed(ng.createTestRedirectComponentFactory()).addInjector(injector);
   final testFixture = await testBed.create();
   final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;
   final router = testFixture.assertOnlyInstance.router;

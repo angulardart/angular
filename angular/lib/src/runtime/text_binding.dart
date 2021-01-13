@@ -1,7 +1,7 @@
 import 'dart:html';
 
 import 'package:meta/dart2js.dart' as dart2js;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/runtime/check_binding.dart';
 
 import 'interpolate.dart';
 
@@ -12,8 +12,8 @@ import 'interpolate.dart';
 ///    - avoids code duplication
 ///    - creates a hot function which JS engines (e.g. V8) can optimize.
 class TextBinding {
-  Object _currentValue = '';
-  final Text element = Text('');
+  Object? _currentValue = '';
+  final element = Text('');
 
   // This is a size optimization. dart2js will hoist the element field
   // initializer to a TextBinding constructor parameter, duplicating that
@@ -32,9 +32,9 @@ class TextBinding {
 
   /// Updates the [Text] node if [newValue]'s type is bool, num, int, or double
   /// and differs from the previous value.
-  void updateTextWithPrimitive(Object newValue) {
+  void updateTextWithPrimitive(Object? newValue) {
     if (checkBinding(_currentValue, newValue)) {
-      element.text = toStringWithNull(newValue);
+      element.text = interpolate0(newValue);
       _currentValue = newValue;
     }
   }

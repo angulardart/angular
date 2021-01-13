@@ -1,4 +1,4 @@
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/utilities.dart';
 
 /// A function that can be used to return a unique key for [item] at [index].
 ///
@@ -26,38 +26,38 @@ import 'package:angular/src/runtime.dart';
 /// of your custom type (neither [TrackByFn] nor `NgFor` allow that) at this
 /// time: https://github.com/dart-lang/angular/issues/1020. You must use an `as`
 /// cast or `is` check. See the example above.
-typedef TrackByFn = Object Function(int index, dynamic item);
+typedef TrackByFn = Object? Function(int index, dynamic item);
 
-Object _trackByIdentity(int index, dynamic item) => item;
+Object? _trackByIdentity(int index, dynamic item) => item;
 
 class DefaultIterableDiffer {
   final TrackByFn _trackByFn;
-  int _length;
-  Iterable<Object> _collection;
+  int? _length;
+  Iterable<Object?>? _collection;
   // Keeps track of the used records at any point in time (during & across
   // `_check()` calls)
-  _DuplicateMap _linkedRecords;
+  _DuplicateMap? _linkedRecords;
   // Keeps track of the removed records at any point in time during `_check()`
   // calls.
-  _DuplicateMap _unlinkedRecords;
-  CollectionChangeRecord _previousItHead;
-  CollectionChangeRecord _itHead;
-  CollectionChangeRecord _itTail;
-  CollectionChangeRecord _additionsHead;
-  CollectionChangeRecord _additionsTail;
-  CollectionChangeRecord _movesHead;
-  CollectionChangeRecord _movesTail;
-  CollectionChangeRecord _removalsHead;
-  CollectionChangeRecord _removalsTail;
+  _DuplicateMap? _unlinkedRecords;
+  CollectionChangeRecord? _previousItHead;
+  CollectionChangeRecord? _itHead;
+  CollectionChangeRecord? _itTail;
+  CollectionChangeRecord? _additionsHead;
+  CollectionChangeRecord? _additionsTail;
+  CollectionChangeRecord? _movesHead;
+  CollectionChangeRecord? _movesTail;
+  CollectionChangeRecord? _removalsHead;
+  CollectionChangeRecord? _removalsTail;
   // Keeps track of records where custom track by is the same, but item identity
   // has changed
-  CollectionChangeRecord _identityChangesHead;
-  CollectionChangeRecord _identityChangesTail;
+  CollectionChangeRecord? _identityChangesHead;
+  CollectionChangeRecord? _identityChangesTail;
 
-  DefaultIterableDiffer([TrackByFn trackByFn])
+  DefaultIterableDiffer([TrackByFn? trackByFn])
       : _trackByFn = trackByFn ?? _trackByIdentity;
 
-  DefaultIterableDiffer clone(TrackByFn trackByFn) {
+  DefaultIterableDiffer clone(TrackByFn? trackByFn) {
     var differ = DefaultIterableDiffer(trackByFn);
     return differ
       .._length = _length
@@ -77,56 +77,57 @@ class DefaultIterableDiffer {
       .._identityChangesTail = _identityChangesTail;
   }
 
-  Iterable<Object> get collection => _collection;
+  Iterable<Object?>? get collection => _collection;
 
-  int get length => _length;
+  int? get length => _length;
 
-  void forEachOperation(void Function(CollectionChangeRecord, int, int) fn) {
+  void forEachOperation(void Function(CollectionChangeRecord, int?, int?) fn) {
     var nextIt = _itHead;
     var nextRemove = _removalsHead;
     var addRemoveOffset = 0;
     int sizeDeficit;
-    List<int> moveOffsets;
+    List<int?>? moveOffsets;
 
     while (nextIt != null || nextRemove != null) {
       // Figure out which is the next record to process
       // Order: remove, add, move
       dynamic record = nextRemove == null ||
               nextIt != null &&
-                  nextIt.currentIndex <
+                  nextIt.currentIndex! <
                       _getPreviousIndex(
-                          nextRemove, addRemoveOffset, moveOffsets)
+                          nextRemove, addRemoveOffset, moveOffsets)!
           ? nextIt
           : nextRemove;
 
       var adjPreviousIndex =
           _getPreviousIndex(unsafeCast(record), addRemoveOffset, moveOffsets);
 
-      var currentIndex = unsafeCast<int>(record.currentIndex);
+      // TODO(b/171306883): Type "record" and remove the unsafeCast(s).
+      var currentIndex = unsafeCast<int?>(record.currentIndex);
 
       // consume the item, adjust the addRemoveOffset and update
       // moveDistance if necessary
       if (identical(record, nextRemove)) {
         addRemoveOffset--;
-        nextRemove = nextRemove._nextRemoved;
+        nextRemove = nextRemove!._nextRemoved;
       } else {
-        nextIt = nextIt._next;
+        nextIt = nextIt!._next;
 
         if (record.previousIndex == null) {
           addRemoveOffset++;
         } else {
           // INVARIANT:  currentIndex < previousIndex
-          moveOffsets ??= <int>[];
+          moveOffsets ??= <int?>[];
 
-          var localMovePreviousIndex = adjPreviousIndex - addRemoveOffset;
-          var localCurrentIndex = currentIndex - addRemoveOffset;
+          var localMovePreviousIndex = adjPreviousIndex! - addRemoveOffset;
+          var localCurrentIndex = currentIndex! - addRemoveOffset;
 
           if (localMovePreviousIndex != localCurrentIndex) {
             for (var i = 0; i < localMovePreviousIndex; i++) {
               int offset;
 
               if (i < moveOffsets.length) {
-                offset = moveOffsets[i];
+                offset = moveOffsets[i]!;
               } else {
                 if (moveOffsets.length > i) {
                   offset = moveOffsets[i] = 0;
@@ -166,7 +167,7 @@ class DefaultIterableDiffer {
 
   void forEachAddedItem(void Function(CollectionChangeRecord) fn) {
     for (var record = _additionsHead;
-        !identical(record, null);
+        record != null;
         record = record._nextAdded) {
       fn(record);
     }
@@ -174,7 +175,7 @@ class DefaultIterableDiffer {
 
   void forEachRemovedItem(void Function(CollectionChangeRecord) fn) {
     for (var record = _removalsHead;
-        !identical(record, null);
+        record != null;
         record = record._nextRemoved) {
       fn(record);
     }
@@ -182,40 +183,33 @@ class DefaultIterableDiffer {
 
   void forEachIdentityChange(void Function(CollectionChangeRecord) fn) {
     for (var record = _identityChangesHead;
-        !identical(record, null);
+        record != null;
         record = record._nextIdentityChange) {
       fn(record);
     }
   }
 
-  DefaultIterableDiffer diff(Iterable<Object> collection) {
-    if (collection != null) {
-      if (collection is! Iterable<Object>) {
-        throw StateError("Error trying to diff '$collection'");
-      }
-    } else {
-      collection = const [];
-    }
-    return check(collection) ? this : null;
+  DefaultIterableDiffer? diff(Iterable<Object?>? collection) {
+    return check(collection ?? const []) ? this : null;
   }
 
   void onDestroy() {}
   // todo(vicb): optim for UnmodifiableListView (frozen arrays)
-  bool check(Iterable<Object> collection) {
+  bool check(Iterable<Object?> collection) {
     _reset();
     var record = _itHead;
     var mayBeDirty = false;
     int index;
     var item;
     var itemTrackBy;
-    if (collection is List<Object>) {
+    if (collection is List<Object?>) {
       var list = collection;
-      _length = collection.length;
-      for (index = 0; index < _length; index++) {
+      var length = collection.length;
+      _length = length;
+      for (index = 0; index < length; index++) {
         item = list[index];
         itemTrackBy = _trackByFn(index, item);
-        if (identical(record, null) ||
-            !identical(record.trackById, itemTrackBy)) {
+        if (record == null || !identical(record.trackById, itemTrackBy)) {
           record = _mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
         } else {
@@ -233,20 +227,19 @@ class DefaultIterableDiffer {
       index = 0;
       collection.forEach((item) {
         itemTrackBy = _trackByFn(index, item);
-        if (identical(record, null) ||
-            !identical(record.trackById, itemTrackBy)) {
+        if (record == null || !identical(record!.trackById, itemTrackBy)) {
           record = _mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
         } else {
           if (mayBeDirty) {
             // TODO(misko): can we limit this to duplicates only?
-            record = _verifyReinsertion(record, item, itemTrackBy, index);
+            record = _verifyReinsertion(record!, item, itemTrackBy, index);
           }
-          if (!identical(record.item, item)) {
-            _addIdentityChange(record, item);
+          if (!identical(record!.item, item)) {
+            _addIdentityChange(record!, item);
           }
         }
-        record = record._next;
+        record = record!._next;
         index++;
       });
       _length = index;
@@ -273,20 +266,20 @@ class DefaultIterableDiffer {
   /// @internal
   void _reset() {
     if (isDirty) {
-      CollectionChangeRecord record;
-      CollectionChangeRecord nextRecord;
+      CollectionChangeRecord? record;
+      CollectionChangeRecord? nextRecord;
       for (record = _previousItHead = _itHead;
-          !identical(record, null);
+          record != null;
           record = record._next) {
         record._nextPrevious = record._next;
       }
       for (record = _additionsHead;
-          !identical(record, null);
+          record != null;
           record = record._nextAdded) {
         record.previousIndex = record.currentIndex;
       }
       _additionsHead = _additionsTail = null;
-      for (record = _movesHead; !identical(record, null); record = nextRecord) {
+      for (record = _movesHead; record != null; record = nextRecord) {
         record.previousIndex = record.currentIndex;
         nextRecord = record._nextMoved;
       }
@@ -304,11 +297,11 @@ class DefaultIterableDiffer {
   /// - `index` is the position of the item in the collection
   ///
   /// @internal
-  CollectionChangeRecord _mismatch(CollectionChangeRecord record, dynamic item,
+  CollectionChangeRecord _mismatch(CollectionChangeRecord? record, dynamic item,
       dynamic itemTrackBy, int index) {
     // The previous record after which we will append the current one.
-    CollectionChangeRecord previousRecord;
-    if (identical(record, null)) {
+    CollectionChangeRecord? previousRecord;
+    if (record == null) {
       previousRecord = _itTail;
     } else {
       previousRecord = record._prev;
@@ -317,10 +310,8 @@ class DefaultIterableDiffer {
       _remove(record);
     }
     // Attempt to see if we have seen the item before.
-    record = identical(_linkedRecords, null)
-        ? null
-        : _linkedRecords.get(itemTrackBy, index);
-    if (!identical(record, null)) {
+    record = _linkedRecords?.get(itemTrackBy, index);
+    if (record != null) {
       // We have seen this before, we need to move it forward in the collection.
       // But first we need to check if identity changed, so we can update in
       // view if necessary.
@@ -328,10 +319,8 @@ class DefaultIterableDiffer {
       _moveAfter(record, previousRecord, index);
     } else {
       // Never seen it, check evicted list.
-      record = identical(_unlinkedRecords, null)
-          ? null
-          : _unlinkedRecords.get(itemTrackBy);
-      if (!identical(record, null)) {
+      record = _unlinkedRecords?.get(itemTrackBy);
+      if (record != null) {
         // It is an item which we have evicted earlier: reinsert it back into
         // the list. But first we need to check if identity changed, so we can
         // update in view if necessary
@@ -378,10 +367,8 @@ class DefaultIterableDiffer {
   /// @internal
   CollectionChangeRecord _verifyReinsertion(CollectionChangeRecord record,
       dynamic item, dynamic itemTrackBy, int index) {
-    var reinsertRecord = identical(_unlinkedRecords, null)
-        ? null
-        : _unlinkedRecords.get(itemTrackBy);
-    if (!identical(reinsertRecord, null)) {
+    var reinsertRecord = _unlinkedRecords?.get(itemTrackBy);
+    if (reinsertRecord != null) {
       record = _reinsertAfter(reinsertRecord, record._prev, index);
     } else if (record.currentIndex != index) {
       record.currentIndex = index;
@@ -396,46 +383,34 @@ class DefaultIterableDiffer {
   /// - `record` The first excess [CollectionChangeRecord].
   ///
   /// @internal
-  void _truncate(CollectionChangeRecord record) {
+  void _truncate(CollectionChangeRecord? record) {
     // Anything after that needs to be removed;
-    while (!identical(record, null)) {
+    while (record != null) {
       var nextRecord = record._next;
       _addToRemovals(_unlink(record));
       record = nextRecord;
     }
-    if (!identical(_unlinkedRecords, null)) {
-      _unlinkedRecords.clear();
-    }
-    if (!identical(_additionsTail, null)) {
-      _additionsTail._nextAdded = null;
-    }
-    if (!identical(_movesTail, null)) {
-      _movesTail._nextMoved = null;
-    }
-    if (!identical(_itTail, null)) {
-      _itTail._next = null;
-    }
-    if (!identical(_removalsTail, null)) {
-      _removalsTail._nextRemoved = null;
-    }
-    if (!identical(_identityChangesTail, null)) {
-      _identityChangesTail._nextIdentityChange = null;
-    }
+    _unlinkedRecords?.clear();
+    _additionsTail?._nextAdded = null;
+    _movesTail?._nextMoved = null;
+    _itTail?._next = null;
+    _removalsTail?._nextRemoved = null;
+    _identityChangesTail?._nextIdentityChange = null;
   }
 
   CollectionChangeRecord _reinsertAfter(CollectionChangeRecord record,
-      CollectionChangeRecord prevRecord, int index) {
+      CollectionChangeRecord? prevRecord, int index) {
     if (!identical(_unlinkedRecords, null)) {
-      _unlinkedRecords.remove(record);
+      _unlinkedRecords!.remove(record);
     }
     var prev = record._prevRemoved;
     var next = record._nextRemoved;
-    if (identical(prev, null)) {
+    if (prev == null) {
       _removalsHead = next;
     } else {
       prev._nextRemoved = next;
     }
-    if (identical(next, null)) {
+    if (next == null) {
       _removalsTail = prev;
     } else {
       next._prevRemoved = prev;
@@ -446,7 +421,7 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _moveAfter(CollectionChangeRecord record,
-      CollectionChangeRecord prevRecord, int index) {
+      CollectionChangeRecord? prevRecord, int index) {
     _unlink(record);
     _insertAfter(record, prevRecord, index);
     _addToMoves(record, index);
@@ -454,7 +429,7 @@ class DefaultIterableDiffer {
   }
 
   CollectionChangeRecord _addAfter(CollectionChangeRecord record,
-      CollectionChangeRecord prevRecord, int index) {
+      CollectionChangeRecord? prevRecord, int index) {
     _insertAfter(record, prevRecord, index);
     if (identical(_additionsTail, null)) {
       // todo(vicb)
@@ -467,13 +442,13 @@ class DefaultIterableDiffer {
       // assert(_additionsTail._nextAdded === null);
 
       // assert(record._nextAdded === null);
-      _additionsTail = _additionsTail._nextAdded = record;
+      _additionsTail = _additionsTail!._nextAdded = record;
     }
     return record;
   }
 
   CollectionChangeRecord _insertAfter(CollectionChangeRecord record,
-      CollectionChangeRecord prevRecord, int index) {
+      CollectionChangeRecord? prevRecord, int index) {
     // todo(vicb)
 
     // assert(record != prevRecord);
@@ -481,7 +456,7 @@ class DefaultIterableDiffer {
     // assert(record._next === null);
 
     // assert(record._prev === null);
-    var next = identical(prevRecord, null) ? _itHead : prevRecord._next;
+    var next = (prevRecord == null) ? _itHead : prevRecord._next;
     // todo(vicb)
 
     // assert(next != record);
@@ -489,18 +464,17 @@ class DefaultIterableDiffer {
     // assert(prevRecord != record);
     record._next = next;
     record._prev = prevRecord;
-    if (identical(next, null)) {
+    if (next == null) {
       _itTail = record;
     } else {
       next._prev = record;
     }
-    if (identical(prevRecord, null)) {
+    if (prevRecord == null) {
       _itHead = record;
     } else {
       prevRecord._next = record;
     }
-    _linkedRecords ??= _DuplicateMap();
-    _linkedRecords.put(record);
+    (_linkedRecords ??= _DuplicateMap()).put(record);
     record.currentIndex = index;
     return record;
   }
@@ -518,12 +492,12 @@ class DefaultIterableDiffer {
     // assert((record._prev = null) === null);
 
     // assert((record._next = null) === null);
-    if (identical(prev, null)) {
+    if (prev == null) {
       _itHead = next;
     } else {
       prev._next = next;
     }
-    if (identical(next, null)) {
+    if (next == null) {
       _itTail = prev;
     } else {
       next._prev = prev;
@@ -548,14 +522,13 @@ class DefaultIterableDiffer {
       // todo(vicb)
 
       // assert(_movesTail._nextMoved === null);
-      _movesTail = _movesTail._nextMoved = record;
+      _movesTail = _movesTail!._nextMoved = record;
     }
     return record;
   }
 
   CollectionChangeRecord _addToRemovals(CollectionChangeRecord record) {
-    _unlinkedRecords ??= _DuplicateMap();
-    _unlinkedRecords.put(record);
+    (_unlinkedRecords ??= _DuplicateMap()).put(record);
     record.currentIndex = null;
     record._nextRemoved = null;
     if (identical(_removalsTail, null)) {
@@ -571,7 +544,7 @@ class DefaultIterableDiffer {
 
       // assert(record._nextRemoved === null);
       record._prevRemoved = _removalsTail;
-      _removalsTail = _removalsTail._nextRemoved = record;
+      _removalsTail = _removalsTail!._nextRemoved = record;
     }
     return record;
   }
@@ -582,7 +555,7 @@ class DefaultIterableDiffer {
     if (identical(_identityChangesTail, null)) {
       _identityChangesTail = _identityChangesHead = record;
     } else {
-      _identityChangesTail = _identityChangesTail._nextIdentityChange = record;
+      _identityChangesTail = _identityChangesTail!._nextIdentityChange = record;
     }
     return record;
   }
@@ -591,14 +564,12 @@ class DefaultIterableDiffer {
   String toString() {
     if (isDevMode) {
       var list = <Object>[];
-      for (var record = _itHead;
-          !identical(record, null);
-          record = record._next) {
+      for (var record = _itHead; record != null; record = record._next) {
         list.add(record);
       }
       var previous = <Object>[];
       for (var record = _previousItHead;
-          !identical(record, null);
+          record != null;
           record = record._nextPrevious) {
         previous.add(record);
       }
@@ -606,7 +577,7 @@ class DefaultIterableDiffer {
       forEachAddedItem((record) => additions.add(record));
       var moves = <dynamic>[];
       for (var record = _movesHead;
-          !identical(record, null);
+          record != null;
           record = record._nextMoved) {
         moves.add(record);
       }
@@ -641,28 +612,28 @@ class DefaultIterableDiffer {
 class CollectionChangeRecord {
   dynamic item;
   dynamic trackById;
-  int currentIndex;
-  int previousIndex;
+  int? currentIndex;
+  int? previousIndex;
 
-  CollectionChangeRecord _nextPrevious;
+  CollectionChangeRecord? _nextPrevious;
 
-  CollectionChangeRecord _prev;
+  CollectionChangeRecord? _prev;
 
-  CollectionChangeRecord _next;
+  CollectionChangeRecord? _next;
 
-  CollectionChangeRecord _prevDup;
+  CollectionChangeRecord? _prevDup;
 
-  CollectionChangeRecord _nextDup;
+  CollectionChangeRecord? _nextDup;
 
-  CollectionChangeRecord _prevRemoved;
+  CollectionChangeRecord? _prevRemoved;
 
-  CollectionChangeRecord _nextRemoved;
+  CollectionChangeRecord? _nextRemoved;
 
-  CollectionChangeRecord _nextAdded;
+  CollectionChangeRecord? _nextAdded;
 
-  CollectionChangeRecord _nextMoved;
+  CollectionChangeRecord? _nextMoved;
 
-  CollectionChangeRecord _nextIdentityChange;
+  CollectionChangeRecord? _nextIdentityChange;
   CollectionChangeRecord(this.item, this.trackById);
 
   @override
@@ -676,9 +647,9 @@ class CollectionChangeRecord {
 // A linked list of CollectionChangeRecords with the same
 // CollectionChangeRecord.item
 class _DuplicateItemRecordList {
-  CollectionChangeRecord _head;
+  CollectionChangeRecord? _head;
 
-  CollectionChangeRecord _tail;
+  CollectionChangeRecord? _tail;
 
   /// Append the record to the list of duplicates.
   ///
@@ -690,7 +661,7 @@ class _DuplicateItemRecordList {
       record._nextDup = null;
       record._prevDup = null;
     } else {
-      _tail._nextDup = record;
+      _tail!._nextDup = record;
       record._prevDup = _tail;
       record._nextDup = null;
       _tail = record;
@@ -699,10 +670,10 @@ class _DuplicateItemRecordList {
 
   // Returns a CollectionChangeRecord having CollectionChangeRecord.trackById
   // == trackById and CollectionChangeRecord.currentIndex >= afterIndex
-  CollectionChangeRecord get(dynamic trackById, int afterIndex) {
-    CollectionChangeRecord record;
-    for (record = _head; !identical(record, null); record = record._nextDup) {
-      if ((identical(afterIndex, null) || afterIndex < record.currentIndex) &&
+  CollectionChangeRecord? get(dynamic trackById, int? afterIndex) {
+    CollectionChangeRecord? record;
+    for (record = _head; record != null; record = record._nextDup) {
+      if ((afterIndex == null || afterIndex < record.currentIndex!) &&
           identical(record.trackById, trackById)) {
         return record;
       }
@@ -716,12 +687,12 @@ class _DuplicateItemRecordList {
   bool remove(CollectionChangeRecord record) {
     var prev = record._prevDup;
     var next = record._nextDup;
-    if (identical(prev, null)) {
+    if (prev == null) {
       _head = next;
     } else {
       prev._nextDup = next;
     }
-    if (identical(next, null)) {
+    if (next == null) {
       _tail = prev;
     } else {
       next._prevDup = prev;
@@ -752,7 +723,7 @@ class _DuplicateMap {
   /// Use case: `[a, b, c, a, a]` if we are at index `3` which is the second `a`
   /// then asking if we have any more `a`s needs to return the last `a` not the
   /// first or second.
-  CollectionChangeRecord get(dynamic trackById, [int afterIndex]) {
+  CollectionChangeRecord? get(dynamic trackById, [int? afterIndex]) {
     var recordList = _map[trackById];
     return recordList == null ? null : recordList.get(trackById, afterIndex);
   }
@@ -764,10 +735,10 @@ class _DuplicateMap {
     var key = record.trackById;
     // todo(vicb)
     // assert(this.map.containsKey(key));
-    var recordList = _map[key];
+    var recordList = _map[key]!;
     // Remove the list of duplicates when it gets empty
     if (recordList.remove(record)) {
-      _map.containsKey(key) && (_map.remove(key) != null || true);
+      _map.remove(key);
     }
     return record;
   }
@@ -786,15 +757,15 @@ class _DuplicateMap {
   }
 }
 
-int _getPreviousIndex(
-    CollectionChangeRecord item, int addRemoveOffset, List<int> moveOffsets) {
+int? _getPreviousIndex(
+    CollectionChangeRecord item, int addRemoveOffset, List<int?>? moveOffsets) {
   var previousIndex = item.previousIndex;
 
-  if (previousIndex == null) return previousIndex;
+  if (previousIndex == null) return null;
 
   var moveOffset = 0;
   if (moveOffsets != null && previousIndex < moveOffsets.length) {
-    moveOffset = moveOffsets[previousIndex];
+    moveOffset = moveOffsets[previousIndex]!;
   }
 
   return previousIndex + addRemoveOffset + moveOffset;

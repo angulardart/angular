@@ -1,17 +1,19 @@
 import 'dart:convert';
 
 import 'package:meta/meta.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
+import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart'
     show toTemplateExtension;
-import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
 
 import '../compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
         CompilePipeMetadata,
+        CompileProviderMetadata,
         CompileTokenMap,
         CompileTypeMetadata,
         CompileTypedMetadata;
@@ -45,15 +47,17 @@ import 'expression_converter.dart';
 import 'ir/provider_resolver.dart';
 import 'ir/view_storage.dart';
 import 'provider_forest.dart' show ProviderForest;
-import 'update_statement_visitor.dart' show bindingToUpdateStatement;
+import 'update_statement_visitor.dart' show bindingToUpdateStatements;
 import 'view_compiler_utils.dart'
     show
         debugInjectorEnter,
         debugInjectorLeave,
         getViewFactory,
         getViewFactoryName,
+        identifierFromTagName,
         injectFromViewParentInjector,
-        maybeCachedCtxDeclarationStatement;
+        maybeCachedCtxDeclarationStatement,
+        unsafeCast;
 import 'view_name_resolver.dart';
 
 /// Visibility of NodeReference within AppView implementation.
@@ -126,15 +130,17 @@ class NodeReference {
   /// Create a [NodeReference] for the root element of a view.
   NodeReference.rootElement()
       : _storage = null,
-        _type = o.importType(Identifiers.HTML_ELEMENT),
+        _type = o.importType(Identifiers.HTML_HTML_ELEMENT),
         _name = componentViewRootElementFieldName,
         _visibility = NodeReferenceVisibility.classPublic,
         _initialValue = null;
 
   /// Create a [NodeReference] for a node passed as a parameter.
   factory NodeReference.parameter(
-          CompileViewStorage _storage, o.OutputType type, String name) =
-      _ParameterNodeReference;
+    CompileViewStorage _storage,
+    o.OutputType type,
+    String name,
+  ) = _ParameterNodeReference;
 
   NodeReference._parameter(this._storage, this._type, this._name)
       : _initialValue = null;
@@ -153,19 +159,24 @@ class NodeReference {
 
   /// If accessed outside of `build()`, makes a variable into a class field.
   void promoteToClassMember() {
-    if (_visibility != NodeReferenceVisibility.classPublic) {
-      _visibility = NodeReferenceVisibility.classPublic;
-      _storage.allocate(
-        _name,
-        outputType: _type,
-        // All of our NodeReferences are shallowly immutable, that is, they are
-        // initialized lazily, but the instance does not change after that. If
-        // we have an initialValue (for example "Text('')"), it is effectively
-        // final.
-        modifiers: _initialValue != null ? const [o.StmtModifier.Final] : null,
-        initializer: _initialValue,
-      );
+    if (_visibility == NodeReferenceVisibility.classPublic) {
+      return;
     }
+    final initialValue = _initialValue;
+    final hasInitialValue = initialValue != null && initialValue != o.NULL_EXPR;
+    _visibility = NodeReferenceVisibility.classPublic;
+    _storage.allocate(
+      _name,
+      outputType: _type,
+      // All of our NodeReferences are shallowly immutable, that is, they are
+      // initialized lazily, but the instance does not change after that. If
+      // we have an initialValue (for example "Text('')"), it is effectively
+      // final.
+      modifiers: hasInitialValue
+          ? const [o.StmtModifier.Final]
+          : const [o.StmtModifier.Late, o.StmtModifier.Final],
+      initializer: initialValue,
+    );
   }
 }
 
@@ -321,9 +332,18 @@ class AppViewReference {
     return o.WriteClassMemberExpr(_name, value).toStmt();
   }
 
-  void allocate(CompileViewStorage storage,
-      {o.OutputType outputType, List<o.StmtModifier> modifiers}) {
-    storage.allocate(_name, outputType: outputType, modifiers: modifiers);
+  void allocate(
+    CompileViewStorage storage, {
+    @required o.OutputType outputType,
+  }) {
+    storage.allocate(
+      _name,
+      outputType: outputType,
+      modifiers: const [
+        o.StmtModifier.Late,
+        o.StmtModifier.Final,
+      ],
+    );
   }
 }
 
@@ -335,7 +355,6 @@ class CompileView {
   final CompilerFlags genConfig;
   final List<CompilePipeMetadata> pipeMetas;
   final o.Expression styles;
-  final Map<String, String> deferredModules;
 
   /// Defines type arguments for generic directives in this view.
   final List<CompileTypedMetadata> directiveTypes;
@@ -364,6 +383,12 @@ class CompileView {
   final List<CompileElement> _viewChildren = [];
 
   /// Flat list of all nodes inside the template including text nodes.
+  ///
+  /// This is populated by the visitor in view_builder.dart, and later
+  /// referenced by the visitor in view_binder.dart. It's crucial that any time
+  /// a visitor method in view_builder.dart adds a node to this list, the
+  /// corresponding visitor method in view_binder.dart increments the index to
+  /// its current node.
   List<CompileNode> nodes = [];
 
   /// List of references to top level nodes in view.
@@ -416,7 +441,6 @@ class CompileView {
     this.viewIndex,
     this.declarationElement,
     this.templateVariables,
-    this.deferredModules,
   ) {
     nameResolver = ViewNameResolver(this);
     storage = CompileViewStorage();
@@ -463,9 +487,6 @@ class CompileView {
     }
     if (declarationElement.parent != null) {
       declarationElement.setEmbeddedView(this);
-    }
-    if (deferredModules == null) {
-      throw ArgumentError();
     }
   }
 
@@ -755,6 +776,7 @@ class CompileView {
       final createParams = <o.Expression>[o.ReadVarExpr(docVarName), parent];
 
       CompileIdentifierMetadata createAndAppendMethod;
+      o.OutputType coerceToTypedElement;
       switch (tagName) {
         case 'div':
           createAndAppendMethod = DomHelpers.appendDiv;
@@ -765,9 +787,19 @@ class CompileView {
         default:
           createAndAppendMethod = DomHelpers.appendElement;
           createParams.add(o.literal(tagName));
+          coerceToTypedElement = o.importType(identifierFromTagName(tagName));
           break;
       }
-      createExpr = o.importExpr(createAndAppendMethod).callFn(createParams);
+      createExpr = o.importExpr(createAndAppendMethod).callFn(
+        createParams,
+        typeArguments: [
+          // Some of our dom_helper methods expect HtmlElement, so if we know
+          // that this tag is one we should add the generic type argument
+          // <HtmlElement> (which ends up just being an unsafeCast behind the
+          // scenes).
+          if (coerceToTypedElement != null) coerceToTypedElement
+        ],
+      );
       _createMethod.addStmt(elementRef.toWriteStmt(createExpr));
     } else {
       // No parent node, just create element and assign.
@@ -775,7 +807,9 @@ class CompileView {
         'createElement',
         [o.literal(tagName)],
       );
-      _createMethod.addStmt(elementRef.toWriteStmt(createRenderNodeExpr));
+      _createMethod.addStmt(
+        elementRef.toWriteStmt(unsafeCast(createRenderNodeExpr)),
+      );
     }
   }
 
@@ -811,18 +845,10 @@ class CompileView {
       CompileDirectiveMetadata childComponent,
       NodeReference elementRef,
       int nodeIndex,
-      bool isDeferred,
       ElementAst ast) {
     var componentViewIdentifier = CompileIdentifierMetadata(
         name: 'View${childComponent.type.name}0',
         moduleUrl: templateModuleUrl(childComponent.type));
-
-    // For non-deferred generic components, these type arguments (if any) can
-    // be applied to the field that stores the view. However, for deferred
-    // components, the field can't be explicitly typed so these type arguments
-    // are instead applied to the constructor invocation.
-    final componentTypeArguments =
-        lookupTypeArgumentsOf(childComponent.type, ast);
 
     o.ReadClassMemberExpr componentViewExpr;
     if (viewType == ViewType.host) {
@@ -831,11 +857,15 @@ class CompileView {
       componentViewExpr = o.ReadClassMemberExpr('componentView');
     } else {
       final appViewRef = AppViewReference(parent, nodeIndex);
-
-      // If the component is deferred, we can't type the field which stores it.
-      final componentViewType = isDeferred
-          ? o.importType(Views.componentView)
-          : o.importType(componentViewIdentifier, componentTypeArguments);
+      // Type arguments (if any) can be applied to the field that stores the view
+      final componentTypeArguments = lookupTypeArgumentsOf(
+        childComponent.type,
+        ast,
+      );
+      final componentViewType = o.importType(
+        componentViewIdentifier,
+        componentTypeArguments,
+      );
 
       // Create the field which stores the component view:
       //
@@ -845,18 +875,13 @@ class CompileView {
       componentViewExpr = appViewRef.toReadExpr();
     }
 
-    // If the component is deferred, its type arguments can't be inferred from
-    // the field to which it's assigned.
-    final constructorTypeArguments = isDeferred ? componentTypeArguments : null;
-
     // Instantiate the component view:
     //
     //   _compView_0 = ViewSomeComponent0(this, 0);
     //
     final createComponentInstanceExpr = o
         .importExpr(componentViewIdentifier)
-        .instantiate([o.THIS_EXPR, o.literal(nodeIndex)],
-            genericTypes: constructorTypeArguments);
+        .instantiate([o.THIS_EXPR, o.literal(nodeIndex)]);
 
     _createMethod
         .addStmt(componentViewExpr.set(createComponentInstanceExpr).toStmt());
@@ -885,14 +910,23 @@ class CompileView {
   }
 
   o.ReadClassMemberExpr createViewContainer(
-      NodeReference nodeReference, int nodeIndex, bool isPrivate,
-      [int parentNodeIndex]) {
+    NodeReference nodeReference,
+    int nodeIndex,
+    bool isPrivate, [
+    int parentNodeIndex,
+  ]) {
     var renderNode = nodeReference.toReadExpr();
     var fieldName = '_appEl_$nodeIndex';
     // Create instance field for app element.
-    storage.allocate(fieldName,
-        outputType: o.importType(Identifiers.ViewContainer),
-        modifiers: [o.StmtModifier.Private]);
+    storage.allocate(
+      fieldName,
+      outputType: o.importType(Identifiers.ViewContainer),
+      modifiers: const [
+        o.StmtModifier.Private,
+        o.StmtModifier.Final,
+        o.StmtModifier.Late,
+      ],
+    );
 
     // Write code to create an instance of ViewContainer.
     // Example:
@@ -914,14 +948,19 @@ class CompileView {
   }
 
   o.Expression createComponentNodeAndAppend(
-      CompileDirectiveMetadata component,
-      CompileElement parent,
-      NodeReference elementRef,
-      int nodeIndex,
-      ElementAst ast,
-      {bool isDeferred}) {
+    CompileDirectiveMetadata component,
+    CompileElement parent,
+    NodeReference elementRef,
+    int nodeIndex,
+    ElementAst ast,
+  ) {
     final componentViewExpr = _createAppViewNodeAndComponent(
-        parent, component, elementRef, nodeIndex, isDeferred, ast);
+      parent,
+      component,
+      elementRef,
+      nodeIndex,
+      ast,
+    );
 
     final root = componentViewExpr.prop(componentViewRootElementFieldName);
     if (isRootNodeOfHost(nodeIndex)) {
@@ -953,14 +992,15 @@ class CompileView {
   bool isRootNodeOfHost(int nodeIndex) =>
       nodeIndex == 0 && viewType == ViewType.host;
 
-  void createNgContentRef(String name, int nodeIndex) {
-    var referenceRef = NodeReference.ngContent(storage, nodeIndex);
-    _createMethod.addStmt(referenceRef.toWriteStmt(o
-        .importExpr(Identifiers.NgContentRef)
-        .instantiate([o.THIS_EXPR, o.literal(nodeIndex)],
-            type: o.importType(Identifiers.NgContentRef))));
-    nameResolver.addLocal(name, referenceRef.toReadExpr());
-  }
+  o.Expression _createNgContentRefExpr(int nodeIndex) => o
+      .importExpr(Identifiers.NgContentRef)
+      .instantiate([o.THIS_EXPR, o.literal(nodeIndex)],
+          type: o.importType(Identifiers.NgContentRef));
+
+  CompileProviderMetadata createNgContentRefProvider(int nodeIndex) =>
+      CompileProviderMetadata(
+          token: identifierToken(Identifiers.NgContentRef),
+          useValue: _createNgContentRefExpr(nodeIndex));
 
   void projectNodesIntoElement(
       CompileElement target, int sourceAstIndex, int ngContentIndex) {
@@ -1018,7 +1058,7 @@ class CompileView {
     o.Expression handler, [
     o.Expression directiveInstance,
   ]) {
-    _createMethod.addStmt(bindingToUpdateStatement(
+    _createMethod.addStmts(bindingToUpdateStatements(
         binding, directiveInstance, node, false, handler));
   }
 
@@ -1041,14 +1081,14 @@ class CompileView {
   /// TemplateRef _TemplateRef_9_4;
   ///
   o.Expression createProvider(
-      String propName,
-      CompileDirectiveMetadata directiveMetadata,
-      ProviderAst provider,
-      List<o.Expression> providerValueExpressions,
-      bool isMulti,
-      bool isEager,
-      CompileElement compileElement,
-      {bool forceDynamic = false}) {
+    String propName,
+    CompileDirectiveMetadata directiveMetadata,
+    ProviderAst provider,
+    List<o.Expression> providerValueExpressions,
+    bool isMulti,
+    bool isEager,
+    CompileElement compileElement,
+  ) {
     o.Expression resolvedProviderValueExpr;
     o.OutputType type;
     if (isMulti) {
@@ -1114,9 +1154,15 @@ class CompileView {
       // contents of the build() function. Otherwise allocate locally.
       if (provider.isReferencedOutsideBuild) {
         if (providerHasChangeDetector) {
-          var item = storage.allocate(propName,
-              outputType: changeDetectorType,
-              modifiers: const [o.StmtModifier.Private]);
+          var item = storage.allocate(
+            propName,
+            outputType: changeDetectorType,
+            modifiers: const [
+              o.StmtModifier.Private,
+              o.StmtModifier.Late,
+              o.StmtModifier.Final,
+            ],
+          );
           _createMethod.addStmt(storage
               .buildWriteExpr(
                   item,
@@ -1125,8 +1171,10 @@ class CompileView {
                       .instantiate(changeDetectorParams))
               .toStmt());
           return o.ReadPropExpr(
-              o.ReadClassMemberExpr(propName, changeDetectorType), 'instance',
-              outputType: forceDynamic ? o.DYNAMIC_TYPE : type);
+            o.ReadClassMemberExpr(propName, changeDetectorType),
+            'instance',
+            outputType: type,
+          );
         } else {
           if (viewType == ViewType.host &&
               provider.providerType == ProviderAstType.Component) {
@@ -1139,9 +1187,15 @@ class CompileView {
                 .set(resolvedProviderValueExpr)
                 .toStmt());
           } else {
-            var item = storage.allocate(propName,
-                outputType: forceDynamic ? o.DYNAMIC_TYPE : type,
-                modifiers: const [o.StmtModifier.Private]);
+            var item = storage.allocate(
+              propName,
+              outputType: type,
+              modifiers: const [
+                o.StmtModifier.Private,
+                o.StmtModifier.Late,
+                o.StmtModifier.Final,
+              ],
+            );
             _createMethod.addStmt(storage
                 .buildWriteExpr(item, resolvedProviderValueExpr)
                 .toStmt());
@@ -1150,8 +1204,7 @@ class CompileView {
       } else {
         // Since provider is not dynamically reachable and we only need
         // the provider locally in build, create a local var.
-        var localVar =
-            o.variable(propName, forceDynamic ? o.DYNAMIC_TYPE : type);
+        var localVar = o.variable(propName, type);
         _createMethod
             .addStmt(localVar.set(resolvedProviderValueExpr).toDeclStmt());
         return localVar;
@@ -1159,39 +1212,48 @@ class CompileView {
     } else {
       // We don't have to eagerly initialize this object. Add an uninitialized
       // class field and provide a getter to construct the provider on demand.
-      var internalFieldName = '_$propName';
-      var internalField = storage.allocate(internalFieldName,
-          outputType: forceDynamic
-              ? o.DYNAMIC_TYPE
-              : (providerHasChangeDetector ? changeDetectorType : type),
-          modifiers: const [o.StmtModifier.Private]);
-      var getter = CompileMethod();
+      final cachedType = providerHasChangeDetector ? changeDetectorType : type;
+      final internalField = storage.allocate(
+        '_$propName',
+        outputType: cachedType.asNullable(),
+        modifiers: const [o.StmtModifier.Private],
+      );
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
             o.importExpr(changeDetectorClass).instantiate(changeDetectorParams);
       }
-      // Note: Equals is important for JS so that it also checks the undefined case!
-      var statements = <o.Statement>[
-        storage
-            .buildWriteExpr(internalField, resolvedProviderValueExpr)
-            .toStmt()
-      ];
-      getter.addStmt(
-          o.IfStmt(storage.buildReadExpr(internalField).isBlank(), statements));
-      getter.addStmt(o.ReturnStatement(storage.buildReadExpr(internalField)));
-      getters.add(o.ClassGetter(
+
+      final getter = CompileMethod()
+        ..addStmts([
+          o.DeclareVarStmt(
+            'result',
+            storage.buildReadExpr(internalField),
+          ),
+          o.IfStmt(
+            o.ReadVarExpr('result').equals(o.NULL_EXPR),
+            [
+              storage
+                  .buildWriteExpr(
+                    internalField,
+                    o.WriteVarExpr('result', resolvedProviderValueExpr),
+                  )
+                  .toStmt(),
+            ],
+          ),
+          o.ReturnStatement(
+            o.ReadVarExpr('result'),
+          ),
+        ]);
+      getters.add(
+        o.ClassGetter(
           propName,
           getter.finish(),
-          forceDynamic
-              ? o.DYNAMIC_TYPE
-              : (providerHasChangeDetector ? changeDetectorType : type)));
+          providerHasChangeDetector ? changeDetectorType : type,
+        ),
+      );
     }
     return o.ReadClassMemberExpr(propName, type);
-  }
-
-  void callFunctionalDirective(o.Expression invokeExpression) {
-    _createMethod.addStmt(invokeExpression.toStmt());
   }
 
   void createPipeInstance(String name, CompilePipeMetadata pipeMeta) {
@@ -1207,7 +1269,11 @@ class CompileView {
     final pipeInstance = storage.allocate(
       name,
       outputType: o.importType(pipeMeta.type),
-      modifiers: [o.StmtModifier.Private],
+      modifiers: [
+        o.StmtModifier.Private,
+        o.StmtModifier.Late,
+        o.StmtModifier.Final,
+      ],
     );
     final typeExpression = o.importExpr(pipeMeta.type);
     if (usesInjectorGet) {
@@ -1233,7 +1299,11 @@ class CompileView {
     var proxy = storage.allocate(
       pureProxyProp.name,
       outputType: pureProxyType,
-      modifiers: const [o.StmtModifier.Private],
+      modifiers: const [
+        o.StmtModifier.Private,
+        o.StmtModifier.Late,
+        o.StmtModifier.Final,
+      ],
     );
     var pureProxyId = argCount < Identifiers.pureProxies.length
         ? Identifiers.pureProxies[argCount]
@@ -1254,7 +1324,7 @@ class CompileView {
     @required bool isHtmlElement,
   }) {
     for (var binding in bindings) {
-      _createMethod.addStmt(createAttributeStatement(
+      _createMethod.addStmts(createAttributeStatements(
         binding,
         elementName,
         nodeReference,
@@ -1263,41 +1333,19 @@ class CompileView {
     }
   }
 
-  o.Statement createAttributeStatement(
+  List<o.Statement> createAttributeStatements(
     ir.Binding binding,
     String elementName,
     NodeReference renderNode, {
     @required bool isHtmlElement,
   }) {
     var expression = _toExpression(binding.source, o.THIS_EXPR);
-    var stmt = bindingToUpdateStatement(
+    return bindingToUpdateStatements(
       binding,
       o.THIS_EXPR,
       renderNode,
       isHtmlElement,
       expression,
-    );
-    return stmt;
-  }
-
-  void deferLoadEmbeddedTemplate(
-    CompileView deferredView,
-    CompileElement targetElement,
-  ) {
-    final deferredLoadExpr = targetElement.writeDeferredLoader(
-      deferredView,
-      targetElement.appViewContainer,
-    );
-    final cancelHandlerName = '_cancelDeferredLoad${targetElement.nodeIndex}';
-    storage.allocate(
-      cancelHandlerName,
-      outputType: o.FunctionType(o.VOID_TYPE, []),
-    );
-    _createMethod.addStmt(
-      o.ReadClassMemberExpr(cancelHandlerName).set(deferredLoadExpr).toStmt(),
-    );
-    destroyMethod.addStmt(
-      o.ReadClassMemberExpr(cancelHandlerName).callFn([]).toStmt(),
     );
   }
 
@@ -1524,19 +1572,29 @@ List<o.Statement> _addReturnValueIfNotEmpty(
 /// The CompileView reuses simple ClassField(s) to implement storage for
 /// runtime.
 class CompileViewStorage implements ViewStorage {
-  final List<o.ClassField> fields = [];
+  final fields = <o.ClassField>[];
 
   @override
-  ViewStorageItem allocate(String name,
-      {o.OutputType outputType,
-      List<o.StmtModifier> modifiers,
-      o.Expression initializer}) {
-    fields.add(o.ClassField(name,
+  ViewStorageItem allocate(
+    String name, {
+    o.OutputType outputType = o.OBJECT_TYPE,
+    List<o.StmtModifier> modifiers,
+    o.Expression initializer,
+  }) {
+    fields.add(
+      o.ClassField(
+        name,
         outputType: outputType,
         modifiers: modifiers,
-        initializer: initializer));
-    return ViewStorageItem(name,
-        outputType: outputType, modifiers: modifiers, initializer: initializer);
+        initializer: initializer,
+      ),
+    );
+    return ViewStorageItem(
+      name,
+      outputType: outputType,
+      modifiers: modifiers,
+      initializer: initializer,
+    );
   }
 
   @override

@@ -42,9 +42,10 @@ void main() {
         var result2 = pipe.transform(str, RegExp('a'), '_');
         var result3 =
             pipe.transform(str, RegExp('a', caseSensitive: false), '_');
-        var f = (x) {
+        String f(_) {
           return 'Adams!';
-        };
+        }
+
         var result4 = pipe.transform(str, 'Adams', f);
         var result5 = pipe.transform(someNumber, '2', '4');
         expect(result1, 'Hugh Adams');

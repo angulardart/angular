@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -8,12 +7,12 @@ import 'package:angular_test/angular_test.dart';
 import 'update_location_on_popstate_test.template.dart' as ng;
 
 void main() {
-  Location location;
-  MockLocationStrategy locationStrategy;
-  NgTestFixture<AppComponent> testFixture;
+  late Location location;
+  late MockLocationStrategy locationStrategy;
+  late NgTestFixture<AppComponent> testFixture;
 
   setUp(() async {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng.createAppComponentFactory(),
       rootInjector: createInjector,
     );

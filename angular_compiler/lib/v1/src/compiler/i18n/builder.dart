@@ -1,6 +1,6 @@
 import 'package:angular_ast/angular_ast.dart';
+import 'package:angular_compiler/v2/context.dart';
 
-import '../template_parser.dart' show TemplateContext;
 import 'message.dart';
 import 'metadata.dart';
 
@@ -8,9 +8,6 @@ import 'metadata.dart';
 class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   final _args = <String, String>{};
   final _messageBuffer = StringBuffer();
-  final TemplateContext _templateContext;
-
-  I18nBuilder(this._templateContext);
 
   /// Whether the message this builds has any text to translate.
   var _hasText = false;
@@ -38,20 +35,20 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   void visitAnnotation(AnnotationAst astNode, [_]) {
     if (astNode.name == i18nDescription ||
         astNode.name.startsWith(i18nDescriptionPrefix)) {
-      _templateContext.reportError(
-        "Internationalized messages can't be nested",
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
         astNode.sourceSpan,
-      );
+        "Internationalized messages can't be nested",
+      ));
     }
   }
 
   @override
   void visitAttribute(AttributeAst astNode, [StringBuffer context]) {
     if (astNode.mustaches != null && astNode.mustaches.isNotEmpty) {
-      _templateContext.reportError(
-        "Interpolations aren't permitted in internationalized messages",
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
         astNode.sourceSpan,
-      );
+        "Interpolations aren't permitted in internationalized messages",
+      ));
       return;
     }
     context.write(' ${astNode.name}');
@@ -82,10 +79,10 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   @override
   void visitElement(ElementAst astNode, [_]) {
     if (astNode.isVoidElement) {
-      _templateContext.reportError(
-        "Void elements aren't permitted in internationalized messages",
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
         astNode.sourceSpan,
-      );
+        "Void elements aren't permitted in internationalized messages",
+      ));
       return;
     }
     // Visit unpermitted AST nodes to report errors.
@@ -170,11 +167,11 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
     return buffer.toString();
   }
 
-  void _reportUnpermitted(TemplateAst astNode) {
-    _templateContext.reportError(
-      'Not permitted in internationalized messages',
+  static void _reportUnpermitted(TemplateAst astNode) {
+    CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
       astNode.sourceSpan,
-    );
+      'Not permitted in internationalized messages',
+    ));
   }
 }
 

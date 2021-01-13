@@ -1,24 +1,19 @@
-import 'dart:async';
-
 import 'package:meta/meta.dart';
+import 'package:angular/src/di/injector/runtime.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/testability.dart';
 
 import '../core/app_host.dart';
 import '../core/application_ref.dart';
 import '../core/application_tokens.dart';
-import '../core/di.dart' show ReflectiveInjector;
 import '../core/linker.dart'
-    show ComponentFactory, ComponentRef, SlowComponentLoader;
+    show ComponentFactory, ComponentLoader, ComponentRef, SlowComponentLoader;
 import '../core/linker/app_view_utils.dart';
 import '../core/linker/component_resolver.dart' show typeToFactory;
-import '../core/testability/testability.dart';
 import '../core/zone/ng_zone.dart';
-import '../di/injector/empty.dart';
-import '../di/injector/hierarchical.dart';
-import '../di/injector/injector.dart';
-import '../runtime.dart';
+import '../di/injector.dart';
 import '../runtime/dom_events.dart';
-import '../security/sanitization_service.dart';
-
+import '../utilities.dart';
 import 'modules.dart';
 
 /// Used as a "tear-off" of [NgZone].
@@ -39,10 +34,10 @@ Injector appInjector(
   NgZone Function() createNgZone = _createNgZone,
 }) {
   // These are the required root services, always provided by AngularDart.
-  final minimalInjector = appGlobals.createAppInjector(minimalApp);
+  final minimalInjector = appGlobals.createAppInjector(minimalApp());
 
   // Lazily initialized later on once we have the user injector.
-  ApplicationRef applicationRef;
+  late final ApplicationRef applicationRef;
   final ngZone = createNgZone();
   final Injector appGlobalInjector = _LazyInjector({
     ApplicationRef: () => applicationRef,
@@ -65,43 +60,12 @@ Injector appInjector(
       ngZone,
       userInjector,
     );
-    assert(
-        _checkSanitizationService(appViewUtils, userInjector),
-        'You are trying to use multiple SanitizationServices but it is a global'
-        ' resource where only one can be specified across the global page'
-        ' context (even across DDC instances.) Fix by only using one type and'
-        ' ensure that class is using a factory providing to provide only one'
-        ' static instance.');
     appViewUtils = AppViewUtils(
       userInjector.provideToken(APP_ID),
-      userInjector.provideType(SanitizationService),
       EventManager(ngZone),
     );
     return userInjector;
   });
-}
-
-// Ensure that the `SanitizationService` used is what the user expects. The
-// service is used in a static fashion which is invisible to the user. Meaning
-// that while they think they are changing the service only for one app or
-// context they are in fact changing all usages of it from that point forward.
-// This check can be removed in the future if appViewUtils is no longer
-// static.
-bool _checkSanitizationService(
-  AppViewUtils appViewUtils,
-  Injector userInjector,
-) {
-  if (appViewUtils == null) {
-    return true;
-  }
-  // We can use Object since we just use identity semantics.
-  final service = userInjector.provideType<Object>(SanitizationService);
-  // Make sure it is the same instance of the sanitizer.
-  // Note since DDC uses the same static values across apps in the same web
-  // page it isn't enough to just rely on injection to ensure this is the same
-  // instance. The sanitizer itself should use a factory pattern to provide
-  // a static singleton.
-  return identical(service, appViewUtils.sanitizer);
 }
 
 /// An implementation of [Injector] that invokes closures.
@@ -110,18 +74,18 @@ bool _checkSanitizationService(
 ///
 /// TODO(matanl): Consider making this a user-accessible injector type.
 @Immutable()
-class _LazyInjector extends HierarchicalInjector implements Injector {
+class _LazyInjector extends HierarchicalInjector {
   final Map<Object, Object Function()> _providers;
 
   const _LazyInjector(
     this._providers, [
-    HierarchicalInjector parent = const EmptyInjector(),
+    Injector? parent,
   ]) : super(parent);
 
   @override
-  Object injectFromSelfOptional(
+  Object? injectFromSelfOptional(
     Object token, [
-    Object orElse = throwIfNotFound,
+    Object? orElse = throwIfNotFound,
   ]) {
     var result = _providers[token];
     if (result == null) {
@@ -134,7 +98,7 @@ class _LazyInjector extends HierarchicalInjector implements Injector {
   }
 }
 
-Injector _identityInjector([Injector parent]) => parent;
+Injector _identityInjector(Injector parent) => parent;
 
 /// Starts a new AngularDart application with [componentFactory] as the root.
 ///
@@ -202,9 +166,6 @@ ComponentRef<T> runApp<T>(
   ComponentFactory<T> componentFactory, {
   InjectorFactory createInjector = _identityInjector,
 }) {
-  if (isDevMode && componentFactory == null) {
-    throw ArgumentError.notNull('componentFactory');
-  }
   final injector = appInjector(createInjector);
   final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
   return appRef.bootstrap(componentFactory);
@@ -220,23 +181,14 @@ ComponentRef<T> runApp<T>(
 /// See [runApp] for additional details.
 Future<ComponentRef<T>> runAppAsync<T>(
   ComponentFactory<T> componentFactory, {
-  @required Future<void> Function(Injector) beforeComponentCreated,
+  required Future<void> Function(Injector) beforeComponentCreated,
   InjectorFactory createInjector = _identityInjector,
 }) {
-  if (isDevMode) {
-    if (componentFactory == null) {
-      throw ArgumentError.notNull('componentFactory');
-    }
-    if (beforeComponentCreated == null) {
-      throw ArgumentError.notNull('beforeComponentCreated');
-    }
-  }
   final injector = appInjector(createInjector);
   final appRef = injector.provideType<ApplicationRef>(ApplicationRef);
   final ngZone = injector.provideType<NgZone>(NgZone);
   return ngZone.run(() {
     final future = beforeComponentCreated(injector);
-    assert(future != null, 'beforeComponentCreated must return a Future');
     return future.then((_) => appRef.bootstrap(componentFactory));
   });
 }
@@ -255,32 +207,24 @@ Future<ComponentRef<T>> runAppAsync<T>(
 ComponentRef<T> runAppLegacy<T>(
   Type componentType, {
   List<Object> createInjectorFromProviders = const [],
-  void Function() initReflector,
+  void Function()? initReflector,
 }) {
   assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
-  if (isDevMode) {
-    if (componentType == null) {
-      throw ArgumentError.notNull('componentType');
-    }
-    if (initReflector == null) {
-      try {
-        typeToFactory(componentType);
-      } on StateError catch (_) {
-        throw ArgumentError(
-          'Could not bootstrap $componentType: provide "initReflector".',
-        );
-      }
-    }
-  }
   return runApp(
     unsafeCast(typeToFactory(componentType)),
-    createInjector: ([parent]) {
+    createInjector: (parent) {
       return ReflectiveInjector.resolveAndCreate(
         [
-          SlowComponentLoader,
+          // Avoids the need to annotate SlowComponentLoader with @Injectable(),
+          // which in turns avoids the need to support `initReflector()` within
+          // the Angular framework itself (which has tricky circular issues).
+          ValueProvider(
+            SlowComponentLoader,
+            SlowComponentLoader(ComponentLoader()),
+          ),
           createInjectorFromProviders,
         ],
         unsafeCast(parent),
@@ -294,35 +238,27 @@ ComponentRef<T> runAppLegacy<T>(
 /// This is the [runAppLegacy] variant of the [runAppAsync] function.
 Future<ComponentRef<T>> runAppLegacyAsync<T>(
   Type componentType, {
-  @required Future<void> Function(Injector) beforeComponentCreated,
+  required Future<void> Function(Injector) beforeComponentCreated,
   List<Object> createInjectorFromProviders = const [],
-  void Function() initReflector,
+  void Function()? initReflector,
 }) {
   assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
-  if (isDevMode) {
-    if (componentType == null) {
-      throw ArgumentError.notNull('componentType');
-    }
-    if (initReflector == null) {
-      try {
-        typeToFactory(componentType);
-      } on StateError catch (_) {
-        throw ArgumentError(
-          'Could not bootstrap $componentType: provide "initReflector".',
-        );
-      }
-    }
-  }
   return runAppAsync(
     unsafeCast(typeToFactory(componentType)),
     beforeComponentCreated: beforeComponentCreated,
-    createInjector: ([parent]) {
+    createInjector: (parent) {
       return ReflectiveInjector.resolveAndCreate(
         [
-          SlowComponentLoader,
+          // Avoids the need to annotate SlowComponentLoader with @Injectable(),
+          // which in turns avoids the need to support `initReflector()` within
+          // the Angular framework itself (which has tricky circular issues).
+          ValueProvider(
+            SlowComponentLoader,
+            SlowComponentLoader(ComponentLoader()),
+          ),
           createInjectorFromProviders,
         ],
         unsafeCast(parent),
@@ -338,7 +274,7 @@ Future<ComponentRef<T>> runAppLegacyAsync<T>(
 Future<ComponentRef<T>> bootstrapStatic<T>(
   Type componentType, [
   List<Object> providers = const [],
-  void Function() initReflector,
+  void Function()? initReflector,
 ]) =>
     Future.microtask(
       () => runAppLegacy(

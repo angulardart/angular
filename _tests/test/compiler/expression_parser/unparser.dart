@@ -1,7 +1,10 @@
+// @dart=2.9
+
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart';
 
-class Unparser implements AstVisitor {
+class Unparser implements AstVisitor<void, String> {
   static final _quoteRegExp = RegExp(r'"');
+
   StringBuffer sb;
 
   String unparse(ASTWithSource ast) {
@@ -11,13 +14,19 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitPropertyRead(PropertyRead ast, dynamic context) {
+  void visitPropertyRead(
+    PropertyRead ast,
+    void _,
+  ) {
     _visit(ast.receiver);
     sb.write(ast.receiver is ImplicitReceiver ? '${ast.name}' : '.${ast.name}');
   }
 
   @override
-  void visitPropertyWrite(PropertyWrite ast, dynamic context) {
+  void visitPropertyWrite(
+    PropertyWrite ast,
+    void _,
+  ) {
     _visit(ast.receiver);
     sb.write(ast.receiver is ImplicitReceiver
         ? '${ast.name} = '
@@ -26,14 +35,20 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitBinary(Binary ast, dynamic context) {
+  void visitBinary(
+    Binary ast,
+    void _,
+  ) {
     _visit(ast.left);
-    sb.write(' ${ast.operation} ');
+    sb.write(' ${ast.operator} ');
     _visit(ast.right);
   }
 
   @override
-  void visitConditional(Conditional ast, dynamic context) {
+  void visitConditional(
+    Conditional ast,
+    void _,
+  ) {
     _visit(ast.condition);
     sb.write(' ? ');
     _visit(ast.trueExp);
@@ -42,26 +57,34 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitIfNull(IfNull ast, dynamic context) {
+  void visitIfNull(
+    IfNull ast,
+    void _,
+  ) {
     _visit(ast.condition);
     sb.write(' ?? ');
     _visit(ast.nullExp);
   }
 
   @override
-  void visitPipe(BindingPipe ast, dynamic context) {
-    sb.write('(');
+  void visitPipe(
+    BindingPipe ast,
+    void _,
+  ) {
+    sb.write('\$pipe.${ast.name}(');
     _visit(ast.exp);
-    sb.write(' | ${ast.name}');
     for (var arg in ast.args) {
-      sb.write(':');
+      sb.write(', ');
       _visit(arg);
     }
     sb.write(')');
   }
 
   @override
-  void visitFunctionCall(FunctionCall ast, dynamic context) {
+  void visitFunctionCall(
+    FunctionCall ast,
+    void _,
+  ) {
     _visit(ast.target);
     sb.write('(');
     var isFirst = true;
@@ -85,10 +108,16 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitImplicitReceiver(ImplicitReceiver ast, dynamic context) {}
+  void visitImplicitReceiver(
+    ImplicitReceiver ast,
+    void _,
+  ) {}
 
   @override
-  void visitInterpolation(Interpolation ast, dynamic context) {
+  void visitInterpolation(
+    Interpolation ast,
+    void _,
+  ) {
     for (var i = 0; i < ast.strings.length; i++) {
       sb.write(ast.strings[i]);
       if (i < ast.expressions.length) {
@@ -100,16 +129,22 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitKeyedRead(KeyedRead ast, dynamic context) {
-    _visit(ast.obj);
+  void visitKeyedRead(
+    KeyedRead ast,
+    void _,
+  ) {
+    _visit(ast.receiver);
     sb.write('[');
     _visit(ast.key);
     sb.write(']');
   }
 
   @override
-  void visitKeyedWrite(KeyedWrite ast, dynamic context) {
-    _visit(ast.obj);
+  void visitKeyedWrite(
+    KeyedWrite ast,
+    void _,
+  ) {
+    _visit(ast.receiver);
     sb.write('[');
     _visit(ast.key);
     sb.write('] = ');
@@ -117,28 +152,23 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitLiteralArray(LiteralArray ast, dynamic context) {
-    sb.write('[');
-    var isFirst = true;
-    for (var expression in ast.expressions) {
-      if (!isFirst) sb.write(', ');
-      isFirst = false;
-      _visit(expression);
-    }
-    sb.write(']');
-  }
-
-  @override
-  void visitLiteralPrimitive(LiteralPrimitive ast, dynamic context) {
-    if (ast.value is String) {
-      sb.write('"${ast.value.replaceAll(Unparser._quoteRegExp, '"')}"');
+  void visitLiteralPrimitive(
+    LiteralPrimitive ast,
+    void _,
+  ) {
+    final value = ast.value;
+    if (value is String) {
+      sb.write('"${value.replaceAll(Unparser._quoteRegExp, '"')}"');
     } else {
-      sb.write('${ast.value}');
+      sb.write('${value}');
     }
   }
 
   @override
-  void visitMethodCall(MethodCall ast, dynamic context) {
+  void visitMethodCall(
+    MethodCall ast,
+    void _,
+  ) {
     _visit(ast.receiver);
     sb.write(
         ast.receiver is ImplicitReceiver ? '${ast.name}(' : '.${ast.name}(');
@@ -157,19 +187,37 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitPrefixNot(PrefixNot ast, dynamic context) {
+  void visitPostfixNotNull(
+    PostfixNotNull ast,
+    void _,
+  ) {
+    _visit(ast.expression);
+    sb.write('!');
+  }
+
+  @override
+  void visitPrefixNot(
+    PrefixNot ast,
+    void _,
+  ) {
     sb.write('!');
     _visit(ast.expression);
   }
 
   @override
-  void visitSafePropertyRead(SafePropertyRead ast, dynamic context) {
+  void visitSafePropertyRead(
+    SafePropertyRead ast,
+    void _,
+  ) {
     _visit(ast.receiver);
     sb.write('?.${ast.name}');
   }
 
   @override
-  void visitSafeMethodCall(SafeMethodCall ast, dynamic context) {
+  void visitSafeMethodCall(
+    SafeMethodCall ast,
+    void _,
+  ) {
     _visit(ast.receiver);
     sb.write('?.${ast.name}(');
     var isFirst = true;
@@ -187,15 +235,24 @@ class Unparser implements AstVisitor {
   }
 
   @override
-  void visitStaticRead(StaticRead ast, dynamic context) {
+  void visitStaticRead(
+    StaticRead ast,
+    void _,
+  ) {
     sb.write(ast.id.name);
   }
 
   @override
-  void visitEmptyExpr(EmptyExpr ast, dynamic context) {}
+  void visitEmptyExpr(
+    EmptyExpr ast,
+    void _,
+  ) {}
 
   @override
-  void visitVariableRead(VariableRead ast, dynamic context) {}
+  void visitVariableRead(
+    VariableRead ast,
+    void _,
+  ) {}
 
   void _visit(AST ast) {
     ast.visit(this);

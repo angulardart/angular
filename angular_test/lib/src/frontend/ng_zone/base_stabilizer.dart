@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:pedantic/pedantic.dart';
+import 'package:angular/angular.dart';
 
 import '../stabilizer.dart';
 
@@ -30,7 +30,7 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
 
   @override
   Future<bool> update([
-    void Function() runAndTrackSideEffects,
+    void Function()? runAndTrackSideEffects,
   ]) {
     // Future.sync() ensures that any errors thrown by `runAndTrackSideEffects`
     // are propagated through the returned Future instead of being thrown
@@ -51,20 +51,15 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
   @protected
   Future<void> waitForAsyncEvents() => ngZone.onTurnDone.first;
 
-  @protected
-  static StackTrace rebuildStackTrace(List<Object> traceOrChain) {
-    return StackTrace.fromString(traceOrChain.join('\n'));
-  }
-
   Future<void> _waitForAsyncEventsOrErrors() async {
-    Object uncaughtError;
-    StackTrace uncaughtStack;
-    StreamSubscription<void> onErrorSub;
+    Object? uncaughtError;
+    StackTrace? uncaughtStack;
+    late final StreamSubscription<void> onErrorSub;
 
     // Used instead of .first in order to allow cancellation.
-    onErrorSub = ngZone.onError.listen((e) {
+    onErrorSub = ngZone.onUncaughtError.listen((e) {
       uncaughtError = e.error;
-      uncaughtStack = rebuildStackTrace(e.stackTrace);
+      uncaughtStack = e.stackTrace;
       onErrorSub.cancel();
     });
 
@@ -77,7 +72,7 @@ abstract class BaseNgZoneStabilizer<T extends Timer> extends NgTestStabilizer {
 
     // Return the caught error or just a blank future to continue.
     return uncaughtError != null
-        ? Future.error(uncaughtError, uncaughtStack)
+        ? Future.error(uncaughtError!, uncaughtStack)
         : Future.value();
   }
 }

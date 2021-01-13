@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -10,25 +9,23 @@ void main() {
 
   group('markChildForCheck() should update', () {
     test('content child', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestContentChildFactory());
+      final testBed = NgTestBed(ng.createTestContentChildFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
-      await testFixture.update((component) => component.child.update('a'));
+      await testFixture.update((component) => component.child!.update('a'));
       expect(testFixture.text, 'a');
     });
 
     test('content children', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestContentChildrenFactory());
+      final testBed = NgTestBed(ng.createTestContentChildrenFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
-      await testFixture.update((component) => component.child.update('a'));
+      await testFixture.update((component) => component.child!.update('a'));
       expect(testFixture.text, 'aaa');
     });
 
     test('view child', () async {
-      final testBed = NgTestBed.forComponent(ng.createTestViewChildFactory());
+      final testBed = NgTestBed(ng.createTestViewChildFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
@@ -36,8 +33,7 @@ void main() {
     });
 
     test('view children', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestViewChildrenFactory());
+      final testBed = NgTestBed(ng.createTestViewChildrenFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, isEmpty);
       await testFixture.update((component) => component.update('a'));
@@ -47,17 +43,17 @@ void main() {
     // This is a common pattern we should be certain works.
     group('existing provider', () {
       test('content children', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createTestExistingProviderContentChildrenFactory());
+        final testBed =
+            NgTestBed(ng.createTestExistingProviderContentChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
-        await testFixture.update((component) => component.child.update('a'));
+        await testFixture.update((component) => component.child!.update('a'));
         expect(testFixture.text, 'aaa');
       });
 
       test('view children', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createTestExistingProviderViewChildrenFactory());
+        final testBed =
+            NgTestBed(ng.createTestExistingProviderViewChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) => component.update('a'));
@@ -67,17 +63,17 @@ void main() {
 
     group('nested', () {
       test('content children', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createTestEmbeddedContentChildrenFactory());
+        final testBed =
+            NgTestBed(ng.createTestEmbeddedContentChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
-        await testFixture.update((component) => component.child.update('a'));
+        await testFixture.update((component) => component.child!.update('a'));
         expect(testFixture.text, 'a');
         await testFixture.update((component) {
           component.isSecondChildVisible = true;
         });
         expect(testFixture.text, 'aa');
-        await testFixture.update((component) => component.child.update('b'));
+        await testFixture.update((component) => component.child!.update('b'));
         expect(testFixture.text, 'bb');
         await testFixture.update((component) {
           component.areRemainingChildrenVisible = true;
@@ -86,8 +82,7 @@ void main() {
       });
 
       test('view children', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createTestEmbeddedViewChildrenFactory());
+        final testBed = NgTestBed(ng.createTestEmbeddedViewChildrenFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, isEmpty);
         await testFixture.update((component) {
@@ -126,11 +121,11 @@ class HasContentChild {
   final ChangeDetectorRef _changeDetectorRef;
 
   @ContentChild(Child)
-  Child child;
+  Child? child;
 
   void update(String value) {
-    child.value = value;
-    _changeDetectorRef.markChildForCheck(child);
+    child!.value = value;
+    _changeDetectorRef.markChildForCheck(child!);
   }
 }
 
@@ -145,7 +140,7 @@ class HasContentChild {
 )
 class TestContentChild {
   @ViewChild(HasContentChild)
-  HasContentChild child;
+  HasContentChild? child;
 }
 
 @Component(
@@ -189,7 +184,7 @@ class HasContentChildren {
 )
 class TestContentChildren {
   @ViewChild(HasContentChildren)
-  HasContentChildren child;
+  HasContentChildren? child;
 }
 
 @Component(
@@ -203,11 +198,11 @@ class TestViewChild {
   final ChangeDetectorRef _changeDetectorRef;
 
   @ViewChild(Child)
-  Child child;
+  Child? child;
 
   void update(String value) {
-    child.value = value;
-    _changeDetectorRef.markChildForCheck(child);
+    child!.value = value;
+    _changeDetectorRef.markChildForCheck(child!);
   }
 }
 
@@ -226,10 +221,10 @@ class TestViewChildren {
   final ChangeDetectorRef _changeDetectorRef;
 
   @ViewChildren(Child)
-  List<Child> children;
+  List<Child>? children;
 
   void update(String value) {
-    for (final child in children) {
+    for (final child in children!) {
       child.value = value;
       _changeDetectorRef.markChildForCheck(child);
     }
@@ -237,7 +232,7 @@ class TestViewChildren {
 }
 
 abstract class HasValue {
-  String value;
+  String? value;
 }
 
 @Component(
@@ -263,10 +258,10 @@ class HasExistingProviderContentChildren {
   final ChangeDetectorRef _changeDetectorRef;
 
   @ContentChildren(HasValue)
-  List<HasValue> children;
+  List<HasValue>? children;
 
   void update(String value) {
-    for (final child in children) {
+    for (final child in children!) {
       child.value = value;
       _changeDetectorRef.markChildForCheck(child);
     }
@@ -286,7 +281,7 @@ class HasExistingProviderContentChildren {
 )
 class TestExistingProviderContentChildren {
   @ViewChild(HasExistingProviderContentChildren)
-  HasExistingProviderContentChildren child;
+  HasExistingProviderContentChildren? child;
 }
 
 @Component(
@@ -304,10 +299,10 @@ class TestExistingProviderViewChildren {
   final ChangeDetectorRef _changeDetectorRef;
 
   @ViewChildren(HasValue)
-  List<HasValue> children;
+  List<HasValue>? children;
 
   void update(String value) {
-    for (final child in children) {
+    for (final child in children!) {
       child.value = value;
       _changeDetectorRef.markChildForCheck(child);
     }
@@ -333,7 +328,7 @@ class TestEmbeddedContentChildren {
   var areRemainingChildrenVisible = false;
 
   @ViewChild(HasContentChildren)
-  HasContentChildren child;
+  HasContentChildren? child;
 }
 
 @Component(

@@ -1,4 +1,4 @@
-@TestOn('browser')
+// @dart=2.9
 
 import 'dart:async';
 
@@ -12,14 +12,12 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support null @Output if mock-like', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestMockNotificationComponentFactory());
+    final testBed = NgTestBed(ng.createTestMockNotificationComponentFactory());
     await testBed.create();
   });
 
   test("shouldn't support null @Output if not mock-like", () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestFakeNotificationComponentFactory());
+    final testBed = NgTestBed(ng.createTestFakeNotificationComponentFactory());
     expect(testBed.create(), throwsA(const TypeMatcher<NoSuchMethodError>()));
   });
 }

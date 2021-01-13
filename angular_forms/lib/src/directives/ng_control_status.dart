@@ -15,22 +15,38 @@ class NgControlStatus {
   NgControlStatus(@Self() this._cd);
 
   @HostBinding('class.ng-untouched')
-  bool get ngClassUntouched =>
-      _cd.control != null ? _cd.control.untouched : false;
+  bool get ngClassUntouched {
+    var control = _cd.control;
+    return control != null ? control.untouched : false;
+  }
 
   @HostBinding('class.ng-touched')
-  bool get ngClassTouched => _cd.control != null ? _cd.control.touched : false;
+  bool get ngClassTouched {
+    var control = _cd.control;
+    return control != null ? control.touched : false;
+  }
 
   @HostBinding('class.ng-pristine')
-  bool get ngClassPristine =>
-      _cd.control != null ? _cd.control.pristine : false;
+  bool get ngClassPristine {
+    var control = _cd.control;
+    return control != null ? control.pristine : false;
+  }
 
   @HostBinding('class.ng-dirty')
-  bool get ngClassDirty => _cd.control != null ? _cd.control.dirty : false;
+  bool get ngClassDirty {
+    var control = _cd.control;
+    return control != null ? control.dirty : false;
+  }
 
   @HostBinding('class.ng-valid')
-  bool get ngClassValid => _cd.control != null ? _cd.control.valid : false;
+  bool get ngClassValid {
+    var control = _cd.control;
+    return control != null ? control.valid : false;
+  }
 
   @HostBinding('class.ng-invalid')
-  bool get ngClassInvalid => _cd.control != null ? !_cd.control.valid : false;
+  bool get ngClassInvalid {
+    var control = _cd.control;
+    return control != null ? !control.valid : false;
+  }
 }

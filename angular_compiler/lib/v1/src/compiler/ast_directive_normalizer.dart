@@ -1,9 +1,8 @@
-import 'dart:async';
-
+import 'package:angular/src/meta.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'compile_metadata.dart';
 import 'parse_util.dart';
@@ -15,20 +14,22 @@ import 'style_url_resolver.dart' show isStyleUrlResolvable;
 /// content and styles are available to the compilation step as simple strings.
 class AstDirectiveNormalizer {
   final NgAssetReader _reader;
+
   const AstDirectiveNormalizer(this._reader);
 
   Future<CompileDirectiveMetadata> normalizeDirective(
     CompileDirectiveMetadata directive,
-  ) {
+  ) async {
     if (!directive.isComponent) {
-      return Future.value(directive);
+      return directive;
     }
-    return _normalizeTemplate(
-      directive.type,
-      directive.template,
-    ).then((result) {
-      return CompileDirectiveMetadata.from(directive, template: result);
-    });
+    return CompileDirectiveMetadata.from(
+      directive,
+      template: await _normalizeTemplate(
+        directive.type,
+        directive.template,
+      ),
+    );
   }
 
   Future<CompileTemplateMetadata> _normalizeTemplate(
@@ -53,55 +54,57 @@ class AstDirectiveNormalizer {
         directiveType.moduleUrl,
         template.templateUrl,
       );
-      final templateContent =
-          await _readTextOrThrow(sourceAbsoluteUrl, directiveType);
       return _normalizeLoadedTemplate(
         directiveType,
         template,
-        templateContent,
+        await _readTextOrThrow(sourceAbsoluteUrl, directiveType),
         sourceAbsoluteUrl,
       );
     }
-    throwFailure(''
-        'Component "${directiveType.name}" in \n'
-        '${directiveType.moduleUrl}:\n'
-        'Requires either a "template" or "templateUrl"; had neither.');
+    throw BuildError.withoutContext(
+      'Component "${directiveType.name}" in \n'
+      '${directiveType.moduleUrl}:\n'
+      'Requires either a "template" or "templateUrl"; had neither.',
+    );
   }
 
   Future<String> _readTextOrThrow(
-      String sourceAbsoluteUrl, CompileTypeMetadata directiveType) async {
+    String sourceAbsoluteUrl,
+    CompileTypeMetadata directiveType,
+  ) async {
     try {
       return await _reader.readText(sourceAbsoluteUrl);
     } catch (e) {
-      throwFailure(''
-          'Component "${directiveType.name}" in \n'
-          '${directiveType.moduleUrl}:\n'
-          'Failed to read templateUrl $sourceAbsoluteUrl.\n'
-          'Ensure the file exists on disk and is available to the compiler.');
+      throw BuildError.withoutContext(
+        'Component "${directiveType.name}" in \n'
+        '${directiveType.moduleUrl}:\n'
+        'Failed to read templateUrl $sourceAbsoluteUrl.\n'
+        'Ensure the file exists on disk and is available to the compiler.',
+      );
     }
   }
 
   Future<void> _validateStyleUrlsNotMeant(
     List<String> styles,
     CompileTypeMetadata directiveType,
-  ) {
+  ) async {
     // Short-circuit.
     if (styles.every((s) => s.contains('\n') || !s.endsWith('.css'))) {
-      return Future.value();
+      return;
     }
     return Future.wait(
-      styles.map((content) {
-        return _reader
-            .canRead(_reader.resolveUrl(directiveType.moduleUrl, content))
-            .then((couldRead) {
-          if (couldRead) {
-            // TODO: https://github.com/dart-lang/angular/issues/851.
-            logWarning('Component "${directiveType.name}" in\n  '
-                '${directiveType.moduleUrl}:\n'
-                '  Has a "styles" property set to a string that is a file.\n'
-                '  This is a common mistake, did you mean "styleUrls" instead?');
-          }
-        });
+      styles.map((content) async {
+        final canRead = await _reader.canRead(
+          _reader.resolveUrl(directiveType.moduleUrl, content),
+        );
+        if (canRead) {
+          logWarning(
+            'Component "${directiveType.name}" in\n  '
+            '${directiveType.moduleUrl}:\n'
+            '  Has a "styles" property set to a string that is a file.\n'
+            '  This is a common mistake, did you mean "styleUrls" instead?',
+          );
+        }
       }),
     );
   }
@@ -109,36 +112,42 @@ class AstDirectiveNormalizer {
   Future<void> _validateTemplateUrlNotMeant(
     String content,
     CompileTypeMetadata directiveType,
-  ) {
+  ) async {
     // Short-circuit.
     if (content.contains('\n') || !content.endsWith('.html')) {
-      return Future.value();
+      return;
     }
-    return _reader
-        .canRead(_reader.resolveUrl(directiveType.moduleUrl, content))
-        .then((couldRead) {
-      if (couldRead) {
-        // TODO: https://github.com/dart-lang/angular/issues/851.
-        logWarning('Component "${directiveType.name}" in\n  '
-            '${directiveType.moduleUrl}:\n'
-            '  Has a "template" property set to a string that is a file.\n'
-            '  This is a common mistake, did you mean "templateUrl" instead?');
-      }
-    });
+    final canRead = await _reader.canRead(
+      _reader.resolveUrl(directiveType.moduleUrl, content),
+    );
+    if (canRead) {
+      logWarning(
+        'Component "${directiveType.name}" in\n  '
+        '${directiveType.moduleUrl}:\n'
+        '  Has a "template" property set to a string that is a file.\n'
+        '  This is a common mistake, did you mean "templateUrl" instead?',
+      );
+    }
   }
 
   CompileTemplateMetadata _normalizeLoadedTemplate(
-      CompileTypeMetadata directiveType,
-      CompileTemplateMetadata templateMeta,
-      String template,
-      String templateAbsUrl) {
+    CompileTypeMetadata directiveType,
+    CompileTemplateMetadata templateMeta,
+    String template,
+    String templateAbsUrl,
+  ) {
     // TODO(alorenzen): Remove need to parse template here.
     // We should be able to calculate this in the main parse.
-    var ngContentSelectors =
-        _parseTemplate(template, directiveType, templateAbsUrl);
+    final ngContentSelectors = _parseTemplate(
+      template,
+      directiveType,
+      templateAbsUrl,
+    );
 
-    var allExternalStyles =
-        _resolveExternalStylesheets(templateMeta, directiveType.moduleUrl);
+    final allExternalStyles = _resolveExternalStylesheets(
+      templateMeta,
+      directiveType.moduleUrl,
+    );
 
     // Optimization: Turn off encapsulation when there are no styles to apply.
     var encapsulation = templateMeta.encapsulation;
@@ -160,24 +169,31 @@ class AstDirectiveNormalizer {
   }
 
   List<String> _resolveExternalStylesheets(
-      CompileTemplateMetadata templateMeta, String moduleUrl) {
-    final allExternalStyles = <String>[];
-
-    // Try to resolve external stylesheets.
-    for (final url in templateMeta.styleUrls) {
-      if (isStyleUrlResolvable(url)) {
-        allExternalStyles.add(_reader.resolveUrl(moduleUrl, url));
-      } else {
-        throwFailure('Invalid Style URL: "$url" (from "$moduleUrl").');
-      }
-    }
-    return allExternalStyles;
+    CompileTemplateMetadata templateMeta,
+    String moduleUrl,
+  ) {
+    return [
+      for (final url in templateMeta.styleUrls)
+        if (isStyleUrlResolvable(url))
+          _reader.resolveUrl(moduleUrl, url)
+        else
+          throw BuildError.withoutContext(
+            'Invalid Style URL: "$url" (from "$moduleUrl").',
+          )
+    ];
   }
 
   /// Parse the template, and visit to find <ng-content>.
-  List<String> _parseTemplate(String template,
-      CompileTypeMetadata directiveType, String templateAbsUrl) {
-    final exceptionHandler = AstExceptionHandler(template, templateAbsUrl);
+  List<String> _parseTemplate(
+    String template,
+    CompileTypeMetadata directiveType,
+    String templateAbsUrl,
+  ) {
+    final exceptionHandler = AstExceptionHandler(
+      template,
+      templateAbsUrl,
+      directiveType.name,
+    );
     final parsedNodes = ast.parse(
       template,
       // TODO: Use the full-file path when possible.
@@ -186,9 +202,8 @@ class AstDirectiveNormalizer {
       exceptionHandler: exceptionHandler,
       desugar: false,
     );
-    exceptionHandler.maybeReportExceptions();
-
-    final visitor = _TemplateNormalizerVisitor();
+    exceptionHandler.throwErrorsIfAny();
+    final visitor = _FindAllNgContentSelectors();
     for (final node in parsedNodes) {
       node.accept(visitor);
     }
@@ -196,7 +211,7 @@ class AstDirectiveNormalizer {
   }
 }
 
-class _TemplateNormalizerVisitor extends ast.RecursiveTemplateAstVisitor<Null> {
+class _FindAllNgContentSelectors extends ast.RecursiveTemplateAstVisitor<void> {
   final ngContentSelectors = <String>[];
 
   @override

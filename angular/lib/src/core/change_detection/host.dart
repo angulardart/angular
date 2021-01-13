@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:meta/meta.dart';
 import 'package:meta/dart2js.dart' as dart2js;
-
-import 'package:angular/src/runtime.dart';
+import 'package:meta/meta.dart';
 import 'package:angular/src/core/linker/views/view.dart';
+import 'package:angular/src/runtime/check_binding.dart';
+import 'package:angular/src/utilities.dart';
 
-import 'change_detection.dart';
+import 'change_detector_ref.dart';
 
 /// A host for tracking the current application.
 ///
@@ -15,15 +15,14 @@ import 'change_detection.dart';
 /// now this is just for ease of testing and not breaking existing code.
 abstract class ChangeDetectionHost {
   /// The current host being executed (synchronously) via [tick].
-  static ChangeDetectionHost _current;
+  static ChangeDetectionHost? _current;
 
   /// **INTERNAL ONLY**: Whether a crash was detected during the last `tick()`.
   static bool get checkForCrashes => _current?._lastGuardedView != null;
 
   /// **INTERNAL ONLY**: Register a crash during [view.detectCrash].
   static void handleCrash(View view, Object error, StackTrace trace) {
-    final current = _current;
-    assert(current != null);
+    final current = _current!;
     current
       .._lastGuardedView = view
       .._lastCaughtException = error
@@ -34,13 +33,13 @@ abstract class ChangeDetectionHost {
   /// is set (non-null). Change detection is re-run (synchronously) in a
   /// slow-mode that individually checks component, and disables change
   /// detection for them if there is failure detected.
-  View _lastGuardedView;
+  View? _lastGuardedView;
 
   /// An exception caught for [_lastGuardedView], if any.
-  Object _lastCaughtException;
+  Object? _lastCaughtException;
 
   /// A stack trace caught for [_lastGuardedView].
-  StackTrace _lastCaughtTrace;
+  StackTrace? _lastCaughtTrace;
 
   /// Tracks whether a tick is currently in progress.
   var _runningTick = false;
@@ -63,6 +62,8 @@ abstract class ChangeDetectionHost {
   /// to ensure that no further changes are detected. If additional changes are
   /// picked up, an exception is thrown to warn the user this is bad behavior to
   /// rely on for the production application.
+  @nonVirtual
+  @protected
   void tick() {
     if (isDevMode && _runningTick) {
       throw StateError('Change detecion (tick) was called recursively');
@@ -130,13 +131,23 @@ abstract class ChangeDetectionHost {
     return _checkForChangeDetectionError();
   }
 
+  static const _isSoundNullSafety = <Object?>[] is! List<Object>;
+
   /// Checks for any uncaught exception that occurred during change detection.
   @dart2js.noInline
   bool _checkForChangeDetectionError() {
-    if (_lastGuardedView != null) {
+    final lastGuardedView = _lastGuardedView;
+    // TODO(b/168837384): _lastCaughtException != null.
+    if (lastGuardedView != null) {
       reportViewException(
-        _lastGuardedView,
-        _lastCaughtException,
+        lastGuardedView,
+        // TODO(b/168837384): Better handle the cases where this is null or make
+        // the value being null part of the explicit contract. By changing this
+        // to `_lastCaughtException!` and running our test cases multiple tests
+        // start failing!
+        _isSoundNullSafety
+            ? _lastCaughtException ?? Error()
+            : _lastCaughtException as Object,
         _lastCaughtTrace,
       );
       _resetViewErrors();
@@ -155,7 +166,7 @@ abstract class ChangeDetectionHost {
   void reportViewException(
     View view,
     Object error, [
-    StackTrace trace,
+    StackTrace? trace,
   ]) {
     view.disableChangeDetection();
     handleUncaughtException(error, trace);
@@ -166,7 +177,11 @@ abstract class ChangeDetectionHost {
   /// This is expected to be provided by the current application.
   @protected
   @visibleForOverriding
-  void handleUncaughtException(Object error, [StackTrace trace, String reason]);
+  void handleUncaughtException(
+    Object error, [
+    StackTrace? trace,
+    String? reason,
+  ]);
 
   /// Runs the given [callback] in the zone and returns the result of that call.
   ///
@@ -179,7 +194,7 @@ abstract class ChangeDetectionHost {
     // outside as Dart swallows rejected futures outside the 'onError: '
     // callback for Future.
     final completer = Completer<R>();
-    FutureOr<R> result;
+    FutureOr<R>? result;
     runInZone(() {
       try {
         result = callback();
@@ -189,16 +204,49 @@ abstract class ChangeDetectionHost {
             completer.complete(result);
           }, onError: (e, s) {
             final sCasted = unsafeCast<StackTrace>(s);
-            completer.completeError(e, sCasted);
-            handleUncaughtException(e, sCasted);
+            final eCasted = unsafeCast<Object>(e);
+            completer.completeError(eCasted, sCasted);
+            handleUncaughtException(eCasted, sCasted);
           });
         }
       } catch (e, s) {
         handleUncaughtException(e, s);
+        // Note, due to the rethrow a synchronous error thrown in callback will
+        // cause the `run` function never to return. This is important to note
+        // because of the handling logic below.
         rethrow;
       }
     });
-    return result is Future<Object> ? completer.future : result;
+    // Some complexity in null-safety: `FutureOr<R>` can mean:
+    // 1. Future<R> where R might be nullable or non-nullable.
+    // 2. R, where R is non-nullable.
+    // 3. R, where R is nullable.
+    //
+    // We need to carefully evaluate the three different cases to avoid a subtle
+    // breaking API change (we still want our users to be allowed to return null
+    // if they expect a nullable value) - i.e.:
+    //
+    //   // Should continue to be valid.
+    //   String? name = run(() => null);
+    //
+    // See also: https://dart.dev/null-safety/understanding-null-safety#nullability-and-generics.
+    final r = result;
+    if (r == null) {
+      // The variable r can only be null here if the callback returned null,
+      // which in turn can only happen if either we were called from opted-in
+      // code and R is nullable, or if we were called from opted-out code.
+      //
+      // In either case, the case here should always suceed. By explicitly
+      // checking for null, we avoid having a cast in the final (and likely more
+      // frequently executed) branch of the conditional.
+      return r as R;
+    } else if (r is Future<Object>) {
+      // Return as a Future<R>.
+      return completer.future;
+    } else {
+      // Return as R.
+      return r;
+    }
   }
 
   /// Executes the [callback] function within the current `NgZone`.

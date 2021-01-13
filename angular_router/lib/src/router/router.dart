@@ -1,9 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:async';
-
 import '../directives/router_outlet_directive.dart';
 import 'navigation_params.dart';
 import 'router_state.dart';
@@ -33,7 +27,7 @@ abstract class Router {
   ///
   /// Note this isn't updated until after all `onActivate` implementations are
   /// invoked, and [onRouteActivated] fires.
-  RouterState get current;
+  RouterState? get current;
 
   /// Emits the requested path when navigation starts.
   ///
@@ -46,6 +40,14 @@ abstract class Router {
   /// Note that for redirected routes, the requested path, not the path it
   /// redirects to, is emitted.
   Stream<String> get onNavigationStart;
+
+  /// Emits the potential change to the router state once the a new route is
+  /// resolved.
+  ///
+  /// This occurs after the [RouterHook] (if any) has rewritten the path and
+  /// parameters and the final non-redirecting route has been resolved, but
+  /// before any [CanActivate] and [CanDeactive] implementations are checked.
+  Stream<RouterState> get onRouteResolved;
 
   /// Emits the next router state after a new route is activated.
   ///
@@ -66,7 +68,7 @@ abstract class Router {
   /// or was blocked by a router lifecycle implementor.
   Future<NavigationResult> navigate(
     String path, [
-    NavigationParams navigationParams,
+    NavigationParams? navigationParams,
   ]);
 
   /// Attempts to navigate to a route that matches [url].

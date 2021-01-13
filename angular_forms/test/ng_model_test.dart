@@ -1,7 +1,6 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/runtime/check_binding.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_test/angular_test.dart';
 
@@ -11,39 +10,40 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   group('NgModelTest', () {
-    NgTestFixture<NgModelTest> fixture;
+    late NgTestFixture<NgModelTest> fixture;
 
     setUp(() async {
-      final testBed = NgTestBed.forComponent(ng.createNgModelTestFactory());
+      final testBed = NgTestBed(ng.createNgModelTestFactory());
       fixture = await testBed.create();
     });
 
     test('should reexport control properties', () async {
       await fixture.update((cmp) {
-        var control = cmp.ngModel.control;
-        expect(cmp.ngModel.value, control.value);
-        expect(cmp.ngModel.valid, control.valid);
-        expect(cmp.ngModel.errors, control.errors);
-        expect(cmp.ngModel.pristine, control.pristine);
-        expect(cmp.ngModel.dirty, control.dirty);
-        expect(cmp.ngModel.touched, control.touched);
-        expect(cmp.ngModel.untouched, control.untouched);
+        var model = cmp.ngModel!;
+        var control = model.control;
+        expect(model.value, control.value);
+        expect(model.valid, control.valid);
+        expect(model.errors, control.errors);
+        expect(model.pristine, control.pristine);
+        expect(model.dirty, control.dirty);
+        expect(model.touched, control.touched);
+        expect(model.untouched, control.untouched);
       });
     });
 
     test('should set up validator', () async {
       await fixture.update((cmp) {
-        expect(cmp.ngModel.errors, {'required': true});
+        expect(cmp.ngModel!.errors, {'required': true});
         cmp.loginValue = 'someValue';
       });
       await fixture.update((cmp) {
-        expect(cmp.ngModel.errors, isNull);
+        expect(cmp.ngModel!.errors, isNull);
       });
     });
   });
 
   test('throws when violating the checkBinding contract', () async {
-    final testBed = NgTestBed.forComponent(
+    final testBed = NgTestBed(
       ng.createNgModelWithCheckBindingTestFactory(),
     );
 
@@ -71,9 +71,9 @@ void main() {
 )
 class NgModelTest {
   @ViewChild('login')
-  NgModel ngModel;
+  NgModel? ngModel;
 
-  String loginValue;
+  String? loginValue;
 }
 
 @Component(
@@ -88,7 +88,7 @@ class NgModelTest {
   ''',
 )
 class NgModelWithCheckBindingTest {
-  String value;
+  String? value;
 }
 
 @Component(
@@ -97,14 +97,14 @@ class NgModelWithCheckBindingTest {
 )
 class CustomEditorWithNgModelSupport implements ControlValueAccessor<String> {
   final NgControl _ngControl;
-  ChangeFunction<String> _onChange;
+  late ChangeFunction<String> _onChange;
 
   CustomEditorWithNgModelSupport(this._ngControl) {
     _ngControl.valueAccessor = this;
   }
 
   @override
-  void writeValue(String value) {
+  void writeValue(String? value) {
     // Example of bad behavior. We are, synchronously, receiving a write coming
     // from ngModel.model=, and synchronously, responding back to ngModel, which
     // in turn, synchronously, talks back via StreamController(sync: true).

@@ -27,7 +27,7 @@ abstract class ControlValueAccessor<T> {
 /// Used to provide a [ControlValueAccessor] for form controls.
 ///
 /// See [DefaultValueAccessor] for how to implement one.
-const ngValueAccessor = MultiToken<ControlValueAccessor>(
+const ngValueAccessor = MultiToken<ControlValueAccessor<dynamic>>(
   'NgValueAccessor',
 );
 
@@ -42,6 +42,7 @@ typedef TouchFunction = dynamic Function();
 /// **NOTE**: This will add a [HostListener] on the `blur` event.
 class TouchHandler {
   // TODO(alorenzen): Make this private.
+  // ignore: prefer_function_declarations_over_variables
   TouchFunction onTouched = () {};
 
   @HostListener('blur')
@@ -60,7 +61,8 @@ class TouchHandler {
 /// **NOTE**: It is expected that all subclasses will implement their own
 /// [HostListener] to actually call the [onChange] callback..
 class ChangeHandler<T> {
-  ChangeFunction<T> onChange = (T _, {String rawValue}) {};
+  // ignore: prefer_function_declarations_over_variables
+  ChangeFunction<T> onChange = (T _, {String? rawValue}) {};
 
   /// Set the function to be called when the control receives a change event.
   void registerOnChange(ChangeFunction<T> fn) {

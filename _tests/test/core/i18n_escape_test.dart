@@ -1,9 +1,8 @@
-@TestOn('browser')
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'i18n_escape_test.template.dart' as ng;
 
@@ -15,30 +14,26 @@ void main() {
 
   group('should escape special characters in', () {
     test('text', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createShouldEscapeI18nTextFactory());
+      final testBed = NgTestBed(ng.createShouldEscapeI18nTextFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, matches(regExp));
     });
 
     test('text with HTML', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createShouldEscapeI18nHtmlFactory());
+      final testBed = NgTestBed(ng.createShouldEscapeI18nHtmlFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, matches(regExp));
     });
 
     test('attributes', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createShouldEscapeI18nAttributeFactory());
+      final testBed = NgTestBed(ng.createShouldEscapeI18nAttributeFactory());
       final testFixture = await testBed.create();
-      final element = testFixture.rootElement.querySelector('[foo]');
+      final element = testFixture.rootElement.querySelector('[foo]')!;
       expect(element.getAttribute('foo'), matches(regExp));
     });
 
     test('properties', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createShouldEscapeI18nPropertyFactory());
+      final testBed = NgTestBed(ng.createShouldEscapeI18nPropertyFactory());
       final testFixture = await testBed.create();
       final imgElement =
           testFixture.rootElement.querySelector('img') as ImageElement;
@@ -46,10 +41,9 @@ void main() {
     });
 
     test('inputs', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createShouldEscapeI18nInputFactory());
+      final testBed = NgTestBed(ng.createShouldEscapeI18nInputFactory());
       final testFixture = await testBed.create();
-      expect(testFixture.assertOnlyInstance.greeting.message, matches(regExp));
+      expect(testFixture.assertOnlyInstance.greeting!.message, matches(regExp));
     });
   });
 }
@@ -79,7 +73,8 @@ class ShouldEscapeI18nHtml {}
   template: '''
     <div
         foo="$message"
-        @i18n:foo="A message with characters that should be escaped">
+        @i18n:foo="A message with characters that should be escaped"
+        @skipSchemaValidationFor="[foo]">
     </div>
    ''',
 )
@@ -101,14 +96,14 @@ class ShouldEscapeI18nProperty {}
 )
 class GreetingComponent {
   @Input()
-  String message;
+  String? message;
 }
 
 @Component(
   selector: 'test',
   template: r'''
     <greeting
-        [message]="'\\ It\'s\n$12.00'"
+        [message]="'\\ It\'s\n\$12.00'"
         @i18n:message="A message with characters that should be escaped">
     </greeting>
   ''',
@@ -116,5 +111,5 @@ class GreetingComponent {
 )
 class ShouldEscapeI18nInput {
   @ViewChild(GreetingComponent)
-  GreetingComponent greeting;
+  GreetingComponent? greeting;
 }

@@ -2,9 +2,10 @@ import 'dart:async';
 
 import 'package:examples.hacker_news_pwa/hacker_news_service.dart';
 
-List<Map> _createFeed(int numItems) => List.generate(numItems, _createItem);
+List<Map<String, Object?>> _createFeed(int numItems) =>
+    List.generate(numItems, _createItem);
 
-Map _createItem(int id, {bool withComments = false}) {
+Map<String, Object?> _createItem(int id, {bool withComments = false}) {
   final item = {
     'comments_count': id,
     'id': id,
@@ -30,9 +31,10 @@ class FakeHackerNewsService implements HackerNewsService {
   const FakeHackerNewsService();
 
   @override
-  Future<List<Map>> getFeed(_, __) => Future.value(_createFeed(30));
+  Future<List<Map<String, Object?>>> getFeed(_, __) =>
+      Future.value(_createFeed(30));
 
   @override
-  Future<Map> getItem(String id) =>
+  Future<Map<String, Object?>> getItem(String id) =>
       Future.value(_createItem(int.parse(id), withComments: true));
 }

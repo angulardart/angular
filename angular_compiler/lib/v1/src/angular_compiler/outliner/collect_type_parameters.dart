@@ -1,7 +1,7 @@
 // We're not supposed to import the top-level analyzer.dart, but  it's needed
 // for [parseCompiliationUnit], which has no alternatives.
 // ignore: deprecated_member_use
-import 'package:analyzer/analyzer.dart';
+import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
@@ -63,8 +63,14 @@ Future<void> _collectTypeParametersFromUnit(
   // Parse unresolved compilation unit from source. This is cheaper than
   // accessing the resolved compilation unit through the element model.
   final source = await buildStep.readAsString(assetId);
-  final unit = parseCompilationUnit(source,
-      name: '${assetId.uri}', parseFunctionBodies: false);
+
+  final parseResult = parseString(
+    content: source,
+    path: '${assetId.uri}',
+    throwIfDiagnostics: false,
+  );
+  final unit = parseResult.unit;
+
   // Collect generic type parameters for directives.
   for (final declaration in unit.declarations) {
     if (declaration is ClassDeclaration &&

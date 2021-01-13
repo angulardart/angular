@@ -1,11 +1,9 @@
-@TestOn('browser')
-
 import 'dart:html';
 import 'dart:js';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'key_events_test.template.dart' as ng;
 
@@ -13,8 +11,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test("Should receive 'keydown' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keydown');
     testFixture.rootElement.dispatchEvent(event);
@@ -26,8 +23,7 @@ void main() {
   });
 
   test("Should receive 'keydown.a' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keydown', KeyCode.A);
     testFixture.rootElement.dispatchEvent(event);
@@ -39,8 +35,7 @@ void main() {
   });
 
   test("Should receive 'keydown.shift.a", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeydownListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeydownListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keydown', KeyCode.A, shiftKey: true);
     testFixture.rootElement.dispatchEvent(event);
@@ -52,8 +47,7 @@ void main() {
   });
 
   test("Should receive 'keypress' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeypressListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeypressListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keypress');
     testFixture.rootElement.dispatchEvent(event);
@@ -63,8 +57,7 @@ void main() {
   });
 
   test("Should receive 'keyup' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = KeyboardEvent('keyup');
     testFixture.rootElement.dispatchEvent(event);
@@ -76,8 +69,7 @@ void main() {
   });
 
   test("Should receive 'keyup.enter' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.ENTER);
     testFixture.rootElement.dispatchEvent(event);
@@ -89,8 +81,7 @@ void main() {
   });
 
   test("Should receive 'keyup.control.enter' event", () async {
-    var testBed =
-        NgTestBed.forComponent(ng.createKeyupListenerComponentFactory());
+    var testBed = NgTestBed(ng.createKeyupListenerComponentFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.ENTER, ctrlKey: true);
     testFixture.rootElement.dispatchEvent(event);
@@ -102,7 +93,7 @@ void main() {
   });
 
   test('Should receive keyboard event with multiple modifiers', () async {
-    var testBed = NgTestBed.forComponent(ng.createModifiersListenerFactory());
+    var testBed = NgTestBed(ng.createModifiersListenerFactory());
     var testFixture = await testBed.create();
     var event = createKeyboardEvent('keyup', KeyCode.NUM_ZERO,
         altKey: true, metaKey: true);
@@ -210,8 +201,14 @@ Event createKeyboardEvent(
     var script = document.createElement('script')
       ..setAttribute('type', 'text/javascript')
       ..text = CREATE_KEYBOARD_EVENT_SCRIPT;
-    document.body.append(script);
+    document.body!.append(script);
   }
-  return context.callMethod(CREATE_KEYBOARD_EVENT_NAME,
-      [type, keyCode, ctrlKey, altKey, shiftKey, metaKey]);
+  return context.callMethod(CREATE_KEYBOARD_EVENT_NAME, [
+    type,
+    keyCode,
+    ctrlKey,
+    altKey,
+    shiftKey,
+    metaKey,
+  ]) as Event;
 }

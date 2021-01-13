@@ -1,12 +1,7 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart' show isDevMode;
+import 'package:angular/src/utilities.dart';
 
 import 'bed.dart';
 import 'stabilizer.dart';
@@ -15,7 +10,7 @@ import 'stabilizer.dart';
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
 T injectFromFixture<T>(NgTestFixture<void> fixture, Object tokenOrType) {
-  return fixture._rootComponentRef.injector.get(tokenOrType);
+  return fixture._rootComponentRef.injector.get(tokenOrType) as T;
 }
 
 class NgTestFixture<T> {
@@ -40,8 +35,8 @@ class NgTestFixture<T> {
   /// In most cases, it is preferable to use `disposeAnyRunningTest`.
   Future<void> dispose() async {
     await update();
-    _rootComponentRef.destroy();
-    _rootComponentRef.location.parent.remove();
+    // Remove the test bed's host element.
+    _rootComponentRef.location.parent!.remove();
     _applicationRef.dispose();
     if (isDevMode) {
       debugClearComponentStyles();
@@ -70,7 +65,7 @@ class NgTestFixture<T> {
   ///   c.value = 5;
   /// });
   /// expect(fixture.text, contains('5 little piggies'));
-  Future<void> update([void Function(T instance) run]) {
+  Future<void> update([void Function(T instance)? run]) {
     return _testStabilizer.stabilize(runAndTrackSideEffects: () {
       if (run != null) {
         Future<void>.sync(() {
@@ -83,7 +78,7 @@ class NgTestFixture<T> {
   /// All text nodes within the fixture.
   ///
   /// Provided as a convenience to do simple `expect` matchers.
-  String get text => rootElement.text;
+  String? get text => rootElement.text;
 
   /// A component instance to use for read-only operations (expect, assert)
   /// ONLY.

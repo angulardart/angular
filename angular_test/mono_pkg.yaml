@@ -1,0 +1,11 @@
+dart:
+- stable
+- dev
+
+stages:
+- analyze:
+  - dartanalyzer: --fatal-warnings .
+- build:
+  - command: pub run build_runner build --fail-on-severe
+- unit_test:
+  - command: pub run build_runner test --fail-on-severe -- -P travis

@@ -8,14 +8,10 @@
 @experimental
 library angular.experimental;
 
-import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart';
-export 'package:angular_compiler/v1/src/metadata.dart' show changeDetectionLink;
 import 'package:meta/meta.dart';
+import 'package:angular/angular.dart';
 
 import 'src/bootstrap/run.dart' show appInjector;
-import 'src/di/injector/injector.dart';
-import 'src/runtime.dart';
 import 'src/runtime/dom_helpers.dart';
 
 export 'src/common/directives/ng_for_identity.dart' show NgForIdentity;
@@ -23,7 +19,7 @@ export 'src/core/linker/component_factory.dart'
     show debugUsesDefaultChangeDetection;
 export 'src/core/linker/component_resolver.dart' show typeToFactory;
 export 'src/core/zone/ng_zone.dart' show longestPendingTimer, inAngularZone;
-export 'src/runtime/check_binding.dart' show debugCheckBindings;
+export 'src/meta.dart' show changeDetectionLink;
 
 /// Create a root application [Injector].
 ///
@@ -38,7 +34,7 @@ export 'src/runtime/check_binding.dart' show debugCheckBindings;
 ///
 /// **WARNING**: This API is not considered part of the stable API.
 Injector rootInjector(InjectorFactory userInjector) {
-  return appInjector(([parent]) => unsafeCast(userInjector(parent)));
+  return appInjector(userInjector);
 }
 
 /// Create a root (legacy, with `SlowComponentLoader`) application [Injector].
@@ -58,12 +54,12 @@ Injector rootLegacyInjector(InjectorFactory userInjector) {
   // Create a new appInjector, using wrappedUserInjector for provided services.
   // This includes services that will need to overwrite default services, such
   // as ExceptionHandler.
-  return appInjector(([parent]) {
+  return appInjector((parent) {
     return Injector.map({
       SlowComponentLoader: const SlowComponentLoader(
         ComponentLoader(),
       ),
-    }, unsafeCast(userInjector(parent)));
+    }, userInjector(parent));
   });
 }
 

@@ -1,0 +1,252 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'eager_existing_providers.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'eager_existing_providers.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'eager_existing_providers.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/di/errors.dart' as import9;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewProvidesServicesComponent0 _compView_0;
+  late final import1.ProvidesServicesComponent _ProvidesServicesComponent_0_5;
+  late final ViewInjectsServicesComponent0 _compView_1;
+  late final import1.InjectsServicesComponent _InjectsServicesComponent_1_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewProvidesServicesComponent0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._ProvidesServicesComponent_0_5 = import1.ProvidesServicesComponent();
+    this._compView_1 = ViewInjectsServicesComponent0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    this._InjectsServicesComponent_1_5 = import1.InjectsServicesComponent(this._ProvidesServicesComponent_0_5, this._ProvidesServicesComponent_0_5);
+    this._compView_1.create(this._InjectsServicesComponent_1_5);
+    this._compView_0.createAndProject(this._ProvidesServicesComponent_0_5, [
+      <Object>[_el_1]
+    ]);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (nodeIndex <= 1))) {
+      return this._ProvidesServicesComponent_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent(this.injector(0));
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$ProvidesServicesComponent = const [];
+
+class ViewProvidesServicesComponent0 extends import0.ComponentView<import1.ProvidesServicesComponent> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewProvidesServicesComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('provides-services'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this.project(parentRenderNode, 0);
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$ProvidesServicesComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _ProvidesServicesComponentNgFactory = ComponentFactory<import1.ProvidesServicesComponent>('provides-services', viewFactory_ProvidesServicesComponentHost0);
+ComponentFactory<import1.ProvidesServicesComponent> get ProvidesServicesComponentNgFactory {
+  return _ProvidesServicesComponentNgFactory;
+}
+
+ComponentFactory<import1.ProvidesServicesComponent> createProvidesServicesComponentFactory() {
+  return ComponentFactory('provides-services', viewFactory_ProvidesServicesComponentHost0);
+}
+
+final List<Object> styles$ProvidesServicesComponentHost = const [];
+
+class _ViewProvidesServicesComponentHost0 extends import8.HostView<import1.ProvidesServicesComponent> {
+  @override
+  void build() {
+    this.componentView = ViewProvidesServicesComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.ProvidesServicesComponent();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if (((((identical(token, import1.EagerProviderA) || identical(token, import1.EagerProviderB)) || identical(token, import1.LazyProviderA)) || identical(token, import1.LazyProviderB)) && (0 == nodeIndex))) {
+      return this.component;
+    }
+    return notFoundResult;
+  }
+}
+
+import8.HostView<import1.ProvidesServicesComponent> viewFactory_ProvidesServicesComponentHost0() {
+  return _ViewProvidesServicesComponentHost0();
+}
+
+final List<Object> styles$InjectsServicesComponent = const [];
+
+class ViewInjectsServicesComponent0 extends import0.ComponentView<import1.InjectsServicesComponent> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewInjectsServicesComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('injects-services'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$InjectsServicesComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _InjectsServicesComponentNgFactory = ComponentFactory<import1.InjectsServicesComponent>('injects-services', viewFactory_InjectsServicesComponentHost0);
+ComponentFactory<import1.InjectsServicesComponent> get InjectsServicesComponentNgFactory {
+  return _InjectsServicesComponentNgFactory;
+}
+
+ComponentFactory<import1.InjectsServicesComponent> createInjectsServicesComponentFactory() {
+  return ComponentFactory('injects-services', viewFactory_InjectsServicesComponentHost0);
+}
+
+final List<Object> styles$InjectsServicesComponentHost = const [];
+
+class _ViewInjectsServicesComponentHost0 extends import8.HostView<import1.InjectsServicesComponent> {
+  @override
+  void build() {
+    this.componentView = ViewInjectsServicesComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = (import5.isDevMode
+        ? import9.debugInjectorWrap(import1.InjectsServicesComponent, () {
+            return import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, this.parentIndex), this.injectorGet(import1.EagerProviderB, this.parentIndex));
+          })
+        : import1.InjectsServicesComponent(this.injectorGet(import1.EagerProviderA, this.parentIndex), this.injectorGet(import1.EagerProviderB, this.parentIndex)));
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.InjectsServicesComponent> viewFactory_InjectsServicesComponentHost0() {
+  return _ViewInjectsServicesComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(ProvidesServicesComponent, createProvidesServicesComponentFactory());
+  _ngRef.registerComponent(InjectsServicesComponent, createInjectsServicesComponentFactory());
+  _ref0.initReflector();
+}

@@ -23,8 +23,8 @@ const NUMBER_VALUE_ACCESSOR = ExistingProvider.forToken(
   providers: [NUMBER_VALUE_ACCESSOR],
 )
 class NumberValueAccessor extends Object
-    with TouchHandler, ChangeHandler<double>
-    implements ControlValueAccessor {
+    with TouchHandler, ChangeHandler<double?>
+    implements ControlValueAccessor<Object?> {
   final InputElement _element;
 
   NumberValueAccessor(HtmlElement element) : _element = element as InputElement;

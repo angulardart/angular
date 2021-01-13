@@ -1,12 +1,11 @@
 import 'dart:html';
 
 import 'package:meta/meta.dart';
-import 'package:angular/src/core/change_detection.dart'
-    show ChangeDetectionStrategy, ChangeDetectorRef;
-import 'package:angular/src/core/di.dart' show Injector;
+import 'package:angular/src/core/change_detection/change_detector_ref.dart';
 import 'package:angular/src/core/zone/ng_zone.dart';
-import 'package:angular/src/runtime.dart' show isDevMode;
-import 'package:angular_compiler/v1/src/metadata.dart' show AfterChanges;
+import 'package:angular/src/di/injector.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'view_ref.dart' show ViewRef;
 import 'views/host_view.dart';
@@ -26,7 +25,7 @@ import 'views/host_view.dart';
 /// change detection strategy is used because they all use the same runtime
 /// representation.
 @experimental
-bool debugUsesDefaultChangeDetection(ComponentRef componentRef) {
+bool debugUsesDefaultChangeDetection(ComponentRef<void> componentRef) {
   if (!isDevMode) {
     throw StateError(
       'This function should only be used for assertions. Consider wrapping the '
@@ -125,6 +124,7 @@ class ComponentRef<C> {
 ///
 /// It is *not* valid to implement, extend, mix-in, or construct this type.
 class ComponentFactory<T> {
+  /// User-defined `selector` in `@Component(selector: '...')`.
   final String selector;
 
   // Not intuitive, but the _Host{Comp}View0 is NOT AppView<{Comp}>, but is a
@@ -138,13 +138,17 @@ class ComponentFactory<T> {
     this._viewFactory,
   );
 
-  @Deprecated('Used for the deprecated router only.')
+  @Deprecated('Unsupported and in the process of removal.')
   Type get componentType => T;
 
-  /// Creates a new component.
+  /// Creates a new component with the dependency [injector] hierarchy.
+  ///
+  /// **WARNING**: While [projectableNodes] is a part of the public API, support
+  /// is limited and not recommended - it relies on a brittle undocumented
+  /// structure. Please reach out before using.
   ComponentRef<T> create(
     Injector injector, [
-    List<List<Object>> projectableNodes,
+    List<List<Object>>? projectableNodes,
   ]) {
     final hostView = _viewFactory();
     return hostView.create(projectableNodes ?? const [], injector);

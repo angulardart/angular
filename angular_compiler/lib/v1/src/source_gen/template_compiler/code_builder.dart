@@ -1,8 +1,9 @@
 import 'package:analyzer/dart/element/element.dart';
+import 'package:code_builder/code_builder.dart';
+import 'package:source_gen/source_gen.dart' show LibraryReader;
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
-import 'package:source_gen/source_gen.dart' show LibraryReader;
-import 'package:code_builder/code_builder.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'template_compiler_outputs.dart';
 
@@ -13,7 +14,9 @@ String buildGeneratedCode(
   String libraryName,
   CompilerFlags flags,
 ) {
-  final buffer = StringBuffer();
+  final languageVersion =
+      CompileContext.current.emitNullSafeCode ? '' : '// @dart=2.9\n\n';
+  final buffer = StringBuffer('$languageVersion');
 
   // Generated code.
   final allocator = Allocator.simplePrefixing();
@@ -22,10 +25,6 @@ String buildGeneratedCode(
     outputs.reflectableOutput,
     LibraryReader(element),
     allocator: allocator,
-    deferredModules: outputs.templateSource != null
-        ? outputs.templateSource.deferredModules.keys.toList()
-        : const [],
-    deferredModuleSource: outputs.templateSource?.outputUrl,
   );
 
   // Write the input file as an import and an export.
@@ -41,7 +40,11 @@ String buildGeneratedCode(
     final imports = StringBuffer();
     final body = StringBuffer();
     final file = LibraryBuilder();
-    final dart = SplitDartEmitter(imports, allocator);
+    final dart = SplitDartEmitter(
+      imports,
+      allocator: allocator,
+      emitNullSafeSyntax: CompileContext.current.emitNullSafeCode,
+    );
 
     for (final injector in outputs.injectorsOutput) {
       final emitter = InjectorEmitter();

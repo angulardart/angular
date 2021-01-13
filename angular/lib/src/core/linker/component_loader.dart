@@ -1,7 +1,6 @@
 import 'package:meta/meta.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
 
-import '../../di/injector/injector.dart';
+import '../../di/injector.dart';
 import 'component_factory.dart';
 import 'view_container_ref.dart';
 
@@ -14,7 +13,6 @@ import 'view_container_ref.dart';
 /// _This class is replacing `SlowComponentLoader`, which has almost the same
 /// API and properties, but uses runtime introspection in order to lookup and
 /// then create the component. Going forward, `ComponentLoader` is preferred._
-@Injectable()
 class ComponentLoader {
   const ComponentLoader();
 
@@ -46,9 +44,9 @@ class ComponentLoader {
   ///
   /// See also [loadNextToLocation].
   @mustCallSuper
-  ComponentRef<T> loadDetached<T>(
+  ComponentRef<T> loadDetached<T extends Object>(
     ComponentFactory<T> component, {
-    Injector injector,
+    Injector? injector,
   }) =>
       component.create(injector ?? const Injector.empty());
 
@@ -62,7 +60,7 @@ class ComponentLoader {
   /// See also [loadNextToLocation].
   ComponentRef<T> loadNextTo<T>(
     ComponentFactory<T> component, {
-    Injector injector,
+    Injector? injector,
   }) =>
       throw UnsupportedError('Not used within a structural directive');
 
@@ -101,7 +99,7 @@ class ComponentLoader {
   ComponentRef<T> loadNextToLocation<T>(
     ComponentFactory<T> component,
     ViewContainerRef location, {
-    Injector injector,
+    Injector? injector,
   }) {
     return location.createComponent(
       component,

@@ -1,7 +1,7 @@
 import 'package:source_span/source_span.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../expression_parser/ast.dart';
-import '../template_parser.dart';
 import 'message.dart';
 import 'metadata.dart';
 
@@ -10,7 +10,6 @@ I18nMessage i18nMessageFromPropertyBinding(
   ASTWithSource value,
   I18nMetadata metadata,
   SourceSpan sourceSpan,
-  TemplateContext templateContext,
 ) {
   final visitor = _I18nPropertyVisitor();
   final context = _I18nPropertyContext();
@@ -18,7 +17,10 @@ I18nMessage i18nMessageFromPropertyBinding(
     value.ast.visit(visitor, context);
     return context.build(metadata);
   } on _I18nPropertyException catch (e) {
-    templateContext.reportError(e.message, sourceSpan);
+    CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+      sourceSpan,
+      e.message,
+    ));
     return null;
   }
 }
@@ -102,11 +104,6 @@ class _I18nPropertyVisitor extends AstVisitor<void, _I18nPropertyContext> {
   }
 
   @override
-  void visitLiteralArray(_, _I18nPropertyContext context) {
-    _reportInvalidBinding(context);
-  }
-
-  @override
   void visitLiteralPrimitive(
     LiteralPrimitive ast,
     _I18nPropertyContext context,
@@ -131,6 +128,11 @@ class _I18nPropertyVisitor extends AstVisitor<void, _I18nPropertyContext> {
 
   @override
   void visitPipe(_, _I18nPropertyContext context) {
+    _reportInvalidBinding(context);
+  }
+
+  @override
+  void visitPostfixNotNull(_, _I18nPropertyContext context) {
     _reportInvalidBinding(context);
   }
 

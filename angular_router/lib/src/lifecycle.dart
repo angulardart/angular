@@ -1,9 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:async';
-
 import 'router/router_state.dart';
 
 // Interfaces that can be implemented/extended/mixed-in in order to inform
@@ -40,7 +34,7 @@ abstract class CanActivate {
   /// ```
   ///
   /// This lifecycle occurs *after* `CanDeactivate.canDeactivate`.
-  Future<bool> canActivate(RouterState current, RouterState next) async {
+  Future<bool> canActivate(RouterState? current, RouterState next) async {
     // Provided as a default if someone extends or mixes-in this interface.
     return true;
   }
@@ -173,7 +167,7 @@ abstract class OnActivate {
   ///   }
   /// }
   /// ```
-  void onActivate(RouterState previous, RouterState current);
+  void onActivate(RouterState? previous, RouterState current);
 }
 
 /// A lifecycle interface to notify when a component is deactivated by a route.

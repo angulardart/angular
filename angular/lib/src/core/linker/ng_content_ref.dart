@@ -4,13 +4,23 @@ import 'views/render_view.dart';
 /// Represents a reference to an `<ng-content>` element.
 ///
 /// This can be used to query whether an `<ng-content>` has any projected nodes.
+/// Users can access this class via a direct reference in the template, or a
+/// view query.
 ///
 /// ```
-/// <ng-content #projectedContent></ng-content>
-/// <div *ngIf="projectedContent.isEmpty">
-///   There was no projected content. Here is some default content!
-/// </div>
-/// ```
+/// @Component(
+///   selector: 'comp',
+///   template: '''
+///     <ng-content #projectedContent></ng-content>
+///     <div *ngIf="!projectedContent.hasContent">
+///       There was no projected content. Here is some default content!
+///     </div>
+///   ''',
+/// )
+/// class FooComponent {
+///   @ViewChild(NgContentRef)
+///   NgContentRef child;
+/// }
 
 class NgContentRef {
   final RenderView _renderView;
@@ -19,8 +29,8 @@ class NgContentRef {
   NgContentRef(this._renderView, this._index);
 
   /// Returns whether this has any projected nodes.
-  // TODO(b/152626836): Update type of ProjectedNode into List<List<Object>>.
   bool get hasContent {
+    // TODO(b/152626836): Update type of ProjectedNode into List<List<Object>>.
     final nodesToProject = (_renderView.projectedNodes[_index]) as List;
     for (var i = 0; i < nodesToProject.length; i++) {
       final node = nodesToProject[i];

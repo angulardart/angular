@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
 
 import 'base_stabilizer.dart';
 import 'timer_hook_zone.dart';
@@ -34,14 +34,15 @@ class RealTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_ObservedTimer> {
         return parent.createTimer(zone, duration, callback);
       }
 
-      _ObservedTimer instance;
-      final wrappedCallback = () {
+      late final _ObservedTimer instance;
+      void wrappedCallback() {
         try {
           callback();
         } finally {
           pendingTimers.remove(instance);
         }
-      };
+      }
+
       final delegate = parent.createTimer(
         zone,
         duration,

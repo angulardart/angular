@@ -15,7 +15,7 @@ abstract class AbstractForm<T extends AbstractControlGroup>
   final _ngSubmit = StreamController<T>.broadcast(sync: true);
   final _ngBeforeSubmit = StreamController<T>.broadcast(sync: true);
 
-  T get form;
+  T? get form;
 
   /// An event fired with the user has triggered a form submission.
   @Output()
@@ -29,14 +29,14 @@ abstract class AbstractForm<T extends AbstractControlGroup>
   Stream<T> get ngBeforeSubmit => _ngBeforeSubmit.stream;
 
   @HostListener('submit')
-  void onSubmit(Event event) {
-    _ngBeforeSubmit.add(form);
-    _ngSubmit.add(form);
+  void onSubmit(Event? event) {
+    _ngBeforeSubmit.add(form!);
+    _ngSubmit.add(form!);
     event?.preventDefault();
   }
 
   @HostListener('reset')
-  void onReset(Event event) {
+  void onReset(Event? event) {
     reset();
     event?.preventDefault();
   }
@@ -45,17 +45,17 @@ abstract class AbstractForm<T extends AbstractControlGroup>
   Form get formDirective => this;
 
   @override
-  T get control => form;
+  T? get control => form;
 
   @override
   List<String> get path => [];
 
   @override
-  Control getControl(NgControl dir) => form?.findPath(dir.path) as Control;
+  Control? getControl(NgControl dir) => form?.findPath(dir.path) as Control?;
 
   @override
-  AbstractControlGroup getControlGroup(NgControlGroup dir) =>
-      form?.findPath(dir.path) as AbstractControlGroup;
+  AbstractControlGroup? getControlGroup(NgControlGroup dir) =>
+      form?.findPath(dir.path) as AbstractControlGroup?;
 
   @override
   void updateModel(NgControl dir, dynamic value) {

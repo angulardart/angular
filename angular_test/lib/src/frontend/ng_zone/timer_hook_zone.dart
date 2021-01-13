@@ -2,33 +2,30 @@ import 'dart:async';
 
 /// Creates a context for capturing timer instances.
 class TimerHookZone {
-  Zone _timerZone;
-
-  TimerHookZone() {
-    _timerZone = Zone.current.fork(
-      specification: ZoneSpecification(createTimer: (
-        self,
-        parent,
-        zone,
-        duration,
-        callback,
-      ) {
-        // Intentionally not bound directly to allow indirect/lazy assignment.
-        return createTimer(self, parent, zone, duration, callback);
-      }, createPeriodicTimer: (
-        self,
-        parent,
-        zone,
-        duration,
-        callback,
-      ) {
-        // Intentionally not bound directly to allow indirect/lazy assignment.
-        return createPeriodicTimer(self, parent, zone, duration, callback);
-      }),
-    );
-  }
+  late final Zone _timerZone = Zone.current.fork(
+    specification: ZoneSpecification(createTimer: (
+      self,
+      parent,
+      zone,
+      duration,
+      callback,
+    ) {
+      // Intentionally not bound directly to allow indirect/lazy assignment.
+      return createTimer(self, parent, zone, duration, callback);
+    }, createPeriodicTimer: (
+      self,
+      parent,
+      zone,
+      duration,
+      callback,
+    ) {
+      // Intentionally not bound directly to allow indirect/lazy assignment.
+      return createPeriodicTimer(self, parent, zone, duration, callback);
+    }),
+  );
 
   /// Lazily set by stabilizers that need access to intercept timer creation.
+  /// ignore: prefer_function_declarations_over_variables
   CreateTimerHandler createTimer = (
     self,
     parent,
@@ -40,6 +37,7 @@ class TimerHookZone {
   };
 
   /// Lazily set by stabilizers that need access to intercept timer creation.
+  /// ignore: prefer_function_declarations_over_variables
   CreatePeriodicTimerHandler createPeriodicTimer = (
     self,
     parent,

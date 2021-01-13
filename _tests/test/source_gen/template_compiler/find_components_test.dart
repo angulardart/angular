@@ -1,46 +1,101 @@
-@TestOn('vm')
+// @dart=2.9
+
+import 'package:meta/meta.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../../resolve_util.dart';
 
 void main() {
-  group('should be mock-like', () {
+  setUp(() {
+    CompileContext.overrideForTesting(CompileContext.forTesting(
+      emitNullSafeCode: false,
+    ));
+  });
+
+  void mockLikeTests({@required bool nullSafe}) {
+    setUp(() {
+      if (nullSafe) {
+        CompileContext.overrideForTesting(CompileContext.forTesting(
+          emitNullSafeCode: true,
+        ));
+      }
+    });
+    final libHeader = nullSafe ? '' : '// @dart=2.9';
     test("with 'noSuchMethod' implementation", () async {
-      final normalizedComponent = await resolveAndFindComponent('''
+      final normalizedComponent = await resolveAndFindComponent(
+        '''
+        $libHeader
         @Component(selector: 'not-blank')
         class MockLikeComponent {
           noSuchMethod(Invocation invocation) => null;
-        }''');
-      expect(normalizedComponent.component.analyzedClass.isMockLike, true);
+        }''',
+      );
+
+      final isMockLike = normalizedComponent.component.analyzedClass.isMockLike;
+      if (nullSafe) {
+        expect(isMockLike, false);
+      } else {
+        expect(isMockLike, true);
+      }
     });
 
     test("with inherited 'noSuchMethod' implementation", () async {
-      final normalizedComponent = await resolveAndFindComponent('''
+      final normalizedComponent = await resolveAndFindComponent(
+        '''
+        $libHeader
         class MockLikeBase {
           noSuchMethod(Invocation invocation) => null;
         }
 
         @Component(selector: 'not-blank')
-        class MockLikeComponent extends MockLikeBase {}''');
-      expect(normalizedComponent.component.analyzedClass.isMockLike, true);
+        class MockLikeComponent extends MockLikeBase {}''',
+      );
+
+      final isMockLike = normalizedComponent.component.analyzedClass.isMockLike;
+      if (nullSafe) {
+        expect(isMockLike, false);
+      } else {
+        expect(isMockLike, true);
+      }
     });
 
     test("with mixed-in 'noSuchMethod' implementation", () async {
-      final normalizedComponent = await resolveAndFindComponent('''
+      final normalizedComponent = await resolveAndFindComponent(
+        '''
+        $libHeader
         class MockLikeMixin {
           noSuchMethod(Invocation invocation) => null;
         }
 
         @Component(selector: 'not-blank')
-        class MockLikeComponent extends Object with MockLikeMixin {}''');
-      expect(normalizedComponent.component.analyzedClass.isMockLike, true);
+        class MockLikeComponent extends Object with MockLikeMixin {}''',
+      );
+
+      final isMockLike = normalizedComponent.component.analyzedClass.isMockLike;
+      if (nullSafe) {
+        expect(isMockLike, false);
+      } else {
+        expect(isMockLike, true);
+      }
     });
+  }
+
+  group('should be mock-like', () {
+    mockLikeTests(nullSafe: false);
+  });
+
+  group('should never be mock-like when opted-in to null-safety', () {
+    mockLikeTests(nullSafe: true);
   });
 
   test('should not be mock-like', () async {
-    final normalizedComponent = await resolveAndFindComponent('''
+    final normalizedComponent = await resolveAndFindComponent(
+      '''
+      // @dart=2.9
       @Component(selector: 'not-blank')
-      class NotMockLikeComponent {}''');
+      class NotMockLikeComponent {}''',
+    );
     expect(normalizedComponent.component.analyzedClass.isMockLike, false);
   });
 

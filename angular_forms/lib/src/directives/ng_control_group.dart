@@ -62,28 +62,29 @@ import 'validators.dart' show ValidatorFn;
 )
 class NgControlGroup extends ControlContainer<AbstractControlGroup>
     implements OnInit, OnDestroy {
-  final ValidatorFn validator;
+  final ValidatorFn? validator;
   final ControlContainer _parent;
 
   bool _isDisabled = false;
   bool _disabledChanged = false;
 
-  NgControlGroup(@SkipSelf() this._parent,
-      @Optional() @Self() @Inject(NG_VALIDATORS) List validators)
-      : validator = composeValidators(validators);
+  NgControlGroup(
+    @SkipSelf() this._parent,
+    @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic>? validators,
+  ) : validator = composeValidators(validators);
 
   @Input('ngControlGroup')
   @override
-  set name(String value) {
+  set name(String? value) {
     super.name = value;
   }
 
   @Input('ngDisabled')
-  set disabled(bool isDisabled) {
-    _isDisabled = isDisabled;
+  set disabled(bool? isDisabled) {
+    _isDisabled = isDisabled!;
     if (control != null) {
       _disabledChanged = false;
-      toggleDisabled(isDisabled);
+      toggleDisabled(_isDisabled);
     } else {
       _disabledChanged = true;
     }
@@ -107,11 +108,11 @@ class NgControlGroup extends ControlContainer<AbstractControlGroup>
 
   /// Get the [AbstractControlGroup] backing this binding.
   @override
-  AbstractControlGroup get control => formDirective.getControlGroup(this);
+  AbstractControlGroup? get control => formDirective.getControlGroup(this);
 
   /// Get the path to this control group.
   @override
-  List<String> get path => controlPath(name, _parent);
+  List<String?> get path => controlPath(name, _parent);
 
   /// Get the [Form] to which this group belongs.
   @override

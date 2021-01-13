@@ -1,0 +1,115 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'i18n.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'i18n.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'i18n.dart' as import1;
+import 'package:intl/intl.dart' as import2;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
+import 'package:angular/src/core/linker/views/view.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import6;
+import 'dart:html' as import7;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import11;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  static final String _message_0 = import2.Intl.message('Message', desc: 'description', locale: 'en_US', meaning: 'meaning', skip: true);
+  static final String _message_1 = import2.Intl.message('message', desc: 'description');
+  late final import1.MessageDirective _MessageDirective_7_5;
+  static import3.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.unsafeCast(import7.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/templates/i18n.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final doc = import7.document;
+    final _el_0 = import8.appendElement<import7.HtmlElement>(doc, parentRenderNode, 'p');
+    final _text_1 = import8.appendText(_el_0, _message_0);
+    final _text_2 = import8.appendText(parentRenderNode, ' ');
+    final _el_3 = import8.appendElement<import7.HtmlElement>(doc, parentRenderNode, 'img');
+    import8.setAttribute(_el_3, 'alt', _message_1);
+    final _text_4 = import8.appendText(parentRenderNode, ' ');
+    final _el_5 = import8.appendElement<import7.HtmlElement>(doc, parentRenderNode, 'p');
+    final _html_6 = import9.createTrustedHtml(_message_2('<i>', '<b>', '</b>', '</i>'));
+    _el_5.append(_html_6);
+    final _el_7 = import8.appendDiv(doc, parentRenderNode);
+    this._MessageDirective_7_5 = import1.MessageDirective();
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = this.firstCheck;
+    if (firstCheck) {
+      (this._MessageDirective_7_5.message = _message_1);
+    }
+  }
+
+  static String _message_2(String startTag0, String startTag1, String endTag1, String endTag0) {
+    return import2.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewGoldenComponent0__message_2', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import11.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import11.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

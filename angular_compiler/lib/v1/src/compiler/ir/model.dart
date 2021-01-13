@@ -242,12 +242,12 @@ class MatchedDirective implements IRNode {
     @required this.providerSource,
     @required this.inputs,
     @required this.outputs,
-    @required Set<Lifecycle> lifecycles,
+    @required this.lifecycles,
     @required this.hasInputs,
     @required this.hasHostProperties,
     @required this.isComponent,
     @required this.isOnPush,
-  }) : lifecycles = lifecycles;
+  });
 
   bool hasLifecycle(Lifecycle lifecycle) => lifecycles.contains(lifecycle);
 
@@ -421,7 +421,7 @@ class PropertyBinding implements BindingTarget {
 }
 
 class InputBinding implements BindingTarget {
-  /// The name of the input declared on the directive class.
+  /// The name of the input property on the directive class.
   ///
   /// For example, "name" in
   ///
@@ -431,7 +431,19 @@ class InputBinding implements BindingTarget {
   ///   String name;
   /// }
   /// ```
-  final String name;
+  final String propertyName;
+
+  /// The name used to set the input, optional declared by the input annotation.
+  ///
+  /// For example, "userName" in
+  ///
+  /// ```
+  /// class User {
+  ///   @Input('userName')
+  ///   String name;
+  /// }
+  /// ```
+  final String templateName;
 
   @override
   final o.OutputType type;
@@ -439,7 +451,7 @@ class InputBinding implements BindingTarget {
   @override
   final securityContext = TemplateSecurityContext.none;
 
-  InputBinding(this.name, this.type);
+  InputBinding(this.propertyName, this.templateName, this.type);
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
@@ -477,6 +489,14 @@ class CustomEvent extends BoundEvent {
 }
 
 class DirectiveOutput extends BoundEvent {
+  /// Whether this output has mock-like behavior.
+  ///
+  /// The heuristic used to determine mock-like behavior is if the analyzed
+  /// class or one of its ancestors, other than [Object], implements
+  /// [noSuchMethod].
+  ///
+  /// Note that is the value is _never_ true for null-safe libraries, as we no
+  /// longer support null streams/stream subscriptions in the generated code.
   final bool isMockLike;
 
   DirectiveOutput(String name, this.isMockLike) : super(name);

@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -13,8 +12,8 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     group('Controls', () {
-      NgTestFixture<TestControlComponent> fixture;
-      TestControlComponent readonlyCmp;
+      late NgTestFixture<TestControlComponent> fixture;
+      late TestControlComponent readonlyCmp;
 
       void _showControls(TestControlComponent component, bool show) {
         component
@@ -23,15 +22,14 @@ void main() {
       }
 
       setUp(() async {
-        var testBed =
-            NgTestBed.forComponent(ng.createTestControlComponentFactory());
+        var testBed = NgTestBed(ng.createTestControlComponentFactory());
         fixture = await testBed.create();
         readonlyCmp = fixture.assertOnlyInstance;
       });
 
       test('Initial should have no controls', () async {
-        expect(readonlyCmp.form.form.controls.length, 0);
-        expect(readonlyCmp.form.value, {});
+        expect(readonlyCmp.form!.form!.controls.length, 0);
+        expect(readonlyCmp.form!.value, {});
       });
 
       test('Adding controls adds them to the form', () async {
@@ -39,8 +37,8 @@ void main() {
           component.one = 'one';
           _showControls(component, true);
         });
-        expect(readonlyCmp.form.form.controls.length, 2);
-        expect(readonlyCmp.form.value, {'one': 'one', 'two': null});
+        expect(readonlyCmp.form!.form!.controls.length, 2);
+        expect(readonlyCmp.form!.value, {'one': 'one', 'two': null});
       });
 
       test('Adding then removing controls does not remove control', () async {
@@ -50,25 +48,25 @@ void main() {
         });
         await fixture.update((component) => _showControls(component, false));
 
-        expect(readonlyCmp.form.form.controls.length, 2);
-        expect(readonlyCmp.form.value, {'one': 'one', 'two': null});
+        expect(readonlyCmp.form!.form!.controls.length, 2);
+        expect(readonlyCmp.form!.value, {'one': 'one', 'two': null});
       });
 
       test('Readding a control preserves the value', () async {
         await fixture.update((component) => _showControls(component, true));
         await fixture.update((component) =>
-            (component.form.controls['two'] as Control).updateValue('two'));
+            (component.form!.controls!['two'] as Control).updateValue('two'));
         await fixture.update((component) => _showControls(component, false));
         await fixture.update((component) => _showControls(component, true));
-        expect(readonlyCmp.form.form.controls.length, 2);
-        expect(readonlyCmp.form.value, {'one': null, 'two': 'two'},
+        expect(readonlyCmp.form!.form!.controls.length, 2);
+        expect(readonlyCmp.form!.value, {'one': null, 'two': 'two'},
             reason: 'Should still have the same values');
       });
     });
 
     group('ControlGroup', () {
-      NgTestFixture<TestGroupComponent> fixture;
-      TestGroupComponent readonlyCmp;
+      late NgTestFixture<TestGroupComponent> fixture;
+      late TestGroupComponent readonlyCmp;
 
       void _showGroups(TestGroupComponent component, bool show) {
         component
@@ -77,15 +75,14 @@ void main() {
       }
 
       setUp(() async {
-        var testBed =
-            NgTestBed.forComponent(ng.createTestGroupComponentFactory());
+        var testBed = NgTestBed(ng.createTestGroupComponentFactory());
         fixture = await testBed.create();
         readonlyCmp = fixture.assertOnlyInstance;
       });
 
       test('Initial should have no controls', () {
-        expect(readonlyCmp.form.form.controls.length, 0);
-        expect(readonlyCmp.form.value, {});
+        expect(readonlyCmp.form!.form!.controls.length, 0);
+        expect(readonlyCmp.form!.value, {});
       });
 
       test('Adding control groups adds them to the form', () async {
@@ -93,8 +90,8 @@ void main() {
           component.one = 'one';
           _showGroups(component, true);
         });
-        expect(readonlyCmp.form.form.controls.length, 2);
-        expect(readonlyCmp.form.value, {
+        expect(readonlyCmp.form!.form!.controls.length, 2);
+        expect(readonlyCmp.form!.value, {
           'one': {'one': 'one'},
           'two': {'two': null}
         });
@@ -107,8 +104,8 @@ void main() {
           _showGroups(component, true);
         });
         await fixture.update((component) => _showGroups(component, false));
-        expect(readonlyCmp.form.form.controls.length, 2);
-        expect(readonlyCmp.form.value, {
+        expect(readonlyCmp.form!.form!.controls.length, 2);
+        expect(readonlyCmp.form!.value, {
           'one': {'one': 'one'},
           'two': {'two': null}
         });
@@ -117,15 +114,15 @@ void main() {
       test('Readding a control group preserves the value', () async {
         await fixture.update((component) => _showGroups(component, true));
         await fixture.update((component) =>
-            ((component.form.controls['two'] as ControlGroup).controls['two']
+            ((component.form!.controls!['two'] as ControlGroup).controls['two']
                     as Control)
                 .updateValue('two'));
         await fixture.update((component) => _showGroups(component, false));
         await fixture.update((component) => _showGroups(component, true));
 
-        expect(readonlyCmp.form.form.controls.length, 2);
+        expect(readonlyCmp.form!.form!.controls.length, 2);
         expect(
-            readonlyCmp.form.value,
+            readonlyCmp.form!.value,
             {
               'one': {'one': null},
               'two': {'two': 'two'}
@@ -147,11 +144,12 @@ void main() {
 ''',
 )
 class TestControlComponent {
-  String one;
-  bool showInputOne, showInputTwo = false;
+  String? one;
+  var showInputOne = false;
+  bool showInputTwo = false;
 
   @ViewChild(NgForm)
-  NgForm form;
+  NgForm? form;
 }
 
 @Component(
@@ -165,9 +163,10 @@ class TestControlComponent {
 ''',
 )
 class TestGroupComponent {
-  String one;
-  bool showGroupOne, showGroupTwo = false;
+  String? one;
+  var showGroupOne = false;
+  bool showGroupTwo = false;
 
   @ViewChild(NgForm)
-  NgForm form;
+  NgForm? form;
 }

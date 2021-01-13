@@ -1,4 +1,4 @@
-import 'package:angular/src/di/injector/injector.dart' show Injector;
+import 'package:angular/src/di/injector.dart' show Injector;
 
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'component_loader.dart';
@@ -68,8 +68,8 @@ abstract class ViewContainerRef implements ComponentLoader {
   ComponentRef<T> createComponent<T>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
-    Injector injector,
-    List<List<dynamic>> projectableNodes,
+    Injector? injector,
+    List<List<Object>>? projectableNodes,
   ]);
 
   /// Inserts a View identified by a [ViewRef] into the container.
@@ -81,7 +81,7 @@ abstract class ViewContainerRef implements ComponentLoader {
   /// TODO(i): refactor insert+remove into move
   ViewRef insert(ViewRef viewRef, [int index = -1]);
 
-  ViewRef move(ViewRef viewRef, int currentIndex);
+  ViewRef? move(ViewRef viewRef, int currentIndex);
 
   /// Returns the index of the View, specified via [ViewRef], within the current
   /// container or `-1` if this container doesn't contain the View.

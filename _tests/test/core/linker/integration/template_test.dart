@@ -1,10 +1,8 @@
-@TestOn('browser')
-
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'template_test.template.dart' as ng;
 
@@ -12,8 +10,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support template directives via <template> elements', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTemplateDirectiveComponentFactory());
+    final testBed = NgTestBed(ng.createTemplateDirectiveComponentFactory());
     final testFixture = await testBed.create();
     // 1 template + 2 copies.
     expect(testFixture.rootElement.childNodes, hasLength(3));
@@ -22,11 +19,10 @@ void main() {
   });
 
   test('should not detach views when parent is destroyed', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createDestroyParentViewComponentFactory());
+    final testBed = NgTestBed(ng.createDestroyParentViewComponentFactory());
     final testFixture = await testBed.create();
     final ngIfElement = testFixture.rootElement.children.first;
-    final someViewport = testFixture.assertOnlyInstance.viewport;
+    final someViewport = testFixture.assertOnlyInstance.viewport!;
     expect(ngIfElement.children, hasLength(2));
     expect(someViewport.container, hasLength(2));
     await testFixture.update((component) => component.visible = false);
@@ -35,8 +31,7 @@ void main() {
   });
 
   test('should use a comment while stamping out <template> elements', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createEmptyTemplateComponentFactory());
+    final testBed = NgTestBed(ng.createEmptyTemplateComponentFactory());
     final testFixture = await testBed.create();
     final childNodes = testFixture.rootElement.childNodes;
     expect(childNodes, hasLength(1));
@@ -44,8 +39,7 @@ void main() {
   });
 
   test('should transplant TemplateRef into another ViewContainer', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createTemplateRefTransplantComponentFactory());
+    final testBed = NgTestBed(ng.createTemplateRefTransplantComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text,
         'From component,From toolbar,Component with an injected host');
@@ -88,7 +82,7 @@ class DestroyParentViewComponent {
   bool visible = true;
 
   @ViewChild(SomeViewport)
-  SomeViewport viewport;
+  SomeViewport? viewport;
 }
 
 @Component(
@@ -131,7 +125,7 @@ class ToolbarViewContainer {
 )
 class ToolbarComponent {
   @ContentChildren(ToolbarPart)
-  List<ToolbarPart> query;
+  List<ToolbarPart>? query;
 
   String prop = 'hello world';
 }

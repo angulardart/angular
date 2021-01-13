@@ -1,8 +1,8 @@
 import 'dart:html';
 
 import 'package:meta/meta.dart';
-import 'package:angular/src/di/injector/injector.dart' show Injector;
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/di/injector.dart' show Injector;
+import 'package:angular/src/utilities.dart';
 
 import 'component_factory.dart' show ComponentFactory, ComponentRef;
 import 'component_loader.dart';
@@ -19,11 +19,11 @@ import 'views/view.dart';
 /// `<template>` element so they can be attached after initialization.
 class ViewContainer extends ComponentLoader implements ViewContainerRef {
   final int index;
-  final int parentIndex;
-  final View parentView;
+  final int? parentIndex;
+  final View? parentView;
   final Node nativeElement;
 
-  List<DynamicView> nestedViews;
+  List<DynamicView>? nestedViews;
 
   ViewContainer(
     this.index,
@@ -39,7 +39,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// specified index.
   @override
   ViewRef get(int index) {
-    return nestedViews[index];
+    return nestedViews![index];
   }
 
   /// The number of Views currently attached to this container.
@@ -55,10 +55,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ElementRef get element => elementRef;
 
   @override
-  Injector get parentInjector => parentView.injector(parentIndex);
+  Injector get parentInjector => parentView!.injector(parentIndex);
 
   @override
-  Injector get injector => parentView.injector(index);
+  Injector get injector => parentView!.injector(index);
 
   @experimental
   void detectChangesInCheckAlwaysViews() {
@@ -77,7 +77,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
       return;
     }
     for (var i = 0, len = nested.length; i < len; i++) {
-      nested[i].detectChanges();
+      nested[i].detectChangesDeprecated();
     }
   }
 
@@ -118,8 +118,8 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ComponentRef<T> createComponent<T>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
-    Injector injector,
-    List<List<dynamic>> projectableNodes,
+    Injector? injector,
+    List<List<Object>>? projectableNodes,
   ]) {
     final contextInjector = injector ?? parentInjector;
     final componentRef = componentFactory.create(
@@ -140,7 +140,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   @override
-  ViewRef move(ViewRef viewRef, int currentIndex) {
+  ViewRef? move(ViewRef viewRef, int currentIndex) {
     if (currentIndex == -1) {
       return null;
     }
@@ -152,7 +152,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// container or `-1` if this container doesn't contain the View.
   @override
   int indexOf(ViewRef viewRef) {
-    return nestedViews.indexOf(unsafeCast(viewRef));
+    return nestedViews!.indexOf(unsafeCast(viewRef));
   }
 
   /// Destroys a View attached to this container at the specified `index`.
@@ -193,7 +193,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
-      return const <Null>[];
+      return const <Never>[];
     }
     final result = <T>[];
     for (var i = 0, l = nestedViews.length; i < l; i++) {
@@ -208,7 +208,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ) {
     final nestedViews = this.nestedViews;
     if (nestedViews == null || nestedViews.isEmpty) {
-      return const <Null>[];
+      return const <Never>[];
     }
     final result = <T>[];
     for (var i = 0, l = nestedViews.length; i < l; i++) {
@@ -217,14 +217,14 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     return result;
   }
 
-  Node _findRenderNode(List<DynamicView> views, int index) {
+  Node? _findRenderNode(List<DynamicView> views, int index) {
     return index > 0
-        ? views[index - 1].viewFragment.findLastDomNode()
+        ? views[index - 1].viewFragment!.findLastDomNode()
         : nativeElement;
   }
 
   void moveView(DynamicView view, int currentIndex) {
-    final views = nestedViews;
+    final views = nestedViews!;
     final previousIndex = views.indexOf(view);
 
     views.removeAt(previousIndex);
@@ -254,7 +254,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   DynamicView detachView(int viewIndex) {
-    return nestedViews.removeAt(viewIndex)
+    return nestedViews!.removeAt(viewIndex)
       ..removeRootNodes()
       ..wasRemoved();
   }
@@ -262,7 +262,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   @override
   ComponentRef<T> loadNextTo<T>(
     ComponentFactory<T> component, {
-    Injector injector,
+    Injector? injector,
   }) =>
       loadNextToLocation(component, this, injector: injector);
 }

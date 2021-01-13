@@ -1,4 +1,5 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular_compiler/v1/src/compiler/attribute_matcher.dart';
@@ -335,10 +336,12 @@ void main() {
       expect(cssSelector.toString(), '*:not(.someclass[attrname="attrvalue"])');
     });
     test('should throw when nested :not', () {
-      expect(() {
-        CssSelector.parse(
-            'sometag:not(:not([attrname=attrvalue].someclass))')[0];
-      }, throwsWith('Nesting :not is not allowed in a selector'));
+      expect(
+        () => CssSelector.parse(
+          'sometag:not(:not([attrname=attrvalue].someclass))',
+        ).first,
+        throwsWith('Nesting :not is not allowed in a selector'),
+      );
     });
     test('should throw when multiple selectors in :not', () {
       expect(() {

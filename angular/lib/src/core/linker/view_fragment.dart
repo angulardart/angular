@@ -1,7 +1,7 @@
 import 'dart:html';
 
-import 'package:angular/src/runtime.dart';
 import 'package:meta/dart2js.dart' as dart2js;
+import 'package:angular/src/utilities.dart';
 
 import 'view_container.dart';
 
@@ -53,7 +53,7 @@ class ViewFragment {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].viewFragment.appendDomNodesInto(target);
+            nestedViews[n].viewFragment!.appendDomNodesInto(target);
           }
         }
       } else {
@@ -63,43 +63,32 @@ class ViewFragment {
   }
 
   /// Returns the last (as defined by a DFS - depth first search) DOM [Node].
-  ///
-  /// In the case where [nodesOrViewContainers] is `null` (or empty), this
-  /// method returns `null`. This is a rarer case (i.e. in the case of an empty
-  /// template).
   @dart2js.noInline
-  Node findLastDomNode() {
+  Node? findLastDomNode() {
     // Finds the last Node or uses the anchor node of a ViewContainer.
-    final nodes = _nodesOrViewContainers;
-    for (var i = nodes.length - 1; i >= 0; i--) {
-      final node = nodes[i];
-      return node is ViewContainer ? _findLastDomNode(node) : unsafeCast(node);
+    final nodesOrViewContainers = _nodesOrViewContainers;
+    if (nodesOrViewContainers.isNotEmpty) {
+      final lastNode = nodesOrViewContainers.last;
+      return lastNode is ViewContainer
+          ? _findLastDomNode(lastNode)
+          : unsafeCast(lastNode);
+    } else {
+      return null;
     }
-
-    // An empty list.
-    return null;
   }
 
-  static Node _findLastDomNode(ViewContainer container) {
+  static Node? _findLastDomNode(ViewContainer container) {
     final nestedViews = container.nestedViews;
-
-    // As an optimization (?) `nestedViews` may be `null` instead of empty.
-    if (nestedViews != null) {
-      for (var i = nestedViews.length - 1; i >= 0; i--) {
-        return nestedViews[i].viewFragment.findLastDomNode();
-      }
-    }
-
-    return container.nativeElement;
+    return nestedViews != null && nestedViews.isNotEmpty
+        ? nestedViews.last.viewFragment!.findLastDomNode()
+        : container.nativeElement;
   }
 
   /// Returns all DOM [Node]s (as defined by a DFS - depth first search).
   ///
   /// In the case where [nodesOrViewContainers] is `null`, this returns `[]`.
   @dart2js.noInline
-  List<Node> flattenDomNodes() {
-    return _flattenDomNodes([], _nodesOrViewContainers);
-  }
+  List<Node> flattenDomNodes() => _flattenDomNodes([], _nodesOrViewContainers);
 
   static List<Node> _flattenDomNodes(List<Node> target, List<Object> nodes) {
     final length = nodes.length;
@@ -113,7 +102,7 @@ class ViewFragment {
           for (var n = 0; n < length; n++) {
             _flattenDomNodes(
               target,
-              nestedViews[n].viewFragment._nodesOrViewContainers,
+              nestedViews[n].viewFragment!._nodesOrViewContainers,
             );
           }
         }

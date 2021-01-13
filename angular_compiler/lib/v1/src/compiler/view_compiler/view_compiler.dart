@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
@@ -6,8 +7,7 @@ import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart'
     show templateVisitAll;
-import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 
 import 'compile_element.dart' show CompileElement;
 import 'compile_view.dart' show CompileView;
@@ -30,14 +30,13 @@ class ViewCompileResult {
 class ViewCompiler {
   final CompilerFlags _genConfig;
   final ElementSchemaRegistry _schemaRegistry;
-  Parser parser;
+  ExpressionParser parser;
 
   ViewCompiler(this._genConfig, this.parser, this._schemaRegistry);
 
   ViewCompileResult compileComponent(
     ir.View view,
-    o.Expression styles,
-    Map<String, String> deferredModules, {
+    o.Expression styles, {
     @required bool registerComponentFactory,
   }) {
     var statements = <o.Statement>[];
@@ -50,7 +49,6 @@ class ViewCompiler {
       0,
       CompileElement.root(),
       [],
-      deferredModules,
     );
     view.compileView = compileView;
     _buildView(view);

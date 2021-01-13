@@ -2,8 +2,8 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dev/find.dart';
 import 'package:pub_semver/pub_semver.dart';
+import 'package:dev/find.dart';
 import 'package:yaml/yaml.dart';
 
 /// Verifies that non-dev dependency ranges for all packages are compatible.

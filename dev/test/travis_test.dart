@@ -1,6 +1,5 @@
-@TestOn('vm')
-import 'package:dev/travis.dart';
 import 'package:test/test.dart';
+import 'package:dev/travis.dart';
 
 void main() {
   group('OutputWriter', () {

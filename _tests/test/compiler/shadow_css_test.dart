@@ -1,9 +1,10 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'dart:async';
 
-import 'package:angular_compiler/v1/src/compiler/stylesheet_compiler/shadow_css.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/src/compiler/stylesheet_compiler/shadow_css.dart';
 
 const content = 'content';
 const host = 'host';
@@ -300,6 +301,56 @@ void main() {
       var css = ':host(div::scrollbar:vertical):host-context(.foo:hover) {}';
       var expected = 'div.$host.$host.foo:hover::scrollbar:vertical,'
           '.foo:hover div.$host.$host::scrollbar:vertical {}';
+      shimAndExpect(css, expected);
+    });
+  });
+
+  group(':global-context()', () {
+    test('should handle tag selector argument', () {
+      shimAndExpect(':global-context(div) {}', 'div {}');
+    });
+
+    test('should handle name selector argument', () {
+      shimAndExpect(':global-context(#x) {}', '#x {}');
+    });
+
+    test('should handle class selector argument', () {
+      shimAndExpect(':global-context(.x) {}', '.x {}');
+    });
+
+    test('should handle attribute selector argument', () {
+      var css = ':global-context([a="b"]) {}';
+      var expected = '[a="b"] {}';
+      shimAndExpect(css, expected);
+    });
+
+    test('should handle pseudo-class selector argument', () {
+      var css = ':global-context(:nth-child(2n+1)) {}';
+      var expected = ':nth-child(2n+1) {}';
+      shimAndExpect(css, expected);
+    });
+
+    test('should handle pseudo-element selector argument', () {
+      var css = ':global-context(::before) {}';
+      var expected = '::before {}';
+      shimAndExpect(css, expected);
+    });
+
+    test('should handle compound selector argument', () {
+      var css = ':global-context(a.x:active) {}';
+      var expected = 'a.x:active {}';
+      shimAndExpect(css, expected);
+    });
+
+    test('should handle complex selector', () {
+      var css = ':global-context(.x) > .y {}';
+      var expected = '.x > .y.$content {}';
+      shimAndExpect(css, expected);
+    });
+
+    test('should handle multiple selectors', () {
+      var css = ':global-context(.x),:global-context(.y) {}';
+      var expected = '.x,.y {}';
       shimAndExpect(css, expected);
     });
   });

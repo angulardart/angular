@@ -1,8 +1,7 @@
 import 'dart:async';
 
-import 'package:angular/angular.dart';
 import 'package:collection/collection.dart';
-import 'package:meta/meta.dart';
+import 'package:angular/angular.dart';
 
 import 'base_stabilizer.dart';
 import 'timer_hook_zone.dart';
@@ -30,13 +29,13 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
   factory FakeTimeNgZoneStabilizer(
     TimerHookZone timerZone,
     NgZone ngZone, {
-    int maxIterations,
+    int? maxIterations,
   }) {
     // All non-periodic timers that have been started, but not completed.
     final pendingTimers = PriorityQueue<_FakeTimer>();
 
     // The parent zone that adds hooks around every non-periodic timer.
-    FakeTimeNgZoneStabilizer stabilizer;
+    late final FakeTimeNgZoneStabilizer stabilizer;
 
     timerZone.createTimer = (self, parent, zone, duration, callback) {
       _FakeTimer instance;
@@ -77,7 +76,7 @@ class FakeTimeNgZoneStabilizer extends BaseNgZoneStabilizer<_FakeTimer> {
   FakeTimeNgZoneStabilizer._(
     NgZone ngZone,
     PriorityQueue<_FakeTimer> pendingTimers, {
-    int maxIterations,
+    int? maxIterations,
   })  : _maxIterations = maxIterations ?? defaultMaxIterations,
         super(ngZone, pendingTimers);
 
@@ -155,7 +154,7 @@ class _FakeTimer implements Timer, Comparable<_FakeTimer> {
     this._clearPendingStatus,
     this._scheduledDuration,
     this._completeAfter, {
-    @required this.isPeriodic,
+    required this.isPeriodic,
   });
 
   bool _isActive = true;
@@ -187,9 +186,13 @@ class _FakeTimer implements Timer, Comparable<_FakeTimer> {
       // For periodic timers, we've cancelled this one and schedule a new one.
       _completeAfter = _completeAfter + _scheduledDuration;
 
-      // Trigger this timer being removed and added to the pendingTimers queue.
+      // Trigger this timer being removed...
       _clearPendingStatus(this);
-      onPeriodic(this);
+
+      // ...and if the timer has not been cancelled, re-add to the queue.
+      if (_isActive) {
+        onPeriodic(this);
+      }
     } else {
       _isActive = false;
     }

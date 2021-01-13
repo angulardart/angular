@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// Provides influence over how change detection should execute for a component.
 ///
 /// In practice, this is often used just for [markForCheck], which sets a
@@ -101,6 +103,23 @@ abstract class ChangeDetectorRef {
   /// facilitate migrating components to use `ChangeDetectionStrategy.OnPush`.
   void markChildForCheck(Object child);
 
+  /// See [DeprecatedChangeDetectorRef.detach] for details.
+  @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
+  @protected
+  void detachDeprecated();
+
+  /// See [DeprecatedChangeDetectorRef.reattach] for details.
+  @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
+  @protected
+  void reattachDeprecated();
+
+  /// See [DeprecatedDetectChanges.detectChanges] for details.
+  @Deprecated('Breaks assumptions around change detection and will be removed')
+  @protected
+  void detectChangesDeprecated();
+}
+
+extension DeprecatedChangeDetectorRef on ChangeDetectorRef {
   /// Detaches the component from the change detection hierarchy.
   ///
   /// A component whose change detector has been detached will be skipped during
@@ -120,7 +139,9 @@ abstract class ChangeDetectorRef {
   /// consider reaching out if you have a bug or performance issue that leads
   /// to using [detach] over `ChangeDetectionStrategy.OnPush` / [markForCheck].
   @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
-  void detach();
+  void detach() {
+    detachDeprecated();
+  }
 
   /// Reattaches a component that was [detach]-ed previously from the hierarchy.
   ///
@@ -129,8 +150,12 @@ abstract class ChangeDetectorRef {
   /// docs around [detach] for details of how detaching works and why this
   /// method invocation should be rare.
   @Deprecated('Use "changeDetection: ChangeDetectionStrategy.OnPush" instead')
-  void reattach();
+  void reattach() {
+    reattachDeprecated();
+  }
+}
 
+extension DeprecatedDetectChanges on ChangeDetectorRef {
   /// Forces synchronous change detection of this component and its children.
   ///
   /// **WARNING**: In practice, this API was not intended to be public with
@@ -146,5 +171,7 @@ abstract class ChangeDetectorRef {
   /// forcing more change detection, `NgZone.runAfterChangesObserved`. It is
   /// also worth filing a bug if this is needed.
   @Deprecated('Breaks assumptions around change detection and will be removed')
-  void detectChanges();
+  void detectChanges() {
+    detectChangesDeprecated();
+  }
 }

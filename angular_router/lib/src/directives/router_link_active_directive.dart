@@ -1,13 +1,9 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 import 'dart:html';
 
 import 'package:collection/collection.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/utilities.dart';
 
 import '../router/router.dart';
 import '../router/router_state.dart';
@@ -32,16 +28,16 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
   final Element _element;
   final Router _router;
 
-  StreamSubscription<RouterState> _routeChanged;
-  List<String> _classes;
+  late StreamSubscription<RouterState> _routeChanged;
+  late List<String> _classes;
 
   @ContentChildren(RouterLink)
-  List<RouterLink> links;
+  List<RouterLink>? links;
 
   RouterLinkActive(this._element, this._router);
 
   @override
-  void ngOnDestroy() => _routeChanged?.cancel();
+  void ngOnDestroy() => _routeChanged.cancel();
 
   @override
   void ngAfterViewInit() {
@@ -62,9 +58,10 @@ class RouterLinkActive implements AfterViewInit, OnDestroy {
     }
   }
 
-  void _update(RouterState routerState) {
+  void _update(RouterState? routerState) {
     var isActive = false;
-    if (routerState != null) {
+    var links = this.links;
+    if (routerState != null && links != null) {
       for (var link in links) {
         final url = link.url;
         if (url.path != routerState.path) continue;

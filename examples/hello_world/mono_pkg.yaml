@@ -1,0 +1,10 @@
+dart:
+- stable
+- dev
+
+stages:
+- analyze:
+  - dartanalyzer: --fatal-warnings .
+- build:
+  - command: pub run build_runner build --fail-on-severe
+

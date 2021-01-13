@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:build_test/build_test.dart';
 import 'package:logging/logging.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'resolve.dart';
 
@@ -42,13 +39,9 @@ Future<T> _recordLogs<T>(
   final records = <LogRecord>[];
   final subscription = logger.onRecord.listen(records.add);
   return scopeLogAsync(() async {
-    return runBuildZoned(
+    return runWithContext(
+      CompileContext.forTesting(),
       run,
-      zoneValues: {
-        CompileContext: CompileContext(
-          policyExceptions: {},
-        ),
-      },
     ).then((result) {
       subscription.cancel();
       onLog(records);

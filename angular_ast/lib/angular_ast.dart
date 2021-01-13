@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:meta/meta.dart';
 
 import 'src/ast.dart';
@@ -69,7 +65,6 @@ List<TemplateAst> parse(
   String template, {
   @required String sourceUrl,
   bool desugar = true,
-  bool parseExpressions = true,
   ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
 }) {
   return const NgParser().parse(
@@ -77,6 +72,5 @@ List<TemplateAst> parse(
     sourceUrl: sourceUrl,
     exceptionHandler: exceptionHandler,
     desugar: desugar,
-    parseExpressions: parseExpressions,
   );
 }

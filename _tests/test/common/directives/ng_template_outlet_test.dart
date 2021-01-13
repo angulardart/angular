@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
@@ -12,34 +11,31 @@ void main() {
 
   group('insert', () {
     test('should do nothing if templateRef is null', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createTestWithNullComponentFactory());
+      var testBed = NgTestBed(ng.createTestWithNullComponentFactory());
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       expect(element, hasTextContent(''));
     });
 
     test('should insert content specified by TemplateRef', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createTestInsertContentComponentFactory());
+      var testBed = NgTestBed(ng.createTestInsertContentComponentFactory());
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       expect(element, hasTextContent(''));
       var refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestInsertContentComponent componentInstance) {
-        componentInstance.currentTplRef = refs.tplRefs.first;
+        componentInstance.currentTplRef = refs!.tplRefs!.first;
       });
       expect(element, hasTextContent('foo'));
     });
 
     test('should clear content if TemplateRef becomes null', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createTestClearContentComponentFactory());
+      var testBed = NgTestBed(ng.createTestClearContentComponentFactory());
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       var refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestClearContentComponent componentInstance) {
-        componentInstance.currentTplRef = refs.tplRefs.first;
+        componentInstance.currentTplRef = refs!.tplRefs!.first;
       });
       expect(element, hasTextContent('foo'));
       await testFixture.update((TestClearContentComponent componentInstance) {
@@ -50,17 +46,16 @@ void main() {
     });
 
     test('should swap content if TemplateRef changes', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createTestChangeContentComponentFactory());
+      var testBed = NgTestBed(ng.createTestChangeContentComponentFactory());
       var testFixture = await testBed.create();
       var element = testFixture.rootElement;
       var refs = testFixture.assertOnlyInstance.refs;
       await testFixture.update((TestChangeContentComponent componentInstance) {
-        componentInstance.currentTplRef = refs.tplRefs.first;
+        componentInstance.currentTplRef = refs!.tplRefs!.first;
       });
       expect(element, hasTextContent('foo'));
       await testFixture.update((TestChangeContentComponent componentInstance) {
-        componentInstance.currentTplRef = refs.tplRefs.last;
+        componentInstance.currentTplRef = refs!.tplRefs!.last;
       });
       expect(element, hasTextContent('bar'));
     });
@@ -68,8 +63,7 @@ void main() {
 
   group('[ngTemplateOutletContext]', () {
     test('should update on changes', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestContextChangeComponentFactory());
+      final testBed = NgTestBed(ng.createTestContextChangeComponentFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
@@ -79,8 +73,7 @@ void main() {
     });
 
     test('should update when identity changes', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createTestContextChangeComponentFactory());
+      final testBed = NgTestBed(ng.createTestContextChangeComponentFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('foo'));
       await testFixture.update((component) {
@@ -92,8 +85,8 @@ void main() {
     });
 
     test('should reapply when [ngTemplateOutlet] changes', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createTestContextTemplateRefChangeComponentFactory());
+      final testBed =
+          NgTestBed(ng.createTestContextTemplateRefChangeComponentFactory());
       final testFixture = await testBed.create();
       expect(testFixture.text, contains('Hello world!'));
       await testFixture.update((component) {
@@ -103,7 +96,7 @@ void main() {
     });
 
     test('should support *-syntax', () async {
-      final testBed = NgTestBed.forComponent(ng.createTestStarSyntaxFactory());
+      final testBed = NgTestBed(ng.createTestStarSyntaxFactory());
       final testFixture = await testBed.create();
       expect(
         testFixture.text,
@@ -113,11 +106,32 @@ void main() {
   });
 
   test('should support [ngTemplateOutletValue] as a short-hand', () async {
-    final testBed = NgTestBed.forComponent(ng.createTestValueInputFactory());
+    final testBed = NgTestBed(ng.createTestValueInputFactory());
     final testFixture = await testBed.create(beforeChangeDetection: (c) {
       c.value = 'Hello World';
     });
     expect(testFixture.text, contains('Hello World'));
+  });
+
+  test('should not crash setting and resetting [ngTemplateOutlet]', () async {
+    final testBed = NgTestBed(ng.createTestSetTemplateFactory());
+    final testFixture = await testBed.create();
+    await testFixture.update((component) {
+      // This sets the active view within `NgTemplateOutlet`.
+      component.activeTemplate = component.greetingTemplate;
+    });
+    expect(testFixture.text!.trim(), 'Hello world!');
+    await testFixture.update((component) {
+      // This incorrectly wouldn't invalidate the active view.
+      component.activeTemplate = null;
+    });
+    expect(testFixture.text!.trim(), isEmpty);
+    await testFixture.update((component) {
+      // This would attempt to remove the previously active view a second time
+      // and crash.
+      component.activeTemplate = component.greetingTemplate;
+    });
+    expect(testFixture.text!.trim(), 'Hello world!');
   });
 }
 
@@ -127,7 +141,7 @@ void main() {
 )
 class CaptureTplRefs {
   @ContentChildren(TemplateRef)
-  List<TemplateRef> tplRefs;
+  List<TemplateRef>? tplRefs;
 }
 
 @Component(
@@ -136,7 +150,7 @@ class CaptureTplRefs {
   template: '',
 )
 class TestComponent {
-  TemplateRef currentTplRef;
+  TemplateRef? currentTplRef;
 }
 
 @Component(
@@ -145,7 +159,7 @@ class TestComponent {
   template: '<template [ngTemplateOutlet]="null"></template>',
 )
 class TestWithNullComponent {
-  TemplateRef currentTplRef;
+  TemplateRef? currentTplRef;
 }
 
 @Component(
@@ -155,10 +169,10 @@ class TestWithNullComponent {
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
 )
 class TestInsertContentComponent {
-  TemplateRef currentTplRef;
+  TemplateRef? currentTplRef;
 
   @ViewChild('refs')
-  CaptureTplRefs refs;
+  CaptureTplRefs? refs;
 }
 
 @Component(
@@ -168,10 +182,10 @@ class TestInsertContentComponent {
       '<template [ngTemplateOutlet]="currentTplRef"></template>',
 )
 class TestClearContentComponent {
-  TemplateRef currentTplRef;
+  TemplateRef? currentTplRef;
 
   @ViewChild('refs')
-  CaptureTplRefs refs;
+  CaptureTplRefs? refs;
 }
 
 @Component(
@@ -182,10 +196,10 @@ class TestClearContentComponent {
       '[ngTemplateOutlet]="currentTplRef"></template>',
 )
 class TestChangeContentComponent {
-  TemplateRef currentTplRef;
+  TemplateRef? currentTplRef;
 
   @ViewChild('refs')
-  CaptureTplRefs refs;
+  CaptureTplRefs? refs;
 }
 
 @Component(
@@ -245,5 +259,19 @@ class TestStarSyntax {
   directives: [NgTemplateOutlet],
 )
 class TestValueInput {
-  String value;
+  String? value;
+}
+
+@Component(
+  selector: 'test',
+  template: '''
+    <template #greeting>Hello world!</template>
+    <ng-container *ngTemplateOutlet="activeTemplate"></ng-container>
+  ''',
+  directives: [NgTemplateOutlet],
+)
+class TestSetTemplate {
+  @ViewChild('greeting')
+  TemplateRef? greetingTemplate;
+  TemplateRef? activeTemplate;
 }

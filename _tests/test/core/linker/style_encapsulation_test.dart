@@ -1,29 +1,27 @@
-@TestOn('browser')
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'style_encapsulation_test.template.dart' as ng;
 
 void main() {
   tearDown(() {
-    document.head.querySelectorAll('style').forEach((e) => e.remove());
+    document.head!.querySelectorAll('style').forEach((e) => e.remove());
     return disposeAnyRunningTest();
   });
 
   String failureReason(Element target) {
-    final lastStyles = document.head.querySelectorAll('style');
+    final lastStyles = document.head!.querySelectorAll('style');
     final styleText = lastStyles.map((e) => e.text).join('\n');
     return 'HTML:\n\n${target.outerHtml}\nCSS:\n\n$styleText';
   }
 
   test('should encapsulate usages of [class]=', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestSetClassPropertyFactory());
+    final testBed = NgTestBed(ng.createTestSetClassPropertyFactory());
     final fixture = await testBed.create();
-    final element = fixture.rootElement.querySelector('div');
+    final element = fixture.rootElement.querySelector('div')!;
     expect(
       element.getComputedStyle().position,
       'absolute',
@@ -32,10 +30,9 @@ void main() {
   });
 
   test('should encapsulate usages of [attr.class]=', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestSetClassAttributeFactory());
+    final testBed = NgTestBed(ng.createTestSetClassAttributeFactory());
     final fixture = await testBed.create();
-    final element = fixture.rootElement.querySelector('div');
+    final element = fixture.rootElement.querySelector('div')!;
     expect(
       element.getComputedStyle().position,
       'absolute',
@@ -44,10 +41,9 @@ void main() {
   });
 
   test('should support encapsulation piercing ::ng-deep', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createTestEncapsulationPierceFactory());
+    final testBed = NgTestBed(ng.createTestEncapsulationPierceFactory());
     final fixture = await testBed.create();
-    final element = fixture.rootElement.querySelector('button');
+    final element = fixture.rootElement.querySelector('button')!;
     expect(
       element.getComputedStyle().textTransform,
       isNot('uppercase'),

@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:source_gen/source_gen.dart' show LibraryReader;
+import 'package:angular_compiler/v2/context.dart';
 
 import '../analyzer/di/dependencies.dart';
 import '../analyzer/di/tokens.dart';
@@ -11,20 +11,6 @@ import '../analyzer/reflector.dart';
 /// Generates `.dart` source code given a [ReflectableOutput].
 class ReflectableEmitter {
   static const _package = 'package:angular';
-
-  /// Optional, may be specified in order to avoid linking to specified URLs.
-  ///
-  /// These are expected in the fully-qualified `asset:...` notation, including
-  /// both relative files and `package: ...` imports.
-  ///
-  /// For example in the case of using the `@deferred` feature, we don't want
-  /// to call "initReflector(...)" on the components' modules.
-  final Iterable<String> deferredModules;
-
-  /// Origin of the analyzed library.
-  ///
-  /// If [deferredModules] is non-empty, this is expected to be provided.
-  final String deferredModuleSource;
 
   /// Where the runtime `reflector.dart` is located.
   final String reflectorSource;
@@ -57,11 +43,8 @@ class ReflectableEmitter {
     this._output,
     this._library, {
     Allocator allocator,
-    this.reflectorSource = '$_package/src/di/reflector.dart',
-    List<String> deferredModules,
-    this.deferredModuleSource,
-  })  : _allocator = allocator ?? Allocator.none,
-        deferredModules = deferredModules ?? const [];
+    this.reflectorSource = '$_package/src/reflector.dart',
+  }) : _allocator = allocator ?? Allocator.none;
 
   /// Whether we have one or more URLs that need `initReflector` called on them.
   bool get _linkingNeeded => _output.urlsNeedingInitReflector.isNotEmpty;
@@ -73,25 +56,6 @@ class ReflectableEmitter {
 
   /// Whether the result of analysis is that this file is a complete no-op.
   bool get _isNoop => !_linkingNeeded && !_registrationNeeded;
-
-  /// Returns whether to skip linking to [url].
-  ///
-  /// The view compiler may instruct us to defer additional source URLs if they
-  /// were only used in order to refer to a component that is later deferred
-  /// using the `@deferred` template syntax.
-  bool _isUsedForDeferredComponentsOnly(String url) {
-    if (deferredModules.isEmpty) {
-      return false;
-    }
-    // Transforms the current source URL to an AssetId (canonical).
-    final module = AssetId.resolve(deferredModuleSource);
-    // Given the url, resolve what absolute path that is.
-    // We might get a relative path, but we only deal with absolute URLs.
-    final asset = AssetId.resolve(url, from: module);
-    // The template compiler and package:build use a different asset: scheme.
-    final assetUrl = 'asset:${asset.toString().replaceFirst('|', '/')}';
-    return deferredModules.contains(assetUrl);
-  }
 
   /// Creates a manual tear-off of the provided constructor.
   Expression _tearOffConstructor(
@@ -158,7 +122,11 @@ class ReflectableEmitter {
     // Prepare to write code.
     _importBuffer = StringBuffer();
     _initReflectorBuffer = StringBuffer();
-    _dartEmitter = SplitDartEmitter(_importBuffer, _allocator);
+    _dartEmitter = SplitDartEmitter(
+      _importBuffer,
+      allocator: _allocator,
+      emitNullSafeSyntax: CompileContext.current.emitNullSafeCode,
+    );
     _libraryBuilder = LibraryBuilder();
 
     // Reference _ngRef if we do any registration.
@@ -218,9 +186,6 @@ class ReflectableEmitter {
     }
     var counter = 0;
     for (final url in _output.urlsNeedingInitReflector) {
-      if (_isUsedForDeferredComponentsOnly(url)) {
-        continue;
-      }
       // Generates:
       //
       // import "<url>" as _refN;
@@ -347,9 +312,14 @@ class SplitDartEmitter extends DartEmitter {
   final StringSink _writeImports;
 
   SplitDartEmitter(
-    this._writeImports, [
+    this._writeImports, {
     Allocator allocator = Allocator.none,
-  ]) : super(allocator);
+    bool emitNullSafeSyntax = false,
+  }) : super(
+          allocator,
+          false,
+          emitNullSafeSyntax,
+        );
 
   @override
   StringSink visitDirective(Directive spec, [_]) {

@@ -1,6 +1,6 @@
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:csslib/parser.dart';
 import 'package:csslib/visitor.dart';
+import 'package:angular_compiler/v1/cli.dart';
 
 /// This is a limited shim for Shadow DOM CSS styling.
 ///
@@ -22,8 +22,9 @@ import 'package:csslib/visitor.dart';
 ///   this feature, all selectors except those preceding or containing shadow
 ///   host selectors are scoped with a host specific content class.
 ///
-///     div               =>  div.content
-///     :host(.foo) .bar  =>  .foo.host .bar.content
+///     div                        =>  div.content
+///     :host(.foo) .bar           =>  .foo.host .bar.content
+///     :global-context(.foo) .bar =>  .foo .bar.content
 ///
 /// * Shadow Piercing Combinators
 ///
@@ -173,6 +174,10 @@ bool _isHostFunction(SimpleSelector selector) =>
 bool _isHostContextFunction(SimpleSelector selector) =>
     selector is PseudoClassFunctionSelector && selector.name == 'host-context';
 
+bool _isGlobalContextFunction(SimpleSelector selector) =>
+    selector is PseudoClassFunctionSelector &&
+    selector.name == 'global-context';
+
 /// Returns [true] if [selectorGroup] matches an element named [name].
 bool _matchesElement(SelectorGroup selectorGroup, String name) {
   if (selectorGroup.selectors.length != 1) return false;
@@ -286,6 +291,13 @@ class _CompoundSelector {
   bool get containsHostContext {
     for (var sequence in _sequences) {
       if (_isHostContextFunction(sequence.simpleSelector)) return true;
+    }
+    return false;
+  }
+
+  bool get containsGlobalContext {
+    for (var sequence in _sequences) {
+      if (_isGlobalContextFunction(sequence.simpleSelector)) return true;
     }
     return false;
   }
@@ -495,7 +507,8 @@ class _ShadowTransformer extends Visitor {
     for (var i = indices.deepIndex - 1; i > indices.hostIndex; i--) {
       var compoundSelector = selector.compoundSelectors[i];
       if (compoundSelector.containsHost ||
-          compoundSelector.containsHostContext) {
+          compoundSelector.containsHostContext ||
+          compoundSelector.containsGlobalContext) {
         indices.hostIndex = i;
       } else {
         compoundSelector.add(_createClassSelectorSequence(_contentClass));
@@ -521,6 +534,13 @@ class _ShadowTransformer extends Visitor {
           // Replace :host with host class.
           compoundSelector._sequences[j] =
               _createClassSelectorSequence(_hostClass);
+        } else if (_isGlobalContextFunction(selector)) {
+          // Remove the global-context psuedo itself and replace with the
+          // context selector.
+          compoundSelector._sequences.removeAt(j);
+          var contextFn = selector as PseudoClassFunctionSelector;
+          var contextArg = _clone(contextFn.selector.simpleSelectorSequences);
+          compoundSelector.addAll(contextArg);
         }
       }
     }

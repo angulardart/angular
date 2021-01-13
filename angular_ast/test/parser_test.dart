@@ -1,9 +1,5 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'package:angular_ast/angular_ast.dart';
 import 'package:test/test.dart';
+import 'package:angular_ast/angular_ast.dart';
 
 void main() {
   List<StandaloneTemplateAst> parse(String template) {
@@ -277,24 +273,6 @@ void main() {
         ElementAst('path', CloseElementAst('path')),
       ],
     );
-  });
-
-  test('should parse and desugar @deferred', () {
-    expect(parse('<div @deferred></div>'), [
-      EmbeddedTemplateAst(
-          hasDeferredComponent: true,
-          childNodes: [ElementAst('div', CloseElementAst('div'))])
-    ]);
-  });
-
-  test('should parse multiple annotations and desugar @deferred', () {
-    expect(parse('<div @foo="bar" @deferred></div>'), [
-      EmbeddedTemplateAst(hasDeferredComponent: true, childNodes: [
-        ElementAst('div', CloseElementAst('div'), annotations: [
-          AnnotationAst('foo', 'bar'),
-        ])
-      ]),
-    ]);
   });
 
   test('should parse an annotation with a value', () {

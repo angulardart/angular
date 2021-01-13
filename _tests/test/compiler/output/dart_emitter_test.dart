@@ -1,4 +1,5 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
@@ -27,8 +28,13 @@ void main() {
       emitter = DartEmitter();
       someVar = o.variable('someVar');
     });
+
+    void enableNullSafety() {
+      emitter = DartEmitter(emitNullSafeSyntax: true);
+    }
+
     String emitStmt(o.Statement stmt) {
-      return emitter.emitStatements(someModuleUrl, [stmt], {});
+      return emitter.emitStatements(someModuleUrl, [stmt]);
     }
 
     test('should declare variables', () {
@@ -49,7 +55,7 @@ void main() {
               .set(o.literal(1,
                   o.BuiltinType(o.BuiltinTypeName.Int, [o.TypeModifier.Const])))
               .toDeclStmt(null, [o.StmtModifier.Final])),
-          'final int someVar = 1;');
+          'final someVar = 1;');
       expect(
           emitStmt(someVar.set(o.literal(1)).toDeclStmt()), 'var someVar = 1;');
       expect(emitStmt(someVar.set(o.literal(1)).toDeclStmt(o.INT_TYPE)),
@@ -109,6 +115,105 @@ void main() {
           emitStmt(o.not(o.variable('a')).callMethod('toString', []).toStmt()),
           '(!a).toString();');
     });
+
+    test('should support but hide the non-nullable assertion operator', () {
+      expect(
+        emitStmt(o.variable('a').notNull().callFn([o.literal(1)]).toStmt()),
+        '(a/*!*/)(1);',
+      );
+    });
+
+    test('should support and write the non-nullable assertion operator', () {
+      enableNullSafety();
+      expect(
+        emitStmt(o.variable('a').notNull().callFn([o.literal(1)]).toStmt()),
+        '(a!)(1);',
+      );
+    });
+
+    test('should support but hide a nullable built-in type', () {
+      final nullableString = o.BuiltinType(
+        o.BuiltinTypeName.String,
+        [o.TypeModifier.Nullable],
+      );
+      var writeVarExpr = o.variable('a').set(o.literal(null));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(nullableString)),
+        'String/*?*/ a = null;',
+      );
+    });
+
+    test('should support and write a nullable built-in type', () {
+      enableNullSafety();
+      final nullableString = o.BuiltinType(
+        o.BuiltinTypeName.String,
+        [o.TypeModifier.Nullable],
+      );
+      var writeVarExpr = o.variable('a').set(o.literal(null));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(nullableString)),
+        'String? a = null;',
+      );
+    });
+
+    test('should support but hide the late declaration modifier', () {
+      var writeVarExpr = o.variable('a').set(o.literal('Hello'));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(o.STRING_TYPE, [o.StmtModifier.Late])),
+        '/*late*/ String a = \'Hello\';',
+      );
+    });
+
+    test('should support and write the late declaration modifier', () {
+      enableNullSafety();
+      var writeVarExpr = o.variable('a').set(o.literal('Hello'));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(o.STRING_TYPE, [o.StmtModifier.Late])),
+        'late String a = \'Hello\';',
+      );
+    });
+
+    test('should support but hide late + final declaration modifier', () {
+      var writeVarExpr = o.variable('a').set(o.literal('Hello'));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(o.STRING_TYPE, [
+          o.StmtModifier.Late,
+          o.StmtModifier.Final,
+        ])),
+        '/*late final*/ String a = \'Hello\';',
+      );
+    });
+
+    test('should support and write late + final declaration modifier', () {
+      enableNullSafety();
+      var writeVarExpr = o.variable('a').set(o.literal('Hello'));
+      expect(
+        emitStmt(writeVarExpr.toDeclStmt(o.STRING_TYPE, [
+          o.StmtModifier.Late,
+          o.StmtModifier.Final,
+        ])),
+        'late final String a = \'Hello\';',
+      );
+    });
+
+    test('should support Never but emit Null when not opted-in', () {
+      var declareVar = o.variable('a').set(o.NULL_EXPR);
+      expect(
+        emitStmt(declareVar.toDeclStmt(o.NEVER_TYPE)),
+        'Null /*Never*/ a = null;',
+      );
+    });
+
+    test('should support and write Never', () {
+      enableNullSafety();
+      var declareVar = o.variable('a').set(o.NULL_EXPR);
+      expect(
+        emitStmt(declareVar.toDeclStmt(o.NEVER_TYPE)),
+        // = null isn't semantically valid, but this is a synthetic test anyway.
+        'Never a = null;',
+      );
+    });
+
     test('should omit optional const', () {
       expect(
         emitStmt(o.variable('SomeClass').instantiate(
