@@ -1,4 +1,8 @@
 github:
+  on:
+    push:
+    pull_request:
+
 
 self_validate: analyze
 merge_stages:
