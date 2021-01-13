@@ -1,8 +1,10 @@
 github:
   on:
     push:
+      - master
+      - google
     pull_request:
-
+      - master
 
 self_validate: analyze
 merge_stages:
