@@ -4,6 +4,7 @@ github:
       branches:
         - master
         - google
+        - kevmoo_hax
     pull_request:
       branches:
         - master
