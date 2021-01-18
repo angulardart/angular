@@ -2,12 +2,7 @@
 name: Dart CI
 on:
   push:
-    branches:
-      - master
-      - google
   pull_request:
-    branches:
-      - master
 defaults:
   run:
     shell: bash
