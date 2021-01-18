@@ -16,7 +16,7 @@ class Pub {
 
   /// Setup pub invocation and verify it by checking pub's version.
   static Future<Pub> init(String workspaceDir, {String sdk}) async {
-    var pub;
+    String pub;
     if (sdk != null) {
       log.info('Use custom SDK: "$sdk"');
       pub = join(sdk, 'bin', 'pub');
@@ -29,8 +29,8 @@ class Pub {
 
     log.info('Run "$pubVersion"');
     await Process.start(pub, args.split(' ')).then((process) async {
-      stdout.addStream(process.stdout);
-      stderr.addStream(process.stderr);
+      await stdout.addStream(process.stdout);
+      await stderr.addStream(process.stderr);
       await process.exitCode.then((exitCode) {
         if (exitCode != 0) {
           log.severe('"$pubVersion" failed with exit code: $exitCode');
@@ -50,8 +50,8 @@ class Pub {
     await Process.start(invocation, args.split(' '),
             workingDirectory: workspaceDir)
         .then((process) async {
-      stdout.addStream(process.stdout);
-      stderr.addStream(process.stderr);
+      await stdout.addStream(process.stdout);
+      await stderr.addStream(process.stderr);
       await process.exitCode.then((exitCode) {
         if (exitCode == 0) {
           log.info('"$pubUpdate" finished successfully');
@@ -73,8 +73,8 @@ class Pub {
     await Process.start(invocation, args.split(' '),
             workingDirectory: workspaceDir)
         .then((process) async {
-      stdout.addStream(process.stdout);
-      stderr.addStream(process.stderr);
+      await stdout.addStream(process.stdout);
+      await stderr.addStream(process.stderr);
       await process.exitCode.then((exitCode) {
         if (exitCode == 0) {
           log.info('"$pubBuild" finished successfully');
