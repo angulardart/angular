@@ -15,6 +15,7 @@ dependencies:
   logging: '>=0.9.0 <0.12.0'
   meta: ^1.3.0-nullsafety
   stack_trace: ^1.10.0-nullsafety
+  stream_transform: ^2.0.0-nullsafety
 
   # Compiler. Eventually we want to move these to angular_compiler.
   analyzer: ^0.40.0
