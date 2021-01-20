@@ -2,12 +2,7 @@
 name: Dart CI
 on:
   push:
-    branches:
-      - master
-      - google
   pull_request:
-    branches:
-      - master
 defaults:
   run:
     shell: bash
@@ -156,7 +151,6 @@ jobs:
         working-directory: _tests
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_004:
     name: "build; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
@@ -187,7 +181,6 @@ jobs:
         working-directory: angular_ast
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_005:
     name: "build; PKG: angular_compiler; `pub run build_runner build --fail-on-severe`"
@@ -218,7 +211,6 @@ jobs:
         working-directory: angular_compiler
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_006:
     name: "build; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
@@ -249,7 +241,6 @@ jobs:
         working-directory: angular_forms
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_007:
     name: "build; PKG: angular_router; `pub run build_runner build --fail-on-severe`"
@@ -280,7 +271,6 @@ jobs:
         working-directory: angular_router
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_008:
     name: "build; PKG: angular_test; `pub run build_runner build --fail-on-severe`"
@@ -311,7 +301,6 @@ jobs:
         working-directory: angular_test
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_009:
     name: "build; PKG: examples/hello_world; `pub run build_runner build --fail-on-severe`"
@@ -342,7 +331,6 @@ jobs:
         working-directory: examples/hello_world
         run: pub run build_runner build --fail-on-severe
     needs:
-      - job_001
       - job_002
   job_010:
     name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P travis`"
@@ -373,7 +361,6 @@ jobs:
         working-directory: angular_ast
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -411,7 +398,6 @@ jobs:
         working-directory: angular_compiler
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -449,7 +435,6 @@ jobs:
         working-directory: angular_forms
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -487,7 +472,6 @@ jobs:
         working-directory: angular_router
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -525,7 +509,6 @@ jobs:
         working-directory: angular_test
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -563,7 +546,6 @@ jobs:
         working-directory: _tests
         run: pub run build_runner test --fail-on-severe -- -P travis_vm
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
@@ -606,7 +588,6 @@ jobs:
         working-directory: _tests
         run: pub run build_runner test --fail-on-severe -- -P travis_browser
     needs:
-      - job_001
       - job_002
       - job_003
       - job_004
