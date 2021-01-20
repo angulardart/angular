@@ -333,6 +333,80 @@ jobs:
     needs:
       - job_002
   job_010:
+    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_vm`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v0.3
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_vm"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P travis_vm
+    needs:
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+  job_011:
+    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_browser`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_2"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v0.3
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_browser"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P travis_browser
+    needs:
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+  job_012:
     name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -369,7 +443,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_011:
+  job_013:
     name: "unit_test; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -406,7 +480,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_012:
+  job_014:
     name: "unit_test; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -443,7 +517,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_013:
+  job_015:
     name: "unit_test; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -480,7 +554,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_014:
+  job_016:
     name: "unit_test; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -517,88 +591,3 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_015:
-    name: "unit_test_vm; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_vm`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_1"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
-            os:ubuntu-latest;pub-cache-hosted;dart:dev
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: dart-lang/setup-dart@v0.3
-        with:
-          sdk: dev
-      - id: checkout
-        uses: actions/checkout@v2
-      - id: _tests_pub_upgrade
-        name: "_tests; pub upgrade --no-precompile"
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: _tests
-        run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_vm"
-        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
-        working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P travis_vm
-    needs:
-      - job_002
-      - job_003
-      - job_004
-      - job_005
-      - job_006
-      - job_007
-      - job_008
-      - job_009
-      - job_010
-      - job_011
-      - job_012
-      - job_013
-      - job_014
-  job_016:
-    name: "unit_test_browser; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_browser`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_2"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
-            os:ubuntu-latest;pub-cache-hosted;dart:dev
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: dart-lang/setup-dart@v0.3
-        with:
-          sdk: dev
-      - id: checkout
-        uses: actions/checkout@v2
-      - id: _tests_pub_upgrade
-        name: "_tests; pub upgrade --no-precompile"
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: _tests
-        run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_browser"
-        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
-        working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P travis_browser
-    needs:
-      - job_002
-      - job_003
-      - job_004
-      - job_005
-      - job_006
-      - job_007
-      - job_008
-      - job_009
-      - job_010
-      - job_011
-      - job_012
-      - job_013
-      - job_014
-      - job_015
