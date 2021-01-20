@@ -6,5 +6,7 @@ stages:
   - dartanalyzer: --fatal-warnings .
 - build:
   - command: pub run build_runner build --fail-on-severe
-- unit_test:
-  - command: pub run build_runner test --fail-on-severe -- -P travis
+- unit_test_vm:
+  - command: pub run build_runner test --fail-on-severe -- -P travis_vm
+- unit_test_browser:
+  - command: pub run build_runner test --fail-on-severe -- -P travis_browser
