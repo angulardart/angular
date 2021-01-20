@@ -51,9 +51,9 @@ class Cli {
         help: 'Specify Angular Components git repository ref.',
       );
     final results = parser.parse(args);
-    angular = results['angular'];
-    sdk = results['sdk'];
-    componentsGitUrl = results['components-git-url'];
-    componentsGitRef = results['components-git-ref'];
+    angular = results['angular'] as String;
+    sdk = results['sdk'] is String ? results['sdk'] as String : null;
+    componentsGitUrl = results['components-git-url'] as String;
+    componentsGitRef = results['components-git-ref'] as String;
   }
 }

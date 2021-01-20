@@ -22,19 +22,20 @@ class Pubspec {
   Future<void> overrideAngularDependencies(String angular) async {
     final pubspec = await _read();
     _overrideAngularDependencies(angular, pubspec);
-    await _write(pubspec);
+    _write(pubspec);
   }
 
-  Future<Map> _read() async {
+  Future<Map<dynamic, dynamic>> _read() async {
     log.info('Loading pubspec.yaml: "${_file.path}"');
     final contents = await _file.readAsString();
     final yaml = loadYaml(contents);
     final _json = json.encode(yaml);
     final map = json.decode(_json);
-    return map;
+    return map as Map;
   }
 
-  void _overrideAngularDependencies(String angular, Map pubspec) {
+  void _overrideAngularDependencies(
+      String angular, Map<dynamic, dynamic> pubspec) {
     log.info('Overriding Angular dependencies');
     log.info('Angular used for overrides: "${angular}"');
 
@@ -52,7 +53,7 @@ class Pubspec {
         'Post-update dependency_overrides:\n${pubspec['dependency_overrides']}');
   }
 
-  void _write(Map pubspec) {
+  void _write(Map<dynamic, dynamic> pubspec) {
     log.info('Writing to pubspec.yaml: "${_file.path}"');
     _file.writeAsStringSync(json.encode(pubspec));
   }
