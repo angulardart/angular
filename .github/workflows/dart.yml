@@ -1,8 +1,13 @@
-# Created with package:mono_repo v3.4.4
+# Created with package:mono_repo v3.4.6
 name: Dart CI
 on:
   push:
+    branches:
+      - master
+      - google
   pull_request:
+    branches:
+      - master
 defaults:
   run:
     shell: bash
@@ -22,14 +27,13 @@ jobs:
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: stable
-      - run: dart --version
+          sdk: stable
       - id: checkout
         uses: actions/checkout@v2
       - name: mono_repo self validate
-        run: pub global activate mono_repo 3.4.4
+        run: pub global activate mono_repo 3.4.6
       - name: mono_repo self validate
         run: pub global run mono_repo generate --validate
   job_002:
@@ -46,10 +50,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: _tests_pub_upgrade
@@ -138,10 +141,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: _tests_pub_upgrade
@@ -154,6 +156,7 @@ jobs:
         working-directory: _tests
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_004:
     name: "build; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
@@ -169,10 +172,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_ast_pub_upgrade
@@ -185,6 +187,7 @@ jobs:
         working-directory: angular_ast
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_005:
     name: "build; PKG: angular_compiler; `pub run build_runner build --fail-on-severe`"
@@ -200,10 +203,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_compiler_pub_upgrade
@@ -216,6 +218,7 @@ jobs:
         working-directory: angular_compiler
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_006:
     name: "build; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
@@ -231,10 +234,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_forms_pub_upgrade
@@ -247,6 +249,7 @@ jobs:
         working-directory: angular_forms
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_007:
     name: "build; PKG: angular_router; `pub run build_runner build --fail-on-severe`"
@@ -262,10 +265,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_router_pub_upgrade
@@ -278,6 +280,7 @@ jobs:
         working-directory: angular_router
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_008:
     name: "build; PKG: angular_test; `pub run build_runner build --fail-on-severe`"
@@ -293,10 +296,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_test_pub_upgrade
@@ -309,6 +311,7 @@ jobs:
         working-directory: angular_test
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_009:
     name: "build; PKG: examples/hello_world; `pub run build_runner build --fail-on-severe`"
@@ -324,10 +327,9 @@ jobs:
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: examples_hello_world_pub_upgrade
@@ -340,46 +342,9 @@ jobs:
         working-directory: examples/hello_world
         run: pub run build_runner build --fail-on-severe
     needs:
+      - job_001
       - job_002
   job_010:
-    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis`"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cache Pub hosted dependencies
-        uses: actions/cache@v2
-        with:
-          path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_1"
-          restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
-            os:ubuntu-latest;pub-cache-hosted;dart:dev
-            os:ubuntu-latest;pub-cache-hosted
-            os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
-        with:
-          release-channel: dev
-      - run: dart --version
-      - id: checkout
-        uses: actions/checkout@v2
-      - id: _tests_pub_upgrade
-        name: "_tests; pub upgrade --no-precompile"
-        if: "always() && steps.checkout.conclusion == 'success'"
-        working-directory: _tests
-        run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis"
-        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
-        working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P travis
-    needs:
-      - job_002
-      - job_003
-      - job_004
-      - job_005
-      - job_006
-      - job_007
-      - job_008
-      - job_009
-  job_011:
     name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -387,16 +352,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast;commands:command_3"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_ast_pub_upgrade
@@ -409,6 +373,7 @@ jobs:
         working-directory: angular_ast
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
+      - job_001
       - job_002
       - job_003
       - job_004
@@ -417,7 +382,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_012:
+  job_011:
     name: "unit_test; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -425,16 +390,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler;commands:command_3"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_compiler_pub_upgrade
@@ -447,6 +411,7 @@ jobs:
         working-directory: angular_compiler
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
+      - job_001
       - job_002
       - job_003
       - job_004
@@ -455,7 +420,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_013:
+  job_012:
     name: "unit_test; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -463,16 +428,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms;commands:command_3"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_forms_pub_upgrade
@@ -485,6 +449,7 @@ jobs:
         working-directory: angular_forms
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
+      - job_001
       - job_002
       - job_003
       - job_004
@@ -493,7 +458,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_014:
+  job_013:
     name: "unit_test; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -501,16 +466,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router;commands:command_3"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_router_pub_upgrade
@@ -523,6 +487,7 @@ jobs:
         working-directory: angular_router
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
+      - job_001
       - job_002
       - job_003
       - job_004
@@ -531,7 +496,7 @@ jobs:
       - job_007
       - job_008
       - job_009
-  job_015:
+  job_014:
     name: "unit_test; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P travis`"
     runs-on: ubuntu-latest
     steps:
@@ -539,16 +504,15 @@ jobs:
         uses: actions/cache@v2
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test;commands:command_1"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test;commands:command_3"
           restore-keys: |
             os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test
             os:ubuntu-latest;pub-cache-hosted;dart:dev
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
-      - uses: cedx/setup-dart@v2
+      - uses: dart-lang/setup-dart@v0.3
         with:
-          release-channel: dev
-      - run: dart --version
+          sdk: dev
       - id: checkout
         uses: actions/checkout@v2
       - id: angular_test_pub_upgrade
@@ -561,6 +525,7 @@ jobs:
         working-directory: angular_test
         run: pub run build_runner test --fail-on-severe -- -P travis
     needs:
+      - job_001
       - job_002
       - job_003
       - job_004
@@ -569,3 +534,90 @@ jobs:
       - job_007
       - job_008
       - job_009
+  job_015:
+    name: "unit_test_vm; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_vm`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v0.3
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_vm"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P travis_vm
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+  job_016:
+    name: "unit_test_browser; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_browser`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_2"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v0.3
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_browser"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P travis_browser
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
