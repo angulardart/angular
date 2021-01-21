@@ -1,7 +1,7 @@
 name: _tests
 description: Tests for AngularDart.
 environment:
-  sdk: ">=2.12.0-0.0.dev <3.0.0"
+  sdk: ">=2.12.0-0 <3.0.0"
 
 dependencies:
   # No strict dependencies, we always use dependency_overrides.
