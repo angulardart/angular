@@ -174,15 +174,9 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
           }
           final values = argument.expression as ListLiteral;
           if (values.elements.isNotEmpty &&
-              // Avoid an edge case where all of your entries are just empty
-              // lists. Not likely to happen, but might as well check anyway at
-              // this point.
-              values.elements.every(
-                  (e) => (e as Expression).staticType?.isDynamic != false)) {
-            // We didn't resolve something.
+              values.elements.any(_isUnresolvedOrNotAnExpression)) {
             _exceptionHandler.handle(UnresolvedExpressionError(
-              values.elements.where(
-                  (e) => (e as Expression).staticType?.isDynamic != false),
+              values.elements.where(_isUnresolvedOrNotAnExpression),
               element,
               annotationImpl.compilationUnit,
             ));
@@ -191,6 +185,14 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
       }
     }
     return values;
+  }
+
+  static bool _isUnresolvedOrNotAnExpression(CollectionElement e) {
+    if (e is Expression) {
+      return e.staticType?.isDynamic != false;
+    } else {
+      return true;
+    }
   }
 
   CompileTypedMetadata _typeMetadataFrom(TypedElement typed) {
