@@ -1,5 +1,5 @@
 #!/bin/bash
-# Created with package:mono_repo v3.4.4
+# Created with package:mono_repo v3.4.6
 
 # Support built in commands on windows out of the box.
 function pub() {
@@ -63,6 +63,14 @@ for PKG in ${PKGS}; do
         pub run build_runner build --fail-on-severe || EXIT_CODE=$?
         ;;
       command_1)
+        echo 'pub run build_runner test --fail-on-severe -- -P travis_vm'
+        pub run build_runner test --fail-on-severe -- -P travis_vm || EXIT_CODE=$?
+        ;;
+      command_2)
+        echo 'pub run build_runner test --fail-on-severe -- -P travis_browser'
+        pub run build_runner test --fail-on-severe -- -P travis_browser || EXIT_CODE=$?
+        ;;
+      command_3)
         echo 'pub run build_runner test --fail-on-severe -- -P travis'
         pub run build_runner test --fail-on-severe -- -P travis || EXIT_CODE=$?
         ;;
