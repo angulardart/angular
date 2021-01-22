@@ -154,13 +154,11 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
             false, false, []);
 
   void setEmbeddedView(CompileView view) {
-    // TODO(b/128427013): Remove these exceptions, they are likely never hit.
     if (appViewContainer == null) {
-      throw StateError('Expecting appView container to host view');
+      throw StateError('Expected appViewContainer to be set.');
     }
     if (view.viewFactory == null) {
-      throw StateError('Expecting viewFactory initialization before '
-          'embedding view');
+      throw StateError('Expected view.viewFactory to be set.');
     }
     embeddedView = view;
     if (view != null) {
