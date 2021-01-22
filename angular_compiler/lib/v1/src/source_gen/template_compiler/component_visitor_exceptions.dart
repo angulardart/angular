@@ -118,8 +118,7 @@ class AngularAnalysisError extends AsyncBuildError {
       );
     }
 
-    var resolvedMetadata =
-        _metadataWithWorkaround(result.node, indexedAnnotation.element);
+    var resolvedMetadata = _metadataFromAncestry(result.node);
 
     if (resolvedMetadata == null) {
       return BuildError.forElement(indexedAnnotation.element, toString());
@@ -263,19 +262,6 @@ List<Annotation> _metadataFromAncestry(AstNode node) {
   return _metadataFromAncestry(node.parent);
 }
 
-List<Annotation> _metadataWithWorkaround(
-    AstNode node, Element originalElement) {
-  var resolvedMetadata = _metadataFromAncestry(node);
-
-  // TODO(b/124524319): Remove this check when the Analyzer is fixed.
-  if (resolvedMetadata.isEmpty &&
-      originalElement is ParameterElement &&
-      node is ConstructorDeclaration) {
-    return null;
-  }
-  return resolvedMetadata;
-}
-
 class ErrorMessageForAnnotation extends AsyncBuildError {
   final IndexedAnnotation indexedAnnotation;
 
@@ -291,13 +277,15 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
     ElementDeclarationResult result;
     try {
       result = await _resolvedClassResult(
-          resolver, indexedAnnotation.element, toString());
+        resolver,
+        indexedAnnotation.element,
+        toString(),
+      );
     } on BuildError catch (buildError) {
       return buildError;
     }
 
-    var resolvedMetadata =
-        _metadataWithWorkaround(result.node, indexedAnnotation.element);
+    var resolvedMetadata = _metadataFromAncestry(result.node);
 
     if (resolvedMetadata == null) {
       return BuildError.forElement(indexedAnnotation.element, toString());
