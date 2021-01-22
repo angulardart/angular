@@ -4860,8 +4860,8 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = _._expr_0 = _.__ViewGoldenComponent0__NgFor_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__NgIf_0_9 = _.__ViewGoldenComponent0__appEl_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _._expr_0 = _.__ViewGoldenComponent0__NgFor_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__NgIf_0_9 = _.__ViewGoldenComponent0__appEl_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._data = t0;
     },
@@ -4878,8 +4878,7 @@
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = null;
-      _.__HostView_component_isSet = false;
+      _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
       _._host_view$_data = t0;
     }
@@ -8725,21 +8724,17 @@
       t4 = self.deopt();
       t6 = self.deopt();
       t7 = self.deopt();
-      if (hostView.__HostView_component_isSet)
-        H.throwExpression(H.LateError$fieldAI("component"));
-      else {
-        hostView.__HostView_component_isSet = true;
+      if (hostView.__HostView_component === $)
         hostView.__HostView_component = new L.GoldenComponent(t4, t6, t7);
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       t4 = hostView.get$componentView();
       t6 = hostView.get$component();
-      if (t4.__ComponentView_ctx_isSet)
-        H.throwExpression(H.LateError$fieldAI("ctx"));
-      else {
-        t4.__ComponentView_ctx_isSet = true;
+      if (t4.__ComponentView_ctx === $)
         t4.__ComponentView_ctx = t6;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("ctx"));
       t6 = t4._data;
       if (t6.___ComponentViewData_projectedNodes == null)
         t6.___ComponentViewData_projectedNodes = C.List_empty0;
@@ -9484,7 +9479,8 @@
   };
   E.ComponentView.prototype = {
     get$ctx: function() {
-      return this.__ComponentView_ctx_isSet ? this.__ComponentView_ctx : H.throwExpression(H.LateError$fieldNI("ctx"));
+      var t1 = this.__ComponentView_ctx;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$componentStyles: function() {
       var t1 = this.__ComponentView_componentStyles;
@@ -9628,7 +9624,8 @@
   };
   G.HostView.prototype = {
     get$component: function() {
-      return this.__HostView_component_isSet ? this.__HostView_component : H.throwExpression(H.LateError$fieldNI("component"));
+      var t1 = this.__HostView_component;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView: function() {
       var t1 = this.__HostView_componentView;

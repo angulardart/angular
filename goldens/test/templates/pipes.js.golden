@@ -4626,15 +4626,14 @@
       _._textBinding_16 = t4;
       _._textBinding_21 = t5;
       _._textBinding_24 = t6;
-      _.__ComponentView_ctx = _.__ViewGoldenComponent0__pipe_impureLifecycle_6 = _.__ViewGoldenComponent0__pipe_time_5 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4 = _.__ViewGoldenComponent0__pipe_typed_3_0 = _.__ViewGoldenComponent0__pipe_typed_3 = _.__ViewGoldenComponent0__pipe_merge_2_0 = _.__ViewGoldenComponent0__pipe_merge_2 = _.__ViewGoldenComponent0__pipe_concat_1_0 = _.__ViewGoldenComponent0__pipe_concat_1 = _.__ViewGoldenComponent0__pipe_identity_0_0 = _.__ViewGoldenComponent0__pipe_identity_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ViewGoldenComponent0__pipe_impureLifecycle_6 = _.__ViewGoldenComponent0__pipe_time_5 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4 = _.__ViewGoldenComponent0__pipe_typed_3_0 = _.__ViewGoldenComponent0__pipe_typed_3 = _.__ViewGoldenComponent0__pipe_merge_2_0 = _.__ViewGoldenComponent0__pipe_merge_2 = _.__ViewGoldenComponent0__pipe_concat_1_0 = _.__ViewGoldenComponent0__pipe_concat_1 = _.__ViewGoldenComponent0__pipe_identity_0_0 = _.__ViewGoldenComponent0__pipe_identity_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._data = t7;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = null;
-      _.__HostView_component_isSet = false;
+      _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
       _._host_view$_data = t0;
     }
@@ -4682,16 +4681,14 @@
     },
     pureProxy1: function(fn, $T, S0) {
       var t1 = {};
-      t1._result = null;
-      t1._result_isSet = false;
+      t1._result = $;
       t1.first = true;
       t1.v0 = null;
       return new A.pureProxy1_closure(t1, new A.pureProxy1__result_set(t1, $T), fn, new A.pureProxy1__result_get(t1, $T), S0, $T);
     },
     pureProxy2: function(fn, $T, S0, S1) {
       var t1 = {};
-      t1._result = null;
-      t1._result_isSet = false;
+      t1._result = $;
       t1.first = true;
       t1.v1 = t1.v0 = null;
       return new A.pureProxy2_closure(t1, new A.pureProxy2__result_set(t1, $T), fn, new A.pureProxy2__result_get(t1, $T), S0, S1, $T);
@@ -8547,21 +8544,17 @@
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
       t4 = L.GoldenComponent$();
-      if (hostView.__HostView_component_isSet)
-        H.throwExpression(H.LateError$fieldAI("component"));
-      else {
-        hostView.__HostView_component_isSet = true;
+      if (hostView.__HostView_component === $)
         hostView.__HostView_component = t4;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       t4 = hostView.get$componentView();
       t6 = hostView.get$component();
-      if (t4.__ComponentView_ctx_isSet)
-        H.throwExpression(H.LateError$fieldAI("ctx"));
-      else {
-        t4.__ComponentView_ctx_isSet = true;
+      if (t4.__ComponentView_ctx === $)
         t4.__ComponentView_ctx = t6;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("ctx"));
       t6 = t4._data;
       if (t6.___ComponentViewData_projectedNodes == null)
         t6.___ComponentViewData_projectedNodes = C.List_empty0;
@@ -8909,7 +8902,8 @@
   };
   G.HostView.prototype = {
     get$component: function() {
-      return this.__HostView_component_isSet ? this.__HostView_component : H.throwExpression(H.LateError$fieldNI("component"));
+      var t1 = this.__HostView_component;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView: function() {
       var t1 = this.__HostView_componentView;
@@ -9234,9 +9228,7 @@
   };
   A.pureProxy1__result_set.prototype = {
     call$1: function(t1) {
-      var t2 = this._box_0;
-      t2._result_isSet = true;
-      return t2._result = t1;
+      return this._box_0._result = t1;
     },
     $signature: function() {
       return this.T._eval$1("@(0)");
@@ -9244,8 +9236,8 @@
   };
   A.pureProxy1__result_get.prototype = {
     call$0: function() {
-      var t1 = this._box_0;
-      return t1._result_isSet ? t1._result : H.throwExpression(H.LateError$localNI("result"));
+      var t1 = this._box_0._result;
+      return t1 === $ ? H.throwExpression(H.LateError$localNI("result")) : t1;
     },
     $signature: function() {
       return this.T._eval$1("0()");
@@ -9273,9 +9265,7 @@
   };
   A.pureProxy2__result_set.prototype = {
     call$1: function(t1) {
-      var t2 = this._box_0;
-      t2._result_isSet = true;
-      return t2._result = t1;
+      return this._box_0._result = t1;
     },
     $signature: function() {
       return this.T._eval$1("@(0)");
@@ -9283,8 +9273,8 @@
   };
   A.pureProxy2__result_get.prototype = {
     call$0: function() {
-      var t1 = this._box_0;
-      return t1._result_isSet ? t1._result : H.throwExpression(H.LateError$localNI("result"));
+      var t1 = this._box_0._result;
+      return t1 === $ ? H.throwExpression(H.LateError$localNI("result")) : t1;
     },
     $signature: function() {
       return this.T._eval$1("0()");
@@ -9541,7 +9531,9 @@
     },
     detectChangesInternal$0: function() {
       var _this = this,
-        _ctx = _this.__ComponentView_ctx_isSet ? _this.__ComponentView_ctx : H.throwExpression(H.LateError$fieldNI("ctx"));
+        _ctx = _this.__ComponentView_ctx;
+      if (_ctx === $)
+        _ctx = H.throwExpression(H.LateError$fieldNI("ctx"));
       _this._textBinding_4.updateText$1(O.interpolate0(_this._pipe_identity_0_0$1(_ctx.get$a(_ctx))));
       _this._textBinding_7.updateText$1(O.interpolate0(_this._pipe_concat_1_0$2(_ctx.get$a(_ctx), _ctx.get$b(_ctx))));
       _this._textBinding_10.updateText$1(O.interpolate0(_this._pipe_merge_2_0$2(_ctx.get$a(_ctx), _ctx.get$b(_ctx))));

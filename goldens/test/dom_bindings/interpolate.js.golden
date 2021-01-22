@@ -4380,38 +4380,34 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = _._expr_1 = _._expr_0 = _.__ViewGoldenComponent0__NullCheckedInterpolate_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__MaximumInterpolateLimit_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__InputInterpolate_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__PropertyInterpolate_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__LiteralsInterpolate_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__AdjacentInterpolate_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__KnownFinalValuesInterpolate_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__SimpleUnknownInterpolate_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__SimpleStringInterpolate_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _._expr_1 = _._expr_0 = _.__ViewGoldenComponent0__NullCheckedInterpolate_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__MaximumInterpolateLimit_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__InputInterpolate_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__PropertyInterpolate_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__LiteralsInterpolate_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__AdjacentInterpolate_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__KnownFinalValuesInterpolate_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__SimpleUnknownInterpolate_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__SimpleStringInterpolate_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = null;
-      _.__HostView_component_isSet = false;
+      _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
       _._data = t0;
     },
     ViewSimpleStringInterpolate0: function ViewSimpleStringInterpolate0(t0, t1) {
       var _ = this;
       _._textBinding_0 = t0;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t1;
     },
     ViewSimpleUnknownInterpolate0: function ViewSimpleUnknownInterpolate0(t0, t1) {
       var _ = this;
       _._textBinding_0 = t0;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t1;
     },
     ViewKnownFinalValuesInterpolate0: function ViewKnownFinalValuesInterpolate0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
@@ -4422,36 +4418,33 @@
       _._textBinding_7 = t2;
       _._textBinding_9 = t3;
       _._textBinding_11 = t4;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t5;
     },
     ViewLiteralsInterpolate0: function ViewLiteralsInterpolate0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewPropertyInterpolate0: function ViewPropertyInterpolate0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = _.__ViewPropertyInterpolate0__el_0 = _._expr_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ViewPropertyInterpolate0__el_0 = _._expr_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewInputInterpolate0: function ViewInputInterpolate0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = _._expr_0 = _.__ViewInputInterpolate0__ChildComponent_0_5 = _.__ViewInputInterpolate0__compView_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _._expr_0 = _.__ViewInputInterpolate0__ChildComponent_0_5 = _.__ViewInputInterpolate0__compView_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewChildComponent0: function ViewChildComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
@@ -4477,8 +4470,8 @@
       _._textBinding_36 = t17;
       _._textBinding_38 = t18;
       _._textBinding_40 = t19;
-      _.__ComponentView_ctx = _.__ViewMaximumInterpolateLimit0__el_45 = _.__ViewMaximumInterpolateLimit0__el_43 = _._expr_1 = _._expr_0 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ViewMaximumInterpolateLimit0__el_45 = _.__ViewMaximumInterpolateLimit0__el_43 = _._expr_1 = _._expr_0 = null;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t20;
     },
@@ -4487,8 +4480,7 @@
       _._textBinding_0 = t0;
       _._textBinding_2 = t1;
       _._textBinding_4 = t2;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t3;
     }
@@ -8491,12 +8483,10 @@
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
       t4 = L.GoldenComponent$();
-      if (hostView.__HostView_component_isSet)
-        H.throwExpression(H.LateError$fieldAI("component"));
-      else {
-        hostView.__HostView_component_isSet = true;
+      if (hostView.__HostView_component === $)
         hostView.__HostView_component = t4;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
@@ -8700,7 +8690,8 @@
   D.ViewFragment.prototype = {};
   E.ComponentView.prototype = {
     get$ctx: function() {
-      return this.__ComponentView_ctx_isSet ? this.__ComponentView_ctx : H.throwExpression(H.LateError$fieldNI("ctx"));
+      var t1 = this.__ComponentView_ctx;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     set$componentStyles: function(t1) {
       if (this.__ComponentView_componentStyles == null)
@@ -8725,12 +8716,10 @@
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx_isSet)
-        H.throwExpression(H.LateError$fieldAI("ctx"));
-      else {
-        _this.__ComponentView_ctx_isSet = true;
+      if (_this.__ComponentView_ctx === $)
         _this.__ComponentView_ctx = component;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("ctx"));
       t1 = _this._component_view$_data;
       if (t1.___ComponentViewData_projectedNodes == null)
         t1.___ComponentViewData_projectedNodes = projectedNodes;
@@ -8779,7 +8768,8 @@
   };
   G.HostView.prototype = {
     get$component: function() {
-      return this.__HostView_component_isSet ? this.__HostView_component : H.throwExpression(H.LateError$fieldNI("component"));
+      var t1 = this.__HostView_component;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView: function() {
       var t1 = this.__HostView_componentView;

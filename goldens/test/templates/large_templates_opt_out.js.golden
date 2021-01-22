@@ -4357,20 +4357,17 @@
       t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H.setRuntimeTypeInfo([], type$.JSArray__WrappedTimer));
       t2 = type$.nullable_Object;
       t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
-      if (t5.__NgZone__innerZone_isSet)
-        H.throwExpression(H.LateError$fieldAI("_innerZone"));
-      else {
-        t5.__NgZone__innerZone_isSet = true;
+      if (t5.__NgZone__innerZone === $)
         t5.__NgZone__innerZone = t2;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("_innerZone"));
       return t5;
     },
     appInjector: function(userProvidedInjector) {
       var ngZone, t3, userInjector, t1 = {},
         t2 = $.$get$appGlobals();
       t2 = U.minimalApp().call$1(t2._hostInjector);
-      t1._applicationRef = null;
-      t1._applicationRef_isSet = false;
+      t1._applicationRef = $;
       ngZone = G._createNgZone();
       t3 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(new G.appInjector__applicationRef_get(t1)), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
       userInjector = userProvidedInjector.call$1(new G._LazyInjector(t3, t2 == null ? C.C__EmptyInjector : t2));
@@ -4434,7 +4431,7 @@
       _._exceptionHandler = t2;
       _._injector = t3;
       _._ngZone = t4;
-      _.__ApplicationRef__onMicroSub_isSet = _.__ApplicationRef__onErrorSub_isSet = false;
+      _.__ApplicationRef__onMicroSub = _.__ApplicationRef__onErrorSub = $;
       _._lastCaughtTrace = _._lastCaughtException = _._lastGuardedView = null;
       _._runningTick = false;
       _._changeDetectors = t5;
@@ -4463,8 +4460,8 @@
       _._onTurnDone = t3;
       _._onUncaughtError = t4;
       _._outerZone = t5;
-      _.__NgZone__innerZone = null;
-      _._hasPendingMacrotasks = _._hasPendingMicrotasks = _.__NgZone__innerZone_isSet = false;
+      _.__NgZone__innerZone = $;
+      _._hasPendingMacrotasks = _._hasPendingMicrotasks = false;
       _._isStable = true;
       _._nesting = 0;
       _._isRunning = false;
@@ -4618,8 +4615,7 @@
       var _ = this;
       _.parentView = t0;
       _.parentIndex = t1;
-      _.___ComponentViewData_projectedNodes = null;
-      _.___ComponentViewData_projectedNodes_isSet = false;
+      _.___ComponentViewData_projectedNodes = $;
       _._changeDetectionMode = t2;
       _._changeDetectorState = 0;
       _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
@@ -5058,9 +5054,9 @@
         styles = $.ViewChildComponent0__componentStyles;
       if (styles == null)
         styles = $.ViewChildComponent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.set$componentStyles(styles);
+      t1.__ComponentView_componentStyles = styles;
       t2 = document.createElement("child");
-      t1.set$rootElement(0, t2);
+      t1.__ComponentView_rootElement = t2;
       return t1;
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
@@ -5070,12 +5066,8 @@
       _._NgIf_44_9 = _._appEl_44 = _._NgIf_43_9 = _._appEl_43 = _._NgIf_42_9 = _._appEl_42 = _._NgIf_41_9 = _._appEl_41 = _._NgIf_40_9 = _._appEl_40 = _._NgIf_39_9 = _._appEl_39 = _._NgIf_38_9 = _._appEl_38 = _._NgIf_37_9 = _._appEl_37 = _._NgIf_36_9 = _._appEl_36 = _._NgIf_35_9 = _._appEl_35 = _._NgIf_34_9 = _._appEl_34 = _._NgIf_33_9 = _._appEl_33 = _._NgIf_32_9 = _._appEl_32 = _._NgIf_31_9 = _._appEl_31 = _._NgIf_30_9 = _._appEl_30 = null;
       _._NgIf_59_9 = _._appEl_59 = _._NgIf_58_9 = _._appEl_58 = _._NgIf_57_9 = _._appEl_57 = _._NgIf_56_9 = _._appEl_56 = _._NgIf_55_9 = _._appEl_55 = _._NgIf_54_9 = _._appEl_54 = _._NgIf_53_9 = _._appEl_53 = _._NgIf_52_9 = _._appEl_52 = _._NgIf_51_9 = _._appEl_51 = _._NgIf_50_9 = _._appEl_50 = _._NgIf_49_9 = _._appEl_49 = _._NgIf_48_9 = _._appEl_48 = _._NgIf_47_9 = _._appEl_47 = _._NgIf_46_9 = _._appEl_46 = _._NgIf_45_9 = _._appEl_45 = null;
       _._NgIf_74_9 = _._appEl_74 = _._NgIf_73_9 = _._appEl_73 = _._NgIf_72_9 = _._appEl_72 = _._NgIf_71_9 = _._appEl_71 = _._NgIf_70_9 = _._appEl_70 = _._NgIf_69_9 = _._appEl_69 = _._NgIf_68_9 = _._appEl_68 = _._NgIf_67_9 = _._appEl_67 = _._NgIf_66_9 = _._appEl_66 = _._NgIf_65_9 = _._appEl_65 = _._NgIf_64_9 = _._appEl_64 = _._NgIf_63_9 = _._appEl_63 = _._NgIf_62_9 = _._appEl_62 = _._NgIf_61_9 = _._appEl_61 = _._NgIf_60_9 = _._appEl_60 = null;
-      _.__ComponentView_ctx = _._NgIf_83_9 = _._appEl_83 = _._NgIf_82_9 = _._appEl_82 = _._NgIf_81_9 = _._appEl_81 = _._NgIf_80_9 = _._appEl_80 = _._NgIf_79_9 = _._appEl_79 = _._NgIf_78_9 = _._appEl_78 = _._NgIf_77_9 = _._appEl_77 = _._NgIf_76_9 = _._appEl_76 = _._NgIf_75_9 = _._appEl_75 = null;
-      _.__ComponentView_ctx_isSet = false;
-      _.__ComponentView_componentStyles = null;
-      _.__ComponentView_componentStyles_isSet = false;
-      _.__ComponentView_rootElement = null;
-      _.__ComponentView_rootElement_isSet = false;
+      _._NgIf_83_9 = _._appEl_83 = _._NgIf_82_9 = _._appEl_82 = _._NgIf_81_9 = _._appEl_81 = _._NgIf_80_9 = _._appEl_80 = _._NgIf_79_9 = _._appEl_79 = _._NgIf_78_9 = _._appEl_78 = _._NgIf_77_9 = _._appEl_77 = _._NgIf_76_9 = _._appEl_76 = _._NgIf_75_9 = _._appEl_75 = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = $;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponent1: function _ViewGoldenComponent1(t0) {
@@ -5416,22 +5408,12 @@
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = null;
-      _.__HostView_component_isSet = false;
-      _.__HostView_componentView = null;
-      _.__HostView_componentView_isSet = false;
-      _.__HostView__injector = null;
-      _.__HostView__injector_isSet = false;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = $;
       _._data = t0;
     },
     ViewChildComponent0: function ViewChildComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = null;
-      _.__ComponentView_ctx_isSet = false;
-      _.__ComponentView_componentStyles = null;
-      _.__ComponentView_componentStyles_isSet = false;
-      _.__ComponentView_rootElement = null;
-      _.__ComponentView_rootElement_isSet = false;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = $;
       _._component_view$_data = t0;
     }
   };
@@ -8941,19 +8923,17 @@
   G.appInjector__applicationRef_set.prototype = {
     call$1: function(t1) {
       var t2 = this._box_0;
-      if (t2._applicationRef_isSet)
-        throw H.wrapException(H.LateError$localAI("applicationRef"));
-      else {
-        t2._applicationRef_isSet = true;
+      if (t2._applicationRef === $)
         return t2._applicationRef = t1;
-      }
+      else
+        throw H.wrapException(H.LateError$localAI("applicationRef"));
     },
     $signature: 18
   };
   G.appInjector__applicationRef_get.prototype = {
     call$0: function() {
-      var t1 = this._box_0;
-      return t1._applicationRef_isSet ? t1._applicationRef : H.throwExpression(H.LateError$localNI("applicationRef"));
+      var t1 = this._box_0._applicationRef;
+      return t1 === $ ? H.throwExpression(H.LateError$localNI("applicationRef")) : t1;
     },
     $signature: 9
   };
@@ -8965,7 +8945,8 @@
   };
   G.appInjector_closure0.prototype = {
     call$0: function() {
-      return $.__appViewUtils_isSet ? $.__appViewUtils : H.throwExpression(H.LateError$fieldNI("appViewUtils"));
+      var t1 = $.__appViewUtils;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("appViewUtils")) : t1;
     },
     $signature: 14
   };
@@ -8986,7 +8967,6 @@
       var t1 = this.userInjector;
       this._applicationRef_set.call$1(Y.ApplicationRef$_(this.ngZone, t1.$get$1(0, C.Type_ExceptionHandler_qBE), t1));
       t1.$get$1(0, C.C_OpaqueToken);
-      $.__appViewUtils_isSet = true;
       $.__appViewUtils = new Q.AppViewUtils();
       return t1;
     },
@@ -9051,17 +9031,17 @@
       var _this = this,
         t1 = _this._ngZone,
         t2 = t1._onUncaughtError;
-      new P._BroadcastStream(t2, H._instanceType(t2)._eval$1("_BroadcastStream<1>")).listen$1(new Y.ApplicationRef$__closure(_this));
-      if (_this.__ApplicationRef__onErrorSub_isSet)
+      t2 = new P._BroadcastStream(t2, H._instanceType(t2)._eval$1("_BroadcastStream<1>")).listen$1(new Y.ApplicationRef$__closure(_this));
+      if (_this.__ApplicationRef__onErrorSub === $)
+        _this.__ApplicationRef__onErrorSub = t2;
+      else
         H.throwExpression(H.LateError$fieldAI("_onErrorSub"));
-      else
-        _this.__ApplicationRef__onErrorSub_isSet = true;
       t1 = t1._onMicrotaskEmpty;
-      new P._BroadcastStream(t1, H._instanceType(t1)._eval$1("_BroadcastStream<1>")).listen$1(new Y.ApplicationRef$__closure0(_this));
-      if (_this.__ApplicationRef__onMicroSub_isSet)
-        H.throwExpression(H.LateError$fieldAI("_onMicroSub"));
+      t1 = new P._BroadcastStream(t1, H._instanceType(t1)._eval$1("_BroadcastStream<1>")).listen$1(new Y.ApplicationRef$__closure0(_this));
+      if (_this.__ApplicationRef__onMicroSub === $)
+        _this.__ApplicationRef__onMicroSub = t1;
       else
-        _this.__ApplicationRef__onMicroSub_isSet = true;
+        H.throwExpression(H.LateError$fieldAI("_onMicroSub"));
     },
     bootstrap$1$1: function(componentFactory, $T) {
       return this.run$1$1(new Y.ApplicationRef_bootstrap_closure(this, componentFactory, $T), $T._eval$1("ComponentRef<0>"));
@@ -9109,34 +9089,28 @@
         t2 = this.$this,
         t3 = t2._injector,
         hostView = t1._viewFactory.call$0();
-      if (hostView.__HostView__injector_isSet)
-        H.throwExpression(H.LateError$fieldAI("_injector"));
-      else {
-        hostView.__HostView__injector_isSet = true;
+      if (hostView.__HostView__injector === $)
         hostView.__HostView__injector = t3;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("_injector"));
       t4 = new Z.ViewGoldenComponent0(E._ComponentViewData__ComponentViewData(hostView, 0, 3));
       styles = $.ViewGoldenComponent0__componentStyles;
       if (styles == null)
         styles = $.ViewGoldenComponent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t4.set$componentStyles(styles);
+      t4.__ComponentView_componentStyles = styles;
       t5 = document;
       t6 = t5.createElement("golden");
-      t4.set$rootElement(0, t6);
-      if (hostView.__HostView_componentView_isSet)
-        H.throwExpression(H.LateError$fieldAI("componentView"));
-      else {
-        hostView.__HostView_componentView_isSet = true;
+      t4.__ComponentView_rootElement = t6;
+      if (hostView.__HostView_componentView === $)
         hostView.__HostView_componentView = t4;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("componentView"));
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
-      if (hostView.__HostView_component_isSet)
-        H.throwExpression(H.LateError$fieldAI("component"));
-      else {
-        hostView.__HostView_component_isSet = true;
+      if (hostView.__HostView_component === $)
         hostView.__HostView_component = new L.GoldenComponent();
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
@@ -9398,33 +9372,20 @@
   };
   E.ComponentView.prototype = {
     get$ctx: function() {
-      return this.__ComponentView_ctx_isSet ? this.__ComponentView_ctx : H.throwExpression(H.LateError$fieldNI("ctx"));
+      var t1 = this.__ComponentView_ctx;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$componentStyles: function() {
-      return this.__ComponentView_componentStyles_isSet ? this.__ComponentView_componentStyles : H.throwExpression(H.LateError$fieldNI("componentStyles"));
-    },
-    set$componentStyles: function(t1) {
-      if (this.__ComponentView_componentStyles_isSet)
-        throw H.wrapException(H.LateError$fieldAI("componentStyles"));
-      else {
-        this.__ComponentView_componentStyles_isSet = true;
-        this.__ComponentView_componentStyles = t1;
-      }
+      var t1 = this.__ComponentView_componentStyles;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("componentStyles")) : t1;
     },
     get$rootElement: function(_) {
-      return this.__ComponentView_rootElement_isSet ? this.__ComponentView_rootElement : H.throwExpression(H.LateError$fieldNI("rootElement"));
-    },
-    set$rootElement: function(_, t1) {
-      if (this.__ComponentView_rootElement_isSet)
-        throw H.wrapException(H.LateError$fieldAI("rootElement"));
-      else {
-        this.__ComponentView_rootElement_isSet = true;
-        this.__ComponentView_rootElement = t1;
-      }
+      var t1 = this.__ComponentView_rootElement;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("rootElement")) : t1;
     },
     get$projectedNodes: function() {
-      var t1 = this._component_view$_data;
-      return t1.___ComponentViewData_projectedNodes_isSet ? t1.___ComponentViewData_projectedNodes : H.throwExpression(H.LateError$fieldNI("projectedNodes"));
+      var t1 = this._component_view$_data.___ComponentViewData_projectedNodes;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("projectedNodes")) : t1;
     },
     get$parentView: function() {
       return this._component_view$_data.parentView;
@@ -9439,19 +9400,15 @@
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx_isSet)
-        H.throwExpression(H.LateError$fieldAI("ctx"));
-      else {
-        _this.__ComponentView_ctx_isSet = true;
+      if (_this.__ComponentView_ctx === $)
         _this.__ComponentView_ctx = component;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("ctx"));
       t1 = _this._component_view$_data;
-      if (t1.___ComponentViewData_projectedNodes_isSet)
-        H.throwExpression(H.LateError$fieldAI("projectedNodes"));
-      else {
-        t1.___ComponentViewData_projectedNodes_isSet = true;
+      if (t1.___ComponentViewData_projectedNodes === $)
         t1.___ComponentViewData_projectedNodes = projectedNodes;
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("projectedNodes"));
       _this.build$0();
     },
     initViewRoot$0: function() {
@@ -9584,10 +9541,12 @@
   };
   G.HostView.prototype = {
     get$component: function() {
-      return this.__HostView_component_isSet ? this.__HostView_component : H.throwExpression(H.LateError$fieldNI("component"));
+      var t1 = this.__HostView_component;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView: function() {
-      return this.__HostView_componentView_isSet ? this.__HostView_componentView : H.throwExpression(H.LateError$fieldNI("componentView"));
+      var t1 = this.__HostView_componentView;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("componentView")) : t1;
     },
     get$viewFragment: function() {
       return this._data.viewFragment;
@@ -9619,7 +9578,8 @@
       this._data.set$changeDetectorState(2);
     },
     injectFromAncestry$2: function(token, notFoundValue) {
-      return (this.__HostView__injector_isSet ? this.__HostView__injector : H.throwExpression(H.LateError$fieldNI("_injector"))).$get$2(0, token, notFoundValue);
+      var t1 = this.__HostView__injector;
+      return (t1 === $ ? H.throwExpression(H.LateError$fieldNI("_injector")) : t1).$get$2(0, token, notFoundValue);
     },
     removeRootNodes$0: function() {
       var rootNodes = this._data.viewFragment.flattenDomNodes$0();
@@ -9694,7 +9654,8 @@
   };
   Y.NgZone.prototype = {
     get$_innerZone: function() {
-      return this.__NgZone__innerZone_isSet ? this.__NgZone__innerZone : H.throwExpression(H.LateError$fieldNI("_innerZone"));
+      var t1 = this.__NgZone__innerZone;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("_innerZone")) : t1;
     },
     _ng_zone$_scheduleMicrotask$4: function($self, $parent, zone, fn) {
       var implementation, implZone, _this = this;
@@ -9746,8 +9707,7 @@
     },
     _createTimer$5: function($self, $parent, zone, duration, fn) {
       var t2, implementation, implZone, t1 = {};
-      t1._wrappedTimer = null;
-      t1._wrappedTimer_isSet = false;
+      t1._wrappedTimer = $;
       t2 = new Y.NgZone__createTimer__wrappedTimer_get(t1);
       implementation = $parent._delegationTarget.get$_async$_createTimer();
       implZone = implementation.zone;
@@ -9844,19 +9804,17 @@
   Y.NgZone__createTimer__wrappedTimer_set.prototype = {
     call$1: function(t1) {
       var t2 = this._box_0;
-      if (t2._wrappedTimer_isSet)
-        throw H.wrapException(H.LateError$localAI("wrappedTimer"));
-      else {
-        t2._wrappedTimer_isSet = true;
+      if (t2._wrappedTimer === $)
         return t2._wrappedTimer = t1;
-      }
+      else
+        throw H.wrapException(H.LateError$localAI("wrappedTimer"));
     },
     $signature: 33
   };
   Y.NgZone__createTimer__wrappedTimer_get.prototype = {
     call$0: function() {
-      var t1 = this._box_0;
-      return t1._wrappedTimer_isSet ? t1._wrappedTimer : H.throwExpression(H.LateError$localNI("wrappedTimer"));
+      var t1 = this._box_0._wrappedTimer;
+      return t1 === $ ? H.throwExpression(H.LateError$localNI("wrappedTimer")) : t1;
     },
     $signature: 34
   };
@@ -12529,8 +12487,7 @@
     $._RootZone__rootDelegate = null;
     $._toStringVisiting = H.setRuntimeTypeInfo([], type$.JSArray_Object);
     $.ChangeDetectionHost__current = null;
-    $.__appViewUtils = null;
-    $.__appViewUtils_isSet = false;
+    $.__appViewUtils = $;
     $.domRootRendererIsDirty = false;
     $.ViewGoldenComponent0__componentStyles = null;
     $.ViewChildComponent0__componentStyles = null;

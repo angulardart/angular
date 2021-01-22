@@ -4592,38 +4592,37 @@
       var _ = this;
       _.__ViewGoldenComponent0__compView_7 = _.__A_6_8 = _.__ViewGoldenComponent0__D_6_7 = _.__ViewGoldenComponent0__DirectiveProviding$A2$D2_6_6 = _.__ViewGoldenComponent0__ChildComponentWithNgContentProviding$D_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__D_5_10 = _.__C_5_9 = _.__B_5_8 = _.__A_5_7 = _.__ViewGoldenComponent0__DirectiveProviding$A2$D2_5_6 = _.__ViewGoldenComponent0__ChildComponentProvidingA$B$C_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__ChildComponentWithVisibilityAll_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__ChildComponentInjecting$D_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__D_2_6 = _.__ViewGoldenComponent0__ChildComponentWithNgContentProviding$D_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__C_1_8 = _.__B_1_7 = _.__A_1_6 = _.__ViewGoldenComponent0__ChildComponentProvidingA$B$C_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__C_0_8 = _.__B_0_7 = _.__A_0_6 = _.__ViewGoldenComponent0__ChildComponentProvidingA$B$C_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
       _.__ViewGoldenComponent0__ChildComponentInjecting$D_7_5 = null;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = null;
-      _.__HostView_component_isSet = false;
+      _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
       _._data = t0;
     },
     ViewChildComponentProvidingA$B$C0: function ViewChildComponentProvidingA$B$C0(t0) {
       var _ = this;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewChildComponentWithNgContentProviding$D0: function ViewChildComponentWithNgContentProviding$D0(t0) {
       var _ = this;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewChildComponentInjecting$D0: function ViewChildComponentInjecting$D0(t0) {
       var _ = this;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
     ViewChildComponentWithVisibilityAll0: function ViewChildComponentWithVisibilityAll0(t0) {
       var _ = this;
-      _.__ComponentView_ctx_isSet = false;
+      _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     }
@@ -8397,12 +8396,10 @@
       _el_0 = t4.get$rootElement(t4);
       t4 = new A._ElementInjector(hostView, 0);
       self.deopt(t4.get$get(t4));
-      if (hostView.__HostView_component_isSet)
-        H.throwExpression(H.LateError$fieldAI("component"));
-      else {
-        hostView.__HostView_component_isSet = true;
+      if (hostView.__HostView_component === $)
         hostView.__HostView_component = new L.GoldenComponent();
-      }
+      else
+        H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
@@ -8628,10 +8625,10 @@
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx_isSet)
-        H.throwExpression(H.LateError$fieldAI("ctx"));
+      if (_this.__ComponentView_ctx === $)
+        _this.__ComponentView_ctx = component;
       else
-        _this.__ComponentView_ctx_isSet = true;
+        H.throwExpression(H.LateError$fieldAI("ctx"));
       t1 = _this._component_view$_data;
       if (t1.___ComponentViewData_projectedNodes == null)
         t1.___ComponentViewData_projectedNodes = projectedNodes;
@@ -8680,7 +8677,8 @@
   };
   G.HostView.prototype = {
     get$component: function() {
-      return this.__HostView_component_isSet ? this.__HostView_component : H.throwExpression(H.LateError$fieldNI("component"));
+      var t1 = this.__HostView_component;
+      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView: function() {
       var t1 = this.__HostView_componentView;
