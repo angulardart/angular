@@ -19,9 +19,6 @@ abstract class CompileMetadataWithType extends CompileMetadataWithIdentifier {
 }
 
 class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
-  // TODO(het): remove this once we switch to codegen. The transformer version
-  // includes prefixes that aren't supposed to be emitted because it can't tell
-  // if a prefix is a class name or a qualified import name.
   final bool emitPrefix;
   final List<o.OutputType> typeArguments;
   final String prefix;
