@@ -337,7 +337,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
   /// i.e. it is not possible to bind a value into a changing attribute or
   /// tag name.
   ///
-  /// The filtering is white list based. All attributes in the schema above
+  /// The filtering is allow-list based. All attributes in the schema above
   /// are assumed to have the 'NONE' security context, i.e. that they are safe
   /// inert string values. Only specific well known attack vectors are assigned
   /// their appropriate context.

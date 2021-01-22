@@ -74,7 +74,7 @@ class DartEmitter implements OutputEmitter {
 class _DartEmitterVisitor extends AbstractEmitterVisitor
     implements o.TypeVisitor<void, EmitterVisitorContext> {
   // List of packages that are public api and can be imported without prefix.
-  static const _whiteListedImports = [
+  static const _allowListedImports = [
     'package:angular/angular.dart',
     'dart:core',
     // ElementRef.
@@ -713,7 +713,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (moduleUrl != null && moduleUrl != _moduleUrl) {
       prefix = importsWithPrefixes[moduleUrl];
       if (prefix == null) {
-        if (_whiteListedImports.contains(moduleUrl)) {
+        if (_allowListedImports.contains(moduleUrl)) {
           prefix = '';
         } else {
           prefix = 'import${importsWithPrefixes.length}';
