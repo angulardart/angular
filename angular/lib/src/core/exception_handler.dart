@@ -1,7 +1,11 @@
+import 'dart:html';
+
+import 'package:meta/meta.dart';
+
 /// Provides a hook for receiving unhandled errors/exceptions.
 ///
-/// The default implementation of `ExceptionHandler` when used in AngularDart is
-/// prints error message directly to the JavaScript developer console.
+/// The default implementation of `ExceptionHandler` when used in AngularDart
+/// prints the error message directly to the JavaScript developer console.
 ///
 /// It's possible to instead write a _custom exception handler_:
 /// ```
@@ -28,7 +32,7 @@
 ///   );
 /// }
 /// ```
-abstract class ExceptionHandler {
+class ExceptionHandler {
   /// Internal use only: Converts a caught angular exception into a string.
   ///
   /// **NOTE**: [stackTrace] _should_ be typed as `StackTrace`, but currently is
@@ -48,8 +52,8 @@ abstract class ExceptionHandler {
     return buffer.toString();
   }
 
-  // Prevents inheritance.
-  const ExceptionHandler._();
+  @visibleForOverriding
+  const ExceptionHandler();
 
   /// Handles an error or [exception] caught at runtime.
   ///
@@ -62,5 +66,11 @@ abstract class ExceptionHandler {
     Object exception, [
     Object? stackTrace,
     @Deprecated('No longer supported. Remove this argument.') String? reason,
-  ]);
+  ]) {
+    window.console.error(ExceptionHandler.exceptionToString(
+      exception,
+      stackTrace,
+      reason,
+    ));
+  }
 }

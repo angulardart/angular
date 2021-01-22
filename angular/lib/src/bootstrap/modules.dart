@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:math';
 
 import 'package:angular/src/core/application_tokens.dart';
@@ -32,27 +31,6 @@ class _ThrowingSlowComponentLoader implements SlowComponentLoader {
   }
 }
 
-/// Ideally, this would just be the default [ExceptionHandler].
-///
-/// However, due to legacy decisions (b/162087242), most users override the
-/// default exception handler _anyway_, and in practice this is only used by new
-/// apps, playground apps, or smaller apps that don't log exceptions somewhere
-/// on the server.
-///
-/// TODO(b/162087242): Just fold this into [ExceptionHandler].
-class _BrowserExceptionHandler implements ExceptionHandler {
-  const _BrowserExceptionHandler();
-
-  @override
-  void call(Object error, [Object? stack, String? reason]) {
-    window.console.error(ExceptionHandler.exceptionToString(
-      error,
-      stack,
-      reason,
-    ));
-  }
-}
-
 /// Returns a simple application [Injector] that is hand-authored.
 ///
 /// Some of the services provided below ([ExceptionHandler], [APP_ID]) may be
@@ -66,7 +44,7 @@ InjectorFactory minimalApp() {
   return (parent) {
     return Injector.map({
       APP_ID: _createRandomAppId(),
-      ExceptionHandler: const _BrowserExceptionHandler(),
+      ExceptionHandler: const ExceptionHandler(),
       ComponentLoader: const ComponentLoader(),
       SlowComponentLoader: const _ThrowingSlowComponentLoader(),
     }, parent);
