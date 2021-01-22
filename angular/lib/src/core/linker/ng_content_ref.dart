@@ -21,7 +21,6 @@ import 'views/render_view.dart';
 ///   @ViewChild(NgContentRef)
 ///   NgContentRef child;
 /// }
-
 class NgContentRef {
   final RenderView _renderView;
   final int _index;
@@ -30,8 +29,7 @@ class NgContentRef {
 
   /// Returns whether this has any projected nodes.
   bool get hasContent {
-    // TODO(b/152626836): Update type of ProjectedNode into List<List<Object>>.
-    final nodesToProject = (_renderView.projectedNodes[_index]) as List;
+    final nodesToProject = _renderView.projectedNodes[_index];
     for (var i = 0; i < nodesToProject.length; i++) {
       final node = nodesToProject[i];
       // Check for views inserted dynamically by a directive (such as *ngIf or

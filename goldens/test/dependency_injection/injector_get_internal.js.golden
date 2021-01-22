@@ -8605,7 +8605,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty);
+      this.createAndProject$2(component, C.List_empty0);
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
@@ -9295,8 +9295,8 @@
       t1 = _this.get$_compView_2();
       t2 = _this.__ViewGoldenComponent0__MaterialIcon_2_5;
       t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s17_)) : t2);
-      t1 = type$.JSArray_Object;
-      _this.get$_compView_1().createAndProject$2(_this.get$_MaterialInputComponent_1_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_2], t1)], t1));
+      t1 = type$.JSArray_List_Object;
+      _this.get$_compView_1().createAndProject$2(_this.get$_MaterialInputComponent_1_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_2], type$.JSArray_Object)], t1));
       _el_3 = T.appendDiv(doc, _el_0);
       T.setAttribute(_el_3, "ngControlGroup", "address");
       if (_this.__ViewGoldenComponent0__NgControlGroup_3_5 == null)
@@ -9907,6 +9907,7 @@
       Injector: findType("Injector"),
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray_Validator: findType("JSArray<Validator>"),
@@ -10088,7 +10089,7 @@
     C.C__StringStackTrace = new P._StringStackTrace();
     C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
     C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));

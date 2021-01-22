@@ -57,7 +57,7 @@ abstract class ComponentView<T> extends RenderView {
   // it (nor do we query to check whether it is null). Getters cannot be late,
   // so this is effectively the same thing.
   @override
-  List<Object> get projectedNodes => _data.projectedNodes;
+  List<List<Object>> get projectedNodes => _data.projectedNodes;
 
   @override
   View? get parentView => _data.parentView;
@@ -91,7 +91,7 @@ abstract class ComponentView<T> extends RenderView {
   ///
   /// The [projectedNodes] are any content placed between the opening and
   /// closing tags of [component].
-  void createAndProject(T component, List<Object> projectedNodes) {
+  void createAndProject(T component, List<List<Object>> projectedNodes) {
     ctx = component;
     _data.projectedNodes = projectedNodes;
 
@@ -278,7 +278,7 @@ class _ComponentViewData implements RenderViewData {
   final int parentIndex;
 
   @override
-  late final List<Object> projectedNodes;
+  late final List<List<Object>> projectedNodes;
 
   @override
   List<StreamSubscription<void>>? subscriptions;

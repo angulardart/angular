@@ -8848,7 +8848,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty);
+      this.createAndProject$2(component, C.List_empty0);
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
@@ -9644,8 +9644,7 @@
         _this.__ViewGoldenComponent0__NgIf_3_9 = new K.NgIf(new D.TemplateRef(t1, G.after_queries_template__viewFactory_GoldenComponent1$closure()), t2);
       else
         H.throwExpression(H.LateError$fieldAI("_NgIf_3_9"));
-      t1 = type$.JSArray_Object;
-      _this.get$_compView_1().createAndProject$2(_this.get$_UsesAfterContent_1_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_2, _this.get$_appEl_3()], t1)], t1));
+      _this.get$_compView_1().createAndProject$2(_this.get$_UsesAfterContent_1_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_2, _this.get$_appEl_3()], type$.JSArray_Object)], type$.JSArray_List_Object));
     },
     detectChangesInternal$0: function() {
       var _this = this,
@@ -10112,6 +10111,7 @@
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
       JSArray_DynamicView: findType("JSArray<DynamicView>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Node: findType("JSArray<Node>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
@@ -10294,7 +10294,7 @@
     C.C__StringStackTrace = new P._StringStackTrace();
     C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
     C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));

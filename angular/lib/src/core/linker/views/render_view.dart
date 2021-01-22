@@ -55,7 +55,7 @@ abstract class RenderView extends View {
   /// A view will only attempt to _use_ this value if and only if it has at
   /// least one `<ng-content>` slot. These nodes are not created by the view
   /// itself but rather by the view's parent.
-  List<Object> get projectedNodes;
+  List<List<Object>> get projectedNodes;
 
   // Initialization ------------------------------------------------------------
 

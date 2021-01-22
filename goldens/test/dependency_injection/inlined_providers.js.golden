@@ -8621,7 +8621,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty);
+      this.createAndProject$2(component, C.List_empty0);
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
@@ -9220,7 +9220,7 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_7")) : t1;
     },
     build$0: function() {
-      var t2, _el_3, t3, styles, _el_5, _el_6, _el_7, _this = this,
+      var t2, _el_3, t3, t4, styles, _el_5, _el_6, _el_7, _this = this,
         _s33_ = "_ChildComponentProvidingA$B$C_0_5",
         _s33_0 = "_ChildComponentProvidingA$B$C_1_5",
         _s43_ = "_ChildComponentWithNgContentProviding$D_2_5",
@@ -9293,7 +9293,8 @@
       if (t2 == null)
         t2 = H.throwExpression(H.LateError$fieldNI(_s43_));
       t3 = type$.JSArray_Object;
-      t1.createAndProject$2(t2, H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_3], t3)], t3));
+      t4 = type$.JSArray_List_Object;
+      t1.createAndProject$2(t2, H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_3], t3)], t4));
       t2 = new O.ViewChildComponentWithVisibilityAll0(E._ComponentViewData__ComponentViewData(_this, 4, 3));
       styles = $.ViewChildComponentWithVisibilityAll0__componentStyles;
       if (styles == null)
@@ -9372,7 +9373,7 @@
       t2 = _this.__ViewGoldenComponent0__ChildComponentWithNgContentProviding$D_6_5;
       if (t2 == null)
         t2 = H.throwExpression(H.LateError$fieldNI(_s43_0));
-      t1.createAndProject$2(t2, H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_7], t3)], t3));
+      t1.createAndProject$2(t2, H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_7], t3)], t4));
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       var result, t1, _this = this;
@@ -9738,6 +9739,7 @@
       Injector: findType("Injector"),
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray__WrappedTimer: findType("JSArray<_WrappedTimer>"),
@@ -9919,7 +9921,7 @@
     C.C__StringStackTrace = new P._StringStackTrace();
     C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
     C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));

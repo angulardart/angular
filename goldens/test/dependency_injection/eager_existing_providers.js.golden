@@ -8556,7 +8556,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty);
+      this.createAndProject$2(component, C.List_empty0);
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;
@@ -9157,8 +9157,7 @@
       t1 = _this.get$_compView_1();
       t2 = _this.__ViewGoldenComponent0__InjectsServicesComponent_1_5;
       t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s29_)) : t2);
-      t1 = type$.JSArray_Object;
-      _this.get$_compView_0().createAndProject$2(_this.get$_ProvidesServicesComponent_0_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_1], t1)], t1));
+      _this.get$_compView_0().createAndProject$2(_this.get$_ProvidesServicesComponent_0_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_1], type$.JSArray_Object)], type$.JSArray_List_Object));
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
       if ((token === C.Type_EagerProviderA_Chj || token === C.Type_EagerProviderB_Chj || token === C.Type_LazyProviderA_cQL || token === C.Type_LazyProviderB_UWp) && nodeIndex <= 1)
@@ -9449,6 +9448,7 @@
       Injector: findType("Injector"),
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray__WrappedTimer: findType("JSArray<_WrappedTimer>"),
@@ -9630,7 +9630,7 @@
     C.C__StringStackTrace = new P._StringStackTrace();
     C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
     C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));

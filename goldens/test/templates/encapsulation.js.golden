@@ -9313,7 +9313,7 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_el_8")) : t1;
     },
     build$0: function() {
-      var t2, t3, _el_1, t4, _el_6, _this = this,
+      var t2, t3, _el_1, t4, t5, _el_6, _this = this,
         _s8_ = "trailing",
         parentRenderNode = _this.initViewRoot$0(),
         t1 = new E.ViewNoEncapsulation0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
@@ -9344,20 +9344,21 @@
         H.throwExpression(H.LateError$fieldAI("_el_3"));
       T.appendText(_this.get$_el_3(), "World!");
       t1 = type$.JSArray_Object;
-      _this.get$_compView_0().createAndProject$2(_this.get$_NoEncapsulation_0_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_1], t1)], t1));
-      t3 = new E.ViewEmulatedEncapsulation0(E._ComponentViewData__ComponentViewData(_this, 5, 3));
+      t3 = type$.JSArray_List_Object;
+      _this.get$_compView_0().createAndProject$2(_this.get$_NoEncapsulation_0_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_1], t1)], t3));
+      t4 = new E.ViewEmulatedEncapsulation0(E._ComponentViewData__ComponentViewData(_this, 5, 3));
       styles = $.ViewEmulatedEncapsulation0__componentStyles;
       if (styles == null)
         styles = $.ViewEmulatedEncapsulation0__componentStyles = O.ComponentStyles_ComponentStyles$scoped($.styles$EmulatedEncapsulation, null);
-      t3.set$componentStyles(styles);
-      t4 = t2.createElement("emulated-encapsulation");
-      t3.set$rootElement(0, t4);
+      t4.set$componentStyles(styles);
+      t5 = t2.createElement("emulated-encapsulation");
+      t4.set$rootElement(0, t5);
       if (_this.__ViewGoldenComponent0__compView_5 == null)
-        _this.__ViewGoldenComponent0__compView_5 = t3;
+        _this.__ViewGoldenComponent0__compView_5 = t4;
       else
         H.throwExpression(H.LateError$fieldAI("_compView_5"));
-      t3 = _this.get$_compView_5();
-      parentRenderNode.appendChild(t3.get$rootElement(t3));
+      t4 = _this.get$_compView_5();
+      parentRenderNode.appendChild(t4.get$rootElement(t4));
       if (_this.__ViewGoldenComponent0__EmulatedEncapsulation_5_5 == null)
         _this.__ViewGoldenComponent0__EmulatedEncapsulation_5_5 = new L.EmulatedEncapsulation();
       else
@@ -9371,7 +9372,7 @@
       else
         H.throwExpression(H.LateError$fieldAI("_el_8"));
       T.appendText(_this.get$_el_8(), "World!");
-      _this.get$_compView_5().createAndProject$2(_this.get$_EmulatedEncapsulation_5_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_6], t1)], t1));
+      _this.get$_compView_5().createAndProject$2(_this.get$_EmulatedEncapsulation_5_5(), H.setRuntimeTypeInfo([H.setRuntimeTypeInfo([_el_6], t1)], t3));
     },
     detectChangesInternal$0: function() {
       var currVal_1, currVal_2, currVal_3, t2, currVal_7, _this = this,
@@ -9788,6 +9789,7 @@
       Injector: findType("Injector"),
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
       JSArray__WrappedTimer: findType("JSArray<_WrappedTimer>"),
@@ -9969,7 +9971,7 @@
     C.C__StringStackTrace = new P._StringStackTrace();
     C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
     C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));

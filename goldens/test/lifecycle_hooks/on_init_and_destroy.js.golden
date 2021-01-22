@@ -8554,7 +8554,7 @@
     build$0: function() {
     },
     create$1: function(_, component) {
-      this.createAndProject$2(component, C.List_empty);
+      this.createAndProject$2(component, C.List_empty0);
     },
     createAndProject$2: function(component, projectedNodes) {
       var t1, _this = this;

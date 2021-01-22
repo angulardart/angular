@@ -51,7 +51,7 @@ abstract class EmbeddedView<T> extends RenderView
   int get parentIndex => _data.parentIndex;
 
   @override
-  List<Object> get projectedNodes => _data.projectedNodes;
+  List<List<Object>> get projectedNodes => _data.projectedNodes;
 
   @override
   bool get destroyed => _data.destroyed;
@@ -246,7 +246,7 @@ class _EmbeddedViewData<T> implements DynamicViewData, RenderViewData {
   final int parentIndex;
 
   @override
-  final List<Object> projectedNodes;
+  final List<List<Object>> projectedNodes;
 
   /// Storage for any template local variables defined for this view.
   final locals = <String, dynamic>{};
