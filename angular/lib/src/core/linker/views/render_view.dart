@@ -65,12 +65,7 @@ abstract class RenderView extends View {
   /// discriminator to determine which parts of the template are mapped to
   /// what parts of the DOM.
   @dart2js.noInline
-  void project(Element? target, int index) {
-    // TODO(b/132111830): Determine in what case this is `null`.
-    if (target == null) {
-      return;
-    }
-
+  void project(Element target, int index) {
     // TODO(b/132111830): Determine why this would be out of bounds.
     final projectedNodesByContentIndex = projectedNodes;
     if (index >= projectedNodesByContentIndex.length) {
