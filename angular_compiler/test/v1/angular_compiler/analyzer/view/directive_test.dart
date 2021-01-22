@@ -27,22 +27,6 @@ void main() {
     );
   });
 
-  test('should catch a @HostBinding on a non-getter', () async {
-    await expectBuildError(
-      '''
-      // @dart=2.9
-      class Comp {
-        @HostBinding('attr.title')
-        void cantBindThis() {}
-      }
-    ''',
-      allOf(
-        contains('@HostBinding must be on a field or getter'),
-        contains('cantBindThis'),
-      ),
-    );
-  });
-
   test('should catch a @HostListener on a private member', () async {
     await expectBuildError(
       '''
@@ -55,22 +39,6 @@ void main() {
       allOf(
         contains('@HostListener must be on a public member'),
         contains('_cantTouchThis'),
-      ),
-    );
-  });
-
-  test('should catch a @HostListener on a non-method', () async {
-    await expectBuildError(
-      '''
-      // @dart=2.9
-      class Comp {
-        @HostListener('click')
-        Function fn;
-      }
-    ''',
-      allOf(
-        contains('@HostListener must be on a method'),
-        contains('fn'),
       ),
     );
   });

@@ -32,28 +32,9 @@ class DirectiveVisitor {
     this.onHostListener = _noopClassMethod,
   });
 
-  /// Throws a [BuildError] if [element] is not a getter or field.
-  static void _assertGetterOrField(Element element, String message) {
-    if (element is FieldElement) {
-      return;
-    }
-    if (element is PropertyAccessorElement && element.isGetter) {
-      return;
-    }
-    throw BuildError.forElement(element, message);
-  }
-
   /// Throws a [BuildError] if [element] is not an instance-level member.
   static void _assertInstance(Element element, String message) {
     if (element is ClassMemberElement && !element.isStatic) {
-      return;
-    }
-    throw BuildError.forElement(element, message);
-  }
-
-  /// Throws a [BuildError] if [element] is not a method.
-  static void _assertMethod(Element element, String message) {
-    if (element is MethodElement) {
       return;
     }
     throw BuildError.forElement(element, message);
@@ -68,16 +49,6 @@ class DirectiveVisitor {
   }
 
   static bool _isRequired(ParameterElement e) => e.isRequiredPositional;
-
-  static void _assertMaxArgs(Element element, String message, int maxArgs) {
-    // TODO(b/133248314): Re-enable or delete this case.
-    /*
-    if (element is MethodElement &&
-        element.parameters.where(_isRequired).length > maxArgs) {
-      throw BuildError.forElement(element, message);
-    }
-    */
-  }
 
   static void _assertExactArgs(Element element, String message, int exactArgs) {
     if (element is MethodElement &&
@@ -113,31 +84,28 @@ class DirectiveVisitor {
   }
 
   void _visitMember(Element member) {
-    for (final hostBinding
-        in $HostBinding.annotationsOfExact(member, throwOnUnresolved: false)) {
+    for (final hostBinding in $HostBinding.annotationsOfExact(
+      member,
+      throwOnUnresolved: false,
+    )) {
       _visitHostBinding(member, hostBinding);
     }
-    for (final hostListener
-        in $HostListener.annotationsOfExact(member, throwOnUnresolved: false)) {
+    for (final hostListener in $HostListener.annotationsOfExact(
+      member,
+      throwOnUnresolved: false,
+    )) {
       _visitHostListener(member, hostListener);
     }
   }
 
   void _visitHostBinding(Element member, DartObject annotation) {
     _assertPublic(member, '@HostBinding must be on a public member');
-    _assertGetterOrField(member, '@HostBinding must be on a field or getter');
     onHostBinding(member, annotation);
   }
 
   void _visitHostListener(Element member, DartObject annotation) {
-    _assertPublic(member, '@HostListener must be on a public member');
-    _assertMethod(member, '@HostListener must be on a method');
     _assertInstance(member, '@HostListener must be on a non-static member');
-    _assertMaxArgs(
-      member,
-      '@HostListener is only valid on methods with 0 or 1 parameters',
-      1,
-    );
+    _assertPublic(member, '@HostListener must be on a public member');
 
     final hostListenerArgs = ConstantReader(annotation).read('args');
     if (hostListenerArgs.isList) {

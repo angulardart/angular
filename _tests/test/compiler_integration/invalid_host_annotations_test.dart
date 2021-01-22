@@ -8,40 +8,6 @@ void main() {
   CompileContext.overrideForTesting();
 
   group('should fail on @HostBinding', () {
-    test('on a method', () {
-      return compilesExpecting("""
-        import '$ngImport';
-
-        @Component(
-          selector: 'bad',
-          template: '',
-        )
-        class BadComp {
-          @HostBinding('attr.notAGetter')
-          String methodNotValid() => '...';
-        }
-      """, errors: [
-        contains('@HostBinding must be on a field or getter'),
-      ]);
-    });
-
-    test('on a setter', () {
-      return compilesExpecting("""
-        import '$ngImport';
-
-        @Component(
-          selector: 'bad',
-          template: '',
-        )
-        class BadComp {
-          @HostBinding('attr.notAGetter')
-          set setterNotValid(_) {}
-        }
-      """, errors: [
-        contains('@HostBinding must be on a field or getter'),
-      ]);
-    });
-
     test('Invalid value with dot symbol prefix', () {
       return compilesExpecting("""
         import '$ngImport';
@@ -61,40 +27,6 @@ void main() {
   });
 
   group('should fail on @HostListener', () {
-    test('on a getter', () {
-      return compilesExpecting("""
-        import '$ngImport';
-
-        @Component(
-          selector: 'bad',
-          template: '',
-        )
-        class BadComp {
-          @HostListener('click')
-          String get onClick => '';
-        }
-      """, errors: [
-        contains('@HostListener must be on a method'),
-      ]);
-    });
-
-    test('on a setter', () {
-      return compilesExpecting("""
-        import '$ngImport';
-
-        @Component(
-          selector: 'bad',
-          template: '',
-        )
-        class BadComp {
-          @HostListener('click')
-          set onClick(_) {}
-        }
-      """, errors: [
-        contains('@HostListener must be on a method'),
-      ]);
-    });
-
     test('on a static method', () {
       return compilesExpecting("""
         import '$ngImport';
