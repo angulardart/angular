@@ -1641,7 +1641,6 @@ class _PreserveWhitespaceVisitor extends ast.IdentityTemplateAstVisitor<void> {
     ast.TextAst node,
     List<ast.TemplateAst> astNodes,
   ) {
-    // TODO(matanl): Consider removing this case entirely.
     return ast.TextAst.from(node, replaceNgSpace(node.value));
   }
 }
