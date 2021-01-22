@@ -637,13 +637,9 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
     }
   }
 
-  // TODO(matanl): Make this @visibleForOveride, and override in the plugin
-  // implementation so errors can be forwarded to the analyzer ErrorReporter.
-  //
-  // TODO(matanl): Replace Null -> Never once NNBD is available.
   @alwaysThrows
   // ignore: prefer_void_to_null
-  Null _notSupported(String reason, AstNode astNode) {
+  static Null _notSupported(String reason, AstNode astNode) {
     throw _SubsetException(reason, astNode);
   }
 }
