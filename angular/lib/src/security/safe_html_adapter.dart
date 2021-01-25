@@ -10,7 +10,6 @@ String? sanitizeHtml(Object? stringOrSafeOrBypass) {
   if (stringOrSafeOrBypass == null) {
     return null;
   }
-  // TODO(b/157605404): Consider stricter runtime or compile-time checks.
   final unsafeString = stringOrSafeOrBypass.toString();
   return sanitizeHtmlInternal(unsafeString);
 }
@@ -20,7 +19,6 @@ String? sanitizeStyle(Object? stringOrSafeOrBypass) {
   if (stringOrSafeOrBypass == null) {
     return null;
   }
-  // TODO(b/157605404): Consider stricter runtime or compile-time checks.
   final unsafeString = stringOrSafeOrBypass.toString();
   return internalSanitizeStyle(unsafeString);
 }
@@ -30,7 +28,6 @@ String? sanitizeUrl(Object? stringOrSafeOrBypass) {
   if (stringOrSafeOrBypass == null) {
     return null;
   }
-  // TODO(b/157605404): Consider stricter runtime or compile-time checks.
   final unsafeString = stringOrSafeOrBypass.toString();
   return internalSanitizeUrl(unsafeString);
 }
