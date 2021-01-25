@@ -14,8 +14,7 @@ import 'package:build/experiments.dart';
 import 'package:build_test/build_test.dart';
 import 'package:package_config/package_config.dart';
 
-const _angularPkgPath = 'package:third_party.dart_src.angular';
-const _angularLibPath = '$_angularPkgPath.angular/angular.dart';
+const _angularLibPath = 'package:angular/angular.dart';
 const _environmentVar = 'ANGULAR_PACKAGE_CONFIG_PATH';
 const _defaultLibrary = 'test_lib';
 final _defaultAssetId = AssetId(_defaultLibrary, 'lib/$_defaultLibrary.dart');
