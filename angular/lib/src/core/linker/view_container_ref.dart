@@ -6,65 +6,64 @@ import 'element_ref.dart';
 import 'template_ref.dart';
 import 'view_ref.dart' show EmbeddedViewRef, ViewRef;
 
-/// Represents a container where one or more Views can be attached.
+/// Represents a container where one or more views can be attached.
 ///
-/// The container can contain two kinds of Views. Host Views, created by
-/// instantiating a [Component] via [#createComponent], and Embedded Views,
-/// created by instantiating an [TemplateRef Embedded Template] via
-/// [#createEmbeddedView].
+/// The container can contain two kinds of views. Host views, created by
+/// instantiating a [ComponentFactory] via [createComponent], and embedded
+/// views, created by instantiating an [TemplateRef] via [createEmbeddedView].
 ///
-/// The location of the View Container within the containing View is specified
-/// by the Anchor `element`. Each View Container can have only one Anchor
-/// Element and each Anchor Element can only have a single View Container.
+/// The location of the view container within the containing view is specified
+/// by the anchor [element]. Each view container can have only one anchor
+/// element and each anchor element can only have a single view container.
 ///
-/// Root elements of Views attached to this container become siblings of the
-/// Anchor Element in the Rendered View.
+/// Root elements of views attached to this container become siblings of the
+/// anchor element in the rendered view.
 ///
-/// To access a `ViewContainerRef` of an Element, you can either place a
-/// [Directive] injected with `ViewContainerRef` on the Element, or you obtain
-/// it via a [ViewChild] query.
+/// To access a [ViewContainerRef] of an `Element`, you can either place a
+/// `@Directive` injected with [ViewContainerRef] on the `Element`, or obtain
+/// it via a `@ViewChild` query.
 abstract class ViewContainerRef implements ComponentLoader {
-  /// Returns the [ViewRef] for the View located in this container at the
-  /// specified index.
+  /// Returns the view located in this container at the specified [index].
   ViewRef get(int index);
 
-  /// Returns the number of Views currently attached to this container.
+  /// Returns the number of views currently attached to this container.
   int get length;
 
-  /// Anchor element that specifies the location of this container in the
-  /// containing View.
+  /// Anchor element (the location of this container in the containing view).
   ElementRef get element;
 
+  /// Injector context for the view container within the larger app.
   Injector get injector;
 
+  /// The parent injector context.
   Injector get parentInjector;
 
-  /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
-  /// and inserts it into this container at the specified `index`.
+  /// Instantiates [templateRef] and inserts it into this container at [index].
   ///
-  /// If `index` is not specified, the new View will be inserted as the last
+  /// If [index] is not specified, the new view will be inserted as the last
   /// View in the container.
   ///
-  /// Returns the [ViewRef] for the newly created View.
-  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index);
+  /// Returns the newly created view.
+  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, [int index = -1]);
 
-  /// Instantiates an Embedded View based on the [TemplateRef `templateRef`]
-  /// and appends it into this container.
+  /// Instantiates [templateRef] and appends it into this container.
+  ///
+  /// Returns the newly created view.
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef);
 
-  /// Instantiates a single [Component] and inserts its Host View into this
-  /// container at the specified `index`.
+  /// Instantiates a single component and inserts its host view into this
+  /// container at the specified [index].
   ///
   /// The component is instantiated using its [ComponentFactory].
   ///
-  /// If `index` is not specified, the new View will be inserted as the last
+  /// If [index] is not specified, the new view will be inserted as the last
   /// View in the container.
   ///
   /// You can optionally specify the [Injector] that will be used as parent for
-  /// the Component.
+  /// the component.
   ///
-  /// Returns the [ComponentRef] of the Host View created for the newly
-  /// instantiated Component.
+  /// Returns the [ComponentRef] of the host view created for the newly
+  /// instantiated component.
   ComponentRef<T> createComponent<T>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
@@ -74,32 +73,36 @@ abstract class ViewContainerRef implements ComponentLoader {
 
   /// Inserts a View identified by a [ViewRef] into the container.
   ///
-  /// If `index` is not specified, the new View will be inserted as the
-  /// last View in the container.
+  /// If [index] is not specified, the new View will be inserted as the
+  /// last view in the container.
   ///
   /// Returns the inserted [ViewRef].
-  /// TODO(i): refactor insert+remove into move
   ViewRef insert(ViewRef viewRef, [int index = -1]);
 
-  ViewRef? move(ViewRef viewRef, int currentIndex);
+  /// Moves the provided [viewRef] into the specified [index].
+  ///
+  /// If [index] is not specified, the existing view will be moved to be the
+  /// last view in the container.
+  void move(ViewRef viewRef, [int index = -1]);
 
-  /// Returns the index of the View, specified via [ViewRef], within the current
-  /// container or `-1` if this container doesn't contain the View.
+  /// Returns the index of the attached [viewRef].
+  ///
+  /// Returns `-1` if this container doesn't contain the provided view.
   int indexOf(ViewRef viewRef);
 
-  /// Destroys a View attached to this container at the specified `index`.
+  /// Removes the view attached to this container at the specified [index].
   ///
-  /// If `index` is not specified, the last View in the container will be
+  /// If [index] is not specified, the last View in the container will be
   /// removed.
-  /// TODO(i): rename to destroy
+  ///
+  /// NOTE: In the process of removing the view, the view is also destroyed.
   void remove([int index = -1]);
 
-  /// Use along with [#insert] to move a View within the current container.
+  /// Use along with [insert] to move a view within the current container.
   ///
-  /// If the `index` param is omitted, the last [ViewRef] is detached.
-  /// TODO(i): refactor insert+remove into move
+  /// If the `index` parameter is omitted, the last [ViewRef] is detached.
   ViewRef detach([int index = -1]);
 
-  /// Destroys all Views in this container.
+  /// Destroys all views in this container.
   void clear();
 }

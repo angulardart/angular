@@ -8616,7 +8616,7 @@
   };
   R.NgFor__applyChanges_closure.prototype = {
     call$3: function(item, adjustedPreviousIndex, currentIndex) {
-      var t1, t2, t3, view, index, views, refRenderNode, _this = this;
+      var t1, t2, t3, view, index, views, refRenderNode, previousIndex, _this = this;
       if (item.previousIndex == null) {
         t1 = _this.$this;
         t2 = t1._viewContainer;
@@ -8659,7 +8659,18 @@
           if (adjustedPreviousIndex < 0 || adjustedPreviousIndex >= t2.length)
             return H.ioore(t2, adjustedPreviousIndex);
           t2 = t2[adjustedPreviousIndex];
-          t1.move$2(t2, currentIndex);
+          index = currentIndex === -1 ? t1.get$length(t1) : currentIndex;
+          t3 = t1.nestedViews;
+          t3.toString;
+          previousIndex = C.JSArray_methods.indexOf$1(t3, t2);
+          if (previousIndex === -1)
+            H.throwExpression(P.StateError$("View is not a member of this container"));
+          C.JSArray_methods.removeAt$1(t3, previousIndex);
+          C.JSArray_methods.insert$2(t3, index, t2);
+          refRenderNode = t1._findRenderNode$2(t3, index);
+          if (refRenderNode != null)
+            t2.addRootNodesAfter$1(refRenderNode);
+          t2.wasMoved$0();
           _this.insertTuples.push(new R._RecordViewTuple(t2, item));
         }
       }
@@ -9458,20 +9469,6 @@
           return H.ioore(nested, i);
         nested[i].destroyInternalState$0();
       }
-    },
-    move$2: function(viewRef, currentIndex) {
-      var t1, refRenderNode;
-      if (currentIndex === -1)
-        return null;
-      t1 = this.nestedViews;
-      t1.toString;
-      C.JSArray_methods.removeAt$1(t1, C.JSArray_methods.indexOf$1(t1, viewRef));
-      C.JSArray_methods.insert$2(t1, currentIndex, viewRef);
-      refRenderNode = this._findRenderNode$2(t1, currentIndex);
-      if (refRenderNode != null)
-        viewRef.addRootNodesAfter$1(refRenderNode);
-      viewRef.wasMoved$0();
-      return viewRef;
     },
     _findRenderNode$2: function(views, index) {
       var t1;

@@ -99,7 +99,10 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ///
   /// Returns the [ViewRef] for the newly created View.
   @override
-  EmbeddedViewRef insertEmbeddedView(TemplateRef templateRef, int index) {
+  EmbeddedViewRef insertEmbeddedView(
+    TemplateRef templateRef, [
+    int index = -1,
+  ]) {
     final viewRef = templateRef.createEmbeddedView();
     insert(viewRef, index);
     return viewRef;
@@ -110,7 +113,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   @override
   EmbeddedViewRef createEmbeddedView(TemplateRef templateRef) {
     final viewRef = templateRef.createEmbeddedView();
-    attachView(unsafeCast(viewRef), length);
+    _attachView(unsafeCast(viewRef), length);
     return viewRef;
   }
 
@@ -135,17 +138,16 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     if (index == -1) {
       index = length;
     }
-    attachView(unsafeCast(viewRef), index);
+    _attachView(unsafeCast(viewRef), index);
     return viewRef;
   }
 
   @override
-  ViewRef? move(ViewRef viewRef, int currentIndex) {
-    if (currentIndex == -1) {
-      return null;
+  void move(ViewRef viewRef, [int index = -1]) {
+    if (index == -1) {
+      index = length;
     }
-    moveView(unsafeCast(viewRef), currentIndex);
-    return viewRef;
+    _moveView(unsafeCast(viewRef), index);
   }
 
   /// Returns the index of the View, specified via [ViewRef], within the current
@@ -159,7 +161,6 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   ///
   /// If `index` is not specified, the last View in the container will be
   /// removed.
-  /// TODO(i): rename to destroy
   @override
   void remove([int index = -1]) {
     if (index == -1) {
@@ -171,7 +172,6 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   /// Use along with [#insert] to move a View within the current container.
   ///
   /// If the `index` param is omitted, the last [ViewRef] is detached.
-  /// TODO(i): refactor insert+remove into move
   @override
   ViewRef detach([int index = -1]) {
     if (index == -1) {
@@ -223,14 +223,18 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
         : nativeElement;
   }
 
-  void moveView(DynamicView view, int currentIndex) {
+  void _moveView(DynamicView view, int newIndex) {
     final views = nestedViews!;
     final previousIndex = views.indexOf(view);
+    if (previousIndex == -1) {
+      throw StateError('View is not a member of this container');
+    }
 
-    views.removeAt(previousIndex);
-    views.insert(currentIndex, view);
+    views
+      ..removeAt(previousIndex)
+      ..insert(newIndex, view);
 
-    final refRenderNode = _findRenderNode(views, currentIndex);
+    final refRenderNode = _findRenderNode(views, newIndex);
 
     if (refRenderNode != null) {
       view.addRootNodesAfter(refRenderNode);
@@ -239,7 +243,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
     view.wasMoved();
   }
 
-  void attachView(DynamicView view, int viewIndex) {
+  void _attachView(DynamicView view, int viewIndex) {
     final views = nestedViews ?? <DynamicView>[];
     views.insert(viewIndex, view);
 
