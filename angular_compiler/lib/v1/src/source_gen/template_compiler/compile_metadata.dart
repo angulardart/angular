@@ -664,13 +664,10 @@ class CompileTypeMetadataVisitor
       );
     }
 
-    //throw BuildError.forAnnotation(
-    //  _indexedAnnotation.annotation,
-    //  'Could not resolve dependency $object',
-    //);
-
-    logWarning('Could not resolve dependency $object');
-    return CompileDiDependencyMetadata();
+    throw BuildError.forAnnotation(
+      _indexedAnnotation.annotation,
+      'Could not resolve dependency $object',
+    );
   }
 
   bool _isOpaqueToken(DartObject token) =>
