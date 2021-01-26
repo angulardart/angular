@@ -9522,7 +9522,7 @@
         element.className = newClass;
         $parent = _this._component_view$_data.parentView;
         if ($parent instanceof A.RenderView)
-          $parent.addShimC$1(element);
+          $parent.get$componentStyles();
       } else
         _this.super$RenderView$updateChildClass(element, newClass);
     }
@@ -9584,9 +9584,6 @@
     injectFromAncestry$2: function(token, notFoundValue) {
       var t1 = this._component_view$_data;
       return t1.parentView.inject$3(token, t1.parentIndex, notFoundValue);
-    },
-    addShimC$1: function(element) {
-      this.get$componentStyles();
     },
     updateChildClass$2: function(element, newClass) {
       this.get$componentStyles();

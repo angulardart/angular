@@ -4587,8 +4587,8 @@
     }
   },
   O = {
-    ComponentStyles$_: function(_styles, _componentUrl, _componentId, contentPrefix, hostPrefix) {
-      var t1 = new O.ComponentStyles(_componentUrl, _styles, _componentId, contentPrefix, hostPrefix);
+    ComponentStyles$_: function(_styles, _componentUrl, _componentId, _contentPrefix, _hostPrefix) {
+      var t1 = new O.ComponentStyles(_componentUrl, _styles, _componentId, _contentPrefix, _hostPrefix);
       t1._appendStyles$0();
       return t1;
     },
@@ -4624,16 +4624,16 @@
       _._componentUrl = t0;
       _._styles = t1;
       _._componentId = t2;
-      _.contentPrefix = t3;
-      _.hostPrefix = t4;
+      _._contentPrefix = t3;
+      _._hostPrefix = t4;
     },
     _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1, t2, t3, t4) {
       var _ = this;
       _._componentUrl = t0;
       _._styles = t1;
       _._componentId = t2;
-      _.contentPrefix = t3;
-      _.hostPrefix = t4;
+      _._contentPrefix = t3;
+      _._hostPrefix = t4;
     }
   },
   E = {
@@ -8682,8 +8682,17 @@
   D.ComponentFactory.prototype = {};
   M.ComponentLoader.prototype = {};
   O.ComponentStyles.prototype = {
-    get$usesStyleEncapsulation: function() {
-      return true;
+    addContentShimClassHtmlElement$1: function(element) {
+      T.updateClassBinding(element, this._contentPrefix, true);
+    },
+    addHostShimClassHtmlElement$1: function(element) {
+      T.updateClassBinding(element, this._hostPrefix, true);
+    },
+    updateChildClassHtmlElement$2: function(element, newClass) {
+      element.className = newClass + " " + this._contentPrefix;
+    },
+    updateChildClassForHostHtmlElement$2: function(element, newClass) {
+      element.className = newClass + " " + this._hostPrefix;
     },
     _appendStyles$0: function() {
       var target = H.setRuntimeTypeInfo([], type$.JSArray_String),
@@ -8695,8 +8704,15 @@
     }
   };
   O._UnscopedComponentStyles.prototype = {
-    get$usesStyleEncapsulation: function() {
-      return false;
+    addContentShimClassHtmlElement$1: function(element) {
+    },
+    addHostShimClassHtmlElement$1: function(element) {
+    },
+    updateChildClassHtmlElement$2: function(element, newClass) {
+      element.className = newClass;
+    },
+    updateChildClassForHostHtmlElement$2: function(element, newClass) {
+      element.className = newClass;
     }
   };
   D.ViewFragment.prototype = {};
@@ -8741,10 +8757,8 @@
       _this.build$0();
     },
     initViewRoot$0: function() {
-      var hostElement = this.get$rootElement(this),
-        styles = this.get$componentStyles();
-      if (styles.get$usesStyleEncapsulation())
-        T.updateClassBinding(hostElement, styles.hostPrefix, true);
+      var hostElement = this.get$rootElement(this);
+      this.get$componentStyles().addHostShimClassHtmlElement$1(hostElement);
       return hostElement;
     },
     detectChangesDeprecated$0: function() {
@@ -8768,13 +8782,12 @@
       this._component_view$_data.set$changeDetectorState(2);
     },
     updateChildClass$2: function(element, newClass) {
-      var styles, $parent, _this = this;
+      var $parent, _this = this;
       if (element === _this.get$rootElement(_this)) {
-        styles = _this.get$componentStyles();
-        element.className = styles.get$usesStyleEncapsulation() ? newClass + " " + styles.hostPrefix : newClass;
+        _this.get$componentStyles().updateChildClassForHostHtmlElement$2(element, newClass);
         $parent = _this._component_view$_data.parentView;
         if ($parent instanceof A.RenderView)
-          $parent.addShimC$1(element);
+          $parent.get$componentStyles().addContentShimClassHtmlElement$1(element);
       } else
         _this.super$RenderView$updateChildClass(element, newClass);
     }
@@ -8856,14 +8869,8 @@
       var t1 = this._component_view$_data;
       return t1.parentView.inject$3(token, t1.parentIndex, notFoundValue);
     },
-    addShimC$1: function(element) {
-      var styles = this.get$componentStyles();
-      if (styles.get$usesStyleEncapsulation())
-        T.updateClassBinding(element, styles.contentPrefix, true);
-    },
     updateChildClass$2: function(element, newClass) {
-      var styles = this.get$componentStyles();
-      element.className = styles.get$usesStyleEncapsulation() ? newClass + " " + styles.contentPrefix : newClass;
+      this.get$componentStyles().updateChildClassHtmlElement$2(element, newClass);
     }
   };
   A.View.prototype = {
@@ -9487,14 +9494,16 @@
       else
         H.throwExpression(H.LateError$fieldAI("_el_0"));
       _this.updateChildClass$2(_this.get$_el_0(), "trailing-text");
-      _this.addShimC$1(_this.get$_el_0());
+      t1 = _this.get$_el_0();
+      _this.get$componentStyles().addContentShimClassHtmlElement$1(t1);
       t1 = T.appendDiv(doc, _this.get$_el_0());
       if (_this.__ViewEmulatedEncapsulation0__el_1 == null)
         _this.__ViewEmulatedEncapsulation0__el_1 = t1;
       else
         H.throwExpression(H.LateError$fieldAI("_el_1"));
       _this.updateChildClass$2(_this.get$_el_1(), "glyph trailing");
-      _this.addShimC$1(_this.get$_el_1());
+      t1 = _this.get$_el_1();
+      _this.get$componentStyles().addContentShimClassHtmlElement$1(t1);
       T.appendText(parentRenderNode, " ");
       _this.project$2(parentRenderNode, 0);
     },

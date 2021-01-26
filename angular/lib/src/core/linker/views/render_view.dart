@@ -162,12 +162,9 @@ abstract class RenderView extends View {
   // Styling -------------------------------------------------------------------
 
   /// Equivalent to [addShimE], but optimized for [HtmlElement].
-  @dart2js.noInline
+  @dart2js.tryInline
   void addShimC(HtmlElement element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBinding(element, styles.contentPrefix, true);
-    }
+    componentStyles.addContentShimClassHtmlElement(element);
   }
 
   /// Adds a content shim class to [element].
@@ -177,12 +174,9 @@ abstract class RenderView extends View {
   ///
   /// This should only be used for SVG or custom elements. For a plain
   /// [HtmlElement], use [addShimC] instead.
-  @dart2js.noInline
+  @dart2js.tryInline
   void addShimE(Element element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBindingNonHtml(element, styles.contentPrefix, true);
-    }
+    componentStyles.addContentShimClass(element);
   }
 
   /// Called by change detector to apply correct host and content shimming
@@ -193,22 +187,13 @@ abstract class RenderView extends View {
   /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
   @dart2js.noInline
   void updateChildClass(HtmlElement element, String newClass) {
-    final styles = componentStyles;
-    final shim = styles.usesStyleEncapsulation;
-    element.className = shim ? '$newClass ${styles.contentPrefix}' : newClass;
+    componentStyles.updateChildClassHtmlElement(element, newClass);
   }
 
   /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
   @dart2js.noInline
   void updateChildClassNonHtml(Element element, String? newClass) {
-    newClass ??= '';
-    final styles = componentStyles;
-    final shim = styles.usesStyleEncapsulation;
-    updateAttribute(
-      element,
-      'class',
-      shim ? '$newClass ${styles.contentPrefix}' : newClass,
-    );
+    componentStyles.updateChildClass(element, newClass ?? '');
   }
 }
 

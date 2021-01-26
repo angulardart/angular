@@ -7,7 +7,6 @@ import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/devtools.dart';
 import 'package:angular/src/meta.dart';
-import 'package:angular/src/runtime/dom_helpers.dart';
 import 'package:angular/src/utilities.dart';
 
 import 'render_view.dart';
@@ -117,10 +116,7 @@ abstract class ComponentView<T> extends RenderView {
   @dart2js.noInline
   HtmlElement initViewRoot() {
     final hostElement = rootElement;
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBinding(hostElement, styles.hostPrefix, true);
-    }
+    componentStyles.addHostShimClassHtmlElement(hostElement);
     return hostElement;
   }
 
@@ -218,10 +214,8 @@ abstract class ComponentView<T> extends RenderView {
   @dart2js.noInline
   @override
   void updateChildClass(HtmlElement element, String newClass) {
-    if (element == rootElement) {
-      final styles = componentStyles;
-      final shim = styles.usesStyleEncapsulation;
-      element.className = shim ? '$newClass ${styles.hostPrefix}' : newClass;
+    if (identical(element, rootElement)) {
+      componentStyles.updateChildClassForHostHtmlElement(element, newClass);
       final parent = parentView;
       if (parent is RenderView) {
         parent.addShimC(element);
@@ -234,15 +228,8 @@ abstract class ComponentView<T> extends RenderView {
   @dart2js.noInline
   @override
   void updateChildClassNonHtml(Element element, String? newClass) {
-    newClass ??= '';
     if (identical(element, rootElement)) {
-      final styles = componentStyles;
-      final shim = styles.usesStyleEncapsulation;
-      updateAttribute(
-        element,
-        'class',
-        shim ? '$newClass ${styles.hostPrefix}' : newClass,
-      );
+      componentStyles.updateChildClassForHost(element, newClass ?? '');
       final parent = parentView;
       if (parent is RenderView) {
         parent.addShimE(element);
