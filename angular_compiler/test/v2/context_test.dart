@@ -107,7 +107,7 @@ void main() {
           policyExceptionsInPackages: {},
         );
         expect(context.emitNullSafeCode, isFalse);
-      }, tags: 'fails-on-travis');
+      }, tags: 'fails-on-ci');
 
       test('should be true if the opted-in and allow-listed', () {
         final context = CompileContext(

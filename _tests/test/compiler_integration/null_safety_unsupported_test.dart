@@ -27,7 +27,7 @@ void main() {
         contains('Null-safety is not supported for AngularDart.'),
       ],
     );
-  }, tags: 'fails-on-travis');
+  }, tags: 'fails-on-ci');
 
   test('should pass on files opted-in to null safety w/ allow-list', () async {
     CompileContext.overrideForTesting(

@@ -1,4 +1,4 @@
+include: ../tool/dart_test_repo.yaml
+
 platforms:
   - vm
-
-reporter: expanded

@@ -1,3 +1,5 @@
+include: ../tool/dart_test_repo.yaml
+
 presets:
   browser:
     platforms:
@@ -9,6 +11,7 @@ presets:
     - test/di
     - test/integration
     - test/platform
+    add_presets: [ci]
 
   vm:
     platforms:
@@ -16,5 +19,4 @@ presets:
     paths:
     - test/compiler
     - test/compiler_integration
-
-reporter: expanded
+    add_presets: [ci]
