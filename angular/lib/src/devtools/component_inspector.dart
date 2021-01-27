@@ -83,6 +83,24 @@ class ComponentInspector {
     return componentView.rootElement;
   }
 
+  /// Returns the [id] of the component that rendered [node].
+  ///
+  /// The [groupName] should be the same one passed to the latest
+  /// [getComponents] call.
+  ///
+  /// Returns `-1` if [node] has no corresponding component.
+  int getComponentIdForNode(Node node, String groupName) {
+    Node? current = node;
+    while (current != null) {
+      final componentView = _elementToComponentView[current];
+      if (componentView != null) {
+        return _referenceCounter.toId(componentView, groupName);
+      }
+      current = current.parent;
+    }
+    return -1;
+  }
+
   /// Returns the inputs bound to a component as a map from name to value.
   ///
   /// The component is identified using the [id] obtained from [getComponents].

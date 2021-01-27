@@ -25,6 +25,9 @@ void enableDevTools() {
     _getComponentElement = allowInterop(
       ComponentInspector.instance.getComponentElement,
     );
+    _getComponentIdForNode = allowInterop(
+      ComponentInspector.instance.getComponentIdForNode,
+    );
   }
 }
 
@@ -32,4 +35,9 @@ void enableDevTools() {
 @JS('getAngularComponentElement')
 external set _getComponentElement(
   html.HtmlElement Function(int) implementation,
+);
+
+@JS('getAngularComponentIdForNode')
+external set _getComponentIdForNode(
+  void Function(html.Node, String) implementation,
 );
