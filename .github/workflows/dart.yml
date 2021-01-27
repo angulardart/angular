@@ -345,7 +345,7 @@ jobs:
       - job_001
       - job_002
   job_010:
-    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_vm`"
+    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P vm`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -368,10 +368,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_vm"
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P vm"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P travis_vm
+        run: pub run build_runner test --fail-on-severe -- -P vm
     needs:
       - job_001
       - job_002
@@ -383,7 +383,7 @@ jobs:
       - job_008
       - job_009
   job_011:
-    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P travis_browser`"
+    name: "unit_test; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P browser`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -406,10 +406,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P travis_browser"
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P browser"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P travis_browser
+        run: pub run build_runner test --fail-on-severe -- -P browser
     needs:
       - job_001
       - job_002
@@ -421,7 +421,7 @@ jobs:
       - job_008
       - job_009
   job_012:
-    name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "unit_test; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -444,10 +444,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
-      - name: "angular_ast; pub run build_runner test --fail-on-severe -- -P travis"
+      - name: "angular_ast; pub run build_runner test --fail-on-severe -- -P ci"
         if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
         working-directory: angular_ast
-        run: pub run build_runner test --fail-on-severe -- -P travis
+        run: pub run build_runner test --fail-on-severe -- -P ci
     needs:
       - job_001
       - job_002
@@ -459,7 +459,7 @@ jobs:
       - job_008
       - job_009
   job_013:
-    name: "unit_test; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "unit_test; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -482,10 +482,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
-      - name: "angular_compiler; pub run build_runner test --fail-on-severe -- -P travis"
+      - name: "angular_compiler; pub run build_runner test --fail-on-severe -- -P ci"
         if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
         working-directory: angular_compiler
-        run: pub run build_runner test --fail-on-severe -- -P travis
+        run: pub run build_runner test --fail-on-severe -- -P ci
     needs:
       - job_001
       - job_002
@@ -497,7 +497,7 @@ jobs:
       - job_008
       - job_009
   job_014:
-    name: "unit_test; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "unit_test; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -520,10 +520,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
-      - name: "angular_forms; pub run build_runner test --fail-on-severe -- -P travis"
+      - name: "angular_forms; pub run build_runner test --fail-on-severe -- -P ci"
         if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
         working-directory: angular_forms
-        run: pub run build_runner test --fail-on-severe -- -P travis
+        run: pub run build_runner test --fail-on-severe -- -P ci
     needs:
       - job_001
       - job_002
@@ -535,7 +535,7 @@ jobs:
       - job_008
       - job_009
   job_015:
-    name: "unit_test; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "unit_test; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -558,10 +558,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
-      - name: "angular_router; pub run build_runner test --fail-on-severe -- -P travis"
+      - name: "angular_router; pub run build_runner test --fail-on-severe -- -P ci"
         if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
         working-directory: angular_router
-        run: pub run build_runner test --fail-on-severe -- -P travis
+        run: pub run build_runner test --fail-on-severe -- -P ci
     needs:
       - job_001
       - job_002
@@ -573,7 +573,7 @@ jobs:
       - job_008
       - job_009
   job_016:
-    name: "unit_test; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P travis`"
+    name: "unit_test; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -596,10 +596,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
-      - name: "angular_test; pub run build_runner test --fail-on-severe -- -P travis"
+      - name: "angular_test; pub run build_runner test --fail-on-severe -- -P ci"
         if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
         working-directory: angular_test
-        run: pub run build_runner test --fail-on-severe -- -P travis
+        run: pub run build_runner test --fail-on-severe -- -P ci
     needs:
       - job_001
       - job_002

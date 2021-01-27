@@ -18,7 +18,7 @@ void main() {
       component.href = 'javascript:alert(1)';
     });
     expect(a.href, isNot(contains('javascript')));
-  }, tags: 'fails-on-travis');
+  }, tags: 'fails-on-ci');
 
   test('should escape unsafe styles', () async {
     final testBed = NgTestBed(ng.createUnsafeStyleComponentFactory());
@@ -52,7 +52,7 @@ void main() {
       div.innerHtml,
       'also <iframe srcdoc="<div></div>"> content</iframe>',
     );
-  }, tags: 'fails-on-travis');
+  }, tags: 'fails-on-ci');
 }
 
 @Component(

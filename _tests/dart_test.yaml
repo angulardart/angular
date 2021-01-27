@@ -1,8 +1,8 @@
 # Include common configuration.
-include: ../dev/tool/test/dart_test_repo.yaml
+include: ../tool/dart_test_repo.yaml
 
 presets:
-  travis_browser:
+  browser:
     platforms:
     - chrome
     paths:
@@ -12,12 +12,12 @@ presets:
     - test/di
     - test/integration
     - test/platform
-    add_presets: [travis]
+    add_presets: [ci]
 
-  travis_vm:
+  vm:
     platforms:
     - vm
     paths:
     - test/compiler
     - test/compiler_integration
-    add_presets: [travis]
+    add_presets: [ci]
