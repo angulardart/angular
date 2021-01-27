@@ -3268,9 +3268,12 @@
       return null;
     },
     _rootScheduleMicrotask: function($self, $parent, zone, f) {
-      var t1 = C.C__RootZone !== zone;
-      if (t1)
-        f = !(!t1 || C.C__RootZone.get$errorZone() === zone.get$errorZone()) ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, type$.void);
+      var t1, t2;
+      if (C.C__RootZone !== zone) {
+        t1 = C.C__RootZone.get$errorZone();
+        t2 = zone.get$errorZone();
+        f = t1 !== t2 ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, type$.void);
+      }
       P._scheduleAsyncCallback(f);
     },
     _rootCreateTimer: function($self, $parent, zone, duration, callback) {

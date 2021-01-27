@@ -3293,9 +3293,12 @@
       return null;
     },
     _rootScheduleMicrotask: function($self, $parent, zone, f) {
-      var t1 = C.C__RootZone !== zone;
-      if (t1)
-        f = !(!t1 || C.C__RootZone.get$errorZone() === zone.get$errorZone()) ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, type$.void);
+      var t1, t2;
+      if (C.C__RootZone !== zone) {
+        t1 = C.C__RootZone.get$errorZone();
+        t2 = zone.get$errorZone();
+        f = t1 !== t2 ? zone.bindCallbackGuarded$1(f) : zone.bindCallback$1$1(f, type$.void);
+      }
       P._scheduleAsyncCallback(f);
     },
     _rootCreateTimer: function($self, $parent, zone, duration, callback) {
@@ -8496,11 +8499,6 @@
     call$0: function() {
       var t4, styles, t5, t6, _el_0, parentRenderNode, _el_2, _el_5, _el_8, _el_11, _el_14, _el_17, _el_19, _el_22, t7, t8, t9, replacement, component, existing, replacement0, testability, registry,
         _s11_ = "LIFECYCLE: ",
-        _s16_ = "_pipe_identity_0",
-        _s14_ = "_pipe_concat_1",
-        _s13_ = "_pipe_merge_2",
-        _s13_0 = "_pipe_typed_3",
-        _s21_ = "_pipe_pureLifecycle_4",
         t1 = this.componentFactory,
         t2 = this.$this,
         t3 = t2._injector,
@@ -8569,67 +8567,57 @@
       _el_22 = T.appendDiv(t5, _el_17);
       T.appendText(_el_22, _s11_);
       _el_22.appendChild(t4._textBinding_24.element);
+      t6 = new L.IdentityPurePipe();
       if (t4.__ViewGoldenComponent0__pipe_identity_0 == null)
-        t4.__ViewGoldenComponent0__pipe_identity_0 = new L.IdentityPurePipe();
+        t4.__ViewGoldenComponent0__pipe_identity_0 = t6;
       else
-        H.throwExpression(H.LateError$fieldAI(_s16_));
-      t6 = t4.__ViewGoldenComponent0__pipe_identity_0;
-      if (t6 == null)
-        t6 = H.throwExpression(H.LateError$fieldNI(_s16_));
+        H.throwExpression(H.LateError$fieldAI("_pipe_identity_0"));
       t7 = type$.Object;
       t6 = A.pureProxy1(t6.get$transform(t6), t7, t7);
       if (t4.__ViewGoldenComponent0__pipe_identity_0_0 == null)
         t4.__ViewGoldenComponent0__pipe_identity_0_0 = t6;
       else
         H.throwExpression(H.LateError$fieldAI("_pipe_identity_0_0"));
+      t6 = new L.ConcatPurePipe();
       if (t4.__ViewGoldenComponent0__pipe_concat_1 == null)
-        t4.__ViewGoldenComponent0__pipe_concat_1 = new L.ConcatPurePipe();
+        t4.__ViewGoldenComponent0__pipe_concat_1 = t6;
       else
-        H.throwExpression(H.LateError$fieldAI(_s14_));
-      t6 = t4.__ViewGoldenComponent0__pipe_concat_1;
-      if (t6 == null)
-        t6 = H.throwExpression(H.LateError$fieldNI(_s14_));
+        H.throwExpression(H.LateError$fieldAI("_pipe_concat_1"));
       t8 = type$.String;
       t6 = A.pureProxy2(t6.get$transform(t6), t8, t8, t8);
       if (t4.__ViewGoldenComponent0__pipe_concat_1_0 == null)
         t4.__ViewGoldenComponent0__pipe_concat_1_0 = t6;
       else
         H.throwExpression(H.LateError$fieldAI("_pipe_concat_1_0"));
+      t6 = new L.MergePurePipe();
       if (t4.__ViewGoldenComponent0__pipe_merge_2 == null)
-        t4.__ViewGoldenComponent0__pipe_merge_2 = new L.MergePurePipe();
+        t4.__ViewGoldenComponent0__pipe_merge_2 = t6;
       else
-        H.throwExpression(H.LateError$fieldAI(_s13_));
-      t6 = t4.__ViewGoldenComponent0__pipe_merge_2;
-      if (t6 == null)
-        t6 = H.throwExpression(H.LateError$fieldNI(_s13_));
+        H.throwExpression(H.LateError$fieldAI("_pipe_merge_2"));
       t9 = type$.dynamic;
       t9 = A.pureProxy2(H.instantiate1(t6.get$transform(t6), t9), type$.List_dynamic, t9, t9);
       if (t4.__ViewGoldenComponent0__pipe_merge_2_0 == null)
         t4.__ViewGoldenComponent0__pipe_merge_2_0 = t9;
       else
         H.throwExpression(H.LateError$fieldAI("_pipe_merge_2_0"));
+      t6 = new L.TypedPurePipe();
       if (t4.__ViewGoldenComponent0__pipe_typed_3 == null)
-        t4.__ViewGoldenComponent0__pipe_typed_3 = new L.TypedPurePipe();
+        t4.__ViewGoldenComponent0__pipe_typed_3 = t6;
       else
-        H.throwExpression(H.LateError$fieldAI(_s13_0));
-      t6 = t4.__ViewGoldenComponent0__pipe_typed_3;
-      if (t6 == null)
-        t6 = H.throwExpression(H.LateError$fieldNI(_s13_0));
-      t8 = A.pureProxy2(t6.get$transform(t6), type$.Map_String_int, t8, type$.int);
+        H.throwExpression(H.LateError$fieldAI("_pipe_typed_3"));
+      t6 = A.pureProxy2(t6.get$transform(t6), type$.Map_String_int, t8, type$.int);
       if (t4.__ViewGoldenComponent0__pipe_typed_3_0 == null)
-        t4.__ViewGoldenComponent0__pipe_typed_3_0 = t8;
+        t4.__ViewGoldenComponent0__pipe_typed_3_0 = t6;
       else
         H.throwExpression(H.LateError$fieldAI("_pipe_typed_3_0"));
+      t6 = new L.PureLifecyclePipe();
       if (t4.__ViewGoldenComponent0__pipe_pureLifecycle_4 == null)
-        t4.__ViewGoldenComponent0__pipe_pureLifecycle_4 = new L.PureLifecyclePipe();
+        t4.__ViewGoldenComponent0__pipe_pureLifecycle_4 = t6;
       else
-        H.throwExpression(H.LateError$fieldAI(_s21_));
-      t6 = t4.__ViewGoldenComponent0__pipe_pureLifecycle_4;
-      if (t6 == null)
-        t6 = H.throwExpression(H.LateError$fieldNI(_s21_));
-      t7 = A.pureProxy1(t6.get$transform(t6), t7, t7);
+        H.throwExpression(H.LateError$fieldAI("_pipe_pureLifecycle_4"));
+      t6 = A.pureProxy1(t6.get$transform(t6), t7, t7);
       if (t4.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 == null)
-        t4.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = t7;
+        t4.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = t6;
       else
         H.throwExpression(H.LateError$fieldAI("_pipe_pureLifecycle_4_0"));
       if (t4.__ViewGoldenComponent0__pipe_time_5 == null)
