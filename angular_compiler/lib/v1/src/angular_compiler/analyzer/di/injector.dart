@@ -92,9 +92,10 @@ class InjectorReader {
   @alwaysThrows
   void _throwFactoryProvider(DartObject context) {
     throw BuildError.forElement(
-        field,
-        'Invalid provider ($context): an explicit value of `null` was passed in '
-        'where a function is expected.');
+      field,
+      'Invalid provider ($context): an explicit value of `${context.type}` '
+      'was passed in where a function is expected.',
+    );
   }
 
   /// Providers that are part of the provided list of the annotation.
@@ -127,6 +128,8 @@ class InjectorReader {
     } on NullTokenException catch (e) {
       _throwParseError(e.constant);
     } on NullFactoryException catch (e) {
+      _throwFactoryProvider(e.constant);
+    } on InvalidFactoryException catch (e) {
       _throwFactoryProvider(e.constant);
     } on FormatException catch (e) {
       _throwParseError(annotation.objectValue, e.message);

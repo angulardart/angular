@@ -155,6 +155,9 @@ class ProviderReader {
   ) {
     final objectValue = provider.read('useFactory').objectValue;
     final factoryElement = objectValue.toFunctionValue();
+    if (factoryElement == null) {
+      throw InvalidFactoryException(objectValue);
+    }
     final manualDeps = provider.read('deps');
     return UseFactoryProviderElement(
       token,
@@ -357,10 +360,18 @@ class NullTokenException implements Exception {
 
 /// Thrown when a value of `null` is read for `FactoryProvider`.
 class NullFactoryException implements Exception {
-  /// Constant whose `.token` property was resolved to `null`.
+  /// Constant whose `useFactory` property was resolved to `null`.
   final DartObject constant;
 
   const NullFactoryException(this.constant);
+}
+
+/// Thrown when a non-factory value is attached to a `FactoryProvider`.
+class InvalidFactoryException implements Exception {
+  /// Constant whose `useFactory` was not a factory function.
+  final DartObject constant;
+
+  const InvalidFactoryException(this.constant);
 }
 
 class UnsupportedProviderException implements Exception {
