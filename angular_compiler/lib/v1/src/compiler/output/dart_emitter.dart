@@ -140,7 +140,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (stmt.hasModifier(o.StmtModifier.Late)) {
       var modifier = 'late';
       if (stmt.hasModifier(o.StmtModifier.Final)) {
-        modifier = '${modifier} final';
+        modifier = '$modifier final';
       }
       if (!emitNullSafeSyntax) {
         modifier = '/*$modifier*/ ';
@@ -233,7 +233,7 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
     if (field.hasModifier(o.StmtModifier.Late)) {
       var modifier = 'late';
       if (field.hasModifier(o.StmtModifier.Final)) {
-        modifier = '${modifier} final';
+        modifier = '$modifier final';
       }
       if (!emitNullSafeSyntax) {
         modifier = '/*$modifier*/ ';

@@ -362,7 +362,7 @@ void _assertGlobalSingletonService(Iterable<Provider<void>> providers) {
       // Error message copied from .../cli/messages/messages.dart to avoid
       // circular dependency.
       throw UnsupportedError(
-          '"${tokenName}" is an app-wide, singleton service provided by the '
+          '"$tokenName" is an app-wide, singleton service provided by the '
           'framework that cannot be overridden or manually provided.\n'
           '\n'
           'If you are providing this service to fix a missing provider error, '

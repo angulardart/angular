@@ -160,7 +160,7 @@ class Unparser implements AstVisitor<void, String> {
     if (value is String) {
       sb.write('"${value.replaceAll(Unparser._quoteRegExp, '"')}"');
     } else {
-      sb.write('${value}');
+      sb.write('$value');
     }
   }
 

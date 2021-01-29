@@ -119,9 +119,9 @@ class _FailedAnalysisError extends Error {
   @override
   String toString() {
     if (_parseResult.errors.isEmpty) {
-      return 'Library could not be loaded. Source:\n\n```\n${_dartSource}\n```';
+      return 'Library could not be loaded. Source:\n\n```\n$_dartSource\n```';
     }
     final parseErrors = _parseResult.errors.join('\n  -');
-    return 'Library could not be loaded. Errors:\n\n  - ${parseErrors}';
+    return 'Library could not be loaded. Errors:\n\n  - $parseErrors';
   }
 }

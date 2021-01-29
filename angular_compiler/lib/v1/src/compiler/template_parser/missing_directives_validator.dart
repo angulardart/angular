@@ -57,7 +57,7 @@ class MissingDirectiveValidator
       CompileContext.current.reportAndRecover(
         BuildError.forSourceSpan(
           ast.sourceSpan,
-          "Can't find '<${elementName}>'. Please check that the spelling "
+          "Can't find '<$elementName>'. Please check that the spelling "
           'is correct, and that the intended component is included in the '
           "host component's list of directives. "
           'See more details go/skipschemavalidationfor',

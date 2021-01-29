@@ -261,6 +261,6 @@ class OpaqueTokenElement implements TokenElement {
 
   @override
   String toString() {
-    return '${classUrl} {$identifier:${typeUrl}}';
+    return '$classUrl {$identifier:$typeUrl}';
   }
 }

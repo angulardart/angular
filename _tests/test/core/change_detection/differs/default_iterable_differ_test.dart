@@ -401,7 +401,7 @@ class ItemWithId {
   ItemWithId(this.id);
   @override
   String toString() {
-    return '{id: ${id}}';
+    return '{id: $id}';
   }
 }
 
@@ -411,7 +411,7 @@ class ComplexItem {
   ComplexItem(this.id, this.color);
   @override
   String toString() {
-    return '{id: ${id}, color: ${color}}';
+    return '{id: $id, color: $color}';
   }
 }
 

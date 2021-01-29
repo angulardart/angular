@@ -36,7 +36,7 @@ class AstExceptionHandler extends RecoveringExceptionHandler {
           e.errorCode.message,
         ),
       ),
-      'Errors in ${_sourceUrl} while compiling component $_directiveName',
+      'Errors in $_sourceUrl while compiling component $_directiveName',
     );
   }
 }
