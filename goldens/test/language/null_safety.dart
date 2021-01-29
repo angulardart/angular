@@ -9,8 +9,8 @@ void main() {
     ..initLateFields()
     ..accessLateFields();
 
-  ClassWithNullableInitializer()..accessLateField();
-  ClassWithLateFinalInitializer()..accessLateField();
+  ClassWithNullableInitializer().accessLateField();
+  ClassWithLateFinalInitializer().accessLateField();
 
   var queue = <Foo>[];
   funcWithNullableLocal(queue);
