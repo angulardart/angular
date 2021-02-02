@@ -54,6 +54,25 @@ void main() {
       );
     });
 
+    test('@ContentChildren, when nested with a #referenced child', () async {
+      fixture = await NgTestBed(
+        ng.createTestReferencedNgForReorderContentChildrenFactory(),
+      ).create(
+        beforeChangeDetection: (c) => c.items = [1, 2, 3],
+      );
+
+      expect(
+        fixture.assertOnlyInstance.children!.map((h) => h.text),
+        ['1', '2', '3'],
+      );
+      await forceReorder132();
+      expect(
+        fixture.assertOnlyInstance.children!.map((h) => h.text),
+        // TODO(b/129297484): Should be "['1', '3', '2']".
+        ['1', '2', '3'],
+      );
+    });
+
     test('@ViewChildren', () async {
       fixture = await NgTestBed(
         ng.createTestNgForReorderViewChildrenFactory(),
@@ -87,6 +106,25 @@ void main() {
       expect(
         fixture.assertOnlyInstance.children!.map((h) => h.text),
         ['1', '3', '2'],
+      );
+    });
+
+    test('@ViewChildren, when nested with a #referenced child', () async {
+      fixture = await NgTestBed(
+        ng.createTestReferencedNgForReorderViewChildrenFactory(),
+      ).create(
+        beforeChangeDetection: (c) => c.items = [1, 2, 3],
+      );
+
+      expect(
+        fixture.assertOnlyInstance.children!.map((h) => h.text),
+        ['1', '2', '3'],
+      );
+      await forceReorder132();
+      expect(
+        fixture.assertOnlyInstance.children!.map((h) => h.text),
+        // TODO(b/129297484): Should be "['1', '3', '2']".
+        ['1', '2', '3'],
       );
     });
   });
@@ -129,18 +167,42 @@ class TestNgForReorderContentChildren extends TestNgForBase {
     NgIf,
   ],
   template: '''
-    <ng-container *ngIf="true">
-      <content-projected-child>
-        <ul>
-          <li #listItem *ngFor="let i of items">
-            <ng-container *ngIf="true">{{i}}</ng-container>
-          </li>
-        </ul>
-      </content-projected-child>
-    </ng-container>
+    <content-projected-child>
+      <ul>
+        <li #listItem *ngFor="let i of items">
+          <ng-container *ngIf="true">{{i}}</ng-container>
+        </li>
+      </ul>
+    </content-projected-child>
   ''',
 )
 class TestNestedNgForReorderContentChildren extends TestNgForBase {
+  @ViewChild(ContentProjectedChild)
+  ContentProjectedChild? child;
+
+  @override
+  List<HtmlElement>? get children => child!.children;
+}
+
+@Component(
+  selector: 'test-ng-for-reorder-content',
+  directives: [
+    ContentProjectedChild,
+    NgFor,
+    NgIf,
+  ],
+  template: '''
+    <content-projected-child>
+      <ul>
+        <li *ngFor="let i of items">
+          <!-- Note that the #listItem reference moves below -->
+          <span #listItem *ngIf="true">{{i}}</span>
+        </li>
+      </ul>
+    </content-projected-child>
+  ''',
+)
+class TestReferencedNgForReorderContentChildren extends TestNgForBase {
   @ViewChild(ContentProjectedChild)
   ContentProjectedChild? child;
 
@@ -181,7 +243,7 @@ class TestNgForReorderViewChildren extends TestNgForBase {
     NgIf,
   ],
   template: '''
-    <ul *ngIf="true">
+    <ul>
       <li #listItem *ngFor="let i of items">
         <span *ngIf="true">{{i}}</span>
       </li>
@@ -189,6 +251,26 @@ class TestNgForReorderViewChildren extends TestNgForBase {
   ''',
 )
 class TestNestedNgForReorderViewChildren extends TestNgForBase {
+  @ViewChildren('listItem')
+  @override
+  List<HtmlElement>? children;
+}
+
+@Component(
+  selector: 'test-ng-for-reorder-view',
+  directives: [
+    NgFor,
+    NgIf,
+  ],
+  template: '''
+    <ul>
+      <li *ngFor="let i of items">
+        <span #listItem *ngIf="true">{{i}}</span>
+      </li>
+    </ul>
+  ''',
+)
+class TestReferencedNgForReorderViewChildren extends TestNgForBase {
   @ViewChildren('listItem')
   @override
   List<HtmlElement>? children;
