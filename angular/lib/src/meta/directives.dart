@@ -367,6 +367,11 @@ abstract class _Query {
 /// ```
 ///
 /// See [ViewChildren] for a full documentation of parameters and more examples.
+///
+/// **WARNING**: There is a known issue (b/129297484) where, when used in
+/// combination with an `NgFor` (or a custom directive that supports moving
+/// embedded views) this field or setter may _not_ be updated. For details see
+/// go/angular-dart/dev/template-queries.
 @Target({
   TargetKind.field,
   TargetKind.setter,
@@ -588,6 +593,11 @@ abstract class _ViewQuery extends _Query {
 /// writing a custom structural directive (like `*ngIf`) that changes the
 /// structure of the DOM in custom ways will not work properly with queries and
 /// could cause runtime type errors.
+///
+/// **WARNING**: There is a known issue (b/129297484) where, when used in
+/// combination with an `NgFor` (or a custom directive that supports moving
+/// embedded views) this field or setter may _not_ be updated. For details see
+/// go/angular-dart/dev/template-queries.
 @Target({
   TargetKind.field,
   TargetKind.setter,
