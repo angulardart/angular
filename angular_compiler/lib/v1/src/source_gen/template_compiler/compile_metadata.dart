@@ -95,9 +95,9 @@ class CompileTypeMetadataVisitor
   CompileProviderMetadata createProviderMetadata(DartObject provider) {
     // If `provider` is a type literal, then treat it as a `useClass` provider
     // with the class literal itself as the token.
-    if (provider.toTypeValue() != null) {
-      var element = provider.toTypeValue().element;
-      if (element is! ClassElement) {
+    var type = provider.toTypeValue();
+    if (type != null) {
+      if (type is! InterfaceType) {
         logWarning(BuildError.forAnnotation(
           _indexedAnnotation.annotation,
           'Expected to find class in provider list, but instead '
@@ -105,7 +105,7 @@ class CompileTypeMetadataVisitor
         ).toString());
         return null;
       }
-      var metadata = visitClassElement(element as ClassElement);
+      var metadata = visitClassElement((type as InterfaceType).element);
       if (metadata == null) {
         // Was skipped.
         return null;
@@ -127,12 +127,9 @@ class CompileTypeMetadataVisitor
       return null;
     }
     final providerType = inferProviderType(provider, token);
-    final providerTypeElement = providerType?.element;
-    final providerTypeArgument = providerTypeElement is ClassElement
-        ? _getCompileTypeMetadata(providerTypeElement,
-            typeArguments: providerType is ParameterizedType
-                ? providerType.typeArguments
-                : const [])
+    final providerTypeArgument = providerType is InterfaceType
+        ? _getCompileTypeMetadata(providerType.element,
+            typeArguments: providerType.typeArguments)
         : null;
 
     final tokenMetadata = _token(token);
@@ -207,8 +204,7 @@ class CompileTypeMetadataVisitor
       } else {
         CompileContext.current.reportAndRecover(BuildError.forAnnotation(
           _indexedAnnotation.annotation,
-          'Provider.useClass can only be used with a class, but found '
-          '${type.element}',
+          'Provider.useClass can only be used with a class, but found $type',
         ));
         return null;
       }
@@ -500,7 +496,15 @@ class CompileTypeMetadataVisitor
     // DartType for `<type> Function(...)` constructs, but the field `element`
     // is missing. This checks is preventing a `null` value is passed to
     // `moduleUrl()`.
-    if (type.element == null) {
+    Element element = type.aliasElement;
+    if (element == null) {
+      if (type is DynamicType) {
+        element = type.element;
+      } else if (type is InterfaceType) {
+        element = type.element;
+      }
+    }
+    if (element == null) {
       var typeStr = type.getDisplayString(withNullability: false);
       var source = libraryIdentifier.isNotEmpty ? '$libraryIdentifier\n' : '';
       throw BuildError.withoutContext(
@@ -510,7 +514,7 @@ class CompileTypeMetadataVisitor
       );
     }
     return CompileIdentifierMetadata(
-        name: getTypeName(type), moduleUrl: moduleUrl(type.element));
+        name: getTypeName(type), moduleUrl: moduleUrl(element));
   }
 
   o.Expression _useValueExpression(DartObject token) {

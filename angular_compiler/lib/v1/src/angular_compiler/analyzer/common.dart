@@ -5,27 +5,36 @@ import 'package:analyzer/src/dart/element/type.dart';
 import 'package:source_gen/src/utils.dart';
 
 /// Returns the import URL for [type].
-String getTypeImport(DartType type) =>
-    normalizeUrl(type.element.library.source.uri).toString();
+String getTypeImport(DartType type) {
+  var aliasElement = type.aliasElement;
+  if (aliasElement != null) {
+    return normalizeUrl(aliasElement.library.source.uri).toString();
+  }
+  if (type is DynamicType) {
+    return 'dart:core';
+  }
+  if (type is InterfaceType) {
+    return normalizeUrl(type.element.library.source.uri).toString();
+  }
+  throw UnimplementedError('(${type.runtimeType}) $type');
+}
 
 /// Forwards and backwards-compatible method of getting the "name" of [type].
 String getTypeName(DartType type) {
-  // Crux of the issue is that the latest dart analyzer/kernel/frontend does not
-  // retain the name of a typedef, for example:
-  //   typedef void InterestingFn();
-  //
-  // Is retained as "typedef InterestingFn = void Function()", where the
-  // DartType itself no longer has a "name" property (it always returns null).
-  if (type is FunctionType) {
-    final element = type.element;
-    if (element is FunctionTypeAliasElement) {
-      return element.name;
-    }
-    if (element is GenericFunctionTypeElement) {
-      return element.enclosingElement.name;
-    }
+  var aliasElement = type.aliasElement;
+  if (aliasElement != null) {
+    return aliasElement.name;
   }
-  return type.name;
+  if (type is DynamicType) {
+    return 'dynamic';
+  }
+  if (type is FunctionType) {
+    return null;
+  }
+  if (type is InterfaceType) {
+    return type.element.name;
+  }
+  throw UnimplementedError('(${type.runtimeType}) $type');
 }
 
 /// Returns the bound [DartType] from the instance [object].

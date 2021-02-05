@@ -40,21 +40,29 @@ TypeLink linkTypeOf(DartType type) {
   // that does not come from a typedef, it is the type of a top-level function
   // and that type was not inferred previously by the analyzer. A more proper
   // fix from Angular would be to support function types (for now dynamic only).
-  if (type.isDynamic || type.element?.library == null) {
+  if (type.isDynamic) {
     return TypeLink.$dynamic;
   }
   type = _resolveBounds(type);
   // Return dynamic type (no type found) after _resolveBounds.
   // Note: with non_nullable, library is never null: we need to check its name.
-  if (type.element.library == null || getTypeName(type) == null) {
+  if (getTypeName(type) == null) {
     return TypeLink.$dynamic;
   }
+
+  var typeArguments = type.aliasArguments;
+  if (typeArguments == null) {
+    if (type is InterfaceType) {
+      typeArguments = type.typeArguments;
+    } else {
+      typeArguments = const <DartType>[];
+    }
+  }
+
   return TypeLink(
     getTypeName(type),
     getTypeImport(type),
-    generics: type is ParameterizedType
-        ? type.typeArguments.map(linkTypeOf).toList()
-        : const [],
+    generics: typeArguments.map(linkTypeOf).toList(),
     isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
   );
 }

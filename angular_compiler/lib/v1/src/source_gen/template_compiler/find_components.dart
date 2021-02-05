@@ -335,13 +335,19 @@ class _ComponentVisitor
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
-              final typeArguments = resolvedType is ParameterizedType
-                  ? resolvedType.typeArguments.map(fromDartType).toList()
-                  : const <o.OutputType>[];
+              var typeArguments = resolvedType.aliasArguments;
+              if (typeArguments == null) {
+                if (resolvedType is InterfaceType) {
+                  typeArguments = resolvedType.typeArguments;
+                } else {
+                  typeArguments = const <DartType>[];
+                }
+              }
               _inputTypes[element.displayName] = CompileTypeMetadata(
-                  moduleUrl: moduleUrl(element),
-                  name: typeName,
-                  typeArguments: typeArguments);
+                moduleUrl: moduleUrl(element),
+                name: typeName,
+                typeArguments: typeArguments.map(fromDartType).toList(),
+              );
             }
           }
         } else {
