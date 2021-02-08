@@ -64,7 +64,7 @@ Future<ElementDeclarationResult> _resolvedClassResult(
     assetId,
     allowSyntaxErrors: true,
   );
-  final result = await element.session.getResolvedLibraryByElement(library);
+  final result = await resolver.getResolvedLibraryByElement(library);
   if (result.state == ResultState.NOT_A_FILE) {
     // We don't have access to source information in summarized libraries,
     // but another build step will likely emit the root cause errors.
