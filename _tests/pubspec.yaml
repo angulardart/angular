@@ -43,3 +43,13 @@ dependency_overrides:
     path: ../angular_router
   angular_test:
     path: ../angular_test
+  build:
+    git:
+      url: https://github.com/lukaszkolodziejczyk/build.git
+      ref: get-resolved-library
+      path: build
+  build_resolvers:
+    git:
+      url: https://github.com/lukaszkolodziejczyk/build.git
+      ref: get-resolved-library
+      path: build_resolvers

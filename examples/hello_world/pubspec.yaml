@@ -21,3 +21,13 @@ dependency_overrides:
     path: ../../angular_ast
   angular_compiler:
     path: ../../angular_compiler
+  build:
+    git:
+      url: https://github.com/lukaszkolodziejczyk/build.git
+      ref: get-resolved-library
+      path: build
+  build_resolvers:
+    git:
+      url: https://github.com/lukaszkolodziejczyk/build.git
+      ref: get-resolved-library
+      path: build_resolvers
