@@ -24,7 +24,7 @@ void main() {
       }
       """,
       errors: [
-        contains('Null-safety is not supported for AngularDart.'),
+        contains('Null-safety is not '),
       ],
     );
   }, tags: 'fails-on-ci');
