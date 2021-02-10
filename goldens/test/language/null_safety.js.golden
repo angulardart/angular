@@ -2043,7 +2043,7 @@
       if (typeof receiver == "number") {
         if (Math.floor(receiver) == receiver)
           return J.JSInt.prototype;
-        return J.JSDouble.prototype;
+        return J.JSNumNotInt.prototype;
       }
       if (typeof receiver == "string")
         return J.JSString.prototype;
@@ -2098,7 +2098,7 @@
     },
     JSInt: function JSInt() {
     },
-    JSDouble: function JSDouble() {
+    JSNumNotInt: function JSNumNotInt() {
     },
     JSString: function JSString() {
     }
@@ -2361,7 +2361,7 @@
     }
   };
   J.JSInt.prototype = {};
-  J.JSDouble.prototype = {};
+  J.JSNumNotInt.prototype = {};
   J.JSString.prototype = {
     $add: function(receiver, other) {
       return receiver + other;
@@ -2661,7 +2661,7 @@
     _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, H.Closure, H.Rti, H._FunctionParameters, P.Null, P.StringBuffer, R.ClassWithNullableFields, R.ClassWithLateFields, R.ClassWithLateFinalFields, R.ClassWithNullableInitializer, R.ClassWithLateFinalInitializer, R.Foo]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JSArray, J.JSNumber, J.JSString]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
-    _inheritMany(J.JSNumber, [J.JSInt, J.JSDouble]);
+    _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
     _inheritMany(P.Error, [H.LateError, H.RuntimeError, H._Error, P.AssertionError, P.NullThrownError, P.ArgumentError, P.UnsupportedError, P.ConcurrentModificationError, P.CyclicInitializationError]);
     _inheritMany(H.Closure, [H.TearOffClosure, R.funcWithNullableLocal_onCallback, R.funcWithLateFinalLocal__foo_set, R.funcWithLateFinalLocal__foo_get, R.funcWithLateFinalLocal_onCallback]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
