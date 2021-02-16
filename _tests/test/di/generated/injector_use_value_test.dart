@@ -64,9 +64,17 @@ void main() {
       expect(fn('a'), 'a');
     });
 
-    test('raw string', () {
-      final raw = injector.provideToken(stringRawToken);
-      expect(raw, r'$5.00 USD');
+    test('various strings', () {
+      final s1 = injector.provideToken(stringRawToken);
+      expect(s1, r'$5.00 USD');
+      final s2 = injector.provideToken(singleQuoteToken);
+      expect(s2, "It's Mine. My Own. My Precious.");
+      final s3 = injector.provideToken(escapeTokenToken);
+      expect(s3, 'A new\nline');
+      final s4 = injector.provideToken(unicodeToken);
+      expect(s4, '\u{0000}');
+      final s5 = injector.provideToken(rarerEscapeToken);
+      expect(s5, '\t\r\\');
     });
   });
 }
@@ -113,7 +121,23 @@ const stringIdentityToken = OpaqueToken<StringIdentityFn>();
   ValueProvider.forToken(
     stringRawToken,
     r'$5.00 USD',
-  )
+  ),
+  ValueProvider.forToken(
+    singleQuoteToken,
+    "It's Mine. My Own. My Precious.",
+  ),
+  ValueProvider.forToken(
+    escapeTokenToken,
+    'A new\nline',
+  ),
+  ValueProvider.forToken(
+    unicodeToken,
+    '\u{0000}',
+  ),
+  ValueProvider.forToken(
+    rarerEscapeToken,
+    '\t\r\\',
+  ),
 ])
 final InjectorFactory example = ng.example$Injector;
 
@@ -164,3 +188,7 @@ class StaticClass {
 }
 
 const stringRawToken = OpaqueToken<String>('stringRawToken');
+const singleQuoteToken = OpaqueToken<String>('singleQuoteToken');
+const escapeTokenToken = OpaqueToken<String>('escapeTokenToken');
+const unicodeToken = OpaqueToken<String>('unicodeToken');
+const rarerEscapeToken = OpaqueToken<String>('rarerEscapeToken');

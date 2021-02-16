@@ -89,17 +89,17 @@ class _Injector$doGenerate extends _i1.HierarchicalInjector implements _i1.Injec
 
   Object _getObject$0() => _field0 ??= _i2.createExampleOptional(provideUntyped(_i2.Example, null));
   List<String> _getList$1() => _field1 ??= _i2.createListOfString();
-  String _getString$2() => r'ABC123';
-  Object _getObject$3() => const {r'instanceOfExample': _i2.Example(), _i2.instanceOfExamplePrime: r'instanceOfExamplePrime'};
+  String _getString$2() => 'ABC123';
+  Object _getObject$3() => const {'instanceOfExample': _i2.Example(), _i2.instanceOfExamplePrime: 'instanceOfExamplePrime'};
   Object _getObject$4() => const [_i2.Example(), _i2.instanceOfExamplePrime, _i2.ExampleTheta.instance];
   Object _getObject$5() => _i2.ExampleTheta.instance;
   Object _getObject$6() => _i2.instanceOfExamplePrime;
   Object _getObject$7() => const _i2.Example();
-  String _getString$8() => r'String';
-  Object _getObject$9() => r'Object';
+  String _getString$8() => 'String';
+  Object _getObject$9() => 'Object';
   _i2.Example _getExample$10() => _field10 ??= _i2.Example();
-  String _getString$11() => r'A';
-  String _getString$12() => r'B';
+  String _getString$11() => 'A';
+  String _getString$12() => 'B';
   _i1.Injector _getInjector$13() => this;
   @override
   Object? injectFromSelfOptional(Object token, [Object? orElse = _i1.throwIfNotFound]) {

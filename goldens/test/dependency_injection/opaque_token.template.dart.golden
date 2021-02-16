@@ -163,15 +163,15 @@ _i1.Injector goldenInjector$Injector(_i1.Injector parent) => _Injector$goldenInj
 class _Injector$goldenInjector extends _i1.HierarchicalInjector implements _i1.Injector {
   _Injector$goldenInjector._(_i1.Injector parent) : super(parent);
 
-  String _getString$0() => r'customToken: Hello World';
-  String _getString$1() => r'genericTyped: Hello World';
-  Object _getObject$2() => r'untypedToken: Hello World';
-  Object _getObject$3() => r'untypedMulti: A';
-  Object _getObject$4() => r'untypedMulti: B';
-  String _getString$5() => r'untypedMulti: A';
-  String _getString$6() => r'untypedMulti: B';
-  String _getString$7() => r'customMulti: A';
-  String _getString$8() => r'customMulti: B';
+  String _getString$0() => 'customToken: Hello World';
+  String _getString$1() => 'genericTyped: Hello World';
+  Object _getObject$2() => 'untypedToken: Hello World';
+  Object _getObject$3() => 'untypedMulti: A';
+  Object _getObject$4() => 'untypedMulti: B';
+  String _getString$5() => 'untypedMulti: A';
+  String _getString$6() => 'untypedMulti: B';
+  String _getString$7() => 'customMulti: A';
+  String _getString$8() => 'customMulti: B';
   _i1.Injector _getInjector$9() => this;
   @override
   Object? injectFromSelfOptional(Object token, [Object? orElse = _i1.throwIfNotFound]) {
