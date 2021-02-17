@@ -326,7 +326,7 @@ class InjectorReader {
           'While attempting to resolve a constant value for a provider '
           '(token = ${provider.token}), there was no way to access '
           '$privateReference.\n\n'
-          'While it is synactically valid to write the expression, we are '
+          'While it is syntactically valid to write the expression, we are '
           'not able to refer to private references that are inaccessible from '
           'another library.\n\n'
           'Consider either making constructor(s) public, creating a static '
