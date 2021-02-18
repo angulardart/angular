@@ -154,7 +154,8 @@ class AngularAnalysisError extends AsyncBuildError {
           final sourceUrl = e.source.uri;
           final sourceContent = e.source.contents.data;
 
-          if (sourceContent.isEmpty) {
+          // TODO(b/180549869): remove the negative length check.
+          if (sourceContent.isEmpty || e.length.isNegative) {
             return SourceSpanMessageTuple(
                 SourceSpan(
                     SourceLocation(0, sourceUrl: sourceUrl, line: 0, column: 0),
