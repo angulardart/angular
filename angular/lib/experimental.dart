@@ -34,6 +34,7 @@ export 'src/meta.dart' show changeDetectionLink;
 /// ```
 ///
 /// **WARNING**: This API is not considered part of the stable API.
+@experimental
 Injector rootInjector(InjectorFactory userInjector) {
   return appInjector(userInjector);
 }
