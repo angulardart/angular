@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
-import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular/src/di/injector.dart';
 import 'package:angular/src/reflector.dart' as reflector;
 import 'package:angular_test/angular_test.dart';
@@ -655,17 +654,6 @@ void main() {
   });
 
   group('root Injector overrides', () {
-    test('rootLegacyInjector should provide a working SlowComponentLoader', () {
-      final appInjector = rootLegacyInjector((parent) => parent);
-
-      // Easiest way to tell is make sure its the same const instance.
-      expect(
-        appInjector.get(SlowComponentLoader), // ignore: deprecated_member_use
-        // ignore: deprecated_member_use
-        const SlowComponentLoader(ComponentLoader()),
-      );
-    });
-
     void _testOverrideExceptionHandler(Injector appInjector) {
       // Normally errors here are forwarded to the ExceptionHandler.
       //
@@ -680,17 +668,6 @@ void main() {
         const TypeMatcher<_IntentionalError>(),
       );
     }
-
-    // This is relied on by internal clients until we introduce a sharding API.
-    test('rootLegacyInjector should allow overriding ExceptionHandler', () {
-      _testOverrideExceptionHandler(
-        rootLegacyInjector((parent) {
-          return Injector.map({
-            ExceptionHandler: _CustomExceptionHandler(),
-          }, parent);
-        }),
-      );
-    });
 
     // This is relied on by internal clients until we introduce a sharding API.
     test('rootInjector should allow overriding ExceptionHandler', () {

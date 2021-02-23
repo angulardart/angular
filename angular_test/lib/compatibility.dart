@@ -8,7 +8,8 @@ library angular_test.compatibility;
 
 import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/experimental.dart';
+import 'package:angular/src/bootstrap/run.dart' show appInjector;
+import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 
 export 'src/frontend/bed.dart' show createDynamicFixture, createDynamicTestBed;
 export 'src/frontend/fixture.dart' show injectFromFixture;
@@ -30,6 +31,32 @@ Injector createTestInjector(List<Object> providers) {
   // parent to the user-supplied providers.
   return ReflectiveInjector.resolveAndCreate(
     providers,
-    rootLegacyInjector((parent) => parent),
+    _rootLegacyInjector((parent) => parent),
   );
+}
+
+/// Create a root (legacy, with `SlowComponentLoader`) application [Injector].
+///
+/// Requires [userInjector] to provide app-level services or overrides:
+/// ```dart
+/// main() {
+///   var injector = rootLegacyInjector((parent) {
+///     return Injector.map({ /* ... */ }, parent);
+///   });
+/// }
+/// ```
+///
+/// This method was moved from package:angular/experimental.dart after
+/// [createTestInjector] became its sole remaining user.
+Injector _rootLegacyInjector(InjectorFactory userInjector) {
+  // Create a new appInjector, using wrappedUserInjector for provided services.
+  // This includes services that will need to overwrite default services, such
+  // as ExceptionHandler.
+  return appInjector((parent) {
+    return Injector.map({
+      SlowComponentLoader: const SlowComponentLoader(
+        ComponentLoader(),
+      ),
+    }, userInjector(parent));
+  });
 }

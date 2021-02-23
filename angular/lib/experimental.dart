@@ -12,7 +12,6 @@ import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
 
 import 'src/bootstrap/run.dart' show appInjector;
-import 'src/core/linker/dynamic_component_loader.dart';
 import 'src/runtime/dom_helpers.dart';
 
 export 'src/common/directives/ng_for_identity.dart' show NgForIdentity;
@@ -37,32 +36,6 @@ export 'src/meta.dart' show changeDetectionLink;
 @experimental
 Injector rootInjector(InjectorFactory userInjector) {
   return appInjector(userInjector);
-}
-
-/// Create a root (legacy, with `SlowComponentLoader`) application [Injector].
-///
-/// Requires [userInjector] to provide app-level services or overrides:
-/// ```dart
-/// main() {
-///   var injector = rootLegacyInjector((parent) {
-///     return Injector.map({ /* ... */ }, parent);
-///   });
-/// }
-/// ```
-///
-/// **WARNING**: This API is not considered part of the stable API.
-@experimental
-Injector rootLegacyInjector(InjectorFactory userInjector) {
-  // Create a new appInjector, using wrappedUserInjector for provided services.
-  // This includes services that will need to overwrite default services, such
-  // as ExceptionHandler.
-  return appInjector((parent) {
-    return Injector.map({
-      SlowComponentLoader: const SlowComponentLoader(
-        ComponentLoader(),
-      ),
-    }, userInjector(parent));
-  });
 }
 
 /// Returns `true` when AngularDart has modified the DOM.
