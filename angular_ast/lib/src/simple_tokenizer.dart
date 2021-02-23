@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:charcode/charcode.dart';
 import 'package:meta/meta.dart';
 import 'package:string_scanner/string_scanner.dart';

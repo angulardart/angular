@@ -1,3 +1,5 @@
+// @dart=2.9
+
 part of angular_ast.src.recovery_protocol.recovery_protocol;
 
 class NgAnalyzerRecoveryProtocol extends RecoveryProtocol {

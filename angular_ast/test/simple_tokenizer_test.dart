@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:angular_ast/src/simple_tokenizer.dart';
 import 'package:angular_ast/src/token/tokens.dart';

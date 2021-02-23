@@ -1,3 +1,5 @@
+// @dart=2.9
+
 library angular_ast.src.recovery_protocol.recovery_protocol;
 
 import '../parser/reader.dart';

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 export 'ast/attribute.dart' show AttributeAst, ParsedAttributeAst;
 export 'ast/close_element.dart' show CloseElementAst, ParsedCloseElementAst;
 export 'ast/comment.dart' show CommentAst;

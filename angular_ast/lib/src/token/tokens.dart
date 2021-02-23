@@ -1,3 +1,5 @@
+// @dart=2.9
+
 library angular_ast.src.token.tokens;
 
 import '../hash.dart';

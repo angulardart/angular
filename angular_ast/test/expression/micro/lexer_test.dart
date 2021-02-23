@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:angular_ast/src/expression/micro/lexer.dart';
 import 'package:angular_ast/src/expression/micro/token.dart';

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 /// Copied from `package:quiver/core.dart` to avoid a dependnecy on quiver.
 library angular_ast.src.hash;
 

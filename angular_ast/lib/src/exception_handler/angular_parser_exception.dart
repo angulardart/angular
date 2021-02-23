@@ -1,3 +1,5 @@
+// @dart=2.9
+
 part of 'exception_handler.dart';
 
 /// Exception class to be used in AngularAst parser.

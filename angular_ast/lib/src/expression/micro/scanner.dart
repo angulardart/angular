@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:string_scanner/string_scanner.dart';
 
 import '../../exception_handler/exception_handler.dart';

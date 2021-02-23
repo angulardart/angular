@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import '../../hash.dart';
 
 /// Represents a section of parsed text from an Angular micro expression.
