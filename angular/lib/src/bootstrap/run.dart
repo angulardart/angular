@@ -6,8 +6,7 @@ import 'package:angular/src/testability.dart';
 import '../core/app_host.dart';
 import '../core/application_ref.dart';
 import '../core/application_tokens.dart';
-import '../core/linker.dart'
-    show ComponentFactory, ComponentLoader, ComponentRef, SlowComponentLoader;
+import '../core/linker.dart' show ComponentFactory, ComponentRef;
 import '../core/linker/app_view_utils.dart';
 import '../core/linker/component_resolver.dart' show typeToFactory;
 import '../core/zone/ng_zone.dart';
@@ -199,7 +198,6 @@ Future<ComponentRef<T>> runAppAsync<T>(
 /// [initReflector] is no longer needed in your application. Specifically, using
 /// this method enables the use of the following deprecated APIs:
 /// * `ReflectiveInjector`
-/// * `SlowComponentLoader`
 ///
 /// ... if neither your app nor your dependencies requires these APIs, it is
 /// recommended to switch to [runApp] instead, which has significant code-size
@@ -218,13 +216,6 @@ ComponentRef<T> runAppLegacy<T>(
     createInjector: (parent) {
       return ReflectiveInjector.resolveAndCreate(
         [
-          // Avoids the need to annotate SlowComponentLoader with @Injectable(),
-          // which in turns avoids the need to support `initReflector()` within
-          // the Angular framework itself (which has tricky circular issues).
-          ValueProvider(
-            SlowComponentLoader,
-            SlowComponentLoader(ComponentLoader()),
-          ),
           createInjectorFromProviders,
         ],
         unsafeCast(parent),
@@ -252,13 +243,6 @@ Future<ComponentRef<T>> runAppLegacyAsync<T>(
     createInjector: (parent) {
       return ReflectiveInjector.resolveAndCreate(
         [
-          // Avoids the need to annotate SlowComponentLoader with @Injectable(),
-          // which in turns avoids the need to support `initReflector()` within
-          // the Angular framework itself (which has tricky circular issues).
-          ValueProvider(
-            SlowComponentLoader,
-            SlowComponentLoader(ComponentLoader()),
-          ),
           createInjectorFromProviders,
         ],
         unsafeCast(parent),

@@ -203,13 +203,7 @@ class NgTestBed<T> {
   }) {
     return NgTestBed<T>._(
       host: host,
-      // Otherwise _ThrowingSlowComponentLoader is used by default.
-      providers: const [
-        ValueProvider(
-          SlowComponentLoader,
-          SlowComponentLoader(ComponentLoader()),
-        ),
-      ],
+      providers: const [],
       stabilizer: watchAngularLifecycle ? _defaultStabilizers : _alwaysStable,
       rootInjector: rootInjector,
     );

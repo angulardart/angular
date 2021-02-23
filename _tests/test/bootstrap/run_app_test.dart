@@ -53,28 +53,6 @@ void main() {
     runInApp(() => HelloWorldComponent.doAsyncTaskAndThenRename('Universe'));
   }
 
-  /// Verifies that [SlowComponentLoader] is usable.
-  void verifySlowComponentLoaderIsUsable() {
-    final componentLoader = component.injector.provideType<SlowComponentLoader>(
-      SlowComponentLoader,
-    );
-    expect(
-      () => componentLoader.load(HelloWorldComponent, Injector.empty()),
-      returnsNormally,
-    );
-  }
-
-  /// Verifies that [SlowComponentLoader] is available but disabled.
-  void verifySlowComponentLoaderIsDisabled() {
-    final componentLoader = component.injector.provideType<SlowComponentLoader>(
-      SlowComponentLoader,
-    );
-    expect(
-      () => componentLoader.load(HelloWorldComponent, Injector.empty()),
-      throwsUnsupportedError,
-    );
-  }
-
   setUp(() {
     rootDomContainer = DivElement()..id = 'test-root-dom';
     rootDomContainer.append(Element.tag('hello-world'));
@@ -94,7 +72,6 @@ void main() {
     component = runApp(ng.createHelloWorldComponentFactory());
     verifyDomAndStyles();
     verifyTestability();
-    verifySlowComponentLoaderIsDisabled();
   });
 
   test('runApp should allow overriding ExceptionHandler', () async {
@@ -128,7 +105,6 @@ void main() {
     component = runAppLegacy<HelloWorldComponent>(HelloWorldComponent);
     verifyDomAndStyles();
     verifyTestability();
-    verifySlowComponentLoaderIsUsable();
   });
 
   test('runAppLegacyAsync should bootstrap from a Type', () async {
@@ -141,7 +117,6 @@ void main() {
       },
     );
     verifyDomAndStyles(innerText: 'Hello Async World!');
-    verifySlowComponentLoaderIsUsable();
   });
 
   test('ApplicationRef should be injectable in a user-application', () async {

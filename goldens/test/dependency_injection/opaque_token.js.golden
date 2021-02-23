@@ -4291,8 +4291,6 @@
       var t1 = new U._createRandomAppId_char(C.C__JSRandom);
       return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
     },
-    _ThrowingSlowComponentLoader: function _ThrowingSlowComponentLoader() {
-    },
     minimalApp_closure: function minimalApp_closure() {
     },
     _createRandomAppId_char: function _createRandomAppId_char(t0) {
@@ -8129,11 +8127,10 @@
   };
   P._SqlResultSetRowList_Interceptor_ListMixin.prototype = {};
   P._SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin.prototype = {};
-  U._ThrowingSlowComponentLoader.prototype = {};
   U.minimalApp_closure.prototype = {
     call$1: function($parent) {
       var t1 = type$.Object;
-      return M._MapInjector$(P.LinkedHashMap_LinkedHashMap$_literal([C.OpaqueToken_APP_ID, U._createRandomAppId(), C.Type_ExceptionHandler_qBE, C.C_ExceptionHandler, C.Type_ComponentLoader_7xV, C.C_ComponentLoader, C.Type_SlowComponentLoader_qxe, C.C__ThrowingSlowComponentLoader], t1, t1), $parent);
+      return M._MapInjector$(P.LinkedHashMap_LinkedHashMap$_literal([C.OpaqueToken_APP_ID, U._createRandomAppId(), C.Type_ExceptionHandler_qBE, C.C_ExceptionHandler, C.Type_ComponentLoader_7xV, C.C_ComponentLoader], t1, t1), $parent);
     },
     $signature: 8
   };
@@ -9139,7 +9136,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.Duration, P.StackOverflowError, P._Exception, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, U._ThrowingSlowComponentLoader, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.Duration, P.StackOverflowError, P._Exception, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.CssStyleValue, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -9508,7 +9505,6 @@
     C.C__Required = new H._Required();
     C.C__RootZone = new P._RootZone();
     C.C__StringStackTrace = new P._StringStackTrace();
-    C.C__ThrowingSlowComponentLoader = new U._ThrowingSlowComponentLoader();
     C.Duration_0 = new P.Duration(0);
     C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
     C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
@@ -9525,7 +9521,6 @@
     C.Type_ExceptionHandler_qBE = H.typeLiteral("ExceptionHandler");
     C.Type_Injector_aJC = H.typeLiteral("Injector");
     C.Type_NgZone_6ty = H.typeLiteral("NgZone");
-    C.Type_SlowComponentLoader_qxe = H.typeLiteral("SlowComponentLoader");
     C.Type_TestabilityRegistry_IMm = H.typeLiteral("TestabilityRegistry");
     C.Type_Testability_h8g = H.typeLiteral("Testability");
     C._RegisterBinaryZoneFunction_kGu = new P._RegisterBinaryZoneFunction(C.C__RootZone, P.async___rootRegisterBinaryCallback$closure());

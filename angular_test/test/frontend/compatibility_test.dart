@@ -2,6 +2,7 @@ import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:angular_test/compatibility.dart';
 

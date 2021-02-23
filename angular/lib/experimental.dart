@@ -12,6 +12,7 @@ import 'package:meta/meta.dart';
 import 'package:angular/angular.dart';
 
 import 'src/bootstrap/run.dart' show appInjector;
+import 'src/core/linker/dynamic_component_loader.dart';
 import 'src/runtime/dom_helpers.dart';
 
 export 'src/common/directives/ng_for_identity.dart' show NgForIdentity;

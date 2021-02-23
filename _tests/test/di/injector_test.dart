@@ -4,6 +4,7 @@ import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/experimental.dart';
+import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular/src/di/injector.dart';
 import 'package:angular/src/reflector.dart' as reflector;
 import 'package:angular_test/angular_test.dart';
@@ -662,18 +663,6 @@ void main() {
         appInjector.get(SlowComponentLoader), // ignore: deprecated_member_use
         // ignore: deprecated_member_use
         const SlowComponentLoader(ComponentLoader()),
-      );
-    });
-
-    test('rootInjector should provide a throwing SlowComponentLoader', () {
-      final appInjector = rootInjector((parent) => parent);
-
-      expect(
-        () => appInjector
-            // ignore: deprecated_member_use
-            .provideType<SlowComponentLoader>(SlowComponentLoader)
-            .load(ATypeThatShouldThrow, Injector.empty()),
-        throwsA(isA<UnsupportedError>()),
       );
     });
 
