@@ -226,11 +226,11 @@ class HumanizingTemplateAstVisitor
 
   @override
   String visitReference(ReferenceAst astNode, [_]) {
-    var identifier = '#${astNode.identifier}';
-    if (astNode.variable != null) {
-      return '$identifier="${astNode.variable}"';
+    var variable = '#${astNode.variable}';
+    if (astNode.identifier != null) {
+      return '$variable="${astNode.identifier}"';
     } else {
-      return identifier;
+      return variable;
     }
   }
 
