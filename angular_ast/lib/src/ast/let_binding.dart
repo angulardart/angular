@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -23,7 +21,7 @@ abstract class LetBindingAst implements TemplateAst {
 
   /// Create a new synthetic [LetBindingAst] that originated from [origin].
   factory LetBindingAst.from(
-    TemplateAst origin,
+    TemplateAst? origin,
     String name, [
     String value,
   ]) = _SyntheticLetBindingAst.from;
@@ -36,8 +34,8 @@ abstract class LetBindingAst implements TemplateAst {
     SourceFile sourceFile,
     NgToken prefixToken,
     NgToken elementDecoratorToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ]) = ParsedLetBindingAst;
 
   @override
@@ -48,7 +46,7 @@ abstract class LetBindingAst implements TemplateAst {
   int get hashCode => hash2(name, value);
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitLetBinding(this, context);
   }
 
@@ -56,7 +54,7 @@ abstract class LetBindingAst implements TemplateAst {
   String get name;
 
   /// Name of the value assigned to the variable.
-  String get value;
+  String? get value;
 
   @override
   String toString() {
@@ -86,11 +84,11 @@ class ParsedLetBindingAst extends TemplateAst
   /// [NgAttributeValueToken] that represents the value bound to the
   /// let- variable; may be `null` to have no value implying $implicit.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign; may be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedLetBindingAst(
     SourceFile sourceFile,
@@ -114,17 +112,17 @@ class ParsedLetBindingAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` if no value.
   @override
-  int get equalSignOffset => equalSignToken?.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of value starting at left quote; may be `null` to have no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of `let` prefix in `let-someVariable`.
   @override
@@ -132,7 +130,7 @@ class ParsedLetBindingAst extends TemplateAst
 
   /// There is no suffix token, always returns null.
   @override
-  int get suffixOffset => null;
+  int? get suffixOffset => null;
 }
 
 class _SyntheticLetBindingAst extends SyntheticTemplateAst with LetBindingAst {
@@ -140,12 +138,12 @@ class _SyntheticLetBindingAst extends SyntheticTemplateAst with LetBindingAst {
   final String name;
 
   @override
-  final String value;
+  final String? value;
 
   _SyntheticLetBindingAst(this.name, [this.value]);
 
   _SyntheticLetBindingAst.from(
-    TemplateAst origin,
+    TemplateAst? origin,
     this.name, [
     this.value,
   ]) : super.from(origin);

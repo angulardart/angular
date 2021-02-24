@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:meta/meta.dart';
 import 'package:source_span/src/span.dart';
 
@@ -11,7 +9,7 @@ import '../visitor.dart';
 /// Wraps a parsed Dart [Expression] as an Angular [ExpressionAst].
 class ExpressionAst<T> implements TemplateAst {
   /// Dart expression.
-  final T expression;
+  final T? expression;
 
   /// Create a new expression AST wrapping a Dart expression.
   const ExpressionAst(this.expression);
@@ -20,8 +18,8 @@ class ExpressionAst<T> implements TemplateAst {
   factory ExpressionAst.parse(
     String expression,
     int offset, {
-    @required String sourceUrl,
-    ExceptionHandler exceptionHandler,
+    @required String? sourceUrl,
+    ExceptionHandler? exceptionHandler,
   }) {
     return ExpressionAst(null);
   }
@@ -38,18 +36,18 @@ class ExpressionAst<T> implements TemplateAst {
   int get hashCode => expression.hashCode;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
-    return visitor.visitExpression(this, context);
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
+    return visitor.visitExpression(this as ExpressionAst<Object>, context);
   }
 
   @override
-  NgToken get beginToken => null;
+  NgToken? get beginToken => null;
 
   @override
   List<StandaloneTemplateAst> get childNodes => const [];
 
   @override
-  NgToken get endToken => null;
+  NgToken? get endToken => null;
 
   @override
   bool get isParent => false;
@@ -61,10 +59,10 @@ class ExpressionAst<T> implements TemplateAst {
   bool get isSynthetic => true;
 
   @override
-  SourceSpan get sourceSpan => null;
+  SourceSpan? get sourceSpan => null;
 
   @override
-  String get sourceUrl => null;
+  String? get sourceUrl => null;
 
   @override
   String toString() => '$ExpressionAst {$expression}';

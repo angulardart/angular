@@ -4,13 +4,13 @@ part of 'exception_handler.dart';
 @sealed
 class AngularParserException extends Error {
   /// Length of error segment/token.
-  final int length;
+  final int? length;
 
   /// Reasoning for exception to be raised.
   final ParserErrorCode errorCode;
 
   /// Offset of where the exception was detected.
-  final int offset;
+  final int? offset;
 
   AngularParserException(
     this.errorCode,

@@ -512,7 +512,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
 class NgAttributeValueToken extends NgToken {
   factory NgAttributeValueToken.generate(
     NgToken leftQuote,
-    NgToken innerValue,
+    NgToken? innerValue,
     NgToken rightQuote,
   ) {
     return NgAttributeValueToken._(
@@ -523,14 +523,14 @@ class NgAttributeValueToken extends NgToken {
     );
   }
 
-  final NgToken leftQuote;
-  final NgToken innerValue;
-  final NgToken rightQuote;
+  final NgToken? leftQuote;
+  final NgToken? innerValue;
+  final NgToken? rightQuote;
 
   bool get containsErrorSynthetic =>
-      leftQuote.errorSynthetic ||
-      innerValue.errorSynthetic ||
-      rightQuote.errorSynthetic;
+      leftQuote!.errorSynthetic ||
+      innerValue!.errorSynthetic ||
+      rightQuote!.errorSynthetic;
 
   const NgAttributeValueToken._(
     int offset,
@@ -556,18 +556,19 @@ class NgAttributeValueToken extends NgToken {
   int get hashCode => hash3(leftQuote, innerValue, rightQuote);
 
   @override
-  int get end => rightQuote.end;
+  int get end => rightQuote!.end;
 
   @override
-  int get length => leftQuote.length + innerValue.length + rightQuote.length;
+  int get length => leftQuote!.length + innerValue!.length + rightQuote!.length;
 
   @override
-  String get lexeme => leftQuote.lexeme + innerValue.lexeme + rightQuote.lexeme;
+  String get lexeme =>
+      leftQuote!.lexeme + innerValue!.lexeme + rightQuote!.lexeme;
 
   @override
   String toString() => '#$NgAttributeValueToken($type) {$offset:$lexeme} '
       '[\n\t$leftQuote,\n\t$innerValue,\n\t$rightQuote]';
 
-  bool get isDoubleQuote => leftQuote.type == NgTokenType.doubleQuote;
-  bool get isSingleQuote => leftQuote.type == NgTokenType.singleQuote;
+  bool get isDoubleQuote => leftQuote?.type == NgTokenType.doubleQuote;
+  bool get isSingleQuote => leftQuote?.type == NgTokenType.singleQuote;
 }

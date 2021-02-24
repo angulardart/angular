@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:meta/meta.dart';
 
 import '../../ast.dart';
@@ -16,12 +14,12 @@ class NgMicroParser {
 
   NgMicroAst parse(
     String directive,
-    String expression,
-    int expressionOffset, {
-    @required String sourceUrl,
-    TemplateAst origin,
+    String? expression,
+    int? expressionOffset, {
+    required String sourceUrl,
+    TemplateAst? origin,
   }) {
-    var paddedExpression = ' ' * expressionOffset + expression;
+    var paddedExpression = ' ' * expressionOffset! + expression!;
     var tokens = const NgMicroLexer().tokenize(paddedExpression).iterator;
     return _RecursiveMicroAstParser(
       directive,
@@ -35,15 +33,15 @@ class NgMicroParser {
 
 class _RecursiveMicroAstParser {
   final String _directive;
-  final int _expressionOffset;
-  final int _expressionLength;
+  final int? _expressionOffset;
+  final int? _expressionLength;
 //  final String _sourceUrl;
   final Iterator<NgMicroToken> _tokens;
 
   final letBindings = <LetBindingAst>[];
   final properties = <PropertyAst>[];
 
-  final TemplateAst _origin;
+  final TemplateAst? _origin;
 
   _RecursiveMicroAstParser(
     this._directive,
@@ -142,7 +140,7 @@ class _RecursiveMicroAstParser {
     }
   }
 
-  AngularParserException _unexpected([NgMicroToken token]) {
+  AngularParserException _unexpected([NgMicroToken? token]) {
     token ??= _tokens.current;
     return AngularParserException(
       ParserErrorCode.INVALID_MICRO_EXPRESSION,

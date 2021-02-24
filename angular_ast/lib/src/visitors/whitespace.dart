@@ -1,7 +1,3 @@
-// @dart=2.9
-
-import 'package:meta/meta.dart';
-
 import '../ast.dart';
 import 'recursive.dart';
 
@@ -40,7 +36,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   List<StandaloneTemplateAst> visitAllRoot(
     List<StandaloneTemplateAst> rootNodes,
   ) =>
-      visitAll(_visitRemovingWhitespace(rootNodes));
+      visitAll(_visitRemovingWhitespace(rootNodes))
+          as List<StandaloneTemplateAst>;
 
   @override
   TemplateAst visitContainer(ContainerAst astNode, [_]) {
@@ -110,10 +107,10 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   }
 
   /// Returns [text], with all significant whitespace reduced to a single space.
-  static TextAst _collapseWhitespace(
+  static TextAst? _collapseWhitespace(
     TextAst text, {
-    @required bool trimLeft,
-    @required bool trimRight,
+    required bool trimLeft,
+    required bool trimRight,
   }) {
     // Collapses all adjacent whitespace into a single space.
     const preserveNbsp = '\uE501';
@@ -137,7 +134,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
   static const _ngsp = '\uE500';
 
   List<StandaloneTemplateAst> _visitRemovingWhitespace(
-    List<StandaloneTemplateAst> childNodes,
+    List<StandaloneTemplateAst?> childNodes,
   ) {
     // 1. Remove whitespace-only text nodes where previous/after nodes are
     //    not an InterpolationAst, but are anything else. For example, in the
@@ -148,16 +145,17 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     // </div>
     //
     // ... we should collapse to "<div><span>Hello World</span></div>".
-    TemplateAst prevNode;
-    TemplateAst nextNode = childNodes.length > 1 ? childNodes[1] : null;
+    TemplateAst? prevNode;
+    TemplateAst? nextNode = childNodes.length > 1 ? childNodes[1] : null;
     for (var i = 0, l = childNodes.length; i < l; i++) {
-      var currentNode = childNodes[i];
+      StandaloneTemplateAst? currentNode;
+      currentNode = childNodes[i];
 
       if (currentNode is TextAst) {
         // This is because the re-assignment (currentNode =) below disables the
         // type promotion, but we want everywhere in this if (...) { ... } block
         // to assume it is a TextAst at this point.
-        final currentNodeCasted = currentNode as TextAst;
+        final currentNodeCasted = currentNode;
 
         // Node i, where i - 1 and i + 1 are not interpolations, we can
         // completely remove the (text) node. For example, this would take
@@ -172,7 +170,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
           // 1. All adjacent whitespace is collapsed into a single space.
           // 2. Depending on siblings, *also* trimLeft or trimRight.
           currentNode = _collapseWhitespace(
-            currentNode as TextAst,
+            currentNode,
             trimLeft: _shouldCollapseAdjacentTo(prevNode, lastNode: true),
             trimRight: _shouldCollapseAdjacentTo(nextNode, lastNode: false),
           );
@@ -186,7 +184,8 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     }
 
     // Remove any nodes that were removed by processing.
-    return childNodes.where((a) => a != null).toList();
+    return childNodes.where((a) => a != null).toList()
+        as List<StandaloneTemplateAst>;
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
@@ -233,7 +232,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
 
   /// Whether [astNode] should be treated as insignficant to nearby whitespace.
   static bool _shouldCollapseAdjacentTo(
-    TemplateAst astNode, {
+    TemplateAst? astNode, {
     bool lastNode = false,
   }) =>
       // Always collapse adjacent to a non-element-like node.
@@ -242,7 +241,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
       astNode is ElementAst && !_isPotentiallyInline(astNode) ||
       // Sometimes collapse adjacent to a template or container node.
       _shouldCollapseWrapperNode(
-        astNode as StandaloneTemplateAst,
+        astNode,
         lastNode: lastNode,
       );
 

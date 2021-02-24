@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -29,8 +27,8 @@ abstract class ReferenceAst implements TemplateAst {
     SourceFile sourceFile,
     NgToken prefixToken,
     NgToken elementDecoratorToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ]) = ParsedReferenceAst;
 
   @override
@@ -45,14 +43,14 @@ abstract class ReferenceAst implements TemplateAst {
   int get hashCode => hash2(identifier, variable);
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitReference(this, context);
   }
 
   /// What `exportAs` identifier to assign to [variable].
   ///
   /// If not set (i.e. `null`), the reference is the raw DOM element.
-  String get identifier;
+  String? get identifier;
 
   /// Local variable name being assigned.
   String get variable;
@@ -81,16 +79,16 @@ class ParsedReferenceAst extends TemplateAst
   final NgToken nameToken;
 
   @override
-  NgToken get suffixToken => null;
+  NgToken? get suffixToken => null;
 
   /// [NgAttributeValueToken] that represents `identifier` in
   /// `#variable="reference"`.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token; may be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedReferenceAst(
     SourceFile sourceFile,
@@ -110,16 +108,16 @@ class ParsedReferenceAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` if no value.
   @override
-  int get equalSignOffset => equalSignToken.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Offset of `identifier` in `#variable="identifier"`; may be `null` if no
   /// value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of `identifier` starting at left quote; may be `null` if no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of `#` in `#variable`.
   @override
@@ -127,11 +125,11 @@ class ParsedReferenceAst extends TemplateAst
 
   /// Always returns `null` since `#ref` has no suffix.
   @override
-  int get suffixOffset => null;
+  int? get suffixOffset => null;
 
   /// Name `identifier` in `#variable="identifier"`.
   @override
-  String get identifier => valueToken?.innerValue?.lexeme;
+  String? get identifier => valueToken?.innerValue?.lexeme;
 
   /// Name `variable` in `#variable="identifier"`.
   @override
@@ -148,7 +146,7 @@ class _SyntheticReferenceAst extends SyntheticTemplateAst with ReferenceAst {
   ]) : super.from(origin);
 
   @override
-  final String identifier;
+  final String? identifier;
 
   @override
   final String variable;

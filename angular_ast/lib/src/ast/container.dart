@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 
@@ -50,7 +48,7 @@ abstract class ContainerAst implements StandaloneTemplateAst {
   List<StarAst> get stars;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R? accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitContainer(this, context);
   }
 

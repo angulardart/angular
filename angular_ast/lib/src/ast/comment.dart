@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -28,7 +26,7 @@ abstract class CommentAst implements StandaloneTemplateAst {
   ) = _ParsedCommentAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitComment(this, context);
   }
 

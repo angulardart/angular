@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 
@@ -17,29 +15,29 @@ abstract class AttributeAst implements TemplateAst {
   /// Create a new synthetic [AttributeAst] with a string [value].
   factory AttributeAst(
     String name, [
-    String value,
-    List<InterpolationAst> mustaches,
+    String? value,
+    List<InterpolationAst>? mustaches,
   ]) = _SyntheticAttributeAst;
 
   /// Create a new synthetic [AttributeAst] that originated from node [origin].
   factory AttributeAst.from(
     TemplateAst origin,
     String name, [
-    String value,
-    List<InterpolationAst> mustaches,
+    String? value,
+    List<InterpolationAst>? mustaches,
   ]) = _SyntheticAttributeAst.from;
 
   /// Create a new [AttributeAst] parsed from tokens from [sourceFile].
   factory AttributeAst.parsed(
     SourceFile sourceFile,
     NgToken nameToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
-    List<InterpolationAst> mustaches,
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
+    List<InterpolationAst>? mustaches,
   ]) = ParsedAttributeAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitAttribute(this, context);
   }
 
@@ -60,15 +58,15 @@ abstract class AttributeAst implements TemplateAst {
   String get name;
 
   /// Static attribute value; may be `null` to have no value.
-  String get value;
+  String? get value;
 
   /// Mustaches found within value; may be `null` if value is null.
   /// If value exists but has no mustaches, will be empty list.
-  List<InterpolationAst> get mustaches;
+  List<InterpolationAst>? get mustaches;
 
   /// Static attribute value with quotes attached;
   /// may be `null` to have no value.
-  String get quotedValue;
+  String? get quotedValue;
 
   @override
   String toString() {
@@ -92,11 +90,11 @@ class ParsedAttributeAst extends TemplateAst
   /// [NgAttributeValueToken] that represents the attribute value. May be `null`
   /// to have no value.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token. May be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedAttributeAst(
     SourceFile sourceFile,
@@ -120,40 +118,40 @@ class ParsedAttributeAst extends TemplateAst
 
   /// Static offset of equal sign; may be `null` to have no value.
   @override
-  int get equalSignOffset => equalSignToken?.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Static attribute value; may be `null` to have no value.
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   /// Parsed static attribute parts that are mustache-expressions.
   @override
-  final List<InterpolationAst> mustaches;
+  final List<InterpolationAst>? mustaches;
 
   /// Static attribute value including quotes; may be `null` to have no value.
   @override
-  String get quotedValue => valueToken?.lexeme;
+  String? get quotedValue => valueToken?.lexeme;
 
   /// Static attribute value offset; may be `null` to have no value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Static attribute value including quotes offset; may be `null` to have no
   /// value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   @override
-  NgToken get prefixToken => null;
+  NgToken? get prefixToken => null;
 
   @override
-  int get prefixOffset => null;
+  int? get prefixOffset => null;
 
   @override
-  NgToken get suffixToken => null;
+  NgToken? get suffixToken => null;
 
   @override
-  int get suffixOffset => null;
+  int? get suffixOffset => null;
 }
 
 class _SyntheticAttributeAst extends SyntheticTemplateAst with AttributeAst {
@@ -161,13 +159,13 @@ class _SyntheticAttributeAst extends SyntheticTemplateAst with AttributeAst {
   final String name;
 
   @override
-  final String value;
+  final String? value;
 
   @override
-  final List<InterpolationAst> mustaches;
+  final List<InterpolationAst>? mustaches;
 
   @override
-  String get quotedValue => value == null ? null : '"$value"';
+  String? get quotedValue => value == null ? null : '"$value"';
 
   _SyntheticAttributeAst(this.name, [this.value, this.mustaches]);
 

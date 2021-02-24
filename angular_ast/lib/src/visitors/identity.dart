@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:meta/meta.dart';
 
 import '../ast.dart';
@@ -7,7 +5,7 @@ import '../visitor.dart';
 
 /// An [TemplateAstVisitor] that does nothing but return the AST node back.
 class IdentityTemplateAstVisitor<C>
-    implements TemplateAstVisitor<TemplateAst, C> {
+    implements TemplateAstVisitor<TemplateAst, C?> {
   @literal
   const IdentityTemplateAstVisitor();
 

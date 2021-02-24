@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 
@@ -18,8 +16,8 @@ class NgMicroAst {
 
   @literal
   const NgMicroAst({
-    @required this.letBindings,
-    @required this.properties,
+    required this.letBindings,
+    required this.properties,
   });
 
   @override

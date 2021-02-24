@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:string_scanner/string_scanner.dart';
 
 import '../../exception_handler/exception_handler.dart';
@@ -16,8 +14,8 @@ class NgMicroScanner {
   static final _findWhitespace = RegExp(r'\s+');
 
   final StringScanner _scanner;
-  int _expressionOffset;
-  int _expressionLength;
+  late int _expressionOffset;
+  late int _expressionLength;
 
   _NgMicroScannerState _state = _NgMicroScannerState.scanInitial;
 
@@ -31,7 +29,7 @@ class NgMicroScanner {
     _expressionLength = _scanner.string.length - _expressionOffset;
   }
 
-  NgMicroToken scan() {
+  NgMicroToken? scan() {
     switch (_state) {
       case _NgMicroScannerState.hasError:
         throw StateError('An error occurred');
@@ -57,8 +55,9 @@ class NgMicroScanner {
         return _scanLetAssignment();
       case _NgMicroScannerState.scanLetIdentifier:
         return _scanLetIdentifier();
+      default:
+        throw _unexpected();
     }
-    throw _unexpected();
   }
 
   String _lexeme(int offset) => _scanner.substring(offset);
@@ -116,7 +115,7 @@ class NgMicroScanner {
     throw _unexpected();
   }
 
-  NgMicroToken _scanEndExpression() {
+  NgMicroToken? _scanEndExpression() {
     if (_scanner.isDone) {
       _state = _NgMicroScannerState.isEndOfFile;
       return null;

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -13,14 +11,14 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
   /// Create a new synthetic [InterpolationAst] with a bound [expression].
   factory InterpolationAst(
     String value,
-    ExpressionAst<Object> expression,
+    ExpressionAst<Object>? expression,
   ) = _SyntheticInterpolationAst;
 
   /// Create a new synthetic [InterpolationAst] that originated from [origin].
   factory InterpolationAst.from(
     TemplateAst origin,
     String value,
-    ExpressionAst<Object> expression,
+    ExpressionAst<Object>? expression,
   ) = _SyntheticInterpolationAst.from;
 
   /// Create a new [InterpolationAst] parsed from tokens in [sourceFile].
@@ -32,13 +30,13 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
   ) = ParsedInterpolationAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitInterpolation(this, context);
   }
 
   /// Bound expression.
-  ExpressionAst<Object> get expression;
-  set expression(ExpressionAst<Object> expression);
+  ExpressionAst<Object>? get expression;
+  set expression(ExpressionAst<Object>? expression);
 
   /// Bound String value used in expression; used to preserve offsets
   String get value;
@@ -51,7 +49,7 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
   }
 
   @override
-  int get hashCode => expression.hashCode;
+  int get hashCode => expression!.hashCode;
 
   @override
   String toString() => '$InterpolationAst {$value}';
@@ -59,7 +57,7 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
 
 class ParsedInterpolationAst extends TemplateAst with InterpolationAst {
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   final NgToken valueToken;
 
@@ -77,7 +75,7 @@ class ParsedInterpolationAst extends TemplateAst with InterpolationAst {
 class _SyntheticInterpolationAst extends SyntheticTemplateAst
     with InterpolationAst {
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   _SyntheticInterpolationAst(this.value, this.expression);
 

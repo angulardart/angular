@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import '../ast.dart';
 import '../exception_handler/exception_handler.dart';
 import '../expression/micro.dart';
@@ -15,7 +13,7 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
 
   /// Create a new visitor.
   DesugarVisitor({
-    ExceptionHandler exceptionHandler,
+    ExceptionHandler? exceptionHandler,
   }) : exceptionHandler = exceptionHandler ?? const ThrowingExceptionHandler();
 
   @override
@@ -87,7 +85,7 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
         ..properties.add(PropertyAst.from(
           banana,
           banana.name,
-          banana.value,
+          banana.value!,
         ));
     }
     astNode.bananas.clear();
@@ -112,7 +110,7 @@ class DesugarVisitor extends IdentityTemplateAstVisitor<void>
           directiveName,
           starExpression,
           expressionOffset,
-          sourceUrl: astNode.sourceUrl,
+          sourceUrl: astNode.sourceUrl!,
           origin: origin,
         );
       } on AngularParserException catch (e) {

@@ -1,11 +1,9 @@
-// @dart=2.9
-
 import '../ast.dart';
 import '../visitor.dart';
 
 /// Provides a human-readable view of a template AST tree.
 class HumanizingTemplateAstVisitor
-    extends TemplateAstVisitor<String, StringBuffer> {
+    extends TemplateAstVisitor<String, StringBuffer?> {
   const HumanizingTemplateAstVisitor();
 
   @override
@@ -31,7 +29,7 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitCloseElement(CloseElementAst astNode, [StringBuffer context]) {
+  String visitCloseElement(CloseElementAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
     context..write('</')..write(astNode.name)..write('>');
     return context.toString();
@@ -43,7 +41,7 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitContainer(ContainerAst astNode, [StringBuffer context]) {
+  String visitContainer(ContainerAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
     context.write('<ng-container');
     if (astNode.annotations.isNotEmpty) {
@@ -65,7 +63,7 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitElement(ElementAst astNode, [StringBuffer context]) {
+  String visitElement(ElementAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
     context..write('<')..write(astNode.name);
     if (astNode.annotations.isNotEmpty) {
@@ -107,14 +105,14 @@ class HumanizingTemplateAstVisitor
     if (astNode.isSynthetic) {
       context.write(astNode.isVoidElement ? '/>' : '>');
     } else {
-      context.write(astNode.endToken.lexeme);
+      context.write(astNode.endToken!.lexeme);
     }
 
     if (astNode.childNodes.isNotEmpty) {
       context.writeAll(astNode.childNodes.map((c) => c.accept(this)));
     }
     if (astNode.closeComplement != null) {
-      context.write(visitCloseElement(astNode.closeComplement));
+      context.write(visitCloseElement(astNode.closeComplement!));
     }
     return context.toString();
   }
@@ -122,7 +120,7 @@ class HumanizingTemplateAstVisitor
   @override
   String visitEmbeddedContent(
     EmbeddedContentAst astNode, [
-    StringBuffer context,
+    StringBuffer? context,
   ]) {
     context ??= StringBuffer();
     if (astNode.selector != null) {
@@ -137,7 +135,7 @@ class HumanizingTemplateAstVisitor
   @override
   String visitEmbeddedTemplate(
     EmbeddedTemplateAst astNode, [
-    StringBuffer context,
+    StringBuffer? context,
   ]) {
     context ??= StringBuffer();
     context.write('<template');
@@ -175,7 +173,7 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitEvent(EventAst astNode, [StringBuffer context]) {
+  String visitEvent(EventAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
     context.write('(${astNode.name}');
     if (astNode.reductions.isNotEmpty) {
@@ -208,7 +206,7 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitProperty(PropertyAst astNode, [StringBuffer context]) {
+  String visitProperty(PropertyAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
     context.write('[${astNode.name}');
     if (astNode.postfix != null) {

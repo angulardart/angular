@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../token/tokens.dart';
@@ -18,29 +16,29 @@ abstract class TemplateAst {
   const TemplateAst.parsed(this.beginToken, this.endToken, this._sourceFile);
 
   /// First token that was used to form this AST.
-  final NgToken beginToken;
+  final NgToken? beginToken;
 
   /// Child nodes, if any.
   List<StandaloneTemplateAst> get childNodes => const [];
 
   /// Last token that was used to form this AST.
-  final NgToken endToken;
+  final NgToken? endToken;
 
   /// Segment of source text from which the AST was parsed from.
   ///
   /// Includes all *significant* parts of the source text, including child nodes
   /// and identifying characters. May not include pre or post whitespace or
   /// delimiters.
-  SourceSpan get sourceSpan {
-    return _sourceFile.span(beginToken.offset, endToken.end);
+  SourceSpan? get sourceSpan {
+    return _sourceFile.span(beginToken!.offset, endToken!.end);
   }
 
-  String get sourceUrl {
+  String? get sourceUrl {
     return _sourceFile.url.toString();
   }
 
   /// Have the [visitor] start visiting this node.
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]);
+  R? accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]);
 
   /// Whether this node is capable of containing children and does.
   ///
@@ -80,7 +78,7 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   }
 
   /// What AST node this node originated from (before transformation); optional.
-  final TemplateAst origin;
+  final TemplateAst? origin;
 
   /// Create a synthetic AST that has no origin from parsed source.
   ///
@@ -91,9 +89,9 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   const SyntheticTemplateAst.from(this.origin);
 
   @override
-  NgToken get beginToken {
+  NgToken? get beginToken {
     if (origin != null) {
-      return origin.beginToken;
+      return origin!.beginToken;
     }
     throw _unsupported();
   }
@@ -103,9 +101,9 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   List<StandaloneTemplateAst> get childNodes => const [];
 
   @override
-  NgToken get endToken {
+  NgToken? get endToken {
     if (origin != null) {
-      return origin.endToken;
+      return origin!.endToken;
     }
     throw _unsupported();
   }
@@ -120,17 +118,17 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   final bool isSynthetic = true;
 
   @override
-  SourceSpan get sourceSpan {
+  SourceSpan? get sourceSpan {
     if (origin != null) {
-      return origin.sourceSpan;
+      return origin!.sourceSpan;
     }
     throw _unsupported();
   }
 
   @override
-  String get sourceUrl {
+  String? get sourceUrl {
     if (origin != null) {
-      return origin.sourceUrl;
+      return origin!.sourceUrl;
     }
     throw _unsupported();
   }
@@ -143,20 +141,20 @@ abstract class SyntheticTemplateAst implements TemplateAst {
 /// Clients should not extend, implement, or mix-in this class.
 abstract class TagOffsetInfo {
   int get nameOffset;
-  int get valueOffset;
-  int get quotedValueOffset;
-  int get equalSignOffset;
+  int? get valueOffset;
+  int? get quotedValueOffset;
+  int? get equalSignOffset;
 }
 
 /// Represents an interface for a parsed element decorator.
 ///
 /// Clients should not extend, implement, or mix-in this class.
 abstract class ParsedDecoratorAst {
-  NgToken get prefixToken;
+  NgToken? get prefixToken;
   NgToken get nameToken;
-  NgToken get suffixToken;
-  NgAttributeValueToken get valueToken;
+  NgToken? get suffixToken;
+  NgAttributeValueToken? get valueToken;
 
-  int get prefixOffset;
-  int get suffixOffset; //May be null for reference and template
+  int? get prefixOffset;
+  int? get suffixOffset; //May be null for reference and template
 }

@@ -1,7 +1,3 @@
-// @dart=2.9
-
-import 'package:meta/meta.dart';
-
 import 'src/ast.dart';
 import 'src/exception_handler/exception_handler.dart';
 import 'src/parser.dart';
@@ -65,7 +61,7 @@ export 'src/visitor.dart'
 /// (valueChanged)="..."` respectively.
 List<TemplateAst> parse(
   String template, {
-  @required String sourceUrl,
+  required String sourceUrl,
   bool desugar = true,
   ExceptionHandler exceptionHandler = const ThrowingExceptionHandler(),
 }) {

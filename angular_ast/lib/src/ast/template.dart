@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 
@@ -43,7 +41,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
     SourceFile sourceFile,
     NgToken beginToken,
     NgToken endToken, {
-    CloseElementAst closeComplement,
+    CloseElementAst? closeComplement,
     List<AnnotationAst> annotations,
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
@@ -54,7 +52,7 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   }) = _ParsedEmbeddedTemplateAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R? accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitEmbeddedTemplate(this, context);
   }
 
@@ -87,8 +85,8 @@ abstract class EmbeddedTemplateAst implements StandaloneTemplateAst {
   List<LetBindingAst> get letBindings;
 
   /// </template> that is paired to this <template>.
-  CloseElementAst get closeComplement;
-  set closeComplement(CloseElementAst closeComplement);
+  CloseElementAst? get closeComplement;
+  set closeComplement(CloseElementAst? closeComplement);
 
   @override
   bool operator ==(Object o) {
@@ -208,7 +206,7 @@ class _ParsedEmbeddedTemplateAst extends TemplateAst with EmbeddedTemplateAst {
   final List<LetBindingAst> letBindings;
 
   @override
-  CloseElementAst closeComplement;
+  CloseElementAst? closeComplement;
 }
 
 class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
@@ -257,5 +255,5 @@ class _SyntheticEmbeddedTemplateAst extends SyntheticTemplateAst
   final List<LetBindingAst> letBindings;
 
   @override
-  CloseElementAst closeComplement;
+  CloseElementAst? closeComplement;
 }

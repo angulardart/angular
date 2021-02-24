@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:meta/meta.dart';
 
 import '../ast.dart';
@@ -10,13 +8,14 @@ import '../visitor.dart';
 ///
 /// Note that methods may modify values.
 class RecursiveTemplateAstVisitor<C>
-    implements TemplateAstVisitor<TemplateAst, C> {
+    implements TemplateAstVisitor<TemplateAst, C?> {
   @literal
   const RecursiveTemplateAstVisitor();
 
   /// Visits a collection of [TemplateAst] nodes, returning all of those that
   /// are not null.
-  List<T> visitAll<T extends TemplateAst>(Iterable<T> astNodes, [C context]) {
+  List<T>? visitAll<T extends TemplateAst>(Iterable<T>? astNodes,
+      [C? context]) {
     if (astNodes == null) return null;
 
     final results = <T>[];
@@ -30,15 +29,15 @@ class RecursiveTemplateAstVisitor<C>
   }
 
   /// Visits a single [TemplateAst] node, capturing the type.
-  T visit<T extends TemplateAst>(T astNode, [C context]) =>
-      astNode?.accept(this, context) as T;
+  T? visit<T extends TemplateAst>(T? astNode, [C? context]) =>
+      astNode?.accept(this, context) as T?;
 
   @override
   TemplateAst visitAnnotation(AnnotationAst astNode, [_]) => astNode;
 
   @override
   @mustCallSuper
-  TemplateAst visitAttribute(AttributeAst astNode, [C context]) =>
+  TemplateAst visitAttribute(AttributeAst astNode, [C? context]) =>
       AttributeAst.from(
         astNode,
         astNode.name,
@@ -57,12 +56,12 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitContainer(ContainerAst astNode, [C context]) =>
+  TemplateAst visitContainer(ContainerAst astNode, [C? context]) =>
       ContainerAst.from(
         astNode,
-        annotations: visitAll(astNode.annotations, context),
-        childNodes: visitAll(astNode.childNodes, context),
-        stars: visitAll(astNode.stars, context),
+        annotations: visitAll(astNode.annotations, context) ?? [],
+        childNodes: visitAll(astNode.childNodes, context) ?? [],
+        stars: visitAll(astNode.stars, context) ?? [],
       );
 
   @override
@@ -70,37 +69,38 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode, [C context]) =>
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst astNode,
+          [C? context]) =>
       EmbeddedTemplateAst.from(
         astNode,
-        annotations: visitAll(astNode.annotations, context),
-        attributes: visitAll(astNode.attributes, context),
-        childNodes: visitAll(astNode.childNodes, context),
-        events: visitAll(astNode.events, context),
-        properties: visitAll(astNode.properties, context),
-        references: visitAll(astNode.references, context),
-        letBindings: visitAll(astNode.letBindings, context),
+        annotations: visitAll(astNode.annotations, context) ?? [],
+        attributes: visitAll(astNode.attributes, context) ?? [],
+        childNodes: visitAll(astNode.childNodes, context) ?? [],
+        events: visitAll(astNode.events, context) ?? [],
+        properties: visitAll(astNode.properties, context) ?? [],
+        references: visitAll(astNode.references, context) ?? [],
+        letBindings: visitAll(astNode.letBindings, context) ?? [],
       );
 
   @override
   @mustCallSuper
-  TemplateAst visitElement(ElementAst astNode, [C context]) => ElementAst.from(
+  TemplateAst visitElement(ElementAst astNode, [C? context]) => ElementAst.from(
         astNode,
         astNode.name,
         visit(astNode.closeComplement),
-        attributes: visitAll(astNode.attributes, context),
-        childNodes: visitAll(astNode.childNodes, context),
-        events: visitAll(astNode.events, context),
-        properties: visitAll(astNode.properties, context),
-        references: visitAll(astNode.references, context),
-        bananas: visitAll(astNode.bananas, context),
-        stars: visitAll(astNode.stars, context),
-        annotations: visitAll(astNode.annotations, context),
+        attributes: visitAll(astNode.attributes, context) ?? [],
+        childNodes: visitAll(astNode.childNodes, context) ?? [],
+        events: visitAll(astNode.events, context) ?? [],
+        properties: visitAll(astNode.properties, context) ?? [],
+        references: visitAll(astNode.references, context) ?? [],
+        bananas: visitAll(astNode.bananas, context) ?? [],
+        stars: visitAll(astNode.stars, context) ?? [],
+        annotations: visitAll(astNode.annotations, context) ?? [],
       );
 
   @override
   @mustCallSuper
-  TemplateAst visitEvent(EventAst astNode, [C context]) => EventAst.from(
+  TemplateAst visitEvent(EventAst astNode, [C? context]) => EventAst.from(
         astNode,
         astNode.name,
         astNode.value,

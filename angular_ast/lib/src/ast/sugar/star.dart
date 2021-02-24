@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:source_span/source_span.dart';
 
 import '../../ast.dart';
@@ -17,14 +15,14 @@ abstract class StarAst implements TemplateAst {
   /// Create a new synthetic [StarAst] assigned to [name].
   factory StarAst(
     String name, [
-    String value,
+    String? value,
   ]) = _SyntheticStarAst;
 
   /// Create a new synthetic property AST that originated from another AST.
   factory StarAst.from(
     TemplateAst origin,
     String name, [
-    String value,
+    String? value,
   ]) = _SyntheticStarAst.from;
 
   /// Create a new property assignment parsed from tokens in [sourceFile].
@@ -32,12 +30,12 @@ abstract class StarAst implements TemplateAst {
     SourceFile sourceFile,
     NgToken prefixToken,
     NgToken elementDecoratorToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ]) = ParsedStarAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitStar(this, context);
   }
 
@@ -56,7 +54,7 @@ abstract class StarAst implements TemplateAst {
   String get name;
 
   /// Name of expression string. Can be null.
-  String get value;
+  String? get value;
 
   @override
   String toString() {
@@ -83,16 +81,16 @@ class ParsedStarAst extends TemplateAst
   final NgToken nameToken;
 
   @override
-  NgToken get suffixToken => null;
+  NgToken? get suffixToken => null;
 
   /// [NgAttributeValueToken] that represents `"value"`; may be `null` to have
   /// no value.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token; may be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedStarAst(
     SourceFile sourceFile,
@@ -113,19 +111,19 @@ class ParsedStarAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` to have no value.
   @override
-  int get equalSignOffset => equalSignToken.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Value bound to `*directive`; may be `null` to have no value.
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   /// Offset of value; may be `null` to have no value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of value starting at left quote; may be `null` to have no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of template prefix `*`.
   @override
@@ -133,7 +131,7 @@ class ParsedStarAst extends TemplateAst
 
   /// Always returns `null` since `*directive` has no suffix.
   @override
-  int get suffixOffset => null;
+  int? get suffixOffset => null;
 }
 
 class _SyntheticStarAst extends SyntheticTemplateAst with StarAst {
@@ -152,5 +150,5 @@ class _SyntheticStarAst extends SyntheticTemplateAst with StarAst {
   final String name;
 
   @override
-  final String value;
+  final String? value;
 }
