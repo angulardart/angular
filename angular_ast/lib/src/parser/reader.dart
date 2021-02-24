@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:collection';
 
 import 'package:source_span/source_span.dart';
@@ -13,7 +11,7 @@ import '../token/tokens.dart';
 class NgTokenReader<T> {
   final Iterator<NgBaseToken<Object>> _iterator;
 
-  NgBaseToken<Object> _peek;
+  NgBaseToken<Object>? _peek;
 
   factory NgTokenReader(
       SourceFile source, Iterable<NgBaseToken<Object>> tokens) {
@@ -23,7 +21,7 @@ class NgTokenReader<T> {
   NgTokenReader._(SourceFile source, this._iterator);
 
   /// Returns the next token, if any, otherwise `null`.
-  NgBaseToken<Object> next() {
+  NgBaseToken<Object>? next() {
     if (_peek != null) {
       var token = _peek;
       _peek = null;
@@ -34,14 +32,14 @@ class NgTokenReader<T> {
 
   /// Returns the next token without incrementing.
   /// Returns null otherwise.
-  NgBaseToken<Object> peek() => _peek = next();
+  NgBaseToken<Object>? peek() => _peek = next();
 
   /// Returns the next token type without incrementing.
   /// Returns null otherwise.
-  T peekType() {
+  T? peekType() {
     _peek = next();
     if (_peek != null) {
-      return _peek.type as T;
+      return _peek!.type as T;
     }
     return null;
   }
@@ -89,15 +87,15 @@ class NgTokenReversibleReader<T> extends NgTokenReader<T> {
     var buffer = Queue<NgBaseToken<Object>>();
 
     peek();
-    while (_peek != null && _peek.type == ignoreType) {
-      buffer.add(_peek);
+    while (_peek != null && _peek!.type == ignoreType) {
+      buffer.add(_peek!);
       _peek = null;
       peek();
     }
 
-    var returnType = (_peek == null) ? null : _peek.type;
+    var returnType = (_peek == null) ? null : _peek!.type;
     if (_peek != null) {
-      buffer.add(_peek);
+      buffer.add(_peek!);
       _peek = null;
     }
     _seen.addAll(buffer);
@@ -106,7 +104,7 @@ class NgTokenReversibleReader<T> extends NgTokenReader<T> {
   }
 
   @override
-  NgBaseToken<Object> next() {
+  NgBaseToken<Object>? next() {
     if (_peek != null) {
       var token = _peek;
       _peek = null;
@@ -119,12 +117,12 @@ class NgTokenReversibleReader<T> extends NgTokenReader<T> {
 
   NgBaseToken<Object> putBack(NgBaseToken<Object> token) {
     if (_peek != null) {
-      _seen.addFirst(_peek);
+      _seen.addFirst(_peek!);
       _peek = token;
-      return _peek;
+      return _peek!;
     } else {
       _peek = token;
-      return _peek;
+      return _peek!;
     }
   }
 }

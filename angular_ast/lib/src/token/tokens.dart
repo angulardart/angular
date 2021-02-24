@@ -1,5 +1,3 @@
-// @dart=2.9
-
 library angular_ast.src.token.tokens;
 
 import '../hash.dart';
@@ -208,7 +206,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   @override
   final NgSimpleTokenType type;
   @override
-  String get lexeme => lexemeMap[type];
+  String get lexeme => lexemeMap[type]!;
 
   @override
   String toString() => '#$NgSimpleToken($type) {$offset:$lexeme}';
@@ -243,7 +241,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
   int get contentEnd => contentOffset + contentLength;
 
   /// Offset of right quote; may be `null` to indicate unclosed.
-  final int quoteEndOffset;
+  final int? quoteEndOffset;
 
   NgSimpleQuoteToken(
       NgSimpleTokenType type, int offset, String lexeme, bool isClosed,
@@ -494,7 +492,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
 
   /// What characters were scanned and represent this token.
   @override
-  String get lexeme => lexemeMap[type];
+  String get lexeme => lexemeMap[type]!;
 
   /// Indexed location where the token begins in the original source text.
   @override

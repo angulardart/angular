@@ -1,5 +1,3 @@
-// @dart=2.9
-
 part of angular_ast.src.token.tokens;
 
 /// The types of tokens that can be returned by the NgStringTokenizer

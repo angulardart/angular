@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:charcode/charcode.dart';
 import 'package:meta/meta.dart';
 import 'package:string_scanner/string_scanner.dart';
@@ -85,7 +83,6 @@ class NgSimpleScanner {
       case _NgSimpleScannerState.interpolation:
         return scanInterpolation();
     }
-    return null;
   }
 
   NgSimpleToken scanComment() {
@@ -145,7 +142,7 @@ class NgSimpleScanner {
       return NgSimpleToken.EOF(offset);
     }
     if (_scanner.scan(_allElementMatches)) {
-      var match = _scanner.lastMatch;
+      var match = _scanner.lastMatch!;
       if (matchesGroup(match, 1)) {
         return NgSimpleToken.closeBracket(offset);
       }
@@ -247,7 +244,7 @@ class NgSimpleScanner {
       return NgSimpleToken.EOF(offset);
     }
     if (_scanner.scan(_allTextMatches)) {
-      var match = _scanner.lastMatch;
+      var match = _scanner.lastMatch!;
       if (matchesGroup(match, 1)) {
         var text = _scanner.substring(offset);
         var mustacheMatch = _mustaches.firstMatch(text);
@@ -363,15 +360,15 @@ class NgSimpleScanner {
     return string.replaceAllMapped(_escape, (match) {
       // decimal
       if (matchesGroup(match, 1)) {
-        return String.fromCharCode(int.parse(match.group(1)));
+        return String.fromCharCode(int.parse(match.group(1)!));
       }
       // hex
       if (matchesGroup(match, 2)) {
-        return String.fromCharCode(int.parse(match.group(2), radix: 16));
+        return String.fromCharCode(int.parse(match.group(2)!, radix: 16));
       }
       // named
       if (matchesGroup(match, 3)) {
-        return NAMED_ENTITIES[match.group(3)] ?? match.group(3);
+        return NAMED_ENTITIES[match.group(3)] ?? match.group(3)!;
       }
 
       return '';

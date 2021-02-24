@@ -1,5 +1,3 @@
-// @dart=2.9
-
 part of 'exception_handler.dart';
 
 @sealed

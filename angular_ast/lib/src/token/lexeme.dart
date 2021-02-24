@@ -1,5 +1,3 @@
-// @dart=2.9
-
 part of angular_ast.src.token.tokens;
 
 /// A [NgSimpleToken] that has a custom lexeme, i.e. not predefined by type.
