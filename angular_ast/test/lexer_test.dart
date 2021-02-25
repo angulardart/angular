@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
 
@@ -11,7 +9,8 @@ void main() {
 
   // Returns the html parsed as a series of tokens, then back to html.
   String untokenize(Iterable<NgToken> tokens) => tokens
-      .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+      .fold(StringBuffer(),
+          (buffer, token) => (buffer as StringBuffer)..write(token.lexeme))
       .toString();
 
   test('should tokenize plain text', () {

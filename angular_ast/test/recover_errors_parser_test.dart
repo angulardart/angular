@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
 
@@ -40,7 +38,7 @@ void main() {
     expect(element, ElementAst('div', CloseElementAst('div')));
     expect(element.closeComplement, CloseElementAst('div'));
     expect(element.isSynthetic, false);
-    expect(element.closeComplement.isSynthetic, true);
+    expect(element.closeComplement!.isSynthetic, true);
     expect(astsToString(asts), '<div></div>');
 
     checkException(ParserErrorCode.CANNOT_FIND_MATCHING_CLOSE, 0, 5);
@@ -54,7 +52,7 @@ void main() {
     expect(element, ElementAst('div', CloseElementAst('div')));
     expect(element.closeComplement, CloseElementAst('div'));
     expect(element.isSynthetic, true);
-    expect(element.closeComplement.isSynthetic, false);
+    expect(element.closeComplement!.isSynthetic, false);
     expect(astsToString(asts), '<div></div>');
 
     checkException(ParserErrorCode.DANGLING_CLOSE_ELEMENT, 0, 6);
@@ -76,7 +74,7 @@ void main() {
     var element = asts[0] as ElementAst;
     expect(element.childNodes.length, 1);
     expect(element.childNodes[0].childNodes.length, 2);
-    expect(element.closeComplement.isSynthetic, true);
+    expect(element.closeComplement!.isSynthetic, true);
     expect(astsToString(asts), '<div><div><div>text1</div>text2</div></div>');
 
     checkException(ParserErrorCode.CANNOT_FIND_MATCHING_CLOSE, 0, 5);
@@ -88,7 +86,7 @@ void main() {
 
     var element = asts[2] as ElementAst;
     expect(element.isSynthetic, true);
-    expect(element.closeComplement.isSynthetic, false);
+    expect(element.closeComplement!.isSynthetic, false);
 
     var exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions.length, 1);
@@ -105,22 +103,22 @@ void main() {
     var elementA = asts[0];
     expect(elementA.childNodes.length, 1);
     expect(elementA.isSynthetic, false);
-    expect((elementA as ElementAst).closeComplement.isSynthetic, false);
+    expect((elementA as ElementAst).closeComplement!.isSynthetic, false);
 
     var elementInnerB = elementA.childNodes[0];
     expect(elementInnerB.childNodes.length, 1);
     expect(elementInnerB.isSynthetic, false);
-    expect((elementInnerB as ElementAst).closeComplement.isSynthetic, true);
+    expect((elementInnerB as ElementAst).closeComplement!.isSynthetic, true);
 
     var elementC = elementInnerB.childNodes[0];
     expect(elementC.childNodes.length, 0);
     expect(elementC.isSynthetic, true);
-    expect((elementC as ElementAst).closeComplement.isSynthetic, false);
+    expect((elementC as ElementAst).closeComplement!.isSynthetic, false);
 
     var elementOuterB = asts[1];
     expect(elementOuterB.childNodes.length, 0);
     expect(elementOuterB.isSynthetic, true);
-    expect((elementOuterB as ElementAst).closeComplement.isSynthetic, false);
+    expect((elementOuterB as ElementAst).closeComplement!.isSynthetic, false);
 
     expect(astsToString(asts), '<a><b><c></c></b></a><b></b>');
 
@@ -348,7 +346,8 @@ void main() {
     var template = div.childNodes[0];
     expect(template, TypeMatcher<EmbeddedTemplateAst>());
     expect(template.isSynthetic, false);
-    expect((template as EmbeddedTemplateAst).closeComplement.isSynthetic, true);
+    expect(
+        (template as EmbeddedTemplateAst).closeComplement!.isSynthetic, true);
 
     expect(
         astsToString(asts),
@@ -369,7 +368,7 @@ void main() {
     expect(template, TypeMatcher<EmbeddedTemplateAst>());
     expect(template.isSynthetic, true);
     expect(
-        (template as EmbeddedTemplateAst).closeComplement.isSynthetic, false);
+        (template as EmbeddedTemplateAst).closeComplement!.isSynthetic, false);
     expect(astsToString(asts), '<div><template></template></div>');
 
     checkException(ParserErrorCode.DANGLING_CLOSE_ELEMENT, 5, 11);
@@ -487,27 +486,27 @@ void main() {
     var attr = element.attributes[0] as ParsedAttributeAst;
     expect(attr.value, '{{mustache1 {{ mustache2');
 
-    expect(attr.mustaches.length, 2);
-    var mustache1 = attr.mustaches[0] as ParsedInterpolationAst;
-    var mustache2 = attr.mustaches[1] as ParsedInterpolationAst;
+    expect(attr.mustaches!.length, 2);
+    var mustache1 = attr.mustaches![0] as ParsedInterpolationAst;
+    var mustache2 = attr.mustaches![1] as ParsedInterpolationAst;
 
-    expect(mustache1.beginToken.offset, 15);
-    expect(mustache1.beginToken.lexeme, '{{');
-    expect(mustache1.beginToken.errorSynthetic, false);
+    expect(mustache1.beginToken!.offset, 15);
+    expect(mustache1.beginToken!.lexeme, '{{');
+    expect(mustache1.beginToken!.errorSynthetic, false);
     expect(mustache1.valueToken.offset, 17);
     expect(mustache1.valueToken.lexeme, 'mustache1 ');
-    expect(mustache1.endToken.offset, 27);
-    expect(mustache1.endToken.lexeme, '}}');
-    expect(mustache1.endToken.errorSynthetic, true);
+    expect(mustache1.endToken!.offset, 27);
+    expect(mustache1.endToken!.lexeme, '}}');
+    expect(mustache1.endToken!.errorSynthetic, true);
 
-    expect(mustache2.beginToken.offset, 27);
-    expect(mustache2.beginToken.lexeme, '{{');
-    expect(mustache2.beginToken.errorSynthetic, false);
+    expect(mustache2.beginToken!.offset, 27);
+    expect(mustache2.beginToken!.lexeme, '{{');
+    expect(mustache2.beginToken!.errorSynthetic, false);
     expect(mustache2.valueToken.offset, 29);
     expect(mustache2.valueToken.lexeme, ' mustache2');
-    expect(mustache2.endToken.offset, 39);
-    expect(mustache2.endToken.lexeme, '}}');
-    expect(mustache2.endToken.errorSynthetic, true);
+    expect(mustache2.endToken!.offset, 39);
+    expect(mustache2.endToken!.lexeme, '}}');
+    expect(mustache2.endToken!.errorSynthetic, true);
 
     var exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions.length, 2);
@@ -564,27 +563,27 @@ void main() {
     var attr = element.attributes[0] as ParsedAttributeAst;
     expect(attr.value, 'mustache1 }} mustache2 }}');
 
-    expect(attr.mustaches.length, 2);
-    var mustache1 = attr.mustaches[0] as ParsedInterpolationAst;
-    var mustache2 = attr.mustaches[1] as ParsedInterpolationAst;
+    expect(attr.mustaches!.length, 2);
+    var mustache1 = attr.mustaches![0] as ParsedInterpolationAst;
+    var mustache2 = attr.mustaches![1] as ParsedInterpolationAst;
 
-    expect(mustache1.beginToken.offset, 15);
-    expect(mustache1.beginToken.lexeme, '{{');
-    expect(mustache1.beginToken.errorSynthetic, true);
+    expect(mustache1.beginToken!.offset, 15);
+    expect(mustache1.beginToken!.lexeme, '{{');
+    expect(mustache1.beginToken!.errorSynthetic, true);
     expect(mustache1.valueToken.offset, 15);
     expect(mustache1.valueToken.lexeme, 'mustache1 ');
-    expect(mustache1.endToken.offset, 25);
-    expect(mustache1.endToken.lexeme, '}}');
-    expect(mustache1.endToken.errorSynthetic, false);
+    expect(mustache1.endToken!.offset, 25);
+    expect(mustache1.endToken!.lexeme, '}}');
+    expect(mustache1.endToken!.errorSynthetic, false);
 
-    expect(mustache2.beginToken.offset, 27);
-    expect(mustache2.beginToken.lexeme, '{{');
-    expect(mustache2.beginToken.errorSynthetic, true);
+    expect(mustache2.beginToken!.offset, 27);
+    expect(mustache2.beginToken!.lexeme, '{{');
+    expect(mustache2.beginToken!.errorSynthetic, true);
     expect(mustache2.valueToken.offset, 27);
     expect(mustache2.valueToken.lexeme, ' mustache2 ');
-    expect(mustache2.endToken.offset, 38);
-    expect(mustache2.endToken.lexeme, '}}');
-    expect(mustache2.endToken.errorSynthetic, false);
+    expect(mustache2.endToken!.offset, 38);
+    expect(mustache2.endToken!.lexeme, '}}');
+    expect(mustache2.endToken!.errorSynthetic, false);
 
     var exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions.length, 2);
@@ -607,11 +606,11 @@ void main() {
     final p = asts.first as ElementAst;
     expect(p.attributes, hasLength(1));
     expect(p.isSynthetic, false);
-    expect(p.closeComplement.isSynthetic, true);
+    expect(p.closeComplement!.isSynthetic, true);
 
     final foo = p.attributes.first;
     // The recovered text used to span an invalid range and cause a crash.
-    expect(foo.sourceSpan.text, 'foo="bar></p>');
+    expect(foo.sourceSpan!.text, 'foo="bar></p>');
 
     final exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions, hasLength(3));

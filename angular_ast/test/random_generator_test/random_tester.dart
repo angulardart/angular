@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -17,7 +15,8 @@ String lexerFixedFilename = 'lexer_fixed.html';
 String fullyFixedFilename = 'ast_fixed.html';
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(),
+        (buffer, token) => (buffer as StringBuffer)..write(token.lexeme))
     .toString();
 
 enum State {

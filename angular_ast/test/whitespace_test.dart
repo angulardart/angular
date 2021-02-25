@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
 
@@ -329,4 +327,4 @@ String _parseAndMinifiy(String template) {
 
 final _minimizing = const MinimizeWhitespaceVisitor();
 final _humanizing = const HumanizingTemplateAstVisitor();
-String _humanize(TemplateAst astNode) => astNode.accept(_humanizing);
+String _humanize(TemplateAst astNode) => astNode.accept(_humanizing)!;

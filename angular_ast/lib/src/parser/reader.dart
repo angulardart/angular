@@ -14,11 +14,11 @@ class NgTokenReader<T> {
   NgBaseToken<Object>? _peek;
 
   factory NgTokenReader(
-      SourceFile source, Iterable<NgBaseToken<Object>> tokens) {
+      SourceFile? source, Iterable<NgBaseToken<Object>> tokens) {
     return NgTokenReader._(source, tokens.iterator);
   }
 
-  NgTokenReader._(SourceFile source, this._iterator);
+  NgTokenReader._(SourceFile? source, this._iterator);
 
   /// Returns the next token, if any, otherwise `null`.
   NgBaseToken<Object>? next() {
@@ -67,14 +67,14 @@ class NgTokenReversibleReader<T> extends NgTokenReader<T> {
   final Queue<NgBaseToken<Object>> _seen = Queue<NgBaseToken<Object>>();
 
   factory NgTokenReversibleReader(
-    SourceFile source,
+    SourceFile? source,
     Iterable<NgBaseToken<Object>> tokens,
   ) {
     return NgTokenReversibleReader._(source, tokens.iterator);
   }
 
   NgTokenReversibleReader._(
-    SourceFile source,
+    SourceFile? source,
     Iterator<NgBaseToken<Object>> iterator,
   ) : super._(source, iterator);
 

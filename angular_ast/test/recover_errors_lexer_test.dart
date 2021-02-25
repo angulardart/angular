@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_ast/src/parser/reader.dart';
@@ -15,30 +13,31 @@ Iterable<NgToken> tokenize(String html) {
   return const NgLexer().tokenize(html, recoveringException);
 }
 
-Iterator<NgToken> tokenizeThrow(String html) {
+Iterator<NgToken?> tokenizeThrow(String html) {
   return const NgLexer().tokenize(html, throwingException).iterator;
 }
 
-void unwrapAll(Iterator<NgToken> it) {
-  while (it.moveNext() != null) {}
+void unwrapAll(Iterator<NgToken?> it) {
+  while ((it.moveNext() as NgToken?) != null) {}
 }
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(),
+        (buffer, token) => (buffer as StringBuffer)..write(token.lexeme))
     .toString();
 
 void testRecoverySolution(
   String baseHtml,
   NgScannerState startState,
   List<NgSimpleTokenType> encounteredTokens,
-  NgTokenType expectedSyntheticType,
-  NgScannerState expectedNextState, {
+  NgTokenType? expectedSyntheticType,
+  NgScannerState? expectedNextState, {
   String syntheticLexeme = '',
 }) {
   var recoveryOffset = baseHtml.length;
 
   for (var type in encounteredTokens) {
-    var reader = NgTokenReversibleReader(null, []);
+    var reader = NgTokenReversibleReader<Object>(null, []);
     var token = NgSimpleToken(type, recoveryOffset);
 
     String errorString;
@@ -49,7 +48,7 @@ void testRecoverySolution(
     } else if (type == NgSimpleTokenType.identifier) {
       errorString = 'some-identifier';
     } else {
-      errorString = NgSimpleToken.lexemeMap[type];
+      errorString = NgSimpleToken.lexemeMap[type]!;
     }
     var errorHtml = baseHtml + errorString;
 
@@ -61,7 +60,7 @@ void testRecoverySolution(
 
       var solution = recoveryProtocol.recover(startState, token, reader);
 
-      NgToken expectedSynthetic;
+      NgToken? expectedSynthetic;
       if (expectedSyntheticType == null) {
         expectedSynthetic = null;
       } else if (expectedSyntheticType == NgTokenType.doubleQuote ||

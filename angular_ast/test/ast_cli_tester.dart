@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'dart:io';
 
 import 'package:path/path.dart' as p;
@@ -42,7 +40,7 @@ void main() {
 
       print('\n\nERRORS:');
       exceptionHandler.exceptions.forEach((e) {
-        var context = input.substring(e.offset, e.offset + e.length);
+        var context = input.substring(e.offset!, e.offset! + e.length!);
         print('${e.errorCode.message} :: $context at ${e.offset}');
       });
     }

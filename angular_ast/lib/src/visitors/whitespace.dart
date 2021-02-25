@@ -147,6 +147,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
     // ... we should collapse to "<div><span>Hello World</span></div>".
     TemplateAst? prevNode;
     TemplateAst? nextNode = childNodes.length > 1 ? childNodes[1] : null;
+    var returnedNodes = <StandaloneTemplateAst>[];
     for (var i = 0, l = childNodes.length; i < l; i++) {
       StandaloneTemplateAst? currentNode;
       currentNode = childNodes[i];
@@ -175,17 +176,15 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
             trimRight: _shouldCollapseAdjacentTo(nextNode, lastNode: false),
           );
         }
-
-        childNodes[i] = currentNode;
+      }
+      if (currentNode != null) {
+        returnedNodes.add(currentNode);
       }
 
       prevNode = currentNode;
       nextNode = i < l - 2 ? childNodes[i + 2] : null;
     }
-
-    // Remove any nodes that were removed by processing.
-    return childNodes.where((a) => a != null).toList()
-        as List<StandaloneTemplateAst>;
+    return returnedNodes;
   }
 
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Inline_elements
