@@ -200,15 +200,13 @@ class DefaultIterableDiffer {
     var record = _itHead;
     var mayBeDirty = false;
     int index;
-    var item;
-    var itemTrackBy;
     if (collection is List<Object?>) {
       var list = collection;
       var length = collection.length;
       _length = length;
       for (index = 0; index < length; index++) {
-        item = list[index];
-        itemTrackBy = _trackByFn(index, item);
+        var item = list[index];
+        var itemTrackBy = _trackByFn(index, item);
         if (record == null || !identical(record.trackById, itemTrackBy)) {
           record = _mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
@@ -226,7 +224,7 @@ class DefaultIterableDiffer {
     } else {
       index = 0;
       collection.forEach((item) {
-        itemTrackBy = _trackByFn(index, item);
+        var itemTrackBy = _trackByFn(index, item);
         if (record == null || !identical(record!.trackById, itemTrackBy)) {
           record = _mismatch(record, item, itemTrackBy, index);
           mayBeDirty = true;
