@@ -8,8 +8,8 @@ import 'slice_pipe_test.template.dart' as ng;
 void main() {
   group('SlicePipe', () {
     late List<num> list;
-    var str;
-    var pipe;
+    late String str;
+    late SlicePipe pipe;
     setUp(() {
       list = [1, 2, 3, 4, 5];
       str = 'tuvwxyz';

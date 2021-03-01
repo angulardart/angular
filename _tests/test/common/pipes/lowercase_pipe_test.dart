@@ -1,12 +1,11 @@
 import 'package:test/test.dart';
-import 'package:_tests/test_util.dart';
 import 'package:angular/src/common/pipes/lowercase_pipe.dart';
 
 void main() {
   group('LowerCasePipe', () {
-    var upper;
-    var lower;
-    var pipe;
+    late String upper;
+    late String lower;
+    late LowerCasePipe pipe;
     setUp(() {
       lower = 'something';
       upper = 'SOMETHING';
@@ -22,9 +21,6 @@ void main() {
         expect(val, lower);
         var val2 = pipe.transform('WAT');
         expect(val2, 'wat');
-      });
-      test('should not support other objects', () {
-        expect(() => pipe.transform(Object()), throwsATypeError);
       });
     });
   });

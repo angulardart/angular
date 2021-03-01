@@ -102,7 +102,7 @@ class PushCmpWithRef {
   final ChangeDetectorRef ref;
 
   @Input()
-  var prop;
+  String? prop;
 
   PushCmpWithRef(this.ref);
 
@@ -161,7 +161,7 @@ class PushCmp {
   int numberOfChecks = 0;
 
   @Input()
-  var prop;
+  String? prop;
 
   void noop() {}
 

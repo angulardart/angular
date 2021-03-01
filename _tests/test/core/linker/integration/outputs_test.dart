@@ -144,7 +144,7 @@ class DirectiveWithTwoWayBinding {
   final _streamController = StreamController<String>();
 
   @Input()
-  var control;
+  String? control;
 
   @Output()
   Stream<String> get controlChange => _streamController.stream;

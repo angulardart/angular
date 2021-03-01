@@ -8,7 +8,9 @@ import 'package:angular_compiler/v1/src/compiler/selector.dart'
 
 void main() {
   group('SelectorMatcher', () {
-    var matcher, selectableCollector, s1, s2, s3, s4;
+    SelectorMatcher<int> matcher;
+    void Function(CssSelector, int) selectableCollector;
+    List<CssSelector> s1, s2, s3, s4;
     List<dynamic> matched;
     void reset() {
       matched = [];

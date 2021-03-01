@@ -607,7 +607,7 @@ void main() {
       });
 
       group('providers', () {
-        var nextProviderId;
+        int nextProviderId;
         CompileTokenMetadata createToken(String value) {
           CompileTokenMetadata token;
           if (value.startsWith('type:')) {
@@ -1705,7 +1705,7 @@ void main() {
     });
 
     group('content projection', () {
-      var compCounter;
+      int compCounter;
       setUp(() {
         compCounter = 0;
       });

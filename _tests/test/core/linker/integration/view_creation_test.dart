@@ -173,7 +173,7 @@ class SomeImperativeViewport {
   ViewContainerRef vc;
   TemplateRef templateRef;
   EmbeddedViewRef? view;
-  var anchor;
+  TemplateElement anchor;
 
   SomeImperativeViewport(
       this.vc, this.templateRef, @Inject(ANCHOR_ELEMENT) this.anchor);
@@ -263,7 +263,7 @@ class DirectiveUpdatesDomComponent {
 )
 class DirectiveWithPropDecorators {
   final StreamController<String> _streamController = StreamController<String>();
-  var target;
+  Element? target;
 
   @Input('elProp')
   String? dirProp;
@@ -275,7 +275,7 @@ class DirectiveWithPropDecorators {
   String? myAttr;
 
   @HostListener('click', ['\$event.target'])
-  void onClick(target) {
+  void onClick(Element target) {
     this.target = target;
   }
 

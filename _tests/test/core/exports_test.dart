@@ -72,7 +72,7 @@ void main() {
       var testBed = NgTestBed(ng.createStaticEventHandlerArgTestFactory());
       var fixture = await testBed.create();
       var div = fixture.rootElement.querySelector('div')!;
-      var listArg;
+      late List<Object> listArg;
       await fixture.update((StaticEventHandlerArgTest component) {
         component.clickHandler = (list) {
           listArg = list;

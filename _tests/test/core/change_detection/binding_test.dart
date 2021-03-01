@@ -146,7 +146,7 @@ class _GetValue<T extends ValueTest> {
 )
 class ChildComponent {
   @Input()
-  var value;
+  dynamic value;
 }
 
 abstract class ValueTest {

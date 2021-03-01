@@ -170,7 +170,7 @@ void main() {
     test('should remove destroyed directives from query results', () async {
       final testBed =
           NgTestBed(ng.createDestroysViewChildrenComponentFactory());
-      var component;
+      late DestroysViewChildrenComponent component;
       final testFixture = await testBed.create(
           beforeChangeDetection: (instance) => component = instance);
       expect(component.textDirectives, hasLength(1));

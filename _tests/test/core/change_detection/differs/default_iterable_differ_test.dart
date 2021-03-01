@@ -266,7 +266,7 @@ void main() {
       });
     });
     group('trackBy function by id', () {
-      var differ;
+      late DefaultIterableDiffer differ;
       // ignore: prefer_function_declarations_over_variables
       var trackByItemId = (int index, dynamic item) => item.id;
       // ignore: prefer_function_declarations_over_variables
@@ -374,7 +374,7 @@ void main() {
       });
     });
     group('trackBy function by index', () {
-      var differ;
+      late DefaultIterableDiffer differ;
       // ignore: prefer_function_declarations_over_variables
       var trackByIndex = (int index, Object? item) => index;
       setUp(() {

@@ -48,7 +48,7 @@ void main() {
   template: r'{{value}}',
 )
 class ChildComponent {
-  var _value;
+  dynamic _value;
   var updates = 0;
 
   @Input()
@@ -66,7 +66,7 @@ class ChildComponent {
   template: '<child [value]="boundValue"></child>',
 )
 class BoundValueTest {
-  var boundValue;
+  dynamic boundValue;
 
   @ViewChild(ChildComponent)
   ChildComponent? child;

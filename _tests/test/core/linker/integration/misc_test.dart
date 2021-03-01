@@ -166,9 +166,9 @@ class DynamicChildComponent {}
   selector: '[static]',
 )
 class NeedsAttribute {
-  var typeAttribute;
-  var staticAttribute;
-  var fooAttribute;
+  String? typeAttribute;
+  String? staticAttribute;
+  String? fooAttribute;
 
   NeedsAttribute(
       @Attribute('type') this.typeAttribute,

@@ -28,7 +28,7 @@ void main() {
         NgTestBed(ng.createProvidesInjectableUnboundedComponentFactory());
     final testFixture = await testBed.create();
     final dir = testFixture.assertOnlyInstance.container;
-    expect(dir!.directive.injectable, TypeMatcher<InjectableService>());
+    expect(dir!.directive!.injectable, TypeMatcher<InjectableService>());
   });
 
   test('should support the event-bus scenario', () async {
@@ -127,7 +127,7 @@ class ProvidesInjectableInViewComponent {
   visibility: Visibility.all,
 )
 class DirectiveContainingDirectiveConsumingAnInjectable {
-  var directive;
+  DirectiveConsumingInjectableUnbounded? directive;
 }
 
 @Component(

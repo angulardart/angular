@@ -9,7 +9,7 @@ import 'directive_lifecycle_integration_test.template.dart' as ng;
 void main() {
   group('directive lifecycle integration spec', () {
     late Log log;
-    var fixture;
+    late NgTestFixture<MyComp> fixture;
 
     setUp(() async {
       log = Log();
@@ -87,7 +87,7 @@ class LifecycleCmp
         AfterViewChecked {
   final Log _log;
   @Input()
-  var field;
+  int? field;
 
   LifecycleCmp(this._log);
 

@@ -497,7 +497,7 @@ class NgForOptionsTest {
   @ContentChild(TemplateRef)
   TemplateRef? contentTpl;
 
-  var items;
+  dynamic items;
 
   NgForOptionsTest() {
     items = [];
