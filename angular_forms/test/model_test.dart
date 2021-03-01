@@ -86,7 +86,7 @@ void main() {
       });
 
       group('updateValue', () {
-        late Control c;
+        late Control<String> c;
         late ControlGroup g;
         setUp(() {
           c = Control('oldValue');
@@ -97,13 +97,13 @@ void main() {
           expect(c.value, 'newValue');
         });
         test('should invoke ngOnChanges if it is present', () {
-          var ngOnChanges;
+          Object? ngOnChanges;
           c.registerOnChange((v) => ngOnChanges = ['invoked', v]);
           c.updateValue('newValue');
           expect(ngOnChanges, ['invoked', 'newValue']);
         });
         test('should not invoke on change when explicitly specified', () {
-          var onChange;
+          Object? onChange;
           c.registerOnChange((v) => onChange = ['invoked', v]);
           c.updateValue('newValue', emitModelToViewChange: false);
           expect(onChange, isNull);
@@ -133,7 +133,7 @@ void main() {
         });
       });
       group('valueChanges & statusChanges', () {
-        var c;
+        late Control<String> c;
         setUp(() {
           c = Control('old', Validators.required);
         });

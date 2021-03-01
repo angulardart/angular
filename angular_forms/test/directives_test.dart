@@ -5,7 +5,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_forms/src/directives/shared.dart';
 
 class DummyControlValueAccessor implements ControlValueAccessor<dynamic> {
-  var writtenValue;
+  dynamic writtenValue;
 
   @override
   void writeValue(dynamic obj) {

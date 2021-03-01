@@ -554,7 +554,7 @@ void main() {
         var testBed = NgTestBed(ng.createNestedFormTestFactory());
         var fixture = await testBed.create();
         var input = fixture.rootElement.querySelector('input') as InputElement;
-        var form;
+        late ControlGroup form;
         await fixture.update((NestedFormTest component) {
           input.value = 'updatedValue';
           dispatchEvent(input, 'input');
@@ -796,7 +796,7 @@ void main() {
 )
 class WrappedAccessor implements ControlValueAccessor<dynamic> {
   @HostBinding('attr.value')
-  var value;
+  dynamic value;
 
   late Function onChange;
 

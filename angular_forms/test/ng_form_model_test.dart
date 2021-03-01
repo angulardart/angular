@@ -173,7 +173,7 @@ class NgFormModelTest {
   )
 ])
 class DummyControlValueAccessor implements ControlValueAccessor<dynamic> {
-  var writtenValue;
+  dynamic writtenValue;
 
   @override
   void writeValue(dynamic obj) {
