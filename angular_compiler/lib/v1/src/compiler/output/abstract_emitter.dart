@@ -434,7 +434,7 @@ abstract class AbstractEmitterVisitor
   @override
   void visitBinaryOperatorExpr(
       o.BinaryOperatorExpr ast, EmitterVisitorContext context) {
-    var opStr;
+    String opStr;
     switch (ast.operator) {
       case o.BinaryOperator.Equals:
         opStr = '==';
