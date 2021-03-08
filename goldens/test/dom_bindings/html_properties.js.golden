@@ -4229,9 +4229,6 @@
         return f;
       else
         return P._convertDartFunctionFast(f);
-    },
-    getProperty: function(o, $name) {
-      return o[$name];
     }
   },
   W = {
@@ -10904,7 +10901,7 @@
       return J.get$get$x(self.Object.getOwnPropertyDescriptor(self.Node.prototype, "childNodes"));
     });
     _lazyFinal($, "_clobberSafeGetAttribute", "$get$_clobberSafeGetAttribute", function() {
-      return P.getProperty(self.Element.prototype, "getAttribute");
+      return self.Element.prototype.getAttribute;
     });
     _lazyFinal($, "_clobberSafeTagName", "$get$_clobberSafeTagName", function() {
       return J.get$get$x(self.Object.getOwnPropertyDescriptor(self.Element.prototype, "tagName"));
