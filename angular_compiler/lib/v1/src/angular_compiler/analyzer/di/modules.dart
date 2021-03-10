@@ -29,7 +29,7 @@ class ModuleReader {
   /// Validation may not be performed on the underlying elements.
   @protected
   bool isModule(DartObject o) =>
-      isList(o) || o.type != null && $Module.isExactlyType(o.type);
+      isList(o) || o.type?.element != null && $Module.isExactlyType(o.type);
 
   /// Helper method that can recursively extract [DartObject]s for `Provider`.
   ///
