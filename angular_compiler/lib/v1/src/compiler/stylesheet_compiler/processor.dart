@@ -22,7 +22,7 @@ Future<Map<AssetId, String>> processStylesheet(
 Map<AssetId, String> _mapSourceByAssetId(List<DartSourceOutput> modules) {
   final sourceByAssetId = <AssetId, String>{};
   for (final module in modules) {
-    final assetId = AssetId.resolve(module.outputUrl);
+    final assetId = AssetId.resolve(Uri.parse(module.outputUrl));
     sourceByAssetId[assetId] = module.sourceCode;
   }
   return sourceByAssetId;

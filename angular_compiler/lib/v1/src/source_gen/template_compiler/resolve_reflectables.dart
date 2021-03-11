@@ -20,7 +20,7 @@ Future<ReflectableOutput> resolveReflectables({
   // Returns null if the URI is unsupported.
   AssetId tryResolvedAsset(String uri) {
     try {
-      return AssetId.resolve(uri, from: buildStep.inputId);
+      return AssetId.resolve(Uri.parse(uri), from: buildStep.inputId);
     } on UnsupportedError catch (_) {
       return null;
     }

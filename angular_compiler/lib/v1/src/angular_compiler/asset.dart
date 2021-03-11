@@ -16,19 +16,20 @@ abstract class NgAssetReader {
 
   /// Returns [url] relative to a [baseUrl].
   String resolveUrl(String baseUrl, String url) {
-    baseUrl = _normalize(baseUrl);
-    url = _normalize(url);
-    final asset = AssetId.resolve(url, from: AssetId.resolve(baseUrl));
+    final normalizedBase = _normalize(baseUrl);
+    final normalizedUrl = _normalize(url);
+    final asset =
+        AssetId.resolve(normalizedUrl, from: AssetId.resolve(normalizedBase));
     return asset.uri.toString();
   }
 
-  String _normalize(String url) => assetToPackageUrl(Uri.parse(url))
+  Uri _normalize(String url) => Uri.parse(assetToPackageUrl(Uri.parse(url))
       .toString()
       // Normalization for Windows URLs.
       // See https://github.com/dart-lang/angular/issues/723.
       .replaceAll('..%5C', '')
       // Other normalization.
-      .replaceAll('%7C', r'/');
+      .replaceAll('%7C', r'/'));
 }
 
 class _BuildStepAssetReader extends NgAssetReader {
