@@ -6,17 +6,37 @@ import 'package:angular/src/utilities.dart';
 /// Whether [_debugCheckBinding] should throw if the values are different.
 var _debugThrowIfChanged = false;
 
+/// Whether [_debugCheckBinding] should throw immediately, or collect the
+/// values to be thrown in [debugThrowIfUnstableExpressionsFound].
+var _debugThrowImmediately = false;
+final _unstableExpressionValues = <UnstableExpressionValue>[];
+
 /// Whether [debugEnterThrowOnChanged] was enabled for the current cycle.
 bool get debugThrowIfChanged => isDevMode && _debugThrowIfChanged;
 
-/// Modifies the runtime of [checkBinding] to throw if the values have changed.
+/// Modifies the runtime of [checkBinding] to record if the values have changed.
 void debugEnterThrowOnChanged() {
   _debugThrowIfChanged = true;
 }
 
-/// Reverts [debugEnterThrowOnChanged].
+/// Modifies [_debugCheckBinding] to throw immediately.
+void debugThrowOnChangedImmediately() {
+  _debugThrowImmediately = true;
+}
+
+/// Throws if unstable expressions have been detected.
+void debugThrowIfUnstableExpressionsFound() {
+  if (_unstableExpressionValues.isNotEmpty) {
+    final message = _unstableExpressionValues.join();
+    _unstableExpressionValues.clear();
+    throw UnstableExpressionError(message);
+  }
+}
+
+/// Reverts [debugEnterThrowOnChanged]
 void debugExitThrowOnChanged() {
   _debugThrowIfChanged = false;
+  _debugThrowImmediately = false;
 }
 
 /// Whether [_debugCheckBinding] should check all expressions types.
@@ -67,10 +87,15 @@ bool checkBinding(
 
 /// Returns `true` if [oldValue] is identical to [newValue].
 ///
-/// Executed only in debug mode when [_throwIfChanged] is also set to `true`. If
-/// [oldValue] is _not_ identical to [newValue], we throw a runtime error
-/// signifying that the binding should not have changed the provided value in
-/// the middle of a change detection cycle.
+/// Executed only in debug mode when [_debugThrowIfChanged] is `true`. If
+/// [oldValue] is _not_ identical to [newValue], we will record that the binding
+/// should not have changed the provided value in the middle of a change
+/// detection cycle.
+///
+/// If [_debugThrowImmediately] is set to `true`, an error is thrown
+/// immediately, otherwise the changed bindings are accumulated in a list and
+/// reported together in a single exception thrown from
+/// [debugThrowIfUnstableExpressionsFound].
 bool _debugCheckBinding(
   Object? oldValue,
   Object? newValue, [
@@ -82,25 +107,26 @@ bool _debugCheckBinding(
       : const _DevModeEquality().equals(oldValue, newValue);
 
   if (!isIdentical) {
-    throw UnstableExpressionError._(
+    _unstableExpressionValues.add(UnstableExpressionValue._(
       expression: expression,
       location: location,
       oldValue: oldValue,
       newValue: newValue,
-    );
+    ));
+    if (_debugThrowImmediately) {
+      debugThrowIfUnstableExpressionsFound();
+    }
   }
 
   return true;
 }
 
-/// An error thrown in debug mode when the top-down data flow contract failed.
+/// A record collected in debug mode when the top-down data flow contract failed.
 ///
 /// AngularDart requires that during a synchronous pass of change detection
 /// evaluating a bound [expression] does not result in a [newValue] that has a
 /// different identity to [oldValue].
-///
-/// **WARNING**: Do _not_ attempt to catch or handle this (or any) [Error].
-class UnstableExpressionError extends Error {
+class UnstableExpressionValue {
   /// Contextual expression that was evaluated to result in [newValue].
   final String? expression;
 
@@ -113,7 +139,7 @@ class UnstableExpressionError extends Error {
   /// Current value of evaluating [expression].
   final Object? newValue;
 
-  UnstableExpressionError._({
+  UnstableExpressionValue._({
     @required this.oldValue,
     @required this.newValue,
     this.expression,
@@ -123,19 +149,37 @@ class UnstableExpressionError extends Error {
   @override
   String toString() {
     if (_debugCheckAllExpressionsAndReportExpressionContext) {
-      final message = ''
-          'An expression bound in an AngularDart template returned a different '
-          'value the second time it was evaluated.\n\n';
-      return '$message'
+      return ''
           'Unstable expression ${expression ?? 'UNKNOWN'} '
           'in ${location ?? 'UNKNOWN'}:\n'
-          '  Previous: $oldValue\n'
-          '  Current:  $newValue\n\n'
-          '$_goLink';
+          '  Previous: $oldValue (#${identityHashCode(oldValue)})\n'
+          '  Current:  $newValue (#${identityHashCode(newValue)})\n';
     }
     return ''
         'Expression has changed after it was checked. '
-        'Previous value: "$oldValue". Current value: "$newValue".';
+        'Previous value: "$oldValue". Current value: "$newValue".\n';
+  }
+}
+
+/// An error thrown in debug mode when the top-down data flow contract failed.
+///
+/// AngularDart requires that during a synchronous pass of change detection
+/// evaluating a bound [expression] does not result in a [newValue] that has a
+/// different identity to [oldValue].
+///
+/// **WARNING**: Do _not_ attempt to catch or handle this (or any) [Error].
+class UnstableExpressionError extends Error {
+  UnstableExpressionError(this.details);
+
+  /// Formatted string describing the unstable expressions.
+  final String details;
+
+  @override
+  String toString() {
+    final message = ''
+        'An expression bound in an AngularDart template returned a different '
+        'value the second time it was evaluated.\n';
+    return '$message\n$details\n$_goLink\n';
   }
 }
 

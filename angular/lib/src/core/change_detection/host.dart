@@ -106,6 +106,7 @@ abstract class ChangeDetectionHost {
       for (var i = 0; i < length; i++) {
         detectors[i].detectChanges();
       }
+      debugThrowIfUnstableExpressionsFound();
       debugExitThrowOnChanged();
     }
   }
@@ -120,6 +121,9 @@ abstract class ChangeDetectionHost {
   bool _runTickGuarded() {
     final detectors = _changeDetectors;
     final length = detectors.length;
+    if (isDevMode) {
+      debugThrowOnChangedImmediately();
+    }
     for (var i = 0; i < length; i++) {
       final detector = detectors[i];
       if (detector is View) {
@@ -127,6 +131,9 @@ abstract class ChangeDetectionHost {
         _lastGuardedView = view;
         view.detectChanges();
       }
+    }
+    if (isDevMode) {
+      debugExitThrowOnChanged();
     }
     return _checkForChangeDetectionError();
   }
