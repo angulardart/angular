@@ -2,8 +2,6 @@ import 'dart:async';
 import 'dart:convert' show json;
 import 'dart:developer';
 
-import 'package:angular/src/utilities.dart';
-
 import '../core/app.dart';
 
 /// Registers a service extension [handler] that manages a group of objects.
@@ -48,9 +46,11 @@ void _registerServiceExtension(
 
     return completer.future.then((result) {
       return ServiceExtensionResponse.result(result);
-    }, onError: (exception, stackTrace) {
-      // TODO(b/158612293): determine if this should be kept.
-      App.instance.exceptionHandler.call(unsafeCast(exception), stackTrace);
+    }, onError: (Object exception, StackTrace stackTrace) {
+      final context =
+          'The following exception was thrown while handling the service '
+          'extension "$method"';
+      App.instance.exceptionHandler('$context:\n$exception', stackTrace);
       return ServiceExtensionResponse.error(
         ServiceExtensionResponse.extensionError,
         json.encode({
