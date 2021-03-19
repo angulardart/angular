@@ -270,25 +270,26 @@
       return H.Primitives__objectTypeNameNewRti(object);
     },
     Primitives__objectTypeNameNewRti: function(object) {
-      var dispatchName, $constructor, constructorName;
+      var dispatchName, t1, $constructor, constructorName;
       if (object instanceof P.Object)
         return H._rtiToString(H.instanceType(object), null);
       if (J.getInterceptor$(object) === C.Interceptor_methods || false) {
         dispatchName = C.C_JS_CONST(object);
-        if (H.Primitives__saneNativeClassName(dispatchName))
+        t1 = dispatchName !== "Object" && dispatchName !== "";
+        if (t1)
           return dispatchName;
         $constructor = object.constructor;
         if (typeof $constructor == "function") {
           constructorName = $constructor.name;
-          if (typeof constructorName == "string" && H.Primitives__saneNativeClassName(constructorName))
+          if (typeof constructorName == "string")
+            t1 = constructorName !== "Object" && constructorName !== "";
+          else
+            t1 = false;
+          if (t1)
             return constructorName;
         }
       }
       return H._rtiToString(H.instanceType(object), null);
-    },
-    Primitives__saneNativeClassName: function($name) {
-      var t1 = $name !== "Object" && $name !== "";
-      return t1;
     },
     ioore: function(receiver, index) {
       if (receiver == null)
@@ -457,7 +458,9 @@
           return t1.$add();
         $.Closure_functionCounter = t1 + 1;
         selfName = "self" + t1;
-        return new Function("return function(){var " + selfName + " = this." + H.BoundClosure_selfFieldName() + ";return " + selfName + "." + H.S(stubName) + "();}")();
+        t1 = "return function(){var " + selfName + " = this.";
+        t2 = $.BoundClosure_selfFieldNameCache;
+        return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + ";return " + selfName + "." + H.S(stubName) + "();}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity).join(",");
       t1 = $.Closure_functionCounter;
@@ -465,7 +468,9 @@
         return t1.$add();
       $.Closure_functionCounter = t1 + 1;
       $arguments += t1;
-      return new Function("return function(" + $arguments + "){return this." + H.BoundClosure_selfFieldName() + "." + H.S(stubName) + "(" + $arguments + ");}")();
+      t1 = "return function(" + $arguments + "){return this.";
+      t2 = $.BoundClosure_selfFieldNameCache;
+      return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + "." + H.S(stubName) + "(" + $arguments + ");}")();
     },
     Closure_cspForwardInterceptedCall: function(arity, isSuperCall, $name, $function) {
       var getSelf = H.BoundClosure_selfOf,
@@ -520,9 +525,11 @@
       }
     },
     Closure_forwardInterceptedCallTo: function(receiver, $function) {
-      var stubName, arity, lookedUpFunction, t1, t2, $arguments,
-        selfField = H.BoundClosure_selfFieldName(),
-        receiverField = $.BoundClosure_receiverFieldNameCache;
+      var receiverField, stubName, arity, lookedUpFunction, t1, t2, $arguments,
+        selfField = $.BoundClosure_selfFieldNameCache;
+      if (selfField == null)
+        selfField = $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self");
+      receiverField = $.BoundClosure_receiverFieldNameCache;
       if (receiverField == null)
         receiverField = $.BoundClosure_receiverFieldNameCache = H.BoundClosure_computeFieldNamed("receiver");
       stubName = $function.$stubName;
@@ -562,10 +569,6 @@
     },
     BoundClosure_receiverOf: function(closure) {
       return closure._receiver;
-    },
-    BoundClosure_selfFieldName: function() {
-      var t1 = $.BoundClosure_selfFieldNameCache;
-      return t1 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t1;
     },
     BoundClosure_computeFieldNamed: function(fieldName) {
       var names, i, $name,

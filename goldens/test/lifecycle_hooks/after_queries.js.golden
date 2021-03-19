@@ -333,25 +333,26 @@
       return H.Primitives__objectTypeNameNewRti(object);
     },
     Primitives__objectTypeNameNewRti: function(object) {
-      var dispatchName, $constructor, constructorName;
+      var dispatchName, t1, $constructor, constructorName;
       if (object instanceof P.Object)
         return H._rtiToString(H.instanceType(object), null);
       if (J.getInterceptor$(object) === C.Interceptor_methods || type$.UnknownJavaScriptObject._is(object)) {
         dispatchName = C.C_JS_CONST(object);
-        if (H.Primitives__saneNativeClassName(dispatchName))
+        t1 = dispatchName !== "Object" && dispatchName !== "";
+        if (t1)
           return dispatchName;
         $constructor = object.constructor;
         if (typeof $constructor == "function") {
           constructorName = $constructor.name;
-          if (typeof constructorName == "string" && H.Primitives__saneNativeClassName(constructorName))
+          if (typeof constructorName == "string")
+            t1 = constructorName !== "Object" && constructorName !== "";
+          else
+            t1 = false;
+          if (t1)
             return constructorName;
         }
       }
       return H._rtiToString(H.instanceType(object), null);
-    },
-    Primitives__saneNativeClassName: function($name) {
-      var t1 = $name !== "Object" && $name !== "";
-      return t1;
     },
     Primitives_stringFromCharCode: function(charCode) {
       var bits;
@@ -538,9 +539,6 @@
         }
       }(expression);
     },
-    NullError$: function(_message, match) {
-      return new H.NullError(_message, match == null ? null : match.method);
-    },
     JsNoSuchMethodError$: function(_message, match) {
       var t1 = match == null,
         t2 = t1 ? null : match.method;
@@ -562,7 +560,7 @@
       return error;
     },
     _unwrapNonDartException: function(ex) {
-      var message, number, ieErrorCode, nsme, notClosure, nullCall, nullLiteralCall, undefCall, undefLiteralCall, nullProperty, undefProperty, undefLiteralProperty, match, t1, _null = null;
+      var message, number, ieErrorCode, t1, nsme, notClosure, nullCall, nullLiteralCall, undefCall, undefLiteralCall, nullProperty, undefProperty, undefLiteralProperty, match, _null = null;
       if (!("message" in ex))
         return ex;
       message = ex.message;
@@ -575,7 +573,8 @@
               return H.saveStackTrace(ex, H.JsNoSuchMethodError$(H.S(message) + " (Error " + ieErrorCode + ")", _null));
             case 445:
             case 5007:
-              return H.saveStackTrace(ex, H.NullError$(H.S(message) + " (Error " + ieErrorCode + ")", _null));
+              t1 = H.S(message) + " (Error " + ieErrorCode + ")";
+              return H.saveStackTrace(ex, new H.NullError(t1, _null));
           }
       }
       if (ex instanceof TypeError) {
@@ -629,7 +628,7 @@
             } else
               t1 = true;
             if (t1)
-              return H.saveStackTrace(ex, H.NullError$(message, match));
+              return H.saveStackTrace(ex, new H.NullError(message, match == null ? _null : match.method));
           }
         }
         return H.saveStackTrace(ex, new H.UnknownJsTypeError(typeof message == "string" ? message : ""));
@@ -833,7 +832,9 @@
           return t1.$add();
         $.Closure_functionCounter = t1 + 1;
         selfName = "self" + t1;
-        return new Function("return function(){var " + selfName + " = this." + H.BoundClosure_selfFieldName() + ";return " + selfName + "." + H.S(stubName) + "();}")();
+        t1 = "return function(){var " + selfName + " = this.";
+        t2 = $.BoundClosure_selfFieldNameCache;
+        return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + ";return " + selfName + "." + H.S(stubName) + "();}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity).join(",");
       t1 = $.Closure_functionCounter;
@@ -841,7 +842,9 @@
         return t1.$add();
       $.Closure_functionCounter = t1 + 1;
       $arguments += t1;
-      return new Function("return function(" + $arguments + "){return this." + H.BoundClosure_selfFieldName() + "." + H.S(stubName) + "(" + $arguments + ");}")();
+      t1 = "return function(" + $arguments + "){return this.";
+      t2 = $.BoundClosure_selfFieldNameCache;
+      return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + "." + H.S(stubName) + "(" + $arguments + ");}")();
     },
     Closure_cspForwardInterceptedCall: function(arity, isSuperCall, $name, $function) {
       var getSelf = H.BoundClosure_selfOf,
@@ -896,9 +899,11 @@
       }
     },
     Closure_forwardInterceptedCallTo: function(receiver, $function) {
-      var stubName, arity, lookedUpFunction, t1, t2, $arguments,
-        selfField = H.BoundClosure_selfFieldName(),
-        receiverField = $.BoundClosure_receiverFieldNameCache;
+      var receiverField, stubName, arity, lookedUpFunction, t1, t2, $arguments,
+        selfField = $.BoundClosure_selfFieldNameCache;
+      if (selfField == null)
+        selfField = $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self");
+      receiverField = $.BoundClosure_receiverFieldNameCache;
       if (receiverField == null)
         receiverField = $.BoundClosure_receiverFieldNameCache = H.BoundClosure_computeFieldNamed("receiver");
       stubName = $function.$stubName;
@@ -938,10 +943,6 @@
     },
     BoundClosure_receiverOf: function(closure) {
       return closure._receiver;
-    },
-    BoundClosure_selfFieldName: function() {
-      var t1 = $.BoundClosure_selfFieldNameCache;
-      return t1 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t1;
     },
     BoundClosure_computeFieldNamed: function(fieldName) {
       var t1, i, $name,
@@ -2710,7 +2711,7 @@
       return {i: interceptor, p: proto, e: extension, x: indexability};
     },
     getNativeInterceptor: function(object) {
-      var proto, objectProto, $constructor, interceptor,
+      var proto, objectProto, $constructor, interceptor, t1,
         record = object[init.dispatchPropertyName];
       if (record == null)
         if ($.initNativeDispatchFlag == null) {
@@ -2730,7 +2731,14 @@
           throw H.wrapException(P.UnimplementedError$("Return interceptor for " + H.S(proto(object, record))));
       }
       $constructor = object.constructor;
-      interceptor = $constructor == null ? null : $constructor[J.JS_INTEROP_INTERCEPTOR_TAG()];
+      if ($constructor == null)
+        interceptor = null;
+      else {
+        t1 = $._JS_INTEROP_INTERCEPTOR_TAG;
+        if (t1 == null)
+          t1 = $._JS_INTEROP_INTERCEPTOR_TAG = init.getIsolateTag("_$dart_js");
+        interceptor = $constructor[t1];
+      }
       if (interceptor != null)
         return interceptor;
       interceptor = H.lookupAndCacheInterceptor(object);
@@ -2744,14 +2752,13 @@
       if (proto === Object.prototype)
         return C.PlainJavaScriptObject_methods;
       if (typeof $constructor == "function") {
-        Object.defineProperty($constructor, J.JS_INTEROP_INTERCEPTOR_TAG(), {value: C.UnknownJavaScriptObject_methods, enumerable: false, writable: true, configurable: true});
+        t1 = $._JS_INTEROP_INTERCEPTOR_TAG;
+        if (t1 == null)
+          t1 = $._JS_INTEROP_INTERCEPTOR_TAG = init.getIsolateTag("_$dart_js");
+        Object.defineProperty($constructor, t1, {value: C.UnknownJavaScriptObject_methods, enumerable: false, writable: true, configurable: true});
         return C.UnknownJavaScriptObject_methods;
       }
       return C.UnknownJavaScriptObject_methods;
-    },
-    JS_INTEROP_INTERCEPTOR_TAG: function() {
-      var t1 = $._JS_INTEROP_INTERCEPTOR_TAG;
-      return t1 == null ? $._JS_INTEROP_INTERCEPTOR_TAG = init.getIsolateTag("_$dart_js") : t1;
     },
     JSArray_JSArray$fixed: function($length, $E) {
       if ($length < 0 || $length > 4294967295)
@@ -4400,9 +4407,9 @@
         styles = $.ViewChildComponent0__componentStyles;
       if (styles == null)
         styles = $.ViewChildComponent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.set$componentStyles(styles);
+      t1.__ComponentView_componentStyles = styles;
       t2 = document.createElement("child");
-      t1.set$rootElement(0, t2);
+      t1.__ComponentView_rootElement = t2;
       return t1;
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
@@ -4552,30 +4559,21 @@
       this.stackTrace = t1;
     }
   },
-  M = {
-    ChangeDetectionHost_checkForCrashes: function() {
-      var t1 = $.ChangeDetectionHost__current;
-      return (t1 == null ? null : t1._lastGuardedView) != null;
-    },
-    ChangeDetectionHost: function ChangeDetectionHost() {
-    },
-    ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
+  M = {ChangeDetectionHost: function ChangeDetectionHost() {
+    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
       var _ = this;
       _._box_0 = t0;
       _.$this = t1;
       _.callback = t2;
       _.completer = t3;
       _.R = t4;
-    },
-    ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
+    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
       this.completer = t0;
       this.R = t1;
-    },
-    ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
+    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
       this.$this = t0;
       this.completer = t1;
-    },
-    ComponentLoader: function ComponentLoader() {
+    }, ComponentLoader: function ComponentLoader() {
     },
     _MapInjector$: function(providers, $parent) {
       var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
@@ -6633,7 +6631,8 @@
       return t1 == null ? $._RootZone__rootDelegate = new P._ZoneDelegate(this) : t1;
     },
     get$_parentDelegate: function() {
-      return this.get$_delegate();
+      var t1 = $._RootZone__rootDelegate;
+      return t1 == null ? $._RootZone__rootDelegate = new P._ZoneDelegate(this) : t1;
     },
     get$errorZone: function() {
       return this;
@@ -8518,10 +8517,10 @@
       styles = $.ViewGoldenComponent0__componentStyles;
       if (styles == null)
         styles = $.ViewGoldenComponent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t4.set$componentStyles(styles);
+      t4.__ComponentView_componentStyles = styles;
       t5 = document;
       t6 = t5.createElement("golden");
-      t4.set$rootElement(0, t6);
+      t4.__ComponentView_rootElement = t6;
       if (hostView.__HostView_componentView == null)
         hostView.__HostView_componentView = t4;
       else
@@ -8819,21 +8818,9 @@
       var t1 = this.__ComponentView_componentStyles;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("componentStyles")) : t1;
     },
-    set$componentStyles: function(t1) {
-      if (this.__ComponentView_componentStyles == null)
-        this.__ComponentView_componentStyles = t1;
-      else
-        throw H.wrapException(H.LateError$fieldAI("componentStyles"));
-    },
     get$rootElement: function(_) {
       var t1 = this.__ComponentView_rootElement;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("rootElement")) : t1;
-    },
-    set$rootElement: function(_, t1) {
-      if (this.__ComponentView_rootElement == null)
-        this.__ComponentView_rootElement = t1;
-      else
-        throw H.wrapException(H.LateError$fieldAI("rootElement"));
     },
     get$projectedNodes: function() {
       var t1 = this._component_view$_data.___ComponentViewData_projectedNodes;
@@ -8880,7 +8867,8 @@
         t1 = this._component_view$_data;
       if (t1._shouldSkipChangeDetection)
         return;
-      if (M.ChangeDetectionHost_checkForCrashes())
+      t2 = $.ChangeDetectionHost__current;
+      if ((t2 == null ? null : t2._lastGuardedView) != null)
         this.detectCrash$0();
       else
         this.detectChangesInternal$0();
@@ -8946,10 +8934,12 @@
       }
     },
     detectChangesDeprecated$0: function() {
-      var t1 = this._embedded_view$_data;
+      var t2,
+        t1 = this._embedded_view$_data;
       if (t1._embedded_view$_shouldSkipChangeDetection)
         return;
-      if (M.ChangeDetectionHost_checkForCrashes())
+      t2 = $.ChangeDetectionHost__current;
+      if ((t2 == null ? null : t2._lastGuardedView) != null)
         this.detectCrash$0();
       else
         this.detectChangesInternal$0();
@@ -9015,10 +9005,12 @@
       }
     },
     detectChangesDeprecated$0: function() {
-      var t1 = this._data;
+      var t2,
+        t1 = this._data;
       if (t1._host_view$_shouldSkipChangeDetection)
         return;
-      if (M.ChangeDetectionHost_checkForCrashes())
+      t2 = $.ChangeDetectionHost__current;
+      if ((t2 == null ? null : t2._lastGuardedView) != null)
         this.detectCrash$0();
       else
         this.get$componentView().detectChangesDeprecated$0();
@@ -9588,10 +9580,10 @@
         styles = $.ViewUsesAfterView0__componentStyles;
       if (styles == null)
         styles = $.ViewUsesAfterView0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.set$componentStyles(styles);
+      t1.__ComponentView_componentStyles = styles;
       t2 = document;
       t3 = t2.createElement("uses-after-view");
-      t1.set$rootElement(0, t3);
+      t1.__ComponentView_rootElement = t3;
       if (_this.__ViewGoldenComponent0__compView_0 == null)
         _this.__ViewGoldenComponent0__compView_0 = t1;
       else
@@ -9608,9 +9600,9 @@
       styles = $.ViewUsesAfterContent0__componentStyles;
       if (styles == null)
         styles = $.ViewUsesAfterContent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.set$componentStyles(styles);
+      t1.__ComponentView_componentStyles = styles;
       t2 = t2.createElement("uses-after-content");
-      t1.set$rootElement(0, t2);
+      t1.__ComponentView_rootElement = t2;
       if (_this.__ViewGoldenComponent0__compView_1 == null)
         _this.__ViewGoldenComponent0__compView_1 = t1;
       else
