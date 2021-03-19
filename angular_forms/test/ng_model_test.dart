@@ -42,6 +42,29 @@ void main() {
     });
   });
 
+  group('NgModelWithNgDisabledTest', () {
+    late NgTestFixture<NgModelWithNgDisabledTestComponent> fixture;
+    late NgModelWithNgDisabledTestComponent component;
+
+    setUp(() async {
+      final testBed =
+          NgTestBed(ng.createNgModelWithNgDisabledTestComponentFactory());
+      fixture = await testBed.create();
+      component = fixture.assertOnlyInstance;
+    });
+
+    test('disables component when ngDisabled initially true', () async {
+      expect(component.editor!.isDisabled, isTrue);
+    });
+
+    test('enables component when ngDisabled changes to false', () async {
+      await fixture.update((cmp) {
+        cmp.isDisabled = false;
+      });
+      expect(component.editor!.isDisabled, isFalse);
+    });
+  });
+
   test('throws when violating the checkBinding contract', () async {
     final testBed = NgTestBed(
       ng.createNgModelWithCheckBindingTestFactory(),
@@ -92,12 +115,39 @@ class NgModelWithCheckBindingTest {
 }
 
 @Component(
+  selector: 'test',
+  directives: [
+    CustomEditorWithNgModelSupport,
+    NgModel,
+  ],
+  template: '''
+    <custom-editor-with-ng-model
+        #editor
+        [(ngModel)]="value" [ngDisabled]="isDisabled">
+    </custom-editor-with-ng-model>
+  ''',
+)
+class NgModelWithNgDisabledTestComponent {
+  String? value;
+  bool isDisabled = true;
+
+  @ViewChild('editor')
+  CustomEditorWithNgModelSupport? editor;
+}
+
+@Component(
   selector: 'custom-editor-with-ng-model',
   template: '',
 )
 class CustomEditorWithNgModelSupport implements ControlValueAccessor<String> {
   final NgControl _ngControl;
   late ChangeFunction<String> _onChange;
+
+  /// Whether or not the component is disabled.
+  ///
+  /// Typically, the disabled state would render differently, but for testing
+  /// purposes we just set a boolean.
+  bool isDisabled = false;
 
   CustomEditorWithNgModelSupport(this._ngControl) {
     _ngControl.valueAccessor = this;
@@ -115,7 +165,9 @@ class CustomEditorWithNgModelSupport implements ControlValueAccessor<String> {
   }
 
   @override
-  void onDisabledChanged(_) {}
+  void onDisabledChanged(isDisabled) {
+    this.isDisabled = isDisabled;
+  }
 
   @override
   void registerOnChange(ChangeFunction<String> function) {

@@ -38,6 +38,7 @@ void setUpControl(Control control, NgControl dir) {
   control.registerOnChange(
       (dynamic newValue) => dir.valueAccessor?.writeValue(newValue));
   control.disabledChanges.listen(dir.valueAccessor?.onDisabledChanged);
+  if (control.disabled) dir.valueAccessor!.onDisabledChanged(control.disabled);
   // touched
   dir.valueAccessor!.registerOnTouched(() => control.markAsTouched());
 }
