@@ -28,8 +28,8 @@ List<o.Statement> bindingToUpdateStatements(
   var devToolsStatement =
       devToolsBindingStatement(binding, appViewInstance, currValExpr);
   return [
-    updateStatement,
     if (devToolsStatement != null) devToolsStatement,
+    updateStatement,
   ];
 }
 
