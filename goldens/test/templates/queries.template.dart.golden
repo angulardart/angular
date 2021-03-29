@@ -17,16 +17,17 @@ import 'dart:html' as import8;
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/core/linker/element_ref.dart';
-import 'package:angular/src/runtime/check_binding.dart' as import12;
-import 'package:angular/src/runtime/queries.dart' as import13;
+import 'package:angular/src/devtools.dart' as import12;
+import 'package:angular/src/runtime/check_binding.dart' as import13;
+import 'package:angular/src/runtime/queries.dart' as import14;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
-import 'package:angular/src/core/linker/views/render_view.dart' as import16;
-import 'package:angular/src/core/linker/views/host_view.dart' as import17;
-import 'package:angular/src/common/directives/ng_for.dart' as import18;
-import 'package:angular/src/runtime/text_binding.dart' as import19;
-import 'package:angular/src/core/linker/ng_content_ref.dart' as import20;
-import 'package:angular/src/runtime/interpolate.dart' as import21;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
+import 'package:angular/src/core/linker/views/render_view.dart' as import17;
+import 'package:angular/src/core/linker/views/host_view.dart' as import18;
+import 'package:angular/src/common/directives/ng_for.dart' as import19;
+import 'package:angular/src/runtime/text_binding.dart' as import20;
+import 'package:angular/src/core/linker/ng_content_ref.dart' as import21;
+import 'package:angular/src/runtime/interpolate.dart' as import22;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -69,11 +70,14 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_2_9, 'ngIf', _ctx.someValue);
+    }
     this._NgIf_2_9.ngIf = _ctx.someValue;
     this._appEl_2.detectChangesInNestedViews();
-    if ((!import12.debugThrowIfChanged)) {
+    if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_4_isDirty) {
-        _ctx.usingTypeFromField = import13.flattenNodes([
+        _ctx.usingTypeFromField = import14.flattenNodes([
           [this._AnotherDirective_0_5, this._AnotherDirective_1_5],
           this._appEl_2.mapNestedViewsWithSingleResult((_ViewGoldenComponent1 nestedView) {
             return nestedView._AnotherDirective_0_5;
@@ -82,7 +86,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
         this._viewQuery_AnotherDirective_4_isDirty = false;
       }
       if (this._viewQuery_q3_5_isDirty) {
-        _ctx.nestedViewChild = import13.firstOrNull(this._appEl_2.mapNestedViewsWithSingleResult((_ViewGoldenComponent1 nestedView) {
+        _ctx.nestedViewChild = import14.firstOrNull(this._appEl_2.mapNestedViewsWithSingleResult((_ViewGoldenComponent1 nestedView) {
           return nestedView._AnotherDirective_0_5;
         }));
         this._viewQuery_q3_5_isDirty = false;
@@ -120,9 +124,9 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
   return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
 }
 
-class _ViewGoldenComponent1 extends import15.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent1 extends import16.EmbeddedView<import1.GoldenComponent> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewGoldenComponent1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -138,13 +142,13 @@ class _ViewGoldenComponent1 extends import15.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import15.EmbeddedView<void> viewFactory_GoldenComponent1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_GoldenComponent1(import17.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent1(parentView, parentIndex);
 }
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import17.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import18.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -155,7 +159,7 @@ class _ViewGoldenComponentHost0 extends import17.HostView<import1.GoldenComponen
   }
 }
 
-import17.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import18.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -192,9 +196,9 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    if ((!import12.debugThrowIfChanged)) {
+    if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_0_isDirty) {
-        _ctx.viewChildren = import13.flattenNodes([
+        _ctx.viewChildren = import14.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViewsWithSingleResult((_ViewEmbeddedQueries1 nestedView) {
             return nestedView._AnotherDirective_0_5;
@@ -233,9 +237,9 @@ ComponentFactory<import1.EmbeddedQueries> createEmbeddedQueriesFactory() {
   return ComponentFactory('test', viewFactory_EmbeddedQueriesHost0);
 }
 
-class _ViewEmbeddedQueries1 extends import15.EmbeddedView<import1.EmbeddedQueries> {
+class _ViewEmbeddedQueries1 extends import16.EmbeddedView<import1.EmbeddedQueries> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewEmbeddedQueries1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewEmbeddedQueries1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -250,13 +254,13 @@ class _ViewEmbeddedQueries1 extends import15.EmbeddedView<import1.EmbeddedQuerie
   }
 }
 
-import15.EmbeddedView<void> viewFactory_EmbeddedQueries1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_EmbeddedQueries1(import17.RenderView parentView, int parentIndex) {
   return _ViewEmbeddedQueries1(parentView, parentIndex);
 }
 
-class _ViewEmbeddedQueries2 extends import15.EmbeddedView<import1.EmbeddedQueries> {
+class _ViewEmbeddedQueries2 extends import16.EmbeddedView<import1.EmbeddedQueries> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewEmbeddedQueries2(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewEmbeddedQueries2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -271,13 +275,13 @@ class _ViewEmbeddedQueries2 extends import15.EmbeddedView<import1.EmbeddedQuerie
   }
 }
 
-import15.EmbeddedView<void> viewFactory_EmbeddedQueries2(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_EmbeddedQueries2(import17.RenderView parentView, int parentIndex) {
   return _ViewEmbeddedQueries2(parentView, parentIndex);
 }
 
 final List<Object> styles$EmbeddedQueriesHost = const [];
 
-class _ViewEmbeddedQueriesHost0 extends import17.HostView<import1.EmbeddedQueries> {
+class _ViewEmbeddedQueriesHost0 extends import18.HostView<import1.EmbeddedQueries> {
   @override
   void build() {
     this.componentView = ViewEmbeddedQueries0(this, 0);
@@ -287,7 +291,7 @@ class _ViewEmbeddedQueriesHost0 extends import17.HostView<import1.EmbeddedQuerie
   }
 }
 
-import17.HostView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0() {
+import18.HostView<import1.EmbeddedQueries> viewFactory_EmbeddedQueriesHost0() {
   return _ViewEmbeddedQueriesHost0();
 }
 
@@ -324,9 +328,9 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    if ((!import12.debugThrowIfChanged)) {
+    if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_0_isDirty) {
-        _ctx.viewChildren = import13.flattenNodes([
+        _ctx.viewChildren = import14.flattenNodes([
           [this._AnotherDirective_0_5],
           this._appEl_1.mapNestedViewsWithSingleResult((_ViewEmbeddedQueriesList1 nestedView) {
             return nestedView._AnotherDirective_0_5;
@@ -365,9 +369,9 @@ ComponentFactory<import1.EmbeddedQueriesList> createEmbeddedQueriesListFactory()
   return ComponentFactory('test', viewFactory_EmbeddedQueriesListHost0);
 }
 
-class _ViewEmbeddedQueriesList1 extends import15.EmbeddedView<import1.EmbeddedQueriesList> {
+class _ViewEmbeddedQueriesList1 extends import16.EmbeddedView<import1.EmbeddedQueriesList> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewEmbeddedQueriesList1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewEmbeddedQueriesList1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -382,13 +386,13 @@ class _ViewEmbeddedQueriesList1 extends import15.EmbeddedView<import1.EmbeddedQu
   }
 }
 
-import15.EmbeddedView<void> viewFactory_EmbeddedQueriesList1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_EmbeddedQueriesList1(import17.RenderView parentView, int parentIndex) {
   return _ViewEmbeddedQueriesList1(parentView, parentIndex);
 }
 
-class _ViewEmbeddedQueriesList2 extends import15.EmbeddedView<import1.EmbeddedQueriesList> {
+class _ViewEmbeddedQueriesList2 extends import16.EmbeddedView<import1.EmbeddedQueriesList> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewEmbeddedQueriesList2(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewEmbeddedQueriesList2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -403,13 +407,13 @@ class _ViewEmbeddedQueriesList2 extends import15.EmbeddedView<import1.EmbeddedQu
   }
 }
 
-import15.EmbeddedView<void> viewFactory_EmbeddedQueriesList2(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_EmbeddedQueriesList2(import17.RenderView parentView, int parentIndex) {
   return _ViewEmbeddedQueriesList2(parentView, parentIndex);
 }
 
 final List<Object> styles$EmbeddedQueriesListHost = const [];
 
-class _ViewEmbeddedQueriesListHost0 extends import17.HostView<import1.EmbeddedQueriesList> {
+class _ViewEmbeddedQueriesListHost0 extends import18.HostView<import1.EmbeddedQueriesList> {
   @override
   void build() {
     this.componentView = ViewEmbeddedQueriesList0(this, 0);
@@ -419,7 +423,7 @@ class _ViewEmbeddedQueriesListHost0 extends import17.HostView<import1.EmbeddedQu
   }
 }
 
-import17.HostView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0() {
+import18.HostView<import1.EmbeddedQueriesList> viewFactory_EmbeddedQueriesListHost0() {
   return _ViewEmbeddedQueriesListHost0();
 }
 
@@ -451,6 +455,9 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.conditionA);
+    }
     this._NgIf_0_9.ngIf = _ctx.conditionA;
     this._appEl_0.detectChangesInNestedViews();
   }
@@ -485,10 +492,10 @@ ComponentFactory<import1.NestedNgForQueriesList> createNestedNgForQueriesListFac
   return ComponentFactory('test', viewFactory_NestedNgForQueriesListHost0);
 }
 
-class _ViewNestedNgForQueriesList1 extends import15.EmbeddedView<import1.NestedNgForQueriesList> {
+class _ViewNestedNgForQueriesList1 extends import16.EmbeddedView<import1.NestedNgForQueriesList> {
   late final ViewContainer _appEl_1;
   late final NgIf _NgIf_1_9;
-  _ViewNestedNgForQueriesList1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewNestedNgForQueriesList1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -503,6 +510,9 @@ class _ViewNestedNgForQueriesList1 extends import15.EmbeddedView<import1.NestedN
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.conditionB);
+    }
     this._NgIf_1_9.ngIf = _ctx.conditionB;
     this._appEl_1.detectChangesInNestedViews();
   }
@@ -513,14 +523,14 @@ class _ViewNestedNgForQueriesList1 extends import15.EmbeddedView<import1.NestedN
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedNgForQueriesList1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_NestedNgForQueriesList1(import17.RenderView parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList1(parentView, parentIndex);
 }
 
-class _ViewNestedNgForQueriesList2 extends import15.EmbeddedView<import1.NestedNgForQueriesList> {
+class _ViewNestedNgForQueriesList2 extends import16.EmbeddedView<import1.NestedNgForQueriesList> {
   late final ViewContainer _appEl_1;
-  late final import18.NgFor _NgFor_1_9;
-  _ViewNestedNgForQueriesList2(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  late final import19.NgFor _NgFor_1_9;
+  _ViewNestedNgForQueriesList2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -528,7 +538,7 @@ class _ViewNestedNgForQueriesList2 extends import15.EmbeddedView<import1.NestedN
     final _anchor_1 = import9.appendAnchor(_el_0);
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_NestedNgForQueriesList3);
-    this._NgFor_1_9 = import18.NgFor(this._appEl_1, _TemplateRef_1_8);
+    this._NgFor_1_9 = import19.NgFor(this._appEl_1, _TemplateRef_1_8);
     this.initRootNode(_el_0);
   }
 
@@ -538,10 +548,13 @@ class _ViewNestedNgForQueriesList2 extends import15.EmbeddedView<import1.NestedN
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
       if ((_ctx.items != null)) {
-        (this._NgFor_1_9.ngForOf = _ctx.items);
+        if (import12.isDevToolsEnabled) {
+          import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', _ctx.items);
+        }
+        this._NgFor_1_9.ngForOf = _ctx.items;
       }
     }
-    if ((!import12.debugThrowIfChanged)) {
+    if ((!import13.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_1.detectChangesInNestedViews();
@@ -553,13 +566,13 @@ class _ViewNestedNgForQueriesList2 extends import15.EmbeddedView<import1.NestedN
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedNgForQueriesList2(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_NestedNgForQueriesList2(import17.RenderView parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList2(parentView, parentIndex);
 }
 
-class _ViewNestedNgForQueriesList3 extends import15.EmbeddedView<import1.NestedNgForQueriesList> {
+class _ViewNestedNgForQueriesList3 extends import16.EmbeddedView<import1.NestedNgForQueriesList> {
   late final import1.AnotherDirective _AnotherDirective_1_5;
-  _ViewNestedNgForQueriesList3(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewNestedNgForQueriesList3(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -570,13 +583,13 @@ class _ViewNestedNgForQueriesList3 extends import15.EmbeddedView<import1.NestedN
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedNgForQueriesList3(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_NestedNgForQueriesList3(import17.RenderView parentView, int parentIndex) {
   return _ViewNestedNgForQueriesList3(parentView, parentIndex);
 }
 
 final List<Object> styles$NestedNgForQueriesListHost = const [];
 
-class _ViewNestedNgForQueriesListHost0 extends import17.HostView<import1.NestedNgForQueriesList> {
+class _ViewNestedNgForQueriesListHost0 extends import18.HostView<import1.NestedNgForQueriesList> {
   @override
   void build() {
     this.componentView = ViewNestedNgForQueriesList0(this, 0);
@@ -586,7 +599,7 @@ class _ViewNestedNgForQueriesListHost0 extends import17.HostView<import1.NestedN
   }
 }
 
-import17.HostView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0() {
+import18.HostView<import1.NestedNgForQueriesList> viewFactory_NestedNgForQueriesListHost0() {
   return _ViewNestedNgForQueriesListHost0();
 }
 
@@ -622,6 +635,9 @@ class ViewStaticSingleQuery0 extends import0.ComponentView<import1.StaticSingleQ
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.isVisible);
+    }
     this._NgIf_1_9.ngIf = _ctx.isVisible;
     this._appEl_1.detectChangesInNestedViews();
   }
@@ -656,9 +672,9 @@ ComponentFactory<import1.StaticSingleQuery> createStaticSingleQueryFactory() {
   return ComponentFactory('static-single-query', viewFactory_StaticSingleQueryHost0);
 }
 
-class _ViewStaticSingleQuery1 extends import15.EmbeddedView<import1.StaticSingleQuery> {
+class _ViewStaticSingleQuery1 extends import16.EmbeddedView<import1.StaticSingleQuery> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
-  _ViewStaticSingleQuery1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewStaticSingleQuery1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -668,13 +684,13 @@ class _ViewStaticSingleQuery1 extends import15.EmbeddedView<import1.StaticSingle
   }
 }
 
-import15.EmbeddedView<void> viewFactory_StaticSingleQuery1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_StaticSingleQuery1(import17.RenderView parentView, int parentIndex) {
   return _ViewStaticSingleQuery1(parentView, parentIndex);
 }
 
 final List<Object> styles$StaticSingleQueryHost = const [];
 
-class _ViewStaticSingleQueryHost0 extends import17.HostView<import1.StaticSingleQuery> {
+class _ViewStaticSingleQueryHost0 extends import18.HostView<import1.StaticSingleQuery> {
   @override
   void build() {
     this.componentView = ViewStaticSingleQuery0(this, 0);
@@ -684,7 +700,7 @@ class _ViewStaticSingleQueryHost0 extends import17.HostView<import1.StaticSingle
   }
 }
 
-import17.HostView<import1.StaticSingleQuery> viewFactory_StaticSingleQueryHost0() {
+import18.HostView<import1.StaticSingleQuery> viewFactory_StaticSingleQueryHost0() {
   return _ViewStaticSingleQueryHost0();
 }
 
@@ -722,11 +738,14 @@ class ViewDynamicSingleQuery0 extends import0.ComponentView<import1.DynamicSingl
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.isVisible);
+    }
     this._NgIf_0_9.ngIf = _ctx.isVisible;
     this._appEl_0.detectChangesInNestedViews();
-    if ((!import12.debugThrowIfChanged)) {
+    if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_0_isDirty) {
-        _ctx.another = import13.firstOrNull(import13.flattenNodes([
+        _ctx.another = import14.firstOrNull(import14.flattenNodes([
           this._appEl_0.mapNestedViewsWithSingleResult((_ViewDynamicSingleQuery1 nestedView) {
             return nestedView._AnotherDirective_0_5;
           }),
@@ -767,10 +786,10 @@ ComponentFactory<import1.DynamicSingleQuery> createDynamicSingleQueryFactory() {
   return ComponentFactory('dynamic-single-query', viewFactory_DynamicSingleQueryHost0);
 }
 
-class _ViewDynamicSingleQuery1 extends import15.EmbeddedView<import1.DynamicSingleQuery> {
+class _ViewDynamicSingleQuery1 extends import16.EmbeddedView<import1.DynamicSingleQuery> {
   late final import1.AnotherDirective _AnotherDirective_0_5;
   late final import1.AnotherDirective _AnotherDirective_1_5;
-  _ViewDynamicSingleQuery1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewDynamicSingleQuery1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final doc = import8.document;
@@ -787,13 +806,13 @@ class _ViewDynamicSingleQuery1 extends import15.EmbeddedView<import1.DynamicSing
   }
 }
 
-import15.EmbeddedView<void> viewFactory_DynamicSingleQuery1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_DynamicSingleQuery1(import17.RenderView parentView, int parentIndex) {
   return _ViewDynamicSingleQuery1(parentView, parentIndex);
 }
 
 final List<Object> styles$DynamicSingleQueryHost = const [];
 
-class _ViewDynamicSingleQueryHost0 extends import17.HostView<import1.DynamicSingleQuery> {
+class _ViewDynamicSingleQueryHost0 extends import18.HostView<import1.DynamicSingleQuery> {
   @override
   void build() {
     this.componentView = ViewDynamicSingleQuery0(this, 0);
@@ -803,7 +822,7 @@ class _ViewDynamicSingleQueryHost0 extends import17.HostView<import1.DynamicSing
   }
 }
 
-import17.HostView<import1.DynamicSingleQuery> viewFactory_DynamicSingleQueryHost0() {
+import18.HostView<import1.DynamicSingleQuery> viewFactory_DynamicSingleQueryHost0() {
   return _ViewDynamicSingleQueryHost0();
 }
 
@@ -856,7 +875,7 @@ ComponentFactory<import1.ContentQuery> createContentQueryFactory() {
 
 final List<Object> styles$ContentQueryHost = const [];
 
-class _ViewContentQueryHost0 extends import17.HostView<import1.ContentQuery> {
+class _ViewContentQueryHost0 extends import18.HostView<import1.ContentQuery> {
   @override
   void build() {
     this.componentView = ViewContentQuery0(this, 0);
@@ -866,16 +885,16 @@ class _ViewContentQueryHost0 extends import17.HostView<import1.ContentQuery> {
   }
 }
 
-import17.HostView<import1.ContentQuery> viewFactory_ContentQueryHost0() {
+import18.HostView<import1.ContentQuery> viewFactory_ContentQueryHost0() {
   return _ViewContentQueryHost0();
 }
 
 final List<Object> styles$ContentHasReference = const [];
 
 class ViewContentHasReference0 extends import0.ComponentView<import1.ContentHasReference> {
-  final import19.TextBinding _textBinding_2 = import19.TextBinding();
-  final import19.TextBinding _textBinding_4 = import19.TextBinding();
-  late final import20.NgContentRef _NgContentRef_0_5;
+  final import20.TextBinding _textBinding_2 = import20.TextBinding();
+  final import20.TextBinding _textBinding_4 = import20.TextBinding();
+  late final import21.NgContentRef _NgContentRef_0_5;
   static import4.ComponentStyles? _componentStyles;
   ViewContentHasReference0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -890,7 +909,7 @@ class ViewContentHasReference0 extends import0.ComponentView<import1.ContentHasR
     final _ctx = this.ctx;
     final parentRenderNode = this.initViewRoot();
     this.project(parentRenderNode, 0);
-    this._NgContentRef_0_5 = import20.NgContentRef(this, 0);
+    this._NgContentRef_0_5 = import21.NgContentRef(this, 0);
     final _text_1 = import9.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_2.element);
     final _text_3 = import9.appendText(parentRenderNode, ' ');
@@ -902,8 +921,8 @@ class ViewContentHasReference0 extends import0.ComponentView<import1.ContentHasR
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final local_foo = this._NgContentRef_0_5;
-    this._textBinding_2.updateText(import21.interpolate0(local_foo.hasContent));
-    this._textBinding_4.updateText(import21.interpolate0((_ctx.ref!).hasContent));
+    this._textBinding_2.updateText(import22.interpolate0(local_foo.hasContent));
+    this._textBinding_4.updateText(import22.interpolate0((_ctx.ref!).hasContent));
   }
 
   static void _debugClearComponentStyles() {
@@ -933,7 +952,7 @@ ComponentFactory<import1.ContentHasReference> createContentHasReferenceFactory()
 
 final List<Object> styles$ContentHasReferenceHost = const [];
 
-class _ViewContentHasReferenceHost0 extends import17.HostView<import1.ContentHasReference> {
+class _ViewContentHasReferenceHost0 extends import18.HostView<import1.ContentHasReference> {
   @override
   void build() {
     this.componentView = ViewContentHasReference0(this, 0);
@@ -943,7 +962,7 @@ class _ViewContentHasReferenceHost0 extends import17.HostView<import1.ContentHas
   }
 }
 
-import17.HostView<import1.ContentHasReference> viewFactory_ContentHasReferenceHost0() {
+import18.HostView<import1.ContentHasReference> viewFactory_ContentHasReferenceHost0() {
   return _ViewContentHasReferenceHost0();
 }
 

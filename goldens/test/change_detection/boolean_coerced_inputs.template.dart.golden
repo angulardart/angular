@@ -13,9 +13,10 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
-import 'package:angular/src/runtime/check_binding.dart' as import8;
+import 'package:angular/src/devtools.dart' as import8;
+import 'package:angular/src/runtime/check_binding.dart' as import9;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/core/linker/views/host_view.dart' as import11;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -62,11 +63,20 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _ctx = this.ctx;
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_0_5, 'raised', true);
+      }
       this._FancyButtonComponent_0_5.raised = true;
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_1_5, 'raised', true);
+      }
       this._FancyButtonComponent_1_5.raised = true;
     }
     final currVal_2 = _ctx.value;
-    if (import8.checkBinding(this._expr_2, currVal_2, 'value', 'asset:goldens/test/change_detection/boolean_coerced_inputs.dart')) {
+    if (import9.checkBinding(this._expr_2, currVal_2, 'value', 'asset:goldens/test/change_detection/boolean_coerced_inputs.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_2_5, 'raised', currVal_2);
+      }
       this._FancyButtonComponent_2_5.raised = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -109,7 +119,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import11.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -119,7 +129,7 @@ class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponen
   }
 }
 
-import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import11.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -167,7 +177,7 @@ ComponentFactory<import1.FancyButtonComponent> createFancyButtonComponentFactory
 
 final List<Object> styles$FancyButtonComponentHost = const [];
 
-class _ViewFancyButtonComponentHost0 extends import10.HostView<import1.FancyButtonComponent> {
+class _ViewFancyButtonComponentHost0 extends import11.HostView<import1.FancyButtonComponent> {
   @override
   void build() {
     this.componentView = ViewFancyButtonComponent0(this, 0);
@@ -177,7 +187,7 @@ class _ViewFancyButtonComponentHost0 extends import10.HostView<import1.FancyButt
   }
 }
 
-import10.HostView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0() {
+import11.HostView<import1.FancyButtonComponent> viewFactory_FancyButtonComponentHost0() {
   return _ViewFancyButtonComponentHost0();
 }
 

@@ -9170,10 +9170,13 @@
   B.GoldenComponent.prototype = {};
   B.MessageDirective.prototype = {};
   E.ViewGoldenComponent0.prototype = {
+    get$_MessageDirective_7_5: function() {
+      var t1 = this.__ViewGoldenComponent0__MessageDirective_7_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_MessageDirective_7_5")) : t1;
+    },
     detectChangesInternal$0: function() {
       if (this._data._changeDetectorState === 0) {
-        if (this.__ViewGoldenComponent0__MessageDirective_7_5 == null)
-          H.throwExpression(H.LateError$fieldNI("_MessageDirective_7_5"));
+        this.get$_MessageDirective_7_5();
         $.$get$ViewGoldenComponent0__message_1();
       }
     }

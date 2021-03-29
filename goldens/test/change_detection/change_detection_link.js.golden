@@ -9729,6 +9729,10 @@
       var t1 = this.__ViewOnPushLink0__appEl_2;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_2")) : t1;
     },
+    get$_NgIf_2_9: function() {
+      var t1 = this.__ViewOnPushLink0__NgIf_2_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_2_9")) : t1;
+    },
     get$_compView_3: function() {
       var t1 = this.__ViewOnPushLink0__compView_3;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_3")) : t1;
@@ -9740,6 +9744,10 @@
     get$_appEl_5: function() {
       var t1 = this.__ViewOnPushLink0__appEl_5;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_5")) : t1;
+    },
+    get$_NgIf_5_9: function() {
+      var t1 = this.__ViewOnPushLink0__NgIf_5_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_5_9")) : t1;
     },
     build$0: function() {
       var parentRenderNode, _anchor_0, t1, _anchor_2, t2, styles, _anchor_5, _this = this,
@@ -9824,15 +9832,12 @@
       _this.get$_compView_4().get$_appEl_0().detectChangesInCheckAlwaysViews$0();
     },
     detectChangesInternal$0: function() {
-      var t2, _this = this,
+      var _this = this,
         _ctx = _this.get$ctx(),
-        t1 = _this.__ViewOnPushLink0__NgIf_2_9;
-      if (t1 == null)
-        t1 = H.throwExpression(H.LateError$fieldNI("_NgIf_2_9"));
-      t2 = _ctx.isVisible;
+        t1 = _this.get$_NgIf_2_9(),
+        t2 = _ctx.isVisible;
       t1.set$ngIf(t2);
-      t1 = _this.__ViewOnPushLink0__NgIf_5_9;
-      (t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_5_9")) : t1).set$ngIf(t2);
+      _this.get$_NgIf_5_9().set$ngIf(t2);
       _this.get$_appEl_0().detectChangesInNestedViews$0();
       _this.get$_appEl_2().detectChangesInNestedViews$0();
       _this.get$_appEl_5().detectChangesInNestedViews$0();

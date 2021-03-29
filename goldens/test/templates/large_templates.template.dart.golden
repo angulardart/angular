@@ -16,10 +16,11 @@ import 'package:angular/src/utilities.dart' as import7;
 import 'dart:html' as import8;
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/devtools.dart' as import11;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import12;
-import 'package:angular/src/core/linker/views/render_view.dart' as import13;
-import 'package:angular/src/core/linker/views/host_view.dart' as import14;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import13;
+import 'package:angular/src/core/linker/views/render_view.dart' as import14;
+import 'package:angular/src/core/linker/views/host_view.dart' as import15;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -545,89 +546,341 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_0_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_1_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_2_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_2_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_3_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_3_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_4_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_4_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_5_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_5_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_6_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_6_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_7_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_7_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_8_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_8_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_9_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_9_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_10_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_10_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_11_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_11_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_12_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_12_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_13_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_13_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_14_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_14_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_15_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_15_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_16_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_16_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_17_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_17_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_18_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_18_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_19_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_19_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_20_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_20_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_21_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_21_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_22_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_22_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_23_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_23_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_24_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_24_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_25_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_25_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_26_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_26_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_27_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_27_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_28_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_28_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_29_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_29_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_30_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_30_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_31_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_31_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_32_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_32_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_33_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_33_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_34_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_34_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_35_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_35_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_36_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_36_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_37_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_37_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_38_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_38_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_39_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_39_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_40_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_40_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_41_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_41_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_42_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_42_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_43_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_43_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_44_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_44_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_45_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_45_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_46_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_46_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_47_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_47_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_48_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_48_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_49_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_49_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_50_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_50_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_51_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_51_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_52_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_52_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_53_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_53_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_54_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_54_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_55_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_55_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_56_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_56_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_57_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_57_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_58_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_58_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_59_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_59_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_60_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_60_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_61_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_61_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_62_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_62_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_63_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_63_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_64_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_64_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_65_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_65_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_66_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_66_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_67_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_67_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_68_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_68_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_69_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_69_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_70_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_70_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_71_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_71_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_72_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_72_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_73_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_73_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_74_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_74_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_75_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_75_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_76_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_76_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_77_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_77_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_78_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_78_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_79_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_79_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_80_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_80_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_81_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_81_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_82_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_82_9.ngIf = _ctx.isLoading;
+    if (import11.isDevToolsEnabled) {
+      import11.ComponentInspector.instance.recordInput(this._NgIf_83_9, 'ngIf', _ctx.isLoading);
+    }
     this._NgIf_83_9.ngIf = _ctx.isLoading;
     this._appEl_0.detectChangesInNestedViews();
     this._appEl_1.detectChangesInNestedViews();
@@ -828,10 +1081,10 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
   return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
 }
 
-class _ViewGoldenComponent1 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent1 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent1(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent1(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -852,14 +1105,14 @@ class _ViewGoldenComponent1 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent1(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent1(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent1(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent2 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent2 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent2(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent2(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -880,14 +1133,14 @@ class _ViewGoldenComponent2 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent2(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent2(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent2(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent3 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent3 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent3(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent3(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -908,14 +1161,14 @@ class _ViewGoldenComponent3 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent3(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent3(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent3(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent4 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent4 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent4(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent4(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -936,14 +1189,14 @@ class _ViewGoldenComponent4 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent4(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent4(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent4(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent5 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent5 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent5(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent5(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -964,14 +1217,14 @@ class _ViewGoldenComponent5 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent5(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent5(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent5(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent6 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent6 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent6(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent6(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -992,14 +1245,14 @@ class _ViewGoldenComponent6 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent6(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent6(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent6(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent7 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent7 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent7(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent7(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1020,14 +1273,14 @@ class _ViewGoldenComponent7 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent7(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent7(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent7(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent8 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent8 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent8(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent8(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1048,14 +1301,14 @@ class _ViewGoldenComponent8 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent8(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent8(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent8(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent9 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent9 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent9(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent9(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1076,14 +1329,14 @@ class _ViewGoldenComponent9 extends import12.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent9(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent9(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent9(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent10 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent10 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent10(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent10(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1104,14 +1357,14 @@ class _ViewGoldenComponent10 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent10(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent10(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent10(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent11 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent11 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent11(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent11(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1132,14 +1385,14 @@ class _ViewGoldenComponent11 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent11(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent11(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent11(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent12 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent12 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent12(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent12(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1160,14 +1413,14 @@ class _ViewGoldenComponent12 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent12(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent12(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent12(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent13 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent13 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent13(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent13(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1188,14 +1441,14 @@ class _ViewGoldenComponent13 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent13(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent13(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent13(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent14 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent14 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent14(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent14(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1216,14 +1469,14 @@ class _ViewGoldenComponent14 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent14(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent14(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent14(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent15 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent15 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent15(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent15(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1244,14 +1497,14 @@ class _ViewGoldenComponent15 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent15(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent15(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent15(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent16 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent16 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent16(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent16(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1272,14 +1525,14 @@ class _ViewGoldenComponent16 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent16(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent16(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent16(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent17 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent17 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent17(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent17(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1300,14 +1553,14 @@ class _ViewGoldenComponent17 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent17(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent17(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent17(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent18 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent18 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent18(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent18(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1328,14 +1581,14 @@ class _ViewGoldenComponent18 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent18(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent18(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent18(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent19 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent19 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent19(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent19(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1356,14 +1609,14 @@ class _ViewGoldenComponent19 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent19(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent19(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent19(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent20 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent20 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent20(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent20(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1384,14 +1637,14 @@ class _ViewGoldenComponent20 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent20(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent20(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent20(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent21 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent21 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent21(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent21(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1412,14 +1665,14 @@ class _ViewGoldenComponent21 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent21(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent21(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent21(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent22 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent22 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent22(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent22(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1440,14 +1693,14 @@ class _ViewGoldenComponent22 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent22(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent22(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent22(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent23 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent23 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent23(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent23(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1468,14 +1721,14 @@ class _ViewGoldenComponent23 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent23(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent23(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent23(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent24 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent24 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent24(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent24(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1496,14 +1749,14 @@ class _ViewGoldenComponent24 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent24(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent24(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent24(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent25 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent25 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent25(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent25(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1524,14 +1777,14 @@ class _ViewGoldenComponent25 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent25(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent25(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent25(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent26 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent26 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent26(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent26(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1552,14 +1805,14 @@ class _ViewGoldenComponent26 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent26(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent26(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent26(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent27 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent27 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent27(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent27(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1580,14 +1833,14 @@ class _ViewGoldenComponent27 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent27(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent27(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent27(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent28 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent28 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent28(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent28(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1608,14 +1861,14 @@ class _ViewGoldenComponent28 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent28(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent28(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent28(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent29 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent29 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent29(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent29(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1636,14 +1889,14 @@ class _ViewGoldenComponent29 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent29(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent29(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent29(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent30 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent30 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent30(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent30(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1664,14 +1917,14 @@ class _ViewGoldenComponent30 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent30(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent30(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent30(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent31 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent31 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent31(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent31(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1692,14 +1945,14 @@ class _ViewGoldenComponent31 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent31(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent31(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent31(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent32 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent32 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent32(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent32(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1720,14 +1973,14 @@ class _ViewGoldenComponent32 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent32(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent32(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent32(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent33 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent33 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent33(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent33(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1748,14 +2001,14 @@ class _ViewGoldenComponent33 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent33(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent33(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent33(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent34 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent34 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent34(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent34(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1776,14 +2029,14 @@ class _ViewGoldenComponent34 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent34(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent34(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent34(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent35 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent35 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent35(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent35(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1804,14 +2057,14 @@ class _ViewGoldenComponent35 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent35(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent35(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent35(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent36 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent36 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent36(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent36(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1832,14 +2085,14 @@ class _ViewGoldenComponent36 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent36(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent36(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent36(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent37 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent37 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent37(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent37(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1860,14 +2113,14 @@ class _ViewGoldenComponent37 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent37(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent37(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent37(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent38 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent38 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent38(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent38(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1888,14 +2141,14 @@ class _ViewGoldenComponent38 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent38(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent38(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent38(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent39 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent39 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent39(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent39(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1916,14 +2169,14 @@ class _ViewGoldenComponent39 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent39(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent39(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent39(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent40 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent40 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent40(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent40(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1944,14 +2197,14 @@ class _ViewGoldenComponent40 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent40(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent40(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent40(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent41 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent41 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent41(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent41(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -1972,14 +2225,14 @@ class _ViewGoldenComponent41 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent41(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent41(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent41(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent42 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent42 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent42(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent42(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2000,14 +2253,14 @@ class _ViewGoldenComponent42 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent42(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent42(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent42(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent43 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent43 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent43(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent43(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2028,14 +2281,14 @@ class _ViewGoldenComponent43 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent43(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent43(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent43(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent44 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent44 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent44(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent44(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2056,14 +2309,14 @@ class _ViewGoldenComponent44 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent44(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent44(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent44(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent45 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent45 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent45(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent45(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2084,14 +2337,14 @@ class _ViewGoldenComponent45 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent45(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent45(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent45(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent46 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent46 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent46(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent46(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2112,14 +2365,14 @@ class _ViewGoldenComponent46 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent46(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent46(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent46(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent47 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent47 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent47(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent47(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2140,14 +2393,14 @@ class _ViewGoldenComponent47 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent47(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent47(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent47(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent48 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent48 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent48(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent48(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2168,14 +2421,14 @@ class _ViewGoldenComponent48 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent48(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent48(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent48(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent49 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent49 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent49(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent49(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2196,14 +2449,14 @@ class _ViewGoldenComponent49 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent49(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent49(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent49(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent50 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent50 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent50(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent50(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2224,14 +2477,14 @@ class _ViewGoldenComponent50 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent50(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent50(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent50(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent51 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent51 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent51(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent51(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2252,14 +2505,14 @@ class _ViewGoldenComponent51 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent51(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent51(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent51(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent52 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent52 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent52(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent52(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2280,14 +2533,14 @@ class _ViewGoldenComponent52 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent52(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent52(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent52(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent53 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent53 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent53(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent53(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2308,14 +2561,14 @@ class _ViewGoldenComponent53 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent53(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent53(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent53(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent54 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent54 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent54(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent54(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2336,14 +2589,14 @@ class _ViewGoldenComponent54 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent54(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent54(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent54(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent55 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent55 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent55(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent55(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2364,14 +2617,14 @@ class _ViewGoldenComponent55 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent55(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent55(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent55(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent56 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent56 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent56(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent56(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2392,14 +2645,14 @@ class _ViewGoldenComponent56 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent56(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent56(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent56(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent57 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent57 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent57(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent57(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2420,14 +2673,14 @@ class _ViewGoldenComponent57 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent57(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent57(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent57(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent58 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent58 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent58(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent58(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2448,14 +2701,14 @@ class _ViewGoldenComponent58 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent58(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent58(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent58(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent59 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent59 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent59(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent59(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2476,14 +2729,14 @@ class _ViewGoldenComponent59 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent59(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent59(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent59(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent60 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent60 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent60(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent60(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2504,14 +2757,14 @@ class _ViewGoldenComponent60 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent60(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent60(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent60(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent61 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent61 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent61(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent61(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2532,14 +2785,14 @@ class _ViewGoldenComponent61 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent61(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent61(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent61(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent62 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent62 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent62(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent62(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2560,14 +2813,14 @@ class _ViewGoldenComponent62 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent62(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent62(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent62(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent63 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent63 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent63(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent63(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2588,14 +2841,14 @@ class _ViewGoldenComponent63 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent63(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent63(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent63(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent64 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent64 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent64(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent64(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2616,14 +2869,14 @@ class _ViewGoldenComponent64 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent64(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent64(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent64(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent65 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent65 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent65(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent65(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2644,14 +2897,14 @@ class _ViewGoldenComponent65 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent65(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent65(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent65(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent66 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent66 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent66(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent66(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2672,14 +2925,14 @@ class _ViewGoldenComponent66 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent66(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent66(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent66(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent67 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent67 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent67(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent67(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2700,14 +2953,14 @@ class _ViewGoldenComponent67 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent67(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent67(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent67(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent68 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent68 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent68(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent68(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2728,14 +2981,14 @@ class _ViewGoldenComponent68 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent68(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent68(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent68(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent69 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent69 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent69(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent69(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2756,14 +3009,14 @@ class _ViewGoldenComponent69 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent69(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent69(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent69(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent70 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent70 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent70(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent70(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2784,14 +3037,14 @@ class _ViewGoldenComponent70 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent70(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent70(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent70(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent71 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent71 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent71(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent71(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2812,14 +3065,14 @@ class _ViewGoldenComponent71 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent71(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent71(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent71(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent72 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent72 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent72(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent72(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2840,14 +3093,14 @@ class _ViewGoldenComponent72 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent72(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent72(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent72(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent73 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent73 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent73(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent73(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2868,14 +3121,14 @@ class _ViewGoldenComponent73 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent73(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent73(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent73(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent74 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent74 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent74(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent74(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2896,14 +3149,14 @@ class _ViewGoldenComponent74 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent74(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent74(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent74(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent75 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent75 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent75(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent75(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2924,14 +3177,14 @@ class _ViewGoldenComponent75 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent75(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent75(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent75(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent76 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent76 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent76(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent76(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2952,14 +3205,14 @@ class _ViewGoldenComponent76 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent76(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent76(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent76(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent77 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent77 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent77(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent77(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -2980,14 +3233,14 @@ class _ViewGoldenComponent77 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent77(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent77(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent77(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent78 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent78 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent78(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent78(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3008,14 +3261,14 @@ class _ViewGoldenComponent78 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent78(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent78(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent78(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent79 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent79 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent79(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent79(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3036,14 +3289,14 @@ class _ViewGoldenComponent79 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent79(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent79(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent79(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent80 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent80 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent80(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent80(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3064,14 +3317,14 @@ class _ViewGoldenComponent80 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent80(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent80(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent80(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent81 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent81 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent81(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent81(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3092,14 +3345,14 @@ class _ViewGoldenComponent81 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent81(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent81(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent81(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent82 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent82 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent82(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent82(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3120,14 +3373,14 @@ class _ViewGoldenComponent82 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent82(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent82(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent82(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent83 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent83 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent83(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent83(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3148,14 +3401,14 @@ class _ViewGoldenComponent83 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent83(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent83(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent83(parentView, parentIndex);
 }
 
-class _ViewGoldenComponent84 extends import12.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent84 extends import13.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
-  _ViewGoldenComponent84(import13.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent84(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -3176,13 +3429,13 @@ class _ViewGoldenComponent84 extends import12.EmbeddedView<import1.GoldenCompone
   }
 }
 
-import12.EmbeddedView<void> viewFactory_GoldenComponent84(import13.RenderView parentView, int parentIndex) {
+import13.EmbeddedView<void> viewFactory_GoldenComponent84(import14.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent84(parentView, parentIndex);
 }
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import14.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import15.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -3192,7 +3445,7 @@ class _ViewGoldenComponentHost0 extends import14.HostView<import1.GoldenComponen
   }
 }
 
-import14.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import15.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -3240,7 +3493,7 @@ ComponentFactory<import1.ChildComponent> createChildComponentFactory() {
 
 final List<Object> styles$ChildComponentHost = const [];
 
-class _ViewChildComponentHost0 extends import14.HostView<import1.ChildComponent> {
+class _ViewChildComponentHost0 extends import15.HostView<import1.ChildComponent> {
   @override
   void build() {
     this.componentView = ViewChildComponent0(this, 0);
@@ -3250,7 +3503,7 @@ class _ViewChildComponentHost0 extends import14.HostView<import1.ChildComponent>
   }
 }
 
-import14.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
+import15.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
   return _ViewChildComponentHost0();
 }
 

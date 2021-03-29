@@ -18,10 +18,11 @@ import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/common/directives/ng_if.dart';
 import 'package:angular/src/runtime/dom_helpers.dart' as import12;
-import 'package:angular/src/runtime/check_binding.dart' as import13;
-import 'package:angular/src/runtime/queries.dart' as import14;
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
-import 'package:angular/src/core/linker/views/render_view.dart' as import16;
+import 'package:angular/src/devtools.dart' as import13;
+import 'package:angular/src/runtime/check_binding.dart' as import14;
+import 'package:angular/src/runtime/queries.dart' as import15;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
+import 'package:angular/src/core/linker/views/render_view.dart' as import17;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -161,14 +162,20 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
+    if (import13.isDevToolsEnabled) {
+      import13.ComponentInspector.instance.recordInput(this._NgIf_2_9, 'ngIf', _ctx.isVisible);
+    }
     this._NgIf_2_9.ngIf = _ctx.isVisible;
+    if (import13.isDevToolsEnabled) {
+      import13.ComponentInspector.instance.recordInput(this._NgIf_5_9, 'ngIf', _ctx.isVisible);
+    }
     this._NgIf_5_9.ngIf = _ctx.isVisible;
     this._appEl_0.detectChangesInNestedViews();
     this._appEl_2.detectChangesInNestedViews();
     this._appEl_5.detectChangesInNestedViews();
-    if ((!import13.debugThrowIfChanged)) {
+    if ((!import14.debugThrowIfChanged)) {
       if (this._viewQuery_embeddedContainer_1_isDirty) {
-        _ctx.embeddedContainer = import14.firstOrNull(this._appEl_2.mapNestedViewsWithSingleResult((_ViewOnPushLink2 nestedView) {
+        _ctx.embeddedContainer = import15.firstOrNull(this._appEl_2.mapNestedViewsWithSingleResult((_ViewOnPushLink2 nestedView) {
           return nestedView._appEl_0;
         }));
         this._viewQuery_embeddedContainer_1_isDirty = false;
@@ -212,22 +219,22 @@ ComponentFactory<import1.OnPushLink> createOnPushLinkFactory() {
   return ComponentFactory('on-push-link', viewFactory_OnPushLinkHost0);
 }
 
-class _ViewOnPushLink1 extends import15.EmbeddedView<import1.OnPushLink> {
-  _ViewOnPushLink1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+class _ViewOnPushLink1 extends import16.EmbeddedView<import1.OnPushLink> {
+  _ViewOnPushLink1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this.initRootNodesAndSubscriptions(import5.unsafeCast(const <Object>[]), null);
   }
 }
 
-import15.EmbeddedView<void> viewFactory_OnPushLink1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_OnPushLink1(import17.RenderView parentView, int parentIndex) {
   return _ViewOnPushLink1(parentView, parentIndex);
 }
 
-class _ViewOnPushLink2 extends import15.EmbeddedView<import1.OnPushLink> {
+class _ViewOnPushLink2 extends import16.EmbeddedView<import1.OnPushLink> {
   late final ViewContainer _appEl_0;
   late final TemplateRef _TemplateRef_0_8;
-  _ViewOnPushLink2(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewOnPushLink2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     final _anchor_0 = import12.createAnchor();
@@ -257,26 +264,26 @@ class _ViewOnPushLink2 extends import15.EmbeddedView<import1.OnPushLink> {
   }
 }
 
-import15.EmbeddedView<void> viewFactory_OnPushLink2(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_OnPushLink2(import17.RenderView parentView, int parentIndex) {
   return _ViewOnPushLink2(parentView, parentIndex);
 }
 
-class _ViewOnPushLink3 extends import15.EmbeddedView<import1.OnPushLink> {
-  _ViewOnPushLink3(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+class _ViewOnPushLink3 extends import16.EmbeddedView<import1.OnPushLink> {
+  _ViewOnPushLink3(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this.initRootNodesAndSubscriptions(import5.unsafeCast(const <Object>[]), null);
   }
 }
 
-import15.EmbeddedView<void> viewFactory_OnPushLink3(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_OnPushLink3(import17.RenderView parentView, int parentIndex) {
   return _ViewOnPushLink3(parentView, parentIndex);
 }
 
-class _ViewOnPushLink4 extends import15.EmbeddedView<import1.OnPushLink> {
+class _ViewOnPushLink4 extends import16.EmbeddedView<import1.OnPushLink> {
   late final ViewNestedOnPushLink0 _compView_0;
   late final import1.NestedOnPushLink _NestedOnPushLink_0_5;
-  _ViewOnPushLink4(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewOnPushLink4(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewNestedOnPushLink0(this, 0);
@@ -302,7 +309,7 @@ class _ViewOnPushLink4 extends import15.EmbeddedView<import1.OnPushLink> {
   }
 }
 
-import15.EmbeddedView<void> viewFactory_OnPushLink4(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_OnPushLink4(import17.RenderView parentView, int parentIndex) {
   return _ViewOnPushLink4(parentView, parentIndex);
 }
 
@@ -444,15 +451,15 @@ ComponentFactory<import1.NestedOnPushLink> createNestedOnPushLinkFactory() {
   return ComponentFactory('nested-on-push-link', viewFactory_NestedOnPushLinkHost0);
 }
 
-class _ViewNestedOnPushLink1 extends import15.EmbeddedView<import1.NestedOnPushLink> {
-  _ViewNestedOnPushLink1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+class _ViewNestedOnPushLink1 extends import16.EmbeddedView<import1.NestedOnPushLink> {
+  _ViewNestedOnPushLink1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this.initRootNodesAndSubscriptions(import5.unsafeCast(const <Object>[]), null);
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedOnPushLink1(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_NestedOnPushLink1(import17.RenderView parentView, int parentIndex) {
   return _ViewNestedOnPushLink1(parentView, parentIndex);
 }
 

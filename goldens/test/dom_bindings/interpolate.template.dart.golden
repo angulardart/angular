@@ -13,11 +13,12 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/runtime/text_binding.dart' as import10;
-import 'package:angular/src/runtime/interpolate.dart' as import11;
-import 'package:angular/src/runtime/dom_helpers.dart' as import12;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/runtime/text_binding.dart' as import11;
+import 'package:angular/src/runtime/interpolate.dart' as import12;
+import 'package:angular/src/runtime/dom_helpers.dart' as import13;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -106,11 +107,17 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _ctx = this.ctx;
     final currVal_0 = _ctx.string;
     if (import7.checkBinding(this._expr_0, currVal_0, 'string', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._SimpleStringInterpolate_0_5, 'value', currVal_0);
+      }
       this._SimpleStringInterpolate_0_5.value = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.anything;
     if (import7.checkBinding(this._expr_1, currVal_1, 'anything', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._SimpleUnknownInterpolate_1_5, 'value', currVal_1);
+      }
       this._SimpleUnknownInterpolate_1_5.value = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -165,7 +172,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -175,14 +182,14 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
 final List<Object> styles$SimpleStringInterpolate = const [];
 
 class ViewSimpleStringInterpolate0 extends import0.ComponentView<import1.SimpleStringInterpolate> {
-  final import10.TextBinding _textBinding_0 = import10.TextBinding();
+  final import11.TextBinding _textBinding_0 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewSimpleStringInterpolate0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -201,7 +208,7 @@ class ViewSimpleStringInterpolate0 extends import0.ComponentView<import1.SimpleS
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import11.interpolateString0(_ctx.value));
+    this._textBinding_0.updateText(import12.interpolateString0(_ctx.value));
   }
 
   static void _debugClearComponentStyles() {
@@ -231,7 +238,7 @@ ComponentFactory<import1.SimpleStringInterpolate> createSimpleStringInterpolateF
 
 final List<Object> styles$SimpleStringInterpolateHost = const [];
 
-class _ViewSimpleStringInterpolateHost0 extends import9.HostView<import1.SimpleStringInterpolate> {
+class _ViewSimpleStringInterpolateHost0 extends import10.HostView<import1.SimpleStringInterpolate> {
   @override
   void build() {
     this.componentView = ViewSimpleStringInterpolate0(this, 0);
@@ -241,14 +248,14 @@ class _ViewSimpleStringInterpolateHost0 extends import9.HostView<import1.SimpleS
   }
 }
 
-import9.HostView<import1.SimpleStringInterpolate> viewFactory_SimpleStringInterpolateHost0() {
+import10.HostView<import1.SimpleStringInterpolate> viewFactory_SimpleStringInterpolateHost0() {
   return _ViewSimpleStringInterpolateHost0();
 }
 
 final List<Object> styles$SimpleUnknownInterpolate = const [];
 
 class ViewSimpleUnknownInterpolate0 extends import0.ComponentView<import1.SimpleUnknownInterpolate> {
-  final import10.TextBinding _textBinding_0 = import10.TextBinding();
+  final import11.TextBinding _textBinding_0 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewSimpleUnknownInterpolate0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -267,7 +274,7 @@ class ViewSimpleUnknownInterpolate0 extends import0.ComponentView<import1.Simple
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import11.interpolate0(_ctx.value));
+    this._textBinding_0.updateText(import12.interpolate0(_ctx.value));
   }
 
   static void _debugClearComponentStyles() {
@@ -297,7 +304,7 @@ ComponentFactory<import1.SimpleUnknownInterpolate> createSimpleUnknownInterpolat
 
 final List<Object> styles$SimpleUnknownInterpolateHost = const [];
 
-class _ViewSimpleUnknownInterpolateHost0 extends import9.HostView<import1.SimpleUnknownInterpolate> {
+class _ViewSimpleUnknownInterpolateHost0 extends import10.HostView<import1.SimpleUnknownInterpolate> {
   @override
   void build() {
     this.componentView = ViewSimpleUnknownInterpolate0(this, 0);
@@ -307,7 +314,7 @@ class _ViewSimpleUnknownInterpolateHost0 extends import9.HostView<import1.Simple
   }
 }
 
-import9.HostView<import1.SimpleUnknownInterpolate> viewFactory_SimpleUnknownInterpolateHost0() {
+import10.HostView<import1.SimpleUnknownInterpolate> viewFactory_SimpleUnknownInterpolateHost0() {
   return _ViewSimpleUnknownInterpolateHost0();
 }
 
@@ -327,14 +334,14 @@ class ViewKnownFinalValuesInterpolate0 extends import0.ComponentView<import1.Kno
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import12.appendSpan(doc, parentRenderNode);
-    final _text_1 = import12.appendText(_el_0, import11.interpolateString0(import1.KnownFinalValuesInterpolate.aConstString));
-    final _text_2 = import12.appendText(parentRenderNode, ' ');
-    final _el_3 = import12.appendSpan(doc, parentRenderNode);
-    final _text_4 = import12.appendText(_el_3, import11.interpolateString0(import1.KnownFinalValuesInterpolate.aFinalString));
-    final _text_5 = import12.appendText(parentRenderNode, ' ');
-    final _el_6 = import12.appendSpan(doc, parentRenderNode);
-    final _text_7 = import12.appendText(_el_6, import11.interpolate0(import1.KnownFinalValuesInterpolate.aFinalNumber));
+    final _el_0 = import13.appendSpan(doc, parentRenderNode);
+    final _text_1 = import13.appendText(_el_0, import12.interpolateString0(import1.KnownFinalValuesInterpolate.aConstString));
+    final _text_2 = import13.appendText(parentRenderNode, ' ');
+    final _el_3 = import13.appendSpan(doc, parentRenderNode);
+    final _text_4 = import13.appendText(_el_3, import12.interpolateString0(import1.KnownFinalValuesInterpolate.aFinalString));
+    final _text_5 = import13.appendText(parentRenderNode, ' ');
+    final _el_6 = import13.appendSpan(doc, parentRenderNode);
+    final _text_7 = import13.appendText(_el_6, import12.interpolate0(import1.KnownFinalValuesInterpolate.aFinalNumber));
   }
 
   static void _debugClearComponentStyles() {
@@ -364,7 +371,7 @@ ComponentFactory<import1.KnownFinalValuesInterpolate> createKnownFinalValuesInte
 
 final List<Object> styles$KnownFinalValuesInterpolateHost = const [];
 
-class _ViewKnownFinalValuesInterpolateHost0 extends import9.HostView<import1.KnownFinalValuesInterpolate> {
+class _ViewKnownFinalValuesInterpolateHost0 extends import10.HostView<import1.KnownFinalValuesInterpolate> {
   @override
   void build() {
     this.componentView = ViewKnownFinalValuesInterpolate0(this, 0);
@@ -374,18 +381,18 @@ class _ViewKnownFinalValuesInterpolateHost0 extends import9.HostView<import1.Kno
   }
 }
 
-import9.HostView<import1.KnownFinalValuesInterpolate> viewFactory_KnownFinalValuesInterpolateHost0() {
+import10.HostView<import1.KnownFinalValuesInterpolate> viewFactory_KnownFinalValuesInterpolateHost0() {
   return _ViewKnownFinalValuesInterpolateHost0();
 }
 
 final List<Object> styles$AdjacentInterpolate = const [];
 
 class ViewAdjacentInterpolate0 extends import0.ComponentView<import1.AdjacentInterpolate> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
-  final import10.TextBinding _textBinding_3 = import10.TextBinding();
-  final import10.TextBinding _textBinding_7 = import10.TextBinding();
-  final import10.TextBinding _textBinding_9 = import10.TextBinding();
-  final import10.TextBinding _textBinding_11 = import10.TextBinding();
+  final import11.TextBinding _textBinding_1 = import11.TextBinding();
+  final import11.TextBinding _textBinding_3 = import11.TextBinding();
+  final import11.TextBinding _textBinding_7 = import11.TextBinding();
+  final import11.TextBinding _textBinding_9 = import11.TextBinding();
+  final import11.TextBinding _textBinding_11 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewAdjacentInterpolate0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -399,29 +406,29 @@ class ViewAdjacentInterpolate0 extends import0.ComponentView<import1.AdjacentInt
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import12.appendSpan(doc, parentRenderNode);
+    final _el_0 = import13.appendSpan(doc, parentRenderNode);
     _el_0.append(this._textBinding_1.element);
-    final _text_2 = import12.appendText(_el_0, ' ');
+    final _text_2 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_3.element);
-    final _text_4 = import12.appendText(_el_0, '!');
-    final _text_5 = import12.appendText(parentRenderNode, ' ');
-    final _el_6 = import12.appendSpan(doc, parentRenderNode);
+    final _text_4 = import13.appendText(_el_0, '!');
+    final _text_5 = import13.appendText(parentRenderNode, ' ');
+    final _el_6 = import13.appendSpan(doc, parentRenderNode);
     _el_6.append(this._textBinding_7.element);
-    final _text_8 = import12.appendText(_el_6, '! We are happy to have ');
+    final _text_8 = import13.appendText(_el_6, '! We are happy to have ');
     _el_6.append(this._textBinding_9.element);
-    final _text_10 = import12.appendText(_el_6, ' in our ');
+    final _text_10 = import13.appendText(_el_6, ' in our ');
     _el_6.append(this._textBinding_11.element);
-    final _text_12 = import12.appendText(_el_6, '!');
+    final _text_12 = import13.appendText(_el_6, '!');
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import11.interpolateString0(_ctx.greeting));
-    this._textBinding_3.updateText(import11.interpolateString0(_ctx.place));
-    this._textBinding_7.updateText(import11.interpolateString0(_ctx.greeting));
-    this._textBinding_9.updateText(import11.interpolateString0(_ctx.name));
-    this._textBinding_11.updateText(import11.interpolateString0(_ctx.place));
+    this._textBinding_1.updateText(import12.interpolateString0(_ctx.greeting));
+    this._textBinding_3.updateText(import12.interpolateString0(_ctx.place));
+    this._textBinding_7.updateText(import12.interpolateString0(_ctx.greeting));
+    this._textBinding_9.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_11.updateText(import12.interpolateString0(_ctx.place));
   }
 
   static void _debugClearComponentStyles() {
@@ -451,7 +458,7 @@ ComponentFactory<import1.AdjacentInterpolate> createAdjacentInterpolateFactory()
 
 final List<Object> styles$AdjacentInterpolateHost = const [];
 
-class _ViewAdjacentInterpolateHost0 extends import9.HostView<import1.AdjacentInterpolate> {
+class _ViewAdjacentInterpolateHost0 extends import10.HostView<import1.AdjacentInterpolate> {
   @override
   void build() {
     this.componentView = ViewAdjacentInterpolate0(this, 0);
@@ -461,7 +468,7 @@ class _ViewAdjacentInterpolateHost0 extends import9.HostView<import1.AdjacentInt
   }
 }
 
-import9.HostView<import1.AdjacentInterpolate> viewFactory_AdjacentInterpolateHost0() {
+import10.HostView<import1.AdjacentInterpolate> viewFactory_AdjacentInterpolateHost0() {
   return _ViewAdjacentInterpolateHost0();
 }
 
@@ -481,18 +488,18 @@ class ViewLiteralsInterpolate0 extends import0.ComponentView<import1.LiteralsInt
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import12.appendSpan(doc, parentRenderNode);
-    final _text_1 = import12.appendText(_el_0, 'Hello');
-    final _text_2 = import12.appendText(_el_0, ' ');
-    final _text_3 = import12.appendText(_el_0, 'World');
-    final _text_4 = import12.appendText(_el_0, '!');
-    final _text_5 = import12.appendText(parentRenderNode, ' ');
-    final _el_6 = import12.appendSpan(doc, parentRenderNode);
-    final _text_7 = import12.appendText(_el_6, '1');
-    final _text_8 = import12.appendText(_el_6, ' ');
-    final _text_9 = import12.appendText(_el_6, '2');
-    final _text_10 = import12.appendText(_el_6, ' ');
-    final _text_11 = import12.appendText(_el_6, '3');
+    final _el_0 = import13.appendSpan(doc, parentRenderNode);
+    final _text_1 = import13.appendText(_el_0, 'Hello');
+    final _text_2 = import13.appendText(_el_0, ' ');
+    final _text_3 = import13.appendText(_el_0, 'World');
+    final _text_4 = import13.appendText(_el_0, '!');
+    final _text_5 = import13.appendText(parentRenderNode, ' ');
+    final _el_6 = import13.appendSpan(doc, parentRenderNode);
+    final _text_7 = import13.appendText(_el_6, '1');
+    final _text_8 = import13.appendText(_el_6, ' ');
+    final _text_9 = import13.appendText(_el_6, '2');
+    final _text_10 = import13.appendText(_el_6, ' ');
+    final _text_11 = import13.appendText(_el_6, '3');
   }
 
   static void _debugClearComponentStyles() {
@@ -522,7 +529,7 @@ ComponentFactory<import1.LiteralsInterpolate> createLiteralsInterpolateFactory()
 
 final List<Object> styles$LiteralsInterpolateHost = const [];
 
-class _ViewLiteralsInterpolateHost0 extends import9.HostView<import1.LiteralsInterpolate> {
+class _ViewLiteralsInterpolateHost0 extends import10.HostView<import1.LiteralsInterpolate> {
   @override
   void build() {
     this.componentView = ViewLiteralsInterpolate0(this, 0);
@@ -532,7 +539,7 @@ class _ViewLiteralsInterpolateHost0 extends import9.HostView<import1.LiteralsInt
   }
 }
 
-import9.HostView<import1.LiteralsInterpolate> viewFactory_LiteralsInterpolateHost0() {
+import10.HostView<import1.LiteralsInterpolate> viewFactory_LiteralsInterpolateHost0() {
   return _ViewLiteralsInterpolateHost0();
 }
 
@@ -554,15 +561,15 @@ class ViewPropertyInterpolate0 extends import0.ComponentView<import1.PropertyInt
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import12.appendSpan(doc, parentRenderNode);
+    this._el_0 = import13.appendSpan(doc, parentRenderNode);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = import11.interpolateString2('', _ctx.title1, ' ', _ctx.title2, '');
+    final currVal_0 = import12.interpolateString2('', _ctx.title1, ' ', _ctx.title2, '');
     if (import7.checkBinding(this._expr_0, currVal_0, '{{title1}} {{title2}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import12.setProperty(this._el_0, 'title', currVal_0);
+      import13.setProperty(this._el_0, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
@@ -594,7 +601,7 @@ ComponentFactory<import1.PropertyInterpolate> createPropertyInterpolateFactory()
 
 final List<Object> styles$PropertyInterpolateHost = const [];
 
-class _ViewPropertyInterpolateHost0 extends import9.HostView<import1.PropertyInterpolate> {
+class _ViewPropertyInterpolateHost0 extends import10.HostView<import1.PropertyInterpolate> {
   @override
   void build() {
     this.componentView = ViewPropertyInterpolate0(this, 0);
@@ -604,7 +611,7 @@ class _ViewPropertyInterpolateHost0 extends import9.HostView<import1.PropertyInt
   }
 }
 
-import9.HostView<import1.PropertyInterpolate> viewFactory_PropertyInterpolateHost0() {
+import10.HostView<import1.PropertyInterpolate> viewFactory_PropertyInterpolateHost0() {
   return _ViewPropertyInterpolateHost0();
 }
 
@@ -636,8 +643,11 @@ class ViewInputInterpolate0 extends import0.ComponentView<import1.InputInterpola
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = import11.interpolateString2('', _ctx.a, ' ', _ctx.b, '');
+    final currVal_0 = import12.interpolateString2('', _ctx.a, ' ', _ctx.b, '');
     if (import7.checkBinding(this._expr_0, currVal_0, '{{a}} {{b}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+      }
       this._ChildComponent_0_5.value = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -676,7 +686,7 @@ ComponentFactory<import1.InputInterpolate> createInputInterpolateFactory() {
 
 final List<Object> styles$InputInterpolateHost = const [];
 
-class _ViewInputInterpolateHost0 extends import9.HostView<import1.InputInterpolate> {
+class _ViewInputInterpolateHost0 extends import10.HostView<import1.InputInterpolate> {
   @override
   void build() {
     this.componentView = ViewInputInterpolate0(this, 0);
@@ -686,7 +696,7 @@ class _ViewInputInterpolateHost0 extends import9.HostView<import1.InputInterpola
   }
 }
 
-import9.HostView<import1.InputInterpolate> viewFactory_InputInterpolateHost0() {
+import10.HostView<import1.InputInterpolate> viewFactory_InputInterpolateHost0() {
   return _ViewInputInterpolateHost0();
 }
 
@@ -734,7 +744,7 @@ ComponentFactory<import1.ChildComponent> createChildComponentFactory() {
 
 final List<Object> styles$ChildComponentHost = const [];
 
-class _ViewChildComponentHost0 extends import9.HostView<import1.ChildComponent> {
+class _ViewChildComponentHost0 extends import10.HostView<import1.ChildComponent> {
   @override
   void build() {
     this.componentView = ViewChildComponent0(this, 0);
@@ -744,33 +754,33 @@ class _ViewChildComponentHost0 extends import9.HostView<import1.ChildComponent> 
   }
 }
 
-import9.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
+import10.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
   return _ViewChildComponentHost0();
 }
 
 final List<Object> styles$MaximumInterpolateLimit = const [];
 
 class ViewMaximumInterpolateLimit0 extends import0.ComponentView<import1.MaximumInterpolateLimit> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
-  final import10.TextBinding _textBinding_3 = import10.TextBinding();
-  final import10.TextBinding _textBinding_5 = import10.TextBinding();
-  final import10.TextBinding _textBinding_7 = import10.TextBinding();
-  final import10.TextBinding _textBinding_9 = import10.TextBinding();
-  final import10.TextBinding _textBinding_11 = import10.TextBinding();
-  final import10.TextBinding _textBinding_13 = import10.TextBinding();
-  final import10.TextBinding _textBinding_15 = import10.TextBinding();
-  final import10.TextBinding _textBinding_17 = import10.TextBinding();
-  final import10.TextBinding _textBinding_19 = import10.TextBinding();
-  final import10.TextBinding _textBinding_22 = import10.TextBinding();
-  final import10.TextBinding _textBinding_24 = import10.TextBinding();
-  final import10.TextBinding _textBinding_26 = import10.TextBinding();
-  final import10.TextBinding _textBinding_28 = import10.TextBinding();
-  final import10.TextBinding _textBinding_30 = import10.TextBinding();
-  final import10.TextBinding _textBinding_32 = import10.TextBinding();
-  final import10.TextBinding _textBinding_34 = import10.TextBinding();
-  final import10.TextBinding _textBinding_36 = import10.TextBinding();
-  final import10.TextBinding _textBinding_38 = import10.TextBinding();
-  final import10.TextBinding _textBinding_40 = import10.TextBinding();
+  final import11.TextBinding _textBinding_1 = import11.TextBinding();
+  final import11.TextBinding _textBinding_3 = import11.TextBinding();
+  final import11.TextBinding _textBinding_5 = import11.TextBinding();
+  final import11.TextBinding _textBinding_7 = import11.TextBinding();
+  final import11.TextBinding _textBinding_9 = import11.TextBinding();
+  final import11.TextBinding _textBinding_11 = import11.TextBinding();
+  final import11.TextBinding _textBinding_13 = import11.TextBinding();
+  final import11.TextBinding _textBinding_15 = import11.TextBinding();
+  final import11.TextBinding _textBinding_17 = import11.TextBinding();
+  final import11.TextBinding _textBinding_19 = import11.TextBinding();
+  final import11.TextBinding _textBinding_22 = import11.TextBinding();
+  final import11.TextBinding _textBinding_24 = import11.TextBinding();
+  final import11.TextBinding _textBinding_26 = import11.TextBinding();
+  final import11.TextBinding _textBinding_28 = import11.TextBinding();
+  final import11.TextBinding _textBinding_30 = import11.TextBinding();
+  final import11.TextBinding _textBinding_32 = import11.TextBinding();
+  final import11.TextBinding _textBinding_34 = import11.TextBinding();
+  final import11.TextBinding _textBinding_36 = import11.TextBinding();
+  final import11.TextBinding _textBinding_38 = import11.TextBinding();
+  final import11.TextBinding _textBinding_40 = import11.TextBinding();
   Object? _expr_0;
   Object? _expr_1;
   late final import6.ButtonElement _el_43;
@@ -788,85 +798,85 @@ class ViewMaximumInterpolateLimit0 extends import0.ComponentView<import1.Maximum
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    final _el_0 = import12.appendSpan(doc, parentRenderNode);
+    final _el_0 = import13.appendSpan(doc, parentRenderNode);
     _el_0.append(this._textBinding_1.element);
-    final _text_2 = import12.appendText(_el_0, ' ');
+    final _text_2 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_3.element);
-    final _text_4 = import12.appendText(_el_0, ' ');
+    final _text_4 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_5.element);
-    final _text_6 = import12.appendText(_el_0, ' ');
+    final _text_6 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_7.element);
-    final _text_8 = import12.appendText(_el_0, ' ');
+    final _text_8 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_9.element);
-    final _text_10 = import12.appendText(_el_0, ' ');
+    final _text_10 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_11.element);
-    final _text_12 = import12.appendText(_el_0, ' ');
+    final _text_12 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_13.element);
-    final _text_14 = import12.appendText(_el_0, ' ');
+    final _text_14 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_15.element);
-    final _text_16 = import12.appendText(_el_0, ' ');
+    final _text_16 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_17.element);
-    final _text_18 = import12.appendText(_el_0, ' ');
+    final _text_18 = import13.appendText(_el_0, ' ');
     _el_0.append(this._textBinding_19.element);
-    final _text_20 = import12.appendText(parentRenderNode, ' ');
-    final _el_21 = import12.appendSpan(doc, parentRenderNode);
+    final _text_20 = import13.appendText(parentRenderNode, ' ');
+    final _el_21 = import13.appendSpan(doc, parentRenderNode);
     _el_21.append(this._textBinding_22.element);
-    final _text_23 = import12.appendText(_el_21, ' ');
+    final _text_23 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_24.element);
-    final _text_25 = import12.appendText(_el_21, ' ');
+    final _text_25 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_26.element);
-    final _text_27 = import12.appendText(_el_21, ' ');
+    final _text_27 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_28.element);
-    final _text_29 = import12.appendText(_el_21, ' ');
+    final _text_29 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_30.element);
-    final _text_31 = import12.appendText(_el_21, ' ');
+    final _text_31 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_32.element);
-    final _text_33 = import12.appendText(_el_21, ' ');
+    final _text_33 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_34.element);
-    final _text_35 = import12.appendText(_el_21, ' ');
+    final _text_35 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_36.element);
-    final _text_37 = import12.appendText(_el_21, ' ');
+    final _text_37 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_38.element);
-    final _text_39 = import12.appendText(_el_21, ' ');
+    final _text_39 = import13.appendText(_el_21, ' ');
     _el_21.append(this._textBinding_40.element);
-    final _text_41 = import12.appendText(parentRenderNode, ' ');
-    final _text_42 = import12.appendText(parentRenderNode, ' ');
-    this._el_43 = import12.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
-    final _text_44 = import12.appendText(parentRenderNode, ' ');
-    this._el_45 = import12.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
+    final _text_41 = import13.appendText(parentRenderNode, ' ');
+    final _text_42 = import13.appendText(parentRenderNode, ' ');
+    this._el_43 = import13.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
+    final _text_44 = import13.appendText(parentRenderNode, ' ');
+    this._el_45 = import13.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import11.interpolateString0(_ctx.stringA));
-    this._textBinding_3.updateText(import11.interpolateString0(_ctx.stringB));
-    this._textBinding_5.updateText(import11.interpolateString0(_ctx.stringC));
-    this._textBinding_7.updateText(import11.interpolateString0(_ctx.stringD));
-    this._textBinding_9.updateText(import11.interpolateString0(_ctx.stringE));
-    this._textBinding_11.updateText(import11.interpolateString0(_ctx.stringF));
-    this._textBinding_13.updateText(import11.interpolateString0(_ctx.stringG));
-    this._textBinding_15.updateText(import11.interpolateString0(_ctx.stringH));
-    this._textBinding_17.updateText(import11.interpolateString0(_ctx.stringI));
-    this._textBinding_19.updateText(import11.interpolateString0(_ctx.stringJ));
-    this._textBinding_22.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringA)));
-    this._textBinding_24.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringB)));
-    this._textBinding_26.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringC)));
-    this._textBinding_28.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringD)));
-    this._textBinding_30.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringE)));
-    this._textBinding_32.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringF)));
-    this._textBinding_34.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringG)));
-    this._textBinding_36.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringH)));
-    this._textBinding_38.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringI)));
-    this._textBinding_40.updateText(import11.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringJ)));
-    final currVal_0 = import11.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, ',', _ctx.stringE, ',', _ctx.stringF, ',', _ctx.stringG, ',', _ctx.stringH, ',', _ctx.stringI, '']);
+    this._textBinding_1.updateText(import12.interpolateString0(_ctx.stringA));
+    this._textBinding_3.updateText(import12.interpolateString0(_ctx.stringB));
+    this._textBinding_5.updateText(import12.interpolateString0(_ctx.stringC));
+    this._textBinding_7.updateText(import12.interpolateString0(_ctx.stringD));
+    this._textBinding_9.updateText(import12.interpolateString0(_ctx.stringE));
+    this._textBinding_11.updateText(import12.interpolateString0(_ctx.stringF));
+    this._textBinding_13.updateText(import12.interpolateString0(_ctx.stringG));
+    this._textBinding_15.updateText(import12.interpolateString0(_ctx.stringH));
+    this._textBinding_17.updateText(import12.interpolateString0(_ctx.stringI));
+    this._textBinding_19.updateText(import12.interpolateString0(_ctx.stringJ));
+    this._textBinding_22.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringA)));
+    this._textBinding_24.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringB)));
+    this._textBinding_26.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringC)));
+    this._textBinding_28.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringD)));
+    this._textBinding_30.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringE)));
+    this._textBinding_32.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringF)));
+    this._textBinding_34.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringG)));
+    this._textBinding_36.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringH)));
+    this._textBinding_38.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringI)));
+    this._textBinding_40.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringJ)));
+    final currVal_0 = import12.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, ',', _ctx.stringE, ',', _ctx.stringF, ',', _ctx.stringG, ',', _ctx.stringH, ',', _ctx.stringI, '']);
     if (import7.checkBinding(this._expr_0, currVal_0, '{{stringA}},{{stringB}},{{stringC}},{{stringD}},{{stringE}},{{stringF}},{{stringG}},{{stringH}},{{stringI}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import12.setProperty(this._el_43, 'title', currVal_0);
+      import13.setProperty(this._el_43, 'title', currVal_0);
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = import11.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, '']);
+    final currVal_1 = import12.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, '']);
     if (import7.checkBinding(this._expr_1, currVal_1, '{{stringA}},{{stringB}},{{stringC}},{{stringD}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import12.setProperty(this._el_45, 'title', currVal_1);
+      import13.setProperty(this._el_45, 'title', currVal_1);
       this._expr_1 = currVal_1;
     }
   }
@@ -898,7 +908,7 @@ ComponentFactory<import1.MaximumInterpolateLimit> createMaximumInterpolateLimitF
 
 final List<Object> styles$MaximumInterpolateLimitHost = const [];
 
-class _ViewMaximumInterpolateLimitHost0 extends import9.HostView<import1.MaximumInterpolateLimit> {
+class _ViewMaximumInterpolateLimitHost0 extends import10.HostView<import1.MaximumInterpolateLimit> {
   @override
   void build() {
     this.componentView = ViewMaximumInterpolateLimit0(this, 0);
@@ -908,16 +918,16 @@ class _ViewMaximumInterpolateLimitHost0 extends import9.HostView<import1.Maximum
   }
 }
 
-import9.HostView<import1.MaximumInterpolateLimit> viewFactory_MaximumInterpolateLimitHost0() {
+import10.HostView<import1.MaximumInterpolateLimit> viewFactory_MaximumInterpolateLimitHost0() {
   return _ViewMaximumInterpolateLimitHost0();
 }
 
 final List<Object> styles$NullCheckedInterpolate = const [];
 
 class ViewNullCheckedInterpolate0 extends import0.ComponentView<import1.NullCheckedInterpolate> {
-  final import10.TextBinding _textBinding_0 = import10.TextBinding();
-  final import10.TextBinding _textBinding_2 = import10.TextBinding();
-  final import10.TextBinding _textBinding_4 = import10.TextBinding();
+  final import11.TextBinding _textBinding_0 = import11.TextBinding();
+  final import11.TextBinding _textBinding_2 = import11.TextBinding();
+  final import11.TextBinding _textBinding_4 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewNullCheckedInterpolate0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
@@ -931,17 +941,17 @@ class ViewNullCheckedInterpolate0 extends import0.ComponentView<import1.NullChec
   void build() {
     final parentRenderNode = this.initViewRoot();
     parentRenderNode.append(this._textBinding_0.element);
-    final _text_1 = import12.appendText(parentRenderNode, ' ');
+    final _text_1 = import13.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_2.element);
-    final _text_3 = import12.appendText(parentRenderNode, ' ');
+    final _text_3 = import13.appendText(parentRenderNode, ' ');
     parentRenderNode.append(this._textBinding_4.element);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import11.interpolate0((_ctx.maybeNull ?? '')));
-    this._textBinding_2.updateText(import11.interpolateString0(_ctx.maybeNull?.toUpperCase()));
+    this._textBinding_0.updateText(import12.interpolate0((_ctx.maybeNull ?? '')));
+    this._textBinding_2.updateText(import12.interpolateString0(_ctx.maybeNull?.toUpperCase()));
     this._textBinding_4.updateTextWithPrimitive(_ctx.maybeNull?.hashCode);
   }
 
@@ -972,7 +982,7 @@ ComponentFactory<import1.NullCheckedInterpolate> createNullCheckedInterpolateFac
 
 final List<Object> styles$NullCheckedInterpolateHost = const [];
 
-class _ViewNullCheckedInterpolateHost0 extends import9.HostView<import1.NullCheckedInterpolate> {
+class _ViewNullCheckedInterpolateHost0 extends import10.HostView<import1.NullCheckedInterpolate> {
   @override
   void build() {
     this.componentView = ViewNullCheckedInterpolate0(this, 0);
@@ -982,7 +992,7 @@ class _ViewNullCheckedInterpolateHost0 extends import9.HostView<import1.NullChec
   }
 }
 
-import9.HostView<import1.NullCheckedInterpolate> viewFactory_NullCheckedInterpolateHost0() {
+import10.HostView<import1.NullCheckedInterpolate> viewFactory_NullCheckedInterpolateHost0() {
   return _ViewNullCheckedInterpolateHost0();
 }
 

@@ -13,8 +13,9 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -59,16 +60,25 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     bool firstCheck = this.firstCheck;
     final currVal_0 = _ctx.a;
     if (import7.checkBinding(this._expr_0, currVal_0, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'a', currVal_0);
+      }
       this._UsesOnInit_0_5.a = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.b;
     if (import7.checkBinding(this._expr_1, currVal_1, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'b', currVal_1);
+      }
       this._UsesOnInit_0_5.b = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.c;
     if (import7.checkBinding(this._expr_2, currVal_2, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'c', currVal_2);
+      }
       this._UsesOnInit_0_5.c = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -77,16 +87,25 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     }
     final currVal_3 = _ctx.a;
     if (import7.checkBinding(this._expr_3, currVal_3, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'a', currVal_3);
+      }
       this._UsesOnDestroy_1_5.a = currVal_3;
       this._expr_3 = currVal_3;
     }
     final currVal_4 = _ctx.b;
     if (import7.checkBinding(this._expr_4, currVal_4, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'b', currVal_4);
+      }
       this._UsesOnDestroy_1_5.b = currVal_4;
       this._expr_4 = currVal_4;
     }
     final currVal_5 = _ctx.c;
     if (import7.checkBinding(this._expr_5, currVal_5, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'c', currVal_5);
+      }
       this._UsesOnDestroy_1_5.c = currVal_5;
       this._expr_5 = currVal_5;
     }
@@ -128,7 +147,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -138,7 +157,7 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -186,7 +205,7 @@ ComponentFactory<import1.UsesOnInit> createUsesOnInitFactory() {
 
 final List<Object> styles$UsesOnInitHost = const [];
 
-class _ViewUsesOnInitHost0 extends import9.HostView<import1.UsesOnInit> {
+class _ViewUsesOnInitHost0 extends import10.HostView<import1.UsesOnInit> {
   @override
   void build() {
     this.componentView = ViewUsesOnInit0(this, 0);
@@ -205,7 +224,7 @@ class _ViewUsesOnInitHost0 extends import9.HostView<import1.UsesOnInit> {
   }
 }
 
-import9.HostView<import1.UsesOnInit> viewFactory_UsesOnInitHost0() {
+import10.HostView<import1.UsesOnInit> viewFactory_UsesOnInitHost0() {
   return _ViewUsesOnInitHost0();
 }
 
@@ -253,7 +272,7 @@ ComponentFactory<import1.UsesOnDestroy> createUsesOnDestroyFactory() {
 
 final List<Object> styles$UsesOnDestroyHost = const [];
 
-class _ViewUsesOnDestroyHost0 extends import9.HostView<import1.UsesOnDestroy> {
+class _ViewUsesOnDestroyHost0 extends import10.HostView<import1.UsesOnDestroy> {
   @override
   void build() {
     this.componentView = ViewUsesOnDestroy0(this, 0);
@@ -268,7 +287,7 @@ class _ViewUsesOnDestroyHost0 extends import9.HostView<import1.UsesOnDestroy> {
   }
 }
 
-import9.HostView<import1.UsesOnDestroy> viewFactory_UsesOnDestroyHost0() {
+import10.HostView<import1.UsesOnDestroy> viewFactory_UsesOnDestroyHost0() {
   return _ViewUsesOnDestroyHost0();
 }
 

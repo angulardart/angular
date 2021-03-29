@@ -9392,11 +9392,14 @@
       var t1 = this.__ViewGoldenComponent0__appEl_2;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_2")) : t1;
     },
+    get$_NgIf_2_9: function() {
+      var t1 = this.__ViewGoldenComponent0__NgIf_2_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_2_9")) : t1;
+    },
     detectChangesInternal$0: function() {
       var t1, t2, _this = this;
       _this.get$ctx();
-      t1 = _this.__ViewGoldenComponent0__NgIf_2_9;
-      (t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_2_9")) : t1).set$ngIf(false);
+      _this.get$_NgIf_2_9().set$ngIf(false);
       _this.get$_appEl_2().detectChangesInNestedViews$0();
       if (_this._viewQuery_AnotherDirective_4_isDirty) {
         t1 = _this.__ViewGoldenComponent0__AnotherDirective_0_5;

@@ -10371,9 +10371,17 @@
       var t1 = this.___ViewGoldenComponent2__appEl_1;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
     },
+    get$_NgIf_1_9: function() {
+      var t1 = this.___ViewGoldenComponent2__NgIf_1_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_1_9")) : t1;
+    },
     get$_appEl_3: function() {
       var t1 = this.___ViewGoldenComponent2__appEl_3;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_3")) : t1;
+    },
+    get$_NgIf_3_9: function() {
+      var t1 = this.___ViewGoldenComponent2__NgIf_3_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_3_9")) : t1;
     },
     build$0: function() {
       var t1, t2, _anchor_3, _this = this,
@@ -10404,17 +10412,11 @@
       _this.initRootNode$1(_el_0);
     },
     detectChangesInternal$0: function() {
-      var t2, _this = this,
+      var _this = this,
         local_col = _this._embedded_view$_data.locals.$index(0, "$implicit"),
-        t1 = _this.___ViewGoldenComponent2__NgIf_1_9;
-      if (t1 == null)
-        t1 = H.throwExpression(H.LateError$fieldNI("_NgIf_1_9"));
-      t2 = local_col & 1;
-      t1.set$ngIf(t2 === 0);
-      t1 = _this.___ViewGoldenComponent2__NgIf_3_9;
-      if (t1 == null)
-        t1 = H.throwExpression(H.LateError$fieldNI("_NgIf_3_9"));
-      t1.set$ngIf(t2 === 1);
+        t1 = local_col & 1;
+      _this.get$_NgIf_1_9().set$ngIf(t1 === 0);
+      _this.get$_NgIf_3_9().set$ngIf(t1 === 1);
       _this.get$_appEl_1().detectChangesInNestedViews$0();
       _this.get$_appEl_3().detectChangesInNestedViews$0();
     },

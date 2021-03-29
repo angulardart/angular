@@ -17,10 +17,11 @@ import 'dart:html' as import8;
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/template_ref.dart';
 import 'package:angular/src/runtime/check_binding.dart' as import11;
+import 'package:angular/src/devtools.dart' as import12;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import13;
-import 'package:angular/src/core/linker/views/render_view.dart' as import14;
-import 'package:angular/src/core/linker/views/host_view.dart' as import15;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
+import 'package:angular/src/core/linker/views/render_view.dart' as import15;
+import 'package:angular/src/core/linker/views/host_view.dart' as import16;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -74,8 +75,14 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     bool firstCheck = this.firstCheck;
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._ChildComponent_2_5, 'value', currVal_0);
+      }
       this._ChildComponent_2_5.value = currVal_0;
       this._expr_0 = currVal_0;
+    }
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_3_9, 'ngIf', _ctx.showValue);
     }
     this._NgIf_3_9.ngIf = _ctx.showValue;
     this._appEl_3.detectChangesInNestedViews();
@@ -129,11 +136,11 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
   return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
 }
 
-class _ViewGoldenComponent1 extends import13.EmbeddedView<import1.GoldenComponent> {
+class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponent> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
   Object? _expr_0;
-  _ViewGoldenComponent1(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewGoldenComponent1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -148,6 +155,9 @@ class _ViewGoldenComponent1 extends import13.EmbeddedView<import1.GoldenComponen
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+      }
       this._ChildComponent_0_5.value = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -160,13 +170,13 @@ class _ViewGoldenComponent1 extends import13.EmbeddedView<import1.GoldenComponen
   }
 }
 
-import13.EmbeddedView<void> viewFactory_GoldenComponent1(import14.RenderView parentView, int parentIndex) {
+import14.EmbeddedView<void> viewFactory_GoldenComponent1(import15.RenderView parentView, int parentIndex) {
   return _ViewGoldenComponent1(parentView, parentIndex);
 }
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import15.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import16.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -176,7 +186,7 @@ class _ViewGoldenComponentHost0 extends import15.HostView<import1.GoldenComponen
   }
 }
 
-import15.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import16.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -216,8 +226,14 @@ class ViewUsesAfterView0 extends import0.ComponentView<import1.UsesAfterView> {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+      }
       this._ChildComponent_0_5.value = currVal_0;
       this._expr_0 = currVal_0;
+    }
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.showValue);
     }
     this._NgIf_1_9.ngIf = _ctx.showValue;
     this._appEl_1.detectChangesInNestedViews();
@@ -255,11 +271,11 @@ ComponentFactory<import1.UsesAfterView> createUsesAfterViewFactory() {
   return ComponentFactory('uses-after-view', viewFactory_UsesAfterViewHost0);
 }
 
-class _ViewUsesAfterView1 extends import13.EmbeddedView<import1.UsesAfterView> {
+class _ViewUsesAfterView1 extends import14.EmbeddedView<import1.UsesAfterView> {
   late final ViewChildComponent0 _compView_0;
   late final import1.ChildComponent _ChildComponent_0_5;
   Object? _expr_0;
-  _ViewUsesAfterView1(import14.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewUsesAfterView1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewChildComponent0(this, 0);
@@ -274,6 +290,9 @@ class _ViewUsesAfterView1 extends import13.EmbeddedView<import1.UsesAfterView> {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+      }
       this._ChildComponent_0_5.value = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -286,13 +305,13 @@ class _ViewUsesAfterView1 extends import13.EmbeddedView<import1.UsesAfterView> {
   }
 }
 
-import13.EmbeddedView<void> viewFactory_UsesAfterView1(import14.RenderView parentView, int parentIndex) {
+import14.EmbeddedView<void> viewFactory_UsesAfterView1(import15.RenderView parentView, int parentIndex) {
   return _ViewUsesAfterView1(parentView, parentIndex);
 }
 
 final List<Object> styles$UsesAfterViewHost = const [];
 
-class _ViewUsesAfterViewHost0 extends import15.HostView<import1.UsesAfterView> {
+class _ViewUsesAfterViewHost0 extends import16.HostView<import1.UsesAfterView> {
   @override
   void build() {
     this.componentView = ViewUsesAfterView0(this, 0);
@@ -314,7 +333,7 @@ class _ViewUsesAfterViewHost0 extends import15.HostView<import1.UsesAfterView> {
   }
 }
 
-import15.HostView<import1.UsesAfterView> viewFactory_UsesAfterViewHost0() {
+import16.HostView<import1.UsesAfterView> viewFactory_UsesAfterViewHost0() {
   return _ViewUsesAfterViewHost0();
 }
 
@@ -362,7 +381,7 @@ ComponentFactory<import1.ChildComponent> createChildComponentFactory() {
 
 final List<Object> styles$ChildComponentHost = const [];
 
-class _ViewChildComponentHost0 extends import15.HostView<import1.ChildComponent> {
+class _ViewChildComponentHost0 extends import16.HostView<import1.ChildComponent> {
   @override
   void build() {
     this.componentView = ViewChildComponent0(this, 0);
@@ -372,7 +391,7 @@ class _ViewChildComponentHost0 extends import15.HostView<import1.ChildComponent>
   }
 }
 
-import15.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
+import16.HostView<import1.ChildComponent> viewFactory_ChildComponentHost0() {
   return _ViewChildComponentHost0();
 }
 
@@ -421,7 +440,7 @@ ComponentFactory<import1.UsesAfterContent> createUsesAfterContentFactory() {
 
 final List<Object> styles$UsesAfterContentHost = const [];
 
-class _ViewUsesAfterContentHost0 extends import15.HostView<import1.UsesAfterContent> {
+class _ViewUsesAfterContentHost0 extends import16.HostView<import1.UsesAfterContent> {
   @override
   void build() {
     this.componentView = ViewUsesAfterContent0(this, 0);
@@ -443,7 +462,7 @@ class _ViewUsesAfterContentHost0 extends import15.HostView<import1.UsesAfterCont
   }
 }
 
-import15.HostView<import1.UsesAfterContent> viewFactory_UsesAfterContentHost0() {
+import16.HostView<import1.UsesAfterContent> viewFactory_UsesAfterContentHost0() {
   return _ViewUsesAfterContentHost0();
 }
 

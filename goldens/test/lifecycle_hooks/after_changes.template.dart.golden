@@ -13,8 +13,9 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -50,18 +51,27 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     changed = false;
     final currVal_0 = _ctx.a;
     if (import7.checkBinding(this._expr_0, currVal_0, 'a', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'a', currVal_0);
+      }
       this._UsesAfterChanges_0_5.a = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.b;
     if (import7.checkBinding(this._expr_1, currVal_1, 'b', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'b', currVal_1);
+      }
       this._UsesAfterChanges_0_5.b = currVal_1;
       changed = true;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.c;
     if (import7.checkBinding(this._expr_2, currVal_2, 'c', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'c', currVal_2);
+      }
       this._UsesAfterChanges_0_5.c = currVal_2;
       changed = true;
       this._expr_2 = currVal_2;
@@ -104,7 +114,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -114,7 +124,7 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -162,7 +172,7 @@ ComponentFactory<import1.UsesAfterChanges> createUsesAfterChangesFactory() {
 
 final List<Object> styles$UsesAfterChangesHost = const [];
 
-class _ViewUsesAfterChangesHost0 extends import9.HostView<import1.UsesAfterChanges> {
+class _ViewUsesAfterChangesHost0 extends import10.HostView<import1.UsesAfterChanges> {
   @override
   void build() {
     this.componentView = ViewUsesAfterChanges0(this, 0);
@@ -172,7 +182,7 @@ class _ViewUsesAfterChangesHost0 extends import9.HostView<import1.UsesAfterChang
   }
 }
 
-import9.HostView<import1.UsesAfterChanges> viewFactory_UsesAfterChangesHost0() {
+import10.HostView<import1.UsesAfterChanges> viewFactory_UsesAfterChangesHost0() {
   return _ViewUsesAfterChangesHost0();
 }
 

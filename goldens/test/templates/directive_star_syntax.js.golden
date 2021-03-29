@@ -10146,6 +10146,10 @@
       var t1 = this.__ViewGoldenComponent0__appEl_0;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_0")) : t1;
     },
+    get$_NgIf_0_9: function() {
+      var t1 = this.__ViewGoldenComponent0__NgIf_0_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_0_9")) : t1;
+    },
     get$_appEl_2: function() {
       var t1 = this.__ViewGoldenComponent0__appEl_2;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_2")) : t1;
@@ -10155,12 +10159,9 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgFor_2_9")) : t1;
     },
     detectChangesInternal$0: function() {
-      var currVal_0, differ, t2, changes, _this = this,
-        _ctx = _this.get$ctx(),
-        t1 = _this.__ViewGoldenComponent0__NgIf_0_9;
-      if (t1 == null)
-        t1 = H.throwExpression(H.LateError$fieldNI("_NgIf_0_9"));
-      t1.set$ngIf(_ctx.show);
+      var currVal_0, t1, differ, t2, changes, _this = this,
+        _ctx = _this.get$ctx();
+      _this.get$_NgIf_0_9().set$ngIf(_ctx.show);
       currVal_0 = _ctx.values;
       t1 = _this._expr_0;
       if (t1 !== currVal_0) {

@@ -13,11 +13,12 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/runtime/text_binding.dart' as import10;
-import 'package:angular/src/runtime/dom_helpers.dart' as import11;
-import 'package:angular/src/runtime/interpolate.dart' as import12;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/runtime/text_binding.dart' as import11;
+import 'package:angular/src/runtime/dom_helpers.dart' as import12;
+import 'package:angular/src/runtime/interpolate.dart' as import13;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -59,6 +60,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     changed = false;
     final currVal_0 = _ctx.name;
     if (import7.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._Child_0_5, 'name', currVal_0);
+      }
       this._Child_0_5.name = currVal_0;
       changed = true;
       this._expr_0 = currVal_0;
@@ -69,6 +73,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     changed = false;
     final currVal_1 = _ctx.name;
     if (import7.checkBinding(this._expr_1, currVal_1, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._ChildWithDoCheck_1_5, 'name', currVal_1);
+      }
       this._ChildWithDoCheck_1_5.name = currVal_1;
       changed = true;
       this._expr_1 = currVal_1;
@@ -116,7 +123,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -126,14 +133,14 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
 final List<Object> styles$Child = const [];
 
 class ViewChild0 extends import0.ComponentView<import1.Child> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
+  final import11.TextBinding _textBinding_1 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewChild0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -146,14 +153,14 @@ class ViewChild0 extends import0.ComponentView<import1.Child> {
   @override
   void build() {
     final parentRenderNode = this.initViewRoot();
-    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
+    final _text_0 = import12.appendText(parentRenderNode, 'Name: ');
     parentRenderNode.append(this._textBinding_1.element);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
   }
 
   static void _debugClearComponentStyles() {
@@ -183,7 +190,7 @@ ComponentFactory<import1.Child> createChildFactory() {
 
 final List<Object> styles$ChildHost = const [];
 
-class _ViewChildHost0 extends import9.HostView<import1.Child> {
+class _ViewChildHost0 extends import10.HostView<import1.Child> {
   @override
   void build() {
     this.componentView = ViewChild0(this, 0);
@@ -202,14 +209,14 @@ class _ViewChildHost0 extends import9.HostView<import1.Child> {
   }
 }
 
-import9.HostView<import1.Child> viewFactory_ChildHost0() {
+import10.HostView<import1.Child> viewFactory_ChildHost0() {
   return _ViewChildHost0();
 }
 
 final List<Object> styles$ChildWithDoCheck = const [];
 
 class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoCheck> {
-  final import10.TextBinding _textBinding_1 = import10.TextBinding();
+  final import11.TextBinding _textBinding_1 = import11.TextBinding();
   static import2.ComponentStyles? _componentStyles;
   ViewChildWithDoCheck0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckOnce) {
     this.initComponentStyles();
@@ -222,14 +229,14 @@ class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoChe
   @override
   void build() {
     final parentRenderNode = this.initViewRoot();
-    final _text_0 = import11.appendText(parentRenderNode, 'Name: ');
+    final _text_0 = import12.appendText(parentRenderNode, 'Name: ');
     parentRenderNode.append(this._textBinding_1.element);
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
   }
 
   static void _debugClearComponentStyles() {
@@ -259,7 +266,7 @@ ComponentFactory<import1.ChildWithDoCheck> createChildWithDoCheckFactory() {
 
 final List<Object> styles$ChildWithDoCheckHost = const [];
 
-class _ViewChildWithDoCheckHost0 extends import9.HostView<import1.ChildWithDoCheck> {
+class _ViewChildWithDoCheckHost0 extends import10.HostView<import1.ChildWithDoCheck> {
   @override
   void build() {
     this.componentView = ViewChildWithDoCheck0(this, 0);
@@ -281,7 +288,7 @@ class _ViewChildWithDoCheckHost0 extends import9.HostView<import1.ChildWithDoChe
   }
 }
 
-import9.HostView<import1.ChildWithDoCheck> viewFactory_ChildWithDoCheckHost0() {
+import10.HostView<import1.ChildWithDoCheck> viewFactory_ChildWithDoCheckHost0() {
   return _ViewChildWithDoCheckHost0();
 }
 

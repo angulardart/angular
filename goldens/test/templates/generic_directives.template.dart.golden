@@ -15,14 +15,15 @@ import 'dart:html' as import6;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import8;
 import 'package:angular/src/runtime/check_binding.dart' as import9;
+import 'package:angular/src/devtools.dart' as import10;
 import 'dart:core';
 import 'package:angular/src/core/linker/view_container.dart';
-import 'package:angular/src/common/directives/ng_for.dart' as import12;
-import 'package:angular/src/runtime/dom_helpers.dart' as import13;
+import 'package:angular/src/common/directives/ng_for.dart' as import13;
+import 'package:angular/src/runtime/dom_helpers.dart' as import14;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
-import 'package:angular/src/core/linker/views/render_view.dart' as import16;
-import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import17;
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import16;
+import 'package:angular/src/core/linker/views/render_view.dart' as import17;
+import 'package:angular/src/core/change_detection/directive_change_detector.dart' as import18;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -268,6 +269,9 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._UntypedComp_0_5, 'input', currVal_0);
+      }
       this._UntypedComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -408,6 +412,9 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
+      }
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -490,6 +497,9 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
+      }
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -631,11 +641,17 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindKey;
     if (import9.checkBinding(this._expr_0, currVal_0, 'bindKey', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._MappingComp1_0_5, 'key', currVal_0);
+      }
       this._MappingComp1_0_5.key = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
     if (import9.checkBinding(this._expr_1, currVal_1, 'bindValue', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._MappingComp1_0_5, 'value', currVal_1);
+      }
       this._MappingComp1_0_5.value = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -776,6 +792,9 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._MappingComp2_0_5, 'input', currVal_0);
+      }
       this._MappingComp2_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -916,6 +935,9 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
+      }
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -998,6 +1020,9 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
+      }
       this._BoundComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1139,11 +1164,17 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
     final _ctx = this.ctx;
     final currVal_0 = _ctx.bindA;
     if (import9.checkBinding(this._expr_0, currVal_0, 'bindA', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._SelfBoundComp_0_5, 'a', currVal_0);
+      }
       this._SelfBoundComp_0_5.a = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
     if (import9.checkBinding(this._expr_1, currVal_1, 'bindB', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._SelfBoundComp_0_5, 'b', currVal_1);
+      }
       this._SelfBoundComp_0_5.b = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1284,6 +1315,9 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._FunctionTypeComp_0_5, 'input', currVal_0);
+      }
       this._FunctionTypeComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1344,7 +1378,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
   late final ViewNestedChildComp0<T> _compView_1;
   late final import1.NestedChildComp<T> _NestedChildComp_1_5;
   late final ViewContainer _appEl_2;
-  late final import12.NgFor _NgFor_2_9;
+  late final import13.NgFor _NgFor_2_9;
   Object? _expr_0;
   Object? _expr_1;
   Object? _expr_2;
@@ -1370,12 +1404,12 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
     parentRenderNode.append(_el_1);
     this._NestedChildComp_1_5 = import1.NestedChildComp();
     this._compView_1.create(this._NestedChildComp_1_5);
-    final _anchor_2 = import13.appendAnchor(parentRenderNode);
+    final _anchor_2 = import14.appendAnchor(parentRenderNode);
     this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, (parentView, parentIndex) {
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
-    this._NgFor_2_9 = import12.NgFor(this._appEl_2, _TemplateRef_2_8);
+    this._NgFor_2_9 = import13.NgFor(this._appEl_2, _TemplateRef_2_8);
   }
 
   @override
@@ -1383,16 +1417,25 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
     final _ctx = this.ctx;
     final currVal_0 = _ctx.input1;
     if (import9.checkBinding(this._expr_0, currVal_0, 'input1', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
+      }
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
     if (import9.checkBinding(this._expr_1, currVal_1, 'input2', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedChildComp_1_5, 'input', currVal_1);
+      }
       this._NestedChildComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
     if (import9.checkBinding(this._expr_2, currVal_2, 'moreInputs', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_2);
+      }
       this._NgFor_2_9.ngForOf = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1436,11 +1479,11 @@ ComponentFactory<import1.NestedParentComp<T>> createNestedParentCompFactory<T>()
   return ComponentFactory('parent', viewFactory_NestedParentCompHost0);
 }
 
-class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedParentComp<T>> {
+class _ViewNestedParentComp1<T> extends import16.EmbeddedView<import1.NestedParentComp<T>> {
   late final ViewNestedChildComp0<T> _compView_0;
   late final import1.NestedChildComp<T> _NestedChildComp_0_5;
   Object? _expr_0;
-  _ViewNestedParentComp1(import16.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  _ViewNestedParentComp1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
   @override
   void build() {
     this._compView_0 = ViewNestedChildComp0(this, 0);
@@ -1455,6 +1498,9 @@ class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedPare
     final local_input = import5.unsafeCast<T>(this.locals['\$implicit']);
     final currVal_0 = local_input;
     if (import9.checkBinding(this._expr_0, currVal_0, 'input', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
+      }
       this._NestedChildComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1467,7 +1513,7 @@ class _ViewNestedParentComp1<T> extends import15.EmbeddedView<import1.NestedPare
   }
 }
 
-import15.EmbeddedView<void> viewFactory_NestedParentComp1<T>(import16.RenderView parentView, int parentIndex) {
+import16.EmbeddedView<void> viewFactory_NestedParentComp1<T>(import17.RenderView parentView, int parentIndex) {
   return _ViewNestedParentComp1<T>(parentView, parentIndex);
 }
 
@@ -1577,16 +1623,25 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
     final _ctx = this.ctx;
     final currVal_0 = _ctx.binding1;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding1', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'input1', currVal_0);
+      }
       this._NestedParentComp_0_5.input1 = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
     if (import9.checkBinding(this._expr_1, currVal_1, 'binding2', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'input2', currVal_1);
+      }
       this._NestedParentComp_0_5.input2 = currVal_1;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
     if (import9.checkBinding(this._expr_2, currVal_2, 'moreBindings', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'moreInputs', currVal_2);
+      }
       this._NestedParentComp_0_5.moreInputs = currVal_2;
       this._expr_2 = currVal_2;
     }
@@ -1677,11 +1732,17 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
     final _ctx = this.ctx;
     final currVal_0 = _ctx.name;
     if (import9.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
+      }
       this._GenericComp_0_5.input = currVal_0;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.index;
     if (import9.checkBinding(this._expr_1, currVal_1, 'index', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._GenericComp_1_5, 'input', currVal_1);
+      }
       this._GenericComp_1_5.input = currVal_1;
       this._expr_1 = currVal_1;
     }
@@ -1755,8 +1816,8 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
   void build() {
     final parentRenderNode = this.initViewRoot();
     final doc = import6.document;
-    this._el_0 = import13.appendDiv(doc, parentRenderNode);
-    import13.setAttribute(this._el_0, 'generic', '');
+    this._el_0 = import14.appendDiv(doc, parentRenderNode);
+    import14.setAttribute(this._el_0, 'generic', '');
     this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
   }
 
@@ -1765,6 +1826,9 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
     final _ctx = this.ctx;
     final currVal_0 = _ctx.value;
     if (import9.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/templates/generic_directives.dart')) {
+      if (import10.isDevToolsEnabled) {
+        import10.ComponentInspector.instance.recordInput(this._GenericDirective_0_5.instance, 'input', currVal_0);
+      }
       this._GenericDirective_0_5.instance.input = currVal_0;
       this._expr_0 = currVal_0;
     }
@@ -1812,14 +1876,14 @@ import8.HostView<import1.UsesGenericChangeDetector> viewFactory_UsesGenericChang
   return _ViewUsesGenericChangeDetectorHost0();
 }
 
-class GenericDirectiveNgCd<T extends String> extends import17.DirectiveChangeDetector {
+class GenericDirectiveNgCd<T extends String> extends import18.DirectiveChangeDetector {
   final import1.GenericDirective<T> instance;
   Object? _expr_0;
   GenericDirectiveNgCd(this.instance);
-  void detectHostChanges(import16.RenderView view, import6.Element el) {
+  void detectHostChanges(import17.RenderView view, import6.Element el) {
     final currVal_0 = this.instance.input;
     if (import9.checkBinding(this._expr_0, currVal_0, null, null)) {
-      import13.updateAttribute(el, 'a', currVal_0);
+      import14.updateAttribute(el, 'a', currVal_0);
       this._expr_0 = currVal_0;
     }
   }
