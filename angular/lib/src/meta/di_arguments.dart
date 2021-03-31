@@ -251,3 +251,5 @@ class SkipSelf {
 class Host {
   const Host();
 }
+
+const String diArgumentsUrl = 'package:angular/src/meta/di_arguments.dart';

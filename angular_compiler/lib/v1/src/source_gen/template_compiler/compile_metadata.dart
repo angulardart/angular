@@ -54,8 +54,8 @@ class CompileTypeMetadataVisitor
 
   @override
   CompileTypeMetadata visitFunctionElement(FunctionElement element) =>
-      element.metadata.any((annotation) =>
-              annotation_matcher.matchAnnotation(Directive, annotation))
+      element.metadata.any((annotation) => annotation_matcher.matchAnnotation(
+              '$directivesUrl#Directive', annotation))
           ? _getFunctionCompileTypeMetadata(element)
           : null;
 
@@ -640,16 +640,16 @@ class CompileTypeMetadataVisitor
       var isSkipSelf = false;
       var isOptional = false;
       for (var i = 1; i < metadata.length; i++) {
-        if (const TypeChecker.fromRuntime(Self)
+        if (const TypeChecker.fromUrl('$diArgumentsUrl#Self')
             .isExactlyType(metadata[i].type)) {
           isSelf = true;
-        } else if (const TypeChecker.fromRuntime(Host)
+        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#Host')
             .isExactlyType(metadata[i].type)) {
           isHost = true;
-        } else if (const TypeChecker.fromRuntime(SkipSelf)
+        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#SkipSelf')
             .isExactlyType(metadata[i].type)) {
           isSkipSelf = true;
-        } else if (const TypeChecker.fromRuntime(Optional)
+        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#Optional')
             .isExactlyType(metadata[i].type)) {
           isOptional = true;
         }
@@ -768,25 +768,32 @@ class ParameterInfo {
 
   void _populateTypeInfo(
       DartObject annotationValue, ElementAnnotation annotation) {
-    if (annotation_matcher.matchTypeExactly(Attribute, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$directivesUrl#Attribute', annotationValue)) {
       attribute = annotationValue;
     }
-    if (annotation_matcher.matchTypeExactly(Self, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$diArgumentsUrl#Self', annotationValue)) {
       isSelf = true;
     }
-    if (annotation_matcher.matchTypeExactly(Host, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$diArgumentsUrl#Host', annotationValue)) {
       isHost = true;
     }
-    if (annotation_matcher.matchTypeExactly(SkipSelf, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$diArgumentsUrl#SkipSelf', annotationValue)) {
       isSkipSelf = true;
     }
-    if (annotation_matcher.matchTypeExactly(Optional, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$diArgumentsUrl#Optional', annotationValue)) {
       isOptional = true;
     }
-    if (annotation_matcher.isAssignableFrom(OpaqueToken, annotationValue)) {
+    if (annotation_matcher.isAssignableFrom(
+        '$diTokensUrl#OpaqueToken', annotationValue)) {
       opaqueToken = annotationValue;
     }
-    if (annotation_matcher.matchTypeExactly(Inject, annotationValue)) {
+    if (annotation_matcher.matchTypeExactly(
+        '$diArgumentsUrl#Inject', annotationValue)) {
       injectValue = annotationValue;
       injectAnnotation = annotation;
     }
