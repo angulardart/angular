@@ -839,3 +839,6 @@ class HostListener {
   final List<String>? args;
   const HostListener(this.eventName, [this.args]);
 }
+
+const String directivesUrl = 'package:angular'
+    '/src/meta/directives.dart';

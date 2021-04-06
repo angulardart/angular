@@ -349,3 +349,6 @@ abstract class AfterViewInit {
 abstract class AfterViewChecked {
   void ngAfterViewChecked();
 }
+
+const String lifecycleHooksUrl = 'package:angular'
+    '/src/meta/lifecycle_hooks.dart';

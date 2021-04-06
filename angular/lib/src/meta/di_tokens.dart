@@ -142,3 +142,5 @@ class MultiToken<T extends Object> extends OpaqueToken<List<T>> {
 
 /// **INTERNAL ONLY**: Used to provide type inference for [MultiToken].
 List<Object> listOfMultiToken(MultiToken<Object> token) => token._listOf();
+
+const String diTokensUrl = 'package:angular/src/meta/di_tokens.dart';

@@ -26,20 +26,22 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
         constantEvaluationErrors = annotation.constantEvaluationErrors,
         super(element, annotation, annotationIndex);
 
-  bool get isInputType => _isTypeExactly(Input);
-  bool get isOutputType => _isTypeExactly(Output);
+  bool get isInputType => _isTypeExactly('$directivesUrl#Input');
+  bool get isOutputType => _isTypeExactly('$directivesUrl#Output');
   bool get isContentType =>
-      _isTypeExactly(ContentChild) || _isTypeExactly(ContentChildren);
+      _isTypeExactly('$directivesUrl#ContentChild') ||
+      _isTypeExactly('$directivesUrl#ContentChildren');
   bool get isViewType =>
-      _isTypeExactly(ViewChild) || _isTypeExactly(ViewChildren);
-  bool get isComponent => _isTypeExactly(Component);
+      _isTypeExactly('$directivesUrl#ViewChild') ||
+      _isTypeExactly('$directivesUrl#ViewChildren');
+  bool get isComponent => _isTypeExactly('$directivesUrl#Component');
 
   bool get hasErrors =>
       constantValue == null || constantEvaluationErrors.isNotEmpty;
 
   bool sentWarning = false;
 
-  bool _isTypeExactly(Type type) {
+  bool _isTypeExactly(String url) {
     if (hasErrors) {
       if (!sentWarning) {
         // NOTE: Upcast to satisfy Dart's type system.
@@ -51,7 +53,7 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
       }
       return false;
     }
-    return matchTypeExactly(type, constantValue);
+    return matchTypeExactly(url, constantValue);
   }
 }
 
