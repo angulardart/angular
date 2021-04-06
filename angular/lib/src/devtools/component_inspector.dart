@@ -44,9 +44,6 @@ class ComponentInspector {
   final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
 
   /// Frees all object references held by this service.
-  ///
-  /// TODO(b/160341070): call on hot restart.
-  @visibleForTesting
   void dispose() {
     _referenceCounter.dispose();
   }

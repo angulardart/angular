@@ -62,7 +62,10 @@ class App {
             .listen((_) {
           postEvent('angular.update', {});
         });
-        appRef.registerDisposeListener(onTurnStartSubscription.cancel);
+        appRef.registerDisposeListener(() {
+          onTurnStartSubscription.cancel();
+          ComponentInspector.instance.dispose();
+        });
       });
     }
   }

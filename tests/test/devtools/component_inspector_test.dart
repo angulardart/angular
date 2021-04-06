@@ -16,11 +16,7 @@ void main() {
   /// this test uses the same group for all requests.
   final groupName = 'test';
 
-  tearDown(() async {
-    await disposeAnyRunningTest();
-    // TODO(b/157073968): remove once NgTestBed handles this automatically.
-    ComponentInspector.instance.dispose();
-  });
+  tearDown(disposeAnyRunningTest);
 
   // TODO(b/157073968): remove once NgTestBed handles this automatically.
   void setLegacyApp(Injector injector) {
