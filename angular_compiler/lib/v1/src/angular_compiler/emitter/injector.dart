@@ -218,13 +218,14 @@ class InjectorEmitter implements InjectorVisitor {
     bool isMulti,
   ) {
     final fieldName = '_field$index';
+    final types =
+        returnType is TypeReference ? returnType.types : <Reference>[];
     _fieldCache.add(Field((b) => b
       ..name = '_field$index'
       ..type = TypeReference((b) => b
         ..symbol = returnType.symbol
         ..url = returnType.url
-        ..types =
-            returnType is TypeReference ? returnType.types.toBuilder() : null
+        ..types.addAll(types)
         ..isNullable = true)));
 
     final methodName = '_get${returnType.symbol}\$$index';
