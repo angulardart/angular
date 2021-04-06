@@ -159,13 +159,14 @@ class InjectorEmitter implements InjectorVisitor {
     bool isMulti,
   ) {
     final fieldName = '_field$index';
+    final types = type is TypeReference ? type.types : <Reference>[];
     _fieldCache.add(
       Field((b) => b
         ..name = fieldName
         ..type = TypeReference((b) => b
           ..symbol = type.symbol
           ..url = type.url
-          ..types = type is TypeReference ? type.types.toBuilder() : null
+          ..types.addAll(types)
           ..isNullable = true)),
     );
 
