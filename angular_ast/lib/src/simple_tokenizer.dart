@@ -39,8 +39,8 @@ class NgSimpleScanner {
       r'([\s]+)|' //9 whitespace
       //10 any alphanumeric + '-' + '_' + ':'
       r'([a-zA-Z]([\w\_\-:])*[a-zA-Z0-9]?)|'
-      r'("([^"\\]|\\.)*"?)|' //12 closed double quote (includes group 13)
-      r"('([^'\\]|\\.)*'?)|" //14 closed single quote (includes group 15)
+      r'("([^"\\]+|\\.)*"?)|' //12 closed double quote (includes group 13)
+      r"('([^'\\]+|\\.)*'?)|" //14 closed single quote (includes group 15)
       r'(<)|' //16 <
       r'(=)|' //17 =
       r'(\*)|' //18 *
