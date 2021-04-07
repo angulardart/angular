@@ -54,13 +54,6 @@ Uri _toAssetScheme(Uri absoluteUri) {
         'Value passed must be an absolute uri');
   }
   if (absoluteUri.scheme == 'asset') {
-    if (absoluteUri.pathSegments.length < 3) {
-      throw FormatException(
-          'An asset: URI must have at least 3 path '
-          'segments, for example '
-          'asset:<package-name>/<first-level-dir>/<path-to-dart-file>.',
-          absoluteUri.toString());
-    }
     return absoluteUri;
   }
   if (absoluteUri.scheme != 'package') {
