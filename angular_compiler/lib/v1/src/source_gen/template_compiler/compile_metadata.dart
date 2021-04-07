@@ -14,8 +14,6 @@ import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart'
-    as annotation_matcher;
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/v2/analyzer.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -626,17 +624,13 @@ class CompileTypeMetadataVisitor
       var isSkipSelf = false;
       var isOptional = false;
       for (var i = 1; i < metadata.length; i++) {
-        if (const TypeChecker.fromUrl('$diArgumentsUrl#Self')
-            .isExactlyType(metadata[i].type)) {
+        if ($Self.isExactlyType(metadata[i].type)) {
           isSelf = true;
-        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#Host')
-            .isExactlyType(metadata[i].type)) {
+        } else if ($Host.isExactlyType(metadata[i].type)) {
           isHost = true;
-        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#SkipSelf')
-            .isExactlyType(metadata[i].type)) {
+        } else if ($SkipSelf.isExactlyType(metadata[i].type)) {
           isSkipSelf = true;
-        } else if (const TypeChecker.fromUrl('$diArgumentsUrl#Optional')
-            .isExactlyType(metadata[i].type)) {
+        } else if ($Optional.isExactlyType(metadata[i].type)) {
           isOptional = true;
         }
       }
@@ -754,32 +748,20 @@ class ParameterInfo {
 
   void _populateTypeInfo(
       DartObject annotationValue, ElementAnnotation annotation) {
-    if (annotation_matcher.matchTypeExactly(
-        '$directivesUrl#Attribute', annotationValue)) {
+    final annotationType = annotationValue.type;
+    if ($Attribute.isExactlyType(annotationType)) {
       attribute = annotationValue;
-    }
-    if (annotation_matcher.matchTypeExactly(
-        '$diArgumentsUrl#Self', annotationValue)) {
+    } else if ($Self.isExactlyType(annotationType)) {
       isSelf = true;
-    }
-    if (annotation_matcher.matchTypeExactly(
-        '$diArgumentsUrl#Host', annotationValue)) {
+    } else if ($Host.isExactlyType(annotationType)) {
       isHost = true;
-    }
-    if (annotation_matcher.matchTypeExactly(
-        '$diArgumentsUrl#SkipSelf', annotationValue)) {
+    } else if ($SkipSelf.isExactlyType(annotationType)) {
       isSkipSelf = true;
-    }
-    if (annotation_matcher.matchTypeExactly(
-        '$diArgumentsUrl#Optional', annotationValue)) {
+    } else if ($Optional.isExactlyType(annotationType)) {
       isOptional = true;
-    }
-    if (annotation_matcher.isAssignableFrom(
-        '$diTokensUrl#OpaqueToken', annotationValue)) {
+    } else if ($OpaqueToken.isAssignableFromType(annotationType)) {
       opaqueToken = annotationValue;
-    }
-    if (annotation_matcher.matchTypeExactly(
-        '$diArgumentsUrl#Inject', annotationValue)) {
+    } else if ($Inject.isExactlyType(annotationType)) {
       injectValue = annotationValue;
       injectAnnotation = annotation;
     }

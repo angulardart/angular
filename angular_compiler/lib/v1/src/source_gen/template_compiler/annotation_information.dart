@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
-import 'package:angular/src/meta.dart';
-import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart';
+import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
 
 import 'component_visitor_exceptions.dart';
 
@@ -26,22 +26,20 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
         constantEvaluationErrors = annotation.constantEvaluationErrors,
         super(element, annotation, annotationIndex);
 
-  bool get isInputType => _isTypeExactly('$directivesUrl#Input');
-  bool get isOutputType => _isTypeExactly('$directivesUrl#Output');
+  bool get isInputType => _isTypeExactly($Input);
+  bool get isOutputType => _isTypeExactly($Output);
   bool get isContentType =>
-      _isTypeExactly('$directivesUrl#ContentChild') ||
-      _isTypeExactly('$directivesUrl#ContentChildren');
+      _isTypeExactly($ContentChild) || _isTypeExactly($ContentChildren);
   bool get isViewType =>
-      _isTypeExactly('$directivesUrl#ViewChild') ||
-      _isTypeExactly('$directivesUrl#ViewChildren');
-  bool get isComponent => _isTypeExactly('$directivesUrl#Component');
+      _isTypeExactly($ViewChild) || _isTypeExactly($ViewChildren);
+  bool get isComponent => _isTypeExactly($Component);
 
   bool get hasErrors =>
       constantValue == null || constantEvaluationErrors.isNotEmpty;
 
   bool sentWarning = false;
 
-  bool _isTypeExactly(String url) {
+  bool _isTypeExactly(TypeChecker typeChecker) {
     if (hasErrors) {
       if (!sentWarning) {
         // NOTE: Upcast to satisfy Dart's type system.
@@ -53,7 +51,7 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
       }
       return false;
     }
-    return matchTypeExactly(url, constantValue);
+    return typeChecker.isExactlyType(constantValue.type);
   }
 }
 

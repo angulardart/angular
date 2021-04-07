@@ -9,6 +9,7 @@ const _diGeneratedInjector = '$_compilerMetadata/di_generate_injector.dart';
 const _diModules = '$_compilerMetadata/di_modules.dart';
 const _diProviders = '$_compilerMetadata/di_providers.dart';
 const _diTokens = '$_compilerMetadata/di_tokens.dart';
+const _lifecycleHooks = '$_compilerMetadata/lifecycle_hooks.dart';
 const _typed = '$_compilerMetadata/typed.dart';
 const _changeDetectionLink = '$_compilerMetadata/change_detection_link.dart';
 
@@ -18,6 +19,7 @@ const $Component = TypeChecker.fromUrl('$_directives#Component');
 const $Injectable = TypeChecker.fromUrl('$_diArguments#Injectable');
 
 // Parameter metadata.
+const $Attribute = TypeChecker.fromUrl('$_directives#Attribute');
 const $Inject = TypeChecker.fromUrl('$_diArguments#Inject');
 const $Optional = TypeChecker.fromUrl('$_diArguments#Optional');
 const $Self = TypeChecker.fromUrl('$_diArguments#Self');
@@ -45,3 +47,16 @@ const $MultiToken = TypeChecker.fromUrl('$_diTokens#MultiToken');
 const $Typed = TypeChecker.fromUrl('$_typed#Typed');
 const $ChangeDetectionLink =
     TypeChecker.fromUrl('$_changeDetectionLink#_ChangeDetectionLink');
+
+// Lifecycle hooks.
+const $OnInit = TypeChecker.fromUrl('$_lifecycleHooks#OnInit');
+const $OnDestroy = TypeChecker.fromUrl('$_lifecycleHooks#OnDestroy');
+const $DoCheck = TypeChecker.fromUrl('$_lifecycleHooks#DoCheck');
+const $AfterChanges = TypeChecker.fromUrl('$_lifecycleHooks#AfterChanges');
+const $AfterContentInit =
+    TypeChecker.fromUrl('$_lifecycleHooks#AfterContentInit');
+const $AfterContentChecked =
+    TypeChecker.fromUrl('$_lifecycleHooks#AfterContentChecked');
+const $AfterViewInit = TypeChecker.fromUrl('$_lifecycleHooks#AfterViewInit');
+const $AfterViewChecked =
+    TypeChecker.fromUrl('$_lifecycleHooks#AfterViewChecked');

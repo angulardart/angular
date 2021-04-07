@@ -1,8 +1,8 @@
-import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
 
 // See internal bug b/35319372 for details.
@@ -20,31 +20,20 @@ AnnotationMatcher safeMatcher(
       }
     };
 
-/// Creates a matcher that checks for type with [url], warning if an error is
-/// thrown.
-AnnotationMatcher safeMatcherType(
-  String url,
-) =>
-    safeMatcher(
-      (annotation) => matchAnnotation(url, annotation),
-    );
+/// Creates a matcher from [typeChecker] that warns if an error is thrown.
+AnnotationMatcher safeMatcherType(TypeChecker typeChecker) =>
+    safeMatcher((annotation) => matchAnnotation(typeChecker, annotation));
 
 /// Checks if an [ElementAnnotation] node implements [Component].
 bool isComponent(ElementAnnotation annotation) =>
-    matchAnnotation('$directivesUrl#Component', annotation);
+    matchAnnotation($Component, annotation);
 
 /// Checks if an [ElementAnnotation] node implements [Directive].
-bool isDirective(ElementAnnotation annotation) => _matchTypes([
-      '$directivesUrl#Component',
-      '$directivesUrl#Directive',
-    ], annotation);
+bool isDirective(ElementAnnotation annotation) =>
+    isComponent(annotation) || matchAnnotation($Directive, annotation);
 
 /// Checks if an [ElementAnnotation] node implements [Pipe].
-bool isPipe(ElementAnnotation annotation) =>
-    matchAnnotation('$directivesUrl#Pipe', annotation);
-
-bool _matchTypes(Iterable<String> urls, ElementAnnotation annotation) =>
-    urls.any((url) => matchAnnotation(url, annotation));
+bool isPipe(ElementAnnotation annotation) => matchAnnotation($Pipe, annotation);
 
 /// Checks if an [ElementAnnotation] node is exactly the type specified by
 /// [url].
@@ -57,11 +46,11 @@ bool _matchTypes(Iterable<String> urls, ElementAnnotation annotation) =>
 ///
 /// If a [logger] is provided, a warning is output if it fails to resolve the
 /// annotation, otherwise an [ArgumentError] is thrown.
-bool matchAnnotation(String url, ElementAnnotation annotation) {
-  annotation.computeConstantValue();
+bool matchAnnotation(TypeChecker typeChecker, ElementAnnotation annotation) {
+  final object = annotation.computeConstantValue();
   // TODO(b/123715184) Surface the constantEvaluationErrors.
   try {
-    return matchTypeExactly(url, annotation.computeConstantValue());
+    return typeChecker.isExactlyType(object.type);
   } catch (_) {
     var message = ''
         'Could not determine type of annotation. It resolved to '
@@ -82,12 +71,6 @@ bool matchAnnotation(String url, ElementAnnotation annotation) {
     );
   }
 }
-
-bool matchTypeExactly(String url, DartObject object) =>
-    TypeChecker.fromUrl(url).isExactlyType(object.type);
-
-bool isAssignableFrom(String url, DartObject object) =>
-    TypeChecker.fromUrl(url).isAssignableFromType(object.type);
 
 /// Checks if an [ElementAnnotation] node matches specific [Type]s.
 typedef AnnotationMatcher = bool Function(ElementAnnotation annotation);
