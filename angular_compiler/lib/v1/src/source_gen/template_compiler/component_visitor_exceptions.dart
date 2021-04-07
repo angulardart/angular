@@ -51,7 +51,12 @@ Future<ElementDeclarationResult> _resolvedClassResult(
   Element element, [
   String message,
 ]) async {
-  var assetId = await resolver.assetIdForElement(element);
+  AssetId assetId;
+  try {
+    assetId = await resolver.assetIdForElement(element);
+  } catch (e) {
+    throw BuildError.withoutContext('$e $message');
+  }
   // A `part of` dart file is not a standalone dart library. Thus,
   // [library] is null when an error occurs in a `part of` dart file.
   // It loses all actionable information for clients and returns an unhandled
@@ -283,7 +288,10 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
         toString(),
       );
     } on BuildError catch (buildError) {
-      return buildError;
+      final annotationSource = indexedAnnotation.annotation.toSource();
+      return BuildError.withoutContext('$buildError\n\n'
+          'This error occurred processing the following annotation:\n'
+          '$annotationSource');
     }
 
     var resolvedMetadata = _metadataFromAncestry(result.node);
