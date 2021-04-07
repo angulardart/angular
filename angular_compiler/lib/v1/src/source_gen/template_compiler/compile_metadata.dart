@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/ast/ast.dart' hide Directive;
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -51,13 +51,6 @@ class CompileTypeMetadataVisitor
       enforceClassCanBeCreated: true,
     );
   }
-
-  @override
-  CompileTypeMetadata visitFunctionElement(FunctionElement element) =>
-      element.metadata.any((annotation) => annotation_matcher.matchAnnotation(
-              '$directivesUrl#Directive', annotation))
-          ? _getFunctionCompileTypeMetadata(element)
-          : null;
 
   /// Finds the unnamed constructor if it is present.
   ///
@@ -287,13 +280,6 @@ class CompileTypeMetadataVisitor
       typeParameters: typeParameters,
     );
   }
-
-  CompileTypeMetadata _getFunctionCompileTypeMetadata(
-          FunctionElement element) =>
-      CompileTypeMetadata(
-          moduleUrl: moduleUrl(element),
-          name: element.name,
-          diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
 
   bool _hasNoUseValue(DartObject provider) {
     final useValue = dart_objects.getField(provider, 'useValue');
