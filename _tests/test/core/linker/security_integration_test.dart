@@ -50,7 +50,7 @@ void main() {
     });
     expect(
       div.innerHtml,
-      'also <iframe srcdoc="<div></div>"> content</iframe>',
+      'also <iframe> content</iframe>',
     );
   }, tags: 'fails-on-ci');
 }
