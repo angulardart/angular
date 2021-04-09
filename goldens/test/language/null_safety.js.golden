@@ -115,7 +115,7 @@
       if (holder[name] === uninitializedSentinel) {
         var value = initializer();
         if (holder[name] !== uninitializedSentinel)
-          H.throwLateInitializationError(name);
+          H.throwLateFieldADI(name);
         holder[name] = value;
       }
       holder[getterName] = function() {
@@ -234,6 +234,9 @@
   }
   var C = {},
   H = {JS_CONST: function JS_CONST() {
+    },
+    LateError$fieldADI: function(fieldName) {
+      return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
     },
     LateError$fieldNI: function(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
@@ -586,9 +589,6 @@
     throwCyclicInit: function(staticName) {
       throw H.wrapException(new P.CyclicInitializationError(staticName));
     },
-    throwLateInitializationError: function($name) {
-      return H.throwExpression(new H.LateError($name));
-    },
     Closure: function Closure() {
     },
     TearOffClosure: function TearOffClosure() {
@@ -604,6 +604,12 @@
     },
     RuntimeError: function RuntimeError(t0) {
       this.message = t0;
+    },
+    throwLateFieldADI: function(fieldName) {
+      return H.throwExpression(H.LateError$fieldADI(fieldName));
+    },
+    _Cell: function _Cell() {
+      this._value = null;
     },
     Rti__getQuestionFromStar: function(universe, rti) {
       var question = rti._precomputed1;
@@ -2246,11 +2252,10 @@
       queue.push(foo);
     },
     funcWithLateFinalLocal: function(queue) {
-      var t2, t1 = {};
-      t1._foo = null;
-      t2 = new R.funcWithLateFinalLocal__foo_get(t1);
-      new R.funcWithLateFinalLocal__foo_set(t1).call$1(new R.Foo(new R.funcWithLateFinalLocal_onCallback(queue, t2)));
-      queue.push(t2.call$0());
+      var foo = new H._Cell();
+      foo._value = foo;
+      foo._value = new R.Foo(new R.funcWithLateFinalLocal_onCallback(queue, foo));
+      queue.push(foo._readLocal$0());
     },
     ClassWithNullableFields: function ClassWithNullableFields() {
       this.z = this.y = this.x = null;
@@ -2274,15 +2279,9 @@
       this._box_0 = t0;
       this.queue = t1;
     },
-    funcWithLateFinalLocal__foo_set: function funcWithLateFinalLocal__foo_set(t0) {
-      this._box_0 = t0;
-    },
-    funcWithLateFinalLocal__foo_get: function funcWithLateFinalLocal__foo_get(t0) {
-      this._box_0 = t0;
-    },
     funcWithLateFinalLocal_onCallback: function funcWithLateFinalLocal_onCallback(t0, t1) {
       this.queue = t0;
-      this._foo_get = t1;
+      this.foo = t1;
     }
   };
   var holders = [C, H, J, P, R];
@@ -2420,6 +2419,14 @@
   H.RuntimeError.prototype = {
     toString$0: function(_) {
       return "RuntimeError: " + this.message;
+    }
+  };
+  H._Cell.prototype = {
+    _readLocal$0: function() {
+      var t1 = this._value;
+      if (t1 === this)
+        throw H.wrapException(new H.LateError("Local '' has not been initialized."));
+      return t1;
     }
   };
   H.Rti.prototype = {
@@ -2626,7 +2633,7 @@
         if (_this.__ClassWithLateFinalInitializer_someValue == null)
           _this.__ClassWithLateFinalInitializer_someValue = t1;
         else
-          t1 = H.throwExpression(new H.LateError("Field 'someValue' has been assigned during initialization."));
+          t1 = H.throwExpression(H.LateError$fieldADI("someValue"));
       }
       P.print(C.JSInt_methods.round$0(t1));
     }
@@ -2637,36 +2644,21 @@
       C.JSArray_methods.remove$1(this.queue, this._box_0.foo);
     }
   };
-  R.funcWithLateFinalLocal__foo_set.prototype = {
-    call$1: function(t1) {
-      var t2 = this._box_0;
-      if (t2._foo == null)
-        return t2._foo = t1;
-      else
-        throw H.wrapException(new H.LateError("Local 'foo' has already been initialized."));
-    }
-  };
-  R.funcWithLateFinalLocal__foo_get.prototype = {
-    call$0: function() {
-      var t1 = this._box_0._foo;
-      return t1 == null ? H.throwExpression(new H.LateError("Local 'foo' has not been initialized.")) : t1;
-    }
-  };
   R.funcWithLateFinalLocal_onCallback.prototype = {
     call$0: function() {
-      C.JSArray_methods.remove$1(this.queue, this._foo_get.call$0());
+      C.JSArray_methods.remove$1(this.queue, this.foo._readLocal$0());
     }
   };
   (function inheritance() {
     var _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, H.Closure, H.Rti, H._FunctionParameters, P.Null, P.StringBuffer, R.ClassWithNullableFields, R.ClassWithLateFields, R.ClassWithLateFinalFields, R.ClassWithNullableInitializer, R.ClassWithLateFinalInitializer, R.Foo]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, H.Closure, H._Cell, H.Rti, H._FunctionParameters, P.Null, P.StringBuffer, R.ClassWithNullableFields, R.ClassWithLateFields, R.ClassWithLateFinalFields, R.ClassWithNullableInitializer, R.ClassWithLateFinalInitializer, R.Foo]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JSArray, J.JSNumber, J.JSString]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
     _inheritMany(P.Error, [H.LateError, H.RuntimeError, H._Error, P.AssertionError, P.NullThrownError, P.ArgumentError, P.UnsupportedError, P.ConcurrentModificationError, P.CyclicInitializationError]);
-    _inheritMany(H.Closure, [H.TearOffClosure, R.funcWithNullableLocal_onCallback, R.funcWithLateFinalLocal__foo_set, R.funcWithLateFinalLocal__foo_get, R.funcWithLateFinalLocal_onCallback]);
+    _inheritMany(H.Closure, [H.TearOffClosure, R.funcWithNullableLocal_onCallback, R.funcWithLateFinalLocal_onCallback]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(H._TypeError, H._Error);
     _inheritMany(P.ArgumentError, [P.RangeError, P.IndexError]);
