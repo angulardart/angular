@@ -25,6 +25,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/generated_injector_large.dart' : null);
   }

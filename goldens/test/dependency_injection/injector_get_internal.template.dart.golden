@@ -247,6 +247,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     return result;
   }
 
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dependency_injection/injector_get_internal.dart' : null);
   }
@@ -536,6 +541,11 @@ class ViewMaterialAutoSuggestInputComponent0 extends import0.ComponentView<impor
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('material-auto-suggest-input'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dependency_injection/injector_get_internal.dart' : null);
   }
@@ -602,6 +612,11 @@ class ViewMaterialIcon0 extends import0.ComponentView<import1.MaterialIcon> {
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('material-icon'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dependency_injection/injector_get_internal.dart' : null);
   }
@@ -660,6 +675,11 @@ class ViewMaterialInputComponent0 extends import0.ComponentView<import1.Material
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('material-input'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dependency_injection/injector_get_internal.dart' : null);
   }

@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/app.dart';
 import 'package:angular/src/devtools.dart';
 import 'package:angular_test/angular_test.dart';
 
@@ -18,15 +17,10 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
-  // TODO(b/157073968): remove once NgTestBed handles this automatically.
-  void setLegacyApp(Injector injector) {
-    App.setLegacyApp(injector.provideType(ApplicationRef));
-  }
-
   group('getComponents', () {
     test('component views', () async {
       final testBed = NgTestBed(ng.createTestComponentViewsFactory());
-      await testBed.create(beforeComponentCreated: setLegacyApp);
+      await testBed.create();
 
       final components = ComponentInspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
@@ -56,8 +50,7 @@ void main() {
       test('conditional', () async {
         final testBed =
             NgTestBed(ng.createTestConditionalEmbeddedViewsFactory());
-        final testFixture =
-            await testBed.create(beforeComponentCreated: setLegacyApp);
+        final testFixture = await testBed.create();
 
         // Should not return embedded component before it's created.
         var components = ComponentInspector.instance.getComponents(groupName);
@@ -99,7 +92,6 @@ void main() {
       test('repeated', () async {
         final testBed = NgTestBed(ng.createTestRepeatedEmbeddedViewsFactory());
         final testFixture = await testBed.create(
-          beforeComponentCreated: setLegacyApp,
           beforeChangeDetection: (component) {
             component.values = [1, 2, 4];
           },
@@ -160,7 +152,7 @@ void main() {
       test('transplanted', () async {
         final testBed =
             NgTestBed(ng.createTestTransplantedEmbeddedViewsFactory());
-        await testBed.create(beforeComponentCreated: setLegacyApp);
+        await testBed.create();
 
         final components = ComponentInspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
@@ -187,8 +179,7 @@ void main() {
 
     test('host views', () async {
       final testBed = NgTestBed(ng.createTestHostViewsFactory());
-      final testFixture =
-          await testBed.create(beforeComponentCreated: setLegacyApp);
+      final testFixture = await testBed.create();
 
       // Should not return imperatively loaded component before it's created.
       var components = ComponentInspector.instance.getComponents(groupName);
@@ -229,7 +220,7 @@ void main() {
 
     test('projected content', () async {
       final testBed = NgTestBed(ng.createTestProjectedContentFactory());
-      await testBed.create(beforeComponentCreated: setLegacyApp);
+      await testBed.create();
 
       final components = ComponentInspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
@@ -278,7 +269,7 @@ void main() {
 
     test('no inputs', () async {
       final testBed = NgTestBed(ng.createTestUsedInputsFactory());
-      await testBed.create(beforeComponentCreated: setLegacyApp);
+      await testBed.create();
 
       final components = ComponentInspector.instance.getComponents(groupName);
       final component = components.first;
@@ -290,7 +281,7 @@ void main() {
 
     test('omits unused inputs', () async {
       final testBed = NgTestBed(ng.createTestUnusedInputsFactory());
-      await testBed.create(beforeComponentCreated: setLegacyApp);
+      await testBed.create();
 
       final id = firstChildComponentId();
       final inputs = ComponentInspector.instance.getComponentInputs(id);
@@ -299,8 +290,7 @@ void main() {
 
     test('omits inputs until set', () async {
       final testBed = NgTestBed(ng.createTestUsedInputsFactory());
-      final testFixture =
-          await testBed.create(beforeComponentCreated: setLegacyApp);
+      final testFixture = await testBed.create();
 
       final id = firstChildComponentId();
       var inputs = ComponentInspector.instance.getComponentInputs(id);
@@ -327,7 +317,6 @@ void main() {
     test('updates inputs when changed', () async {
       final testBed = NgTestBed(ng.createTestUsedInputsFactory());
       final testFixture = await testBed.create(
-        beforeComponentCreated: setLegacyApp,
         beforeChangeDetection: (component) {
           component.title = 'Hello!';
         },
@@ -347,8 +336,7 @@ void main() {
 
     test('records immutable expressions', () async {
       final testBed = NgTestBed(ng.createTestImmutableInputsFactory());
-      final testFixture =
-          await testBed.create(beforeComponentCreated: setLegacyApp);
+      final testFixture = await testBed.create();
 
       final id = firstChildComponentId();
       final inputs = ComponentInspector.instance.getComponentInputs(id);

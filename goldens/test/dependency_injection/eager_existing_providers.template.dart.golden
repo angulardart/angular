@@ -28,6 +28,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
   }
@@ -117,6 +122,11 @@ class ViewProvidesServicesComponent0 extends import0.ComponentView<import1.Provi
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('provides-services'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
   }
@@ -184,6 +194,11 @@ class ViewInjectsServicesComponent0 extends import0.ComponentView<import1.Inject
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('injects-services'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/eager_existing_providers.dart' : null);
   }

@@ -10,6 +10,7 @@ import '../core/linker.dart' show ComponentFactory, ComponentRef;
 import '../core/linker/app_view_utils.dart';
 import '../core/linker/component_resolver.dart' show typeToFactory;
 import '../core/zone/ng_zone.dart';
+import '../devtools.dart';
 import '../di/injector.dart';
 import '../runtime/dom_events.dart';
 import '../utilities.dart';
@@ -54,7 +55,7 @@ Injector appInjector(
   //
   // We also add other top-level services with similar constraints:
   // * `AppViewUtils`
-  return ngZone.run(() {
+  final injector = ngZone.run(() {
     applicationRef = internalCreateApplicationRef(
       ngZone,
       userInjector,
@@ -65,6 +66,12 @@ Injector appInjector(
     );
     return userInjector;
   });
+
+  if (isDevToolsEnabled) {
+    ComponentInspector.instance.inspect(applicationRef);
+  }
+
+  return injector;
 }
 
 /// An implementation of [Injector] that invokes closures.

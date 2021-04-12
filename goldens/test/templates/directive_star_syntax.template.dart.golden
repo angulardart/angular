@@ -40,6 +40,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import8.unsafeCast(import9.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:goldens/test/templates/directive_star_syntax.dart' : null);
   }

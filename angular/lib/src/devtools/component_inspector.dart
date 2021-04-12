@@ -1,19 +1,30 @@
+import 'dart:async';
+import 'dart:convert' show json;
+import 'dart:developer';
 import 'dart:html';
 
 import 'package:meta/meta.dart';
+import 'package:stream_transform/stream_transform.dart';
 
-import '../core/app.dart';
+import '../core/application_ref.dart';
 import '../core/linker/views/component_view.dart';
 import '../core/linker/views/view.dart';
 import 'reference_counter.dart';
-import 'register_service_extension.dart';
 
 /// A service for inspecting components via service protocol extensions.
 class ComponentInspector {
   /// The current [ComponentInspector].
   static final instance = ComponentInspector._();
 
-  ComponentInspector._();
+  ComponentInspector._() {
+    _registerServiceExtensions();
+
+    // Indicates that all service extensions have been registered. Any external
+    // tool intending to call service extensions should ensure this event has
+    // been posted.
+    // TODO(b/158602712): register extension for querying this state.
+    postEvent('angular.initialized', {});
+  }
 
   /// Maps a component instance to its bound inputs.
   ///
@@ -43,8 +54,43 @@ class ComponentInspector {
   /// Used to retain [ComponentView] instances between requests.
   final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
 
+  ApplicationRef? _applicationRef;
+
+  /// Designates an [applicationRef] to inspect.
+  ///
+  /// This only supports inspecting one [ApplicationRef] at a time. The caller
+  /// must invoke [ApplicationRef.dispose] on the [applicationRef] before
+  /// inspecting another.
+  void inspect(ApplicationRef applicationRef) {
+    assert(_applicationRef == null, '''
+AngularDart DevTools does not yet support apps with multiple runApp()
+invocations. Please contact dart-framework-eng@ if you encounter this error.
+''');
+
+    // Post an event for each zone turn in the app, but no more frequently
+    // than this interval. Despite wanting to signal when the zone turn is
+    // done, we post this event at the *start* of the zone turn because
+    // incoming service extension methods are handled at the end of the zone
+    // turn. This allows clients to respond to this event and receive
+    // updates at the end of the zone turn more quickly than if we posted
+    // the event at the end of the zone turn.
+    const updateInterval = Duration(milliseconds: 500);
+    final onTurnStartSubscription = applicationRef.zone.onTurnStart
+        .throttle(updateInterval, trailing: true)
+        .listen((_) {
+      postEvent('angular.update', {});
+    });
+
+    _applicationRef = applicationRef
+      ..registerDisposeListener(() {
+        onTurnStartSubscription.cancel();
+        _dispose();
+      });
+  }
+
   /// Frees all object references held by this service.
-  void dispose() {
+  void _dispose() {
+    _applicationRef = null;
     _referenceCounter.dispose();
   }
 
@@ -56,9 +102,74 @@ class ComponentInspector {
   }
 
   /// Registers service protocol extensions for inspecting components.
-  void registerServiceExtensions() {
-    registerObjectGroupServiceExtension('disposeGroup', _disposeGroup);
-    registerObjectGroupServiceExtension('getComponents', _getComponents);
+  void _registerServiceExtensions() {
+    _registerObjectGroupServiceExtension('disposeGroup', _disposeGroup);
+    _registerObjectGroupServiceExtension('getComponents', _getComponents);
+  }
+
+  /// Registers a service extension [handler] that manages a group of objects.
+  ///
+  /// The [handler] takes a single parameter, `groupName`, that specifies the
+  /// group used to manage the life cycle of any object references returned in
+  /// the response. Any object references created for a group will be retained
+  /// until that group is explicitly disposed.
+  ///
+  /// The service extension is registered as "ext.angular.[name]".
+  void _registerObjectGroupServiceExtension(
+    String name,
+    FutureOr<Object?> Function(String groupName) handler,
+  ) {
+    _registerServiceExtension(name, (parameters) {
+      return handler(parameters['groupName']!);
+    });
+  }
+
+  /// Registers a service extension [handler] as "ext.angular.[name]".
+  void _registerServiceExtension(
+    String name,
+    FutureOr<Object?> Function(Map<String, String> args) handler,
+  ) {
+    final method = 'ext.angular.$name';
+    registerExtension(method, (_, args) {
+      final completer = Completer<String>();
+      final applicationRef = _applicationRef;
+
+      if (applicationRef != null) {
+        // Wait until the app is stable to invoke the handler. This ensures that
+        // any state collected by the handler is coherent with the latest change
+        // detection pass. Note this does not trigger another change detection
+        // pass because it's called from outside the Angular zone.
+        applicationRef.zone.runAfterChangesObserved(() async {
+          try {
+            final result = await handler(args);
+            final encoded = json.encode({'result': result});
+            completer.complete(encoded);
+          } catch (exception, stackTrace) {
+            completer.completeError(exception, stackTrace);
+          }
+        });
+      } else {
+        completer.completeError('The inspected app was disposed');
+      }
+
+      return completer.future.then((result) {
+        return ServiceExtensionResponse.result(result);
+      }, onError: (Object exception, StackTrace stackTrace) {
+        final context =
+            'The following exception was thrown while handling the service '
+            'extension "$method"';
+        // This could be null if the error was thrown because there's no active
+        // application.
+        applicationRef?.exceptionHandler('$context:\n$exception', stackTrace);
+        return ServiceExtensionResponse.error(
+          ServiceExtensionResponse.extensionError,
+          json.encode({
+            'exception': exception.toString(),
+            'stackTrace': stackTrace.toString(),
+          }),
+        );
+      });
+    });
   }
 
   /// Registers a component [view] to be inspected by this service.
@@ -122,8 +233,11 @@ class ComponentInspector {
   /// least until [groupName] is disposed.
   List<Map<String, Object>> _getComponents(String groupName) {
     final json = <Map<String, Object>>[];
-    for (final element in App.instance.rootElements) {
-      final treeWalker = TreeWalker(element, NodeFilter.SHOW_ELEMENT);
+    for (final component in _applicationRef!.rootComponents) {
+      final treeWalker = TreeWalker(
+        component.location,
+        NodeFilter.SHOW_ELEMENT,
+      );
       _collectJson(treeWalker, groupName, json);
     }
     return json;
@@ -164,7 +278,7 @@ class ComponentInspector {
   /// Returns a JSON representation of the [view]'s component.
   Map<String, Object> _toJson(ComponentView<Object> view, String groupName) {
     return {
-      'name': view.ctx.runtimeType.toString(),
+      'name': view.debugComponentTypeName,
       'id': _referenceCounter.toId(view, groupName),
     };
   }

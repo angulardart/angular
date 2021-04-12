@@ -43,6 +43,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -175,6 +180,11 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('test'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -307,6 +317,11 @@ class ViewEmbeddedQueriesList0 extends import0.ComponentView<import1.EmbeddedQue
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('test'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -437,6 +452,11 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('test'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -614,6 +634,11 @@ class ViewStaticSingleQuery0 extends import0.ComponentView<import1.StaticSingleQ
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('static-single-query'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -717,6 +742,11 @@ class ViewDynamicSingleQuery0 extends import0.ComponentView<import1.DynamicSingl
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('dynamic-single-query'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -834,6 +864,11 @@ class ViewContentQuery0 extends import0.ComponentView<import1.ContentQuery> {
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('content-query'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }
@@ -900,6 +935,11 @@ class ViewContentHasReference0 extends import0.ComponentView<import1.ContentHasR
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('content-has-reference'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/queries.dart' : null);
   }

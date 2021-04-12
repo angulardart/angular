@@ -48,6 +48,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -195,6 +200,11 @@ class ViewSimpleStringInterpolate0 extends import0.ComponentView<import1.SimpleS
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('simple-string'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -261,6 +271,11 @@ class ViewSimpleUnknownInterpolate0 extends import0.ComponentView<import1.Simple
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('simple-unknown'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -326,6 +341,11 @@ class ViewKnownFinalValuesInterpolate0 extends import0.ComponentView<import1.Kno
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('known-finals'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -398,6 +418,11 @@ class ViewAdjacentInterpolate0 extends import0.ComponentView<import1.AdjacentInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('adjacency'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -480,6 +505,11 @@ class ViewLiteralsInterpolate0 extends import0.ComponentView<import1.LiteralsInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('literals'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -553,6 +583,11 @@ class ViewPropertyInterpolate0 extends import0.ComponentView<import1.PropertyInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('property'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -626,6 +661,11 @@ class ViewInputInterpolate0 extends import0.ComponentView<import1.InputInterpola
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('inputs'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -708,6 +748,11 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -790,6 +835,11 @@ class ViewMaximumInterpolateLimit0 extends import0.ComponentView<import1.Maximum
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('max-interpolate-limit'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -933,6 +983,11 @@ class ViewNullCheckedInterpolate0 extends import0.ComponentView<import1.NullChec
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('null-checked'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }

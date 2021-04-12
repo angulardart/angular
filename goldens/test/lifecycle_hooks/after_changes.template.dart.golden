@@ -30,6 +30,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/after_changes.dart' : null);
   }
@@ -136,6 +141,11 @@ class ViewUsesAfterChanges0 extends import0.ComponentView<import1.UsesAfterChang
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-after-changes'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/after_changes.dart' : null);
   }

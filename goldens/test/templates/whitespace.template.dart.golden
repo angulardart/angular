@@ -29,6 +29,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
   }
@@ -110,6 +115,11 @@ class ViewPreserveWhitespace0 extends import0.ComponentView<import1.PreserveWhit
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('preserve-whitespace-true'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
   }
@@ -180,6 +190,11 @@ class ViewMinifyWhitespace0 extends import0.ComponentView<import1.MinifyWhitespa
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('preserve-whitespace-false'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/whitespace.dart' : null);
   }

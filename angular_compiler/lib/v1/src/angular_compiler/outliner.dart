@@ -157,6 +157,7 @@ external _ng.ComponentFactory<$componentName> get ${componentName}NgFactory;
 external _ng.ComponentFactory<$componentType> create${componentName}Factory$typeParameters();
 class $viewName$typeParameters extends _ng.ComponentView<$componentType> {
   external $viewName(_ng.View parentView, int parentIndex);
+  external String get debugComponentTypeName;
 }
 ''');
       }

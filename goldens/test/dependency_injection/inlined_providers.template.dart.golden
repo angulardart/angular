@@ -144,6 +144,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     return result;
   }
 
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -329,6 +334,11 @@ class ViewChildComponentProvidingA$B$C0 extends import0.ComponentView<import1.Ch
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-providing-a-b-c'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -430,6 +440,11 @@ class ViewChildComponentWithNgContentProviding$D0 extends import0.ComponentView<
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-with-ngcontent-providing-d'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -506,6 +521,11 @@ class ViewChildComponentInjecting$D0 extends import0.ComponentView<import1.Child
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-injecting-d'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -568,6 +588,11 @@ class ViewChildComponentWithVisibilityAll0 extends import0.ComponentView<import1
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-with-visibility-all'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }

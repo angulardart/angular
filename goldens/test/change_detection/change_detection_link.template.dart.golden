@@ -34,6 +34,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -118,6 +123,11 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('on-push-link'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -337,6 +347,11 @@ class ViewNestedOnPush0 extends import0.ComponentView<import1.NestedOnPush> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('nested-on-push'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -397,6 +412,11 @@ class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLi
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('nested-on-push-link'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
