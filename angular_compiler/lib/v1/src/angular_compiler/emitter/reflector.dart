@@ -316,9 +316,9 @@ class SplitDartEmitter extends DartEmitter {
     Allocator allocator = Allocator.none,
     bool emitNullSafeSyntax = false,
   }) : super(
-          allocator,
-          false,
-          emitNullSafeSyntax,
+          allocator: allocator,
+          orderDirectives: false,
+          useNullSafetySyntax: emitNullSafeSyntax,
         );
 
   @override
