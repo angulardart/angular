@@ -14,7 +14,7 @@ dependencies:
 
 dev_dependencies:
   async: ^2.5.0
-  angular_test: ^2.4.0
+  angular_test: ^3.0.0
   build_runner: ^1.0.0
   build_test: ^2.0.0
   build_web_compilers: ^2.0.0
