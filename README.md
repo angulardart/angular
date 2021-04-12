@@ -1,6 +1,4 @@
-![Angular Dart](https://raw.githubusercontent.com/dart-lang/angular/master/doc/angulardart-logo.png)
-
-[![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
+[![Dart CI](https://github.com/angulardart/angular/actions/workflows/dart.yml/badge.svg?branch=master)](https://github.com/angulardart/angular/actions/workflows/dart.yml)
 [![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)][Gitter chat room]
 
 The _AngularDart_ packages power some of Google's most critical applications.
@@ -29,17 +27,18 @@ about how we plan to update and maintain these packages going forward!
 | [angular_ast]&ddagger;       | [![Pub Package](https://img.shields.io/pub/v/angular_ast.svg)](https://pub.dev/packages/angular_ast)               |
 | [angular_compiler]&ddagger;  | [![Pub Package](https://img.shields.io/pub/v/angular_compiler.svg)](https://pub.dev/packages/angular_compiler)     |
 
-&dagger; _`angular_components` source is in another [repository](https://github.com/dart-lang/angular_components)._
+&dagger; _`angular_components` source is in another [repository](https://github.com/angulardart/angular_components)._
 
-&ddagger; _Infrastructure packages. Not typically used directly. Included for completeness._
+&ddagger; _Infrastructure packages. Not typically used directly.
+Included for completeness._
 
-[angular]: https://github.com/dart-lang/angular/tree/master/angular
-[angular_ast]: https://github.com/dart-lang/angular/tree/master/angular_ast
-[angular_compiler]: https://github.com/dart-lang/angular/tree/master/angular_compiler
-[angular_components]: https://github.com/dart-lang/angular_components/tree/master/angular_components
-[angular_forms]: https://github.com/dart-lang/angular/tree/master/angular_forms
-[angular_router]: https://github.com/dart-lang/angular/tree/master/angular_router
-[angular_test]: https://github.com/dart-lang/angular/tree/master/angular_test
+[angular]: https://github.com/angulardart/angular/tree/master/angular
+[angular_ast]: https://github.com/angulardart/angular/tree/master/angular_ast
+[angular_compiler]: https://github.com/angulardart/angular/tree/master/angular_compiler
+[angular_components]: https://github.com/angulardart/angular_components/tree/master/angular_components
+[angular_forms]: https://github.com/angulardart/angular/tree/master/angular_forms
+[angular_router]: https://github.com/angulardart/angular/tree/master/angular_router
+[angular_test]: https://github.com/angulardart/angular/tree/master/angular_test
 
 ## Resources
 
