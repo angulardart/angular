@@ -7024,7 +7024,7 @@
   P.Iterator.prototype = {};
   P.Null.prototype = {
     get$hashCode: function(_) {
-      return P.Object.prototype.get$hashCode.call(C.JSNull_methods, this);
+      return P.Object.prototype.get$hashCode.call(this, this);
     },
     toString$0: function(_) {
       return "null";
@@ -9423,7 +9423,6 @@
     C.Interceptor_methods = J.Interceptor.prototype;
     C.JSArray_methods = J.JSArray.prototype;
     C.JSInt_methods = J.JSInt.prototype;
-    C.JSNull_methods = J.JSNull.prototype;
     C.JSNumber_methods = J.JSNumber.prototype;
     C.JSString_methods = J.JSString.prototype;
     C.JavaScriptFunction_methods = J.JavaScriptFunction.prototype;
