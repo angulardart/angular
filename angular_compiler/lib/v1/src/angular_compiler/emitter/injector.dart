@@ -9,9 +9,13 @@ import '../analyzer/di/tokens.dart';
 /// **NOTE**: This class is _stateful_, and should be used once per injector.
 class InjectorEmitter implements InjectorVisitor {
   static const _package = 'package:angular';
-  static const _runtime = '$_package/src/di/injector';
+  static const _runtime = '$_package/src/di';
   static const _$override = Reference('override', 'dart:core');
-  static const _$Object = Reference('Object', 'dart:core');
+  static final _$Object = TypeReference(
+    (b) => b
+      ..url = 'dart:core'
+      ..symbol = 'Object',
+  );
 
   static const _$Injector = Reference(
     'Injector',
@@ -19,7 +23,7 @@ class InjectorEmitter implements InjectorVisitor {
   );
   static const _$Hierarchical = Reference(
     'HierarchicalInjector',
-    '$_runtime/hierarchical.dart',
+    '$_runtime/injector.dart',
   );
   static const _$throwIfNotFound = Reference(
     'throwIfNotFound',
@@ -43,7 +47,7 @@ class InjectorEmitter implements InjectorVisitor {
     ..implements.add(_$Injector)
     ..constructors.add(Constructor((b) => b
       ..name = '_'
-      ..optionalParameters.add(Parameter((b) => b
+      ..requiredParameters.add(Parameter((b) => b
         ..name = 'parent'
         ..type = _$Injector))
       ..initializers.add(refer('super').call([refer('parent')]).code)))
@@ -56,7 +60,7 @@ class InjectorEmitter implements InjectorVisitor {
     ..name = _factoryName
     ..returns = _$Injector
     ..lambda = true
-    ..optionalParameters.add(Parameter((b) => b
+    ..requiredParameters.add(Parameter((b) => b
       ..name = 'parent'
       ..type = _$Injector))
     ..body = refer(_className).newInstanceNamed('_', [
@@ -67,14 +71,14 @@ class InjectorEmitter implements InjectorVisitor {
   @visibleForTesting
   Method createInjectSelfOptional() => Method((b) => b
     ..name = 'injectFromSelfOptional'
-    ..returns = _$Object
+    ..returns = _$Object.rebuild((b) => b.isNullable = true)
     ..annotations.add(_$override)
     ..requiredParameters.add(Parameter((b) => b
       ..name = 'token'
       ..type = _$Object))
     ..optionalParameters.add(Parameter((b) => b
       ..name = 'orElse'
-      ..type = _$Object
+      ..type = _$Object.rebuild((b) => b.isNullable = true)
       ..defaultTo = _$throwIfNotFound.expression.code))
     ..body = Block((b) => b
       ..statements.addAll(_injectSelfBody)
@@ -155,9 +159,16 @@ class InjectorEmitter implements InjectorVisitor {
     bool isMulti,
   ) {
     final fieldName = '_field$index';
-    _fieldCache.add(Field((b) => b
-      ..name = fieldName
-      ..type = type));
+    final types = type is TypeReference ? type.types : <Reference>[];
+    _fieldCache.add(
+      Field((b) => b
+        ..name = fieldName
+        ..type = TypeReference((b) => b
+          ..symbol = type.symbol
+          ..url = type.url
+          ..types.addAll(types)
+          ..isNullable = true)),
+    );
 
     final methodName = '_get${type.symbol}\$$index';
     _methodCache.add(Method((b) => b
@@ -207,9 +218,15 @@ class InjectorEmitter implements InjectorVisitor {
     bool isMulti,
   ) {
     final fieldName = '_field$index';
+    final types =
+        returnType is TypeReference ? returnType.types : <Reference>[];
     _fieldCache.add(Field((b) => b
       ..name = '_field$index'
-      ..type = returnType));
+      ..type = TypeReference((b) => b
+        ..symbol = returnType.symbol
+        ..url = returnType.url
+        ..types.addAll(types)
+        ..isNullable = true)));
 
     final methodName = '_get${returnType.symbol}\$$index';
     _methodCache.add(

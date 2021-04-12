@@ -1,11 +1,9 @@
-@TestOn('browser')
-
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'on_push_test.template.dart' as ng;
 
@@ -14,10 +12,9 @@ void main() {
 
   group('should use ChangeDetectorRef to manually request a check', () {
     test('from a component declared in the template', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createManualCheckComponentFactory());
+      final testBed = NgTestBed(ng.createManualCheckComponentFactory());
       final testFixture = await testBed.create();
-      final cmp = testFixture.assertOnlyInstance.child;
+      final cmp = testFixture.assertOnlyInstance.child!;
       expect(cmp.numberOfChecks, 1);
       await testFixture.update();
       expect(cmp.numberOfChecks, 1);
@@ -26,9 +23,8 @@ void main() {
     });
 
     test('from an imperatively loaded component', () async {
-      final testBed =
-          NgTestBed.forComponent(ng.createManualCheckLoadedComponentFactory());
-      PushCmpWithRef cmp;
+      final testBed = NgTestBed(ng.createManualCheckLoadedComponentFactory());
+      late final PushCmpWithRef cmp;
       final testFixture = await testBed.create(
         beforeChangeDetection: (component) {
           cmp = component.loadComponent();
@@ -43,20 +39,18 @@ void main() {
   });
 
   test('should check component when bindings update', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createPushCmpHostComponentFactory());
+    final testBed = NgTestBed(ng.createPushCmpHostComponentFactory());
     final testFixture = await testBed.create();
-    final cmp = testFixture.assertOnlyInstance.child;
+    final cmp = testFixture.assertOnlyInstance.child!;
     expect(cmp.numberOfChecks, 1);
     await testFixture.update((component) => component.ctxProp = 'two');
     expect(cmp.numberOfChecks, 2);
   });
 
   test('should check when an event is fired', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createPushCmpHostComponentFactory());
+    final testBed = NgTestBed(ng.createPushCmpHostComponentFactory());
     final testFixture = await testBed.create();
-    final cmp = testFixture.assertOnlyInstance.child;
+    final cmp = testFixture.assertOnlyInstance.child!;
     final cmpElement = testFixture.rootElement.children.first;
     expect(cmp.numberOfChecks, 1);
     // Regular element.
@@ -77,20 +71,18 @@ void main() {
   });
 
   test('should not affect updating bindings', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createPushCmpWithRefHostComponentFactory());
+    final testBed = NgTestBed(ng.createPushCmpWithRefHostComponentFactory());
     final testFixture = await testBed.create();
-    final cmp = testFixture.assertOnlyInstance.child;
+    final cmp = testFixture.assertOnlyInstance.child!;
     expect(cmp.prop, 'one');
     await testFixture.update((component) => component.ctxProp = 'two');
     expect(cmp.prop, 'two');
   });
 
   test('should check when async pipe requests check', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createPushCmpWithAsyncPipeHostCmpFactory());
+    final testBed = NgTestBed(ng.createPushCmpWithAsyncPipeHostCmpFactory());
     final testFixture = await testBed.create();
-    final cmp = testFixture.assertOnlyInstance.child;
+    final cmp = testFixture.assertOnlyInstance.child!;
     expect(cmp.numberOfChecks, 1);
     await testFixture.update();
     expect(cmp.numberOfChecks, 1);
@@ -105,14 +97,14 @@ void main() {
   template: '{{field}}',
 )
 class PushCmpWithRef {
-  int numberOfChecks;
-  ChangeDetectorRef ref;
-  @Input()
-  var prop;
+  var numberOfChecks = 0;
 
-  PushCmpWithRef(this.ref) {
-    numberOfChecks = 0;
-  }
+  final ChangeDetectorRef ref;
+
+  @Input()
+  String? prop;
+
+  PushCmpWithRef(this.ref);
 
   String get field {
     numberOfChecks++;
@@ -131,7 +123,7 @@ class PushCmpWithRef {
 )
 class ManualCheckComponent {
   @ViewChild('cmp')
-  PushCmpWithRef child;
+  PushCmpWithRef? child;
 }
 
 @Component(
@@ -140,10 +132,10 @@ class ManualCheckComponent {
 )
 class ManualCheckLoadedComponent {
   @ViewChild('container', read: ViewContainerRef)
-  ViewContainerRef componentLoader;
+  ViewContainerRef? componentLoader;
 
   PushCmpWithRef loadComponent() {
-    return componentLoader
+    return componentLoader!
         .createComponent(ng.createPushCmpWithRefFactory())
         .instance;
   }
@@ -166,13 +158,10 @@ class EventCmp {
   directives: [EventCmp, NgIf],
 )
 class PushCmp {
-  int numberOfChecks;
-  @Input()
-  var prop;
+  int numberOfChecks = 0;
 
-  PushCmp() {
-    numberOfChecks = 0;
-  }
+  @Input()
+  String? prop;
 
   void noop() {}
 
@@ -191,7 +180,7 @@ class PushCmpHostComponent {
   String ctxProp = 'one';
 
   @ViewChild('cmp')
-  PushCmp child;
+  PushCmp? child;
 }
 
 @Component(
@@ -203,19 +192,19 @@ class PushCmpWithRefHostComponent {
   String ctxProp = 'one';
 
   @ViewChild('cmp')
-  PushCmpWithRef child;
+  PushCmpWithRef? child;
 }
 
 @Component(
   selector: 'push-cmp-with-async',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '{{field | async}}',
+  template: r'{{$pipe.async(field)}}',
   pipes: [AsyncPipe],
 )
 class PushCmpWithAsyncPipe {
   int numberOfChecks = 0;
-  Future<int> future;
-  Completer<int> completer;
+  late final Future<int> future;
+  late final Completer<int> completer;
 
   PushCmpWithAsyncPipe() {
     completer = Completer();
@@ -239,5 +228,5 @@ class PushCmpWithAsyncPipe {
 )
 class PushCmpWithAsyncPipeHostCmp {
   @ViewChild('cmp')
-  PushCmpWithAsyncPipe child;
+  PushCmpWithAsyncPipe? child;
 }

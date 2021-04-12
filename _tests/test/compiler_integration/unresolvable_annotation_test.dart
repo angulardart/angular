@@ -1,8 +1,12 @@
-@TestOn('vm')
-import 'package:_tests/compiler.dart';
+// @dart=2.9
+
 import 'package:test/test.dart';
+import 'package:_tests/compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   test('should fail with a readable error on a mispelled annotation', () async {
     await compilesExpecting("""
       import '$ngImport';
@@ -68,6 +72,20 @@ void main() {
         contains('Try the following when diagnosing the problem:'),
         containsSourceLocation(4, 13),
       ),
+    ]);
+  });
+
+  test('should warn on a bad enum annotation', () async {
+    await compilesExpecting('''
+      @undefinedAnnotation
+      enum SomeEnum {
+        cool,
+      }
+    ''', errors: [], warnings: [
+      allOf(
+        contains('@undefinedAnnotation'),
+        containsSourceLocation(1, 7),
+      )
     ]);
   });
 }

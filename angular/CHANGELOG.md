@@ -1,6 +1,6 @@
 ## 6.0.1
 
-* Update `package:analyzer` dependency to `^0.40.0`.
+*   Update `package:analyzer` dependency to `^0.40.0`.
 
 ## 6.0.0
 
@@ -66,7 +66,80 @@
     unsupported and likely to cause bugs, as the component's change detection
     contract can't be upheld.
 
+*   Error messages produced by the compiler for invalid Dart code and
+    misconfigured metadata should now include the surrounding source code on the
+    offending line(s) with the correct line number(s) for additional context.
+
+*   Added support for specifying generic type arguments on dynamically loaded
+    components.
+
+    For every component, the compiler now generates a top-level function,
+    `create{Type}Factory()`, that can be used to create a `ComponentFactory`
+    with specific generic type arguments. Calling this function is a type safe,
+    drop-in replacement for the corresponding top-level getter
+    `{Type}NgFactory`.
+
+    *Before:*
+
+    ```dart
+    import 'foo_component.template.dart' as foo;
+
+    void loadFooComponent(ViewContainerRef viewContainerRef) {
+      // BAD: Not possible to specify generic type arguments on component.
+      final componentRef =
+          viewContainerRef.createComponent(foo.FooComponentNgFactory);
+    }
+    ```
+
+    *After:*
+
+    ```dart
+    import 'foo_component.template.dart' as foo;
+
+    void loadFooComponent(ViewContainerRef viewContainerRef) {
+      // GOOD: Type arguments on function are forwarded to underlying component.
+      final componentRef = viewContainerRef.createComponent(
+          foo.createFooComponentFactory<String, int>());
+    }
+    ```
+
+*   Added `NgContentRef`, which represents an `<ng-content>` element with a
+    reference variable on it. `NgContentRef` provides the capability to query
+    whether it has any projected nodes.
+
+    ```
+    <ng-content #ref></ng-content>
+    <div *ngIf="!ref.hasContent">No projected content.</div>
+    ```
+
+*   Added `[ngTemplateOutletValue]` to `[ngTemplateOutlet]`. This allows passing
+    a simple default (`r'$implicit'`) value to a `TemplateRef` without being
+    forced to maintain and memoize a `Map`-literal in Dart code:
+
+    ```
+    <template
+      [ngTemplateOutlet]="text"
+      [ngTemplateOutletValue]="textContext">
+    </template>
+    ```
+
+*   Provided a public api for `NgContentRef` which is queryable in a component.
+
+    ```
+    @Component(
+      selector: 'foo',
+      template: '<ng-content #fooRef></ng-content>',
+    )
+    class FooComponent{
+      @ViewChild('fooRef')
+      NgContentRef child;
+    }
+    ```
+
 ### Breaking changes
+
+*   The old pipe syntax (`expression | pipeName:arg`) is removed. Please use the
+    new syntax for pipes (`$pipe.pipeName(expression, arg)`) instead.
 
 *   Warn for all unknown properties in a template.
 
@@ -100,6 +173,45 @@
 *   `TemplateSecurityContext` is no longer exported by
     `package:angular/security.dart`. This enum is only used during compilation
     and has no purpose in client code.
+
+*   `JsonPipe` was removed; it was never a very useful feature in AngularDart
+    since object literals cannot be inspected by serializing to JSON like they
+    would be in JavaScript.
+
+*   List literals (i.e. `[1, 2]`) are no longer supported within the template
+    and throw a compile-time error. Move code that constructs or maintains List
+    instances inside of your `@Component`-annotated Dart class.
+
+*   Functional directives (`@Directive` on a top-level function) are no longer
+    supported. This feature was used quite sparingly, and didn't really offer
+    much over standard class-annotated directives.
+
+*   Template expressions are now parsed using `package:analyzer` and though the
+    subset of expressions supported largely has not changed some expressions
+    that were silently accepted before are now compile-time errors.
+
+*   Removed support for `debugAsyncStack` in both `ExceptionHandler` and
+    `NgZone`; previously this was used for delivering a "long" (asynchronous)
+    stack trace via the exception handlers, but it had been disabled by default
+    for quite some time without any opt-in internally.
+
+*   `Provider(multi: true)` is no longer available or supported. Instead, create
+    and use a dependency injection token that is an instance of `MultiToken`.
+
+*   The `@deferred` template feature has been removed.
+
+### Bug fixes
+
+*   Only providers from the first component that matches an element are
+    available for injection. Previously, if multiple components matched an
+    element, all of their providers could be injected. This was unintentional,
+    as only one component may be associated with a given element.
+
+*   A class selector in a component selector will no longer change the tag name
+    of the component's host element's when instantiated. Previously, a component
+    with a class selector (e.g. `foo.bar`) would match as expected, but cause
+    the component to render the entire selector as the host element's tag name
+    (e.g. `<foo.bar>`).
 
 ## 6.0.0-alpha+1
 

@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -30,10 +29,10 @@ Future<void> expectTextFontStyle(
   ComponentFactory<void> componentFactory,
   String fontStyle,
 ) async {
-  final testBed = NgTestBed.forComponent(componentFactory);
+  final testBed = NgTestBed(componentFactory);
   final testFixture = await testBed.create();
   final text = testFixture.rootElement.querySelector('.text');
-  expect(text.getComputedStyle().getPropertyValue('font-style'), fontStyle);
+  expect(text!.getComputedStyle().getPropertyValue('font-style'), fontStyle);
   return testFixture.dispose();
 }
 

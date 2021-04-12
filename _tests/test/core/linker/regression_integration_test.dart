@@ -1,8 +1,6 @@
-@TestOn('browser')
-
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'regression_integration_test.template.dart' as ng;
 
@@ -10,8 +8,8 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should evaluate conditional operator with right precedence', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createRightPrecedenceConditionalComponentFactory());
+    final testBed =
+        NgTestBed(ng.createRightPrecedenceConditionalComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'red');
     await testFixture.update((component) => component.hasBorder = true);
@@ -19,7 +17,7 @@ void main() {
   });
 
   group('Provider', () {
-    void testProvider(dynamic token, dynamic tokenValue) {
+    void testProvider(Object token, Object tokenValue) {
       final injector = ReflectiveInjector.resolveAndCreate([
         provide(token, useValue: tokenValue),
       ]);
@@ -27,7 +25,7 @@ void main() {
     }
 
     test("should support OpaqueToken with name containing '.'", () {
-      testProvider(OpaqueToken('a.b'), 1);
+      testProvider(const OpaqueToken('a.b'), 1);
     });
 
     test("should support string token containing '.'", () {
@@ -44,16 +42,15 @@ void main() {
   });
 
   test("should interpolate previous element's class binding", () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createInterpolateClassBindingComponentFactory());
+    final testBed =
+        NgTestBed(ng.createInterpolateClassBindingComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'foo');
   });
 
   test('should support ngClass before a component and transclusion inside ngIf',
       () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createContentProviderComponentFactory());
+    final testBed = NgTestBed(ng.createContentProviderComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'ABC');
   });

@@ -4,15 +4,12 @@ import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/v1/src/compiler/parse_util.dart'
-    show ParseErrorLevel;
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/element_converter.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
 import 'package:angular_compiler/v1/src/compiler/template_parser.dart';
-import 'package:angular_compiler/v1/cli.dart' show logWarning, throwFailure;
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 
 import 'bound_value_converter.dart';
 import 'compile_element.dart' show CompileElement;
@@ -55,8 +52,14 @@ void bindView(
   }
 }
 
+/// IMPORTANT: See the comment on [Compile.nodes].
 class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   final CompileView view;
+
+  /// Index into [CompileView.nodes] that corresponds to the current AST.
+  ///
+  /// This *must* be incremented in the exact same methods that the visitor in
+  /// view_builder.dart appends to [CompileView.nodes].
   int _nodeIndex = 0;
   _ViewBinderVisitor(this.view);
 
@@ -138,7 +141,11 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   void visitEvent(BoundEventAst ast, _) {}
 
   @override
-  void visitNgContent(NgContentAst ast, _) {}
+  void visitNgContent(NgContentAst ast, _) {
+    if (ast.reference != null) {
+      _nodeIndex++;
+    }
+  }
 
   @override
   void visitAttr(AttrAst ast, _) {}
@@ -182,7 +189,6 @@ void _bindViewHostProperties(
       BoundExpression(ast.ASTWithSource.missingSource(expression)),
       span,
       schemaRegistry,
-      _handleError,
     ));
   });
 
@@ -206,14 +212,5 @@ void _bindViewHostProperties(
   );
   if (method.isNotEmpty) {
     view.detectHostChangesMethod = method;
-  }
-}
-
-void _handleError(String message, SourceSpan sourceSpan,
-    [ParseErrorLevel level]) {
-  if (level == ParseErrorLevel.FATAL) {
-    throwFailure(message);
-  } else {
-    logWarning(message);
   }
 }

@@ -1,10 +1,12 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/src/generated/utilities_dart.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:collection/collection.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/analyzer.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../common.dart';
 import '../types.dart';
@@ -54,7 +56,10 @@ class DependencyReader {
     if (element is ExecutableElement) {
       return _parseFunctionDependencies(element) as DependencyInvocation<E>;
     }
-    throw ArgumentError('Invalid element: $element.');
+    throw BuildError.forElement(
+      element,
+      'Only classes or functions are valid as a dependency.',
+    );
   }
 
   /// Returns parsed dependencies for the provided [element].
@@ -75,11 +80,17 @@ class DependencyReader {
       }
       bool hasMeta(TypeChecker checker) =>
           metadata.any((m) => checker.isExactlyType(m.type));
+      final isOptional = hasMeta($Optional);
+      _checkForOptionalAndNullable(
+        element,
+        element.type,
+        isOptional: isOptional,
+      );
       positional.add(
         DependencyElement(
           _tokenReader.parseTokenObject(tokenObject),
           host: hasMeta($Host),
-          optional: hasMeta($Optional),
+          optional: isOptional,
           self: hasMeta($Self),
           skipSelf: hasMeta($SkipSelf),
         ),
@@ -94,26 +105,28 @@ class DependencyReader {
   ) {
     final positional = <DependencyElement>[];
     for (final parameter in parameters) {
-      // ParameterKind.POSITIONAL is "optional positional".
-      // ignore: deprecated_member_use, no migration path
-      bool isNamed() => parameter.parameterKind == ParameterKind.NAMED;
-      bool isOptionalAndNotInjectable() =>
-          // ignore: deprecated_member_use, no migration path
-          parameter.parameterKind == ParameterKind.POSITIONAL &&
-          $Optional.firstAnnotationOfExact(parameter) == null &&
-          $Inject.firstAnnotationOf(parameter) == null &&
-          $OpaqueToken.firstAnnotationOf(parameter) == null;
-      if (!isNamed() && !isOptionalAndNotInjectable()) {
+      final isRequired = $Optional.firstAnnotationOfExact(parameter) == null;
+      final hasInjectToken = $Inject.firstAnnotationOfExact(parameter) != null;
+      final hasOpaqueToken = $OpaqueToken.firstAnnotationOf(parameter) != null;
+      bool isRequiredButNotInjectable() =>
+          parameter.isOptionalPositional &&
+          isRequired &&
+          !(hasInjectToken || hasOpaqueToken);
+      if (!parameter.isOptionalNamed && !isRequiredButNotInjectable()) {
         final token = _tokenReader.parseTokenParameter(parameter);
-        bool usesInject() =>
-            $Inject.firstAnnotationOfExact(parameter) != null ||
-            $OpaqueToken.firstAnnotationOf(parameter) != null;
+        _checkForOptionalAndNullable(
+          parameter,
+          parameter.type,
+          isOptional: !isRequired,
+        );
         positional.add(
           DependencyElement(
             token,
-            type: usesInject() ? _tokenReader.parseTokenType(parameter) : null,
+            type: hasInjectToken || hasOpaqueToken
+                ? _tokenReader.parseTokenType(parameter)
+                : null,
             host: $Host.firstAnnotationOfExact(parameter) != null,
-            optional: $Optional.firstAnnotationOfExact(parameter) != null,
+            optional: !isRequired,
             self: $Self.firstAnnotationOfExact(parameter) != null,
             skipSelf: $SkipSelf.firstAnnotationOfExact(parameter) != null,
           ),
@@ -123,12 +136,47 @@ class DependencyReader {
     return DependencyInvocation(bound, positional);
   }
 
+  // There is no common Element sub-type that has a <Element>.type field for
+  // both `ParameterElement` and `ExecutableElement`, so instead we take the
+  // element and type separately.
+  //
+  // TODO(b/170313184): Refactor into a common library.
+  static void _checkForOptionalAndNullable(
+    Element element,
+    DartType type, {
+    @required bool isOptional,
+  }) {
+    if (!CompileContext.current.emitNullSafeCode) {
+      // Do not run this check for libraries not opted-in to null safety.
+      return;
+    }
+    assert(isOptional != null);
+    if (type.isExplicitlyNonNullable) {
+      // Must *NOT* be @Optional()
+      if (isOptional) {
+        throw BuildError.forElement(
+          element,
+          messages.optionalDependenciesNullable,
+        );
+      }
+    } else if (type.isExplicitlyNullable) {
+      // Must *BE* @Optional()
+      if (!isOptional) {
+        throw BuildError.forElement(
+          element,
+          messages.optionalDependenciesNullable,
+        );
+      }
+    }
+  }
+
   DependencyInvocation<ConstructorElement> _parseClassDependencies(
     ClassElement element,
   ) {
     final constructor = findConstructor(element);
     if (constructor == null) {
-      BuildError.throwForElement(element, 'Could not find a valid constructor');
+      throw BuildError.forElement(
+          element, 'Could not find a valid constructor');
     }
     return _parseDependencies(constructor, constructor.parameters);
   }

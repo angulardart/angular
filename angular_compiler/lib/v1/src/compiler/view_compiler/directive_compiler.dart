@@ -1,7 +1,5 @@
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
-import 'package:angular_compiler/v1/src/compiler/output/convert.dart'
-    show typeArgumentsFrom;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 
 import 'bound_value_converter.dart';
@@ -35,7 +33,10 @@ class DirectiveCompiler {
     CompileViewStorage storage,
   ) {
     final el = NodeReference.parameter(
-        storage, o.importType(Identifiers.HTML_ELEMENT), 'el');
+      storage,
+      o.importType(Identifiers.HTML_HTML_ELEMENT),
+      'el',
+    );
     final constructor = _createChangeDetectorConstructor(
       directive,
       storage,
@@ -68,7 +69,7 @@ class DirectiveCompiler {
   ) {
     final instanceType = o.importType(
       directive.metadata.type.identifier,
-      typeArgumentsFrom(directive.typeParameters),
+      directive.typeParameters.map((t) => t.toType()).toList(),
     );
     storage.allocate(
       'instance',

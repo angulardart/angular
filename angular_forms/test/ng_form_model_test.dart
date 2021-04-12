@@ -1,6 +1,3 @@
-@TestOn('browser')
-import 'dart:html';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -15,19 +12,18 @@ void main() {
   ng.initReflector();
 
   group('NgFormModel', () {
-    final defaultAccessor = DefaultValueAccessor(document.createElement('div'));
-    NgTestFixture<NgFormModelTest> fixture;
+    late NgTestFixture<NgFormModelTest> fixture;
 
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed = NgTestBed.forComponent(ng.createNgFormModelTestFactory());
+      var testBed = NgTestBed(ng.createNgFormModelTestFactory());
       fixture = await testBed.create();
     });
 
     test('should reexport control properties', () {
       fixture.update((cmp) {
-        final form = cmp.form;
+        final form = cmp.form!;
         final formModel = cmp.formModel;
         expect(form.control, formModel);
         expect(form.value, formModel.value);
@@ -41,20 +37,11 @@ void main() {
     });
 
     group('addControl', () {
-      test('should throw when no control found', () async {
-        await fixture.update((cmp) {
-          var dir = NgControlName(cmp.form, null, [defaultAccessor]);
-          dir.name = 'invalidName';
-          expect(() => cmp.form.addControl(dir),
-              throwsWith('Cannot find control (invalidName)'));
-        });
-      });
-
       test('should throw when no value accessor', () async {
         await fixture.update((cmp) {
-          var dir = NgControlName(cmp.form, null, null);
+          var dir = NgControlName(cmp.form!, null, null);
           dir.name = 'login';
-          expect(() => cmp.form.addControl(dir),
+          expect(() => cmp.form!.addControl(dir),
               throwsWith('No value accessor for (login)'));
         });
       });
@@ -73,7 +60,7 @@ void main() {
           (cmp.formModel.findPath(['login']) as Control)
               .updateValue('initValue');
           expect(
-              (cmp.loginControlDir.valueAccessor as DummyControlValueAccessor)
+              (cmp.loginControlDir!.valueAccessor as DummyControlValueAccessor)
                   .writtenValue,
               'initValue');
         });
@@ -83,7 +70,7 @@ void main() {
           'should add the directive to the list of directives '
           'included in the form', () async {
         await fixture.update((cmp) {
-          expect(cmp.form.directives, [cmp.loginControlDir]);
+          expect(cmp.form!.directives, [cmp.loginControlDir]);
         });
       });
     });
@@ -120,7 +107,7 @@ void main() {
         });
 
         await fixture.update((cmp) {
-          expect(cmp.form.directives, []);
+          expect(cmp.form!.directives, []);
         });
       });
     });
@@ -133,18 +120,10 @@ void main() {
         });
         await fixture.update((cmp) {
           expect(
-              (cmp.loginControlDir.valueAccessor as DummyControlValueAccessor)
+              (cmp.loginControlDir!.valueAccessor as DummyControlValueAccessor)
                   .writtenValue,
               'new value');
         });
-      });
-
-      test('should validate form is not null', () async {
-        expect(
-            () async => await fixture.update((cmp) {
-                  cmp.formModel = null;
-                }),
-            throwsA(TypeMatcher<StateError>()));
       });
     });
   });
@@ -170,13 +149,13 @@ void main() {
 )
 class NgFormModelTest {
   @ViewChild('form')
-  NgFormModel form;
+  NgFormModel? form;
 
   @ViewChild('login')
-  NgControlName loginControlDir;
+  NgControlName? loginControlDir;
 
   @ViewChild('passwords')
-  NgControlGroup passwords;
+  NgControlGroup? passwords;
 
   bool needsLogin = true;
 
@@ -193,8 +172,8 @@ class NgFormModelTest {
     DummyControlValueAccessor,
   )
 ])
-class DummyControlValueAccessor implements ControlValueAccessor {
-  var writtenValue;
+class DummyControlValueAccessor implements ControlValueAccessor<dynamic> {
+  dynamic writtenValue;
 
   @override
   void writeValue(dynamic obj) {
@@ -214,12 +193,12 @@ class DummyControlValueAccessor implements ControlValueAccessor {
       NG_VALIDATORS, MatchingPasswordsValidator.matchingPasswordsValidator),
 ])
 class MatchingPasswordsValidator {
-  static Map<String, dynamic> matchingPasswordsValidator(
+  static Map<String, dynamic>? matchingPasswordsValidator(
       AbstractControl control) {
     if (control is! ControlGroup) throw StateError('Must be ControlGroup');
-    var group = control as ControlGroup;
-    if (group.controls['password'].value !=
-        group.controls['passwordConfirm'].value) {
+    var group = control;
+    if (group.controls['password']!.value !=
+        group.controls['passwordConfirm']!.value) {
       return {'differentPasswords': true};
     } else {
       return null;

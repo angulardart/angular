@@ -22,17 +22,17 @@ const itemsPerPage = 30;
 class FeedComponent implements OnActivate {
   final HackerNewsService _hackerNewsService;
 
-  List<Map> items;
-  String nextPageUrl;
-  String previousPageUrl;
-  int startingRank;
+  List<Map<String, Object?>>? items;
+  String? nextPageUrl;
+  String? previousPageUrl;
+  int? startingRank;
 
   FeedComponent(this._hackerNewsService);
 
   @override
   void onActivate(_, RouterState current) {
     final routePath = current.routePath;
-    final String feed = routePath.additionalData['feed'];
+    final feed = routePath.additionalData['feed'] as String;
     final page = current.queryParameters['p'];
     final pageNumber = page != null ? int.tryParse(page) ?? 1 : 1;
 

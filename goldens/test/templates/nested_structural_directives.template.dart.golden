@@ -1,0 +1,258 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'nested_structural_directives.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'nested_structural_directives.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'nested_structural_directives.dart' as import1;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import3;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import4;
+import 'package:angular/src/core/linker/views/view.dart' as import5;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import7;
+import 'dart:html' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/runtime/check_binding.dart' as import11;
+import 'package:angular/src/devtools.dart' as import12;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
+import 'package:angular/src/core/linker/views/render_view.dart' as import15;
+import 'dart:core';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/runtime/text_binding.dart' as import18;
+import 'package:angular/src/core/linker/views/host_view.dart' as import19;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewContainer _appEl_1;
+  late final import3.NgFor _NgFor_1_9;
+  Object? _expr_0;
+  static import4.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import5.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import7.unsafeCast(import8.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import7.isDevMode ? 'asset:goldens/test/templates/nested_structural_directives.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final doc = import8.document;
+    final _el_0 = import9.appendElement<import8.TableElement>(doc, parentRenderNode, 'table');
+    final _anchor_1 = import9.appendAnchor(_el_0);
+    this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent1);
+    this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    final currVal_0 = _ctx.matrix;
+    if (import11.checkBinding(this._expr_0, currVal_0, 'matrix', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
+      }
+      this._NgFor_1_9.ngForOf = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    if ((!import11.debugThrowIfChanged)) {
+      this._NgFor_1_9.ngDoCheck();
+    }
+    this._appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_1.destroyNestedViews();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import4.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import7.isDevMode) {
+        import4.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponent> {
+  late final ViewContainer _appEl_1;
+  late final import3.NgFor _NgFor_1_9;
+  Object? _expr_0;
+  _ViewGoldenComponent1(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import8.document;
+    final _el_0 = import7.unsafeCast(doc.createElement('tr'));
+    final _anchor_1 = import9.appendAnchor(_el_0);
+    this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent2);
+    this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_row = import7.unsafeCast<List<int>>(this.locals['\$implicit']);
+    final currVal_0 = local_row;
+    if (import11.checkBinding(this._expr_0, currVal_0, 'row', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
+      }
+      this._NgFor_1_9.ngForOf = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    if ((!import11.debugThrowIfChanged)) {
+      this._NgFor_1_9.ngDoCheck();
+    }
+    this._appEl_1.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_1.destroyNestedViews();
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_GoldenComponent1(import15.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent1(parentView, parentIndex);
+}
+
+class _ViewGoldenComponent2 extends import14.EmbeddedView<import1.GoldenComponent> {
+  late final ViewContainer _appEl_1;
+  late final NgIf _NgIf_1_9;
+  late final ViewContainer _appEl_3;
+  late final NgIf _NgIf_3_9;
+  _ViewGoldenComponent2(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import8.document;
+    final _el_0 = import7.unsafeCast(doc.createElement('td'));
+    final _anchor_1 = import9.appendAnchor(_el_0);
+    this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
+    var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent3);
+    this._NgIf_1_9 = NgIf(this._appEl_1, _TemplateRef_1_8);
+    final _text_2 = import9.appendText(_el_0, ' ');
+    final _anchor_3 = import9.appendAnchor(_el_0);
+    this._appEl_3 = ViewContainer(3, 0, this, _anchor_3);
+    var _TemplateRef_3_8 = TemplateRef(this._appEl_3, viewFactory_GoldenComponent4);
+    this._NgIf_3_9 = NgIf(this._appEl_3, _TemplateRef_3_8);
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_col = import7.unsafeCast<int>(this.locals['\$implicit']);
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', local_col.isEven);
+    }
+    this._NgIf_1_9.ngIf = local_col.isEven;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_3_9, 'ngIf', local_col.isOdd);
+    }
+    this._NgIf_3_9.ngIf = local_col.isOdd;
+    this._appEl_1.detectChangesInNestedViews();
+    this._appEl_3.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_1.destroyNestedViews();
+    this._appEl_3.destroyNestedViews();
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_GoldenComponent2(import15.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent2(parentView, parentIndex);
+}
+
+class _ViewGoldenComponent3 extends import14.EmbeddedView<import1.GoldenComponent> {
+  final import18.TextBinding _textBinding_1 = import18.TextBinding();
+  _ViewGoldenComponent3(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final _text_0 = import9.createText('Even: ');
+    this.initRootNodesAndSubscriptions(import7.unsafeCast(<Object>[_text_0, this._textBinding_1.element]), null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_col = import7.unsafeCast<int>(import7.unsafeCast<_ViewGoldenComponent2>((this.parentView!)).locals['\$implicit']);
+    this._textBinding_1.updateTextWithPrimitive(local_col);
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_GoldenComponent3(import15.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent3(parentView, parentIndex);
+}
+
+class _ViewGoldenComponent4 extends import14.EmbeddedView<import1.GoldenComponent> {
+  final import18.TextBinding _textBinding_1 = import18.TextBinding();
+  _ViewGoldenComponent4(import15.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final _text_0 = import9.createText('Odd: ');
+    this.initRootNodesAndSubscriptions(import7.unsafeCast(<Object>[_text_0, this._textBinding_1.element]), null);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_col = import7.unsafeCast<int>(import7.unsafeCast<_ViewGoldenComponent2>((this.parentView!)).locals['\$implicit']);
+    this._textBinding_1.updateTextWithPrimitive(local_col);
+  }
+}
+
+import14.EmbeddedView<void> viewFactory_GoldenComponent4(import15.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent4(parentView, parentIndex);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import19.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import19.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

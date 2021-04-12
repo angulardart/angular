@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/ast_directive_normalizer.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/compiler_utils.dart';
@@ -10,8 +9,7 @@ import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/directive_converter.dart';
 import 'package:angular_compiler/v1/src/compiler/source_module.dart';
 import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
-import 'package:angular_compiler/v1/src/compiler/template_parser.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart';
 import 'package:angular_compiler/v1/src/source_gen/template_compiler/component_visitor_exceptions.dart';
 import 'package:angular_compiler/v1/src/source_gen/template_compiler/find_components.dart';
 
@@ -25,7 +23,7 @@ class AngularCompiler {
   final AstDirectiveNormalizer _directiveNormalizer;
   final DirectiveConverter _directiveConverter;
   final TemplateCompiler _templateCompiler;
-  final TemplateParser _templateParser;
+  final AstTemplateParser _templateParser;
   final Resolver _resolver;
 
   AngularCompiler(

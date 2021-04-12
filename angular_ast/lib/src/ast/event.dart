@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 
@@ -20,8 +16,8 @@ abstract class EventAst implements TemplateAst {
   /// Create a new synthetic [EventAst] listening to [name].
   factory EventAst(
     String name,
-    String value, [
-    ExpressionAst<Object> expression,
+    String? value, [
+    ExpressionAst<Object>? expression,
     List<String> reductions,
   ]) = _SyntheticEventAst;
 
@@ -29,8 +25,8 @@ abstract class EventAst implements TemplateAst {
   factory EventAst.from(
     TemplateAst origin,
     String name,
-    String value, [
-    ExpressionAst<Object> expression,
+    String? value, [
+    ExpressionAst<Object>? expression,
     List<String> reductions,
   ]) = _SyntheticEventAst.from;
 
@@ -39,9 +35,9 @@ abstract class EventAst implements TemplateAst {
     SourceFile sourceFile,
     NgToken prefixToken,
     NgToken elementDecoratorToken,
-    NgToken suffixToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgToken? suffixToken, [
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ]) = ParsedEventAst;
 
   @override
@@ -55,19 +51,19 @@ abstract class EventAst implements TemplateAst {
   int get hashCode => hash3(name, expression, reductions);
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitEvent(this, context);
   }
 
   /// Bound expression.
-  ExpressionAst<Object> get expression;
-  set expression(ExpressionAst<Object> expression);
+  ExpressionAst<Object>? get expression;
+  set expression(ExpressionAst<Object>? expression);
 
   /// Name of the event being listened to.
   String get name;
 
   /// Unquoted value being bound to event.
-  String get value;
+  String? get value;
 
   /// An optional list of postfixes used to filter events that support it.
   ///
@@ -98,16 +94,16 @@ class ParsedEventAst extends TemplateAst
 
   // [suffixToken] may be null if 'on-' is used instead of '('.
   @override
-  final NgToken suffixToken;
+  final NgToken? suffixToken;
 
   /// [NgAttributeValueToken] that represents `"expression"`; may be `null` to
   /// have no value.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token; may be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedEventAst(
     SourceFile sourceFile,
@@ -128,7 +124,7 @@ class ParsedEventAst extends TemplateAst
 
   /// ExpressionAst of `"expression"`; may be `null` to have no value.
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   /// Name `eventName` in `(eventName.reductions)`.
   @override
@@ -140,19 +136,19 @@ class ParsedEventAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` if no value.
   @override
-  int get equalSignOffset => equalSignToken?.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Expression value as [String] bound to event; may be `null` if no value.
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   /// Offset of value; may be `null` to have no value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of value starting at left quote; may be `null` to have no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of `(` prefix in `(eventName.reductions)`.
   @override
@@ -160,7 +156,7 @@ class ParsedEventAst extends TemplateAst
 
   /// Offset of `)` suffix in `(eventName.reductions)`.
   @override
-  int get suffixOffset => suffixToken.offset;
+  int? get suffixOffset => suffixToken?.offset;
 
   /// Name `reductions` in `(eventName.ctrl.shift.a)`; may be empty.
   @override
@@ -175,10 +171,10 @@ class _SyntheticEventAst extends SyntheticTemplateAst with EventAst {
   final String name;
 
   @override
-  final String value;
+  final String? value;
 
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   @override
   final List<String> reductions;

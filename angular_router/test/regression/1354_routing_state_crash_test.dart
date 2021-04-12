@@ -1,11 +1,10 @@
-@TestOn('browser')
 import 'dart:async';
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
-import 'package:test/test.dart';
 
 import '1354_routing_state_crash_test.template.dart' as ng;
 
@@ -13,7 +12,7 @@ void main() {
   test('should not crash entire app when a routed component throws', () async {
     final appComponent = runApp<AppComponent>(
       ng.createAppComponentFactory(),
-      createInjector: ([parent]) {
+      createInjector: (parent) {
         return Injector.map({
           ExceptionHandler: LoggingExceptionHandler(),
         }, parent);
@@ -82,7 +81,7 @@ class LoggingExceptionHandler implements ExceptionHandler {
 @Component(
   selector: 'app',
   template: r'''
-    <form class="url-form" (submit)="updateUrl(urlBar.value)">
+    <form class="url-form" (submit)="updateUrl(urlBar.value!)">
       <label for="url-bar">Mock URL: </label>
       <input #urlBar id="url-bar" [value]="currentUrl" />
       <button type="submit">Update</button>

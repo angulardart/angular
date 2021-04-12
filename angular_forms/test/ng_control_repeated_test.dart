@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'dart:async';
 
 import 'package:test/test.dart';
@@ -13,7 +12,7 @@ void main() {
 
   // Regression test for https://github.com/dart-lang/angular2/issues/164.
   test('should update an NgForm without throwing an NPE', () async {
-    final testBed = NgTestBed.forComponent(ng.createAppComponentFactory());
+    final testBed = NgTestBed(ng.createAppComponentFactory());
     expect(
       (await testBed.create()).rootElement.innerHtml,
       contains(r'<input title="Input #0:true">'),
@@ -37,7 +36,7 @@ void main() {
   ''',
 )
 class AppComponent {
-  Iterable<String> values;
+  late Iterable<String> values;
   bool b = false;
 
   AppComponent() {

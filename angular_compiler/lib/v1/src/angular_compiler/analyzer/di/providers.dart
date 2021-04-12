@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../common.dart';
 import '../link.dart';
@@ -55,7 +55,11 @@ class ProviderReader {
     final token = _tokenReader.parseTokenObject(value.objectValue);
     final useClass = reader.read('useClass');
     if (!useClass.isNull) {
-      return _parseUseClass(token, o, useClass.typeValue.element);
+      return _parseUseClass(
+        token,
+        o,
+        useClass.typeValue.element as ClassElement,
+      );
     }
     final useFactory = reader.read('useFactory');
     if (!useFactory.isNull) {
@@ -86,7 +90,11 @@ class ProviderReader {
       if (!$Provider.isExactlyType(o.type)) {
         throw NullFactoryException(o);
       }
-      return _parseUseClass(token, o, reader.read('token').typeValue.element);
+      return _parseUseClass(
+        token,
+        o,
+        reader.read('token').typeValue.element as ClassElement,
+      );
     }
     throw UnsupportedProviderException(o, 'Could not parse provider');
   }
@@ -147,6 +155,9 @@ class ProviderReader {
   ) {
     final objectValue = provider.read('useFactory').objectValue;
     final factoryElement = objectValue.toFunctionValue();
+    if (factoryElement == null) {
+      throw InvalidFactoryException(objectValue);
+    }
     final manualDeps = provider.read('deps');
     return UseFactoryProviderElement(
       token,
@@ -189,7 +200,7 @@ class ProviderReader {
         dependencies: _dependencyReader.parseDependencies(element),
       );
     }
-    return BuildError.throwForElement(element, 'Not a class element');
+    throw BuildError.forElement(element, 'Not a class element');
   }
 }
 
@@ -201,12 +212,9 @@ abstract class ProviderElement {
   /// The `T` type of `Provider<T>`.
   final TypeLink providerType;
 
-  final bool _isExplictlyMulti;
-
   const ProviderElement._(
     this.token,
     this.providerType,
-    this._isExplictlyMulti,
   );
 
   @override
@@ -215,10 +223,7 @@ abstract class ProviderElement {
   /// Whether this represents a multi-binding.
   bool get isMulti {
     final token = this.token;
-    if (token is OpaqueTokenElement && token.isMultiToken) {
-      return true;
-    }
-    return _isExplictlyMulti;
+    return token is OpaqueTokenElement && token.isMultiToken;
   }
 
   @mustCallSuper
@@ -240,8 +245,7 @@ class UseClassProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useClass, {
     @required this.dependencies,
-    bool multi = false,
-  }) : super._(e, providerType, multi);
+  }) : super._(e, providerType);
 
   @override
   bool operator ==(Object o) =>
@@ -271,9 +275,8 @@ class UseExistingProviderElement extends ProviderElement {
   const UseExistingProviderElement(
     TokenElement e,
     TypeLink providerType,
-    this.redirect, {
-    bool multi = false,
-  }) : super._(e, providerType, multi);
+    this.redirect,
+  ) : super._(e, providerType);
 
   @override
   bool operator ==(Object o) =>
@@ -305,8 +308,10 @@ class UseFactoryProviderElement extends ProviderElement {
     TypeLink providerType,
     this.useFactory, {
     @required this.dependencies,
-    bool multi = false,
-  }) : super._(e, providerType, multi);
+  }) : super._(
+          e,
+          providerType,
+        );
 
   @override
   bool operator ==(Object o) =>
@@ -338,9 +343,11 @@ class UseValueProviderElement extends ProviderElement {
   const UseValueProviderElement._(
     TokenElement e,
     TypeLink providerType,
-    this.useValue, {
-    bool multi = false,
-  }) : super._(e, providerType, multi);
+    this.useValue,
+  ) : super._(
+          e,
+          providerType,
+        );
 }
 
 /// Thrown when a value of `null` is read for a provider token.
@@ -353,10 +360,18 @@ class NullTokenException implements Exception {
 
 /// Thrown when a value of `null` is read for `FactoryProvider`.
 class NullFactoryException implements Exception {
-  /// Constant whose `.token` property was resolved to `null`.
+  /// Constant whose `useFactory` property was resolved to `null`.
   final DartObject constant;
 
   const NullFactoryException(this.constant);
+}
+
+/// Thrown when a non-factory value is attached to a `FactoryProvider`.
+class InvalidFactoryException implements Exception {
+  /// Constant whose `useFactory` was not a factory function.
+  final DartObject constant;
+
+  const InvalidFactoryException(this.constant);
 }
 
 class UnsupportedProviderException implements Exception {

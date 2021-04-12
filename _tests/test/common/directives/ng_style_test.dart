@@ -1,8 +1,6 @@
-@TestOn('browser')
-
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'ng_style_test.template.dart' as ng;
 
@@ -11,45 +9,44 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should update styles specified in an map literal', () async {
-      var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
+      var testBed = NgTestBed(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((component) {
+      var content = testFixture.rootElement.querySelector('div')!;
+      await testFixture.update((MapUpdateTest component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
-      await testFixture.update((component) {
-        component.map['max-width'] = '30%';
+      await testFixture.update((MapUpdateTest component) {
+        component.map!['max-width'] = '30%';
       });
       expect(content.style.maxWidth, '30%');
     });
 
     test('should remove styles when deleting a key in a map literal', () async {
-      var testBed = NgTestBed.forComponent(ng.createMapUpdateTestFactory());
+      var testBed = NgTestBed(ng.createMapUpdateTestFactory());
       var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((component) {
+      var content = testFixture.rootElement.querySelector('div')!;
+      await testFixture.update((MapUpdateTest component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
-      await testFixture.update((component) {
-        component.map.remove('max-width');
+      await testFixture.update((MapUpdateTest component) {
+        component.map!.remove('max-width');
       });
       expect(content.style.maxWidth, '');
     });
 
     test('should cooperate with the style attribute', () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createMapUpdateWithDefaultTestFactory());
+      var testBed = NgTestBed(ng.createMapUpdateWithDefaultTestFactory());
       var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((component) {
+      var content = testFixture.rootElement.querySelector('div')!;
+      await testFixture.update((MapUpdateWithDefaultTest component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
       expect(content.style.fontSize, '12px');
-      await testFixture.update((component) {
-        component.map.remove('max-width');
+      await testFixture.update((MapUpdateWithDefaultTest component) {
+        component.map!.remove('max-width');
       });
       expect(content.style.maxWidth, '');
       expect(content.style.fontSize, '12px');
@@ -57,17 +54,16 @@ void main() {
 
     test('should cooperate with the style.[styleName]="expr" special-case',
         () async {
-      var testBed =
-          NgTestBed.forComponent(ng.createMapUpdateWithStyleExprTestFactory());
+      var testBed = NgTestBed(ng.createMapUpdateWithStyleExprTestFactory());
       var testFixture = await testBed.create();
-      var content = testFixture.rootElement.querySelector('div');
-      await testFixture.update((component) {
+      var content = testFixture.rootElement.querySelector('div')!;
+      await testFixture.update((MapUpdateWithStyleExprTest component) {
         component.map = {'max-width': '40px'};
       });
       expect(content.style.maxWidth, '40px');
       expect(content.style.fontSize, '12px');
-      await testFixture.update((component) {
-        component.map.remove('max-width');
+      await testFixture.update((MapUpdateWithStyleExprTest component) {
+        component.map!.remove('max-width');
       });
       expect(content.style.maxWidth, '');
       expect(content.style.fontSize, '12px');
@@ -81,7 +77,7 @@ void main() {
   template: '<div [ngStyle]="map"></div>',
 )
 class MapUpdateTest {
-  Map<String, String> map;
+  Map<String, String>? map;
 }
 
 @Component(
@@ -90,7 +86,7 @@ class MapUpdateTest {
   template: '<div style="font-size: 12px" [ngStyle]="map"></div>',
 )
 class MapUpdateWithDefaultTest {
-  Map<String, String> map;
+  Map<String, String>? map;
 }
 
 @Component(
@@ -99,5 +95,5 @@ class MapUpdateWithDefaultTest {
   template: '<div [style.font-size.px]="12" [ngStyle]="map"></div>',
 )
 class MapUpdateWithStyleExprTest {
-  Map<String, String> map;
+  Map<String, String>? map;
 }

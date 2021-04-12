@@ -30,7 +30,7 @@ import 'shared.dart' show setUpControl;
 ///       </form>
 ///     </div>
 ///   ''',
-///   directives: const [CORE_DIRECTIVES, formDirectives]
+///   directives: const [coreDirectives, formDirectives]
 /// )
 /// class App {
 ///   Control loginControl = new Control('');
@@ -63,14 +63,14 @@ import 'shared.dart' show setUpControl;
 )
 class NgFormControl extends NgControl implements AfterChanges {
   bool _formChanged = false;
-  Control _form;
+  Control? _form;
   @Input('ngFormControl')
-  set form(Control value) {
+  set form(Control? value) {
     _form = value;
     _formChanged = true;
   }
 
-  Control get form => _form;
+  Control? get form => _form;
   final _update = StreamController.broadcast();
   bool _modelChanged = false;
   dynamic _model;
@@ -87,29 +87,32 @@ class NgFormControl extends NgControl implements AfterChanges {
       @Optional()
       @Self()
       @Inject(NG_VALIDATORS)
-          List validators,
+          List<dynamic>? validators,
       @Optional()
       @Self()
       @Inject(ngValueAccessor)
-          List<ControlValueAccessor> valueAccessors)
+          List<ControlValueAccessor<dynamic>>? valueAccessors)
       : super(valueAccessors, validators);
 
+  @override
   @Output('ngModelChange')
-  Stream get update => _update.stream;
+  Stream<dynamic> get update => _update.stream;
 
   @override
   void ngAfterChanges() {
-    if (_formChanged) {
-      _formChanged = false;
-      setUpControl(form, this);
-      form.updateValueAndValidity(emitEvent: false);
-    }
+    // Update the control value first so that when the control is setup it has
+    // the correct initial value.
     if (_modelChanged) {
       _modelChanged = false;
       if (!identical(_model, viewModel)) {
-        form.updateValue(model);
+        form!.updateValue(model);
         viewModel = model;
       }
+    }
+    if (_formChanged) {
+      _formChanged = false;
+      setUpControl(form!, this);
+      form!.updateValueAndValidity(emitEvent: false);
     }
   }
 
@@ -117,7 +120,7 @@ class NgFormControl extends NgControl implements AfterChanges {
   List<String> get path => [];
 
   @override
-  Control get control => form;
+  Control? get control => form;
 
   @override
   void viewToModelUpdate(dynamic newValue) {

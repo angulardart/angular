@@ -1,8 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
 import 'dart:html';
 
 import 'package:test/test.dart';
@@ -12,10 +7,8 @@ import 'package:angular_test/angular_test.dart';
 import 'bed_lifecycle_test.template.dart' as ng;
 
 void main() {
-  Element docRoot;
-  Element testRoot;
-
-  ng.initReflector();
+  late Element docRoot;
+  late Element testRoot;
 
   setUp(() {
     docRoot = Element.tag('doc-root');
@@ -29,7 +22,10 @@ void main() {
     // We are going to verify that the document root has a new node created (our
     // component), the node is updated (after change detection), and after
     // destroying the test the document root has been cleared.
-    final testBed = NgTestBed<AngularLifecycle>(host: testRoot);
+    final testBed = NgTestBed(
+      ng.createAngularLifecycleFactory(),
+      host: testRoot,
+    );
     final fixture = await testBed.create();
     expect(docRoot.text, isEmpty);
     await fixture.update((c) => c.value = 'New value');
@@ -40,13 +36,13 @@ void main() {
   });
 
   test('should invoke ngAfterChanges, then ngOnInit', () async {
-    final fixture =
-        await NgTestBed.forComponent(ng.createNgAfterChangesInitOrderFactory())
-            .create(
+    final fixture = await NgTestBed(
+      ng.createNgAfterChangesInitOrderFactory(),
+    ).create(
       beforeChangeDetection: (root) => root.name = 'Hello',
     );
     expect(
-      fixture.assertOnlyInstance.child.events,
+      fixture.assertOnlyInstance.child!.events,
       ['AfterChanges:name=Hello', 'OnInit'],
     );
   });
@@ -54,13 +50,13 @@ void main() {
   test(
       'should invoke ngAfterChanges with asynchronous beforeChangeDetection,'
       ' then ngOnInit', () async {
-    final fixture =
-        await NgTestBed.forComponent(ng.createNgAfterChangesInitOrderFactory())
-            .create(
+    final fixture = await NgTestBed(
+      ng.createNgAfterChangesInitOrderFactory(),
+    ).create(
       beforeChangeDetection: (root) async => root.name = 'Hello',
     );
     expect(
-      fixture.assertOnlyInstance.child.events,
+      fixture.assertOnlyInstance.child!.events,
       ['AfterChanges:name=Hello', 'OnInit'],
     );
   });
@@ -80,10 +76,10 @@ class AngularLifecycle {
   template: '<child [name]="name"></child>',
 )
 class NgAfterChangesInitOrder {
-  String name;
+  String? name;
 
   @ViewChild(ChildWithLifeCycles)
-  ChildWithLifeCycles child;
+  ChildWithLifeCycles? child;
 }
 
 @Component(
@@ -95,7 +91,7 @@ class ChildWithLifeCycles implements AfterChanges, OnInit {
   final events = <String>[];
 
   @Input()
-  String name = '';
+  String? name = '';
 
   @override
   void ngAfterChanges() {

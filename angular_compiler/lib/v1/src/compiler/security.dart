@@ -6,9 +6,6 @@
 ///
 /// [innerHTML] that could cause Cross Site Scripting (XSS) security bugs when
 /// improperly handled is classified as HTML.
-///
-/// See DomSanitizationService for more details on security in Angular
-/// applications.
 enum TemplateSecurityContext {
   /// No security implication.
   none,

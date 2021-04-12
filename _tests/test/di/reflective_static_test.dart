@@ -1,8 +1,12 @@
-@TestOn('browser')
-import 'package:angular/angular.dart';
 import 'package:test/test.dart';
+import 'package:_tests/matchers.dart';
+import 'package:angular/angular.dart';
+
+import 'reflective_static_test.template.dart' as ng;
 
 void main() {
+  ng.initReflector();
+
   group('ReflectiveInjector.resolveStaticAndCreate', () {
     test('should allow ValueProvider', () {
       final injector = ReflectiveInjector.resolveStaticAndCreate([
@@ -134,7 +138,27 @@ void main() {
         throwsUnsupportedError,
       );
     });
+
+    test('should throw ArgumentError on a missing provider', () {
+      final injector = ReflectiveInjector.resolveAndCreate([
+        const Provider(ServiceInjectingToken, useClass: ServiceInjectingToken),
+        // Intentionally omit a binding for "stringToken".
+      ]);
+
+      // Used to return an Object representing the secret "notFound" instead of
+      // throwing ArgumentError, which was the expected behavior.
+      expect(() => injector.get(ServiceInjectingToken), throwsNoProviderError);
+    });
   });
 }
 
 class InjectableService {}
+
+const stringToken = OpaqueToken('stringToken');
+
+@Injectable()
+class ServiceInjectingToken {
+  final String tokenValue;
+
+  ServiceInjectingToken(@Inject(stringToken) this.tokenValue);
+}

@@ -1,6 +1,3 @@
-@TestOn('browser')
-import 'dart:async';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -11,13 +8,11 @@ import 'package:angular_test/angular_test.dart';
 import 'lifecycle_test.template.dart' as ng;
 
 void main() {
-  ng.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   // /first-child -> /second-child
   test('navigate to and from a sibling', () async {
-    final fixture = await setup<TestNavigateToSibling>();
+    final fixture = await setup(ng.createTestNavigateToSiblingFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -53,7 +48,9 @@ void main() {
 
   // /first-reusable-child -> /second-child -> /first-reusable-child
   test('navigate from a reusable component to a sibling and back', () async {
-    final fixture = await setup<TestNavigateToSiblingFromReusableChild>();
+    final fixture = await setup(
+      ng.createTestNavigateToSiblingFromReusableChildFactory(),
+    );
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -88,7 +85,7 @@ void main() {
 
   // /parent/first-child -> /parent/second-child -> /parent/first-child
   test('navigate to a nested sibling and back', () async {
-    final fixture = await setup<TestNavigateToNestedSibling>();
+    final fixture = await setup(ng.createTestNavigateToNestedSiblingFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -147,7 +144,9 @@ void main() {
 
   // /reusable-parent/first-child -> /reusable-parent/second-child
   test('navigate to a nested sibling with a reusable parent', () async {
-    final fixture = await setup<TestNavigateToNestedSiblingWithSharedParent>();
+    final fixture = await setup(
+      ng.createTestNavigateToNestedSiblingWithSharedParentFactory(),
+    );
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -181,7 +180,9 @@ void main() {
 
   // /first-parent/first-child -> /second-parent/second-child
   test('navigate between nested routes', () async {
-    final fixture = await setup<TestNavigateBetweenNestedRoutes>();
+    final fixture = await setup(
+      ng.createTestNavigateBetweenNestedRoutesFactory(),
+    );
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -216,8 +217,9 @@ void main() {
 
   // /first-reusable-parent/first-child -> /second-parent/second-child
   test('navigate between nested routes with a reusable parent', () async {
-    final fixture =
-        await setup<TestNavigateBetweenNestedRoutesWithReusableParent>();
+    final fixture = await setup(
+      ng.createTestNavigateBetweenNestedRoutesWithReusableParentFactory(),
+    );
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -254,8 +256,9 @@ void main() {
   // map to the same component factory, which should be reused.
   test('navigate between nested routes with the same reusable parent',
       () async {
-    final fixture =
-        await setup<TestNavigateBetweenNestedRoutesWithSameReusableParent>();
+    final fixture = await setup(
+      ng.createTestNavigateBetweenNestedRoutesWithSameReusableParentFactory(),
+    );
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -288,7 +291,7 @@ void main() {
   });
 
   test('navigate to the same route should do nothing', () async {
-    final fixture = await setup<TestNavigateToSibling>();
+    final fixture = await setup(ng.createTestNavigateToSiblingFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -304,7 +307,7 @@ void main() {
   });
 
   test('reload the same route', () async {
-    final fixture = await setup<TestNavigateToSibling>();
+    final fixture = await setup(ng.createTestNavigateToSiblingFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -328,7 +331,7 @@ void main() {
   });
 
   test('prevent navigation before other lifecycle callbacks', () async {
-    final fixture = await setup<TestPreventNavigation>();
+    final fixture = await setup(ng.createTestPreventNavigationFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -345,7 +348,7 @@ void main() {
   });
 
   test('redirect to a sibling', () async {
-    final fixture = await setup<TestRedirectToSibling>();
+    final fixture = await setup(ng.createTestRedirectToSiblingFactory());
     final log = fixture.assertOnlyInstance.lifecycleLog;
     final router = fixture.assertOnlyInstance.router;
     expect(log, [
@@ -371,14 +374,20 @@ void main() {
 const instanceIdsToken = OpaqueToken<Map<String, int>>();
 const lifecycleLogToken = OpaqueToken<List<String>>();
 
-Future<NgTestFixture<T>> setup<T>() async {
-  final testBed = NgTestBed<T>().addProviders([
-    ValueProvider.forToken(lifecycleLogToken, <String>[]),
-    ValueProvider.forToken(instanceIdsToken, <String, int>{}),
-    routerProvidersTest,
-  ]);
+Future<NgTestFixture<T>> setup<T>(ComponentFactory<T> factory) async {
+  final testBed = NgTestBed(factory).addInjector(fakeRoot);
   return testBed.create();
 }
+
+List<String> createStringList() => [];
+Map<String, int> createStringIntMap() => {};
+
+@GenerateInjector([
+  FactoryProvider.forToken(lifecycleLogToken, createStringList),
+  FactoryProvider.forToken(instanceIdsToken, createStringIntMap),
+  routerProvidersTest,
+])
+final fakeRoot = ng.fakeRoot$Injector;
 
 /// Records all lifecycle method invocations.
 abstract class RouterLifecycleLogger
@@ -392,7 +401,7 @@ abstract class RouterLifecycleLogger
         OnDestroy,
         OnInit {
   /// An identifier used to indicate which instance received a lifecycle call.
-  final String _identifier;
+  late final String _identifier;
 
   /// An ordered list in which lifecycle invocations are recorded.
   final List<String> lifecycleLog;
@@ -401,10 +410,10 @@ abstract class RouterLifecycleLogger
     String name,
     Map<String, int> instanceIds,
     this.lifecycleLog,
-  ) : _identifier = instanceIds.containsKey(name)
-            ? '$name[${++instanceIds[name]}]'
-            : '$name[0]' {
-    instanceIds.putIfAbsent(name, () => 0);
+  ) {
+    final id = instanceIds.containsKey(name) ? instanceIds[name]! + 1 : 0;
+    instanceIds[name] = id;
+    _identifier = '$name[$id]';
   }
 
   @override

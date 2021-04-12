@@ -57,19 +57,10 @@ class ProviderResolver {
   /// each directive at this node. Code generators that want to build
   /// instances can handle the createProviderInstance callback on the
   /// host interface.
-  ///
-  /// If [deferredComponent] is non-null, this node represents a deferred
-  /// generic component with type arguments. In such a case, the
-  /// [deferredComponentTypeArguments] should be used to instantiate the
-  /// component provider with explicit type arguments. For non-deferred generic
-  /// components we can really on the provider's field type to specify type
-  /// arguments, but for deferred components the field type is dynamic.
   void addDirectiveProviders(
     final List<ProviderAst> providerList,
-    final List<CompileDirectiveMetadata> directives, {
-    CompileIdentifierMetadata deferredComponent,
-    List<o.OutputType> deferredComponentTypeArguments,
-  }) {
+    final List<CompileDirectiveMetadata> directives,
+  ) {
     // Create a lookup map from token to provider.
     for (var provider in providerList) {
       _resolvedProviders.add(provider.token, provider);
@@ -78,10 +69,6 @@ class ProviderResolver {
     // some as getters (eager=false). We rely on the fact that they are
     // already sorted topologically.
     for (var resolvedProvider in providerList) {
-      if (resolvedProvider.providerType ==
-          ProviderAstType.FunctionalDirective) {
-        continue;
-      }
       // One or more(multi) sources when built will return provider value
       // expressions.
       var providerSources = <ProviderSource>[];
@@ -107,20 +94,10 @@ class ProviderResolver {
               _addFactoryProvider(provider, resolvedProvider.providerType);
         } else if (provider.useClass != null) {
           var classType = provider.useClass.identifier;
-          if (classType == deferredComponent) {
-            // This provider represents a deferred generic component. Since the
-            // field type of deferred components is always dynamic, we must
-            // explicitly type the component constructor when creating this
-            // provider instance.
-            providerSource = _addClassProvider(
-              provider,
-              resolvedProvider.providerType,
-              typeArguments: deferredComponentTypeArguments,
-            );
-          } else {
-            providerSource =
-                _addClassProvider(provider, resolvedProvider.providerType);
-          }
+          providerSource = _addClassProvider(
+            provider,
+            resolvedProvider.providerType,
+          );
           // Check if class is a directive and keep track of directiveMetadata
           // for the directive so we can determine if the provider has
           // an associated change detector class.
@@ -227,19 +204,6 @@ class ProviderResolver {
       dep.token,
       dep.isOptional,
     );
-  }
-
-  /// Creates an expression that calls a functional directive.
-  ProviderSource createFunctionalDirectiveSource(ProviderAst provider) {
-    // Add functional directive invocation.
-    // Get function parameter dependencies.
-    final parameters = <ProviderSource>[];
-    final mainProvider = provider.providers.first;
-    for (var dep in mainProvider.deps) {
-      parameters.add(_getDependency(dep));
-    }
-    return FunctionalDirectiveSource(
-        mainProvider.token, mainProvider.useClass, parameters);
   }
 }
 
@@ -355,27 +319,6 @@ class ClassProviderSource extends ProviderSource {
       return debugInjectorWrap(createDiTokenExpression(token), create);
     }
     return create;
-  }
-
-  @override
-  bool get hasDynamicDependencies => _hasDynamicDependencies(_parameters);
-}
-
-class FunctionalDirectiveSource extends ProviderSource {
-  final CompileTypeMetadata _classType;
-  final List<ProviderSource> _parameters;
-
-  FunctionalDirectiveSource(
-      CompileTokenMetadata token, this._classType, this._parameters)
-      : super(token);
-
-  @override
-  o.Expression build() {
-    var paramExpressions = <o.Expression>[];
-    for (var s in _parameters) {
-      paramExpressions.add(s.build());
-    }
-    return o.importExpr(_classType).callFn(paramExpressions);
   }
 
   @override

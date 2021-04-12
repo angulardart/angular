@@ -1,3 +1,4 @@
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
 import 'package:angular_compiler/v1/src/compiler/compiler_utils.dart';
@@ -5,7 +6,6 @@ import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/style_url_resolver.dart'
     show extractStyleUrls;
-import 'package:angular_compiler/v1/cli.dart';
 
 import 'shadow_css.dart';
 
@@ -77,18 +77,18 @@ class StyleCompiler {
     }
 
     // Styles variable contains plain strings and arrays of other styles arrays
-    // (recursive), so we set its type to dynamic.
+    // (recursive), so we set its type to Object.
     final listShouldBeConst = styleExpressions.isEmpty;
     final statement = o
         .variable(stylesVar)
         .set(o.literalArr(
             styleExpressions,
             o.ArrayType(
-              o.DYNAMIC_TYPE,
+              null,
               listShouldBeConst ? [o.TypeModifier.Const] : const [],
             )))
         .toDeclStmt(
-      null,
+      o.ArrayType(o.OBJECT_TYPE),
       [o.StmtModifier.Final],
     );
     return StylesCompileResult([statement], stylesVar);

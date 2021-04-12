@@ -1,11 +1,5 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-import 'dart:async';
-
 import 'package:meta/meta.dart';
-import 'package:angular/di.dart';
+import 'package:angular/angular.dart';
 
 import '../errors.dart';
 import 'ng_zone/timer_hook_zone.dart';
@@ -19,14 +13,14 @@ typedef NgTestStabilizerFactory = NgTestStabilizer Function(Injector);
 /// ensure that only our own stabilizers have access to this specific zone hook.
 typedef AllowTimerHookZoneAccess = NgTestStabilizer Function(
   Injector, [
-  TimerHookZone,
+  TimerHookZone?,
 ]);
 
 /// Returns a composed sequence of [factories] as a single stabilizer.
 NgTestStabilizerFactory composeStabilizers(
   Iterable<NgTestStabilizerFactory> factories,
 ) {
-  return (Injector injector, [TimerHookZone zone]) {
+  return (Injector injector, [TimerHookZone? zone]) {
     return _DelegatingNgTestStabilizer(factories.map((f) {
       // Most (i.e. all user-land) stabilizers do not have access to the
       // "secret" TimerHookZone. Only functions that are defined within this
@@ -35,11 +29,7 @@ NgTestStabilizerFactory composeStabilizers(
         return f(injector, zone);
       }
       // All other factories just are given an injector.
-      if (f is NgTestStabilizerFactory) {
-        return f(injector);
-      }
-      // Base case.
-      throw ArgumentError('Invalid stabilizer factory: $f');
+      return f(injector);
     }));
   };
 }
@@ -96,7 +86,7 @@ abstract class NgTestStabilizer {
   ///   return true;
   /// }
   /// ```
-  Future<bool> update([void Function() runAndTrackSideEffects]) {
+  Future<bool> update([void Function()? runAndTrackSideEffects]) {
     return Future<bool>.sync(() {
       if (runAndTrackSideEffects != null) {
         runAndTrackSideEffects();
@@ -109,12 +99,9 @@ abstract class NgTestStabilizer {
   ///
   /// If more then [threshold] attempts occur, throws [WillNeverStabilizeError].
   Future<void> stabilize({
-    void Function() runAndTrackSideEffects,
+    void Function()? runAndTrackSideEffects,
     int threshold = 100,
   }) async {
-    if (threshold == null) {
-      throw ArgumentError.notNull('threshold');
-    }
     if (runAndTrackSideEffects != null) {
       await update(runAndTrackSideEffects);
     }
@@ -161,7 +148,7 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
   bool get isStable => _delegates.every((delegate) => delegate.isStable);
 
   @override
-  Future<bool> update([void Function() runAndTrackSideEffects]) async {
+  Future<bool> update([void Function()? runAndTrackSideEffects]) async {
     if (_delegates.isEmpty) {
       return false;
     }
@@ -184,8 +171,8 @@ class _DelegatingNgTestStabilizer extends NgTestStabilizer {
 
   /// Runs [update] where [test] is satisfied.
   Future<void> _updateAll(
-    void Function() runAndTrackSideEffects, [
-    bool Function(NgTestStabilizer) test,
+    void Function()? runAndTrackSideEffects, [
+    bool Function(NgTestStabilizer)? test,
   ]) async {
     for (final delegate in _delegates) {
       if (test == null || test(delegate)) {

@@ -1,7 +1,6 @@
-import 'package:angular_ast/angular_ast.dart';
 import 'package:source_span/source_span.dart' show SourceSpan;
-
-import '../template_parser.dart' show TemplateContext;
+import 'package:angular_ast/angular_ast.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 const i18nDescription = 'i18n';
 const i18nDescriptionPrefix = '$i18nDescription:';
@@ -14,7 +13,7 @@ const _i18nIndexForLocale = 1;
 const _i18nIndexForMeaning = 2;
 const _i18nIndexForSkip = 3;
 const _i18nIndexForAttribute = 4;
-final _i18nRegExp = RegExp(
+final i18nRegExp = RegExp(
     // Matches i18n prefix.
     'i18n'
     // Captures optional i18n parameter name.
@@ -28,10 +27,7 @@ final _i18nRegExp = RegExp(
 final _whitespaceRegExp = RegExp(r'\s+');
 
 /// Parses all internationalization metadata from a node's [annotations].
-I18nMetadataBundle parseI18nMetadata(
-  List<AnnotationAst> annotations,
-  TemplateContext context,
-) {
+I18nMetadataBundle parseI18nMetadata(List<AnnotationAst> annotations) {
   if (annotations.isEmpty) {
     return I18nMetadataBundle.empty();
   }
@@ -39,14 +35,14 @@ I18nMetadataBundle parseI18nMetadata(
   // builder which has a null key.
   final builders = <String, _I18nMetadataBuilder>{};
   for (final annotation in annotations) {
-    final match = _i18nRegExp.matchAsPrefix(annotation.name);
+    final match = i18nRegExp.matchAsPrefix(annotation.name);
     if (match == null) {
       continue;
     }
     // If `annotation` doesn't specify an attribute name, `attribute` is null
     // which indicates this metadata internationalizes children.
     final attribute = match[_i18nIndexForAttribute];
-    final builder = builders[attribute] ??= _I18nMetadataBuilder(context);
+    final builder = builders[attribute] ??= _I18nMetadataBuilder();
     if (match[_i18nIndexForLocale] != null) {
       builder.locale = annotation;
     } else if (match[_i18nIndexForMeaning] != null) {
@@ -60,7 +56,11 @@ I18nMetadataBundle parseI18nMetadata(
   final childrenMetadata = builders.remove(null)?.build();
   final attributeMetadata = <String, I18nMetadata>{};
   for (final attribute in builders.keys) {
-    attributeMetadata[attribute] = builders[attribute].build();
+    final metadata = builders[attribute].build();
+    // Omit any invalid metadata.
+    if (metadata != null) {
+      attributeMetadata[attribute] = metadata;
+    }
   }
   return I18nMetadataBundle(childrenMetadata, attributeMetadata);
 }
@@ -145,15 +145,20 @@ class I18nMetadataBundle {
 
 /// A builder for incrementally constructing and validating i18n metadata.
 class _I18nMetadataBuilder {
-  final TemplateContext _context;
+  /// A regular expression that matches a parameter in an i18n annotation.
+  ///
+  /// For example, matches ".skip" in "@i18n.skip:title".
+  static final _parameterRegExp = RegExp(r'\.\w+');
 
   AnnotationAst description;
   AnnotationAst locale;
   AnnotationAst meaning;
   AnnotationAst skip;
 
-  _I18nMetadataBuilder(this._context);
-
+  /// Builds an immutable representation of the accumulated metadata.
+  ///
+  /// Returns null and reports an error if the metadata is incomplete or
+  /// invalid.
   I18nMetadata build() {
     if (description == null) {
       _reportMissingDescriptionFor(locale);
@@ -182,10 +187,16 @@ class _I18nMetadataBuilder {
 
   void _reportMissingDescriptionFor(AnnotationAst annotation) {
     if (annotation != null) {
-      _context.reportError(
-        'A corresponding message description (@i18n) is required',
-        annotation.sourceSpan,
+      // Remove the parameter to create the corresponding description annotation
+      // name.
+      final descriptionName = annotation.name.replaceFirst(
+        _parameterRegExp,
+        '',
       );
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        annotation.sourceSpan,
+        'A corresponding message description (@$descriptionName) is required',
+      ));
     }
   }
 }

@@ -1,12 +1,10 @@
-@TestOn('browser')
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 
 void main() {
   group('DatePipe', () {
-    DateTime date;
-    DatePipe pipe;
+    late DateTime date;
+    late DatePipe pipe;
     setUp(() {
       date = DateTime(2015, 6, 15, 21, 43, 11);
       pipe = DatePipe();

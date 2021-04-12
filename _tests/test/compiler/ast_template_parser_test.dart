@@ -1,25 +1,25 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'dart:async';
 
 import 'package:logging/logging.dart';
 import 'package:term_glyph/term_glyph.dart' as term_glyph;
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
-import 'package:angular_compiler/v1/src/compiler/expression_parser/lexer.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart'
     show identifierToken, Identifiers;
+import 'package:angular_compiler/v1/src/compiler/js_split_facade.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/schema/dom_element_schema_registry.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart'
     show ElementSchemaRegistry;
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart';
 import 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart';
-import 'package:angular_compiler/v1/src/compiler/js_split_facade.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'schema_registry_mock.dart' show MockSchemaRegistry;
 import 'template_humanizer_util.dart';
@@ -100,7 +100,7 @@ void main() {
     );
     final parser = AstTemplateParser(
       elementSchemaRegistry,
-      Parser(Lexer()),
+      ExpressionParser(),
       compilerFlags ?? CompilerFlags(),
     );
     _parse = (template, [directives, pipes]) {
@@ -272,37 +272,45 @@ void main() {
 
         test('should report invalid prefixes', () {
           expect(
-              () => parse('<p [atTr.foo]></p>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'atTr.foo\'\n'
-                  '  ,\n'
-                  '1 | <p [atTr.foo]></p>\n'
-                  '  |    ^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<p [atTr.foo]></p>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Invalid property name \'atTr.foo\'',
+                ),
+              ),
+            ),
+          );
           expect(
-              () => parse('<p [sTyle.foo]></p>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'sTyle.foo\'\n'
-                  '  ,\n'
-                  '1 | <p [sTyle.foo]></p>\n'
-                  '  |    ^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<p [sTyle.foo]></p>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Invalid property name \'sTyle.foo\'',
+                ),
+              ),
+            ),
+          );
           expect(
-              () => parse('<p [Class.foo]></p>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'Class.foo\'\n'
-                  '  ,\n'
-                  '1 | <p [Class.foo]></p>\n'
-                  '  |    ^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<p [Class.foo]></p>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Invalid property name \'Class.foo\'',
+                ),
+              ),
+            ),
+          );
           expect(
-              () => parse('<p [bar.foo]></p>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: Invalid property name \'bar.foo\'\n'
-                  '  ,\n'
-                  '1 | <p [bar.foo]></p>\n'
-                  '  |    ^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<p [bar.foo]></p>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Invalid property name \'bar.foo\'',
+                ),
+              ),
+            ),
+          );
         });
 
         test(
@@ -354,13 +362,15 @@ void main() {
       group('events', () {
         test('should parse bound events with a target', () {
           expect(
-              () => parse('<div (window:event)="v"></div>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: ":" is not allowed in event names: window:event\n'
-                  '  ,\n'
-                  '1 | <div (window:event)="v"></div>\n'
-                  '  |      ^^^^^^^^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div (window:event)="v"></div>'),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  '":" is not allowed in event names',
+                ),
+              ),
+            ),
+          );
         });
 
         test(
@@ -409,42 +419,18 @@ void main() {
         });
       });
 
-      group('bindon', () {
-        test(
-            'should parse bound events and properties via [(...)] and not '
-            'report them as attributes', () {
-          expect(humanizeTplAst(parse('<div [(prop)]="v"></div>', [])), [
-            [ElementAst, 'div'],
-            [
-              BoundElementPropertyAst,
-              PropertyBindingType.property,
-              'prop',
-              'v',
-              null
-            ],
-            [BoundEventAst, 'propChange', null, 'v = \$event']
-          ]);
-        });
-
-        test(
-            'should parse bound events and properties via bindon- and not '
-            'report them as attributes', () {
-          expect(humanizeTplAst(parse('<div bindon-prop="v"></div>', [])), [
-            [ElementAst, 'div'],
-            [AttrAst, 'bindon-prop', 'v']
-          ]);
-
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "bindon-" for properties/events is no longer supported. Use "[()]" instead!\n'
-                  '  ,\n'
-                  '1 | <div bindon-prop="v"></div>\n'
-                  '  |      ^^^^^^^^^^^^^^^\n'
-                  "  '"
-            ].join('\n')
-          ]);
-        });
+      test('should parse banana syntax as a property and event', () {
+        expect(humanizeTplAst(parse('<div [(prop)]="v"></div>', [])), [
+          [ElementAst, 'div'],
+          [
+            BoundElementPropertyAst,
+            PropertyBindingType.property,
+            'prop',
+            'v',
+            null
+          ],
+          [BoundEventAst, 'propChange', null, 'v = \$event']
+        ]);
       });
 
       group('directives', () {
@@ -518,6 +504,8 @@ void main() {
               selector: '[a]',
               type:
                   CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirB'));
+          // TODO(b/135435578): Validate an attribute selector can bind to
+          // an event.
           expect(humanizeTplAst(parse('<div (a)="b"></div>', [dirA])), [
             [ElementAst, 'div'],
             [BoundEventAst, 'a', null, 'b'],
@@ -619,13 +607,16 @@ void main() {
       });
 
       group('providers', () {
-        var nextProviderId;
+        int nextProviderId;
         CompileTokenMetadata createToken(String value) {
-          var token;
+          CompileTokenMetadata token;
           if (value.startsWith('type:')) {
             token = CompileTokenMetadata(
-                identifier: CompileTypeMetadata(
-                    moduleUrl: someModuleUrl, name: value.substring(5)));
+              identifier: CompileTypeMetadata(
+                moduleUrl: someModuleUrl,
+                name: value.substring(5),
+              ),
+            );
           } else {
             token = CompileTokenMetadata(value: value);
           }
@@ -648,11 +639,17 @@ void main() {
             isHost = true;
             value = value.substring(5);
           }
+          var isAttribute = false;
+          if (value.startsWith('attribute:')) {
+            isAttribute = true;
+            value = value.substring(10);
+          }
           return CompileDiDependencyMetadata(
               token: createToken(value),
               isOptional: isOptional,
               isSelf: isSelf,
-              isHost: isHost);
+              isHost: isHost,
+              isAttribute: isAttribute);
         }
 
         CompileProviderMetadata createProvider(String token,
@@ -792,13 +789,15 @@ void main() {
           var dirA = createDir('[dirA]', providers: [provider0]);
           var dirB = createDir('[dirB]', providers: [provider1]);
           expect(
-              () => parse('<div dirA dirB></div>', [dirA, dirB]),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: Mixing multi and non multi provider is not possible for token service0\n'
-                  '  ,\n'
-                  '1 | <div dirA dirB></div>\n'
-                  '  | ^^^^^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div dirA dirB></div>', [dirA, dirB]),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Mixing multi and non multi provider is not possible',
+                ),
+              ),
+            ),
+          );
         });
 
         test('should sort providers by their DI order', () {
@@ -894,13 +893,13 @@ void main() {
         test('should report missing @Self() deps as errors', () {
           var dirA = createDir('[dirA]', deps: ['self:provider0']);
           expect(
-              () => parse('<div dirA></div>', [dirA]),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: No provider for provider0\n'
-                  '  ,\n'
-                  '1 | <div dirA></div>\n'
-                  '  | ^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div dirA></div>', [dirA]),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'No provider for provider0',
+              ),
+            )),
+          );
         });
 
         test('should change missing @Self() that are optional to nulls', () {
@@ -913,13 +912,13 @@ void main() {
         test('should report missing @Host() deps as errors', () {
           var dirA = createDir('[dirA]', deps: ['host:provider0']);
           expect(
-              () => parse('<div dirA></div>', [dirA]),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: No provider for provider0\n'
-                  '  ,\n'
-                  '1 | <div dirA></div>\n'
-                  '  | ^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div dirA></div>', [dirA]),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'No provider for provider0',
+              ),
+            )),
+          );
         });
 
         test('should change missing @Host() that are optional to nulls', () {
@@ -930,48 +929,70 @@ void main() {
         });
 
         test('should report cyclic dependencies as errors', () {
-          var cycle =
-              createDir('[cycleDirective]', deps: ['type:[cycleDirective]']);
+          var cycle = createDir(
+            '[cycleDirective]',
+            deps: ['type:[cycleDirective]'],
+          );
           expect(
-              () => parse('<div cycleDirective></div>', [cycle]),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                  'Cannot instantiate cyclic dependency! [cycleDirective]\n'
-                  '  ,\n'
-                  '1 | <div cycleDirective></div>\n'
-                  '  | ^^^^^^^^^^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div cycleDirective></div>', [cycle]),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'Cannot instantiate cyclic dependency! [cycleDirective]',
+              ),
+            )),
+          );
         });
 
         test('should report missing @Host() deps in providers as errors', () {
           var needsHost = createDir('[needsHost]', deps: ['host:service']);
           expect(
-              () => parse('<div needsHost></div>', [needsHost]),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 1 of path://to/test-comp: '
-                  'ParseErrorLevel.FATAL: No provider for service\n'
-                  '  ,\n'
-                  '1 | <div needsHost></div>\n'
-                  '  | ^^^^^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse('<div needsHost></div>', [needsHost]),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'No provider for service',
+              ),
+            )),
+          );
         });
 
         test('should report missing @Self() deps as errors', () {
-          var needsDirectiveFromSelf = createDir('[needsDirectiveFromSelf]',
-              deps: ['self:type:[simpleDirective]']);
+          var needsDirectiveFromSelf = createDir(
+            '[needsDirectiveFromSelf]',
+            deps: ['self:type:[simpleDirective]'],
+          );
           var simpleDirective = createDir('[simpleDirective]');
           expect(
-              () => parse('''
-                  <div simpleDirective>
-                    <div needsDirectiveFromSelf></div>
-                  </div>''', [needsDirectiveFromSelf, simpleDirective]),
-              throwsWith('Template parse errors:\n'
-                  'line 2, column 21 of path://to/test-comp: '
-                  'ParseErrorLevel.FATAL: No provider for [simpleDirective]\n'
-                  '  ,\n'
-                  '2 |                     <div needsDirectiveFromSelf></div>\n'
-                  '  |                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
-                  "  '"));
+            () => parse(
+              '''
+                <div simpleDirective>
+                  <div needsDirectiveFromSelf></div>
+                </div>
+              ''',
+              [
+                needsDirectiveFromSelf,
+                simpleDirective,
+              ],
+            ),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'No provider for [simpleDirective]',
+              ),
+            )),
+          );
+        });
+
+        test('should pass missing directives check with @Attribute', () {
+          setUpParser(
+            elementSchemaRegistry: DomElementSchemaRegistry(),
+          );
+          var comp = createDir('comp', deps: ['attribute:attrX']);
+          expect(humanizeTplAst(parse('<comp attrX></comp>', [comp])), [
+            [ElementAst, 'comp'],
+            [AttrAst, 'attrX', ''],
+            [DirectiveAst, comp],
+          ]);
+
+          expect(console.warnings, []);
         });
       });
 
@@ -982,45 +1003,6 @@ void main() {
           expect(humanizeTplAst(parse('<div #a></div>', [])), [
             [ElementAst, 'div'],
             [ReferenceAst, 'a', null]
-          ]);
-        });
-
-        test(
-            'should parse references via ref-... and not report '
-            'them as attributes', () {
-          expect(humanizeTplAst(parse('<div ref-a></div>', [])), [
-            [ElementAst, 'div'],
-            [AttrAst, 'ref-a', '']
-          ]);
-
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
-                  '  ,\n'
-                  '1 | <div ref-a></div>\n'
-                  '  |      ^^^^^\n'
-                  "  '"
-            ].join('\n')
-          ]);
-        });
-
-        test(
-            'should parse references via var-... and report them as deprecated',
-            () {
-          expect(humanizeTplAst(parse('<div var-a></div>', [])), [
-            [ElementAst, 'div'],
-            [AttrAst, 'var-a', '']
-          ]);
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
-                  '  ,\n'
-                  '1 | <div var-a></div>\n'
-                  '  |      ^^^^^\n'
-                  "  '"
-            ].join('\n')
           ]);
         });
 
@@ -1056,7 +1038,7 @@ void main() {
             'directive as errors', () {
           expect(
               () => parse('<div #a="dirA"></div>', []),
-              throwsWith('Template parse errors:\n'
+              throwsWith('Template parse errors for (TestComp):\n'
                   'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: There is no directive with "exportAs" set to "dirA"\n'
                   '  ,\n'
                   '1 | #a="dirA"\n'
@@ -1066,24 +1048,24 @@ void main() {
 
         test('should report invalid reference names', () {
           expect(
-              () => parse('<div #a-b></div>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "-" is not allowed in reference names\n'
-                  '  ,\n'
-                  '1 | <div #a-b></div>\n'
-                  '  |      ^^^^\n'
-                  "  '"));
+            () => parse('<div #a-b></div>'),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                '"-" is not allowed in reference names',
+              ),
+            )),
+          );
         });
 
         test('should report variables as errors', () {
           expect(
-              () => parse('<div let-a></div>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of path://to/test-comp: \'let-\' binding can only be used in \'template\' element\n'
-                  '  ,\n'
-                  '1 | <div let-a></div>\n'
-                  '  |      ^^^^^\n'
-                  "  '"));
+            () => parse('<div let-a></div>'),
+            throwsA(predicate(
+              (e) => '$e'.contains(
+                'binding can only be used in \'template\' element',
+              ),
+            )),
+          );
         });
 
         test('should assign references with empty value to components', () {
@@ -1109,11 +1091,6 @@ void main() {
           expect(humanizeTplAst(parse('<div #a></div>', [dirA])), [
             [ElementAst, 'div'],
             [ReferenceAst, 'a', null]
-          ]);
-
-          expect(humanizeTplAst(parse('<div ref-a></div>', [dirA])), [
-            [ElementAst, 'div'],
-            [AttrAst, 'ref-a', '']
           ]);
         });
       });
@@ -1145,46 +1122,10 @@ void main() {
           ]);
         });
 
-        test('should support references via ref-...', () {
-          expect(humanizeTplAst(parse('<template ref-a></template>', [])), [
-            [EmbeddedTemplateAst],
-            [AttrAst, 'ref-a', '']
-          ]);
-
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: "ref-" for references is no longer supported. Use "#" instead!\n'
-                  '  ,\n'
-                  '1 | <template ref-a></template>\n'
-                  '  |           ^^^^^\n'
-                  "  '"
-            ].join('\n')
-          ]);
-        });
-
         test('should parse variables via let-...', () {
           expect(humanizeTplAst(parse('<template let-a="b"></template>', [])), [
             [EmbeddedTemplateAst],
             [VariableAst, 'a', 'b']
-          ]);
-        });
-
-        test('should parse variables via var-... and report them as deprecated',
-            () {
-          expect(humanizeTplAst(parse('<template var-a="b"></template>', [])), [
-            [EmbeddedTemplateAst],
-            [AttrAst, 'var-a', 'b']
-          ]);
-          expect(console.warnings, [
-            [
-              'Template parse warnings:\n'
-                  'line 1, column 11 of path://to/test-comp: ParseErrorLevel.WARNING: "var-" for references is no longer supported. Use "#" instead!\n'
-                  '  ,\n'
-                  '1 | <template var-a="b"></template>\n'
-                  '  |           ^^^^^^^^^\n'
-                  "  '"
-            ].join('\n')
           ]);
         });
 
@@ -1203,30 +1144,6 @@ void main() {
       });
 
       group('inline templates', () {
-        test('should parse variables via #... and report them as deprecated',
-            () {
-          expect(
-              () => parse('<div *ngIf="#a=b"></div>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "#" inside of expressions is no longer supported. Use "let" instead!\n'
-                  '  ,\n'
-                  '1 | <div *ngIf="#a=b"></div>\n'
-                  '  |      ^^^^^^^^^^^^\n'
-                  "  '"));
-        });
-
-        test('should parse variables via var ... and report them as deprecated',
-            () {
-          expect(
-              () => parse('<div *ngIf="var a=b"></div>', []),
-              throwsWith('Template parse errors:\n'
-                  'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: "var" inside of expressions is no longer supported. Use "let" instead!\n'
-                  '  ,\n'
-                  '1 | <div *ngIf="var a=b"></div>\n'
-                  '  |      ^^^^^^^^^^^^^^^\n'
-                  "  '"));
-        });
-
         test('should parse variables via let ...', () {
           expect(humanizeTplAst(parse('<div *ngIf="let a=b"></div>', [])), [
             [EmbeddedTemplateAst],
@@ -1448,28 +1365,347 @@ void main() {
             ],
           ]);
         });
+
+        test('should report error for argument without description', () {
+          expect(
+            () => parse('<p @i18n.skip:title></p>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'A corresponding message description (@i18n:title) is required',
+                ),
+              ),
+            ),
+          );
+        });
       });
 
-      // TODO(b/155218654): Remove once implemented properly.
-      test('TemplateParser w/ removeDebugAttributes removes debug-id', () {
-        setUpParser(
-          compilerFlags: CompilerFlags(removeDebugAttributes: true),
-        );
+      test('catch invalid annotations', () {
         expect(
-          humanizeTplAstSourceSpans(
-            parse('<span class="1" debug-id="2" debugId="3"></span>'),
+          () => parse('<div @unknown></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Invalid annotation',
+              ),
+            ),
           ),
-          [
-            [ElementAst, 'span', '<span class="1" debug-id="2" debugId="3">'],
-            // This is the important one, which shows attributes that stick.
-            [AttrAst, 'class', '1', 'class="1"'],
-          ],
         );
+      });
+
+      group('catch missing', () {
+        setUp(() {
+          setUpParser(
+            elementSchemaRegistry: DomElementSchemaRegistry(),
+          );
+        });
+
+        test('element', () {
+          expect(
+            () => parse('<unknown></unknown>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  "Can't find '<unknown>'",
+                ),
+              ),
+            ),
+          );
+        });
+
+        test('directive', () {
+          expect(
+            () => parse('<div dirA></div>', []),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  "Can't bind to 'dirA' since it isn't an input",
+                ),
+              ),
+            ),
+          );
+        });
+
+        test('@Output', () {
+          final comp = createCompileDirectiveMetadata(
+              selector: 'comp',
+              metadataType: CompileDirectiveMetadataType.Component,
+              outputs: ['e'],
+              type:
+                  CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Comp'));
+          expect(
+            () => parse('<comp (unknownE)="f"></comp>', [comp]),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  "Can't bind to (unknownE) since it isn't an output",
+                ),
+              ),
+            ),
+          );
+        });
+
+        test('@Input with attribute format', () {
+          final dirA = createCompileDirectiveMetadata(
+            selector: 'dirA',
+            inputs: ['prop'],
+            type: CompileTypeMetadata(
+              moduleUrl: someModuleUrl,
+              name: 'dirA',
+            ),
+          );
+          expect(
+            () => parse('<div invalidProp="value"></div>', [dirA]),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  "Can't bind to 'invalidProp' since it isn't an input",
+                ),
+              ),
+            ),
+          );
+        });
+
+        group('@skipSchemaValidationFor', () {
+          test('element', () {
+            expect(
+                humanizeTplAst(parse(
+                    '<unknown @skipSchemaValidationFor="unknown"></unknown>',
+                    [])),
+                [
+                  [ElementAst, 'unknown'],
+                ]);
+          });
+
+          test('attribute', () {
+            final dirA = createCompileDirectiveMetadata(
+                selector: 'dirA',
+                inputs: ['prop'],
+                type: CompileTypeMetadata(
+                    moduleUrl: someModuleUrl, name: 'dirA'));
+            expect(
+                humanizeTplAst(parse(
+                    '<div @skipSchemaValidationFor="[invalidProp]" invalidProp="value"></div>',
+                    [dirA])),
+                [
+                  [ElementAst, 'div'],
+                  [AttrAst, 'invalidProp', 'value'],
+                ]);
+          });
+
+          test('event', () {
+            final comp = createCompileDirectiveMetadata(
+                selector: 'comp',
+                metadataType: CompileDirectiveMetadataType.Component,
+                outputs: ['e'],
+                type: CompileTypeMetadata(
+                    moduleUrl: someModuleUrl, name: 'Comp'));
+            expect(
+                humanizeTplAst(parse(
+                    '<comp @skipSchemaValidationFor="[unknownE]" (unknownE)="f"></comp>',
+                    [comp])),
+                [
+                  [ElementAst, 'comp'],
+                  [BoundEventAst, 'unknownE', null, 'f'],
+                  [DirectiveAst, comp],
+                ]);
+          });
+
+          test('annotation without value', () {
+            expect(
+              () => parse('<div @skipSchemaValidationFor></div>'),
+              throwsA(
+                predicate(
+                  (e) => '$e'.contains(
+                    'Requires a CSS selector value that is used to allow custom tags',
+                  ),
+                ),
+              ),
+            );
+          });
+
+          test('annotation contains unused selector', () {
+            expect(
+              () => parse(
+                '<div foo @skipSchemaValidationFor="[foo],[bar]"></div>',
+                [],
+              ),
+              throwsA(
+                predicate(
+                  (e) => '$e'.contains(
+                    'A selector in @skipSchemaValidationFor="[foo],[bar]" does not match',
+                  ),
+                ),
+              ),
+            );
+          });
+        });
+
+        group('SkipValidaitonSelectors for ACX', () {
+          test('element', () {
+            expect(
+                humanizeTplAst(
+                    parse('<material-content></material-content>', [])),
+                [
+                  [ElementAst, 'material-content'],
+                ]);
+          });
+
+          test('attribute', () {
+            final materialIconComp = createCompileDirectiveMetadata(
+                selector: 'material-icon',
+                type: CompileTypeMetadata(
+                    moduleUrl: someModuleUrl, name: 'materialIconComp'));
+            expect(
+                humanizeTplAst(parse('<material-icon baseline></material-icon>',
+                    [materialIconComp])),
+                [
+                  [ElementAst, 'material-icon'],
+                  [AttrAst, 'baseline', ''],
+                  [DirectiveAst, materialIconComp],
+                ]);
+          });
+        });
+
+        group('skip svg check', () {
+          test('element', () {
+            parse('<svg></svg>');
+          });
+
+          test('nested element', () {
+            parse('<svg><circle /></svg>');
+          });
+
+          test('attribute', () {
+            parse('<svg xmlns="http://www.w3.org/2000/svg"></svg>');
+          });
+        });
+
+        test('should recognize <ng-content> select in element', () {
+          final comp = createCompileDirectiveMetadata(
+              selector: 'comp',
+              metadataType: CompileDirectiveMetadataType.Component,
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Comp'),
+              template: CompileTemplateMetadata(ngContentSelectors: ['foo']));
+          expect(humanizeTplAst(parse('<comp><foo></foo></comp>', [comp])), [
+            [ElementAst, 'comp'],
+            [DirectiveAst, comp],
+            [ElementAst, 'foo'],
+          ]);
+        });
+
+        test(
+            'should recognize <ng-content> select in embedded template element',
+            () {
+          final comp = createCompileDirectiveMetadata(
+              selector: 'comp',
+              metadataType: CompileDirectiveMetadataType.Component,
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Comp'),
+              template:
+                  CompileTemplateMetadata(ngContentSelectors: ['[filter]']));
+          expect(
+              humanizeTplAst(
+                  parse('<comp><template filter></template></comp>', [comp])),
+              [
+                [ElementAst, 'comp'],
+                [DirectiveAst, comp],
+                [EmbeddedTemplateAst],
+                [AttrAst, 'filter', '']
+              ]);
+        });
+
+        test('should recognize <ng-content> select in attribute', () {
+          final comp = createCompileDirectiveMetadata(
+              selector: 'comp',
+              metadataType: CompileDirectiveMetadataType.Component,
+              type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'Comp'),
+              template:
+                  CompileTemplateMetadata(ngContentSelectors: ['[header]']));
+          expect(
+              humanizeTplAst(parse('<comp><div header></div></comp>', [comp])),
+              [
+                [ElementAst, 'comp'],
+                [DirectiveAst, comp],
+                [ElementAst, 'div'],
+                [AttrAst, 'header', '']
+              ]);
+        });
+
+        test('should recognize attribute in <template>', () {
+          expect(humanizeTplAst(parse('<div *ngIf="foo"></div>', [ngIf])), [
+            [EmbeddedTemplateAst],
+            [DirectiveAst, ngIf],
+            [BoundDirectivePropertyAst, 'ngIf', 'foo'],
+            [ElementAst, 'div']
+          ]);
+        });
+
+        test('should recognize a11y attributes', () {
+          expect(
+              humanizeTplAst(parse(
+                  '<div role="button" aria-hidden="true"></div>', [ngIf])),
+              [
+                [ElementAst, 'div'],
+                [AttrAst, 'role', 'button'],
+                [AttrAst, 'aria-hidden', 'true']
+              ]);
+        });
+
+        test('should recognize native event with reductions', () {
+          expect(humanizeTplAst(parse('<div (keydown.enter)="f"></div>', [])), [
+            [ElementAst, 'div'],
+            [BoundEventAst, 'keydown.enter', null, 'f']
+          ]);
+        });
+
+        test('should recognize custom event', () {
+          // (row-selection) is a custom event in <material-table>.
+          final materialTableComp = createCompileDirectiveMetadata(
+              selector: 'material-table',
+              type: CompileTypeMetadata(
+                  moduleUrl: someModuleUrl, name: 'materialTableComp'));
+          expect(
+              humanizeTplAst(parse(
+                  '<material-table (row-selection)="f"></material-table>',
+                  [materialTableComp])),
+              [
+                [ElementAst, 'material-table'],
+                [BoundEventAst, 'row-selection', null, 'f'],
+                [DirectiveAst, materialTableComp],
+              ]);
+        });
+
+        test('should recognize PageLoader attributes', () {
+          expect(
+              humanizeTplAst(parse(
+                  '<div debug-id="a" debugid="b" debugId="c" data-test-id="d"></div>',
+                  [])),
+              [
+                [ElementAst, 'div'],
+                [AttrAst, 'debug-id', 'a'],
+                [AttrAst, 'debugid', 'b'],
+                [AttrAst, 'debugId', 'c'],
+                [AttrAst, 'data-test-id', 'd'],
+              ]);
+        });
+
+        test('should treat attribute and event in HTML case insensitive', () {
+          expect(
+              humanizeTplAst(
+                  parse('<div cLAsS="foo" iD="bar" (cLiCk)="f"></div>', [])),
+              [
+                [ElementAst, 'div'],
+                [AttrAst, 'cLAsS', 'foo'],
+                [AttrAst, 'iD', 'bar'],
+                [BoundEventAst, 'cLiCk', null, 'f'],
+              ]);
+          // Doesn't throw errors;
+        });
       });
     });
 
     group('content projection', () {
-      var compCounter;
+      int compCounter;
       setUp(() {
         compCounter = 0;
       });
@@ -1722,40 +1958,51 @@ void main() {
     group('error cases', () {
       test('should report when ng-content has content', () {
         expect(
-            () => parse('<ng-content>content</ng-content>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 1 of path://to/test-comp: \'<ng-content ...>\' must be followed immediately by close \'</ng-content>\'\n'
-                '  ,\n'
-                '1 | <ng-content>content</ng-content>\n'
-                '  | ^^^^^^^^^^^^\n'
-                "  '\n"
-                'line 1, column 20 of path://to/test-comp: Closing tag is dangling and no matching open tag can be found\n'
-                '  ,\n'
-                '1 | <ng-content>content</ng-content>\n'
-                '  |                    ^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<ng-content>content</ng-content>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                '\'<ng-content ...>\' must be followed immediately by',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report invalid property names', () {
         expect(
-            () => parse('<div [invalidProp]></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Can\'t bind to \'invalidProp\' since it isn\'t a known native property or known directive. Please fix typo or add to directives list.\n'
-                '  ,\n'
-                '1 | <div [invalidProp]></div>\n'
-                '  |      ^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div [invalidProp]></div>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Can\'t bind to \'invalidProp\' since it isn\'t a known native property',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report errors in expressions', () {
         expect(
-            () => parse('<div [prop]="a b"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Parser Error: Unexpected token \'b\' at column 3 in [a b] in path://to/test-comp\n'
-                '  ,\n'
-                '1 | <div [prop]="a b"></div>\n'
-                '  |      ^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div [prop]="a b"></div>', []),
+          anyOf(
+            // TODO(b/155395608): Remove the first case.
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Unexpected token \'b\' at column 3',
+                ),
+              ),
+            ),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains(
+                  'Variables must be declared using the keywords \'const\', \'final\', \'var\' or a type name',
+                ),
+              ),
+            ),
+          ),
+        );
       });
 
       test(
@@ -1842,193 +2089,201 @@ void main() {
       }, skip: 'Doesn\'t throw yet.');
 
       test('should prevent binding event attributes', () async {
-        final template = '<div [attr.onclick]="onClick()"></div>';
         expect(
-            () => parse(template, []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Binding to event attribute \'onclick\' is disallowed for '
-                'security reasons, please use (click)=...\n'
-                '  ,\n'
-                '1 | <div [attr.onclick]="onClick()"></div>\n'
-                '  |      ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div [attr.onclick]="onClick()"></div>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Binding to event attribute \'onclick\' is disallowed',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent binding to unsafe SVG attributes', () async {
         // This test requires that DomElementSchemaRegistry is used instead
         // of a mock implementation of ElementSchemaRegistry.
         setUpParser(elementSchemaRegistry: DomElementSchemaRegistry());
-        final template = '<svg:circle [xlink:href]="url"></svg:circle>';
         expect(
-            () => parse(template, []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 13 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                "Can't bind to 'xlink:href' since it isn't a known native "
-                'property or known directive. Please fix typo or add to '
-                'directives list.\n'
-                '  ,\n'
-                '1 | <svg:circle [xlink:href]="url"></svg:circle>\n'
-                '  |             ^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<svg:circle [xlink:href]="url"></svg:circle>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                "Can't bind to 'xlink:href' since it isn't a known native",
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent duplicate attributes', () {
         expect(
-            () => parse('<div a="b" a="c"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 12 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple attributes with the same name: a.\n'
-                '  ,\n'
-                '1 | <div a="b" a="c"></div>\n'
-                '  |            ^^^^^\n'
-                "  '"));
+          () => parse('<div a="b" a="c"></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Found multiple attributes with the same name: a.',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent duplicate properties', () {
         expect(
-            () => parse('<div [a]="b" [a]="c"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 14 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
-                '  ,\n'
-                '1 | <div [a]="b" [a]="c"></div>\n'
-                '  |              ^^^^^^^\n'
-                "  '"));
+          () => parse('<div [a]="b" [a]="c"></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Found multiple properties with the same name: a.',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent duplicate properties with banana', () {
         expect(
-            () => parse('<div [(a)]="b" [a]="c"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple properties with the same name: a.\n'
-                '  ,\n'
-                '1 | <div [(a)]="b" [a]="c"></div>\n'
-                '  |      ^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div [(a)]="b" [a]="c"></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Found multiple properties with the same name: a.',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent duplicate events', () {
         expect(
-            () => parse('<div (a)="b()" (a)="c()"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 16 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple events with the same name: a. You should merge the handlers into a single statement.\n'
-                '  ,\n'
-                '1 | <div (a)="b()" (a)="c()"></div>\n'
-                '  |                ^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div (a)="b()" (a)="c()"></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Found multiple events with the same name: a.',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent duplicate events from banana', () {
         expect(
-            () => parse('<div [(a)]="b" (aChange)="c()"></div>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Found multiple events with the same name: aChange. You should merge the handlers into a single statement.\n'
-                '  ,\n'
-                '1 | <div [(a)]="b" (aChange)="c()"></div>\n'
-                '  |      ^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div [(a)]="b" (aChange)="c()"></div>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Found multiple events with the same name: aChange',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error and suggested fix for [ngForIn]', () {
         expect(
-            () => parse('<div *ngFor="let item in items"></div>', []),
-            throwsWith('Template parse errors:\n'
-                "line 1, column 6 of path://to/test-comp: ParseErrorLevel.FATAL: Can't "
-                "bind to 'ngForIn' since it isn't an input of any bound "
-                'directive. Please check that the spelling is correct, and '
-                'that the intended directive is included in the host '
-                "component's list of directives.\n"
-                '\n'
-                'This is a common mistake when using *ngFor; did you mean to '
-                "write 'of' instead of 'in'?\n"
-                '  ,\n'
-                '1 | <div *ngFor="let item in items"></div>\n'
-                '  |      ^^^^^^^^^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<div *ngFor="let item in items"></div>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                "Can't bind to 'ngForIn' since it isn't an input",
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent @i18n without a description', () {
         expect(
-            () => parse('<p @i18n></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Requires a value describing the message to help translators\n'
-                '  ,\n'
-                '1 | <p @i18n></p>\n'
-                '  |    ^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n></p>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Requires a value describing the message to help translators',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should prevent an empty @i18n message', () {
         expect(
-            () => parse('<p @i18n="description"></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Internationalized messages must contain text\n'
-                '  ,\n'
-                '1 | <p @i18n="description"></p>\n'
-                '  | ^^^^^^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n="description"></p>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Internationalized messages must contain text',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for "@i18n.locale" without description', () {
         expect(
-            () => parse('<p @i18n.locale="en_US"></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
-                '  ,\n'
-                '1 | <p @i18n.locale="en_US"></p>\n'
-                '  |    ^^^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n.locale="en_US"></p>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'A corresponding message description (@i18n) is required',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for "@i18n.meaning" without description', () {
         expect(
-            () => parse('<p @i18n.meaning="meaning"></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
-                '  ,\n'
-                '1 | <p @i18n.meaning="meaning"></p>\n'
-                '  |    ^^^^^^^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n.meaning="meaning"></p>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'A corresponding message description (@i18n) is required',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for "@i18n.skip" without description', () {
         expect(
-            () => parse('<p @i18n.skip></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 4 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'A corresponding message description (@i18n) is required\n'
-                '  ,\n'
-                '1 | <p @i18n.skip></p>\n'
-                '  |    ^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n.skip></p>', []),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'A corresponding message description (@i18n) is required',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for empty "@i18n.locale"', () {
         expect(
-            () => parse('<p @i18n="description" @i18n.locale></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 24 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'Requires a value to specify a locale\n'
-                '  ,\n'
-                '1 | <p @i18n="description" @i18n.locale></p>\n'
-                '  |                        ^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n="description" @i18n.locale></p>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'Requires a value to specify a locale',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for empty "@i18n.meaning"', () {
         expect(
-            () => parse('<p @i18n="description" @i18n.meaning=" "></p>'),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 24 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                'While optional, when specified the meaning must be non-empty '
-                'to disambiguate from other equivalent messages\n'
-                '  ,\n'
-                '1 | <p @i18n="description" @i18n.meaning=" "></p>\n'
-                '  |                        ^^^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse('<p @i18n="description" @i18n.meaning=" "></p>'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'While optional, when specified the meaning must be non-empty',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error for invalid internationalized expression', () {
@@ -2289,20 +2544,22 @@ void main() {
           type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
         );
         // Should not throw.
-        parse('{{a | test}}', [], [testPipe]);
+        parse(r'{{$pipe.test(a)}}', [], [testPipe]);
       });
 
       test(
           'should report pipes as error that have not been defined '
           'as dependencies', () {
         expect(
-            () => parse('{{a | test}}', []),
-            throwsWith(
-                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: The pipe \'test\' could not be found.\n'
-                '  ,\n'
-                '1 | {{a | test}}\n'
-                '  | ^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse(r'{{$pipe.test(a)}}'),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                'The pipe \'test\' could not be found.',
+              ),
+            ),
+          ),
+        );
       });
 
       test('should report error if invoked with too many arguments', () {
@@ -2312,36 +2569,16 @@ void main() {
           type: CompileTypeMetadata(moduleUrl: someModuleUrl, name: 'DirA'),
         );
         expect(
-            () => parse('{{a | test:12}}', [], [testPipe]),
-            throwsWith(
-                'line 1, column 1 of path://to/test-comp: ParseErrorLevel.FATAL: The pipe '
-                "'test' was invoked with too many arguments: 0 expected, but 1 "
-                'found.\n'
-                '  ,\n'
-                '1 | {{a | test:12}}\n'
-                '  | ^^^^^^^^^^^^^^^\n'
-                "  '"));
+          () => parse(r'{{$pipe.test(a, 12)}}', [], [testPipe]),
+          throwsA(
+            predicate(
+              (e) => '$e'.contains(
+                "'test' was invoked with too many arguments",
+              ),
+            ),
+          ),
+        );
       });
-    });
-
-    group('deferred', () {
-      test('should successfully parse', () {
-        expect(
-            humanizeTplAstSourceSpans(
-                parse('<component @deferred></component>', [])),
-            [
-              [EmbeddedTemplateAst, '@deferred'],
-              [ElementAst, 'component', '<component @deferred>']
-            ]);
-      });
-
-      test('should report invalid binding', () {
-        expect(
-            () => parse('<component @deferred="true"></component>', []),
-            throwsWith('Template parse errors:\n'
-                'line 1, column 12 of path://to/test-comp: ParseErrorLevel.FATAL: '
-                '"@deferred" on elements can\'t be bound to an expression.'));
-      }, skip: 'Re-enable. Does not throw.');
     });
 
     group('namespaces', () {
@@ -2362,12 +2599,8 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   String exportAs,
   List<String> inputs,
   List<String> outputs,
-  // CompileProviderMetadata | CompileTypeMetadata |
-  // CompileIdentifierMetadata | List
-  List providers,
-  // CompileProviderMetadata | CompileTypeMetadata |
-  // CompileIdentifierMetadata | List
-  List viewProviders,
+  List<CompileProviderMetadata> providers,
+  List<CompileProviderMetadata> viewProviders,
   List<CompileQueryMetadata> queries,
   CompileTemplateMetadata template,
 }) {
@@ -2390,21 +2623,22 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   });
 
   return CompileDirectiveMetadata(
-      type: type,
-      metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
-      selector: selector,
-      exportAs: exportAs,
-      inputs: inputsMap,
-      inputTypes: inputTypeMap,
-      outputs: outputsMap,
-      hostListeners: {},
-      hostBindings: {},
-      lifecycleHooks: [],
-      providers: providers,
-      viewProviders: viewProviders,
-      queries: queries,
-      template: template ?? CompileTemplateMetadata(),
-      analyzedClass: AnalyzedClass(null));
+    type: type,
+    metadataType: metadataType ?? CompileDirectiveMetadataType.Directive,
+    selector: selector,
+    exportAs: exportAs,
+    inputs: inputsMap,
+    inputTypes: inputTypeMap,
+    outputs: outputsMap,
+    hostListeners: {},
+    hostBindings: {},
+    lifecycleHooks: [],
+    providers: providers,
+    viewProviders: viewProviders,
+    queries: queries,
+    template: template ?? CompileTemplateMetadata(),
+    analyzedClass: AnalyzedClass(null),
+  );
 }
 
 List<String> splitAtColon(String input, List<String> defaultValues) {

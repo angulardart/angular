@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 import 'dart:html'
     show AnchorElement, Element, Event, KeyboardEvent, KeyCode, MouseEvent;
@@ -30,15 +26,19 @@ import '../url.dart';
 class RouterLink implements OnDestroy {
   final Router _router;
   final Location _location;
-  final String _target;
+  final String? _target;
 
-  StreamSubscription<KeyboardEvent> _keyPressSubscription;
-  String _routerLink;
-  String _cachedVisibleHref;
-  Url _cachedUrl;
+  StreamSubscription<KeyboardEvent>? _keyPressSubscription;
+  late String _routerLink;
+  String? _cachedVisibleHref;
+  Url? _cachedUrl;
 
-  RouterLink(this._router, this._location, @Attribute('target') this._target,
-      Element element) {
+  RouterLink(
+    this._router,
+    this._location,
+    @Attribute('target') this._target,
+    Element element,
+  ) {
     // The browser will synthesize a click event for anchor elements when they
     // receive an Enter key press. For other elements, we must manually add a
     // key press listener to ensure the link remains keyboard accessible.
@@ -63,7 +63,7 @@ class RouterLink implements OnDestroy {
         queryParameters: parsedUrl.queryParameters,
       );
     }
-    return _cachedUrl;
+    return _cachedUrl!;
   }
 
   /// Indicates the URL when the hovering on the link.

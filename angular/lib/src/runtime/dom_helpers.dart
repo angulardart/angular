@@ -9,8 +9,7 @@ import 'dart:html' hide document;
 import 'package:js/js.dart';
 import 'package:js/js_util.dart' as js;
 import 'package:meta/dart2js.dart' as dart2js;
-
-import 'optimizations.dart';
+import 'package:angular/src/utilities.dart';
 
 /// https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode
 Text _createTextNode(String text) => Text(text);
@@ -74,7 +73,7 @@ void updateClassBindingNonHtml(Element element, String className, bool isAdd) {
 void updateAttribute(
   Element element,
   String attribute,
-  String value,
+  String? value,
 ) {
   if (value == null) {
     element.removeAttribute(attribute);
@@ -90,7 +89,7 @@ void updateAttributeNS(
   Element element,
   String namespace,
   String attribute,
-  String value,
+  String? value,
 ) {
   if (value == null) {
     element.removeAttributeNS(namespace, attribute);
@@ -125,7 +124,7 @@ void setAttribute(
 void setProperty(
   Element element,
   String property,
-  Object value,
+  Object? value,
 ) {
   js.setProperty(element, property, value);
 }
@@ -219,7 +218,15 @@ SpanElement appendSpan(Document doc, Node parent) {
 ///
 /// This is an optimization to reduce code size for a common operation.
 @dart2js.noInline
-Element appendElement(Document doc, Node parent, String tagName) {
+T appendElement<T extends Element>(
+  Document doc,
+  Node parent,
+  String tagName,
+) {
+  // <T extends Element> allows the pattern:
+  // HtmlElement e = appendElement(doc, parent, 'foo')
+  //
+  // ... without gratituous use of unsafeCast or casts in general.
   return unsafeCast(parent.append(doc.createElement(tagName)));
 }
 

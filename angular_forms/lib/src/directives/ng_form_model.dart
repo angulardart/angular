@@ -89,39 +89,39 @@ import 'validators.dart' show ValidatorFn;
 )
 class NgFormModel extends AbstractForm<AbstractControlGroup>
     implements AfterChanges {
-  final ValidatorFn _validator;
+  final ValidatorFn? _validator;
 
   bool _formChanged = false;
-  AbstractControlGroup _form;
+  AbstractControlGroup? _form;
 
   @override
-  AbstractControlGroup get form => _form;
+  AbstractControlGroup? get form => _form;
 
   @Input('ngFormModel')
-  set form(AbstractControlGroup value) {
-    _form = value;
+  set form(AbstractControlGroup? value) {
+    _form = value!;
     _formChanged = true;
   }
 
   List<NgControl> directives = [];
 
-  NgFormModel(@Optional() @Self() @Inject(NG_VALIDATORS) List validators)
-      : _validator = composeValidators(validators);
+  NgFormModel(
+    @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic>? validators,
+  ) : _validator = composeValidators(validators);
 
   @override
   void ngAfterChanges() {
-    _checkFormPresent();
     if (_formChanged) {
       _formChanged = false;
-      _form.validator = Validators.compose([_form.validator, _validator]);
-      _form.updateValueAndValidity(onlySelf: true, emitEvent: false);
+      _form!.validator = Validators.compose([_form!.validator, _validator]);
+      _form!.updateValueAndValidity(onlySelf: true, emitEvent: false);
     }
     _updateDomValue();
   }
 
   @override
   void addControl(NgControl dir) {
-    var ctrl = getControl(dir);
+    var ctrl = getControl(dir)!;
     setUpControl(ctrl, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
     directives.add(dir);
@@ -134,8 +134,8 @@ class NgFormModel extends AbstractForm<AbstractControlGroup>
 
   @override
   void addControlGroup(NgControlGroup dir) {
-    var ctrl = form.findPath(dir.path);
-    setUpControlGroup(ctrl, dir);
+    var ctrl = form!.findPath(dir.path);
+    setUpControlGroup(ctrl as AbstractControlGroup, dir);
     ctrl.updateValueAndValidity(emitEvent: false);
   }
 
@@ -144,16 +144,8 @@ class NgFormModel extends AbstractForm<AbstractControlGroup>
 
   void _updateDomValue() {
     for (var dir in directives) {
-      var ctrl = form.findPath(dir.path);
-      dir.valueAccessor.writeValue(ctrl.value);
-    }
-  }
-
-  void _checkFormPresent() {
-    if (form == null) {
-      throw StateError(
-          'ngFormModel expects a form. Please pass one in. Example: '
-          '<form [ngFormModel]="myCoolForm">');
+      var ctrl = form!.findPath(dir.path);
+      dir.valueAccessor!.writeValue(ctrl!.value);
     }
   }
 }

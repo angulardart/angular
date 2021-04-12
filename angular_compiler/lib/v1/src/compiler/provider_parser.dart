@@ -1,5 +1,6 @@
 import 'package:source_span/source_span.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'compile_metadata.dart'
     show
@@ -12,7 +13,6 @@ import 'compile_metadata.dart'
         CompileTokenMetadata,
         CompileTypeMetadata;
 import 'identifiers.dart' show Identifiers, identifierToken;
-import 'parse_util.dart' show ParseError;
 import 'template_ast.dart'
     show
         ReferenceAst,
@@ -22,10 +22,6 @@ import 'template_ast.dart'
         ProviderAst,
         ProviderAstType,
         ElementProviderUsage;
-
-class ProviderError extends ParseError {
-  ProviderError(String message, SourceSpan span) : super(span, message);
-}
 
 /// Per component level context used to parse template using
 /// TemplateParseVisitor.
@@ -39,13 +35,14 @@ class ProviderViewContext {
 
   /// List of tokens provided by component.
   CompileTokenMap<bool> viewProviders;
-  List<ProviderError> errors = [];
 
   ProviderViewContext(this.component, this.sourceSpan) {
     viewQueries = _getViewQueries(component);
     viewProviders = CompileTokenMap<bool>();
-    var normalizedViewProviders =
-        _normalizeProviders(component.viewProviders, sourceSpan, errors);
+    var normalizedViewProviders = _normalizeProviders(
+      component.viewProviders,
+      sourceSpan,
+    );
     // Deduplicate providers by token.
     for (var provider in normalizedViewProviders) {
       if (viewProviders.get(provider.token) == null) {
@@ -69,6 +66,9 @@ class ProviderElementContext implements ElementProviderUsage {
   final _attrs = <String, AttributeValue<Object>>{};
   bool _requiresViewContainer = false;
 
+  /// A container for all @Attribute dependencies.
+  final attributeDeps = <String>{};
+
   ProviderElementContext(
       this._rootProviderContext,
       this._parent,
@@ -85,7 +85,6 @@ class ProviderElementContext implements ElementProviderUsage {
     // including components themselves.
     final resolver = _ProviderResolver(directivesMeta, _sourceSpan);
     _allProviders = resolver.resolve();
-    _rootProviderContext.errors.addAll(resolver.errors);
 
     // Get content queries since we need to eagerly create providers to serve
     // values for component @ContentChild/@ContentChildren at ngOnInit time.
@@ -207,8 +206,10 @@ class ProviderElementContext implements ElementProviderUsage {
       return transformedProviderAst;
     }
     if (_seenProviders.get(token) != null) {
-      _rootProviderContext.errors.add(ProviderError(
-          'Cannot instantiate cyclic dependency! ${token.name}', _sourceSpan));
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        _sourceSpan,
+        'Cannot instantiate cyclic dependency! ${token.name}',
+      ));
       return null;
     }
     _seenProviders.add(token, true);
@@ -261,6 +262,7 @@ class ProviderElementContext implements ElementProviderUsage {
       ProviderAstType requestingProviderType, CompileDiDependencyMetadata dep,
       [bool eager]) {
     if (dep.isAttribute) {
+      _registerAttributeValueForMissingDirectivesCheck(dep);
       // Could be a literal attribute (String), internationalized attribute
       // (I18nMessage), or null if there was no matching attribute.
       final attributeValue = _attrs[dep.token.value]?.value;
@@ -269,12 +271,12 @@ class ProviderElementContext implements ElementProviderUsage {
     if (dep.token != null) {
       // access built-ins
       if (requestingProviderType == ProviderAstType.Directive ||
-          requestingProviderType == ProviderAstType.Component ||
-          requestingProviderType == ProviderAstType.FunctionalDirective) {
+          requestingProviderType == ProviderAstType.Component) {
         if (dep.token.equalsTo(Identifiers.ElementRefToken) ||
             dep.token.equalsTo(Identifiers.HtmlElementToken) ||
             dep.token.equalsTo(Identifiers.ElementToken) ||
             dep.token.equalsTo(Identifiers.ChangeDetectorRefToken) ||
+            dep.token.equalsTo(Identifiers.NgContentRefToken) ||
             dep.token.equalsTo(Identifiers.TemplateRefToken)) {
           return dep;
         }
@@ -298,6 +300,12 @@ class ProviderElementContext implements ElementProviderUsage {
       }
     }
     return null;
+  }
+
+  void _registerAttributeValueForMissingDirectivesCheck(
+      CompileDiDependencyMetadata dep) {
+    final attributeName = dep.token.value as String;
+    attributeDeps.add(attributeName);
   }
 
   CompileDiDependencyMetadata _getDependency(
@@ -341,8 +349,10 @@ class ProviderElementContext implements ElementProviderUsage {
       }
     }
     if (result == null) {
-      _rootProviderContext.errors
-          .add(ProviderError('No provider for ${dep.token.name}', _sourceSpan));
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        _sourceSpan,
+        'No provider for ${dep.token.name}',
+      ));
     }
     return result;
   }
@@ -384,28 +394,30 @@ ProviderAst _transformProviderAst(ProviderAst provider,
 // Flattens list of lists of providers and converts entries that contain Type to
 // CompileProviderMetadata with useClass.
 List<CompileProviderMetadata> _normalizeProviders(
-    List<dynamic /* CompileProviderMetadata | CompileTypeMetadata | List < dynamic > */ >
-        providers,
-    SourceSpan sourceSpan,
-    List<ParseError> targetErrors,
-    [List<CompileProviderMetadata> targetProviders]) {
+  /* CompileProviderMetadata | CompileTypeMetadata | List <Object> */
+  List<Object> providers,
+  SourceSpan sourceSpan, [
+  List<CompileProviderMetadata> targetProviders,
+]) {
   targetProviders ??= <CompileProviderMetadata>[];
   if (providers != null) {
     for (var provider in providers) {
       if (provider is List<Object>) {
-        _normalizeProviders(
-            provider, sourceSpan, targetErrors, targetProviders);
+        _normalizeProviders(provider, sourceSpan, targetProviders);
       } else {
         CompileProviderMetadata normalizeProvider;
         if (provider is CompileProviderMetadata) {
           normalizeProvider = provider;
         } else if (provider is CompileTypeMetadata) {
           normalizeProvider = CompileProviderMetadata(
-              token: CompileTokenMetadata(identifier: provider),
-              useClass: provider);
+            token: CompileTokenMetadata(identifier: provider),
+            useClass: provider,
+          );
         } else {
-          targetErrors.add(
-              ProviderError('Unknown provider type $provider', sourceSpan));
+          CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+            sourceSpan,
+            'Unknown provider type $provider',
+          ));
         }
         if (normalizeProvider != null) {
           targetProviders.add(normalizeProvider);
@@ -424,7 +436,6 @@ List<CompileProviderMetadata> _normalizeProviders(
 class _ProviderResolver {
   final List<CompileDirectiveMetadata> directives;
   final SourceSpan sourceSpan;
-  List<ProviderError> errors = [];
   CompileTokenMap<ProviderAst> _providersByToken;
 
   _ProviderResolver(this.directives, this.sourceSpan);
@@ -451,13 +462,15 @@ class _ProviderResolver {
     }
     for (var directive in orderedList) {
       _resolveProviders(
-          _normalizeProviders(directive.providers, sourceSpan, errors),
-          ProviderAstType.PublicService,
-          eager: false);
+        _normalizeProviders(directive.providers, sourceSpan),
+        ProviderAstType.PublicService,
+        eager: false,
+      );
       _resolveProviders(
-          _normalizeProviders(directive.viewProviders, sourceSpan, errors),
-          ProviderAstType.PrivateService,
-          eager: false);
+        _normalizeProviders(directive.viewProviders, sourceSpan),
+        ProviderAstType.PrivateService,
+        eager: false,
+      );
     }
     return _providersByToken;
   }
@@ -472,11 +485,12 @@ class _ProviderResolver {
     for (var provider in providers) {
       var resolvedProvider = _providersByToken.get(provider.token);
       if (resolvedProvider != null &&
-          !identical(resolvedProvider.multiProvider, provider.multi)) {
-        errors.add(ProviderError(
-            'Mixing multi and non multi provider is not possible for token '
-            '${resolvedProvider.token.name}',
-            sourceSpan));
+          resolvedProvider.multiProvider != provider.multi) {
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          'Mixing multi and non multi provider is not possible for token '
+          '${resolvedProvider.token.name}',
+        ));
       }
       if (resolvedProvider == null) {
         resolvedProvider = ProviderAst(
@@ -543,10 +557,9 @@ ProviderAstType _providerAstTypeFromMetadataType(
       return ProviderAstType.Component;
     case CompileDirectiveMetadataType.Directive:
       return ProviderAstType.Directive;
-    case CompileDirectiveMetadataType.FunctionalDirective:
-      return ProviderAstType.FunctionalDirective;
+    default:
+      throw ArgumentError("Can't create '$ProviderAstType' from '$type'");
   }
-  throw ArgumentError("Can't create '$ProviderAstType' from '$type'");
 }
 
 final CompileTokenMetadata ngIfTokenMetadata =

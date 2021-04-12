@@ -10,11 +10,11 @@ import 'item_component.dart';
 ///
 /// The number of replies to a comment, including the comment itself, are stored
 /// in 'comments_count' for each comment.
-int countComments(Map comment) {
-  final List replies = comment['comments'];
+int countComments(Map<String, Object?> comment) {
+  final replies = comment['comments'] as List<Object?>;
   var numComments = 1;
-  for (final Map reply in replies) {
-    numComments += countComments(reply);
+  for (final reply in replies) {
+    numComments += countComments(reply as Map<String, Object?>);
   }
   return comment['comments_count'] = numComments;
 }
@@ -33,19 +33,22 @@ int countComments(Map comment) {
 class ItemDetailComponent implements OnActivate {
   final HackerNewsService _hackerNewsService;
 
-  Map item;
+  Map<String, Object?>? item;
 
   ItemDetailComponent(this._hackerNewsService);
 
   @override
   void onActivate(_, RouterState current) {
-    final id = current.parameters['id'];
+    final id = current.parameters['id']!;
     _hackerNewsService.getItem(id).then((result) {
       item = result;
-      final List comments = item['comments'];
-      for (final Map comment in comments) {
-        countComments(comment);
+      final comments = result['comments'] as List<Object?>;
+      for (final comment in comments) {
+        countComments(comment as Map<String, Object?>);
       }
     });
   }
+
+  // TODO(b/171232371): Use `as` in the template instead?
+  Iterable<Object?> readCommentsAsIterable() => item!['comments'] as Iterable;
 }

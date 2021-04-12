@@ -1,6 +1,6 @@
-import 'package:angular/src/runtime.dart';
 import 'package:intl/intl.dart';
-import 'package:angular/core.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'invalid_pipe_argument_exception.dart';
 
@@ -68,7 +68,7 @@ import 'invalid_pipe_argument_exception.dart';
 ///     {{ $pipe.date(dateObj, 'shortTime') }} // output is '9:43 PM'
 ///     {{ $pipe.date(dateObj, 'mmss') }}      // output is '43:11'
 @Pipe('date', pure: true)
-class DatePipe implements PipeTransform {
+class DatePipe {
   static final Map<String, String> _ALIASES = {
     'medium': 'yMMMdjms',
     'short': 'yMdjm',
@@ -79,7 +79,7 @@ class DatePipe implements PipeTransform {
     'mediumTime': 'jms',
     'shortTime': 'jm'
   };
-  String transform(dynamic value, [String pattern = 'mediumDate']) {
+  String? transform(dynamic value, [String pattern = 'mediumDate']) {
     if (value == null) return null;
     if (!supports(value)) {
       throw InvalidPipeArgumentException(DatePipe, value);
@@ -88,7 +88,7 @@ class DatePipe implements PipeTransform {
       value = DateTime.fromMillisecondsSinceEpoch(unsafeCast(value));
     }
     if (DatePipe._ALIASES.containsKey(pattern)) {
-      pattern = DatePipe._ALIASES[pattern];
+      pattern = DatePipe._ALIASES[pattern]!;
     }
     return _formatDate(unsafeCast(value), Intl.defaultLocale, pattern);
   }
@@ -101,8 +101,8 @@ class DatePipe implements PipeTransform {
 }
 
 final RegExp _multiPartRegExp = RegExp(r'^([yMdE]+)([Hjms]+)$');
-String _normalizeLocale(String locale) => locale?.replaceAll('-', '_');
-String _formatDate(DateTime date, String locale, String pattern) {
+String? _normalizeLocale(String? locale) => locale?.replaceAll('-', '_');
+String _formatDate(DateTime date, String? locale, String pattern) {
   locale = _normalizeLocale(locale);
   var formatter = DateFormat(null, locale);
   var matches = _multiPartRegExp.firstMatch(pattern);

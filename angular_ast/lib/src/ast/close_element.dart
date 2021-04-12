@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -29,7 +25,7 @@ abstract class CloseElementAst implements TemplateAst {
     NgToken closeTagStart,
     NgToken nameToken,
     NgToken closeTagEnd, {
-    ElementAst openComplement,
+    ElementAst? openComplement,
   }) = ParsedCloseElementAst;
 
   @override
@@ -44,7 +40,7 @@ abstract class CloseElementAst implements TemplateAst {
   int get hashCode => name.hashCode;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) =>
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) =>
       visitor.visitCloseElement(this, context);
 
   /// Whether this is a `</template>` tag and should be directly rendered.
@@ -71,7 +67,7 @@ class ParsedCloseElementAst extends TemplateAst with CloseElementAst {
     NgToken closeElementStart,
     this.identifierToken,
     NgToken closeElementEnd, {
-    ElementAst openComplement,
+    ElementAst? openComplement,
   }) : super.parsed(closeElementStart, closeElementEnd, sourceFile);
 
   @override

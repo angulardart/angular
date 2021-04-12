@@ -1,0 +1,394 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'inputs.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'inputs.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'inputs.dart' as import1;
+import 'package:intl/intl.dart' as import2;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import3;
+import 'package:angular/src/core/linker/views/view.dart' as import4;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import6;
+import 'dart:html' as import7;
+import 'package:angular/src/runtime/dom_helpers.dart' as import8;
+import 'package:angular/src/devtools.dart' as import9;
+import 'package:angular/src/runtime/check_binding.dart' as import10;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import12;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  static final String _message_0 = import2.Intl.message('Message', desc: 'Description');
+  late final ViewHasInputComponent0 _compView_0;
+  late final import1.HasInputComponent _HasInputComponent_0_5;
+  late final ViewHasInputComponent0 _compView_1;
+  late final import1.HasInputComponent _HasInputComponent_1_5;
+  late final ViewHasInputComponent0 _compView_2;
+  late final import1.HasInputComponent _HasInputComponent_2_5;
+  late final ViewHasInputComponent0 _compView_3;
+  late final import1.HasInputComponent _HasInputComponent_3_5;
+  late final ViewHasInputComponent0 _compView_4;
+  late final import1.HasInputComponent _HasInputComponent_4_5;
+  late final ViewHasInputsComponent0 _compView_5;
+  late final import1.HasInputsComponent _HasInputsComponent_5_5;
+  late final ViewHasRenamedInputComponent0 _compView_6;
+  late final import1.HasRenamedInputComponent _HasRenamedInputComponent_6_5;
+  Object? _expr_1;
+  Object? _expr_5;
+  Object? _expr_7;
+  static import3.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.unsafeCast(import7.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewHasInputComponent0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._HasInputComponent_0_5 = import1.HasInputComponent();
+    this._compView_0.create(this._HasInputComponent_0_5);
+    this._compView_1 = ViewHasInputComponent0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._HasInputComponent_1_5 = import1.HasInputComponent();
+    this._compView_1.create(this._HasInputComponent_1_5);
+    this._compView_2 = ViewHasInputComponent0(this, 2);
+    final _el_2 = this._compView_2.rootElement;
+    parentRenderNode.append(_el_2);
+    this._HasInputComponent_2_5 = import1.HasInputComponent();
+    this._compView_2.create(this._HasInputComponent_2_5);
+    this._compView_3 = ViewHasInputComponent0(this, 3);
+    final _el_3 = this._compView_3.rootElement;
+    parentRenderNode.append(_el_3);
+    import8.setAttribute(_el_3, 'name', 'attributeValue');
+    this._HasInputComponent_3_5 = import1.HasInputComponent();
+    this._compView_3.create(this._HasInputComponent_3_5);
+    this._compView_4 = ViewHasInputComponent0(this, 4);
+    final _el_4 = this._compView_4.rootElement;
+    parentRenderNode.append(_el_4);
+    this._HasInputComponent_4_5 = import1.HasInputComponent();
+    this._compView_4.create(this._HasInputComponent_4_5);
+    this._compView_5 = ViewHasInputsComponent0(this, 5);
+    final _el_5 = this._compView_5.rootElement;
+    parentRenderNode.append(_el_5);
+    this._HasInputsComponent_5_5 = import1.HasInputsComponent();
+    this._compView_5.create(this._HasInputsComponent_5_5);
+    this._compView_6 = ViewHasRenamedInputComponent0(this, 6);
+    final _el_6 = this._compView_6.rootElement;
+    parentRenderNode.append(_el_6);
+    this._HasRenamedInputComponent_6_5 = import1.HasRenamedInputComponent();
+    this._compView_6.create(this._HasRenamedInputComponent_6_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    bool firstCheck = this.firstCheck;
+    if (firstCheck) {
+      if ((_ctx.immutableValue != null)) {
+        if (import9.isDevToolsEnabled) {
+          import9.ComponentInspector.instance.recordInput(this._HasInputComponent_0_5, 'name', _ctx.immutableValue);
+        }
+        this._HasInputComponent_0_5.name = _ctx.immutableValue;
+      }
+    }
+    final currVal_1 = _ctx.mutableValue;
+    if (import10.checkBinding(this._expr_1, currVal_1, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_1_5, 'name', currVal_1);
+      }
+      this._HasInputComponent_1_5.name = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    if (firstCheck) {
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_2_5, 'name', 'literalValue');
+      }
+      this._HasInputComponent_2_5.name = 'literalValue';
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_3_5, 'name', 'attributeValue');
+      }
+      this._HasInputComponent_3_5.name = 'attributeValue';
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_4_5, 'name', _message_0);
+      }
+      this._HasInputComponent_4_5.name = _message_0;
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputsComponent_5_5, 'number', 12);
+      }
+      this._HasInputsComponent_5_5.number = 12;
+    }
+    final currVal_5 = _ctx.mutableValue;
+    if (import10.checkBinding(this._expr_5, currVal_5, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasInputsComponent_5_5, 'name', currVal_5);
+      }
+      this._HasInputsComponent_5_5.name = currVal_5;
+      this._expr_5 = currVal_5;
+    }
+    final currVal_7 = _ctx.mutableValue;
+    if (import10.checkBinding(this._expr_7, currVal_7, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
+      if (import9.isDevToolsEnabled) {
+        import9.ComponentInspector.instance.recordInput(this._HasRenamedInputComponent_6_5, 'templateName', currVal_7);
+      }
+      this._HasRenamedInputComponent_6_5.propertyName = currVal_7;
+      this._expr_7 = currVal_7;
+    }
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+    this._compView_2.detectChanges();
+    this._compView_3.detectChanges();
+    this._compView_4.detectChanges();
+    this._compView_5.detectChanges();
+    this._compView_6.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._compView_2.destroyInternalState();
+    this._compView_3.destroyInternalState();
+    this._compView_4.destroyInternalState();
+    this._compView_5.destroyInternalState();
+    this._compView_6.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import12.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$HasInputComponent = const [];
+
+class ViewHasInputComponent0 extends import0.ComponentView<import1.HasInputComponent> {
+  static import3.ComponentStyles? _componentStyles;
+  ViewHasInputComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.unsafeCast(import7.document.createElement('has-input'));
+  }
+  static String? get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$HasInputComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasInputComponentNgFactory = ComponentFactory<import1.HasInputComponent>('has-input', viewFactory_HasInputComponentHost0);
+ComponentFactory<import1.HasInputComponent> get HasInputComponentNgFactory {
+  return _HasInputComponentNgFactory;
+}
+
+ComponentFactory<import1.HasInputComponent> createHasInputComponentFactory() {
+  return ComponentFactory('has-input', viewFactory_HasInputComponentHost0);
+}
+
+final List<Object> styles$HasInputComponentHost = const [];
+
+class _ViewHasInputComponentHost0 extends import12.HostView<import1.HasInputComponent> {
+  @override
+  void build() {
+    this.componentView = ViewHasInputComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasInputComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.HostView<import1.HasInputComponent> viewFactory_HasInputComponentHost0() {
+  return _ViewHasInputComponentHost0();
+}
+
+final List<Object> styles$HasInputsComponent = const [];
+
+class ViewHasInputsComponent0 extends import0.ComponentView<import1.HasInputsComponent> {
+  static import3.ComponentStyles? _componentStyles;
+  ViewHasInputsComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.unsafeCast(import7.document.createElement('has-inputs'));
+  }
+  static String? get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$HasInputsComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasInputsComponentNgFactory = ComponentFactory<import1.HasInputsComponent>('has-inputs', viewFactory_HasInputsComponentHost0);
+ComponentFactory<import1.HasInputsComponent> get HasInputsComponentNgFactory {
+  return _HasInputsComponentNgFactory;
+}
+
+ComponentFactory<import1.HasInputsComponent> createHasInputsComponentFactory() {
+  return ComponentFactory('has-inputs', viewFactory_HasInputsComponentHost0);
+}
+
+final List<Object> styles$HasInputsComponentHost = const [];
+
+class _ViewHasInputsComponentHost0 extends import12.HostView<import1.HasInputsComponent> {
+  @override
+  void build() {
+    this.componentView = ViewHasInputsComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasInputsComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.HostView<import1.HasInputsComponent> viewFactory_HasInputsComponentHost0() {
+  return _ViewHasInputsComponentHost0();
+}
+
+final List<Object> styles$HasRenamedInputComponent = const [];
+
+class ViewHasRenamedInputComponent0 extends import0.ComponentView<import1.HasRenamedInputComponent> {
+  static import3.ComponentStyles? _componentStyles;
+  ViewHasRenamedInputComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import6.unsafeCast(import7.document.createElement('has-renamed-input'));
+  }
+  static String? get _debugComponentUrl {
+    return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import3.ComponentStyles.unscoped(styles$HasRenamedInputComponent, _debugComponentUrl));
+      if (import6.isDevMode) {
+        import3.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasRenamedInputComponentNgFactory = ComponentFactory<import1.HasRenamedInputComponent>('has-renamed-input', viewFactory_HasRenamedInputComponentHost0);
+ComponentFactory<import1.HasRenamedInputComponent> get HasRenamedInputComponentNgFactory {
+  return _HasRenamedInputComponentNgFactory;
+}
+
+ComponentFactory<import1.HasRenamedInputComponent> createHasRenamedInputComponentFactory() {
+  return ComponentFactory('has-renamed-input', viewFactory_HasRenamedInputComponentHost0);
+}
+
+final List<Object> styles$HasRenamedInputComponentHost = const [];
+
+class _ViewHasRenamedInputComponentHost0 extends import12.HostView<import1.HasRenamedInputComponent> {
+  @override
+  void build() {
+    this.componentView = ViewHasRenamedInputComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasRenamedInputComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import12.HostView<import1.HasRenamedInputComponent> viewFactory_HasRenamedInputComponentHost0() {
+  return _ViewHasRenamedInputComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(HasInputComponent, createHasInputComponentFactory());
+  _ngRef.registerComponent(HasInputsComponent, createHasInputsComponentFactory());
+  _ngRef.registerComponent(HasRenamedInputComponent, createHasRenamedInputComponentFactory());
+  _ref0.initReflector();
+}

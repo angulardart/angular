@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:collection/collection.dart';
 import 'package:source_span/source_span.dart';
 
@@ -19,7 +15,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
   /// Create a synthetic element AST.
   factory ElementAst(
     String name,
-    CloseElementAst closeComplement, {
+    CloseElementAst? closeComplement, {
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -34,7 +30,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
   factory ElementAst.from(
     TemplateAst origin,
     String name,
-    CloseElementAst closeComplement, {
+    CloseElementAst? closeComplement, {
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -51,7 +47,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
     NgToken openElementStart,
     NgToken nameToken,
     NgToken openElementEnd, {
-    CloseElementAst closeComplement,
+    CloseElementAst? closeComplement,
     List<AttributeAst> attributes,
     List<StandaloneTemplateAst> childNodes,
     List<EventAst> events,
@@ -96,7 +92,7 @@ abstract class ElementAst implements StandaloneTemplateAst {
   }
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R? accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitElement(this, context);
   }
 
@@ -106,8 +102,8 @@ abstract class ElementAst implements StandaloneTemplateAst {
   /// CloseElement complement
   ///
   /// If [closeComplement] == null, then [isVoidElement] is true.
-  CloseElementAst get closeComplement;
-  set closeComplement(CloseElementAst closeElementAst);
+  CloseElementAst? get closeComplement;
+  set closeComplement(CloseElementAst? closeElementAst);
 
   /// Name (tag) of the element.
   String get name;
@@ -221,7 +217,7 @@ class ParsedElementAst extends TemplateAst with ElementAst {
 
   /// CloseElementAst that complements this elementAst.
   @override
-  CloseElementAst closeComplement;
+  CloseElementAst? closeComplement;
 
   @override
   bool get isVoidElement => closeComplement == null;
@@ -291,7 +287,7 @@ class _SyntheticElementAst extends SyntheticTemplateAst with ElementAst {
   final String name;
 
   @override
-  CloseElementAst closeComplement;
+  CloseElementAst? closeComplement;
 
   @override
   bool get isVoidElement => closeComplement == null;

@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/ast/ast.dart' hide Directive;
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -6,16 +6,17 @@ import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/generated/utilities_dart.dart';
+import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
-import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart'
-    as annotation_matcher;
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/cli.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v2/analyzer.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart' as dart_objects;
@@ -27,29 +28,27 @@ bool _isEmptyString(String s) => s == null || s.isEmpty;
 class CompileTypeMetadataVisitor
     extends SimpleElementVisitor<CompileTypeMetadata> {
   final LibraryReader _library;
-  final ComponentVisitorExceptionHandler _exceptionHandler;
   final IndexedAnnotation _indexedAnnotation;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   CompileTypeMetadataVisitor(
-      this._library, this._exceptionHandler, this._indexedAnnotation);
+    this._library,
+    this._indexedAnnotation,
+    this._exceptionHandler,
+  );
 
   @override
   CompileTypeMetadata visitClassElement(ClassElement element) {
     if (element.isPrivate) {
-      throwFailure('Provided classes must be public: $element');
+      throw BuildError.withoutContext(
+        'Provided classes must be public: $element',
+      );
     }
     return _getCompileTypeMetadata(
       element,
       enforceClassCanBeCreated: true,
     );
   }
-
-  @override
-  CompileTypeMetadata visitFunctionElement(FunctionElement element) =>
-      element.metadata.any((annotation) =>
-              annotation_matcher.matchAnnotation(Directive, annotation))
-          ? _getFunctionCompileTypeMetadata(element)
-          : null;
 
   /// Finds the unnamed constructor if it is present.
   ///
@@ -58,7 +57,7 @@ class CompileTypeMetadataVisitor
     ConstructorElement constructor;
     final constructors = element.constructors.cast<ConstructorElement>();
     if (constructors.isEmpty) {
-      BuildError.throwForElement(element, 'No constructors found');
+      throw BuildError.forElement(element, 'No constructors found');
     }
 
     constructor = constructors.firstWhere(
@@ -66,7 +65,7 @@ class CompileTypeMetadataVisitor
         orElse: () => constructors.first);
 
     if (constructor.isPrivate) {
-      BuildError.throwForElement(element, 'No constructors found');
+      throw BuildError.forElement(element, 'No constructors found');
     }
 
     if (element.isAbstract && !constructor.isFactory) {
@@ -87,55 +86,101 @@ class CompileTypeMetadataVisitor
   CompileProviderMetadata createProviderMetadata(DartObject provider) {
     // If `provider` is a type literal, then treat it as a `useClass` provider
     // with the class literal itself as the token.
-    if (provider.toTypeValue() != null) {
-      var element = provider.toTypeValue().element;
-      if (element is! ClassElement) {
-        _exceptionHandler.handleWarning(ErrorMessageForAnnotation(
-            _indexedAnnotation,
-            'Expected to find class in provider list, but instead '
-            'found $provider'));
+    var type = provider.toTypeValue();
+    if (type != null) {
+      if (type is! InterfaceType) {
+        logWarning(BuildError.forAnnotation(
+          _indexedAnnotation.annotation,
+          'Expected to find class in provider list, but instead '
+          'found $provider',
+        ).toString());
         return null;
       }
-      var metadata = visitClassElement(element as ClassElement);
+      var metadata = visitClassElement((type as InterfaceType).element);
       if (metadata == null) {
         // Was skipped.
         return null;
       }
+      final tokenMetadata = CompileTokenMetadata(identifier: metadata);
+      _preventProvidingGlobalSingletonService(tokenMetadata);
       return CompileProviderMetadata(
-        token: CompileTokenMetadata(identifier: metadata),
+        token: tokenMetadata,
         useClass: metadata,
       );
     }
 
     final token = dart_objects.getField(provider, 'token');
     if (token == null) {
-      _exceptionHandler.handle(ErrorMessageForAnnotation(
-          _indexedAnnotation, 'A provider\'s token field failed to compile.'));
+      CompileContext.current.reportAndRecover(BuildError.forAnnotation(
+        _indexedAnnotation.annotation,
+        'A provider\'s token field failed to compile.',
+      ));
       return null;
     }
     final providerType = inferProviderType(provider, token);
-    final providerTypeElement = providerType?.element;
-    final providerTypeArgument = providerTypeElement is ClassElement
-        ? _getCompileTypeMetadata(providerTypeElement,
-            typeArguments: providerType is ParameterizedType
-                ? providerType.typeArguments
-                : const [])
+    final providerTypeArgument = providerType is InterfaceType
+        ? _getCompileTypeMetadata(providerType.element,
+            typeArguments: providerType.typeArguments)
         : null;
 
+    final tokenMetadata = _token(token);
+    _preventProvidingGlobalSingletonService(tokenMetadata);
     return CompileProviderMetadata(
-      token: _token(token),
+      token: tokenMetadata,
       useClass: _getUseClass(provider, token),
       useExisting: _getUseExisting(provider),
       useFactory: _getUseFactory(provider),
       useValue: _getUseValue(provider),
-      multi: token != null && $MultiToken.isAssignableFromType(token.type) ||
-          dart_objects.coerceBool(
-            provider,
-            'multi',
-            defaultTo: false,
-          ),
+      multi: token != null && $MultiToken.isAssignableFromType(token.type),
       typeArgument: providerTypeArgument,
     );
+  }
+
+  // There is no common Element sub-type that has a <Element>.type field for
+  // both `ParameterElement` and `ExecutableElement`, so instead we take the
+  // element and type separately.
+  //
+  // TODO(b/170313184): Consolidate with the version for generated injectors.
+  static void _checkForOptionalAndNullable(
+    Element element,
+    DartType type, {
+    @required bool isOptional,
+  }) {
+    if (!CompileContext.current.emitNullSafeCode) {
+      // Do not run this check for libraries not opted-in to null safety.
+      return;
+    }
+    assert(isOptional != null);
+    if (type.isExplicitlyNonNullable) {
+      // Must *NOT* be @Optional()
+      if (isOptional) {
+        throw BuildError.forElement(
+          element,
+          messages.optionalDependenciesNullable,
+        );
+      }
+    } else if (type.isExplicitlyNullable) {
+      // Must *BE* @Optional()
+      if (!isOptional) {
+        throw BuildError.forElement(
+          element,
+          messages.optionalDependenciesNullable,
+        );
+      }
+    }
+  }
+
+  void _preventProvidingGlobalSingletonService(CompileTokenMetadata token) {
+    final tokenTypeLink = TypeLink(
+      token.name,
+      token.identifier?.moduleUrl ?? '',
+    );
+    if (isGlobalSingletonService(tokenTypeLink)) {
+      CompileContext.current.reportAndRecover(BuildError.forAnnotation(
+        _indexedAnnotation.annotation,
+        messages.removeGlobalSingletonService(token.name),
+      ));
+    }
   }
 
   CompileTypeMetadata _getUseClass(DartObject provider, DartObject token) {
@@ -148,10 +193,10 @@ class CompileTypeMetadataVisitor
           enforceClassCanBeCreated: true,
         );
       } else {
-        _exceptionHandler.handle(ErrorMessageForAnnotation(
-            _indexedAnnotation,
-            'Provider.useClass can only be used with a class, but found '
-            '${type.element}'));
+        CompileContext.current.reportAndRecover(BuildError.forAnnotation(
+          _indexedAnnotation.annotation,
+          'Provider.useClass can only be used with a class, but found $type',
+        ));
         return null;
       }
     } else if (_hasNoUseValue(provider) && _notAnythingElse(provider)) {
@@ -192,9 +237,12 @@ class CompileTypeMetadataVisitor
         // NOTE: Since 'useFactory' is typed as a Function, this throw
         // should not be accessible. [maybeUseFactory.type.element] will always
         // be a [FunctionTypedElement].
-        throw StateError('Provider.useFactory must be a Function, but got '
-            'type ${maybeUseFactory.type} instead with type element '
-            '${maybeUseFactory.type.element}');
+        throw BuildError.forElement(
+          maybeUseFactory.type.element,
+          'Provider.useFactory must be a Function, but got type'
+          '${maybeUseFactory.type} instead with type element '
+          '${maybeUseFactory.type.element}',
+        );
       }
     }
     return null;
@@ -231,13 +279,6 @@ class CompileTypeMetadataVisitor
     );
   }
 
-  CompileTypeMetadata _getFunctionCompileTypeMetadata(
-          FunctionElement element) =>
-      CompileTypeMetadata(
-          moduleUrl: moduleUrl(element),
-          name: element.name,
-          diDeps: _getCompileDiDependencyMetadata(element.parameters, element));
-
   bool _hasNoUseValue(DartObject provider) {
     final useValue = dart_objects.getField(provider, 'useValue');
     final isNull = dart_objects.isNull(useValue);
@@ -254,11 +295,13 @@ class CompileTypeMetadataVisitor
     try {
       return _useValueExpression(useValue);
     } on _PrivateConstructorException catch (e) {
-      throwFailure('Could not link provider "${provider.getField('token')}" to '
-          '"${e.constructorName}". You may have valid Dart code but the '
-          'angular2 compiler has limited support for `useValue` that '
-          'eventually uses a private constructor. As a workaround we '
-          'recommend `useFactory`.');
+      throw BuildError.withoutContext(
+        'Could not link provider "${provider.getField('token')}" to '
+        '"${e.constructorName}". You may have valid Dart code but the '
+        'angular2 compiler has limited support for `useValue` that '
+        'eventually uses a private constructor. As a workaround we '
+        'recommend `useFactory`.',
+      );
     }
   }
 
@@ -281,9 +324,15 @@ class CompileTypeMetadataVisitor
   ) {
     final parameterInfo = ParameterInfo(p, _exceptionHandler);
     try {
+      // TODO(b/170257539): Resolve inconsistencies with other compiler parts.
+      final isOptional = parameterInfo.isOptional || parameterInfo.isPositional;
+      final isAttribute = parameterInfo.isAttribute;
+      if (!isAttribute) {
+        _checkForOptionalAndNullable(p, p.type, isOptional: isOptional);
+      }
       return CompileDiDependencyMetadata(
         token: _getToken(parameterInfo),
-        isAttribute: parameterInfo.isAttribute, //(p, Attribute),
+        isAttribute: isAttribute,
         isSelf: parameterInfo.isSelf,
         isHost: parameterInfo.isHost,
         isSkipSelf: parameterInfo.isSkipSelf,
@@ -306,7 +355,7 @@ class CompileTypeMetadataVisitor
           ? _tokenForInject(pI)
           : pI.isOpaqueToken
               ? _tokenForOpaqueToken(pI)
-              : _tokenForType(pI.type);
+              : _tokenForType(pI.type, libraryIdentifier: pI.libraryIdentifier);
 
   CompileTokenMetadata _tokenForAttribute(ParameterInfo pI) =>
       CompileTokenMetadata(
@@ -338,7 +387,7 @@ class CompileTypeMetadataVisitor
         ),
       );
     }
-    BuildError.throwForAnnotation(annotation, 'Could not read token');
+    throw BuildError.forAnnotation(annotation, 'Could not read token');
   }
 
   CompileTokenMetadata _token(
@@ -417,13 +466,40 @@ class CompileTypeMetadataVisitor
     );
   }
 
-  CompileTokenMetadata _tokenForType(DartType type, {bool isInstance = false}) {
+  CompileTokenMetadata _tokenForType(DartType type,
+      {String libraryIdentifier = '', bool isInstance = false}) {
     return CompileTokenMetadata(
-        identifier: _idFor(type), identifierIsInstance: isInstance);
+        identifier: _idFor(type, libraryIdentifier: libraryIdentifier),
+        identifierIsInstance: isInstance);
   }
 
-  CompileIdentifierMetadata _idFor(DartType type) => CompileIdentifierMetadata(
-      name: getTypeName(type), moduleUrl: moduleUrl(type.element));
+  CompileIdentifierMetadata _idFor(DartType type,
+      {String libraryIdentifier = ''}) {
+    // The compiler thrown an undefined type error earlier. However, it didn't
+    // treat `<type> Function(...)` as an undefined type. It results in a
+    // DartType for `<type> Function(...)` constructs, but the field `element`
+    // is missing. This checks is preventing a `null` value is passed to
+    // `moduleUrl()`.
+    Element element = type.aliasElement;
+    if (element == null) {
+      if (type is DynamicType) {
+        element = type.element;
+      } else if (type is InterfaceType) {
+        element = type.element;
+      }
+    }
+    if (element == null) {
+      var typeStr = type.getDisplayString(withNullability: false);
+      var source = libraryIdentifier.isNotEmpty ? '$libraryIdentifier\n' : '';
+      throw BuildError.withoutContext(
+        '${source}A function type: $typeStr is not recognized by Dart '
+        'Analyzer\n'
+        'Please add `typedef <TypeName> = $typeStr;`',
+      );
+    }
+    return CompileIdentifierMetadata(
+        name: getTypeName(type), moduleUrl: moduleUrl(element));
+  }
 
   o.Expression _useValueExpression(DartObject token) {
     if (token == null || token.isNull) {
@@ -524,13 +600,16 @@ class CompileTypeMetadataVisitor
       prefix: prefix,
       emitPrefix: true,
       diDeps: typesOrTokens != null
-          ? typesOrTokens.map(_factoryDiDep).toList()
+          ? typesOrTokens.map((t) => _factoryDiDep(function, t)).toList()
           : _getCompileDiDependencyMetadata(function.parameters, function),
     );
   }
 
   // If deps: const [ ... ] is passed, we use that instead of the parameters.
-  CompileDiDependencyMetadata _factoryDiDep(DartObject object) {
+  CompileDiDependencyMetadata _factoryDiDep(
+    FunctionTypedElement function,
+    DartObject object,
+  ) {
     // Simple case: A dependency is a dart `Type` or an Angular `OpaqueToken`.
     if (object.toTypeValue() != null || _isOpaqueToken(object)) {
       return CompileDiDependencyMetadata(token: _token(object));
@@ -545,20 +624,21 @@ class CompileTypeMetadataVisitor
       var isSkipSelf = false;
       var isOptional = false;
       for (var i = 1; i < metadata.length; i++) {
-        if (const TypeChecker.fromRuntime(Self)
-            .isExactlyType(metadata[i].type)) {
+        if ($Self.isExactlyType(metadata[i].type)) {
           isSelf = true;
-        } else if (const TypeChecker.fromRuntime(Host)
-            .isExactlyType(metadata[i].type)) {
+        } else if ($Host.isExactlyType(metadata[i].type)) {
           isHost = true;
-        } else if (const TypeChecker.fromRuntime(SkipSelf)
-            .isExactlyType(metadata[i].type)) {
+        } else if ($SkipSelf.isExactlyType(metadata[i].type)) {
           isSkipSelf = true;
-        } else if (const TypeChecker.fromRuntime(Optional)
-            .isExactlyType(metadata[i].type)) {
+        } else if ($Optional.isExactlyType(metadata[i].type)) {
           isOptional = true;
         }
       }
+      _checkForOptionalAndNullable(
+        function,
+        object.type,
+        isOptional: isOptional,
+      );
       return CompileDiDependencyMetadata(
         token: token,
         isSelf: isSelf,
@@ -568,17 +648,18 @@ class CompileTypeMetadataVisitor
       );
     }
 
-    // TODO: Make this more severe/an error.
-    logWarning('Could not resolve dependency $object');
-    return CompileDiDependencyMetadata();
+    throw BuildError.forAnnotation(
+      _indexedAnnotation.annotation,
+      'Could not resolve dependency $object',
+    );
   }
 
   bool _isOpaqueToken(DartObject token) =>
       token != null && $OpaqueToken.isAssignableFromType(token.type);
 
   o.Expression _expressionForEnum(DartObject token) {
-    final field =
-        _enumValues(token).singleWhere((field) => field.constantValue == token);
+    final field = _enumValues(token)
+        .singleWhere((field) => field.computeConstantValue() == token);
     return o.importExpr(_idFor(token.type)).prop(field.name);
   }
 
@@ -618,6 +699,7 @@ class _PrivateConstructorException extends Error {
 
 class ParameterInfo {
   final ParameterElement _parameter;
+  final ComponentVisitorExceptionHandler _exceptionHandler;
 
   DartObject attribute;
   bool get isAttribute => attribute != null;
@@ -638,9 +720,9 @@ class ParameterInfo {
       _parameter.parameterKind == ParameterKind.POSITIONAL;
 
   DartType get type => _parameter.type;
+  String get libraryIdentifier => _parameter.library.identifier;
 
-  ParameterInfo(
-      this._parameter, ComponentVisitorExceptionHandler exceptionHandler) {
+  ParameterInfo(this._parameter, this._exceptionHandler) {
     for (var annotationIndex = 0;
         annotationIndex < _parameter.metadata.length;
         annotationIndex++) {
@@ -649,11 +731,15 @@ class ParameterInfo {
       final indexedAnnotation =
           IndexedAnnotation(_parameter, annotation, annotationIndex);
       if (annotation.constantEvaluationErrors.isNotEmpty) {
-        exceptionHandler.handle(AngularAnalysisError(
-            annotation.constantEvaluationErrors, indexedAnnotation));
+        _exceptionHandler.handle(AngularAnalysisError(
+          annotation.constantEvaluationErrors,
+          indexedAnnotation,
+        ));
       } else if (annotationValue == null) {
-        exceptionHandler.handle(ErrorMessageForAnnotation(
-            indexedAnnotation, 'Error evaluating annotation'));
+        CompileContext.current.reportAndRecover(BuildError.forAnnotation(
+          indexedAnnotation.annotation,
+          'Error evaluating annotation',
+        ));
       } else {
         _populateTypeInfo(annotationValue, annotation);
       }
@@ -662,25 +748,20 @@ class ParameterInfo {
 
   void _populateTypeInfo(
       DartObject annotationValue, ElementAnnotation annotation) {
-    if (annotation_matcher.matchTypeExactly(Attribute, annotationValue)) {
+    final annotationType = annotationValue.type;
+    if ($Attribute.isExactlyType(annotationType)) {
       attribute = annotationValue;
-    }
-    if (annotation_matcher.matchTypeExactly(Self, annotationValue)) {
+    } else if ($Self.isExactlyType(annotationType)) {
       isSelf = true;
-    }
-    if (annotation_matcher.matchTypeExactly(Host, annotationValue)) {
+    } else if ($Host.isExactlyType(annotationType)) {
       isHost = true;
-    }
-    if (annotation_matcher.matchTypeExactly(SkipSelf, annotationValue)) {
+    } else if ($SkipSelf.isExactlyType(annotationType)) {
       isSkipSelf = true;
-    }
-    if (annotation_matcher.matchTypeExactly(Optional, annotationValue)) {
+    } else if ($Optional.isExactlyType(annotationType)) {
       isOptional = true;
-    }
-    if (annotation_matcher.isAssignableFrom(OpaqueToken, annotationValue)) {
+    } else if ($OpaqueToken.isAssignableFromType(annotationType)) {
       opaqueToken = annotationValue;
-    }
-    if (annotation_matcher.matchTypeExactly(Inject, annotationValue)) {
+    } else if ($Inject.isExactlyType(annotationType)) {
       injectValue = annotationValue;
       injectAnnotation = annotation;
     }

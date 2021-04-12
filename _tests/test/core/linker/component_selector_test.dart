@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
@@ -11,7 +10,7 @@ void main() {
     tearDown(() => disposeAnyRunningTest());
 
     test('should support attaching component to tr tag', () async {
-      var testBed = NgTestBed.forComponent(ng.createTrTagTestFactory());
+      var testBed = NgTestBed(ng.createTrTagTestFactory());
       var testFixture = await testBed.create();
       var rows = testFixture.rootElement.querySelectorAll('tr[repaired-part]');
       expect(rows, hasLength(3));
@@ -19,75 +18,75 @@ void main() {
     });
 
     test('should support exact attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createExactAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createExactAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo]').text, isEmpty);
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, isEmpty);
+      expect(select('[foo]')!.text, isEmpty);
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, isEmpty);
     });
 
     test('should support hypen attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createHyphenAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createHyphenAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo="bar-baz"]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, isEmpty);
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo="bar-baz"]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, isEmpty);
     });
 
     test('should support list attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createListAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createListAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo="bar baz"]').text, 'Matched!');
-      expect(select('[foo="baz bar qux"]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, isEmpty);
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo="bar baz"]')!.text, 'Matched!');
+      expect(select('[foo="baz bar qux"]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, isEmpty);
     });
 
     test('should support prefix attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createPrefixAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createPrefixAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, 'Matched!');
-      expect(select('[foo=bazbar]').text, isEmpty);
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, 'Matched!');
+      expect(select('[foo=bazbar]')!.text, isEmpty);
     });
 
     test('should support set attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createSetAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createSetAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('div').text, isEmpty);
-      expect(select('[foo]').text, 'Matched!');
-      expect(select('[foo=""]').text, 'Matched!');
-      expect(select('[foo="bar"]').text, 'Matched!');
+      expect(select('div')!.text, isEmpty);
+      expect(select('[foo]')!.text, 'Matched!');
+      expect(select('[foo=""]')!.text, 'Matched!');
+      expect(select('[foo="bar"]')!.text, 'Matched!');
     });
 
     test('should support substring attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createSubstringAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createSubstringAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, 'Matched!');
-      expect(select('[foo=bazbar]').text, 'Matched!');
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, 'Matched!');
+      expect(select('[foo=bazbar]')!.text, 'Matched!');
     });
 
     test('should support suffix attribute selector', () async {
-      final testBed = NgTestBed.forComponent(
-          ng.createSuffixAttributeSelectorTestComponentFactory());
+      final testBed =
+          NgTestBed(ng.createSuffixAttributeSelectorTestComponentFactory());
       final testFixture = await testBed.create();
       final select = testFixture.rootElement.querySelector;
-      expect(select('[foo=bar]').text, 'Matched!');
-      expect(select('[foo=barbaz]').text, isEmpty);
-      expect(select('[foo=bazbar]').text, 'Matched!');
+      expect(select('[foo=bar]')!.text, 'Matched!');
+      expect(select('[foo=barbaz]')!.text, isEmpty);
+      expect(select('[foo=bazbar]')!.text, 'Matched!');
     });
   });
 }
@@ -124,9 +123,9 @@ class ExactAttributeSelectorComponent {}
 @Component(
   selector: 'hyphen-attribute-selector-test',
   template: '''
-<div foo></div>
-<div foo="bar"></div>
-<div foo="barbaz"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo></div>
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>''',
   directives: [
     ExactAttributeSelectorComponent,
   ],
@@ -142,9 +141,9 @@ class HyphenAttributeSelectorComponent {}
 @Component(
   selector: 'hyphen-attribute-selector-test',
   template: '''
-<div foo="bar"></div>
-<div foo="bar-baz"></div>
-<div foo="barbaz"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="bar-baz"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>''',
   directives: [
     HyphenAttributeSelectorComponent,
   ],
@@ -160,10 +159,10 @@ class ListAttributeSelectorComponent {}
 @Component(
   selector: 'list-attribute-selector-test',
   template: '''
-<div foo="bar"></div>
-<div foo="bar baz"></div>
-<div foo="baz bar qux"></div>
-<div foo="barbaz"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="bar baz"></div>
+<div @skipSchemaValidationFor="[foo]" foo="baz bar qux"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>''',
   directives: [
     ListAttributeSelectorComponent,
   ],
@@ -179,9 +178,9 @@ class PrefixAttributeSelectorComponent {}
 @Component(
   selector: 'prefix-attribute-selector-test',
   template: '''
-<div foo="bar"></div>
-<div foo="barbaz"></div>
-<div foo="bazbar"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>
+<div @skipSchemaValidationFor="[foo]" foo="bazbar"></div>''',
   directives: [
     PrefixAttributeSelectorComponent,
   ],
@@ -198,9 +197,9 @@ class SetAttributeSelectorComponent {}
   selector: 'set-attribute-selector-test',
   template: '''
 <div></div>
-<div foo></div>
-<div foo=""></div>
-<div foo="bar"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo></div>
+<div @skipSchemaValidationFor="[foo]" foo=""></div>
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>''',
   directives: [
     SetAttributeSelectorComponent,
   ],
@@ -216,10 +215,10 @@ class SubstringAttributeSelectorComponent {}
 @Component(
   selector: 'substring-attribute-selector-test',
   template: '''
-<div foo="bar"></div>
-<div foo="barbaz"></div>
-<div foo="bazbar"></div>
-<div foo="baz bar qux"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>
+<div @skipSchemaValidationFor="[foo]" foo="bazbar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="baz bar qux"></div>''',
   directives: [
     SubstringAttributeSelectorComponent,
   ],
@@ -235,9 +234,9 @@ class SuffixAttributeSelectorComponent {}
 @Component(
   selector: 'suffix-attribute-selector-test',
   template: '''
-<div foo="bar"></div>
-<div foo="barbaz"></div>
-<div foo="bazbar"></div>''',
+<div @skipSchemaValidationFor="[foo]" foo="bar"></div>
+<div @skipSchemaValidationFor="[foo]" foo="barbaz"></div>
+<div @skipSchemaValidationFor="[foo]" foo="bazbar"></div>''',
   directives: [
     SuffixAttributeSelectorComponent,
   ],

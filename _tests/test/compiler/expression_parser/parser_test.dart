@@ -1,37 +1,40 @@
-@TestOn('vm')
+// @dart=2.9
+
 import 'package:test/test.dart';
 import 'package:_tests/test_util.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     show ASTWithSource, Interpolation, PropertyRead;
-import 'package:angular_compiler/v1/src/compiler/expression_parser/lexer.dart'
-    show Lexer;
 import 'package:angular_compiler/v1/src/compiler/expression_parser/parser.dart'
-    show Parser;
-import 'package:angular_compiler/v1/angular_compiler.dart';
+    show ParseException, ExpressionParser;
+import 'package:angular_compiler/v2/context.dart';
 
 import 'unparser.dart' show Unparser;
 
 Matcher throwsWithMatch(RegExp regExp) =>
     throwsA(predicate((e) => regExp.hasMatch(e.toString())));
 
+final _throwsParseException = throwsA(TypeMatcher<ParseException>());
+
 void main() {
   CompileContext.overrideForTesting();
 
-  Parser createParser() {
-    return Parser(Lexer(), supportNewPipeSyntax: true);
-  }
+  group('ExpressionParser', () {
+    _runTests(() => ExpressionParser());
+  });
+}
 
-  ASTWithSource parseAction(text, [location]) {
+void _runTests(ExpressionParser Function() createParser) {
+  ASTWithSource parseAction(String text, [String location]) {
     return createParser().parseAction(text, location, []);
   }
 
-  ASTWithSource parseBinding(text, [location]) {
+  ASTWithSource parseBinding(String text, [String location]) {
     return createParser().parseBinding(text, location, []);
   }
 
-  ASTWithSource parseInterpolation(text, [location]) {
+  ASTWithSource parseInterpolation(String text, [String location]) {
     return createParser().parseInterpolation(text, location, []);
   }
 
@@ -57,11 +60,15 @@ void main() {
     expect(unparse(ast), expected);
   }
 
-  void expectActionError(text, matcher) {
+  void expectInterpolationError(String text, Object matcher) {
+    expect(() => parseInterpolation(text), matcher);
+  }
+
+  void expectActionError(String text, Object matcher) {
     expect(() => parseAction(text), matcher);
   }
 
-  void expectBindingError(text, matcher) {
+  void expectBindingError(String text, Object matcher) {
     expect(() => parseBinding(text), matcher);
   }
 
@@ -74,12 +81,24 @@ void main() {
         checkAction("'1'", '\"1\"');
         checkAction('\"1\"');
       });
+      test('should require escaping \$ in strings', () {
+        expectActionError(r"'$100 USD'", _throwsParseException);
+      });
+      test('should not support string interpolations', () {
+        expectActionError(r"'${foo()}'", _throwsParseException);
+      });
       test('should parse null', () {
         checkAction('null');
       });
       test('should parse unary - expressions', () {
+        // TODO(b/159912942): Just parse as -1.
         checkAction('-1', '0 - 1');
-        checkAction('+1', '1');
+      });
+      test('should fail to parse unary + expressions', () {
+        expectActionError(
+          '+1',
+          _throwsParseException,
+        );
       });
       test('should parse unary ! expressions', () {
         checkAction('!true');
@@ -102,35 +121,26 @@ void main() {
         checkAction('2 == 3');
         checkAction('2 != 3');
       });
-      test('should parse strict equality expressions', () {
-        checkAction('2 === 3');
-        checkAction('2 !== 3');
-      });
       test('should parse expressions', () {
         checkAction('true && true');
         checkAction('true || false');
       });
-      test('should parse grouped expressions', () {
+      test('should parse grouped expressions by ignoring they are grouped', () {
+        // TODO(b/159912942): Parse correctly.
         checkAction('(1 + 2) * 3', '1 + 2 * 3');
       });
-      test('should ignore comments in expressions', () {
-        checkAction('a //comment', 'a');
+      test('should fail on comments in expressions', () {
+        expectActionError('a //comment', _throwsParseException);
       });
       test('should retain // in string literals', () {
         checkAction(
-            '''"http://www.google.com"''', '''"http://www.google.com"''');
+          '''"http://www.google.com"''',
+          '''"http://www.google.com"''',
+        );
       });
       test('should parse an empty string', () {
+        // TODO(b/159912942): Decide whether to keep this.
         checkAction('');
-      });
-      group('literals', () {
-        test('should parse array', () {
-          checkAction('[1][0]');
-          checkAction('[[1]][0][0]');
-          checkAction('[]');
-          checkAction('[].length');
-          checkAction('[1, 2].length');
-        });
       });
       group('member access', () {
         test('should parse field access', () {
@@ -138,9 +148,9 @@ void main() {
           checkAction('a.a');
         });
         test('should only allow identifier or keyword as member names', () {
-          expectActionError('x.(', throwsWith('identifier or keyword'));
-          expectActionError('x. 1234', throwsWith('identifier or keyword'));
-          expectActionError('x.\"foo\"', throwsWith('identifier or keyword'));
+          expectActionError('x.(', _throwsParseException);
+          expectActionError('x. 1234', _throwsParseException);
+          expectActionError('x.\"foo\"', _throwsParseException);
         });
         test('should parse safe field access', () {
           checkAction('a?.a');
@@ -164,7 +174,7 @@ void main() {
         });
       });
       group('functional calls', () {
-        test('should parse function calls', () {
+        test('should parse nested function calls', () {
           checkAction('fn()(1, 2)');
           checkAction('fn()(a: 1)');
         });
@@ -175,10 +185,7 @@ void main() {
           checkAction('false ? 10 : 20');
         });
         test('should throw on incorrect ternary operator syntax', () {
-          expectActionError(
-              'true?1',
-              throwsWithMatch(RegExp(
-                  'Parser Error: Conditional expression true\\?1 requires all 3 expressions')));
+          expectActionError('true?1', _throwsParseException);
         });
       });
       group('ifNull', () {
@@ -187,10 +194,7 @@ void main() {
           checkAction('fn() ?? 0');
         });
         test('should throw on missing null case', () {
-          expectActionError(
-              'null ??',
-              throwsWithMatch(RegExp(
-                  'Parser Error: Unexpected end of expression: null \\?\\?')));
+          expectActionError('null ??', _throwsParseException);
         });
       });
       group('assignment', () {
@@ -199,15 +203,14 @@ void main() {
           checkAction('a.a.a = 123');
         });
         test('should throw on safe field assignments', () {
-          expectActionError(
-              'a?.a = 123', throwsWith('cannot be used in the assignment'));
+          expectActionError('a?.a = 123', _throwsParseException);
         });
         test('should support array updates', () {
           checkAction('a[0] = 200');
         });
       });
       test('should error when using pipes', () {
-        expectActionError('x|blah', throwsWith('Cannot have a pipe'));
+        expectActionError(r'$pipe.blah(x)', _throwsParseException);
       });
       test('should store the source in the result', () {
         expect(parseAction('someExpr').source, 'someExpr');
@@ -224,25 +227,22 @@ void main() {
       test('should not support multiple statements', () {
         expect(
           () => parseAction('1;2'),
-          throwsWith('Event bindings no longer support multiple statements'),
+          _throwsParseException,
         );
       });
     });
     group('general error handling', () {
       test('should throw on an unexpected token', () {
-        expectActionError('[1,2] trac', throwsWith("Unexpected token 'trac'"));
+        expectActionError(
+          'f(1,2) trac',
+          _throwsParseException,
+        );
       });
       test('should throw a reasonable error for unconsumed tokens', () {
-        expectActionError(
-            ')',
-            throwsWithMatch(
-                RegExp('Unexpected token \\) at column 1 in \\[\\)\\]')));
+        expectActionError(')', _throwsParseException);
       });
       test('should throw on missing expected token', () {
-        expectActionError(
-            'a(b',
-            throwsWithMatch(RegExp(
-                'Missing expected \\) at the end of the expression \\[a\\(b\\]')));
+        expectActionError('a(b', _throwsParseException);
       });
       test('should not crash when encountering an invalid event', () {
         // Template validator should prevent from ever getting here, but just
@@ -250,50 +250,25 @@ void main() {
         expectActionError(null, throwsWith('Blank expressions are not'));
       });
       test('should throw on a lexer error', () {
-        expectActionError('a = 1E-',
-            throwsWith('Invalid exponent at offset 6 of expression'));
+        expectActionError('a = 1E-', _throwsParseException);
       });
     });
     group('parseBinding', () {
       group('pipes', () {
-        test('should parse pipes', () {
-          checkBinding('a(b | c)', 'a((b | c))');
-          checkBinding('a.b(c.d(e) | f)', 'a.b((c.d(e) | f))');
-          checkBinding('[1, 2, 3] | a', '([1, 2, 3] | a)');
-          checkBinding('a[b] | c', '(a[b] | c)');
-          checkBinding('a?.b | c', '(a?.b | c)');
-          checkBinding('true | a', '(true | a)');
-          checkBinding('a | b:c | d', '((a | b:c) | d)');
-          checkBinding('a | b:(c | d)', '(a | b:(c | d))');
-          checkBinding('a(n: (b | c))');
-          checkBinding('a(n: (a | b:c | d))', 'a(n: ((a | b:c) | d))');
-          checkBinding('f(value | pipe:x:y)', 'f((value | pipe:x:y))');
-        });
-
-        // TODO(b/133512917): Change un-parser when old syntax is removed.
         test('should parse pipes with the new function call syntax', () {
           final pipe = r'$pipe';
-          checkBinding('a($pipe.c(b))', 'a((b | c))');
-          checkBinding('$pipe.f(a.b(c.d(e)))', '(a.b(c.d(e)) | f)');
-          checkBinding('$pipe.a([1, 2, 3])', '([1, 2, 3] | a)');
-          checkBinding('$pipe.c(a[b])', '(a[b] | c)');
-          checkBinding('$pipe.c(a?.b)', '(a?.b | c)');
-          checkBinding('$pipe.a(true)', '(true | a)');
-          checkBinding('$pipe.d($pipe.b(a, c))', '((a | b:c) | d)');
-          checkBinding('$pipe.b(a, $pipe.d(c))', '(a | b:(c | d))');
+          checkBinding('a($pipe.c(b))', 'a($pipe.c(b))');
+          checkBinding('$pipe.f(a.b(c.d(e)))', '$pipe.f(a.b(c.d(e)))');
+          checkBinding('$pipe.c(a[b])', '$pipe.c(a[b])');
+          checkBinding('$pipe.c(a?.b)', '$pipe.c(a?.b)');
+          checkBinding('$pipe.a(true)', '$pipe.a(true)');
+          checkBinding('$pipe.d($pipe.b(a, c))', '$pipe.d($pipe.b(a, c))');
+          checkBinding('$pipe.b(a, $pipe.d(c))', '$pipe.b(a, $pipe.d(c))');
         });
 
-        test('should only allow identifier or keyword as formatter names', () {
-          expectBindingError('\"Foo\"|(', throwsWith('identifier or keyword'));
-          expectBindingError(
-              '\"Foo\"|1234', throwsWith('identifier or keyword'));
-          expectBindingError(
-              '\"Foo\"|\"uppercase\"', throwsWith('identifier or keyword'));
-        });
         test('should refuse prefixes that are not single identifiers', () {
-          expectBindingError('a + b:c', throwsWith('Unexpected token'));
-          expectBindingError(
-              '1:c', throwsWith('Parser Error: Unexpected token'));
+          expectBindingError('a + b:c', _throwsParseException);
+          expectBindingError('1:c', _throwsParseException);
         });
       });
       test('should store the source in the result', () {
@@ -305,11 +280,11 @@ void main() {
       test('should throw on multiple statements', () {
         expect(
           () => parseBinding('1;2'),
-          throwsWith('Expression binding cannot contain multiple statements'),
+          _throwsParseException,
         );
       });
       test('should throw on assignment', () {
-        expect(() => parseBinding('a=2'), throwsWith('contain assignments'));
+        expect(() => parseBinding('a=2'), _throwsParseException);
       });
       test('should throw when encountering interpolation', () {
         expectBindingError(
@@ -320,8 +295,8 @@ void main() {
       test('should parse conditional expression', () {
         checkBinding('a < b ? a : b');
       });
-      test('should ignore comments in bindings', () {
-        checkBinding('a //comment', 'a');
+      test('should fail on comments in bindings', () {
+        expectBindingError('a //comment', _throwsParseException);
       });
       test('should retain // in string literals', () {
         checkBinding(
@@ -361,34 +336,47 @@ void main() {
  \'bar\' +
  \'baz\' }}''', '''{{ "foo" + "bar" + "baz" }}''');
       });
-      group('comments', () {
-        test('should ignore comments in interpolation expressions', () {
-          checkInterpolation('{{a //comment}}', '{{ a }}');
-        });
-        test('should retain // in single quote strings', () {
-          checkInterpolation("{{ \'http://www.google.com\' }}",
-              '{{ "http://www.google.com" }}');
-        });
-        test('should retain // in double quote strings', () {
+      group('non-comment slashes should parse in', () {
+        test('single quote strings', () {
           checkInterpolation(
-              '{{ "http://www.google.com" }}', '{{ "http://www.google.com" }}');
+            "{{ \'http://www.google.com\' }}",
+            '{{ \"http://www.google.com\" }}',
+          );
         });
-        test('should ignore comments after string literals', () {
-          checkInterpolation('{{ "a//b" //comment }}', '{{ "a//b" }}');
-        });
-        test('should retain // in complex strings', () {
-          checkInterpolation('''{{"//a\'//b`//c`//d\'//e" //comment}}''',
-              '''{{ "//a\'//b`//c`//d\'//e" }}''');
-        });
-        test('should retain // in nested, unterminated strings', () {
-          checkInterpolation('''{{ "a\'b`" //comment}}''', '''{{ "a\'b`" }}''');
+        test('double quote strings', () {
+          checkInterpolation(
+            '{{ "http://www.google.com" }}',
+            '{{ "http://www.google.com" }}',
+          );
         });
       });
-    });
-    group('wrapLiteralPrimitive', () {
-      test('should wrap a literal primitive', () {
-        expect(unparse(createParser().wrapLiteralPrimitive('foo', null)),
-            '\"foo\"');
+
+      group('comments should fail in', () {
+        test('interpolation expressions', () {
+          expectInterpolationError(
+            '{{a //comment}}',
+            _throwsParseException,
+          );
+        });
+
+        test('after string literals', () {
+          expectInterpolationError(
+            '{{ "a//b" //comment }}',
+            _throwsParseException,
+          );
+        });
+        test('complex strings', () {
+          expectInterpolationError(
+            '''{{"//a\'//b`//c`//d\'//e" //comment}}''',
+            _throwsParseException,
+          );
+        });
+        test('nested, unterminated strings', () {
+          expectInterpolationError(
+            '''{{ "a\'b`" //comment}}''',
+            _throwsParseException,
+          );
+        });
       });
     });
   });

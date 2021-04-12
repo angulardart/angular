@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -34,7 +30,7 @@ abstract class TextAst implements StandaloneTemplateAst {
   int get hashCode => value.hashCode;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitText(this, context);
   }
 
@@ -52,7 +48,7 @@ class _ParsedTextAst extends TemplateAst with TextAst {
   ) : super.parsed(textToken, textToken, sourceFile);
 
   @override
-  String get value => beginToken.lexeme;
+  String get value => beginToken!.lexeme;
 }
 
 class _SyntheticTextAst extends SyntheticTemplateAst with TextAst {

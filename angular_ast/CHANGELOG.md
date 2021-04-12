@@ -1,10 +1,13 @@
 ## 1.0.1
 
-* Update `package:analyzer` dependency to `^0.40.0`.
+*   Update `package:analyzer` dependency to `^0.40.0`.
 
 ## 1.0.0
 
-* Stable release.
+*   Stable release.
+*   Added support for a reference on `<ng-content>`.
+*   `toolFriendlyAst{Origin}` is always `true` and is no longer configurable.
+*   Removed `ThrowingAstVisitor`.
 
 ## 0.5.11
 

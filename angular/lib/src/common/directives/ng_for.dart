@@ -1,10 +1,8 @@
-import 'package:angular/core.dart' show DoCheck, Directive, Input;
-import 'package:angular/src/runtime.dart' show unsafeCast;
+import 'package:angular/src/meta.dart';
+import 'package:angular/src/utilities.dart';
 
-import '../../core/change_detection/differs/default_iterable_differ.dart'
-    show DefaultIterableDiffer, CollectionChangeRecord, TrackByFn;
-import '../../core/linker.dart'
-    show ViewContainerRef, TemplateRef, EmbeddedViewRef;
+import '../../core/change_detection/differs/default_iterable_differ.dart';
+import '../../core/linker.dart';
 
 /// The `NgFor` directive instantiates a template once per item from an
 /// iterable. The context for each instantiated template inherits from the outer
@@ -90,15 +88,15 @@ import '../../core/linker.dart'
 class NgFor implements DoCheck {
   final ViewContainerRef _viewContainer;
 
-  DefaultIterableDiffer _differ;
-  Iterable<Object> _ngForOf;
-  TrackByFn _ngForTrackBy;
+  DefaultIterableDiffer? _differ;
+  Iterable<Object?>? _ngForOf;
+  TrackByFn? _ngForTrackBy;
   TemplateRef _templateRef;
 
   NgFor(this._viewContainer, this._templateRef);
 
   @Input()
-  set ngForOf(Iterable<Object> value) {
+  set ngForOf(Iterable<Object?>? value) {
     _ngForOf = value;
     if (_differ == null && value != null) {
       _differ = DefaultIterableDiffer(_ngForTrackBy);
@@ -106,7 +104,7 @@ class NgFor implements DoCheck {
   }
 
   @Input()
-  set ngForTemplate(TemplateRef value) {
+  set ngForTemplate(TemplateRef? value) {
     if (value != null) {
       _templateRef = value;
     }
@@ -116,21 +114,23 @@ class NgFor implements DoCheck {
   ///
   /// See [TrackByFn] for more details on how to use this parameter type.
   @Input()
-  set ngForTrackBy(TrackByFn value) {
+  set ngForTrackBy(TrackByFn? value) {
     _ngForTrackBy = value;
     if (_ngForOf != null) {
-      if (_differ == null) {
+      final differ = _differ;
+      if (differ == null) {
         _differ = DefaultIterableDiffer(_ngForTrackBy);
       } else {
-        _differ = _differ.clone(_ngForTrackBy);
+        _differ = differ.clone(_ngForTrackBy);
       }
     }
   }
 
   @override
   void ngDoCheck() {
-    if (_differ != null) {
-      var changes = _differ.diff(_ngForOf);
+    final differ = _differ;
+    if (differ != null) {
+      var changes = differ.diff(_ngForOf);
       if (changes != null) _applyChanges(changes);
     }
   }
@@ -140,17 +140,22 @@ class NgFor implements DoCheck {
     // easier to consume than current.
 
     final insertTuples = <_RecordViewTuple>[];
-    changes.forEachOperation((CollectionChangeRecord item,
-        int adjustedPreviousIndex, int currentIndex) {
+    changes.forEachOperation((
+      CollectionChangeRecord item,
+      int? adjustedPreviousIndex,
+      int? currentIndex,
+    ) {
       if (item.previousIndex == null) {
-        var view =
-            _viewContainer.insertEmbeddedView(_templateRef, currentIndex);
+        var view = _viewContainer.insertEmbeddedView(
+          _templateRef,
+          currentIndex!,
+        );
         var tuple = _RecordViewTuple(item, view);
         insertTuples.add(tuple);
       } else if (currentIndex == null) {
-        _viewContainer.remove(adjustedPreviousIndex);
+        _viewContainer.remove(adjustedPreviousIndex!);
       } else {
-        var view = _getEmbeddedViewRef(adjustedPreviousIndex);
+        var view = _getEmbeddedViewRef(adjustedPreviousIndex!);
         _viewContainer.move(view, currentIndex);
         var tuple = _RecordViewTuple(item, view);
         insertTuples.add(tuple);
@@ -168,7 +173,7 @@ class NgFor implements DoCheck {
       viewRef.setLocal('count', len);
     }
     changes.forEachIdentityChange((record) {
-      var viewRef = _getEmbeddedViewRef(record.currentIndex);
+      var viewRef = _getEmbeddedViewRef(record.currentIndex!);
       viewRef.setLocal('\$implicit', record.item);
     });
   }
@@ -186,8 +191,8 @@ class NgFor implements DoCheck {
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal('\$implicit', record.item);
-    view.setLocal('even', record.currentIndex.isEven);
-    view.setLocal('odd', record.currentIndex.isOdd);
+    view.setLocal('even', record.currentIndex!.isEven);
+    view.setLocal('odd', record.currentIndex!.isOdd);
   }
 }
 

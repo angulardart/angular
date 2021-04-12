@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:build/build.dart';
 import 'package:angular_compiler/v1/cli.dart';
 

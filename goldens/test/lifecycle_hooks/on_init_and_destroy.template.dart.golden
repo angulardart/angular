@@ -1,0 +1,305 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'on_init_and_destroy.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'on_init_and_destroy.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'on_init_and_destroy.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewUsesOnInit0 _compView_0;
+  late final import1.UsesOnInit _UsesOnInit_0_5;
+  late final ViewUsesOnDestroy0 _compView_1;
+  late final import1.UsesOnDestroy _UsesOnDestroy_1_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  Object? _expr_2;
+  Object? _expr_3;
+  Object? _expr_4;
+  Object? _expr_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewUsesOnInit0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._UsesOnInit_0_5 = import1.UsesOnInit();
+    this._compView_0.create(this._UsesOnInit_0_5);
+    this._compView_1 = ViewUsesOnDestroy0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._UsesOnDestroy_1_5 = import1.UsesOnDestroy();
+    this._compView_1.create(this._UsesOnDestroy_1_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    bool firstCheck = this.firstCheck;
+    final currVal_0 = _ctx.a;
+    if (import7.checkBinding(this._expr_0, currVal_0, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'a', currVal_0);
+      }
+      this._UsesOnInit_0_5.a = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.b;
+    if (import7.checkBinding(this._expr_1, currVal_1, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'b', currVal_1);
+      }
+      this._UsesOnInit_0_5.b = currVal_1;
+      this._expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.c;
+    if (import7.checkBinding(this._expr_2, currVal_2, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'c', currVal_2);
+      }
+      this._UsesOnInit_0_5.c = currVal_2;
+      this._expr_2 = currVal_2;
+    }
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
+      this._UsesOnInit_0_5.ngOnInit();
+    }
+    final currVal_3 = _ctx.a;
+    if (import7.checkBinding(this._expr_3, currVal_3, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'a', currVal_3);
+      }
+      this._UsesOnDestroy_1_5.a = currVal_3;
+      this._expr_3 = currVal_3;
+    }
+    final currVal_4 = _ctx.b;
+    if (import7.checkBinding(this._expr_4, currVal_4, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'b', currVal_4);
+      }
+      this._UsesOnDestroy_1_5.b = currVal_4;
+      this._expr_4 = currVal_4;
+    }
+    final currVal_5 = _ctx.c;
+    if (import7.checkBinding(this._expr_5, currVal_5, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'c', currVal_5);
+      }
+      this._UsesOnDestroy_1_5.c = currVal_5;
+      this._expr_5 = currVal_5;
+    }
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+    this._UsesOnDestroy_1_5.ngOnDestroy();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$UsesOnInit = const [];
+
+class ViewUsesOnInit0 extends import0.ComponentView<import1.UsesOnInit> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesOnInit0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-on-init'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesOnInit, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesOnInitNgFactory = ComponentFactory<import1.UsesOnInit>('uses-on-init', viewFactory_UsesOnInitHost0);
+ComponentFactory<import1.UsesOnInit> get UsesOnInitNgFactory {
+  return _UsesOnInitNgFactory;
+}
+
+ComponentFactory<import1.UsesOnInit> createUsesOnInitFactory() {
+  return ComponentFactory('uses-on-init', viewFactory_UsesOnInitHost0);
+}
+
+final List<Object> styles$UsesOnInitHost = const [];
+
+class _ViewUsesOnInitHost0 extends import10.HostView<import1.UsesOnInit> {
+  @override
+  void build() {
+    this.componentView = ViewUsesOnInit0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesOnInit();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    bool firstCheck = this.firstCheck;
+    if (((!import7.debugThrowIfChanged) && firstCheck)) {
+      this.component.ngOnInit();
+    }
+    this.componentView.detectChanges();
+  }
+}
+
+import10.HostView<import1.UsesOnInit> viewFactory_UsesOnInitHost0() {
+  return _ViewUsesOnInitHost0();
+}
+
+final List<Object> styles$UsesOnDestroy = const [];
+
+class ViewUsesOnDestroy0 extends import0.ComponentView<import1.UsesOnDestroy> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesOnDestroy0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-on-destroy'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesOnDestroy, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesOnDestroyNgFactory = ComponentFactory<import1.UsesOnDestroy>('uses-on-destroy', viewFactory_UsesOnDestroyHost0);
+ComponentFactory<import1.UsesOnDestroy> get UsesOnDestroyNgFactory {
+  return _UsesOnDestroyNgFactory;
+}
+
+ComponentFactory<import1.UsesOnDestroy> createUsesOnDestroyFactory() {
+  return ComponentFactory('uses-on-destroy', viewFactory_UsesOnDestroyHost0);
+}
+
+final List<Object> styles$UsesOnDestroyHost = const [];
+
+class _ViewUsesOnDestroyHost0 extends import10.HostView<import1.UsesOnDestroy> {
+  @override
+  void build() {
+    this.componentView = ViewUsesOnDestroy0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesOnDestroy();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void destroyInternal() {
+    this.component.ngOnDestroy();
+  }
+}
+
+import10.HostView<import1.UsesOnDestroy> viewFactory_UsesOnDestroyHost0() {
+  return _ViewUsesOnDestroyHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(UsesOnInit, createUsesOnInitFactory());
+  _ngRef.registerComponent(UsesOnDestroy, createUsesOnDestroyFactory());
+  _ref0.initReflector();
+}

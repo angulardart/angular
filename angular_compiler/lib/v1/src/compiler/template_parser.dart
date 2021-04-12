@@ -1,18 +1,18 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/js_split_facade.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'compile_metadata.dart'
     show
         CompileDirectiveMetadata,
         CompileIdentifierMetadata,
         CompilePipeMetadata;
-import 'expression_parser/parser.dart' show Parser;
-import 'parse_util.dart';
+import 'expression_parser/parser.dart' show ExpressionParser;
 import 'schema/element_schema_registry.dart' show ElementSchemaRegistry;
 import 'security.dart';
 import 'selector.dart' show CssSelector;
 import 'template_ast.dart'
-    show BoundElementPropertyAst, BoundValue, PropertyBindingType, TemplateAst;
+    show BoundElementPropertyAst, BoundValue, PropertyBindingType;
 
 const _classAttribute = 'class';
 const _propertyPartsSeparator = '.';
@@ -20,67 +20,29 @@ const _attributePrefix = 'attr';
 const _classPrefix = 'class';
 const _stylePrefix = 'style';
 
-class TemplateParseError extends ParseError {
-  TemplateParseError(String message, SourceSpan span, ParseErrorLevel level)
-      : super(span, message, level);
-}
-
 class TemplateContext {
-  final Parser parser;
+  final ExpressionParser parser;
   final ElementSchemaRegistry schemaRegistry;
+  final CompileDirectiveMetadata component;
   final List<CompileDirectiveMetadata> directives;
-  final List<CompileIdentifierMetadata> exports;
-  final AstExceptionHandler exceptionHandler;
 
   TemplateContext({
     this.parser,
     this.schemaRegistry,
+    this.component,
     this.directives,
-    this.exports,
-    this.exceptionHandler,
   });
 
-  void reportError(
-    String message,
-    SourceSpan sourceSpan, [
-    ParseErrorLevel level,
-  ]) {
-    level ??= ParseErrorLevel.FATAL;
-    exceptionHandler
-        .handleParseError(TemplateParseError(message, sourceSpan, level));
-  }
+  List<CompileIdentifierMetadata> get exports => component.exports;
 }
-
-class TemplateParseResult {
-  List<TemplateAst> templateAst;
-  List<ParseError> errors;
-
-  TemplateParseResult([this.templateAst, this.errors]);
-}
-
-/// Converts Html AST to TemplateAST nodes.
-abstract class TemplateParser {
-  ElementSchemaRegistry get schemaRegistry;
-
-  List<TemplateAst> parse(
-      CompileDirectiveMetadata compMeta,
-      String template,
-      List<CompileDirectiveMetadata> directives,
-      List<CompilePipeMetadata> pipes,
-      String name,
-      String templateSourceUrl);
-}
-
-typedef ErrorCallback = void Function(String message, SourceSpan sourceSpan,
-    [ParseErrorLevel level]);
 
 BoundElementPropertyAst createElementPropertyAst(
-    String elementName,
-    String name,
-    BoundValue value,
-    SourceSpan sourceSpan,
-    ElementSchemaRegistry schemaRegistry,
-    ErrorCallback reportError) {
+  String elementName,
+  String name,
+  BoundValue value,
+  SourceSpan sourceSpan,
+  ElementSchemaRegistry schemaRegistry,
+) {
   String unit;
   String namespace;
   PropertyBindingType bindingType;
@@ -94,30 +56,36 @@ BoundElementPropertyAst createElementPropertyAst(
     bindingType = PropertyBindingType.property;
     if (!schemaRegistry.hasProperty(elementName, boundPropertyName)) {
       if (boundPropertyName == 'ngclass') {
-        reportError(
-            'Please use camel-case ngClass instead of ngclass in your template',
-            sourceSpan);
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          'Please use camel-case ngClass instead of ngclass in your template',
+        ));
       } else {
-        reportError(
-            "Can't bind to '$boundPropertyName' since it isn't a known "
-            'native property or known directive. Please fix typo or add to '
-            'directives list.',
-            sourceSpan);
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          "Can't bind to '$boundPropertyName' since it isn't a known "
+          'native property or known directive. Please fix typo or add to '
+          'directives list.',
+        ));
       }
     }
   } else {
     if (parts[0] == _attributePrefix) {
       boundPropertyName = parts[1];
       if (boundPropertyName.toLowerCase().startsWith('on')) {
-        reportError(
-            'Binding to event attribute \'$boundPropertyName\' '
-            'is disallowed for security reasons, please use '
-            '(${boundPropertyName.substring(2)})=...',
-            sourceSpan);
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          'Binding to event attribute \'$boundPropertyName\' '
+          'is disallowed for security reasons, please use '
+          '(${boundPropertyName.substring(2)})=...',
+        ));
       }
       unit = parts.length > 2 ? parts[2] : null;
       if (unit != null && unit != 'if') {
-        reportError('Invalid attribute unit "$unit"', sourceSpan);
+        CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+          sourceSpan,
+          'Invalid attribute unit "$unit"',
+        ));
       }
       // NB: For security purposes, use the mapped property name, not the
       // attribute name.
@@ -139,7 +107,13 @@ BoundElementPropertyAst createElementPropertyAst(
       bindingType = PropertyBindingType.style;
       securityContext = TemplateSecurityContext.style;
     } else {
-      reportError("Invalid property name '$name'", sourceSpan);
+      // Throw an error, otherwise it builds a BoundElementPropertyAst with null
+      // fields that will result in a crash when trying to transform this Ast
+      // node to an IR node.
+      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
+        sourceSpan,
+        "Invalid property name '$name'",
+      ));
       bindingType = null;
       securityContext = null;
     }

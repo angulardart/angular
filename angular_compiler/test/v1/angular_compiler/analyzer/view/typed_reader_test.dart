@@ -1,9 +1,6 @@
-@TestOn('vm')
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
 
 import '../../src/compile.dart';
 import '../../src/resolve.dart';
@@ -12,6 +9,7 @@ const testImport = 'asset:test_lib/lib/test_lib.dart';
 
 Future<TypedElement> parse(String source) async {
   final amendedSource = '''
+    // @dart=2.9
     @Component()
     class GenericComponent<T> {}
 
@@ -33,6 +31,7 @@ void main() {
     group('Typed()', () {
       test('with single concrete type argument', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent<String>>();
 
           @typed
@@ -41,14 +40,19 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('String', 'dart:core'),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink('String', 'dart:core'),
+              ],
+            ),
           ),
         );
       });
       test('with multiple concrete type arguments', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericDirective<String, Object>>();
 
           @typed
@@ -57,15 +61,20 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericDirective', testImport, [
-              TypeLink('String', 'dart:core'),
-              TypeLink('Object', 'dart:core'),
-            ]),
+            TypeLink(
+              'GenericDirective',
+              testImport,
+              generics: [
+                TypeLink('String', 'dart:core'),
+                TypeLink('Object', 'dart:core'),
+              ],
+            ),
           ),
         );
       });
       test('with nested concrete type arguments', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent<List<String>>>();
 
           @typed
@@ -74,16 +83,25 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('List', 'dart:core', [
-                TypeLink('String', 'dart:core'),
-              ]),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink(
+                  'List',
+                  'dart:core',
+                  generics: [
+                    TypeLink('String', 'dart:core'),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       });
       test('with "on"', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent<String>>(on: 'strings');
 
           @typed
@@ -92,9 +110,13 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('String', 'dart:core'),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink('String', 'dart:core'),
+              ],
+            ),
             on: 'strings',
           ),
         );
@@ -104,6 +126,7 @@ void main() {
     group('Typed.of()', () {
       test('with single Symbol argument', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent>.of([#X]);
 
           @typed
@@ -112,14 +135,19 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('X', null),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink('X', null),
+              ],
+            ),
           ),
         );
       });
       test('with single Type argument', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent>.of([int]);
 
           @typed
@@ -128,14 +156,19 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('int', 'dart:core'),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink('int', 'dart:core'),
+              ],
+            ),
           ),
         );
       });
       test('with single Typed argument', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent>.of([Typed<List<int>>()]);
 
           @typed
@@ -144,16 +177,25 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('List', 'dart:core', [
-                TypeLink('int', 'dart:core'),
-              ]),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink(
+                  'List',
+                  'dart:core',
+                  generics: [
+                    TypeLink('int', 'dart:core'),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       });
       test('with nested Typed argument', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent>.of([
             Typed<Map>.of([String, #X]),
           ]);
@@ -164,17 +206,26 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('Map', 'dart:core', [
-                TypeLink('String', 'dart:core'),
-                TypeLink('X', null),
-              ]),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink(
+                  'Map',
+                  'dart:core',
+                  generics: [
+                    TypeLink('String', 'dart:core'),
+                    TypeLink('X', null),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       });
       test('with "on"', () async {
         final typedElement = await parse('''
+          // @dart=2.9
           const typed = Typed<GenericComponent>.of([#X], on: 'flow');
 
           @typed
@@ -183,9 +234,13 @@ void main() {
         expect(
           typedElement,
           TypedElement(
-            TypeLink('GenericComponent', testImport, [
-              TypeLink('X', null),
-            ]),
+            TypeLink(
+              'GenericComponent',
+              testImport,
+              generics: [
+                TypeLink('X', null),
+              ],
+            ),
             on: 'flow',
           ),
         );
@@ -204,6 +259,7 @@ void main() {
     test('if expression isn\'t of type "Typed"', () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         const typed = 12;
 
         @typed
@@ -211,13 +267,14 @@ void main() {
         ''',
         parseTyped,
         errors: [
-          'Expected an expression of type "Typed", but got "int"',
+          contains('Expected an expression of type "Typed", but got "int"'),
         ],
       );
     });
     test('if a concrete type is used as a type argument of "Typed"', () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         @Directive()
         class ConcreteDirective {}
         const typed = Typed<ConcreteDirective>();
@@ -237,6 +294,7 @@ void main() {
     test('if a non-existent type parameter is flowed', () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([#X]);
@@ -256,6 +314,7 @@ void main() {
     test("if a type argument isn't a supported type", () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([12]);
@@ -275,7 +334,8 @@ void main() {
     test('if "Typed.on" is specified anywhere other than the root', () async {
       await compilesExpecting(
         '''
-        @Component()
+       // @dart=2.9
+       @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([
           Typed<List>.of([#X], on: 'foo'),
@@ -296,6 +356,7 @@ void main() {
     test('if "Typed" isn\'t applied to a directive', () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         const typed = Typed<List<int>>();
 
         @typed
@@ -313,6 +374,7 @@ void main() {
     test('if a private type argument is used', () async {
       await compilesExpecting(
         '''
+        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         class _Private {}

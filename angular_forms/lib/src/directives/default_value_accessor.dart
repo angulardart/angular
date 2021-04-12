@@ -28,7 +28,7 @@ const DEFAULT_VALUE_ACCESSOR = ExistingProvider.forToken(
 )
 class DefaultValueAccessor extends Object
     with TouchHandler, ChangeHandler<String>
-    implements ControlValueAccessor {
+    implements ControlValueAccessor<dynamic> {
   final HtmlElement _element;
 
   DefaultValueAccessor(this._element);

@@ -1,13 +1,11 @@
-@TestOn('browser')
-import 'dart:async';
-
+// @dart=2.9
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:angular_forms/src/directives/shared.dart';
 
-class DummyControlValueAccessor implements ControlValueAccessor {
-  var writtenValue;
+class DummyControlValueAccessor implements ControlValueAccessor<dynamic> {
+  dynamic writtenValue;
 
   @override
   void writeValue(dynamic obj) {
@@ -32,7 +30,7 @@ class CustomValidatorDirective implements Validator {
 Matcher throwsWith(String s) =>
     throwsA(predicate((e) => e.toString().contains(s)));
 
-Future<Null> flushMicrotasks() async => await Future.microtask(() => null);
+Future<void> flushMicrotasks() async => await Future.microtask(() => null);
 
 void main() {
   group('Shared selectValueAccessor', () {
@@ -72,7 +70,7 @@ void main() {
           customAccessor);
     });
     test('should throw when more than one custom accessor is provided', () {
-      ControlValueAccessor customAccessor = MockValueAccessor();
+      ControlValueAccessor<dynamic> customAccessor = MockValueAccessor();
       expect(() => selectValueAccessor([customAccessor, customAccessor]),
           throwsWith('More than one custom value accessor matches'));
     });
@@ -82,17 +80,17 @@ void main() {
       DefaultValueAccessor(null);
     });
     test('should compose functions', () {
-      var dummy1 = (_) => {'dummy1': true};
-      var dummy2 = (_) => {'dummy2': true};
+      Map<String, dynamic> dummy1(_) => {'dummy1': true};
+      Map<String, dynamic> dummy2(_) => {'dummy2': true};
       var v = composeValidators([dummy1, dummy2]);
       expect(v(Control('')), {'dummy1': true, 'dummy2': true});
     });
     test('should compose validator directives', () {
-      var dummy1 = (_) => {'dummy1': true};
+      Map<String, dynamic> dummy1(_) => {'dummy1': true};
       var v = composeValidators([dummy1, CustomValidatorDirective()]);
       expect(v(Control('')), {'dummy1': true, 'custom': true});
     });
   });
 }
 
-class MockValueAccessor extends Mock implements ControlValueAccessor {}
+class MockValueAccessor extends Mock implements ControlValueAccessor<dynamic> {}

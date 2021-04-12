@@ -1,18 +1,18 @@
 import 'package:intl/intl.dart';
-import 'package:angular/core.dart' show PipeTransform, Pipe;
-
-import 'invalid_pipe_argument_exception.dart';
+import 'package:angular/src/meta.dart';
 
 final RegExp _re = RegExp('^(\\d+)?\\.((\\d+)(\\-(\\d+))?)?\$');
 
 /// Internal base class for numeric pipes.
 class _NumberPipe {
-  static String _format(num value, _NumberFormatStyle style, String digits,
-      [String currency, bool currencyAsSymbol = false]) {
+  static String? _format(
+    num? value,
+    _NumberFormatStyle style,
+    String? digits, [
+    String? currency,
+    bool currencyAsSymbol = false,
+  ]) {
     if (value == null) return null;
-    if (value is! num) {
-      throw InvalidPipeArgumentException(_NumberPipe, value);
-    }
     var minInt = 1, minFraction = 0, maxFraction = 3;
     if (digits != null) {
       var parts = _re.firstMatch(digits);
@@ -22,13 +22,13 @@ class _NumberPipe {
         );
       }
       if (parts[1] != null) {
-        minInt = int.parse(parts[1]);
+        minInt = int.parse(parts[1]!);
       }
       if (parts[3] != null) {
-        minFraction = int.parse(parts[3]);
+        minFraction = int.parse(parts[3]!);
       }
       if (parts[5] != null) {
-        maxFraction = int.parse(parts[5]);
+        maxFraction = int.parse(parts[5]!);
       }
     }
     return _formatNumber(
@@ -67,8 +67,8 @@ class _NumberPipe {
 /// For more information on the acceptable range for each of these numbers and other
 /// details see your native internationalization library.
 @Pipe('number')
-class DecimalPipe extends _NumberPipe implements PipeTransform {
-  String transform(num value, [String digits]) {
+class DecimalPipe extends _NumberPipe {
+  String? transform(num? value, [String? digits]) {
     return _NumberPipe._format(value, _NumberFormatStyle.Decimal, digits);
   }
 
@@ -86,8 +86,8 @@ class DecimalPipe extends _NumberPipe implements PipeTransform {
 ///
 /// For more information about `digitInfo` see [DecimalPipe]
 @Pipe('percent')
-class PercentPipe extends _NumberPipe implements PipeTransform {
-  String transform(num value, [String digits]) {
+class PercentPipe extends _NumberPipe {
+  String? transform(num? value, [String? digits]) {
     return _NumberPipe._format(value, _NumberFormatStyle.Percent, digits);
   }
 
@@ -109,12 +109,12 @@ class PercentPipe extends _NumberPipe implements PipeTransform {
 /// in the output. The default for this value is `false`.
 /// For more information about `digitInfo` see [DecimalPipe]
 @Pipe('currency')
-class CurrencyPipe extends _NumberPipe implements PipeTransform {
-  String transform(
-    num value, [
+class CurrencyPipe extends _NumberPipe {
+  String? transform(
+    num? value, [
     String currencyCode = 'USD',
     bool symbolDisplay = false,
-    String digits,
+    String? digits,
   ]) =>
       _NumberPipe._format(
         value,
@@ -128,15 +128,15 @@ class CurrencyPipe extends _NumberPipe implements PipeTransform {
 }
 
 enum _NumberFormatStyle { Decimal, Percent, Currency }
-String _normalizeLocale(String locale) => locale?.replaceAll('-', '_');
+String? _normalizeLocale(String? locale) => locale?.replaceAll('-', '_');
 String _formatNumber(
   num number,
-  String locale,
+  String? locale,
   _NumberFormatStyle style, {
   int minimumIntegerDigits = 1,
   int minimumFractionDigits = 0,
   int maximumFractionDigits = 3,
-  String currency,
+  String? currency,
   bool currencyAsSymbol = false,
 }) {
   locale = _normalizeLocale(locale);

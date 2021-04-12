@@ -28,7 +28,7 @@ class CssSelector {
   final List<CssSelector> notSelectors = [];
   static List<CssSelector> parse(String selector) {
     var results = <CssSelector>[];
-    var _addResult = (List<CssSelector> res, CssSelector cssSel) {
+    void addResult(List<CssSelector> res, CssSelector cssSel) {
       if (cssSel.notSelectors.isNotEmpty &&
           cssSel.element == null &&
           cssSel.classNames.isEmpty &&
@@ -36,7 +36,8 @@ class CssSelector {
         cssSel.element = '*';
       }
       res.add(cssSel);
-    };
+    }
+
     var cssSelector = CssSelector();
     var matcher = _selectorRegExp.allMatches(selector);
     var current = cssSelector;
@@ -68,11 +69,11 @@ class CssSelector {
         if (inNot) {
           throw StateError('Multiple selectors in :not are not supported');
         }
-        _addResult(results, cssSelector);
+        addResult(results, cssSelector);
         cssSelector = current = CssSelector();
       }
     }
-    _addResult(results, cssSelector);
+    addResult(results, cssSelector);
     return results;
   }
 
@@ -168,8 +169,10 @@ class CssSelector {
 /// Reads a list of CssSelectors and allows to calculate which ones
 /// are contained in a given CssSelector.
 class SelectorMatcher<T> {
-  static SelectorMatcher createNotMatcher(List<CssSelector> notSelectors) {
-    var notMatcher = SelectorMatcher();
+  static SelectorMatcher<T> createNotMatcher<T>(
+    List<CssSelector> notSelectors,
+  ) {
+    var notMatcher = SelectorMatcher<T>();
     notMatcher.addSelectables(notSelectors, null);
     return notMatcher;
   }

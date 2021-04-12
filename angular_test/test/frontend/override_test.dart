@@ -1,9 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
-import 'dart:async';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -15,8 +9,7 @@ void main() {
 
   test('should support overriding providers', () async {
     final fixture =
-        await NgTestBed.forComponent(ng.createTestViewComponentFactory())
-            .create();
+        await NgTestBed(ng.createTestViewComponentFactory()).create();
     expect(fixture.text, 'Hello World');
   });
 }
@@ -29,7 +22,7 @@ void main() {
 class ViewComponent implements OnInit {
   final DataService _service;
 
-  String value;
+  String? value;
 
   ViewComponent(this._service);
 

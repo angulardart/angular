@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:core';
 import 'dart:io';
 import 'dart:math';
@@ -19,7 +15,8 @@ String lexerFixedFilename = 'lexer_fixed.html';
 String fullyFixedFilename = 'ast_fixed.html';
 
 String untokenize(Iterable<NgToken> tokens) => tokens
-    .fold(StringBuffer(), (buffer, token) => buffer..write(token.lexeme))
+    .fold(StringBuffer(),
+        (buffer, token) => (buffer as StringBuffer)..write(token.lexeme))
     .toString();
 
 enum State {
@@ -186,7 +183,6 @@ void main() async {
       sourceUrl: '/test/parser_test.dart#inline',
       exceptionHandler: exceptionHandler,
       desugar: false,
-      parseExpressions: false,
     );
     stopwatch.stop();
     totalParserTime += stopwatch.elapsedMilliseconds;

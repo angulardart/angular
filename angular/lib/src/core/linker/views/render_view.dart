@@ -6,8 +6,8 @@ import 'package:angular/src/core/linker/app_view_utils.dart';
 import 'package:angular/src/core/linker/style_encapsulation.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_fragment.dart';
-import 'package:angular/src/runtime.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'view.dart';
 
@@ -45,7 +45,7 @@ abstract class RenderView extends View {
   /// Implementations should override the type, which is intentionally omitted
   /// here to avoid the cost of reifying this type wherever used (which
   /// dramatically reduces code size).
-  Object get ctx;
+  Object? get ctx;
 
   /// This view's compiled CSS styles and style encapsulation information.
   ComponentStyles get componentStyles;
@@ -55,7 +55,7 @@ abstract class RenderView extends View {
   /// A view will only attempt to _use_ this value if and only if it has at
   /// least one `<ng-content>` slot. These nodes are not created by the view
   /// itself but rather by the view's parent.
-  List<Object> get projectedNodes;
+  List<List<Object>> get projectedNodes;
 
   // Initialization ------------------------------------------------------------
 
@@ -66,20 +66,14 @@ abstract class RenderView extends View {
   /// what parts of the DOM.
   @dart2js.noInline
   void project(Element target, int index) {
-    // TODO(b/132111830): Determine in what case this is `null`.
-    if (target == null) {
-      return;
-    }
-
-    // TODO(b/132111830): Determine why this would be `null` or out of bounds.
+    // TODO(b/132111830): Determine why this would be out of bounds.
     final projectedNodesByContentIndex = projectedNodes;
-    if (projectedNodesByContentIndex == null ||
-        index >= projectedNodesByContentIndex.length) {
+    if (index >= projectedNodesByContentIndex.length) {
       return;
     }
 
     // TODO(b/132111830): Also determine why this might be `null`.
-    final nodesToProjectIntoTarget = unsafeCast<List<Object>>(
+    final nodesToProjectIntoTarget = unsafeCast<List<Object>?>(
       projectedNodesByContentIndex[index],
     );
     if (nodesToProjectIntoTarget == null) {
@@ -98,7 +92,7 @@ abstract class RenderView extends View {
         if (nestedViews != null) {
           final length = nestedViews.length;
           for (var n = 0; n < length; n++) {
-            nestedViews[n].viewFragment.appendDomNodesInto(target);
+            nestedViews[n].viewFragment!.appendDomNodesInto(target);
           }
         }
       } else if (node is List<Object>) {
@@ -114,8 +108,8 @@ abstract class RenderView extends View {
   // Dependency injection ------------------------------------------------------
 
   @override
-  Object injectFromAncestry(Object token, Object notFoundValue) =>
-      parentView.inject(token, parentIndex, notFoundValue);
+  Object? injectFromAncestry(Object token, Object? notFoundValue) =>
+      parentView!.inject(token, parentIndex, notFoundValue);
 
   // Change detection ----------------------------------------------------------
 
@@ -159,20 +153,18 @@ abstract class RenderView extends View {
         "'($E) => void'");
     return (E event) {
       markForCheck();
-      appViewUtils.eventManager.zone
-          .runGuarded(() => handler(unsafeCast<F>(event)));
+      appViewUtils.eventManager.zone.runGuarded(
+        () => handler(unsafeCast<F>(event)),
+      );
     };
   }
 
   // Styling -------------------------------------------------------------------
 
   /// Equivalent to [addShimE], but optimized for [HtmlElement].
-  @dart2js.noInline
+  @dart2js.tryInline
   void addShimC(HtmlElement element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBinding(element, styles.contentPrefix, true);
-    }
+    componentStyles.addContentShimClassHtmlElement(element);
   }
 
   /// Adds a content shim class to [element].
@@ -182,12 +174,9 @@ abstract class RenderView extends View {
   ///
   /// This should only be used for SVG or custom elements. For a plain
   /// [HtmlElement], use [addShimC] instead.
-  @dart2js.noInline
+  @dart2js.tryInline
   void addShimE(Element element) {
-    final styles = componentStyles;
-    if (styles.usesStyleEncapsulation) {
-      updateClassBindingNonHtml(element, styles.contentPrefix, true);
-    }
+    componentStyles.addContentShimClass(element);
   }
 
   /// Called by change detector to apply correct host and content shimming
@@ -198,18 +187,13 @@ abstract class RenderView extends View {
   /// For example, through the `[class]="..."` or `[attr.class]="..."` syntax.
   @dart2js.noInline
   void updateChildClass(HtmlElement element, String newClass) {
-    final styles = componentStyles;
-    final shim = styles.usesStyleEncapsulation;
-    element.className = shim ? '$newClass ${styles.contentPrefix}' : newClass;
+    componentStyles.updateChildClassHtmlElement(element, newClass);
   }
 
   /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
   @dart2js.noInline
-  void updateChildClassNonHtml(Element element, String newClass) {
-    final styles = componentStyles;
-    final shim = styles.usesStyleEncapsulation;
-    updateAttribute(element, 'class',
-        shim ? '$newClass ${styles.contentPrefix}' : newClass);
+  void updateChildClassNonHtml(Element element, String? newClass) {
+    componentStyles.updateChildClass(element, newClass ?? '');
   }
 }
 
@@ -230,5 +214,5 @@ abstract class RenderViewData implements ViewData {
   /// Storage for subscriptions to any outputs in this view.
   ///
   /// These are cancelled when this is [destroyed].
-  List<StreamSubscription<void>> get subscriptions;
+  List<StreamSubscription<void>>? get subscriptions;
 }

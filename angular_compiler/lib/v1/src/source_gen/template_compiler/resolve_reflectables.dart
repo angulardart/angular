@@ -2,8 +2,8 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
-import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/cli.dart';
 
 /// Given the provided library, returns the [ReflectableOutput].
 ///
@@ -20,7 +20,7 @@ Future<ReflectableOutput> resolveReflectables({
   // Returns null if the URI is unsupported.
   AssetId tryResolvedAsset(String uri) {
     try {
-      return AssetId.resolve(uri, from: buildStep.inputId);
+      return AssetId.resolve(Uri.parse(uri), from: buildStep.inputId);
     } on UnsupportedError catch (_) {
       return null;
     }

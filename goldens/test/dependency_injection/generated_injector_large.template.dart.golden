@@ -1,0 +1,214 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'generated_injector_large.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'generated_injector_large.template.dart' as _ref0;
+import 'package:angular/src/di/injector.dart' as _i1;
+import 'generated_injector_large.dart' as _i2;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'generated_injector_large.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/generated_injector_large.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent(this.injector(0));
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+_i1.Injector doGenerate$Injector(_i1.Injector parent) => _Injector$doGenerate._(parent);
+
+class _Injector$doGenerate extends _i1.HierarchicalInjector implements _i1.Injector {
+  _Injector$doGenerate._(_i1.Injector parent) : super(parent);
+
+  _i2.BaseUtil? _field0;
+
+  _i2.AppUtil? _field1;
+
+  _i2.UtilA9? _field12;
+
+  _i2.UtilA8? _field13;
+
+  _i2.UtilA7? _field14;
+
+  _i2.UtilA6? _field15;
+
+  _i2.UtilA5? _field16;
+
+  _i2.UtilA4? _field17;
+
+  _i2.UtilA3? _field18;
+
+  _i2.UtilA2? _field19;
+
+  _i2.UtilA1? _field20;
+
+  _i2.UtilA0? _field21;
+
+  _i2.BaseUtil _getBaseUtil$0() => _field0 ??= _i2.BaseUtil();
+  _i2.AppUtil _getAppUtil$1() => _field1 ??= _i2.AppUtil(this.get(_i2.UtilB0), this.get(_i2.UtilB1), this.get(_i2.UtilB2), this.get(_i2.UtilB3), this.get(_i2.UtilB4), this.get(_i2.UtilB5), this.get(_i2.UtilB6), this.get(_i2.UtilB7), this.get(_i2.UtilB8), this.get(_i2.UtilB9));
+  Object _getExisting$2() => this.get(_i2.UtilA9);
+  Object _getExisting$3() => this.get(_i2.UtilA8);
+  Object _getExisting$4() => this.get(_i2.UtilA7);
+  Object _getExisting$5() => this.get(_i2.UtilA6);
+  Object _getExisting$6() => this.get(_i2.UtilA5);
+  Object _getExisting$7() => this.get(_i2.UtilA4);
+  Object _getExisting$8() => this.get(_i2.UtilA3);
+  Object _getExisting$9() => this.get(_i2.UtilA2);
+  Object _getExisting$10() => this.get(_i2.UtilA1);
+  Object _getExisting$11() => this.get(_i2.UtilA0);
+  _i2.UtilA9 _getUtilA9$12() => _field12 ??= _i2.UtilA9();
+  _i2.UtilA8 _getUtilA8$13() => _field13 ??= _i2.UtilA8();
+  _i2.UtilA7 _getUtilA7$14() => _field14 ??= _i2.UtilA7();
+  _i2.UtilA6 _getUtilA6$15() => _field15 ??= _i2.UtilA6();
+  _i2.UtilA5 _getUtilA5$16() => _field16 ??= _i2.UtilA5();
+  _i2.UtilA4 _getUtilA4$17() => _field17 ??= _i2.UtilA4();
+  _i2.UtilA3 _getUtilA3$18() => _field18 ??= _i2.UtilA3();
+  _i2.UtilA2 _getUtilA2$19() => _field19 ??= _i2.UtilA2();
+  _i2.UtilA1 _getUtilA1$20() => _field20 ??= _i2.UtilA1();
+  _i2.UtilA0 _getUtilA0$21() => _field21 ??= _i2.UtilA0();
+  _i1.Injector _getInjector$22() => this;
+  @override
+  Object? injectFromSelfOptional(Object token, [Object? orElse = _i1.throwIfNotFound]) {
+    if (identical(token, _i2.BaseUtil)) {
+      return _getBaseUtil$0();
+    }
+    if (identical(token, _i2.AppUtil)) {
+      return _getAppUtil$1();
+    }
+    if (identical(token, _i2.UtilB9)) {
+      return _getExisting$2();
+    }
+    if (identical(token, _i2.UtilB8)) {
+      return _getExisting$3();
+    }
+    if (identical(token, _i2.UtilB7)) {
+      return _getExisting$4();
+    }
+    if (identical(token, _i2.UtilB6)) {
+      return _getExisting$5();
+    }
+    if (identical(token, _i2.UtilB5)) {
+      return _getExisting$6();
+    }
+    if (identical(token, _i2.UtilB4)) {
+      return _getExisting$7();
+    }
+    if (identical(token, _i2.UtilB3)) {
+      return _getExisting$8();
+    }
+    if (identical(token, _i2.UtilB2)) {
+      return _getExisting$9();
+    }
+    if (identical(token, _i2.UtilB1)) {
+      return _getExisting$10();
+    }
+    if (identical(token, _i2.UtilB0)) {
+      return _getExisting$11();
+    }
+    if (identical(token, _i2.UtilA9)) {
+      return _getUtilA9$12();
+    }
+    if (identical(token, _i2.UtilA8)) {
+      return _getUtilA8$13();
+    }
+    if (identical(token, _i2.UtilA7)) {
+      return _getUtilA7$14();
+    }
+    if (identical(token, _i2.UtilA6)) {
+      return _getUtilA6$15();
+    }
+    if (identical(token, _i2.UtilA5)) {
+      return _getUtilA5$16();
+    }
+    if (identical(token, _i2.UtilA4)) {
+      return _getUtilA4$17();
+    }
+    if (identical(token, _i2.UtilA3)) {
+      return _getUtilA3$18();
+    }
+    if (identical(token, _i2.UtilA2)) {
+      return _getUtilA2$19();
+    }
+    if (identical(token, _i2.UtilA1)) {
+      return _getUtilA1$20();
+    }
+    if (identical(token, _i2.UtilA0)) {
+      return _getUtilA0$21();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$22();
+    }
+    return orElse;
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

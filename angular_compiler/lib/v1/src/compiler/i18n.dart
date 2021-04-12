@@ -1,11 +1,11 @@
 import 'package:source_span/source_span.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
+import 'package:angular_compiler/v2/context.dart';
 
 import 'i18n/builder.dart';
 import 'i18n/message.dart';
 import 'i18n/metadata.dart';
 import 'template_ast.dart' as ng;
-import 'template_parser.dart' show TemplateContext;
 
 export 'i18n/message.dart';
 export 'i18n/metadata.dart';
@@ -21,14 +21,13 @@ List<ng.TemplateAst> internationalize(
   ast.StandaloneTemplateAst parent,
   I18nMetadata metadata,
   int ngContentIndex,
-  TemplateContext context,
 ) {
-  final i18nMessage = _message(parent.childNodes, metadata, context);
+  final i18nMessage = _message(parent.childNodes, metadata);
   if (i18nMessage == null) {
-    context.reportError(
-      'Internationalized messages must contain text',
+    CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
       parent.sourceSpan,
-    );
+      'Internationalized messages must contain text',
+    ));
     return [];
   }
   return [
@@ -44,7 +43,6 @@ List<ng.TemplateAst> internationalize(
 I18nMessage _message(
   List<ast.StandaloneTemplateAst> nodes,
   I18nMetadata metadata,
-  TemplateContext context,
 ) {
   /// This disambiguation is important to ensure the message contents are
   /// properly escaped. The `I18nBuilder` used to construct messages does
@@ -52,7 +50,7 @@ I18nMessage _message(
   /// escaped later during code generation.
   return _isText(nodes)
       ? _textMessage(nodes.single as ast.TextAst, metadata)
-      : _htmlMessage(nodes, metadata, context);
+      : _htmlMessage(nodes, metadata);
 }
 
 /// Whether [nodes] contains only a plain text node.
@@ -63,9 +61,8 @@ bool _isText(List<ast.StandaloneTemplateAst> nodes) =>
 I18nMessage _htmlMessage(
   List<ast.StandaloneTemplateAst> nodes,
   I18nMetadata metadata,
-  TemplateContext context,
 ) {
-  final i18nBuilder = I18nBuilder(context);
+  final i18nBuilder = I18nBuilder();
   for (final child in nodes) {
     child.accept(i18nBuilder);
   }

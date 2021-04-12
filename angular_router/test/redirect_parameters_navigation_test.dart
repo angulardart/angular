@@ -1,6 +1,3 @@
-@TestOn('browser')
-import 'dart:async';
-
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
@@ -27,8 +24,7 @@ void main() {
 /// Returns any URL changes that occurred due to navigation.
 Future<List<String>> redirect(String from) async {
   final testBed =
-      NgTestBed.forComponent(ng.createTestRedirectComponentFactory())
-          .addInjector(injector);
+      NgTestBed(ng.createTestRedirectComponentFactory()).addInjector(injector);
   final testFixture = await testBed.create();
   final urlChanges = testFixture.assertOnlyInstance.locationStrategy.urlChanges;
   final router = testFixture.assertOnlyInstance.router;

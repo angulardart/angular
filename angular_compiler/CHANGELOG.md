@@ -1,11 +1,30 @@
 ## 1.0.1
 
-* Removed invalid link from the OnPush compatibility warning.
-* Update `package:analyzer` dependency to `^0.40.0`.
+*   Removed invalid link from the OnPush compatibility warning.
+*   Update `package:analyzer` dependency to `^0.40.0`.
 
 ## 1.0.0
 
-* Stable release.
+*   Stable release.
+
+*   Added a command-line flag, `catchMissingDirectives`, that when set warns
+    about missing directives or mispelled bindings.
+
+*   The old pipe syntax (`expression | pipeName:arg`) is removed. Please use the
+    new syntax for pipes (`$pipe.pipeName(expression, arg)`) instead.
+
+*   `sourceSpanWithLineInfo` now includes the surrounding source on the
+    highlighted line(s), with the correct line number(s).
+
+*   `FactoryProvider` admits static methods as its factory function. This is now
+    supported by `@GenerateInjector` and `ReflectiveInjector`.
+
+*   Hooks `NgContentRef` Api to Dart. An `<ng-content>` element can be treated
+    as a psudeo-DOM element and queried if it contains a reference.
+
+*   Template expressions are now parsed using `package:analyzer` and though the
+    subset of expressions supported largely has not changed some expressions
+    that were silently accepted before are now compile-time errors.
 
 ## 0.4.5
 

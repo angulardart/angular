@@ -1,11 +1,14 @@
-@TestOn('vm')
-import 'package:_tests/compiler.dart';
-import 'package:test/test.dart';
+// @dart=2.9
+
 import 'package:term_glyph/term_glyph.dart' as term_glyph;
+import 'package:test/test.dart';
+import 'package:_tests/compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
   setUpAll(() {
     term_glyph.ascii = true;
+    CompileContext.overrideForTesting();
   });
 
   test('should identify a possibly unresolvable directive', () async {
@@ -77,31 +80,14 @@ void main() {
       )
       class BadComp {
         @Input
-        String inValue;
+        String? inValue;
       }
     ''', warnings: [
-      allOf(contains('Annotation creation must have arguments'),
-          contains('Input'), containsSourceLocation(15, 9)),
-    ]);
-  });
-
-  test('should error on incorrect function annotations', () async {
-    await compilesExpecting('''
-      import '$ngImport';
-
-      @Directive(
-        selector: 'badProvider',
-        providers: [OopsProvider]
-      )
-      bool functionDirective() {}
-
-
-    ''', errors: [
       allOf(
-          contains('Compiling annotation @Directive'),
-          contains('Invalid constant value.'),
-          contains('providers: [OopsProvider]'),
-          containsSourceLocation(5, 21)), // pointing at OopsProvider
+        contains('Annotation creation must have arguments'),
+        contains('Input'),
+        containsSourceLocation(15, 9),
+      ),
     ]);
   });
 
@@ -121,9 +107,14 @@ void main() {
       class BadComp {}
     ''', errors: [
       allOf([
-        isNot(contains(
-            "The argument type 'int' can't be assigned to the parameter type 'String'")),
-        isNot(contains('neverMentionFour'))
+        isNot(
+          contains(
+            "The argument type 'int' can't be assigned to the parameter type 'String'",
+          ),
+        ),
+        isNot(
+          contains('neverMentionFour'),
+        )
       ]),
     ]);
   });
@@ -169,7 +160,7 @@ void main() {
 
   test('should identify an unresolved provider', () async {
     await compilesExpecting('''
-    import '$ngImport';
+      import '$ngImport';
 
       @Component(
         selector: 'bad-provider',
@@ -247,22 +238,6 @@ void main() {
     ]);
   });
 
-  test('should throw on missing selector', () async {
-    await compilesExpecting('''
-    import '$ngImport';
-
-    @Component(
-      template: 'boo'
-    )
-    class NoSelector {}
-    ''', errors: [
-      allOf([
-        contains('Selector is required, got "null"'),
-        containsSourceLocation(3, 5)
-      ])
-    ]);
-  });
-
   test('should throw on empty selector', () async {
     await compilesExpecting('''
     import '$ngImport';
@@ -336,6 +311,72 @@ void main() {
     ]);
   });
 
+  test('should bind events to local variables', () async {
+    await compilesExpecting("""
+      import '$ngImport';
+
+      @Component(
+        selector: 'hero',
+        template: '<div *ngFor="let cb of callbacks"><button (click)="cb()">X</button></div>',
+        directives: [NgFor]
+      )
+      class HeroComponent {
+        final callbacks = [() => print("Hello"), () => print("Hi")];
+      }
+    """, errors: [
+      allOf(
+        contains('Expected method for event binding'),
+        containsSourceLocation(1, 43),
+      )
+    ]);
+  });
+
+  test('<ng-content> should compile as expected', () async {
+    await compilesNormally("""
+      import '$ngImport';
+
+      @Component(
+        selector: 'foo',
+        template: '<ng-content select="[highlight]"></ng-content>',
+      )
+      class FooAComponent {}
+
+      @Component(
+        selector: 'foo[box]',
+        providers: [ExistingProvider(FooAComponent, FooBComponent)],
+        template: '',
+      )
+      class FooBComponent {}
+
+      @Component(
+        selector: 'test',
+        template: '<foo @skipSchemaValidationFor="[box]" box><p highlight>bar</p></foo>',
+        directives: [FooAComponent, FooBComponent],
+      )
+      class TestComponent {}
+    """);
+  });
+
+  test('should support generic component with dynamic type argument', () {
+    return compilesNormally('''
+      import '$ngImport';
+
+      @Component(
+        selector: 'generic',
+        template: '',
+      )
+      class GenericComponent<T> {}
+
+      @Component(
+        selector: 'test',
+        template: '<generic></generic>',
+        directives: [GenericComponent],
+        directiveTypes: [Typed<GenericComponent<dynamic>>()],
+      )
+      class TestComponent {}
+    ''');
+  });
+
   group('providers', () {
     test('should error on invalid token', () async {
       await compilesExpecting('''
@@ -350,8 +391,12 @@ void main() {
       )
       class BadComponent {}
     ''', errors: [
-        allOf(contains('A provider\'s token field failed to compile'),
-            containsSourceLocation(5, 7)), // pointing at @Component
+        allOf(
+          contains(
+            'Evaluation of this constant expression throws an exception',
+          ),
+          containsSourceLocation(8, 21),
+        ),
       ]);
     });
 
@@ -367,8 +412,13 @@ void main() {
       )
       class BadComponent {}
     ''', errors: [], warnings: [
-        allOf(contains('Expected to find class in provider list'),
-            containsSourceLocation(4, 7)), // pointing at @Component
+        allOf(
+          contains('Expected to find class in provider list'),
+          containsSourceLocation(
+            4,
+            7,
+          ),
+        ), // pointing at @Component
       ]);
     });
 
@@ -386,13 +436,16 @@ void main() {
       )
       class BadComponent {}
     ''', errors: [
-        allOf(contains('Provider.useClass can only be used with a class'),
-            containsSourceLocation(6, 7)) // pointing at @Component
+        allOf(
+          contains('Provider.useClass can only be used with a class'),
+          containsSourceLocation(6, 7),
+        ) // pointing at @Component
       ]);
     });
 
     test('should error on when useFactory is not a function', () async {
-      await compilesExpecting('''
+      await compilesExpecting(
+        '''
       import '$ngImport';
 
       class ToProvide {}
@@ -403,7 +456,87 @@ void main() {
         providers: [FactoryProvider(ToProvide, ToProvide)]
       )
       class BadComponent {}
-    ''', errors: [allOf(contains('ToProvide'), containsSourceLocation(8, 48))]);
+    ''',
+        errors: [
+          allOf(
+            contains('ToProvide'),
+            containsSourceLocation(8, 48),
+          ),
+        ],
+      );
     });
+
+    test('should still warn when useClass: is used with an interface',
+        () async {
+      await compilesExpecting("""
+      import '$ngImport';
+
+      abstract class JustAnInterface {}
+
+      @Component(
+        selector: 'comp',
+        provides: const [
+          const Provider(JustAnInterface, useClass: JustAnInterface),
+        ],
+        template: '',
+      )
+      class Comp {}
+    """, warnings: [
+        contains('Found a constructor for an abstract class JustAnInterface'),
+      ]);
+    },
+        skip:
+            'This fails both before AND after the fix for #906. Fixing after.');
+
+    test('should still warn when using a type implicitly as useClass:',
+        () async {
+      await compilesExpecting("""
+      import '$ngImport';
+
+      abstract class JustAnInterface {}
+
+      @Component(
+        selector: 'comp',
+        provides: const [
+          JustAnInterface,
+        ],
+        template: '',
+      )
+      class Comp {}
+    """, warnings: [
+        contains('Found a constructor for an abstract class JustAnInterface'),
+      ]);
+    },
+        skip:
+            'This fails both before AND after the fix for #906. Fixing after.');
+  });
+
+  test('test', () async {
+    final wrongType = 'Model Function()';
+    await compilesExpecting("""
+      import '$ngImport';
+
+      @Injectable()
+      class Model {}
+
+      @Injectable()
+      class TypeUndefined {
+        final $wrongType _model;
+
+        TypeUndefined(this._model);
+      }
+
+      @Component(
+        selector: 'test',
+        template: '',
+        providers: [ClassProvider(TypeUndefined)],
+      )
+      class TypeUndefinedComp {
+        final _type;
+        TypeUndefinedComp(this._type);
+      }
+    """, errors: [
+      contains('A function type: $wrongType is not recognized'),
+    ]);
   });
 }

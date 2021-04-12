@@ -27,16 +27,17 @@ abstract class RecursiveTemplateVisitor<C>
   @mustCallSuper
   TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) =>
       EmbeddedTemplateAst(
-          visitAll(ast.attrs, context),
-          visitAll(ast.references, context),
-          visitAll(ast.variables, context),
-          visitAll(ast.directives, context),
-          visitAll(ast.providers, context),
-          ast.elementProviderUsage,
-          visitAll(ast.children, context),
-          ast.ngContentIndex,
-          ast.sourceSpan,
-          hasDeferredComponent: ast.hasDeferredComponent);
+        visitAll(ast.attrs, context),
+        visitAll(ast.references, context),
+        visitAll(ast.variables, context),
+        visitAll(ast.directives, context),
+        visitAll(ast.providers, context),
+        ast.elementProviderUsage,
+        visitAll(ast.children, context),
+        ast.ngContentIndex,
+        ast.sourceSpan,
+        ast.matchedNgContentSelectors,
+      );
 
   @override
   @mustCallSuper
@@ -51,7 +52,8 @@ abstract class RecursiveTemplateVisitor<C>
       ast.elementProviderUsage,
       visitAll(ast.children, context),
       ast.ngContentIndex,
-      ast.sourceSpan);
+      ast.sourceSpan,
+      ast.matchedNgContentSelectors);
 
   @override
   @mustCallSuper

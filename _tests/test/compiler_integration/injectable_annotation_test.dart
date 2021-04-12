@@ -1,8 +1,12 @@
-@TestOn('vm')
-import 'package:_tests/compiler.dart';
+// @dart=2.9
+
 import 'package:test/test.dart';
+import 'package:_tests/compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   test('should fail on an @Injectable private class', () async {
     await compilesExpecting("""
       import '$ngImport';
@@ -24,6 +28,34 @@ void main() {
 
       @Injectable()
       class HeroService {}
+    """);
+  });
+
+  test('should not warn about @Injectable for classes not injected', () async {
+    // See https://github.com/dart-lang/angular/issues/906.
+    await compilesNormally("""
+      import '$ngImport';
+
+      abstract class JustAnInterface {}
+
+      const providesAnInterface = const ExistingProvider<JustAnInterface>(
+        JustAnInterface,
+        ConcreteClass,
+      );
+
+      @Component(
+        selector: 'comp',
+        providers: const [
+          providesAnInterface,
+        ],
+        template: '',
+      )
+      class ConcreteClass implements JustAnInterface {}
+
+      @Injectable()
+      class InjectsAnInterface {
+        InjectsAnInterface(JustAnInterface _);
+      }
     """);
   });
 }

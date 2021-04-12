@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 
 import '../../ast.dart';
@@ -19,14 +15,14 @@ abstract class BananaAst implements TemplateAst {
   /// Create a new synthetic [BananaAst] with a string [field].
   factory BananaAst(
     String name, [
-    String field,
+    String? field,
   ]) = _SyntheticBananaAst;
 
   /// Create a new synthetic [BananaAst] that originated from node [origin].
   factory BananaAst.from(
     TemplateAst origin,
     String name, [
-    String field,
+    String? field,
   ]) = _SyntheticBananaAst.from;
 
   /// Create a new [BananaAst] parsed from tokens from [sourceFile].
@@ -35,12 +31,12 @@ abstract class BananaAst implements TemplateAst {
     NgToken prefixToken,
     NgToken elementDecoratorToken,
     NgToken suffixToken,
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ) = ParsedBananaAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitBanana(this, context);
   }
 
@@ -59,7 +55,7 @@ abstract class BananaAst implements TemplateAst {
   String get name;
 
   /// Value bound to.
-  String get value;
+  String? get value;
 
   @override
   String toString() {
@@ -89,11 +85,11 @@ class ParsedBananaAst extends TemplateAst
   /// [NgAttributeValueToken] that represents `"value"`; may be `null` to have
   /// no value.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token; may be `null` to have
   /// no value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedBananaAst(
     SourceFile sourceFile,
@@ -117,19 +113,19 @@ class ParsedBananaAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` to have no value.
   @override
-  int get equalSignOffset => equalSignToken?.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Value bound to banana property; may be `null` to have no value.
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   /// Offset of value; may be `null` to have no value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of value starting at left quote; may be `null` to have no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of banana prefix `[(`.
   @override
@@ -145,7 +141,7 @@ class _SyntheticBananaAst extends SyntheticTemplateAst with BananaAst {
   final String name;
 
   @override
-  final String value;
+  final String? value;
 
   _SyntheticBananaAst(this.name, [this.value]);
 

@@ -2,7 +2,15 @@
 
 ## 2.0.0
 
-* Stable release.
+*   Stable release.
+
+### Bug fixes
+
+* Fixed a bug where `MockLocationStrategy.back()` returned the wrong URL
+  after calling `replaceState()`.
+
+* Blocking a navigation triggered by a location change will no longer throw a
+  null error when all prior navigation requests have also been blocked.
 
 ## 2.0.0-alpha+24
 

@@ -1,4 +1,3 @@
-import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;
@@ -12,12 +11,6 @@ class _ViewNameResolverState {
   final Map<String, o.OutputType> localTypes = {};
   final Map<String, o.DeclareVarStmt> localDeclarations = {};
   final CompileView view;
-
-  /// Used to generate unique field names for literal list bindings.
-  var literalListCount = 0;
-
-  /// Used to generate unique field names for literal map bindings.
-  var literalMapCount = 0;
 
   /// Used to generate unique field names for property bindings.
   var bindingCount = 0;
@@ -96,59 +89,8 @@ class ViewNameResolver implements NameResolver {
   }
 
   @override
-  o.Expression createLiteralList(
-    List<o.Expression> values, {
-    o.OutputType type,
-  }) {
-    if (values.isEmpty) {
-      return o.importExpr(Identifiers.emptyListLiteral);
-    }
-    final proxyFieldName = '_arr_${_state.literalListCount++}';
-    final proxyExpr = o.ReadClassMemberExpr(proxyFieldName);
-    final proxyParams = <o.FnParam>[];
-    final proxyReturnEntries = <o.Expression>[];
-    final valueCount = values.length;
-    for (var i = 0; i < valueCount; i++) {
-      final paramName = 'p$i';
-      proxyParams.add(o.FnParam(paramName));
-      proxyReturnEntries.add(o.variable(paramName));
-    }
-    final listType = _createListTypeFrom(type);
-    final pureProxyType = o.FunctionType(
-      listType,
-      List.filled(valueCount, listType.of),
-    );
-    _state.view.createPureProxy(
-      o.fn(
-        proxyParams,
-        [o.ReturnStatement(o.literalArr(proxyReturnEntries))],
-        o.ArrayType(o.DYNAMIC_TYPE),
-      ),
-      valueCount,
-      proxyExpr,
-      pureProxyType: pureProxyType,
-    );
-    return proxyExpr.callFn(values);
-  }
-
-  @override
   int createUniqueBindIndex() => _state.bindingCount++;
 
   @override
   ViewNameResolver scope() => ViewNameResolver._scope(_state);
-}
-
-/// Creates a List<T> type assignable to [type].
-///
-/// It's possible that [type] can't be assigned a list, in which case we rely on
-/// analysis of the generated code to report the incompatibility.
-o.ArrayType _createListTypeFrom(o.OutputType type) {
-  if (type is o.ExternalType &&
-      type.typeParams.isNotEmpty &&
-      (type.value.name == 'List' ||
-          type.value.name == 'Iterable' ||
-          type.value.name == 'dynamic')) {
-    return o.ArrayType(type.typeParams.first);
-  }
-  return o.ArrayType(o.DYNAMIC_TYPE);
 }

@@ -1,9 +1,7 @@
-@TestOn('browser')
-
+import 'package:test/test.dart';
+import 'package:_tests/query_tests.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:_tests/query_tests.dart';
-import 'package:test/test.dart';
 
 import 'query_content_test.template.dart' as ng;
 
@@ -13,7 +11,7 @@ void main() {
   group('List', () {
     testContentChildren(
       contentChildren: TestCase(
-        NgTestBed.forComponent(ng.createTestContentChildrenListFactory()),
+        NgTestBed(ng.createTestContentChildrenListFactory()),
         [1, 2, 3],
       ),
     );
@@ -27,7 +25,7 @@ void main() {
 class ContentChildrenComponent extends HasChildren<ValueDirective> {
   @override
   @ContentChildren(ValueDirective)
-  List actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -37,7 +35,7 @@ class ContentChildrenComponent extends HasChildren<ValueDirective> {
 class ContentChildComponent extends HasChild<ValueDirective> {
   @override
   @ContentChild(ValueDirective)
-  ValueDirective child;
+  ValueDirective? child;
 }
 
 @Component(
@@ -56,10 +54,10 @@ class ContentChildComponent extends HasChild<ValueDirective> {
 )
 class TestContentChildren extends HasChildren<ValueDirective> {
   @ViewChild('comp')
-  HasChildren<ValueDirective> content;
+  HasChildren<ValueDirective>? content;
 
   @override
-  List get actualChildren => content.actualChildren;
+  List<ValueDirective>? get children => content!.children;
 }
 
 @Component(
@@ -76,10 +74,10 @@ class TestContentChildren extends HasChildren<ValueDirective> {
 )
 class TestContentChild extends HasChild<ValueDirective> {
   @ViewChild('comp')
-  HasChild<ValueDirective> content;
+  HasChild<ValueDirective>? content;
 
   @override
-  ValueDirective get child => content.child;
+  ValueDirective? get child => content!.child;
 }
 
 @Component(
@@ -89,7 +87,7 @@ class TestContentChild extends HasChild<ValueDirective> {
 class ContentChildrenComponentList extends HasChildren<ValueDirective> {
   @override
   @ContentChildren(ValueDirective)
-  List<ValueDirective> actualChildren;
+  List<ValueDirective>? children;
 }
 
 @Component(
@@ -108,8 +106,8 @@ class ContentChildrenComponentList extends HasChildren<ValueDirective> {
 )
 class TestContentChildrenList extends HasChildren<ValueDirective> {
   @ViewChild('comp')
-  HasChildren<ValueDirective> content;
+  HasChildren<ValueDirective>? content;
 
   @override
-  List<ValueDirective> get actualChildren => content.actualChildren;
+  List<ValueDirective>? get children => content!.children;
 }

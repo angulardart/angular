@@ -4,12 +4,10 @@ import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
-import 'package:angular_compiler/v1/src/compiler/parse_util.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/binding_converter.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart' as ast;
 import 'package:angular_compiler/v1/src/compiler/template_parser.dart';
-import 'package:angular_compiler/v1/cli.dart';
 
 /// Converts [CompileDirectiveMetadata] objects into
 /// [ir.Directive] instances.
@@ -42,23 +40,10 @@ class DirectiveConverter {
         ast.BoundExpression(ast.ASTWithSource.missingSource(expression)),
         _emptySpan,
         _schemaRegistry,
-        _reportError,
       );
     }).toList();
 
     return convertAllToBinding(hostProperties, analyzedClass: analyzedClass);
-  }
-
-  static void _reportError(
-    String message,
-    SourceSpan sourceSpan, [
-    ParseErrorLevel level,
-  ]) {
-    if (level == ParseErrorLevel.FATAL) {
-      throwFailure(message);
-    } else {
-      logWarning(message);
-    }
   }
 
   static const _securityContextElementName = 'div';

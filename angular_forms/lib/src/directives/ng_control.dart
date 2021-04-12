@@ -9,13 +9,20 @@ import 'validators.dart' show ValidatorFn;
 ///
 /// Used internally by Angular forms.
 abstract class NgControl extends AbstractControlDirective<Control> {
-  ControlValueAccessor valueAccessor;
+  ControlValueAccessor<dynamic>? valueAccessor;
 
-  final ValidatorFn validator;
+  final ValidatorFn? validator;
 
   void viewToModelUpdate(dynamic newValue);
 
-  NgControl(List<ControlValueAccessor> valueAccessors, List validators)
-      : valueAccessor = selectValueAccessor(valueAccessors),
+  /// Updates from the view itself.
+  ///
+  /// Equivalent to the ngModelChange Output.
+  Stream<dynamic> get update;
+
+  NgControl(
+    List<ControlValueAccessor<dynamic>>? valueAccessors,
+    List<dynamic>? validators,
+  )   : valueAccessor = selectValueAccessor(valueAccessors),
         validator = composeValidators(validators);
 }

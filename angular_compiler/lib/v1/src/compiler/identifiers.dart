@@ -14,6 +14,21 @@ const _ngForUrl = '$_angularLib/src/common/directives/ng_for.dart';
 const _profileRuntimeModuleUrl = '$_angularLib/src/debug/profile_runtime.dart';
 const _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 
+/// Identifiers for generating code that supports developer tooling.
+class DevTools {
+  static const _moduleUrl = '$_angularLib/src/devtools.dart';
+
+  static final componentInspector = CompileIdentifierMetadata(
+    name: 'ComponentInspector.instance',
+    moduleUrl: _moduleUrl,
+  );
+
+  static final isDevToolsEnabled = CompileIdentifierMetadata(
+    name: 'isDevToolsEnabled',
+    moduleUrl: _moduleUrl,
+  );
+}
+
 /// A collection of methods for manipulating the DOM from generated code.
 class DomHelpers {
   const DomHelpers._();
@@ -94,12 +109,17 @@ class Interpolation {
   }
 
   static final interpolate = List<CompileIdentifierMetadata>.generate(
-    10,
+    3,
     _interpolate,
   );
 
+  static final interpolateFallback = CompileIdentifierMetadata(
+    name: 'interpolateN',
+    moduleUrl: _moduleUrl,
+  );
+
   static final interpolateString = List<CompileIdentifierMetadata>.generate(
-    10,
+    3,
     _interpolateString,
   );
 
@@ -110,28 +130,29 @@ class Interpolation {
 }
 
 class Runtime {
-  static const _moduleUrl = '$_angularLib/src/runtime.dart';
+  static const _runtimeUrl = '$_angularLib/src/utilities.dart';
+  static const _checkBindingUrl = '$_angularLib/src/runtime/check_binding.dart';
 
   const Runtime._();
 
   static final checkBinding = CompileIdentifierMetadata(
     name: 'checkBinding',
-    moduleUrl: _moduleUrl,
+    moduleUrl: _checkBindingUrl,
   );
 
   static final debugThrowIfChanged = CompileIdentifierMetadata(
     name: 'debugThrowIfChanged',
-    moduleUrl: _moduleUrl,
+    moduleUrl: _checkBindingUrl,
   );
 
   static final isDevMode = CompileIdentifierMetadata(
     name: 'isDevMode',
-    moduleUrl: _moduleUrl,
+    moduleUrl: _runtimeUrl,
   );
 
   static final unsafeCast = CompileIdentifierMetadata(
     name: 'unsafeCast',
-    moduleUrl: _moduleUrl,
+    moduleUrl: _runtimeUrl,
   );
 }
 
@@ -151,9 +172,31 @@ class Queries {
   );
 }
 
+class SafeHtmlAdapters {
+  static const _moduleUrl = '$_angularLib/src/security/safe_html_adapter.dart';
+  static final sanitizeHtml = CompileIdentifierMetadata(
+    name: 'sanitizeHtml',
+    moduleUrl: _moduleUrl,
+  );
+  static final sanitizeStyle = CompileIdentifierMetadata(
+    name: 'sanitizeStyle',
+    moduleUrl: _moduleUrl,
+  );
+  static final sanitizeUrl = CompileIdentifierMetadata(
+    name: 'sanitizeUrl',
+    moduleUrl: _moduleUrl,
+  );
+  static final sanitizeResourceUrl = CompileIdentifierMetadata(
+    name: 'sanitizeResourceUrl',
+    moduleUrl: _moduleUrl,
+  );
+}
+
 class Identifiers {
   static final appViewUtils = CompileIdentifierMetadata(
-      name: 'appViewUtils', moduleUrl: _appViewUtilsModuleUrl);
+    name: 'appViewUtils',
+    moduleUrl: _appViewUtilsModuleUrl,
+  );
   static final ViewContainer = CompileIdentifierMetadata(
       name: 'ViewContainer',
       moduleUrl: 'asset:angular/lib/src/core/linker/view_container.dart');
@@ -190,8 +233,7 @@ class Identifiers {
       moduleUrl: 'asset:angular/lib/src/core/linker/template_ref.dart');
   static final TemplateRefToken = identifierToken(Identifiers.TemplateRef);
   static final Injector = CompileIdentifierMetadata(
-      name: 'Injector',
-      moduleUrl: 'asset:angular/lib/src/di/injector/injector.dart');
+      name: 'Injector', moduleUrl: 'asset:angular/lib/src/di/injector.dart');
   static final InjectorToken = identifierToken(Identifiers.Injector);
   static final ViewType = CompileIdentifierMetadata(
       name: 'ViewType',
@@ -205,8 +247,6 @@ class Identifiers {
       name: 'profileMarkStart', moduleUrl: _profileRuntimeModuleUrl);
   static final profileMarkEnd = CompileIdentifierMetadata(
       name: 'profileMarkEnd', moduleUrl: _profileRuntimeModuleUrl);
-  static final loadDeferred = CompileIdentifierMetadata(
-      name: 'loadDeferred', moduleUrl: _appViewUtilsModuleUrl);
   static final debugInjectorEnter = CompileIdentifierMetadata(
       name: 'debugInjectorEnter', moduleUrl: _debugInjectorModuleUrl);
   static final debugInjectorLeave = CompileIdentifierMetadata(
@@ -216,8 +256,6 @@ class Identifiers {
 
   static final createTrustedHtml = CompileIdentifierMetadata(
       name: 'createTrustedHtml', moduleUrl: _appViewUtilsModuleUrl);
-  static final emptyListLiteral = CompileIdentifierMetadata(
-      name: 'emptyListLiteral', moduleUrl: _proxiesModuleUrl);
   static final pureProxies = [
     null,
     CompileIdentifierMetadata(name: 'pureProxy1', moduleUrl: _proxiesModuleUrl),
@@ -325,6 +363,7 @@ class Identifiers {
     name: 'NgContentRef',
     moduleUrl: 'asset:angular/lib/src/core/linker/ng_content_ref.dart',
   );
+  static final NgContentRefToken = identifierToken(Identifiers.NgContentRef);
 }
 
 CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {

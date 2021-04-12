@@ -1,6 +1,5 @@
-@TestOn('browser')
-import 'package:angular/angular.dart';
 import 'package:test/test.dart';
+import 'package:angular/angular.dart';
 
 import 'injector_use_value_test.template.dart' as ng;
 
@@ -8,9 +7,9 @@ import 'injector_use_value_test.template.dart' as ng;
 //
 // These tend to be complicated and more isolated than other code.
 void main() {
-  Injector injector;
+  late Injector injector;
 
-  setUp(() => injector = example());
+  setUp(() => injector = example(Injector.empty()));
 
   group('should resolve useValue: targeting a', () {
     test('class with a const constructor', () {
@@ -56,18 +55,26 @@ void main() {
     });
 
     test('top-level function', () {
-      IntIdentityFn fn = injector.get(intIdentityToken);
+      final fn = injector.provideToken(intIdentityToken);
       expect(fn(1), 1);
     });
 
     test('static-level method', () {
-      StringIdentityFn fn = injector.get(stringIdentityToken);
+      final fn = injector.provideToken(stringIdentityToken);
       expect(fn('a'), 'a');
     });
 
-    test('raw string', () {
-      String raw = injector.get(stringRawToken);
-      expect(raw, r'$5.00 USD');
+    test('various strings', () {
+      final s1 = injector.provideToken(stringRawToken);
+      expect(s1, r'$5.00 USD');
+      final s2 = injector.provideToken(singleQuoteToken);
+      expect(s2, "It's Mine. My Own. My Precious.");
+      final s3 = injector.provideToken(escapeTokenToken);
+      expect(s3, 'A new\nline');
+      final s4 = injector.provideToken(unicodeToken);
+      expect(s4, '\u{0000}');
+      final s5 = injector.provideToken(rarerEscapeToken);
+      expect(s5, '\t\r\\');
     });
   });
 }
@@ -114,7 +121,23 @@ const stringIdentityToken = OpaqueToken<StringIdentityFn>();
   ValueProvider.forToken(
     stringRawToken,
     r'$5.00 USD',
-  )
+  ),
+  ValueProvider.forToken(
+    singleQuoteToken,
+    "It's Mine. My Own. My Precious.",
+  ),
+  ValueProvider.forToken(
+    escapeTokenToken,
+    'A new\nline',
+  ),
+  ValueProvider.forToken(
+    unicodeToken,
+    '\u{0000}',
+  ),
+  ValueProvider.forToken(
+    rarerEscapeToken,
+    '\t\r\\',
+  ),
 ])
 final InjectorFactory example = ng.example$Injector;
 
@@ -165,3 +188,7 @@ class StaticClass {
 }
 
 const stringRawToken = OpaqueToken<String>('stringRawToken');
+const singleQuoteToken = OpaqueToken<String>('singleQuoteToken');
+const escapeTokenToken = OpaqueToken<String>('escapeTokenToken');
+const unicodeToken = OpaqueToken<String>('unicodeToken');
+const rarerEscapeToken = OpaqueToken<String>('rarerEscapeToken');

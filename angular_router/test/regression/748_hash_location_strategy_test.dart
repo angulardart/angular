@@ -1,11 +1,12 @@
-@TestOn('browser')
+// @dart=2.9
+
 import 'dart:html';
 
+import 'package:mockito/mockito.dart';
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:test/test.dart';
 
 import '748_hash_location_strategy_test.template.dart' as ng;
 
@@ -19,7 +20,7 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('browser location should match clicked href', () async {
-    final testBed = NgTestBed.forComponent(ng.createAppComponentFactory(),
+    final testBed = NgTestBed(ng.createAppComponentFactory(),
         rootInjector: injectorFactory);
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.anchor.getAttribute('href'), '#/foo');

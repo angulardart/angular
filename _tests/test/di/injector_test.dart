@@ -1,11 +1,12 @@
 // ignore_for_file: invalid_use_of_protected_member
-@TestOn('browser')
-import 'package:angular/angular.dart';
-import 'package:angular/src/di/injector/hierarchical.dart';
-import 'package:angular/src/di/injector/injector.dart';
+
 import 'package:test/test.dart';
-import 'package:angular/src/di/reflector.dart' as reflector;
 import 'package:_tests/matchers.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/experimental.dart';
+import 'package:angular/src/di/injector.dart';
+import 'package:angular/src/reflector.dart' as reflector;
+import 'package:angular_test/angular_test.dart';
 
 import 'injector_test.template.dart' as ng;
 
@@ -21,7 +22,7 @@ void main() {
     });
 
     group('.get should delegate', () {
-      CaptureInjectInjector injector;
+      late CaptureInjectInjector injector;
 
       setUp(() => injector = CaptureInjectInjector());
 
@@ -78,7 +79,7 @@ void main() {
 
       test('should throw a readable message even with a parent injector', () {
         final parent = Injector.empty();
-        final child = Injector.empty(parent);
+        final child = Injector.map({}, parent);
         expect(
           () => child.get(ExampleService),
           throwsA(
@@ -100,7 +101,7 @@ void main() {
       test('should fallback to the parent injector if provided', () {
         final instance = ExampleService();
         final parent = Injector.map({ExampleService: instance});
-        final i = Injector.empty(parent);
+        final i = Injector.map({}, parent);
         expect(i.get(ExampleService), instance);
         expect(i.provideType<ExampleService>(ExampleService), instance);
         expect(
@@ -220,11 +221,12 @@ void main() {
       });
 
       test('should resolve a multi binding', () {
+        final fooBar = MultiToken<Object>('fooBar');
         final i = ReflectiveInjector.resolveAndCreate([
-          Provider(#fooBar, useValue: 1, multi: true),
-          Provider(#fooBar, useValue: 2, multi: true),
+          Provider(fooBar, useValue: 1),
+          Provider(fooBar, useValue: 2),
         ]);
-        expect(i.get(#fooBar), [1, 2]);
+        expect(i.get(fooBar), [1, 2]);
       });
 
       test('should resolve @Optional', () {
@@ -266,7 +268,7 @@ void main() {
           B,
           Provider(C, useValue: newC),
         ]);
-        final newB = child1.get(B);
+        final newB = child1.provideType<B>(B);
         expect(newB.c, newC, reason: 'Expected a new "C" binding');
         final child2 = child1.resolveAndCreateChild([
           Provider(B, useValue: newB),
@@ -274,23 +276,6 @@ void main() {
         final newA = child2.get(A);
         expect(newA.b, isNot(newB), reason: 'Expected an old "B" binding');
         expect(newA.b.c, oldC, reason: 'Expected an old "C" binding');
-      });
-
-      test('should reify a MultiProvider<T> in strong-mode runtimes', () {
-        const usPresidents = OpaqueToken<String>('usPresidents');
-        final injector = ReflectiveInjector.resolveAndCreate([
-          const Provider<String>(
-            usPresidents,
-            useValue: 'George W.',
-            multi: true,
-          ),
-          const Provider<String>(
-            usPresidents,
-            useValue: 'Abraham L.',
-            multi: true,
-          ),
-        ]);
-        expect(injector.get(usPresidents), const TypeMatcher<List<String>>());
       });
 
       test('should support MultiToken instead of multi: true', () {
@@ -358,7 +343,7 @@ void main() {
         final injector = ReflectiveInjector.resolveAndCreate([
           Provider(
             ExampleService,
-            useFactory: (Null willNeverBeCalled) => null,
+            useFactory: (void willNeverBeCalled) => null,
             deps: const [ExampleService2],
           ),
         ]);
@@ -383,12 +368,12 @@ void main() {
         final injector = ReflectiveInjector.resolveAndCreate([
           Provider(
             ExampleService,
-            useFactory: (Null willNeverBeCalled) => null,
+            useFactory: (void willNeverBeCalled) => null,
             deps: const [ExampleService2],
           ),
           Provider(
             ExampleService2,
-            useFactory: (Null willNeverBeCalled) => null,
+            useFactory: (void willNeverBeCalled) => null,
             deps: const [ExampleService3, ExampleService4],
           ),
           Provider(
@@ -414,7 +399,7 @@ void main() {
           const Provider(baseUrl, useValue: 'https://site.com/api/'),
           InjectsBaseUrl,
         ]);
-        final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
+        final service = injector.provideType<InjectsBaseUrl>(InjectsBaseUrl);
         expect(service.url, 'https://site.com/api/');
       });
 
@@ -424,7 +409,9 @@ void main() {
           InjectsXsrfToken,
         ]);
         expect(injector.get(const XsrfToken()), 'ABC123');
-        final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
+        final service = injector.provideType<InjectsXsrfToken>(
+          InjectsXsrfToken,
+        );
         expect(service.token, 'ABC123');
       });
 
@@ -452,7 +439,7 @@ void main() {
     });
 
     group('.generate', () {
-      final injector = exampleGenerated();
+      final injector = exampleGenerated(Injector.empty());
 
       test('should consider Provider(T) as Provider(T, useClass: T)', () {
         expect(
@@ -556,29 +543,39 @@ void main() {
       });
 
       test('should treat an OpaqueToken identical to @Inject', () {
-        final InjectsBaseUrl service = injector.get(InjectsBaseUrl);
+        final service = injector.provideType<InjectsBaseUrl>(InjectsBaseUrl);
         expect(service.url, 'https://site.com/api/');
       });
 
       test('should support a user type that extends OpaqueToken', () {
         expect(injector.get(const XsrfToken()), 'ABC123');
-        final InjectsXsrfToken service = injector.get(InjectsXsrfToken);
+        final service = injector.provideType<InjectsXsrfToken>(
+          InjectsXsrfToken,
+        );
         expect(service.token, 'ABC123');
       });
 
       test('should support Module', () {
         expect(
-          exampleFromModule().get(ExampleService),
+          exampleFromModule(Injector.empty()).get(ExampleService),
           const TypeMatcher<ExampleService2>(),
         );
       });
 
       test('should support arbitrary const values in ValueProvider', () {
-        final injector = valueProviderExamples();
-        TestConstNoArgs c1 = injector.get(TestConstNoArgs);
-        TestConstPositionalArgs c2 = injector.get(TestConstPositionalArgs);
-        TestConstNamedArgs c3 = injector.get(TestConstNamedArgs);
-        TestConstNamedArgs2 c4 = injector.get(TestConstNamedArgs2);
+        final injector = valueProviderExamples(Injector.empty());
+        final c1 = injector.provideType<TestConstNoArgs>(
+          TestConstNoArgs,
+        );
+        final c2 = injector.provideType<TestConstPositionalArgs>(
+          TestConstPositionalArgs,
+        );
+        final c3 = injector.provideType<TestConstNamedArgs>(
+          TestConstNamedArgs,
+        );
+        final c4 = injector.provideType<TestConstNamedArgs2>(
+          TestConstNamedArgs2,
+        );
         expect(c1, isNotNull);
         expect(c2, isNotNull);
         expect(c2.name, '$TestConstPositionalArgs');
@@ -590,22 +587,148 @@ void main() {
     });
 
     test('should de-duplicate tokens preferring the last provider', () {
-      final injector = tokenOrdering();
+      final injector = tokenOrdering(Injector.empty());
       expect(injector.get(duplicateToken), 'B');
       expect(injector.get(duplicateMulti), ['A', 'B']);
     });
+
+    group('Dynamic (uses initReflector)', () {
+      late ReflectiveInjector parentInjector;
+
+      setUp(() {
+        parentInjector = ReflectiveInjector.resolveAndCreate([
+          ClassProvider(Model),
+          ValueProvider(Place, Place('Parent')),
+        ]);
+      });
+
+      test('should have the expected bindings at the parent level', () {
+        expect((parentInjector.get(Model) as Model).place.name, 'Parent');
+      });
+
+      test('should have the expected bindings at the child level', () {
+        final childInjector = parentInjector.resolveAndCreateChild([
+          ValueProvider(Place, Place('Child')),
+        ]);
+        expect(
+          // ignore: deprecated_member_use
+          (childInjector.resolveAndInstantiate(Model) as Model).place.name,
+          'Child',
+        );
+      });
+    });
+
+    group('Static (no initReflector)', () {
+      late ReflectiveInjector parentInjector;
+
+      final modelProvider = FactoryProvider(
+        Model,
+        (Place place) => Model(place),
+        deps: const [Place],
+      );
+
+      setUp(() {
+        parentInjector = ReflectiveInjector.resolveStaticAndCreate([
+          modelProvider,
+          ValueProvider(Place, Place('Parent')),
+        ]);
+      });
+
+      test('should have the expected bindings at the parent level', () {
+        expect((parentInjector.get(Model) as Model).place.name, 'Parent');
+      });
+
+      test('should have the expected bindings at the child level', () {
+        final childInjector = parentInjector.resolveAndCreateChild([
+          ValueProvider(Place, Place('Child')),
+        ]);
+        expect(
+          // ignore: deprecated_member_use
+          (childInjector.resolveAndInstantiate(modelProvider) as Model)
+              .place
+              .name,
+          'Child',
+        );
+      });
+    });
+  });
+
+  group('root Injector overrides', () {
+    void _testOverrideExceptionHandler(Injector appInjector) {
+      // Normally errors here are forwarded to the ExceptionHandler.
+      //
+      // In the case of #1227, we accidentally always used the default
+      // ExceptionHandler (BrowserExceptionHandler), meaning the user-defined
+      // handler was ignored.
+      (appInjector.get(NgZone) as NgZone).runGuarded(() {
+        throw _IntentionalError();
+      });
+      expect(
+        _CustomExceptionHandler.lastCaught,
+        const TypeMatcher<_IntentionalError>(),
+      );
+    }
+
+    // This is relied on by internal clients until we introduce a sharding API.
+    test('rootInjector should allow overriding ExceptionHandler', () {
+      _testOverrideExceptionHandler(
+        rootInjector((parent) {
+          return Injector.map({
+            ExceptionHandler: _CustomExceptionHandler(),
+          }, parent);
+        }),
+      );
+    });
+  });
+
+  /// This regression test demonstrates why `View.injectorGet()` must null-check
+  /// the `nodeIndex` argument, a rare and complex case that requires a number
+  /// of conditions to be met.
+  ///
+  ///   (1) Create a component whose template contains a top-level view
+  ///   container; this ensures the view container has a null parent index.
+  ///
+  ///   (2) Add directive(s) with multiple providers to any node in the
+  ///   component's template with at least one child node; this ensures that a
+  ///   range check on `nodeIndex` is generated in `injectorGetInternal` and not
+  ///   skipped due to short-circuit evaluation when a node only has one
+  ///   provider and the token doesn't match. This range check is what will
+  ///   throw if `nodeIndex` is null.
+  ///
+  ///   (3) Inject a dependency via the top-level view container's
+  ///   `parentInjector`. This causes the null parent index to pass from
+  ///   `ElementInjector.provideUntyped()` to `View.injectorGet()`.
+  test('View.injectorGet() should handle a null nodeIndex argument', () async {
+    final testValue = 'Hello world!';
+    final testBed = NgTestBed(
+      ng.createTestComponentFactory(),
+      rootInjector: (parent) => Injector.map({testToken: testValue}, parent),
+    );
+    final testFixture = await testBed.create();
+    final testComponent = testFixture.assertOnlyInstance;
+    expect(
+      // This parent injector, an `ElementInjector`, passes a null nodeIndex
+      // parameter to `View.injectorGet()`. Note that while this looks like a
+      // bizarre use case that might not seem worth supporting, this is the
+      // simplest reproduction of this pattern that can be achieved far more
+      // indirectly via declarative means. Clients do depend on this behavior.
+      testComponent.viewContainerRef!.parentInjector.provideToken(testToken),
+      testValue,
+    );
   });
 }
 
 /// Implementation of [Injector] that captures [lastToken] and [lastOrElse].
 class CaptureInjectInjector extends HierarchicalInjector implements Injector {
-  Object lastToken;
-  Object lastOrElse;
+  Object? lastToken;
+  Object? lastOrElse;
+
+  CaptureInjectInjector() : super(Injector.empty());
 
   @override
-  Object injectFromSelfOptional(
+  Object? injectFromSelfOptional(
     Object token, [
-    Object orElse = throwIfNotFound,
+    Object? orElse = throwIfNotFound,
   ]) {
     lastToken = token;
     lastOrElse = orElse;
@@ -637,14 +760,14 @@ const multiStringToken = MultiToken<String>('multiStringToken');
 const typedTokenOfDynamic = OpaqueToken('typedToken');
 const typedTokenOfString = OpaqueToken<String>('typedToken');
 
-const typedTokenOfListDynamic = OpaqueToken<List>('typedToken');
+const typedTokenOfListDynamic = OpaqueToken<List<dynamic>>('typedToken');
 const typedTokenOfListString = OpaqueToken<List<String>>('typedToken');
 
 const unnamedTokenOfDynamic = OpaqueToken();
 const unnamedTokenOfString = OpaqueToken<String>();
 
-Null willNeverBeCalled1(Object _) => null;
-Null willNeverBeCalled2(Object _, Object __) => null;
+Never willNeverBeCalled1(Object _) => throw '';
+Never willNeverBeCalled2(Object _, Object __) => throw '';
 
 class CustomMultiString extends MultiToken<String> {
   const CustomMultiString();
@@ -718,10 +841,11 @@ final InjectorFactory exampleGenerated = ng.exampleGenerated$Injector;
 final InjectorFactory exampleFromModule = ng.exampleFromModule$Injector;
 
 ExampleService createExampleService() => ExampleService();
-List createListWith(String item) => [item];
+
+List<String> createListWith(String item) => [item];
 
 @Injectable()
-List createListWithOptional(@Optional() String missing) => [missing];
+List<String?> createListWithOptional(@Optional() String? missing) => [missing];
 
 @Injectable()
 class A {
@@ -777,12 +901,12 @@ class TestConstPositionalArgs {
 
 class TestConstNamedArgs {
   final String name;
-  const TestConstNamedArgs({this.name});
+  const TestConstNamedArgs({required this.name});
 }
 
 class TestConstNamedArgs2 {
   final String name;
-  const TestConstNamedArgs2({this.name});
+  const TestConstNamedArgs2({required this.name});
 }
 
 const topLevelValue = TestConstNamedArgs2(name: 'TestConstNamedArgs2');
@@ -815,3 +939,65 @@ const duplicateMulti = MultiToken<String>('duplicateMulti');
   ValueProvider.forToken(duplicateMulti, 'B'),
 ])
 final InjectorFactory tokenOrdering = ng.tokenOrdering$Injector;
+
+class ATypeThatShouldThrow {}
+
+class _IntentionalError extends Error {}
+
+class _CustomExceptionHandler implements ExceptionHandler {
+  static Object? lastCaught;
+
+  @override
+  void call(exception, [stackTrace, String? reason]) {
+    lastCaught = exception;
+  }
+}
+
+class Place {
+  final String name;
+
+  Place(this.name);
+
+  @override
+  String toString() => '$Place {name=$name}';
+}
+
+@Injectable()
+class Model {
+  final Place place;
+
+  Model(this.place);
+
+  @override
+  String toString() => '$Model {place=$place}';
+}
+
+@Component(
+  selector: 'test',
+  directives: [ProvidersDirective],
+  template: '''
+    <div providers>
+      <span>Some content to create a range check on nodeIndex</span>
+    </div>
+    <div #container></div>
+  ''',
+)
+class TestComponent {
+  @ViewChild('container', read: ViewContainerRef)
+  ViewContainerRef? viewContainerRef;
+}
+
+const testToken = OpaqueToken<String>('test');
+const tokenA = OpaqueToken<String>('a');
+const tokenB = OpaqueToken<String>('b');
+
+@Directive(
+  selector: '[providers]',
+  // Multiple providers to ensure the range check isn't skipped due to short
+  // circuit evaluation of mismatched token query.
+  providers: [
+    ValueProvider.forToken(tokenA, 'a'),
+    ValueProvider.forToken(tokenB, 'b'),
+  ],
+)
+class ProvidersDirective {}

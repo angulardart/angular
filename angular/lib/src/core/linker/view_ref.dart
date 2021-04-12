@@ -70,7 +70,7 @@ abstract class EmbeddedViewRef implements ViewRef {
   ///
   /// This local variable will be assignable by [name] to a template input
   /// variable created with the `let` keyword.
-  void setLocal(String name, dynamic value);
+  void setLocal(String name, Object? value);
 
   /// Checks whether this view has a local variable called [name].
   bool hasLocal(String name);

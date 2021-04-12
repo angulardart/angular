@@ -7,19 +7,21 @@ import 'package:analyzer/src/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:path/path.dart' as p;
 import 'package:source_gen/source_gen.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
-import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
+import 'package:angular_compiler/v1/src/compiler/template_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/property_binder.dart'
     show isPrimitiveTypeName;
 import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular_compiler/v2/analyzer.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'annotation_information.dart';
 import 'compile_metadata.dart';
@@ -29,9 +31,6 @@ import 'lifecycle_hooks.dart';
 import 'pipe_visitor.dart';
 
 const String _visibilityProperty = 'visibility';
-const _statefulDirectiveFields = [
-  'exportAs',
-];
 
 /// Given the target [library], returns relevant metadata.
 AngularArtifacts findComponentsAndDirectives(
@@ -175,15 +174,9 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
           }
           final values = argument.expression as ListLiteral;
           if (values.elements.isNotEmpty &&
-              // Avoid an edge case where all of your entries are just empty
-              // lists. Not likely to happen, but might as well check anyway at
-              // this point.
-              values.elements.every(
-                  (e) => (e as Expression).staticType?.isDynamic != false)) {
-            // We didn't resolve something.
+              values.elements.any(_isUnresolvedOrNotAnExpression)) {
             _exceptionHandler.handle(UnresolvedExpressionError(
-              values.elements.where(
-                  (e) => (e as Expression).staticType?.isDynamic != false),
+              values.elements.where(_isUnresolvedOrNotAnExpression),
               element,
               annotationImpl.compilationUnit,
             ));
@@ -192,6 +185,14 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
       }
     }
     return values;
+  }
+
+  static bool _isUnresolvedOrNotAnExpression(CollectionElement e) {
+    if (e is Expression) {
+      return e.staticType?.isDynamic != false;
+    } else {
+      return true;
+    }
   }
 
   CompileTypedMetadata _typeMetadataFrom(TypedElement typed) {
@@ -268,61 +269,6 @@ class _ComponentVisitor
   }
 
   @override
-  CompileDirectiveMetadata visitFunctionElement(FunctionElement element) {
-    final annotationInfo =
-        annotationWhere(element, safeMatcherType(Directive), _exceptionHandler);
-    if (annotationInfo == null) return null;
-
-    if (annotationInfo.hasErrors) {
-      _exceptionHandler.handle(AngularAnalysisError(
-          annotationInfo.constantEvaluationErrors, annotationInfo));
-      return null;
-    }
-    var invalid = false;
-    if (element.isPrivate) {
-      log.severe('Functional directives must be public: $element');
-      invalid = true;
-    }
-    if (!element.returnType.isVoid) {
-      log.severe('Functional directives must return void: $element');
-      invalid = true;
-    }
-    final annotationValue = annotationInfo.constantValue;
-    for (var field in _statefulDirectiveFields) {
-      if (!annotationValue.getField(field).isNull) {
-        log.severe("Functional directives don't support '$field': $element");
-        invalid = true;
-      }
-    }
-    final visibility = coerceEnum(
-      annotationValue,
-      _visibilityProperty,
-      Visibility.values,
-    );
-    if (visibility != Visibility.local) {
-      log.severe('Functional directives must be visibility: Visibility.local');
-      invalid = true;
-    }
-    if (invalid) return null;
-    final type = element.accept(CompileTypeMetadataVisitor(
-        _library, _exceptionHandler, annotationInfo));
-    final selector = coerceString(annotationValue, 'selector');
-    return CompileDirectiveMetadata(
-      type: type,
-      originType: type,
-      metadataType: CompileDirectiveMetadataType.FunctionalDirective,
-      selector: selector,
-      analyzedClass: null,
-      inputs: const {},
-      inputTypes: const {},
-      outputs: const {},
-      hostBindings: const {},
-      hostListeners: const {},
-      providers: _extractProviders(annotationInfo, 'providers'),
-    );
-  }
-
-  @override
   CompileDirectiveMetadata visitFieldElement(FieldElement element) {
     super.visitFieldElement(element);
     _visitClassMember(
@@ -360,13 +306,19 @@ class _ComponentVisitor
       if (annotationInfo.isInputType) {
         if (isSetter && element.isPublic) {
           final isField = element is FieldElement;
+          if (isField) {
+            _refuseLateFinalInputs(element as FieldElement);
+          }
           // Resolves specified generic type parameters.
           final setter = _directiveClassElement.thisType
               .lookUpInheritedSetter(element.displayName);
           if (setter.parameters.isEmpty) {
-            _exceptionHandler.handle(ErrorMessageForElement(
-                element, '@Input setter has no parameters.'));
-            return;
+            return CompileContext.current.reportAndRecover(
+              BuildError.forElement(
+                element,
+                '@Input setter has no parameters.',
+              ),
+            );
           }
           final propertyType = setter.parameters.first.type;
           final dynamicType = setter.library.typeProvider.dynamicType;
@@ -383,13 +335,19 @@ class _ComponentVisitor
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
-              final typeArguments = resolvedType is ParameterizedType
-                  ? resolvedType.typeArguments.map(fromDartType).toList()
-                  : const <o.OutputType>[];
+              var typeArguments = resolvedType.aliasArguments;
+              if (typeArguments == null) {
+                if (resolvedType is InterfaceType) {
+                  typeArguments = resolvedType.typeArguments;
+                } else {
+                  typeArguments = const <DartType>[];
+                }
+              }
               _inputTypes[element.displayName] = CompileTypeMetadata(
-                  moduleUrl: moduleUrl(element),
-                  name: typeName,
-                  typeArguments: typeArguments);
+                moduleUrl: moduleUrl(element),
+                name: typeName,
+                typeArguments: typeArguments.map(fromDartType).toList(),
+              );
             }
           }
         } else {
@@ -405,29 +363,75 @@ class _ComponentVisitor
         }
       } else if (annotationInfo.isContentType) {
         if (isSetter && element.isPublic) {
-          _queries.add(_getQuery(
+          final returnType = _fieldOrPropertyType(element);
+          final contentQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
             _fieldOrPropertyType(element),
-          ));
+          );
+          if (contentQuery.first) {
+            _refuseNonNullableSingleChildQueries(element, returnType);
+          }
+          if (element is FieldElement) {
+            _refuseLateQueries(element);
+          }
+          _queries.add(contentQuery);
         } else {
           log.severe('@ContentChild or @ContentChildren can only be used on a '
               'public setter or non-final field, but was found on $element.');
         }
       } else if (annotationInfo.isViewType) {
         if (isSetter && element.isPublic) {
-          _viewQueries.add(_getQuery(
+          final returnType = _fieldOrPropertyType(element);
+          final viewQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
-            _fieldOrPropertyType(element),
-          ));
+            returnType,
+          );
+          if (viewQuery.first) {
+            _refuseNonNullableSingleChildQueries(element, returnType);
+          }
+          if (element is FieldElement) {
+            _refuseLateQueries(element);
+          }
+          _viewQueries.add(viewQuery);
         } else {
           log.severe('@ViewChild or @ViewChildren can only be used on a public '
               'setter or non-final field, but was found on $element.');
         }
       }
+    }
+  }
+
+  void _refuseLateFinalInputs(FieldElement field) {
+    if (field.isLate && field.isFinal) {
+      CompileContext.current.reportAndRecover(BuildError.forElement(
+        field,
+        'Inputs cannot be "late final".\n\n'
+        'See go/angular-dart-null-safety-draft.',
+      ));
+    }
+  }
+
+  void _refuseNonNullableSingleChildQueries(Element member, DartType type) {
+    if (type.isExplicitlyNonNullable) {
+      CompileContext.current.reportAndRecover(BuildError.forElement(
+        member,
+        'ViewChild and ContentChild queries must be nullable.\n\n'
+        'See go/angular-dart-null-safety-draft.',
+      ));
+    }
+  }
+
+  void _refuseLateQueries(FieldElement field) {
+    if (field.isLate) {
+      CompileContext.current.reportAndRecover(BuildError.forElement(
+        field,
+        'View and content queries cannot be "late".\n\n'
+        'See go/angular-dart-null-safety-draft.',
+      ));
     }
   }
 
@@ -579,11 +583,16 @@ class _ComponentVisitor
     // Skip 'Object' since it can't have metadata and we only want to record
     // whether a user type implements 'noSuchMethod'.
     if (element.isDartCoreObject) return;
-    if (element.getMethod('noSuchMethod') != null) {
+
+    // Skip checking for noSuchMethod for opted-in libraries.
+    if (!CompileContext.current.emitNullSafeCode &&
+        element.getMethod('noSuchMethod') != null) {
       _implementsNoSuchMethod = true;
     }
+
     // Collect metadata from field and property accessor annotations.
     super.visitClassElement(element);
+
     // Merge field and setter inputs, so that a derived field input binding is
     // not overridden by an inherited setter input.
     _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
@@ -625,7 +634,8 @@ class _ComponentVisitor
     // Some directives won't have templates but the template parser is going to
     // assume they have at least defaults.
     var componentType = element.accept(
-        CompileTypeMetadataVisitor(_library, _exceptionHandler, directiveInfo));
+      CompileTypeMetadataVisitor(_library, directiveInfo, _exceptionHandler),
+    );
 
     final template = isComponent
         ? _createTemplateMetadata(directiveInfo, componentType)
@@ -649,15 +659,6 @@ class _ComponentVisitor
 
     var changeDetection = _changeDetection(element, annotationValue);
 
-    final isComponentState = $ComponentState.isAssignableFrom(element);
-    if (isComponentState) {
-      if (!isComponent) {
-        _exceptionHandler.handle(ErrorMessageForElement(
-            element, 'Directives cannot implement or use ComponentState'));
-      }
-      changeDetection = ChangeDetectionStrategy.OnPush;
-    }
-
     final isChangeDetectionLink = linkInfo != null;
     if (isChangeDetectionLink &&
         !(isComponent && changeDetection == ChangeDetectionStrategy.OnPush)) {
@@ -667,7 +668,6 @@ class _ComponentVisitor
 
     return CompileDirectiveMetadata(
       type: componentType,
-      isLegacyComponentState: isComponentState,
       originType: componentType,
       metadataType: isComponent
           ? CompileDirectiveMetadataType.Component
@@ -704,12 +704,15 @@ class _ComponentVisitor
       final ngDoCheck = element.getMethod('ngDoCheck') ??
           element.lookUpInheritedMethod('ngDoCheck', element.library);
       if (ngDoCheck != null && ngDoCheck.isAsynchronous) {
-        _exceptionHandler.handle(ErrorMessageForElement(
+        CompileContext.current.reportAndRecover(
+          BuildError.forElement(
             ngDoCheck,
             'ngDoCheck should not be "async". The "ngDoCheck" lifecycle event '
             'must be strictly synchronous, and should not invoke any methods '
             '(or getters/setters) that directly run asynchronous code (such as '
-            'microtasks, timers).'));
+            'microtasks, timers).',
+          ),
+        );
       }
     }
   }
@@ -780,13 +783,19 @@ class _ComponentVisitor
   }
 
   List<CompileProviderMetadata> _extractProviders(
-          AnnotationInformation annotationInfo, String providerField) =>
+    AnnotationInformation annotationInfo,
+    String providerField,
+  ) =>
       visitAll(
-          const ModuleReader().extractProviderObjects(
-              getField(annotationInfo.constantValue, providerField)),
-          CompileTypeMetadataVisitor(
-                  _library, _exceptionHandler, annotationInfo)
-              .createProviderMetadata);
+        const ModuleReader().extractProviderObjects(
+          getField(annotationInfo.constantValue, providerField),
+        ),
+        CompileTypeMetadataVisitor(
+          _library,
+          annotationInfo,
+          _exceptionHandler,
+        ).createProviderMetadata,
+      );
 
   List<CompileIdentifierMetadata> _extractExports(
     AnnotationInformation<ClassElement> annotationInfo,

@@ -1,10 +1,8 @@
-@TestOn('browser')
-import 'dart:async';
 import 'dart:html';
 
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 import 'host_annotation_test.template.dart' as ng;
 
@@ -13,7 +11,7 @@ void main() {
 
   /// Returns the root [Element] created by initializing [component].
   Future<Element> rootElementOf<T>(ComponentFactory<T> component) {
-    final testBed = NgTestBed.forComponent(component);
+    final testBed = NgTestBed(component);
     return testBed.create().then((fixture) => fixture.rootElement);
   }
 
@@ -83,7 +81,7 @@ void main() {
     });
 
     test('should support conditional attributes', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostBindingConditionalAttributeFactory(),
       );
       final fixture = await testBed.create();
@@ -101,7 +99,7 @@ void main() {
     });
 
     test('should support conditional attributes on static members', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostBindingConditionalStaticsFactory(),
       );
       final fixture = await testBed.create();
@@ -111,7 +109,7 @@ void main() {
     });
 
     test('should support conditional classes', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostBindingConditionalClassFactory(),
       );
       final fixture = await testBed.create();
@@ -134,7 +132,7 @@ void main() {
 
   group('@HostListener', () {
     test('should support click', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostListenerClickFactory(),
       );
       final fixture = await testBed.create();
@@ -143,7 +141,7 @@ void main() {
     });
 
     test('should support click through inheritance', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostListenerInheritedClickFactory(),
       );
       final fixture = await testBed.create();
@@ -152,7 +150,7 @@ void main() {
     });
 
     test('should support multiple annotations on a single field', () async {
-      final testBed = NgTestBed.forComponent(
+      final testBed = NgTestBed(
         ng.createHostListenerMultiFactory(),
       );
       final fixture = await testBed.create();
@@ -243,7 +241,7 @@ class HostBindingInstanceClass {
 class HostBindingConditionalAttribute {
   // Old Style
   @HostBinding('attr.disabled')
-  String get disabled => disabledBackingValue ? 'disabled' : null;
+  String? get disabled => disabledBackingValue ? 'disabled' : null;
 
   // New Style
   @HostBinding('attr.aria-disabled.if')
@@ -291,6 +289,7 @@ class HostListenerClick {
   void onClick() => clickHandler();
 
   /// To be provided in test cases.
+  /// ignore: prefer_function_declarations_over_variables
   void Function() clickHandler = () => throw UnimplementedError();
 }
 
@@ -310,5 +309,6 @@ class HostListenerMulti {
   void onBlurOrFocus() => blurOrFocusHandler();
 
   /// To be provided in test cases.
+  /// ignore: prefer_function_declarations_over_variables
   void Function() blurOrFocusHandler = () => throw UnimplementedError();
 }

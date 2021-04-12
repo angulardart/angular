@@ -1,6 +1,6 @@
-import 'package:angular/src/runtime.dart';
-import 'package:angular/src/di/reflector.dart' as reflector;
 import 'package:meta/meta.dart';
+import 'package:angular/src/reflector.dart' as reflector;
+import 'package:angular/src/utilities.dart';
 
 import 'component_factory.dart' show ComponentFactory;
 
@@ -13,5 +13,4 @@ import 'component_factory.dart' show ComponentFactory;
 ComponentFactory<Object> typeToFactory(Object typeOrFactory) =>
     typeOrFactory is ComponentFactory<Object>
         ? typeOrFactory
-        : unsafeCast<ComponentFactory<Object>>(
-            reflector.getComponent(unsafeCast<Type>(typeOrFactory)));
+        : unsafeCast(reflector.getComponent(unsafeCast(typeOrFactory)));

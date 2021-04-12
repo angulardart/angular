@@ -1,9 +1,10 @@
 import 'package:collection/collection.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/meta.dart';
+import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import 'analyzed_class.dart';
 import 'expression_parser/ast.dart' as ast;
-import 'output/convert.dart' show typeArgumentsFrom;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
@@ -18,9 +19,6 @@ abstract class CompileMetadataWithType extends CompileMetadataWithIdentifier {
 }
 
 class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
-  // TODO(het): remove this once we switch to codegen. The transformer version
-  // includes prefixes that aren't supposed to be emitted because it can't tell
-  // if a prefix is a class name or a qualified import name.
   final bool emitPrefix;
   final List<o.OutputType> typeArguments;
   final String prefix;
@@ -239,8 +237,23 @@ class CompileTokenMap<V> {
   void add(CompileTokenMetadata token, V value) {
     var existing = get(token);
     if (existing != null) {
-      throw StateError(
-          'Add failed. Token already exists. Token: ${token.name}');
+      final identifier = token.identifier;
+      String name;
+      if (identifier?.moduleUrl != null && identifier?.name != null) {
+        name = '${identifier.moduleUrl}::${identifier.name}';
+      } else {
+        name = '${token.name}';
+      }
+      throw BuildError.withoutContext(
+        'Failed to register provider for token "$name": It already was '
+        'provided, potentially automatically by the framework. This error is '
+        'usually a sign you are trying to provide a token that is not valid '
+        'to provide at the component level, such as "Element"; these tokens '
+        'are meant to *only* be provided automatically by the framework and '
+        'not manually by end-users.\n\n'
+        'Please file a bug (${messages.urlFileBugs}) if you think this message '
+        'is wrong or misleading.',
+      );
     }
     var ak = token.assetCacheKey;
     if (ak != null) {
@@ -419,18 +432,12 @@ enum CompileDirectiveMetadataType {
 
   /// Metadata type for a class annotated with `@Directive`.
   Directive,
-
-  /// Metadata type for a function annotated with `@Directive`.
-  FunctionalDirective,
 }
 
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
   final CompileTypeMetadata type;
-
-  /// Directive extends or mixes-in `ComponentState`.
-  final bool isLegacyComponentState;
 
   /// User-land class where the component annotation originated.
   final CompileTypeMetadata originType;
@@ -461,7 +468,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 
   CompileDirectiveMetadata({
     this.type,
-    this.isLegacyComponentState = false,
     this.originType,
     this.metadataType,
     this.selector,
@@ -487,7 +493,6 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
       {AnalyzedClass analyzedClass, CompileTemplateMetadata template})
       : type = other.type,
-        isLegacyComponentState = other.isLegacyComponentState,
         originType = other.originType,
         metadataType = other.metadataType,
         selector = other.selector,
@@ -642,7 +647,7 @@ List<CompileTypedMetadata> createHostDirectiveTypes(
     CompileTypedMetadata(
       componentType.name,
       componentType.moduleUrl,
-      typeArgumentsFrom(componentType.typeParameters),
+      componentType.typeParameters.map((t) => t.toType()).toList(),
     )
   ];
 }

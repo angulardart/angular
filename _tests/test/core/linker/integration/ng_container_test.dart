@@ -1,7 +1,6 @@
-@TestOn('browser')
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 // ignore: uri_has_not_been_generated
 import 'ng_container_test.template.dart' as ng;
@@ -10,19 +9,19 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('renders nothing', () async {
-    final testBed = NgTestBed.forComponent(ng.createRendersNothingFactory());
+    final testBed = NgTestBed(ng.createRendersNothingFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.childNodes, isEmpty);
   });
 
   test('renders children in place of self', () async {
-    final testBed = NgTestBed.forComponent(ng.createRendersChildrenFactory());
+    final testBed = NgTestBed(ng.createRendersChildrenFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, html);
   });
 
   test('supports *ngFor', () async {
-    final testBed = NgTestBed.forComponent(ng.createSupportsNgForFactory());
+    final testBed = NgTestBed(ng.createSupportsNgForFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     final values = ['a', 'b', 'c'];
@@ -32,7 +31,7 @@ void main() {
   });
 
   test('supports *ngIf', () async {
-    final testBed = NgTestBed.forComponent(ng.createSupportsNgIfFactory());
+    final testBed = NgTestBed(ng.createSupportsNgIfFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     await testFixture.update((component) => component.visible = true);
@@ -40,8 +39,7 @@ void main() {
   });
 
   test('supports *ngTemplateOutlet', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createSupportsNgTemplateOutletFactory());
+    final testBed = NgTestBed(ng.createSupportsNgTemplateOutletFactory());
     final testFixture = await testBed.create();
     expect(
         testFixture.rootElement.innerHtml,
@@ -51,7 +49,7 @@ void main() {
   });
 
   test('supports nested *-syntax', () async {
-    final testBed = NgTestBed.forComponent(ng.createSupportsNestingFactory());
+    final testBed = NgTestBed(ng.createSupportsNestingFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml, anchorHtml);
     await testFixture.update((component) => component.integers = [1, 2, 3]);
@@ -76,7 +74,7 @@ void main() {
   });
 
   test('can be projected', () async {
-    final testBed = NgTestBed.forComponent(ng.createCanBeProjectedFactory());
+    final testBed = NgTestBed(ng.createCanBeProjectedFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml,
         '<content-host>$anchorHtml$html</content-host>');
@@ -86,8 +84,7 @@ void main() {
   });
 
   test('can host projected content', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createCanHostProjectedContentFactory());
+    final testBed = NgTestBed(ng.createCanHostProjectedContentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.rootElement.innerHtml,
         '<contained-content-host>$html</contained-content-host>');

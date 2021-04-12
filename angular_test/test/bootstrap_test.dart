@@ -1,9 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
-import 'dart:async';
 import 'dart:html';
 
 import 'package:test/test.dart';
@@ -15,7 +9,7 @@ import 'bootstrap_test.template.dart' as ng_generated;
 void main() {
   ng_generated.initReflector();
 
-  Injector _noopInjector([Injector i]) => Injector.empty(i);
+  Injector _noopInjector(Injector i) => i;
 
   test('should create a new component in the DOM', () async {
     final host = Element.div();
@@ -57,7 +51,7 @@ void main() {
     final test = await bootstrapForTest(
       ng_generated.createAddProvidersFactory(),
       host,
-      ([i]) => Injector.map({TestService: TestService()}, i),
+      (i) => Injector.map({TestService: TestService()}, i),
     );
     var instance = test.instance;
     expect(instance._testService, isNotNull);
@@ -66,14 +60,14 @@ void main() {
 
   test('should be able to call injector before component creation', () async {
     final host = Element.div();
-    TestService testService;
+    TestService? testService;
     final test = await bootstrapForTest(
         ng_generated.createAddProvidersFactory(),
         host,
-        ([i]) => Injector.map({TestService: TestService()}, i),
+        (i) => Injector.map({TestService: TestService()}, i),
         beforeComponentCreated: (injector) {
-      testService = injector.get(TestService);
-      testService.count++;
+      testService = injector.provideType(TestService);
+      testService!.count++;
     }, beforeChangeDetection: (_) {
       if (testService == null) {
         fail('`beforeComponentCreated` should be invoked before'
@@ -82,32 +76,33 @@ void main() {
     });
     var instance = test.instance;
     expect(testService, instance._testService);
-    expect(testService.count, 1);
+    expect(testService!.count, 1);
     test.destroy();
   });
 
   test('should be able to call asynchronous injector before component creation',
       () async {
     final host = Element.div();
-    TestService testService;
+    TestService? testService;
     final test = await bootstrapForTest(
-        ng_generated.createAddProvidersFactory(),
-        host,
-        ([i]) => Injector.map({TestService: TestService()}, i),
-        beforeComponentCreated: (injector) =>
-            Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
-              testService = injector.get(TestService);
-              testService.count++;
-            }),
-        beforeChangeDetection: (_) {
-          if (testService == null) {
-            fail('`beforeComponentCreated` should be invoked before'
-                ' `beforeChangeDetection`, `testService` should not be null.');
-          }
-        });
+      ng_generated.createAddProvidersFactory(),
+      host,
+      (i) => Injector.map({TestService: TestService()}, i),
+      beforeComponentCreated: (injector) =>
+          Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
+        testService = injector.provideType(TestService);
+        testService!.count++;
+      }),
+      beforeChangeDetection: (_) {
+        if (testService == null) {
+          fail('`beforeComponentCreated` should be invoked before'
+              ' `beforeChangeDetection`, `testService` should not be null.');
+        }
+      },
+    );
     var instance = test.instance;
     expect(testService, instance._testService);
-    expect(testService.count, 1);
+    expect(testService!.count, 1);
     test.destroy();
   });
 }

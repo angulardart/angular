@@ -15,6 +15,9 @@ class AnalyzedClass {
   /// The heuristic used to determine mock-like behavior is if the analyzed
   /// class or one of its ancestors, other than [Object], implements
   /// [noSuchMethod].
+  ///
+  /// Note that is the value is _never_ true for null-safe libraries, as we no
+  /// longer support null streams/stream subscriptions in the generated code.
   final bool isMockLike;
 
   // The type provider associated with this class.
@@ -142,9 +145,10 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     if (analyzedClass == null) return false;
     var receiver = expression.receiver;
     if (receiver is ast.ImplicitReceiver ||
-        (receiver is ast.StaticRead && receiver.analyzedClass != null)) {
-      var clazz =
-          receiver is ast.StaticRead ? receiver.analyzedClass : analyzedClass;
+        (receiver is ast.StaticRead && receiver.id.analyzedClass != null)) {
+      var clazz = receiver is ast.StaticRead
+          ? receiver.id.analyzedClass
+          : analyzedClass;
       var field = _getField(clazz, expression.name);
       if (field != null) {
         return !field.isSynthetic && (field.isFinal || field.isConst);
@@ -252,7 +256,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   @override
   DartType visitBinary(ast.Binary ast, _) {
     // Special case for adding two strings together.
-    if (ast.operation == '+' &&
+    if (ast.operator == '+' &&
         ast.left.visit(this, _) == _stringType &&
         ast.right.visit(this, _) == _stringType) {
       return _stringType;
@@ -295,9 +299,6 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitKeyedWrite(ast.KeyedWrite ast, _) => _dynamicType;
 
   @override
-  DartType visitLiteralArray(ast.LiteralArray ast, _) => _dynamicType;
-
-  @override
   DartType visitLiteralPrimitive(ast.LiteralPrimitive ast, _) =>
       ast.value is String ? _stringType : _dynamicType;
 
@@ -315,6 +316,9 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
 
   @override
   DartType visitPrefixNot(ast.PrefixNot ast, _) => _dynamicType;
+
+  @override
+  DartType visitPostfixNotNull(ast.PostfixNotNull ast, _) => _dynamicType;
 
   @override
   DartType visitPropertyRead(ast.PropertyRead ast, _) {

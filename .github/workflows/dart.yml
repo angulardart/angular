@@ -1,0 +1,1312 @@
+# Created with package:mono_repo v3.4.7
+name: Dart CI
+on:
+  push:
+    branches:
+      - master
+      - google
+  pull_request:
+    branches:
+      - master
+defaults:
+  run:
+    shell: bash
+env:
+  PUB_ENVIRONMENT: bot.github
+
+jobs:
+  job_001:
+    name: mono_repo self validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:stable"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: stable
+      - id: checkout
+        uses: actions/checkout@v2
+      - name: mono_repo self validate
+        run: pub global activate mono_repo 3.4.7
+      - name: mono_repo self validate
+        run: pub global run mono_repo generate --validate
+  job_002:
+    name: "analyze; Dart dev; PKGS: angular_router, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_test, examples/hello_world; `dartanalyzer --fatal-warnings .`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_test-examples/hello_world;commands:dartanalyzer"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router-_tests-angular-angular_ast-angular_compiler-angular_forms-angular_test-examples/hello_world
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: dartanalyzer --fatal-warnings .
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; dartanalyzer --fatal-warnings ."
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_pub_upgrade
+        name: "angular; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular
+        run: pub upgrade --no-precompile
+      - name: "angular; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
+        working-directory: angular
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: dartanalyzer --fatal-warnings .
+      - id: examples_hello_world_pub_upgrade
+        name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub upgrade --no-precompile
+      - name: "examples/hello_world; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: dartanalyzer --fatal-warnings .
+  job_003:
+    name: "analyze; Dart 2.12.0; PKGS: angular_forms, angular, angular_ast, _tests, angular_compiler, angular_router, examples/hello_world, angular_test; `dartanalyzer --fatal-warnings .`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms-angular-angular_ast-_tests-angular_compiler-angular_router-examples/hello_world-angular_test;commands:dartanalyzer"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms-angular-angular_ast-_tests-angular_compiler-angular_router-examples/hello_world-angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_pub_upgrade
+        name: "angular; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular
+        run: pub upgrade --no-precompile
+      - name: "angular; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
+        working-directory: angular
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: dartanalyzer --fatal-warnings .
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; dartanalyzer --fatal-warnings ."
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: dartanalyzer --fatal-warnings .
+      - id: examples_hello_world_pub_upgrade
+        name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub upgrade --no-precompile
+      - name: "examples/hello_world; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: dartanalyzer --fatal-warnings .
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; dartanalyzer --fatal-warnings ."
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: dartanalyzer --fatal-warnings .
+  job_004:
+    name: "build; Dart dev; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_005:
+    name: "build; Dart dev; PKG: _tests; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner build --fail-on-severe"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_006:
+    name: "build; Dart dev; PKG: examples/hello_world; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/hello_world;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:examples/hello_world
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: examples_hello_world_pub_upgrade
+        name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub upgrade --no-precompile
+      - name: "examples/hello_world; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_007:
+    name: "build; Dart dev; PKG: angular_compiler; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_008:
+    name: "build; Dart dev; PKG: angular_test; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_009:
+    name: "build; Dart dev; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_010:
+    name: "build; Dart dev; PKG: angular_router; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_011:
+    name: "build; Dart 2.12.0; PKG: _tests; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner build --fail-on-severe"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_012:
+    name: "build; Dart 2.12.0; PKG: angular_compiler; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_compiler;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_013:
+    name: "build; Dart 2.12.0; PKG: angular_test; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_test;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_014:
+    name: "build; Dart 2.12.0; PKG: examples/hello_world; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:examples/hello_world;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:examples/hello_world
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: examples_hello_world_pub_upgrade
+        name: "examples/hello_world; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub upgrade --no-precompile
+      - name: "examples/hello_world; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
+        working-directory: examples/hello_world
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_015:
+    name: "build; Dart 2.12.0; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_016:
+    name: "build; Dart 2.12.0; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_ast;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_017:
+    name: "build; Dart 2.12.0; PKG: angular_router; `pub run build_runner build --fail-on-severe`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_router;commands:command_0"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; pub run build_runner build --fail-on-severe"
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub run build_runner build --fail-on-severe
+    needs:
+      - job_001
+      - job_002
+      - job_003
+  job_018:
+    name: "unit_test; Dart dev; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_019:
+    name: "unit_test; Dart dev; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_020:
+    name: "unit_test; Dart dev; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_021:
+    name: "unit_test; Dart dev; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_022:
+    name: "unit_test; Dart dev; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_023:
+    name: "unit_test; Dart 2.12.0; PKG: angular_router; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_router;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_router
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_router_pub_upgrade
+        name: "angular_router; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub upgrade --no-precompile
+      - name: "angular_router; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_router
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_024:
+    name: "unit_test; Dart 2.12.0; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_forms_pub_upgrade
+        name: "angular_forms; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub upgrade --no-precompile
+      - name: "angular_forms; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_forms
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_025:
+    name: "unit_test; Dart 2.12.0; PKG: angular_compiler; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_compiler;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_compiler
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_compiler_pub_upgrade
+        name: "angular_compiler; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub upgrade --no-precompile
+      - name: "angular_compiler; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_compiler
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_026:
+    name: "unit_test; Dart 2.12.0; PKG: angular_test; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_test;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_test
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_test_pub_upgrade
+        name: "angular_test; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub upgrade --no-precompile
+      - name: "angular_test; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_test
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_027:
+    name: "unit_test; Dart 2.12.0; PKG: angular_ast; `pub run build_runner test --fail-on-severe -- -P ci`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_ast;commands:command_3"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:angular_ast
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: angular_ast_pub_upgrade
+        name: "angular_ast; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub upgrade --no-precompile
+      - name: "angular_ast; pub run build_runner test --fail-on-severe -- -P ci"
+        if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
+        working-directory: angular_ast
+        run: pub run build_runner test --fail-on-severe -- -P ci
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_028:
+    name: "unit_test; Dart 2.12.0; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P browser`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests;commands:command_2"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P browser"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P browser
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_029:
+    name: "unit_test; Dart dev; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P vm`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P vm"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P vm
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_030:
+    name: "unit_test; Dart 2.12.0; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P vm`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests;commands:command_1"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:2.12.0
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: "2.12.0"
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P vm"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P vm
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+  job_031:
+    name: "unit_test; Dart dev; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P browser`"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache Pub hosted dependencies
+        uses: actions/cache@v2
+        with:
+          path: "~/.pub-cache/hosted"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests;commands:command_2"
+          restore-keys: |
+            os:ubuntu-latest;pub-cache-hosted;dart:dev;packages:_tests
+            os:ubuntu-latest;pub-cache-hosted;dart:dev
+            os:ubuntu-latest;pub-cache-hosted
+            os:ubuntu-latest
+      - uses: dart-lang/setup-dart@v1.0
+        with:
+          sdk: dev
+      - id: checkout
+        uses: actions/checkout@v2
+      - id: _tests_pub_upgrade
+        name: "_tests; pub upgrade --no-precompile"
+        if: "always() && steps.checkout.conclusion == 'success'"
+        working-directory: _tests
+        run: pub upgrade --no-precompile
+      - name: "_tests; pub run build_runner test --fail-on-severe -- -P browser"
+        if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
+        working-directory: _tests
+        run: pub run build_runner test --fail-on-severe -- -P browser
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017

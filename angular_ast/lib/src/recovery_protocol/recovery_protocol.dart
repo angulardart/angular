@@ -1,6 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 library angular_ast.src.recovery_protocol.recovery_protocol;
 
 import '../parser/reader.dart';
@@ -10,7 +7,7 @@ import '../token/tokens.dart';
 part 'angular_analyzer_protocol.dart';
 
 abstract class RecoveryProtocol {
-  RecoverySolution recover(NgScannerState state, NgSimpleToken current,
+  RecoverySolution recover(NgScannerState? state, NgSimpleToken current,
       NgTokenReversibleReader<Object> reader) {
     switch (state) {
       case NgScannerState.hasError:
@@ -71,8 +68,9 @@ abstract class RecoveryProtocol {
         return scanSuffixProperty(current, reader);
       case NgScannerState.scanText:
         return scanText(current, reader);
+      default:
+        return RecoverySolution.skip();
     }
-    return RecoverySolution.skip();
   }
 
   RecoverySolution hasError(
@@ -200,8 +198,8 @@ abstract class RecoveryProtocol {
 /// Setting tokenToReturn as `null` causes scanner to consume current token
 /// and simply move to next token.
 class RecoverySolution {
-  final NgScannerState nextState;
-  final NgToken tokenToReturn;
+  final NgScannerState? nextState;
+  final NgToken? tokenToReturn;
 
   RecoverySolution(this.nextState, this.tokenToReturn);
 

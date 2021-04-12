@@ -1,0 +1,199 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'after_changes.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'after_changes.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'after_changes.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/src/runtime/check_binding.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewUsesAfterChanges0 _compView_0;
+  late final import1.UsesAfterChanges _UsesAfterChanges_0_5;
+  Object? _expr_0;
+  Object? _expr_1;
+  Object? _expr_2;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/after_changes.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewUsesAfterChanges0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._UsesAfterChanges_0_5 = import1.UsesAfterChanges();
+    this._compView_0.create(this._UsesAfterChanges_0_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    bool changed = false;
+    changed = false;
+    final currVal_0 = _ctx.a;
+    if (import7.checkBinding(this._expr_0, currVal_0, 'a', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'a', currVal_0);
+      }
+      this._UsesAfterChanges_0_5.a = currVal_0;
+      changed = true;
+      this._expr_0 = currVal_0;
+    }
+    final currVal_1 = _ctx.b;
+    if (import7.checkBinding(this._expr_1, currVal_1, 'b', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'b', currVal_1);
+      }
+      this._UsesAfterChanges_0_5.b = currVal_1;
+      changed = true;
+      this._expr_1 = currVal_1;
+    }
+    final currVal_2 = _ctx.c;
+    if (import7.checkBinding(this._expr_2, currVal_2, 'c', 'asset:goldens/test/lifecycle_hooks/after_changes.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'c', currVal_2);
+      }
+      this._UsesAfterChanges_0_5.c = currVal_2;
+      changed = true;
+      this._expr_2 = currVal_2;
+    }
+    if (changed) {
+      this._UsesAfterChanges_0_5.ngAfterChanges();
+    }
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$UsesAfterChanges = const [];
+
+class ViewUsesAfterChanges0 extends import0.ComponentView<import1.UsesAfterChanges> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesAfterChanges0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-after-changes'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/after_changes.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesAfterChanges, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesAfterChangesNgFactory = ComponentFactory<import1.UsesAfterChanges>('uses-after-changes', viewFactory_UsesAfterChangesHost0);
+ComponentFactory<import1.UsesAfterChanges> get UsesAfterChangesNgFactory {
+  return _UsesAfterChangesNgFactory;
+}
+
+ComponentFactory<import1.UsesAfterChanges> createUsesAfterChangesFactory() {
+  return ComponentFactory('uses-after-changes', viewFactory_UsesAfterChangesHost0);
+}
+
+final List<Object> styles$UsesAfterChangesHost = const [];
+
+class _ViewUsesAfterChangesHost0 extends import10.HostView<import1.UsesAfterChanges> {
+  @override
+  void build() {
+    this.componentView = ViewUsesAfterChanges0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesAfterChanges();
+    this.initRootNode(_el_0);
+  }
+}
+
+import10.HostView<import1.UsesAfterChanges> viewFactory_UsesAfterChangesHost0() {
+  return _ViewUsesAfterChangesHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(UsesAfterChanges, createUsesAfterChangesFactory());
+  _ref0.initReflector();
+}

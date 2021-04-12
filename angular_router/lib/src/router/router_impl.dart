@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'dart:async';
 
 import 'package:collection/collection.dart';
@@ -27,11 +23,12 @@ class RouterImpl extends Router {
   final StreamController<RouterState> _onRouteActivated =
       StreamController<RouterState>.broadcast(sync: true);
   final Location _location;
-  final RouterHook _routerHook;
-  RouterState _activeState;
+  final RouterHook? _routerHook;
+  RouterState? _activeState;
   Iterable<ComponentRef<Object>> _activeComponentRefs = [];
-  StreamController<String> _onNavigationStart;
-  RouterOutlet _rootOutlet;
+  StreamController<String>? _onNavigationStart;
+  StreamController<RouterState>? _onRouteResolved;
+  RouterOutlet? _rootOutlet;
 
   /// Completes when the latest navigation request is complete.
   ///
@@ -51,28 +48,38 @@ class RouterImpl extends Router {
           queryParameters: url.queryParameters,
           fragment: fragment,
           replace: true);
-      _enqueueNavigation(url.path, navigationParams).then((navigationResult) {
+      _enqueueNavigation(url.path, navigationParams, isPopState: true)
+          .then((navigationResult) {
         // If the navigation was blocked by a guard, revert the location change
         // by pushing the active state's URL. Note this assumes the location
         // change was triggered by the browser's back button because the browser
         // provides no mechanism for determining its origin.
+        final activeState = _activeState;
         if (navigationResult == NavigationResult.BLOCKED_BY_GUARD &&
             // In rare cases where the initial navigation was also blocked, it's
             // possible for the active state to be null.
-            _activeState != null) {
-          _location.go(_activeState.toUrl());
+            activeState != null) {
+          _location.go(activeState.toUrl());
         }
       });
     });
   }
 
   @override
-  RouterState get current => _activeState;
+  RouterState? get current => _activeState;
 
   @override
   Stream<String> get onNavigationStart {
-    _onNavigationStart ??= StreamController<String>.broadcast(sync: true);
-    return _onNavigationStart.stream;
+    final controller =
+        _onNavigationStart ??= StreamController<String>.broadcast(sync: true);
+    return controller.stream;
+  }
+
+  @override
+  Stream<RouterState> get onRouteResolved {
+    final controller = _onRouteResolved ??=
+        StreamController<RouterState>.broadcast(sync: true);
+    return controller.stream;
   }
 
   @override
@@ -109,8 +116,9 @@ class RouterImpl extends Router {
   @override
   Future<NavigationResult> navigate(
     String path, [
-    NavigationParams navigationParams,
+    NavigationParams? navigationParams,
   ]) {
+    navigationParams ??= const NavigationParams();
     final absolutePath = _getAbsolutePath(path, _activeState);
     return _enqueueNavigation(absolutePath, navigationParams);
   }
@@ -135,8 +143,9 @@ class RouterImpl extends Router {
   /// Enqueues the navigation request to begin after all pending ones complete.
   Future<NavigationResult> _enqueueNavigation(
     String path,
-    NavigationParams navigationParams,
-  ) {
+    NavigationParams navigationParams, {
+    bool isPopState = false,
+  }) {
     // This is used to forward the navigation result or error to the caller.
     final navigationCompleter = Completer<NavigationResult>.sync();
     // Note how this does not await the result of the last navigation, but
@@ -145,7 +154,7 @@ class RouterImpl extends Router {
     // requests to be run even if a preceding request throws, since the act of
     // awaiting an errored future rethrows that error.
     _lastNavigation = _lastNavigation.then((_) {
-      return _navigate(path, navigationParams)
+      return _navigate(path, navigationParams, isPopState: isPopState)
           .then(navigationCompleter.complete)
           .catchError(navigationCompleter.completeError);
     });
@@ -159,6 +168,7 @@ class RouterImpl extends Router {
     String path,
     NavigationParams navigationParams, {
     bool isRedirect = false,
+    bool isPopState = false,
   }) async {
     if (!isRedirect) {
       // Don't check `CanNavigate` or trigger `onNavigationStart` on redirect.
@@ -169,22 +179,19 @@ class RouterImpl extends Router {
       }
     }
 
-    navigationParams?.assertValid();
     path = await _routerHook?.navigationPath(path, navigationParams) ?? path;
     path = _location.normalizePath(path);
     navigationParams =
         await _routerHook?.navigationParams(path, navigationParams) ??
             navigationParams;
-    navigationParams?.assertValid();
 
-    var queryParameters = navigationParams?.queryParameters ?? {};
-    var reload = navigationParams != null ? navigationParams.reload : false;
-    if (!reload &&
+    var current = this.current;
+    if (!navigationParams.reload &&
         current != null &&
         path == current.path &&
-        (navigationParams?.fragment ?? '') == current.fragment &&
-        const MapEquality<String, String>()
-            .equals(queryParameters, current.queryParameters)) {
+        navigationParams.fragment == current.fragment &&
+        const MapEquality<String, String>().equals(
+            navigationParams.queryParameters, current.queryParameters)) {
       // In the rare case that a popstate event matches a route that redirects
       // *to* the current route, the current state will already match the
       // redirected state. Normally when the current state and requested state
@@ -202,7 +209,7 @@ class RouterImpl extends Router {
       return NavigationResult.SUCCESS;
     }
 
-    var nextState = await _resolveState(path, navigationParams);
+    var nextState = await _resolveState(path, navigationParams, isPopState);
     // In the event that `path` is empty and doesn't match any routes,
     // `_resolveState` will return a state with no routes, instead of null.
     if (nextState == null || nextState.routes.isEmpty) {
@@ -214,9 +221,12 @@ class RouterImpl extends Router {
       if (leaf is RedirectRouteDefinition) {
         final newPath = _getAbsolutePath(
             leaf.redirectToUrl(nextState.parameters), nextState.build());
-        return _navigate(newPath, navigationParams, isRedirect: true);
+        return _navigate(newPath, navigationParams,
+            isRedirect: true, isPopState: isPopState);
       }
     }
+
+    _onRouteResolved?.add(nextState.build());
 
     if (!await _canDeactivate(nextState)) {
       return NavigationResult.BLOCKED_BY_GUARD;
@@ -226,9 +236,9 @@ class RouterImpl extends Router {
     }
 
     await _activateRouterState(nextState);
-    if (navigationParams == null || navigationParams.updateUrl) {
+    if (navigationParams.updateUrl) {
       final url = nextState.build().toUrl();
-      if (navigationParams != null && navigationParams.replace) {
+      if (navigationParams.replace) {
         _location.replaceState(url);
       } else {
         _location.go(url);
@@ -241,9 +251,9 @@ class RouterImpl extends Router {
   /// Takes a relative or absolute path and converts it to an absolute path.
   ///
   /// ie: ./new -> /the/current/path/new
-  String _getAbsolutePath(String path, RouterState state) {
+  String _getAbsolutePath(String path, RouterState? state) {
     if (path.startsWith('./')) {
-      var currentRoutes = state.routes.take(state.routes.length - 1);
+      var currentRoutes = state!.routes.take(state.routes.length - 1);
       var currentPath = currentRoutes.fold<String>(
           '', (soFar, route) => soFar + route.toUrl(state.parameters));
 
@@ -254,16 +264,16 @@ class RouterImpl extends Router {
   }
 
   /// Translates a navigation request to the MutableRouterState.
-  Future<MutableRouterState> _resolveState(
+  Future<MutableRouterState?> _resolveState(
     String path,
     NavigationParams navigationParams,
+    bool isPopState,
   ) {
-    var state = MutableRouterState()..path = path;
-    if (navigationParams != null) {
-      state
-        ..fragment = navigationParams.fragment
-        ..queryParameters = navigationParams.queryParameters;
-    }
+    var state = MutableRouterState()
+      ..path = path
+      ..fragment = navigationParams.fragment
+      ..queryParameters = navigationParams.queryParameters
+      ..fromPopState = isPopState;
     return _resolveStateForOutlet(_rootOutlet, state, path)
         .then((matched) => matched ? _attachDefaultChildren(state) : null);
   }
@@ -275,7 +285,7 @@ class RouterImpl extends Router {
   /// Returns true if [outlet] has a route definition that matches [path]. The
   /// matching results are written to [state].
   Future<bool> _resolveStateForOutlet(
-    RouterOutlet outlet,
+    RouterOutlet? outlet,
     MutableRouterState state,
     String path,
   ) async {
@@ -331,17 +341,18 @@ class RouterImpl extends Router {
   /// Returns the [ComponentFactory] loaded by the partial [state]'s last route.
   ///
   /// Returns null if the last route is a [RedirectRouteDefinition].
-  FutureOr<ComponentFactory<Object>> _componentFactory(
+  FutureOr<ComponentFactory<Object>?> _componentFactory(
       MutableRouterState state) {
     var route = state.routes.last;
     if (route is ComponentRouteDefinition) {
       return route.component;
     }
     if (route is DeferredRouteDefinition) {
-      if (route.prefetcher == null) return route.loader();
+      var prefetcher = route.prefetcher;
+      if (prefetcher == null) return route.loader();
       // The prefetcher may return void, so it must be wrapped in a Future so
       // that it can be passed to Future.wait().
-      var prefetcherFuture = Future.value(route.prefetcher(state.build()));
+      var prefetcherFuture = Future.value(prefetcher(state.build()));
       var loaderFuture = route.loader();
       return Future.wait([prefetcherFuture, loaderFuture])
           .then((_) => loaderFuture);
@@ -350,7 +361,7 @@ class RouterImpl extends Router {
   }
 
   /// Returns the next [RouterOutlet] created by [componentRef], if any.
-  RouterOutlet _nextOutlet(ComponentRef<Object> componentRef) =>
+  RouterOutlet? _nextOutlet(ComponentRef<Object> componentRef) =>
       componentRef.injector
           .provideType<RouterOutletToken>(RouterOutletToken)
           .routerOutlet;
@@ -362,7 +373,7 @@ class RouterImpl extends Router {
   /// [RouterState]. The process is repeated until there are no more defaults.
   Future<MutableRouterState> _attachDefaultChildren(
       MutableRouterState stateSoFar) async {
-    RouterOutlet nextOutlet;
+    RouterOutlet? nextOutlet;
     if (stateSoFar.routes.isEmpty) {
       nextOutlet = _rootOutlet;
     } else if (stateSoFar.routes.last is RedirectRouteDefinition) {
@@ -406,7 +417,8 @@ class RouterImpl extends Router {
         return false;
       }
     }
-    if (_routerHook != null && !(await _routerHook.canNavigate())) {
+    final routerHook = _routerHook;
+    if (routerHook != null && !(await routerHook.canNavigate())) {
       return false;
     }
     return true;
@@ -421,12 +433,13 @@ class RouterImpl extends Router {
     for (var componentRef in _activeComponentRefs) {
       final component = componentRef.instance;
       if (component is CanDeactivate &&
-          !(await component.canDeactivate(_activeState, nextState))) {
+          !(await component.canDeactivate(_activeState!, nextState))) {
         return false;
       }
-      if (_routerHook != null &&
-          !(await _routerHook.canDeactivate(
-              component, _activeState, nextState))) {
+      final routerHook = _routerHook;
+      if (routerHook != null &&
+          !(await routerHook.canDeactivate(
+              component, _activeState!, nextState))) {
         return false;
       }
     }
@@ -443,9 +456,9 @@ class RouterImpl extends Router {
           !(await component.canActivate(_activeState, nextState))) {
         return false;
       }
-      if (_routerHook != null &&
-          !(await _routerHook.canActivate(
-              component, _activeState, nextState))) {
+      final routerHook = _routerHook;
+      if (routerHook != null &&
+          !(await routerHook.canActivate(component, _activeState, nextState))) {
         return false;
       }
     }
@@ -460,7 +473,7 @@ class RouterImpl extends Router {
     for (final componentRef in _activeComponentRefs) {
       final component = componentRef.instance;
       if (component is OnDeactivate) {
-        component.onDeactivate(_activeState, nextState);
+        component.onDeactivate(_activeState!, nextState);
       }
     }
 
@@ -468,9 +481,10 @@ class RouterImpl extends Router {
     for (var i = 0, len = mutableNextState.components.length; i < len; ++i) {
       // Get the ComponentRef created during route resolution.
       final resolvedComponentRef = mutableNextState.components[i];
-      final componentFactory = mutableNextState.factories[resolvedComponentRef];
+      final componentFactory =
+          mutableNextState.factories[resolvedComponentRef]!;
       // Grab the cached ComponentRef in case the outlet recreated it.
-      await currentOutlet.activate(componentFactory, _activeState, nextState);
+      await currentOutlet!.activate(componentFactory, _activeState, nextState);
       final componentRef = currentOutlet.prepare(componentFactory);
       if (!identical(componentRef, resolvedComponentRef)) {
         // Replace the resolved ComponentRef with the active ComponentRef so

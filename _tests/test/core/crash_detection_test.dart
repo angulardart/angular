@@ -1,22 +1,23 @@
-@TestOn('browser')
 import 'dart:async';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
-import 'crash_detection_test.template.dart' as ng_generated;
+import 'crash_detection_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('Should normally run change detection', () async {
     final valueService = ValueService()..value = 'Hello';
-    final testBed = NgTestBed<NoCrash>().addProviders([
-      provide(ValueService, useValue: valueService),
-    ]);
+    final testBed = NgTestBed(
+      ng.createNoCrashFactory(),
+    ).addInjector(
+      (i) => Injector.map({
+        ValueService: valueService,
+      }, i),
+    );
     final fixture = await testBed.create();
     expect(
       fixture.text,
@@ -31,9 +32,13 @@ void main() {
 
   test('Should disable change detection on components that throw', () async {
     final valueService = ValueService()..value = '1';
-    final testBed = NgTestBed<Crash>().addProviders([
-      provide(ValueService, useValue: valueService),
-    ]);
+    final testBed = NgTestBed(
+      ng.createCrashFactory(),
+    ).addInjector(
+      (i) => Injector.map({
+        ValueService: valueService,
+      }, i),
+    );
 
     // Initially create with the crashing component disabled.
     final fixture = await testBed.create();
@@ -62,10 +67,14 @@ void main() {
   test('Should disable change detection to avoid infinite ngOnInit', () async {
     final valueService = ValueService()..value = '1';
     final rpcService = RpcService();
-    final testBed = NgTestBed<CrashOnInit>().addProviders([
-      provide(ValueService, useValue: valueService),
-      provide(RpcService, useValue: rpcService),
-    ]);
+    final testBed = NgTestBed(
+      ng.createCrashOnInitFactory(),
+    ).addInjector(
+      (i) => Injector.map({
+        ValueService: valueService,
+        RpcService: rpcService,
+      }, i),
+    );
 
     // Initially create with the crashing component disabled.
     final fixture = await testBed.create();
@@ -144,9 +153,9 @@ class Crash {
   template: 'Error({{first}})',
 )
 class ErrorComponent {
-  List<int> listThatWillNPE;
+  dynamic listThatWillNPE;
 
-  int get first => listThatWillNPE.first;
+  dynamic get first => listThatWillNPE.first;
 }
 
 @Injectable()

@@ -1,16 +1,17 @@
-import 'dart:async';
-
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart';
-import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:build_test/build_test.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
+import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../src/resolve.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
   final dartfmt = DartFormatter().format;
   final angular = 'package:angular';
   final libReflection = '$angular/src/core/reflection/reflection.dart';
@@ -52,43 +53,6 @@ void main() {
           _visited = true;
 
           _ref0.initReflector();
-        }
-      '''),
-    );
-  });
-
-  test('should skip linking to deferred libraries', () {
-    final output = ReflectableOutput(
-      urlsNeedingInitReflector: [
-        // Relative file.
-        'foo.template.dart',
-
-        // Package file.
-        'package:bar/bar.template.dart',
-      ],
-    );
-    final emitter = ReflectableEmitter(
-      output,
-      nullLibrary,
-      deferredModules: [
-        // Relative file.
-        'asset:baz/lib/foo.template.dart',
-
-        // Package file.
-        'asset:bar/lib/bar.template.dart',
-      ],
-      deferredModuleSource: 'asset:baz/lib/baz.dart',
-    );
-    expect(emitter.emitImports(), isEmpty);
-    expect(
-      dartfmt(emitter.emitInitReflector()),
-      dartfmt(r'''
-        var _visited = false;
-        void initReflector() {
-          if (_visited) {
-            return;
-          }
-          _visited = true;
         }
       '''),
     );
@@ -176,7 +140,7 @@ void main() {
             ExampleServiceWithDynamicDeps,
             const [
               [
-                _ngRef.Inject(OpaqueToken<dynamic>('someToken'))
+                _ngRef.Inject(OpaqueToken<Object>('someToken'))
               ]
             ]
           );
@@ -188,7 +152,7 @@ void main() {
             ExampleServiceWithDynamicDeps2,
             const [
               [
-                _ngRef.Inject(OpaqueToken<dynamic>('someToken'))
+                _ngRef.Inject(OpaqueToken<Object>('someToken'))
               ]
             ]
           );
@@ -226,7 +190,7 @@ void main() {
       D createD(@someToken s);
 
       @Injectable()
-      E createE(@Optional() SomeDependency s);
+      E createE(@Optional() SomeDependency? s);
 
       @Injectable()
       F createF(@SkipSelf() SomeDependency s);
@@ -253,10 +217,10 @@ void main() {
             [SomeDependency]
           ]);
           _ngRef.registerDependencies(createC, const [
-            [_ngRef.Inject(OpaqueToken<dynamic>('someToken'))]
+            [_ngRef.Inject(OpaqueToken<Object>('someToken'))]
           ]);
           _ngRef.registerDependencies(createD, const [
-            [_ngRef.Inject(OpaqueToken<dynamic>('someToken'))]
+            [_ngRef.Inject(OpaqueToken<Object>('someToken'))]
           ]);
           _ngRef.registerDependencies(createE, const [
             [SomeDependency, _ngRef.Optional()]
@@ -301,7 +265,7 @@ void main() {
         static D createD(@someToken s);
 
         @Injectable()
-        static E createE(@Optional() SomeDependency s);
+        static E createE(@Optional() SomeDependency? s);
 
         @Injectable()
         static F createF(@SkipSelf() SomeDependency s);
@@ -329,10 +293,10 @@ void main() {
             [SomeDependency]
           ]);
           _ngRef.registerDependencies(Creator.createC, const [
-            [_ngRef.Inject(OpaqueToken<dynamic>('someToken'))]
+            [_ngRef.Inject(OpaqueToken<Object>('someToken'))]
           ]);
           _ngRef.registerDependencies(Creator.createD, const [
-            [_ngRef.Inject(OpaqueToken<dynamic>('someToken'))]
+            [_ngRef.Inject(OpaqueToken<Object>('someToken'))]
           ]);
           _ngRef.registerDependencies(Creator.createE, const [
             [SomeDependency, _ngRef.Optional()]

@@ -1,3 +1,5 @@
+// @dart=2.9
+
 /// Configuration for using `package:build`-compatible build systems.
 ///
 /// See:
@@ -24,9 +26,7 @@ import 'package:angular_compiler/v1/src/source_gen/template_compiler/generator.d
 const _useTemplateOutlinesInstead = 'outline-only';
 
 /// Default build flags that are merged into provided configuration.
-const _defaultFlags = CompilerFlags(
-  useLegacyStyleEncapsulation: false,
-);
+const _defaultFlags = CompilerFlags();
 
 // Default extensions of the output `[.outline].template.dart` file(s).
 const _templateExtension = '.template.dart';
@@ -63,15 +63,7 @@ Builder templateCompiler(
       exportUserCodeFromTemplate: flags.exportUserCodeFromTemplate,
     );
   }
-  return Compiler(
-    flags,
-    generate,
-    {
-      CompileContext: CompileContext(
-        policyExceptions: flags.policyExceptions,
-      ),
-    },
-  ).asBuilder(extension: templateExtension);
+  return Compiler(flags, generate).asBuilder(extension: templateExtension);
 }
 
 /// Generates `.css.dart` files that are imported by the template compiler.

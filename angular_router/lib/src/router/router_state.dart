@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:collection/collection.dart';
 import 'package:angular/angular.dart' show ComponentFactory, ComponentRef;
 
@@ -20,17 +16,18 @@ class RouterState extends Url {
   /// '/customer/5', parameters would equal { 'id': '5' }.
   final Map<String, String> parameters;
 
-  RoutePath _routePath;
-  RoutePath get routePath {
-    return _routePath ??= RoutePath.fromRoutes(routes);
-  }
+  /// Whether this state was caused by a `popstate` event.
+  final bool fromPopState;
+
+  late final routePath = RoutePath.fromRoutes(routes);
 
   RouterState(
     String path,
-    List<RouteDefinition> routes, {
-    Map<String, String> parameters,
+    List<RouteDefinition>? routes, {
+    Map<String, String>? parameters,
     String fragment = '',
-    Map<String, String> queryParameters,
+    Map<String, String>? queryParameters,
+    this.fromPopState = false,
   })  : parameters = Map.unmodifiable(parameters ?? {}),
         routes = List.unmodifiable(routes ?? []),
         super(path, queryParameters: queryParameters, fragment: fragment);
@@ -54,8 +51,7 @@ class MutableRouterState {
   String fragment = '';
   String path = '';
   Map<String, String> queryParameters = {};
-
-  MutableRouterState();
+  bool fromPopState = false;
 
   Map<String, String> get parameters {
     var result = <String, String>{};
@@ -69,7 +65,8 @@ class MutableRouterState {
     return RouterState(path, routes.toList(),
         fragment: fragment,
         queryParameters: queryParameters,
-        parameters: parameters);
+        parameters: parameters,
+        fromPopState: fromPopState);
   }
 
   /// Pushes a [route] and its [match].
@@ -89,7 +86,7 @@ class MutableRouterState {
     var result = <String, String>{};
     var index = 1;
     for (var parameter in route.parameters) {
-      result[parameter] = Uri.decodeComponent(match[index++]);
+      result[parameter] = Uri.decodeComponent(match[index++]!);
     }
     return result;
   }

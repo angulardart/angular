@@ -47,9 +47,9 @@ const _object = 'object';
 /// NOTE: We don't yet support querying for types or events.
 /// NOTE: This schema is auto extracted from `schema_extractor.ts` located in the test folder.
 const List<String> _schema = [
-  '*|%classList,className,id,innerHTML,*beforecopy,*beforecut,*beforepaste,*copy,*cut,*paste,*search,*selectstart,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerHTML,#scrollLeft,#scrollTop',
-  '^*|accessKey,contentEditable,dir,!draggable,!hidden,innerText,lang,*abort,*autocomplete,*autocompleteerror,*beforecopy,*beforecut,*beforepaste,*blur,*cancel,*canplay,*canplaythrough,*change,*click,*close,*contextmenu,*copy,*cuechange,*cut,*dblclick,*drag,*dragend,*dragenter,*dragleave,*dragover,*dragstart,*drop,*durationchange,*emptied,*ended,*error,*focus,*input,*invalid,*keydown,*keypress,*keyup,*load,*loadeddata,*loadedmetadata,*loadstart,*message,*mousedown,*mouseenter,*mouseleave,*mousemove,*mouseout,*mouseover,*mouseup,*mousewheel,*mozfullscreenchange,*mozfullscreenerror,*mozpointerlockchange,*mozpointerlockerror,*paste,*pause,*play,*playing,*progress,*ratechange,*reset,*resize,*scroll,*search,*seeked,*seeking,*select,*selectstart,*show,*stalled,*submit,*suspend,*timeupdate,*toggle,*volumechange,*waiting,*webglcontextcreationerror,*webglcontextlost,*webglcontextrestored,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerText,!spellcheck,%style,#tabIndex,title,!translate',
-  'media|!autoplay,!controls,%crossOrigin,#currentTime,!defaultMuted,#defaultPlaybackRate,!disableRemotePlayback,!loop,!muted,*encrypted,#playbackRate,preload,src,#volume',
+  '*|%classList,className,id,innerHTML,*beforecopy,*beforecut,*beforepaste,*copy,*cut,*paste,*search,*selectstart,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerHTML,#scrollLeft,#scrollTop,role',
+  '^*|accessKey,autocapitalize,!autofocus,contentEditable,dir,!draggable,enterkeyhint,!hidden,innerText,inputmode,is,itemid,itemprop,itemref,!itemscope,itemtype,lang,nonce,*abort,*autocomplete,*autocompleteerror,*beforecopy,*beforecut,*beforepaste,*blur,*cancel,*canplay,*canplaythrough,*change,*click,*close,*contextmenu,*copy,*cuechange,*cut,*dblclick,*drag,*dragend,*dragenter,*dragleave,*dragover,*dragstart,*drop,*durationchange,*emptied,*ended,*error,*focus,*input,*invalid,*keydown,*keypress,*keyup,*load,*loadeddata,*loadedmetadata,*loadstart,*message,*mousedown,*mouseenter,*mouseleave,*mousemove,*mouseout,*mouseover,*mouseup,*mousewheel,*mozfullscreenchange,*mozfullscreenerror,*mozpointerlockchange,*mozpointerlockerror,*paste,*pause,*play,*playing,*progress,*ratechange,*reset,*resize,*scroll,*search,*seeked,*seeking,*select,*selectstart,*show,*stalled,*submit,*suspend,*timeupdate,*toggle,*volumechange,*waiting,*webglcontextcreationerror,*webglcontextlost,*webglcontextrestored,*webkitfullscreenchange,*webkitfullscreenerror,*wheel,outerText,!spellcheck,%style,#tabIndex,title,!translate',
+  'media|!autoplay,!controls,%controlsList,%crossOrigin,#currentTime,!defaultMuted,#defaultPlaybackRate,!disableRemotePlayback,!loop,!muted,*encrypted,#playbackRate,preload,src,#volume',
   '@svg:^*|*abort,*autocomplete,*autocompleteerror,*blur,*cancel,*canplay,*canplaythrough,*change,*click,*close,*contextmenu,*cuechange,*dblclick,*drag,*dragend,*dragenter,*dragleave,*dragover,*dragstart,*drop,*durationchange,*emptied,*ended,*error,*focus,*input,*invalid,*keydown,*keypress,*keyup,*load,*loadeddata,*loadedmetadata,*loadstart,*mousedown,*mouseenter,*mouseleave,*mousemove,*mouseout,*mouseover,*mouseup,*mousewheel,*pause,*play,*playing,*progress,*ratechange,*reset,*resize,*scroll,*seeked,*seeking,*select,*show,*stalled,*submit,*suspend,*timeupdate,*toggle,*volumechange,*waiting,%style,#tabIndex',
   '@svg:graphics^@svg:|',
   '@svg:animation^@svg:|*begin,*end,*repeat',
@@ -64,7 +64,7 @@ const List<String> _schema = [
   'br|clear',
   'base|href,target',
   'body|aLink,background,bgColor,link,*beforeunload,*blur,*error,*focus,*hashchange,*languagechange,*load,*message,*offline,*online,*pagehide,*pageshow,*popstate,*rejectionhandled,*resize,*scroll,*storage,*unhandledrejection,*unload,text,vLink',
-  'button|!autofocus,!disabled,formAction,formEnctype,formMethod,!formNoValidate,formTarget,name,type,value',
+  'button|!disabled,formAction,formEnctype,formMethod,!formNoValidate,formTarget,name,type,value',
   'canvas|#height,#width',
   'content|select',
   'dl|!compact',
@@ -83,10 +83,10 @@ const List<String> _schema = [
   'head|',
   'h1,h2,h3,h4,h5,h6|align',
   'html|version',
-  'iframe|align,!allowFullscreen,frameBorder,height,longDesc,marginHeight,marginWidth,name,%sandbox,scrolling,src,srcdoc,width',
+  'iframe|align,allow,!allowFullscreen,frameBorder,height,longDesc,marginHeight,marginWidth,name,%sandbox,scrolling,src,srcdoc,width',
   'img|align,alt,border,%crossOrigin,#height,#hspace,!isMap,longDesc,lowsrc,name,sizes,src,srcset,useMap,#vspace,#width',
-  'input|accept,align,alt,autocapitalize,autocomplete,!autofocus,!checked,!defaultChecked,defaultValue,dirName,!disabled,%files,formAction,formEnctype,formMethod,!formNoValidate,formTarget,#height,!incremental,!indeterminate,max,#maxLength,min,#minLength,!multiple,name,pattern,placeholder,!readOnly,!required,selectionDirection,#selectionEnd,#selectionStart,#size,src,step,type,useMap,value,%valueAsDate,#valueAsNumber,#width',
-  'keygen|!autofocus,challenge,!disabled,keytype,name',
+  'input|accept,align,alt,autocomplete,!checked,!defaultChecked,defaultValue,dirName,!disabled,%files,formAction,formEnctype,formMethod,!formNoValidate,formTarget,#height,!incremental,!indeterminate,max,#maxLength,min,#minLength,!multiple,name,pattern,placeholder,!readOnly,!required,selectionDirection,#selectionEnd,#selectionStart,#size,src,step,type,useMap,value,%valueAsDate,#valueAsNumber,#width',
+  'keygen|challenge,!disabled,keytype,name',
   'li|type,#value',
   'label|htmlFor',
   'legend|align',
@@ -109,7 +109,7 @@ const List<String> _schema = [
   'progress|#max,#value',
   'q,blockquote,cite|',
   'script|!async,charset,%crossOrigin,!defer,event,htmlFor,integrity,src,text,type',
-  'select|!autofocus,!disabled,#length,!multiple,name,!required,#selectedIndex,#size,value',
+  'select|!disabled,#length,!multiple,name,!required,#selectedIndex,#size,value',
   'shadow|',
   'source|media,sizes,src,srcset,type',
   'span|',
@@ -121,12 +121,12 @@ const List<String> _schema = [
   'tr|align,bgColor,ch,chOff,vAlign',
   'tfoot,thead,tbody|align,ch,chOff,vAlign',
   'template|',
-  'textarea|autocapitalize,!autofocus,#cols,defaultValue,dirName,!disabled,#maxLength,#minLength,name,placeholder,!readOnly,!required,#rows,selectionDirection,#selectionEnd,#selectionStart,value,wrap',
+  'textarea|#cols,defaultValue,dirName,!disabled,#maxLength,#minLength,name,placeholder,!readOnly,!required,#rows,selectionDirection,#selectionEnd,#selectionStart,value,wrap',
   'title|text',
   'track|!default,kind,label,src,srclang',
   'ul|!compact,type',
   'unknown|',
-  'video^media|#height,poster,#width',
+  'video^media|!disablePictureInPicture,#height,poster,#width',
   '@svg:a^@svg:graphics|',
   '@svg:animate^@svg:animation|',
   '@svg:animateMotion^@svg:animation|',
@@ -193,6 +193,8 @@ const List<String> _schema = [
   '@svg:use^@svg:graphics|',
   '@svg:view^@svg:|#zoomAndPan'
 ];
+
+// TODO(b/165123682): case insensitive for attributes.
 const Map<String, String> _attrToPropMap = {
   'class': 'className',
   'innerHtml': 'innerHTML',
@@ -200,8 +202,15 @@ const Map<String, String> _attrToPropMap = {
   'tabindex': 'tabIndex'
 };
 
+const Map<String, String> _propToAttrMap = {
+  'className': 'class',
+  'htmlFor': 'for',
+};
+
 class DomElementSchemaRegistry extends ElementSchemaRegistry {
   var schema = <String, Map<String, String>>{};
+  var eventSchema = <String, Set<String>>{};
+  var attributeSchema = <String, Set<String>>{};
   DomElementSchemaRegistry() {
     for (var encodedType in _schema) {
       var parts = encodedType.split('|');
@@ -209,23 +218,37 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
       var typeParts = (parts[0] + '^').split('^');
       var typeName = typeParts[0];
       var type = <String, String>{};
+      var attributes = <String>{};
+      var events = <String>{};
       var tags = typeName.split(',');
       for (var tag in tags) {
         schema[tag] = type;
+        attributeSchema[tag] = attributes;
+        eventSchema[tag] = events;
       }
       var superType = schema[typeParts[1]];
       superType?.forEach((k, v) => type[k] = v);
+      var superAttributes = attributeSchema[typeParts[1]];
+      superAttributes?.forEach((item) => attributes.add(item));
+      var superEvents = eventSchema[typeParts[1]];
+      superEvents?.forEach((item) => events.add(item));
       for (var property in properties) {
         if (property.isEmpty) continue;
-        if (property.startsWith('*')) continue;
+        if (property.startsWith('*')) {
+          events.add(property.substring(1).toLowerCase());
+        }
         if (property.startsWith('!')) {
           type[property.substring(1)] = _boolean;
+          attributes.add(_toAttribute(property.substring(1)));
         } else if (property.startsWith('#')) {
           type[property.substring(1)] = _number;
+          attributes.add(_toAttribute(property.substring(1)));
         } else if (property.startsWith('%')) {
           type[property.substring(1)] = _object;
+          attributes.add(_toAttribute(property.substring(1)));
         } else {
           type[property] = _string;
+          attributes.add(_toAttribute(property));
         }
       }
     }
@@ -236,6 +259,23 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
     var elementProperties = schema[tagName.toLowerCase()] ?? schema['unknown'];
     return elementProperties[propName] != null;
   }
+
+  @override
+  bool hasAttribute(String tagName, String attributeName) {
+    var elementAttributes =
+        attributeSchema[tagName.toLowerCase()] ?? attributeSchema['unknown'];
+    return elementAttributes.contains(attributeName.toLowerCase());
+  }
+
+  @override
+  bool hasEvent(String tagName, String eventName) {
+    var elementEvents =
+        eventSchema[tagName.toLowerCase()] ?? eventSchema['unknown'];
+    return elementEvents.contains(eventName.toLowerCase());
+  }
+
+  String _toAttribute(String propertyName) =>
+      (_propToAttrMap[propertyName] ?? propertyName).toLowerCase();
 
   static Map<String, TemplateSecurityContext> _SECURITY_SCHEMA;
 
@@ -297,7 +337,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
   /// i.e. it is not possible to bind a value into a changing attribute or
   /// tag name.
   ///
-  /// The filtering is white list based. All attributes in the schema above
+  /// The filtering is allow-list based. All attributes in the schema above
   /// are assumed to have the 'NONE' security context, i.e. that they are safe
   /// inert string values. Only specific well known attack vectors are assigned
   /// their appropriate context.

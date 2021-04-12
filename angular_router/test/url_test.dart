@@ -1,14 +1,10 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:test/test.dart';
 import 'package:angular_router/src/url.dart';
 
 void main() {
   group('$Url', () {
     group('parse', () {
-      Url url;
+      late Url url;
 
       setUpAll(() {
         url = Url.parse('/foo?bar=true&path/param/key=uri?param#baz');

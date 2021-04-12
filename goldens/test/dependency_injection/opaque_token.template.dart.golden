@@ -1,0 +1,212 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'opaque_token.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'opaque_token.template.dart' as _ref0;
+import 'package:angular/src/di/injector.dart' as _i1;
+import 'opaque_token.dart' as _i2;
+import 'package:angular/src/meta/di_tokens.dart' as _i3;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'opaque_token.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'dart:core';
+import 'package:angular/src/meta/di_tokens.dart' as import10;
+import 'opaque_token.dart' as import11;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/opaque_token.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  Object? __untypedToken_0_6;
+  String? __genericTyped_0_7;
+  List<Object>? __untypedMulti_0_8;
+  List<String>? __genericMulti_0_9;
+  String? __CustomToken_0_10;
+  List<String>? __CustomMulti_0_11;
+  Object get _untypedToken_0_6 {
+    var result = this.__untypedToken_0_6;
+    if ((result == null)) {
+      (this.__untypedToken_0_6 = (result = 'untypedToken: Hello World'));
+    }
+    return result;
+  }
+
+  String get _genericTyped_0_7 {
+    var result = this.__genericTyped_0_7;
+    if ((result == null)) {
+      (this.__genericTyped_0_7 = (result = 'genericTyped: Hello World'));
+    }
+    return result;
+  }
+
+  List<Object> get _untypedMulti_0_8 {
+    var result = this.__untypedMulti_0_8;
+    if ((result == null)) {
+      (this.__untypedMulti_0_8 = (result = ['untypedMulti: A', 'untypedMulti: B']));
+    }
+    return result;
+  }
+
+  List<String> get _genericMulti_0_9 {
+    var result = this.__genericMulti_0_9;
+    if ((result == null)) {
+      (this.__genericMulti_0_9 = (result = ['untypedMulti: A', 'untypedMulti: B']));
+    }
+    return result;
+  }
+
+  String get _CustomToken_0_10 {
+    var result = this.__CustomToken_0_10;
+    if ((result == null)) {
+      (this.__CustomToken_0_10 = (result = 'customToken: Hello World'));
+    }
+    return result;
+  }
+
+  List<String> get _CustomMulti_0_11 {
+    var result = this.__CustomMulti_0_11;
+    if ((result == null)) {
+      (this.__CustomMulti_0_11 = (result = ['customMulti: A', 'customMulti: B']));
+    }
+    return result;
+  }
+
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent(this.injector(0));
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((0 == nodeIndex)) {
+      if (identical(token, const import10.OpaqueToken<Object>('untypedToken'))) {
+        return this._untypedToken_0_6;
+      }
+      if (identical(token, const import10.OpaqueToken<String>('genericTyped'))) {
+        return this._genericTyped_0_7;
+      }
+      if (identical(token, const import10.MultiToken<Object>('untypedMulti'))) {
+        return this._untypedMulti_0_8;
+      }
+      if (identical(token, const import10.MultiToken<String>('genericMulti'))) {
+        return this._genericMulti_0_9;
+      }
+      if (identical(token, const import11.CustomToken())) {
+        return this._CustomToken_0_10;
+      }
+      if (identical(token, const import11.CustomMulti())) {
+        return this._CustomMulti_0_11;
+      }
+    }
+    return notFoundResult;
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+_i1.Injector goldenInjector$Injector(_i1.Injector parent) => _Injector$goldenInjector._(parent);
+
+class _Injector$goldenInjector extends _i1.HierarchicalInjector implements _i1.Injector {
+  _Injector$goldenInjector._(_i1.Injector parent) : super(parent);
+
+  String _getString$0() => 'customToken: Hello World';
+  String _getString$1() => 'genericTyped: Hello World';
+  Object _getObject$2() => 'untypedToken: Hello World';
+  Object _getObject$3() => 'untypedMulti: A';
+  Object _getObject$4() => 'untypedMulti: B';
+  String _getString$5() => 'untypedMulti: A';
+  String _getString$6() => 'untypedMulti: B';
+  String _getString$7() => 'customMulti: A';
+  String _getString$8() => 'customMulti: B';
+  _i1.Injector _getInjector$9() => this;
+  @override
+  Object? injectFromSelfOptional(Object token, [Object? orElse = _i1.throwIfNotFound]) {
+    if (identical(token, const _i2.CustomToken())) {
+      return _getString$0();
+    }
+    if (identical(token, const _i3.OpaqueToken<String>('genericTyped'))) {
+      return _getString$1();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('untypedToken'))) {
+      return _getObject$2();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$9();
+    }
+    if (identical(token, const _i3.MultiToken<Object>('untypedMulti'))) {
+      return [_getObject$3(), _getObject$4()];
+    }
+    if (identical(token, const _i3.MultiToken<String>('genericMulti'))) {
+      return [_getString$5(), _getString$6()];
+    }
+    if (identical(token, const _i2.CustomMulti())) {
+      return [_getString$7(), _getString$8()];
+    }
+    return orElse;
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

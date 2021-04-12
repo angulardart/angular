@@ -5,6 +5,18 @@
 *   `NgTestFixture.dispose()` now resets and clears all component styles from
     the DOM when assertions are enabled.
 
+
+### Breaking Changes
+
+*   `NgTestBed` (the default constructor) is now identical to the behavior of
+    `NgTestBed.forComponent` and has replaced it, and the original
+    implementation that used `initReflector()` to load classes based on `Type`
+    has been renamed to `NgTestBed.useInitReflector`.
+
+### Bug Fixes
+
+*   Removed `_alwaysStable` when other stabilizers exist.
+
 ## 2.4.0
 
 ### New Features

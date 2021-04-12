@@ -1,3 +1,4 @@
+import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart' as core;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
@@ -6,7 +7,6 @@ import 'package:angular_compiler/v1/src/compiler/semantic_analysis/binding_conve
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart' as ast;
 import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_element.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/ir/provider_source.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
 
 /// Converts a list of [ast.DirectiveAst] nodes into [ir.MatchedDirective]
 /// instances.
@@ -26,8 +26,6 @@ List<ir.MatchedDirective> convertMatchedDirectives(
   for (var directive in directives) {
     index++;
     var providerSource = compileElement.directiveInstances[index];
-    // Skip functional directives.
-    if (providerSource == null) continue;
     matchedDirectives.add(convertMatchedDirective(
         directive, providerSource, compileElement, analyzedClass));
   }

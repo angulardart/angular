@@ -1,28 +1,36 @@
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart'
-    show DomHelpers, Identifiers;
+    show DomHelpers, Identifiers, SafeHtmlAdapters;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/security.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_view.dart'
     show NodeReference, TextBindingNodeReference;
+import 'package:angular_compiler/v2/context.dart';
 
+import 'devtools.dart';
 import 'interpolation_utils.dart';
 
-/// Converts [binding] to an update statement.
-///
-/// This is update statement is called when the [currValExpr] has changed.
-o.Statement bindingToUpdateStatement(
-    ir.Binding binding,
-    o.Expression appViewInstance,
-    NodeReference renderNode,
-    bool isHtmlElement,
-    o.Expression currValExpr) {
+/// Returns statements that update a [binding].
+List<o.Statement> bindingToUpdateStatements(
+  ir.Binding binding,
+  o.Expression appViewInstance,
+  NodeReference renderNode,
+  bool isHtmlElement,
+  o.Expression currValExpr,
+) {
   // Wraps current value with sanitization call if necessary.
   var renderValue =
       _sanitizedValue(binding.target.securityContext, currValExpr);
   var visitor = _UpdateStatementsVisitor(
       appViewInstance, renderNode, binding.source, isHtmlElement, currValExpr);
-  return binding.target.accept(visitor, renderValue);
+  var updateStatement = binding.target.accept(visitor, renderValue);
+  var devToolsStatement =
+      devToolsBindingStatement(binding, appViewInstance, currValExpr);
+  return [
+    if (devToolsStatement != null) devToolsStatement,
+    updateStatement,
+  ];
 }
 
 class _UpdateStatementsVisitor
@@ -42,28 +50,34 @@ class _UpdateStatementsVisitor
   );
 
   @override
-  o.Statement visitAttributeBinding(ir.AttributeBinding attributeBinding,
-      [o.Expression renderValue]) {
+  o.Statement visitAttributeBinding(
+    ir.AttributeBinding attributeBinding, [
+    o.Expression renderValue,
+  ]) {
+    // TODO(b/171228413): Remove this deoptimization.
+    var useSetAttributeIfImmutable = true;
+    // Conditional attribute (i.e. [attr.disabled.if]).
+    //
+    // For now we treat this as a pure transform to make the
+    // implementation simpler (and consistent with how it worked before)
+    // - it would be a non-breaking change to optimize further.
     if (attributeBinding.isConditional) {
-      // Conditional attribute (i.e. [attr.disabled.if]).
-      //
-      // For now we treat this as a pure transform to make the
-      // implementation simpler (and consistent with how it worked before)
-      // - it would be a non-breaking change to optimize further.
+      // b/171226440: Avoid using "setAttribute" for conditionals, because we
+      // try to use a (ternary) nullable-string, which is invalid. We either
+      // need more plumbing in order to use "setAttribute" safely.
+      if (CompileContext.current.emitNullSafeCode) {
+        useSetAttributeIfImmutable = false;
+      }
       renderValue = renderValue.conditional(o.literal(''), o.NULL_EXPR);
-      // Convert to string if necessary.
-      // Sanitized and interpolated bindings always return a string, so we only
-      // check if values that don't require sanitization or interpolation need
-      // to be converted to a string.
     } else if (attributeBinding.securityContext ==
             TemplateSecurityContext.none &&
         !isInterpolation(bindingSource) &&
         !bindingSource.isString) {
-      renderValue = renderValue.callMethod(
-        'toString',
-        const [],
-        checked: bindingSource.isNullable,
-      );
+      // Convert to string if necessary.
+      // Sanitized and interpolated bindings always return a string, so we only
+      // check if values that don't require sanitization or interpolation need
+      // to be converted to a string.
+      renderValue = _convertAttributeRenderValue(renderValue, bindingSource);
     }
     if (attributeBinding.hasNamespace) {
       return o.importExpr(DomHelpers.updateAttributeNS).callFn([
@@ -75,7 +89,7 @@ class _UpdateStatementsVisitor
     }
 
     return o
-        .importExpr(bindingSource.isNullable
+        .importExpr(!useSetAttributeIfImmutable || bindingSource.isNullable
             ? DomHelpers.updateAttribute
             : DomHelpers.setAttribute)
         .callFn(
@@ -85,6 +99,27 @@ class _UpdateStatementsVisitor
         renderValue,
       ],
     ).toStmt();
+  }
+
+  static o.Expression _convertAttributeRenderValue(
+    o.Expression renderValue,
+    ir.BindingSource bindingSource,
+  ) {
+    if (CompileContext.current.emitNullSafeCode) {
+      // New behavior: Do nothing. We accept a "String?" (only) as a type and
+      // Dart's compilers will emit a compile-time error (i.e. something like
+      // "cannot assign int to String?") on another value type.
+      return renderValue;
+    } else {
+      // Legacy behavior: Allow a non-String `[attr.foo]="baz"` binding. We
+      // coerce it into a String (or null) by transforming "baz" into
+      // "baz?.toString()".
+      return renderValue.callMethod(
+        'toString',
+        const [],
+        checked: bindingSource.isNullable,
+      );
+    }
   }
 
   @override
@@ -201,7 +236,7 @@ class _UpdateStatementsVisitor
   @override
   o.Statement visitInputBinding(ir.InputBinding inputBinding,
           [o.Expression renderValue]) =>
-      appViewInstance.prop(inputBinding.name).set(renderValue).toStmt();
+      appViewInstance.prop(inputBinding.propertyName).set(renderValue).toStmt();
 
   @override
   o.Statement visitCustomEvent(ir.CustomEvent customEvent,
@@ -236,27 +271,28 @@ class _UpdateStatementsVisitor
 }
 
 o.Expression _sanitizedValue(
-    TemplateSecurityContext securityContext, o.Expression renderValue) {
-  String methodName;
+  TemplateSecurityContext securityContext,
+  o.Expression renderValue,
+) {
+  CompileIdentifierMetadata method;
   switch (securityContext) {
     case TemplateSecurityContext.none:
       return renderValue; // No sanitization needed.
     case TemplateSecurityContext.html:
-      methodName = 'sanitizeHtml';
+      method = SafeHtmlAdapters.sanitizeHtml;
       break;
     case TemplateSecurityContext.style:
-      methodName = 'sanitizeStyle';
+      method = SafeHtmlAdapters.sanitizeStyle;
       break;
     case TemplateSecurityContext.url:
-      methodName = 'sanitizeUrl';
+      method = SafeHtmlAdapters.sanitizeUrl;
       break;
     case TemplateSecurityContext.resourceUrl:
-      methodName = 'sanitizeResourceUrl';
+      method = SafeHtmlAdapters.sanitizeResourceUrl;
       break;
     default:
       throw ArgumentError('internal error, unexpected '
           'TemplateSecurityContext $securityContext.');
   }
-  var ctx = o.importExpr(Identifiers.appViewUtils).prop('sanitizer');
-  return ctx.callMethod(methodName, [renderValue]);
+  return o.importExpr(method).callFn([renderValue]);
 }

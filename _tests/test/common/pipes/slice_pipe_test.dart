@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
@@ -8,9 +7,9 @@ import 'slice_pipe_test.template.dart' as ng;
 
 void main() {
   group('SlicePipe', () {
-    List<num> list;
-    var str;
-    var pipe;
+    late List<num> list;
+    late String str;
+    late SlicePipe pipe;
     setUp(() {
       list = [1, 2, 3, 4, 5];
       str = 'tuvwxyz';
@@ -76,15 +75,15 @@ void main() {
     });
     group('integration', () {
       test('should work with mutable arrays', () async {
-        var testBed = NgTestBed.forComponent(ng.createTestCompFactory());
+        var testBed = NgTestBed(ng.createTestCompFactory());
         var testFixture = await testBed.create();
         var el = testFixture.rootElement;
         var mutable = <num>[1, 2];
-        await testFixture.update((comp) {
+        await testFixture.update((TestComp comp) {
           comp.data = mutable;
         });
         expect(el, hasTextContent('2'));
-        await testFixture.update((comp) {
+        await testFixture.update((TestComp comp) {
           mutable.add(3);
         });
         expect(el, hasTextContent('2,3'));
@@ -95,7 +94,9 @@ void main() {
 
 @Component(
   selector: 'test-comp',
-  template: '{{(data | slice:1).join(\',\') }}',
+  template: r'''
+    {{($pipe.slice(data, 1)).join(',') }}
+    ''',
   pipes: [SlicePipe],
 )
 class TestComp {

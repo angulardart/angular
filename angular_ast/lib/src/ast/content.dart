@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -37,13 +33,13 @@ abstract class EmbeddedContentAst implements StandaloneTemplateAst {
     NgToken elementIdentifierToken,
     NgToken endElementToken,
     CloseElementAst closeComplement, [
-    AttributeAst selectAttribute,
-    AttributeAst ngProjectAsAttribute,
-    ReferenceAst reference,
+    AttributeAst? selectAttribute,
+    AttributeAst? ngProjectAsAttribute,
+    ReferenceAst? reference,
   ]) = ParsedEmbeddedContentAst;
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitEmbeddedContent(this, context);
   }
 
@@ -53,15 +49,15 @@ abstract class EmbeddedContentAst implements StandaloneTemplateAst {
   /// but no value is assigned.
   /// If 'select' is not defined at all (simple <ng-content>), then the value
   /// will default to '*'.
-  String get selector;
+  String? get selector;
 
   /// A CSS selector denoting what this embedded content should be projected as.
   ///
   /// May be null if decorator `ngProjectAs` is not defined.
-  String get ngProjectAs;
+  String? get ngProjectAs;
 
   /// Reference assignment.
-  ReferenceAst get reference;
+  ReferenceAst? get reference;
 
   /// </ng-content> that is paired to this <ng-content>.
   CloseElementAst get closeComplement;
@@ -90,14 +86,14 @@ class ParsedEmbeddedContentAst extends TemplateAst with EmbeddedContentAst {
   final NgToken identifierToken;
 
   // Select assignment.
-  final AttributeAst selectAttribute;
+  final AttributeAst? selectAttribute;
 
   // NgProjectAs assignment.
-  final AttributeAst ngProjectAsAttribute;
+  final AttributeAst? ngProjectAsAttribute;
 
   // Reference assignment.
   @override
-  final ReferenceAst reference;
+  final ReferenceAst? reference;
 
   @override
   CloseElementAst closeComplement;
@@ -118,17 +114,17 @@ class ParsedEmbeddedContentAst extends TemplateAst with EmbeddedContentAst {
         );
 
   @override
-  String get selector {
+  String? get selector {
     // '<ng-content select>' ; no value was defined.
     // Return null to handle later.
-    if (selectAttribute?.name != null && selectAttribute.value == null) {
+    if (selectAttribute?.name != null && selectAttribute!.value == null) {
       return null;
     }
     return selectAttribute?.value ?? '*';
   }
 
   @override
-  String get ngProjectAs {
+  String? get ngProjectAs {
     return ngProjectAsAttribute?.value;
   }
 }
@@ -139,13 +135,13 @@ class _SyntheticEmbeddedContentAst extends SyntheticTemplateAst
   final String selector;
 
   @override
-  final String ngProjectAs;
+  final String? ngProjectAs;
 
   @override
-  final ReferenceAst reference;
+  final ReferenceAst? reference;
 
   @override
-  CloseElementAst closeComplement;
+  late CloseElementAst closeComplement;
 
   _SyntheticEmbeddedContentAst(
       [this.selector = '*', this.ngProjectAs, this.reference]) {

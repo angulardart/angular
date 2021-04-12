@@ -56,7 +56,7 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
 ///       </form>
 ///       <pre>{{data}}</pre>
 ///     </div>''',
-///   directives: const [CORE_DIRECTIVES, formDirectives]
+///   directives: const [coreDirectives, formDirectives]
 /// })
 /// class App {
 ///
@@ -77,7 +77,10 @@ import 'shared.dart' show setUpControl, setUpControlGroup, composeValidators;
   visibility: Visibility.all,
 )
 class NgForm extends AbstractNgForm<ControlGroup> {
-  NgForm(@Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic> validators) {
+  NgForm(
+    @Optional() @Self() @Inject(NG_VALIDATORS) List<dynamic>? validators,
+    ChangeDetectorRef changeDetectorRef,
+  ) : super(changeDetectorRef) {
     form = ControlGroup({}, composeValidators(validators));
   }
 
@@ -92,15 +95,20 @@ class NgForm extends AbstractNgForm<ControlGroup> {
 /// that are backed by different types such as protos.
 abstract class AbstractNgForm<T extends AbstractControlGroup>
     extends AbstractForm<T> {
+  AbstractNgForm(this.changeDetectorRef);
+
+  @protected
+  final ChangeDetectorRef changeDetectorRef;
+
   @override
-  T form;
+  T? form;
 
   @Input('ngDisabled')
-  set disabled(bool isDisabled) {
-    toggleDisabled(isDisabled);
+  set disabled(bool? isDisabled) {
+    toggleDisabled(isDisabled!);
   }
 
-  Map<String, AbstractControl> get controls => form.controls;
+  Map<String?, AbstractControl>? get controls => form?.controls;
 
   T createGroup(NgControlGroup dir);
   // This is separate to allow clients to override the logic if they wish.
@@ -108,22 +116,24 @@ abstract class AbstractNgForm<T extends AbstractControlGroup>
 
   @override
   void addControl(NgControl dir) {
-    var container = findContainer(dir.path);
+    var container = findContainer(dir.path!);
     var ctrl = createControl(dir);
-    container.addControl(dir.name, ctrl);
+    container!.addControl(dir.name, ctrl);
     scheduleMicrotask(() {
       setUpControl(ctrl, dir);
       ctrl.updateValueAndValidity(emitEvent: false);
+      changeDetectorRef.markForCheck();
     });
   }
 
   @override
   void removeControl(NgControl dir) {
     scheduleMicrotask(() {
-      var container = findContainer(dir.path);
+      var container = findContainer(dir.path!);
       if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
+        changeDetectorRef.markForCheck();
       }
     });
   }
@@ -132,10 +142,11 @@ abstract class AbstractNgForm<T extends AbstractControlGroup>
   void addControlGroup(NgControlGroup dir) {
     var container = findContainer(dir.path);
     var group = createGroup(dir);
-    container.addControl(dir.name, group);
+    container!.addControl(dir.name, group);
     scheduleMicrotask(() {
       setUpControlGroup(group, dir);
       group.updateValueAndValidity(emitEvent: false);
+      changeDetectorRef.markForCheck();
     });
   }
 
@@ -146,6 +157,7 @@ abstract class AbstractNgForm<T extends AbstractControlGroup>
       if (container != null) {
         container.removeControl(dir.name);
         container.updateValueAndValidity(emitEvent: false);
+        changeDetectorRef.markForCheck();
       }
     });
   }
@@ -158,8 +170,8 @@ abstract class AbstractNgForm<T extends AbstractControlGroup>
   }
 
   @protected
-  T findContainer(List<String> path) {
+  T? findContainer(List<String?> path) {
     path.removeLast();
-    return path.isEmpty ? form : (form.findPath(path) as T);
+    return path.isEmpty ? form : (form!.findPath(path) as T);
   }
 }

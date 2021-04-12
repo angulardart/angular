@@ -1,5 +1,5 @@
-import 'package:angular_compiler/v1/src/compiler/source_module.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v1/src/compiler/source_module.dart';
 
 /// Elements of a `.template.dart` file to be written to disk.
 class TemplateCompilerOutputs {

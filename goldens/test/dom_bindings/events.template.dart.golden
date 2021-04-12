@@ -1,0 +1,321 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'events.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'events.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'events.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+import 'package:angular/src/runtime/dom_helpers.dart' as import9;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewUsesDomEvents0 _compView_0;
+  late final import1.UsesDomEvents _UsesDomEvents_0_5;
+  late final ViewUsesOutputs0 _compView_1;
+  late final import1.UsesOutputs _UsesOutputs_1_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/events.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewUsesDomEvents0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._UsesDomEvents_0_5 = import1.UsesDomEvents();
+    this._compView_0.create(this._UsesDomEvents_0_5);
+    this._compView_1 = ViewUsesOutputs0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._UsesOutputs_1_5 = import1.UsesOutputs();
+    this._compView_1.create(this._UsesOutputs_1_5);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$UsesDomEvents = const [];
+
+class ViewUsesDomEvents0 extends import0.ComponentView<import1.UsesDomEvents> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesDomEvents0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-dom-events'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/events.dart' : null);
+  }
+
+  @override
+  void build() {
+    final _ctx = this.ctx;
+    final parentRenderNode = this.initViewRoot();
+    final doc = import6.document;
+    final _el_0 = import9.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
+    final _text_1 = import9.appendText(parentRenderNode, ' ');
+    final _el_2 = import9.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
+    final _text_3 = import9.appendText(parentRenderNode, ' ');
+    final _el_4 = import9.appendElement<import6.ButtonElement>(doc, parentRenderNode, 'button');
+    _el_0.addEventListener('click', this.eventHandler0(_ctx.tearOffNoArguments));
+    _el_2.addEventListener('click', this.eventHandler1(_ctx.tearOffWithArguments));
+    _el_4.addEventListener('click', this.eventHandler1(_ctx.callEventWithArguments));
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesDomEvents, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesDomEventsNgFactory = ComponentFactory<import1.UsesDomEvents>('uses-dom-events', viewFactory_UsesDomEventsHost0);
+ComponentFactory<import1.UsesDomEvents> get UsesDomEventsNgFactory {
+  return _UsesDomEventsNgFactory;
+}
+
+ComponentFactory<import1.UsesDomEvents> createUsesDomEventsFactory() {
+  return ComponentFactory('uses-dom-events', viewFactory_UsesDomEventsHost0);
+}
+
+final List<Object> styles$UsesDomEventsHost = const [];
+
+class _ViewUsesDomEventsHost0 extends import8.HostView<import1.UsesDomEvents> {
+  @override
+  void build() {
+    this.componentView = ViewUsesDomEvents0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesDomEvents();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesDomEvents> viewFactory_UsesDomEventsHost0() {
+  return _ViewUsesDomEventsHost0();
+}
+
+final List<Object> styles$UsesOutputs = const [];
+
+class ViewUsesOutputs0 extends import0.ComponentView<import1.UsesOutputs> {
+  late final ViewHasNgEvents0 _compView_0;
+  late final import1.HasNgEvents _HasNgEvents_0_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewUsesOutputs0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('uses-ng-events'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/events.dart' : null);
+  }
+
+  @override
+  void build() {
+    final _ctx = this.ctx;
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewHasNgEvents0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._HasNgEvents_0_5 = import1.HasNgEvents();
+    this._compView_0.create(this._HasNgEvents_0_5);
+    final subscription_0 = this._HasNgEvents_0_5.foo.listen(this.eventHandler0(_ctx.tearOffNoArguments));
+    final subscription_1 = this._HasNgEvents_0_5.bar.listen(this.eventHandler1(_ctx.tearOffWithArguments));
+    final subscription_2 = this._HasNgEvents_0_5.baz.listen(this.eventHandler1(_ctx.callEventWithArguments));
+    this.initSubscriptions([subscription_0, subscription_1, subscription_2]);
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$UsesOutputs, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _UsesOutputsNgFactory = ComponentFactory<import1.UsesOutputs>('uses-ng-events', viewFactory_UsesOutputsHost0);
+ComponentFactory<import1.UsesOutputs> get UsesOutputsNgFactory {
+  return _UsesOutputsNgFactory;
+}
+
+ComponentFactory<import1.UsesOutputs> createUsesOutputsFactory() {
+  return ComponentFactory('uses-ng-events', viewFactory_UsesOutputsHost0);
+}
+
+final List<Object> styles$UsesOutputsHost = const [];
+
+class _ViewUsesOutputsHost0 extends import8.HostView<import1.UsesOutputs> {
+  @override
+  void build() {
+    this.componentView = ViewUsesOutputs0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.UsesOutputs();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.UsesOutputs> viewFactory_UsesOutputsHost0() {
+  return _ViewUsesOutputsHost0();
+}
+
+final List<Object> styles$HasNgEvents = const [];
+
+class ViewHasNgEvents0 extends import0.ComponentView<import1.HasNgEvents> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewHasNgEvents0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('has-ng-events'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/events.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasNgEvents, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasNgEventsNgFactory = ComponentFactory<import1.HasNgEvents>('has-ng-events', viewFactory_HasNgEventsHost0);
+ComponentFactory<import1.HasNgEvents> get HasNgEventsNgFactory {
+  return _HasNgEventsNgFactory;
+}
+
+ComponentFactory<import1.HasNgEvents> createHasNgEventsFactory() {
+  return ComponentFactory('has-ng-events', viewFactory_HasNgEventsHost0);
+}
+
+final List<Object> styles$HasNgEventsHost = const [];
+
+class _ViewHasNgEventsHost0 extends import8.HostView<import1.HasNgEvents> {
+  @override
+  void build() {
+    this.componentView = ViewHasNgEvents0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasNgEvents();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.HasNgEvents> viewFactory_HasNgEventsHost0() {
+  return _ViewHasNgEventsHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(UsesDomEvents, createUsesDomEventsFactory());
+  _ngRef.registerComponent(UsesOutputs, createUsesOutputsFactory());
+  _ngRef.registerComponent(HasNgEvents, createHasNgEventsFactory());
+  _ref0.initReflector();
+}

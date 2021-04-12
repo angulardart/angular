@@ -1,23 +1,18 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
-@TestOn('browser')
-import 'dart:async';
 import 'dart:html';
 
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/dynamic_component_loader.dart';
 import 'package:angular_test/angular_test.dart';
 import 'package:angular_test/compatibility.dart';
 
-import 'compatibility_test.template.dart' as ng_generated;
+import 'compatibility_test.template.dart' as ng;
 
 void main() {
-  ng_generated.initReflector();
+  ng.initReflector();
 
-  Element docRoot;
-  Element testRoot;
+  late Element docRoot;
+  late Element testRoot;
 
   setUp(() {
     docRoot = Element.tag('doc-root');
@@ -27,15 +22,28 @@ void main() {
 
   tearDown(disposeAnyRunningTest);
 
+  test('createTestInjector should support SlowComponentLoader', () async {
+    final injector = createTestInjector([]);
+    final loader = injector.provideType<SlowComponentLoader>(
+      SlowComponentLoader,
+    );
+    expect(
+      () => loader.load(TestSlowComponentLoaderAccess, Injector.empty()),
+      returnsNormally,
+    );
+  });
+
   group('with injector', () {
-    NgTestBed<AngularInjector> testBed;
-    TestService testService;
+    late NgTestBed<AngularInjector> testBed;
+    TestService? testService;
 
     setUp(() {
       testService = null;
-      testBed = NgTestBed<AngularInjector>(
-          host: testRoot,
-          rootInjector: ([i]) => Injector.map({TestService: TestService()}, i));
+      testBed = NgTestBed(
+        ng.createAngularInjectorFactory(),
+        host: testRoot,
+        rootInjector: (i) => Injector.map({TestService: TestService()}, i),
+      );
     });
 
     test('should render, update, and destroy a component', () async {
@@ -45,7 +53,7 @@ void main() {
       final fixture = await testBed.create();
       expect(docRoot.text, isEmpty);
       testService = injectFromFixture(fixture, TestService);
-      await fixture.update((_) => testService.value = 'New value');
+      await fixture.update((_) => testService!.value = 'New value');
       expect(docRoot.text, 'New value');
       await fixture.dispose();
       print(docRoot.innerHtml);
@@ -54,8 +62,8 @@ void main() {
     group('and beforeComponentCreated without error', () {
       test('should handle synchronous fn', () async {
         final fixture = await testBed.create(beforeComponentCreated: (i) {
-          testService = i.get(TestService);
-          testService.value = 'New value';
+          testService = i.provideType(TestService);
+          testService!.value = 'New value';
         }, beforeChangeDetection: (_) {
           expect(testService, isNotNull);
         });
@@ -65,8 +73,8 @@ void main() {
 
       test('should handle asynchronous fn', () async {
         final fixture = await testBed.create(beforeComponentCreated: (i) async {
-          testService = i.get(TestService);
-          testService.value = 'New value';
+          testService = i.provideType(TestService);
+          testService!.value = 'New value';
         }, beforeChangeDetection: (_) {
           expect(testService, isNotNull);
         });
@@ -76,14 +84,15 @@ void main() {
 
       test('should handle asynchronous fn with delayed future', () async {
         final fixture = await testBed.create(
-            beforeComponentCreated: (i) =>
-                Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
-                  testService = i.get(TestService);
-                  testService.value = 'New value';
-                }),
-            beforeChangeDetection: (_) {
-              expect(testService, isNotNull);
-            });
+          beforeComponentCreated: (i) =>
+              Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
+            testService = i.provideType(TestService);
+            testService!.value = 'New value';
+          }),
+          beforeChangeDetection: (_) {
+            expect(testService, isNotNull);
+          },
+        );
         expect(docRoot.text, 'New value');
         await fixture.dispose();
       });
@@ -104,13 +113,14 @@ void main() {
 
       test('should handle asynchronous fn with delayed future', () async {
         expect(
-            testBed.create(
-                beforeComponentCreated: (_) =>
-                    Future.delayed(Duration(milliseconds: 200), () {})
-                        .then((_) {
-                      throw Error();
-                    })),
-            throwsA(const TypeMatcher<Error>()));
+          testBed.create(
+            beforeComponentCreated: (_) =>
+                Future.delayed(Duration(milliseconds: 200), () {}).then((_) {
+              throw Error();
+            }),
+          ),
+          throwsA(const TypeMatcher<Error>()),
+        );
       });
     });
   });
@@ -125,10 +135,16 @@ class AngularInjector {
 
   AngularInjector(this._testService);
 
-  String get value => _testService.value;
+  String? get value => _testService.value;
 }
 
 @Injectable()
 class TestService {
-  String value;
+  String? value;
 }
+
+@Component(
+  selector: 'test',
+  template: '',
+)
+class TestSlowComponentLoaderAccess {}

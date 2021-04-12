@@ -1,15 +1,16 @@
 import 'dart:async';
+
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/src/frontend/ng_zone/fake_time_stabilizer.dart';
 import 'package:angular_test/src/frontend/ng_zone/real_time_stabilizer.dart';
 import 'package:angular_test/src/frontend/ng_zone/timer_hook_zone.dart';
-import 'package:test/test.dart';
 
 void main() {
   group('FakeTimeNgZoneStabilizer', () {
-    NgZone ngZone;
-    TimerHookZone timerZone;
-    FakeTimeNgZoneStabilizer stabilizer;
+    late NgZone ngZone;
+    late TimerHookZone timerZone;
+    late FakeTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
       timerZone = TimerHookZone();
@@ -121,7 +122,7 @@ void main() {
     });
 
     test('should execute periodic timers', () async {
-      Timer timer;
+      late final Timer timer;
       var counter = 0;
 
       ngZone.run(() {
@@ -137,6 +138,27 @@ void main() {
       expect(counter, 2);
 
       timer.cancel();
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 2);
+    });
+
+    test('should cancel a periodic timer within the timer', () async {
+      var counter = 0;
+      ngZone.run(() {
+        return Timer.periodic(Duration(seconds: 1), (timer) {
+          counter++;
+          if (counter > 1) {
+            // b/172149513: Cancelling the timer during completion caused an
+            // assert to be raised; it should be valid to cancel a timer within
+            // the completed callback.
+            timer.cancel();
+          }
+        });
+      });
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 1);
+      await stabilizer.elapse(Duration(seconds: 1));
+      expect(counter, 2);
       await stabilizer.elapse(Duration(seconds: 1));
       expect(counter, 2);
     });
@@ -239,8 +261,8 @@ void main() {
   });
 
   group('RealTimeNgZoneStabilizer', () {
-    NgZone ngZone;
-    RealTimeNgZoneStabilizer stabilizer;
+    late NgZone ngZone;
+    late RealTimeNgZoneStabilizer stabilizer;
 
     setUp(() {
       final timerZone = TimerHookZone();

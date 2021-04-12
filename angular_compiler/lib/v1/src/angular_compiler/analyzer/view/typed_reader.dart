@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_gen/source_gen.dart';
+import 'package:angular_compiler/v2/context.dart';
 
-import '../../../../cli.dart';
 import '../common.dart';
 import '../link.dart';
 import '../types.dart';
@@ -45,8 +46,10 @@ class TypedReader {
   TypedElement parse(DartObject typedObject) {
     if (!$Typed.isExactlyType(typedObject.type)) {
       final typeStr = typeToCode(typedObject.type);
-      throwFailure(''
-          'Expected an expression of type "Typed", but got "$typeStr"');
+      throw BuildError.withoutContext(
+        ''
+        'Expected an expression of type "Typed", but got "$typeStr"',
+      );
     }
     return _parseTyped(typedObject, root: true);
   }
@@ -61,13 +64,14 @@ class TypedReader {
     } else if (constant.isType) {
       return _parseType(object);
     } else {
-      throwFailure(''
-          'Expected a type argument of "Typed" to be of one of the following '
-          'types:\n'
-          '  * "Symbol"\n'
-          '  * "Type"\n'
-          '  * "Typed"\n'
-          'Got an expression of type "${typeToCode(object.type)}".');
+      throw BuildError.withoutContext(
+        'Expected a type argument of "Typed" to be of one of the following '
+        'types:\n'
+        '  * "Symbol"\n'
+        '  * "Type"\n'
+        '  * "Typed"\n'
+        'Got an expression of type "${typeToCode(object.type)}".',
+      );
     }
   }
 
@@ -76,9 +80,10 @@ class TypedReader {
     final symbol = symbolObject.toSymbolValue();
     // Check that the host component has a matching type parameter to flow.
     if (!_hostElement.typeParameters.any((p) => p.name == symbol)) {
-      throwFailure(''
-          'Attempted to flow a type parameter "$symbol", but '
-          '"${_hostElement.name}" declares no such generic type parameter');
+      throw BuildError.withoutContext(
+        'Attempted to flow a type parameter "$symbol", but '
+        '"${_hostElement.name}" declares no such generic type parameter',
+      );
     }
     return TypeLink(symbol, null);
   }
@@ -95,18 +100,20 @@ class TypedReader {
     final type = typeArgumentOf(typedObject);
     if (type is ParameterizedType && type.typeArguments.isNotEmpty) {
       if (root && !$Directive.hasAnnotationOf(type.element)) {
-        throwFailure(''
-            'Expected a "Typed" expression with a "Component" or "Directive" '
-            'annotated type, but got "Typed<${type.name}>"');
+        throw BuildError.withoutContext(
+          'Expected a "Typed" expression with a "Component" or "Directive" '
+          'annotated type, but got "Typed<${type.name}>"',
+        );
       }
       String on;
       final reader = ConstantReader(typedObject);
       final onReader = reader.read('on');
       if (onReader.isString) {
         if (!root) {
-          throwFailure(''
-              'The "on" argument is only supported on the root "Typed" of a '
-              '"Typed" expression');
+          throw BuildError.withoutContext(
+            'The "on" argument is only supported on the root "Typed" of a '
+            '"Typed" expression',
+          );
         }
         on = onReader.stringValue;
       }
@@ -119,25 +126,28 @@ class TypedReader {
           : type.typeArguments.map(linkTypeOf).toList();
       for (final typeArgument in typeArguments) {
         if (typeArgument.isPrivate) {
-          throwFailure(''
-              'Directive type arguments must be public, but "${type.name}" was '
-              'given private type argument "${typeArgument.symbol}" by '
-              '"${_hostElement.name}".');
+          throw BuildError.withoutContext(
+            'Directive type arguments must be public, but "${type.name}" was '
+            'given private type argument "${typeArgument.symbol}" by '
+            '"${_hostElement.name}".',
+          );
         }
       }
       return TypedElement(
         TypeLink(
           getTypeName(type),
           getTypeImport(type),
-          typeArguments,
+          generics: typeArguments,
+          isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
         ),
         on: on,
       );
     } else {
-      throwFailure(''
-          'Expected a generic type to be used as a type argument of "Typed", '
-          'but got concrete type "${typeToCode(type)}". A concrete type may be'
-          'used directly as a type argument without the need for "Typed".');
+      throw BuildError.withoutContext(
+        'Expected a generic type to be used as a type argument of "Typed", '
+        'but got concrete type "${typeToCode(type)}". A concrete type may be'
+        'used directly as a type argument without the need for "Typed".',
+      );
     }
   }
 }

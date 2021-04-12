@@ -1,4 +1,3 @@
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
@@ -13,91 +12,83 @@ void main() {
   group('Visibility', () {
     group('local', () {
       test('component should not be injectable by child component', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createShouldFailToInjectParentComponentFactory());
+        final testBed =
+            NgTestBed(ng.createShouldFailToInjectParentComponentFactory());
         expect(testBed.create(), throwsNoProviderError);
       });
 
       test('directive should be accessible via a query', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldQueryDirectiveFactory());
+        final testBed = NgTestBed(ng.createShouldQueryDirectiveFactory());
         final testFixture = await testBed.create();
         expect(testFixture.assertOnlyInstance.directive, isNotNull);
       });
 
       test('directive should be injectable on same element', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldInjectFromElementFactory());
+        final testBed = NgTestBed(ng.createShouldInjectFromElementFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
+        expect(testFixture.assertOnlyInstance.child!.directive, isNotNull);
       });
 
       test('directive should be injectable in same view', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldInjectFromViewFactory());
+        final testBed = NgTestBed(ng.createShouldInjectFromViewFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.child.directive, isNotNull);
+        expect(testFixture.assertOnlyInstance.child!.directive, isNotNull);
       });
 
       test('directive should not be injectable in child view', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createShouldFailToInjectFromParentViewFactory());
+        final testBed =
+            NgTestBed(ng.createShouldFailToInjectFromParentViewFactory());
         expect(testBed.create(), throwsNoProviderError);
       });
 
       test('directive should inject host component', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldInjectHostFactory());
+        final testBed = NgTestBed(ng.createShouldInjectHostFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.directive.host, isNotNull);
+        expect(testFixture.assertOnlyInstance.directive!.host, isNotNull);
       });
 
       test('service on Visibility.none component is injectable', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createMyComponentWithServiceTestFactory());
+        final testBed = NgTestBed(ng.createMyComponentWithServiceTestFactory());
         var testFixture = await testBed.create();
         expect(testFixture.rootElement, isNotNull);
       });
 
       test('component may provide itself via another token', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldInjectAliasedLocalFactory());
+        final testBed = NgTestBed(ng.createShouldInjectAliasedLocalFactory());
         final testFixture = await testBed.create();
         expect(testFixture.text, testFixture.assertOnlyInstance.text);
       });
 
       test('directive may provide itself for a multi-token', () async {
-        final testBed =
-            NgTestBed.forComponent(ng.createShouldInjectMultiTokenFactory());
+        final testBed = NgTestBed(ng.createShouldInjectMultiTokenFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.child.dependencies, [
+        expect(testFixture.assertOnlyInstance.child!.dependencies, [
           const TypeMatcher<VisibilityLocalImplementation>(),
           const TypeMatcher<VisibilityAllImplementation>(),
         ]);
       });
 
       test('should support $FactoryProvider', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createShouldSupportFactoryProviderFactory());
+        final testBed =
+            NgTestBed(ng.createShouldSupportFactoryProviderFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
+        expect(testFixture.assertOnlyInstance.child!.interface, isNotNull);
       });
 
       test('should support $ClassProvider', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createShouldSupportClassProviderFactory());
+        final testBed = NgTestBed(ng.createShouldSupportClassProviderFactory());
         final testFixture = await testBed.create();
-        expect(testFixture.assertOnlyInstance.child.interface, isNotNull);
+        expect(testFixture.assertOnlyInstance.child!.interface, isNotNull);
       });
     });
 
     group('all', () {
       test('component should be injectable by child component', () async {
-        final testBed = NgTestBed.forComponent(
-            ng.createShouldInjectParentComponentFactory());
+        final testBed =
+            NgTestBed(ng.createShouldInjectParentComponentFactory());
         final testFixture = await testBed.create();
         final testComponent = testFixture.assertOnlyInstance;
-        expect(testComponent.child.parent, testComponent);
+        expect(testComponent.child!.parent, testComponent);
       });
     });
   });
@@ -132,7 +123,7 @@ class VisibilityNoneDirective {}
 )
 class ShouldQueryDirective {
   @ViewChild(VisibilityNoneDirective)
-  VisibilityNoneDirective directive;
+  VisibilityNoneDirective? directive;
 }
 
 @Component(
@@ -152,7 +143,7 @@ class InjectsDirectiveComponent {
 )
 class ShouldInjectFromElement {
   @ViewChild(InjectsDirectiveComponent)
-  InjectsDirectiveComponent child;
+  InjectsDirectiveComponent? child;
 }
 
 @Component(
@@ -166,7 +157,7 @@ class ShouldInjectFromElement {
 )
 class ShouldInjectFromView {
   @ViewChild(InjectsDirectiveComponent)
-  InjectsDirectiveComponent child;
+  InjectsDirectiveComponent? child;
 }
 
 @Component(
@@ -210,7 +201,7 @@ class InjectsVisibilityLocal {
 )
 class ShouldInjectHost {
   @ViewChild(InjectsVisibilityLocal)
-  InjectsVisibilityLocal directive;
+  InjectsVisibilityLocal? directive;
 }
 
 /// This service is exposed through a component that is marked Visibility.none.
@@ -296,7 +287,7 @@ class InjectsVisibilityAllComponent {
 )
 class ShouldInjectParentComponent {
   @ViewChild(InjectsVisibilityAllComponent)
-  InjectsVisibilityAllComponent child;
+  InjectsVisibilityAllComponent? child;
 }
 
 abstract class Interface {}
@@ -347,7 +338,7 @@ class InjectsMultiToken {
 )
 class ShouldInjectMultiToken {
   @ViewChild(InjectsMultiToken)
-  InjectsMultiToken child;
+  InjectsMultiToken? child;
 }
 
 Interface getInterfaceFromImpl(ShouldSupportFactoryProvider impl) => impl;
@@ -364,7 +355,7 @@ Interface getInterfaceFromImpl(ShouldSupportFactoryProvider impl) => impl;
 )
 class ShouldSupportFactoryProvider implements Interface {
   @ViewChild(ShouldInjectInterface)
-  ShouldInjectInterface child;
+  ShouldInjectInterface? child;
 }
 
 @Component(
@@ -388,5 +379,5 @@ class ShouldInjectInterface {
 )
 class ShouldSupportClassProvider implements Interface {
   @ViewChild(ShouldInjectInterface)
-  ShouldInjectInterface child;
+  ShouldInjectInterface? child;
 }

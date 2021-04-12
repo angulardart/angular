@@ -1,7 +1,7 @@
 [![Pub package](https://img.shields.io/pub/v/angular_test.svg)][pub_angular_test]
 
-Testing infrastructure for [AngularDart][webdev_angular],
-used with the [`build_runner` package][build_runner].
+Testing infrastructure for [AngularDart][webdev_angular], used with the
+[`build_runner` package][build_runner].
 
 Documentation and examples:
 
@@ -15,7 +15,7 @@ Documentation and examples:
 
 Additional resources:
 
-* Community/support: [Gitter chat room]
+*   Community/support: [Gitter chat room]
 
 [Gitter chat room]: https://gitter.im/dart-lang/angular
 

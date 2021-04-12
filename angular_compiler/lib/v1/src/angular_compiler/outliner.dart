@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:meta/meta.dart';
@@ -50,7 +48,7 @@ class TemplateOutliner implements Builder {
         };
 
   @override
-  Future<Null> build(BuildStep buildStep) async {
+  Future<void> build(BuildStep buildStep) async {
     if (!await buildStep.resolver.isLibrary(buildStep.inputId)) {
       await buildStep.writeAsString(
         buildStep.inputId.changeExtension(_extension),
@@ -90,7 +88,12 @@ class TemplateOutliner implements Builder {
         injectors.add('${field.name}\$Injector');
       }
     }
-    final output = StringBuffer('$_analyzerIgnores\n');
+    // Unlike the main compiler, we do not do an allow-list check here; this is
+    // both to speed up the outliner (reducing duplicate checks) and because we
+    // do not have a configured CompileContext when the outliner is run.
+    final emitNullSafeCode = library.isNonNullableByDefault;
+    final languageVersion = emitNullSafeCode ? '' : '// @dart=2.9\n\n';
+    final output = StringBuffer('$languageVersion$_analyzerIgnores\n');
     if (exportUserCodeFromTemplate) {
       output
         ..writeln('// The .template.dart files also export the user code.')
@@ -178,8 +181,7 @@ class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {
     }
     if (injectors.isNotEmpty) {
       for (final injector in injectors) {
-        output
-            .writeln('external _ng.Injector $injector([_ng.Injector parent]);');
+        output.writeln('external _ng.Injector $injector(_ng.Injector parent);');
       }
     }
     output..writeln()..writeln('external void initReflector();');

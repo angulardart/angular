@@ -1,0 +1,245 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'visibility.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'visibility.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'visibility.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewHasVisibilityAll0 _compView_0;
+  late final import1.HasVisibilityAll _HasVisibilityAll_0_5;
+  late final ViewHasVisibilityLocal0 _compView_1;
+  late final import1.HasVisibilityLocal _HasVisibilityLocal_1_5;
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/visibility.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    this._compView_0 = ViewHasVisibilityAll0(this, 0);
+    final _el_0 = this._compView_0.rootElement;
+    parentRenderNode.append(_el_0);
+    this._HasVisibilityAll_0_5 = import1.HasVisibilityAll();
+    this._compView_0.create(this._HasVisibilityAll_0_5);
+    this._compView_1 = ViewHasVisibilityLocal0(this, 1);
+    final _el_1 = this._compView_1.rootElement;
+    parentRenderNode.append(_el_1);
+    this._HasVisibilityLocal_1_5 = import1.HasVisibilityLocal();
+    this._compView_1.create(this._HasVisibilityLocal_1_5);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.HasVisibilityAll) && (0 == nodeIndex))) {
+      return this._HasVisibilityAll_0_5;
+    }
+    return notFoundResult;
+  }
+
+  @override
+  void detectChangesInternal() {
+    this._compView_0.detectChanges();
+    this._compView_1.detectChanges();
+  }
+
+  @override
+  void destroyInternal() {
+    this._compView_0.destroyInternalState();
+    this._compView_1.destroyInternalState();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+final List<Object> styles$HasVisibilityAll = const [];
+
+class ViewHasVisibilityAll0 extends import0.ComponentView<import1.HasVisibilityAll> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewHasVisibilityAll0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('has-visibility-all'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/visibility.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasVisibilityAll, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasVisibilityAllNgFactory = ComponentFactory<import1.HasVisibilityAll>('has-visibility-all', viewFactory_HasVisibilityAllHost0);
+ComponentFactory<import1.HasVisibilityAll> get HasVisibilityAllNgFactory {
+  return _HasVisibilityAllNgFactory;
+}
+
+ComponentFactory<import1.HasVisibilityAll> createHasVisibilityAllFactory() {
+  return ComponentFactory('has-visibility-all', viewFactory_HasVisibilityAllHost0);
+}
+
+final List<Object> styles$HasVisibilityAllHost = const [];
+
+class _ViewHasVisibilityAllHost0 extends import8.HostView<import1.HasVisibilityAll> {
+  @override
+  void build() {
+    this.componentView = ViewHasVisibilityAll0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasVisibilityAll();
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  dynamic injectorGetInternal(dynamic token, int nodeIndex, dynamic notFoundResult) {
+    if ((identical(token, import1.HasVisibilityAll) && (0 == nodeIndex))) {
+      return this.component;
+    }
+    return notFoundResult;
+  }
+}
+
+import8.HostView<import1.HasVisibilityAll> viewFactory_HasVisibilityAllHost0() {
+  return _ViewHasVisibilityAllHost0();
+}
+
+final List<Object> styles$HasVisibilityLocal = const [];
+
+class ViewHasVisibilityLocal0 extends import0.ComponentView<import1.HasVisibilityLocal> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewHasVisibilityLocal0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('has-visibility-local'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/visibility.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$HasVisibilityLocal, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _HasVisibilityLocalNgFactory = ComponentFactory<import1.HasVisibilityLocal>('has-visibility-local', viewFactory_HasVisibilityLocalHost0);
+ComponentFactory<import1.HasVisibilityLocal> get HasVisibilityLocalNgFactory {
+  return _HasVisibilityLocalNgFactory;
+}
+
+ComponentFactory<import1.HasVisibilityLocal> createHasVisibilityLocalFactory() {
+  return ComponentFactory('has-visibility-local', viewFactory_HasVisibilityLocalHost0);
+}
+
+final List<Object> styles$HasVisibilityLocalHost = const [];
+
+class _ViewHasVisibilityLocalHost0 extends import8.HostView<import1.HasVisibilityLocal> {
+  @override
+  void build() {
+    this.componentView = ViewHasVisibilityLocal0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.HasVisibilityLocal();
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.HasVisibilityLocal> viewFactory_HasVisibilityLocalHost0() {
+  return _ViewHasVisibilityLocalHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ngRef.registerComponent(HasVisibilityAll, createHasVisibilityAllFactory());
+  _ngRef.registerComponent(HasVisibilityLocal, createHasVisibilityLocalFactory());
+  _ref0.initReflector();
+}

@@ -2,10 +2,19 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
+import 'package:angular_compiler/v2/context.dart';
 
 import '../../src/resolve.dart';
 
 void main() {
+  CompileContext.overrideForTesting();
+
+  final refersToOpaqueToken = TypeLink(
+    'OpaqueToken',
+    'asset:angular/lib/src/meta/di_tokens.dart',
+    generics: [TypeLink.$object],
+  );
+
   group('should parse provider from', () {
     List<DartObject> providers;
     const reader = ProviderReader();
@@ -22,18 +31,15 @@ void main() {
         @exampleModule
         @newModuleA
         @newModuleB
-        @Injectable()
         class Example {
           static Example create(DependencyA a) => Example();
         }
 
-        @Injectable()
         class ExamplePrime extends Example {}
 
         class DependencyA {}
         class DependencyB {}
 
-        @Injectable()
         Example createExample(DependencyA a) => new ExamplePrime();
 
         const exampleToken = const OpaqueToken('exampleToken');
@@ -255,12 +261,7 @@ void main() {
           OpaqueTokenElement(
             'exampleToken',
             isMultiToken: false,
-            classUrl: TypeLink(
-              'OpaqueToken',
-              ''
-                  'package:angular'
-                  '/src/core/di/opaque_token.dart',
-            ),
+            classUrl: refersToOpaqueToken,
           ),
           null,
           linkTypeOf($Example.thisType),
@@ -273,14 +274,16 @@ void main() {
     });
 
     test('using a MultiToken instead of a Type', () {
-      final UseValueProviderElement value = reader.parseProvider(providers[9]);
+      final value = reader.parseProvider(providers[9]);
+      expect(value, TypeMatcher<UseValueProviderElement>());
       expect((value.token as OpaqueTokenElement).isMultiToken, isTrue);
       expect((value.token as OpaqueTokenElement).identifier, 'usPresidents');
       expect(value.isMulti, isTrue);
     });
 
     test('using an explicit Provider type <T>', () {
-      final UseValueProviderElement value = reader.parseProvider(providers[10]);
+      final value = reader.parseProvider(providers[10]);
+      expect(value, TypeMatcher<UseValueProviderElement>());
       expect(value.providerType, TypeLink('String', 'dart:core'));
     });
   });

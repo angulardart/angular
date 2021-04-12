@@ -1,25 +1,21 @@
-@TestOn('browser')
-
-import 'dart:async';
-
 import 'package:async/async.dart' show StreamGroup;
+import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/testing.dart';
 import 'package:angular_test/angular_test.dart';
-import 'package:test/test.dart';
 
 // ingore: uri_has_not_been_generated
 import 'on_navigation_start_test.template.dart' as ng;
 
 void main() {
-  ng.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   group('Router.onNavigationStart', () {
     test('fires on navigation', () async {
-      final testBed = NgTestBed<TestComponent>();
+      final testBed = NgTestBed(
+        ng.createTestComponentFactory(),
+      );
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -32,8 +28,9 @@ void main() {
     });
 
     test("doesn't fire when navigation is prohibited", () async {
-      final testBed = NgTestBed<TestComponent>()
-          .addProviders([Provider(canNavigateToken, useValue: false)]);
+      final testBed = NgTestBed(
+        ng.createTestComponentFactory(),
+      ).addInjector((i) => Injector.map({canNavigateToken: false}, i));
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -43,8 +40,9 @@ void main() {
     });
 
     test('fires when deactivation is prohibited', () async {
-      final testBed = NgTestBed<TestComponent>()
-          .addProviders([Provider(canDeactivateToken, useValue: false)]);
+      final testBed = NgTestBed(
+        ng.createTestComponentFactory(),
+      ).addInjector((i) => Injector.map({canDeactivateToken: false}, i));
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -57,7 +55,9 @@ void main() {
     });
 
     test('fires only once on redirect', () async {
-      final testBed = NgTestBed<TestComponent>();
+      final testBed = NgTestBed(
+        ng.createTestComponentFactory(),
+      );
       final testFixture = await testBed.create();
       final router = testFixture.assertOnlyInstance.router;
       await expectLater(
@@ -71,7 +71,7 @@ void main() {
   });
 }
 
-Stream navigate(Router router, String path) => StreamGroup.merge([
+Stream<dynamic> navigate(Router router, String path) => StreamGroup.merge([
       router.onNavigationStart,
       router.navigate(path).asStream(),
     ]);
@@ -88,8 +88,8 @@ class HomeComponent implements CanDeactivate, CanNavigate {
   final bool _canNavigate;
 
   HomeComponent(
-    @Optional() @Inject(canDeactivateToken) bool canDeactivate,
-    @Optional() @Inject(canNavigateToken) bool canNavigate,
+    @Optional() @Inject(canDeactivateToken) bool? canDeactivate,
+    @Optional() @Inject(canNavigateToken) bool? canNavigate,
   )   : _canDeactivate = canDeactivate ?? true,
         _canNavigate = canNavigate ?? true;
 

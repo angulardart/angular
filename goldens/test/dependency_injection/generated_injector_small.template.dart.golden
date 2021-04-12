@@ -1,0 +1,158 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'generated_injector_small.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'generated_injector_small.template.dart' as _ref0;
+import 'package:angular/src/di/injector.dart' as _i1;
+import 'generated_injector_small.dart' as _i2;
+import 'package:angular/src/meta/di_tokens.dart' as _i3;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'generated_injector_small.dart' as import1;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import2;
+import 'package:angular/src/core/linker/views/view.dart' as import3;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import5;
+import 'dart:html' as import6;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/host_view.dart' as import8;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  static import2.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import3.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/generated_injector_small.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import2.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import5.isDevMode) {
+        import2.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent(this.injector(0));
+    this.initRootNode(_el_0);
+  }
+}
+
+import8.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+_i1.Injector doGenerate$Injector(_i1.Injector parent) => _Injector$doGenerate._(parent);
+
+class _Injector$doGenerate extends _i1.HierarchicalInjector implements _i1.Injector {
+  _Injector$doGenerate._(_i1.Injector parent) : super(parent);
+
+  Object? _field0;
+
+  List<String>? _field1;
+
+  _i2.Example? _field10;
+
+  Object _getObject$0() => _field0 ??= _i2.createExampleOptional(provideUntyped(_i2.Example, null));
+  List<String> _getList$1() => _field1 ??= _i2.createListOfString();
+  String _getString$2() => 'ABC123';
+  Object _getObject$3() => const {'instanceOfExample': _i2.Example(), _i2.instanceOfExamplePrime: 'instanceOfExamplePrime'};
+  Object _getObject$4() => const [_i2.Example(), _i2.instanceOfExamplePrime, _i2.ExampleTheta.instance];
+  Object _getObject$5() => _i2.ExampleTheta.instance;
+  Object _getObject$6() => _i2.instanceOfExamplePrime;
+  Object _getObject$7() => const _i2.Example();
+  String _getString$8() => 'String';
+  Object _getObject$9() => 'Object';
+  _i2.Example _getExample$10() => _field10 ??= _i2.Example();
+  String _getString$11() => 'A';
+  String _getString$12() => 'B';
+  _i1.Injector _getInjector$13() => this;
+  @override
+  Object? injectFromSelfOptional(Object token, [Object? orElse = _i1.throwIfNotFound]) {
+    if (identical(token, _i2.ExampleOptional)) {
+      return _getObject$0();
+    }
+    if (identical(token, const _i3.OpaqueToken<List<String>>('tokenOfListOfString'))) {
+      return _getList$1();
+    }
+    if (identical(token, const _i2.XsrfToken())) {
+      return _getString$2();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('arbitraryToken5'))) {
+      return _getObject$3();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('arbitraryToken4'))) {
+      return _getObject$4();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('arbitraryToken3'))) {
+      return _getObject$5();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('arbitraryToken2'))) {
+      return _getObject$6();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('arbitraryToken1'))) {
+      return _getObject$7();
+    }
+    if (identical(token, const _i3.OpaqueToken<String>('someToken'))) {
+      return _getString$8();
+    }
+    if (identical(token, const _i3.OpaqueToken<Object>('someToken'))) {
+      return _getObject$9();
+    }
+    if (identical(token, _i2.Example)) {
+      return _getExample$10();
+    }
+    if (identical(token, _i1.Injector)) {
+      return _getInjector$13();
+    }
+    if (identical(token, const _i3.MultiToken<String>('someMultiToken'))) {
+      return [_getString$11(), _getString$12()];
+    }
+    return orElse;
+  }
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

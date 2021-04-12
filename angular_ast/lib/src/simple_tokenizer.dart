@@ -1,7 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:charcode/charcode.dart';
 import 'package:meta/meta.dart';
 import 'package:string_scanner/string_scanner.dart';
@@ -43,8 +39,8 @@ class NgSimpleScanner {
       r'([\s]+)|' //9 whitespace
       //10 any alphanumeric + '-' + '_' + ':'
       r'([a-zA-Z]([\w\_\-:])*[a-zA-Z0-9]?)|'
-      r'("([^"\\]|\\.)*"?)|' //12 closed double quote (includes group 13)
-      r"('([^'\\]|\\.)*'?)|" //14 closed single quote (includes group 15)
+      r'("([^"\\]+|\\.)*"?)|' //12 closed double quote (includes group 13)
+      r"('([^'\\]+|\\.)*'?)|" //14 closed single quote (includes group 15)
       r'(<)|' //16 <
       r'(=)|' //17 =
       r'(\*)|' //18 *
@@ -87,7 +83,6 @@ class NgSimpleScanner {
       case _NgSimpleScannerState.interpolation:
         return scanInterpolation();
     }
-    return null;
   }
 
   NgSimpleToken scanComment() {
@@ -147,7 +142,7 @@ class NgSimpleScanner {
       return NgSimpleToken.EOF(offset);
     }
     if (_scanner.scan(_allElementMatches)) {
-      var match = _scanner.lastMatch;
+      var match = _scanner.lastMatch!;
       if (matchesGroup(match, 1)) {
         return NgSimpleToken.closeBracket(offset);
       }
@@ -249,7 +244,7 @@ class NgSimpleScanner {
       return NgSimpleToken.EOF(offset);
     }
     if (_scanner.scan(_allTextMatches)) {
-      var match = _scanner.lastMatch;
+      var match = _scanner.lastMatch!;
       if (matchesGroup(match, 1)) {
         var text = _scanner.substring(offset);
         var mustacheMatch = _mustaches.firstMatch(text);
@@ -365,15 +360,15 @@ class NgSimpleScanner {
     return string.replaceAllMapped(_escape, (match) {
       // decimal
       if (matchesGroup(match, 1)) {
-        return String.fromCharCode(int.parse(match.group(1)));
+        return String.fromCharCode(int.parse(match.group(1)!));
       }
       // hex
       if (matchesGroup(match, 2)) {
-        return String.fromCharCode(int.parse(match.group(2), radix: 16));
+        return String.fromCharCode(int.parse(match.group(2)!, radix: 16));
       }
       // named
       if (matchesGroup(match, 3)) {
-        return NAMED_ENTITIES[match.group(3)] ?? match.group(3);
+        return NAMED_ENTITIES[match.group(3)] ?? match.group(3)!;
       }
 
       return '';

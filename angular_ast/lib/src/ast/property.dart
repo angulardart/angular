@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:source_span/source_span.dart';
 
 import '../ast.dart';
@@ -17,20 +13,20 @@ abstract class PropertyAst implements TemplateAst {
   /// Create a new synthetic [PropertyAst] assigned to [name].
   factory PropertyAst(
     String name, [
-    String value,
-    ExpressionAst<Object> expression,
-    String postfix,
-    String unit,
+    String? value,
+    ExpressionAst<Object>? expression,
+    String? postfix,
+    String? unit,
   ]) = _SyntheticPropertyAst;
 
   /// Create a new synthetic property AST that originated from another AST.
   factory PropertyAst.from(
-    TemplateAst origin,
+    TemplateAst? origin,
     String name, [
-    String value,
-    ExpressionAst<Object> expression,
-    String postfix,
-    String unit,
+    String? value,
+    ExpressionAst<Object>? expression,
+    String? postfix,
+    String? unit,
   ]) = _SyntheticPropertyAst.from;
 
   /// Create a new property assignment parsed from tokens in [sourceFile].
@@ -38,9 +34,9 @@ abstract class PropertyAst implements TemplateAst {
     SourceFile sourceFile,
     NgToken prefixToken,
     NgToken elementDecoratorToken,
-    NgToken suffixToken, [
-    NgAttributeValueToken valueToken,
-    NgToken equalSignToken,
+    NgToken? suffixToken, [
+    NgAttributeValueToken? valueToken,
+    NgToken? equalSignToken,
   ]) = ParsedPropertyAst;
 
   @override
@@ -58,19 +54,19 @@ abstract class PropertyAst implements TemplateAst {
   int get hashCode => hash4(expression, name, postfix, unit);
 
   @override
-  R accept<R, C>(TemplateAstVisitor<R, C> visitor, [C context]) {
+  R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitProperty(this, context);
   }
 
   /// Bound expression; optional for backwards compatibility.
-  ExpressionAst<Object> get expression;
-  set expression(ExpressionAst<Object> expression);
+  ExpressionAst<Object>? get expression;
+  set expression(ExpressionAst<Object>? expression);
 
   /// Name of the property being set.
   String get name;
 
   /// Unquoted value being bound to property.
-  String get value;
+  String? get value;
 
   /// An optional indicator for some properties as a shorthand syntax.
   ///
@@ -80,7 +76,7 @@ abstract class PropertyAst implements TemplateAst {
   /// ```
   ///
   /// Means _has class "foo" while "isFoo" evaluates to true_.
-  String get postfix;
+  String? get postfix;
 
   /// An optional indicator the unit coercion before assigning.
   ///
@@ -90,7 +86,7 @@ abstract class PropertyAst implements TemplateAst {
   /// ```
   ///
   /// Means _assign style.height to height plus the "px" suffix_.
-  String get unit;
+  String? get unit;
 
   @override
   String toString() {
@@ -122,16 +118,16 @@ class ParsedPropertyAst extends TemplateAst
 
   // [suffixToken] may be null of 'bind-' is used instead of '['.
   @override
-  final NgToken suffixToken;
+  final NgToken? suffixToken;
 
   /// [NgAttributeValueToken] that represents `"value"`; may be `null` to
   /// have no value.
   @override
-  final NgAttributeValueToken valueToken;
+  final NgAttributeValueToken? valueToken;
 
   /// [NgToken] that represents the equal sign token; may be `null` to have no
   /// value.
-  final NgToken equalSignToken;
+  final NgToken? equalSignToken;
 
   ParsedPropertyAst(
     SourceFile sourceFile,
@@ -149,7 +145,7 @@ class ParsedPropertyAst extends TemplateAst
 
   /// ExpressionAst of `"value"`; may be `null` to have no value.
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   String get _nameWithoutBrackets => nameToken.lexeme;
 
@@ -163,19 +159,19 @@ class ParsedPropertyAst extends TemplateAst
 
   /// Offset of equal sign; may be `null` if no value.
   @override
-  int get equalSignOffset => equalSignToken?.offset;
+  int? get equalSignOffset => equalSignToken?.offset;
 
   /// Expression value as [String] bound to property; may be `null` if no value.
   @override
-  String get value => valueToken?.innerValue?.lexeme;
+  String? get value => valueToken?.innerValue?.lexeme;
 
   /// Offset of value; may be `null` to have no value.
   @override
-  int get valueOffset => valueToken?.innerValue?.offset;
+  int? get valueOffset => valueToken?.innerValue?.offset;
 
   /// Offset of value starting at left quote; may be `null` to have no value.
   @override
-  int get quotedValueOffset => valueToken?.leftQuote?.offset;
+  int? get quotedValueOffset => valueToken?.leftQuote?.offset;
 
   /// Offset of `[` prefix in `[name.postfix.unit]`.
   @override
@@ -183,18 +179,18 @@ class ParsedPropertyAst extends TemplateAst
 
   /// Offset of `]` suffix in `[name.postfix.unit]`.
   @override
-  int get suffixOffset => suffixToken.offset;
+  int? get suffixOffset => suffixToken?.offset;
 
   /// Name `postfix` in `[name.postfix.unit]`; may be `null` to have no value.
   @override
-  String get postfix {
+  String? get postfix {
     final split = _nameWithoutBrackets.split('.');
     return split.length > 1 ? split[1] : null;
   }
 
   /// Name `unit` in `[name.postfix.unit]`; may be `null` to have no value.
   @override
-  String get unit {
+  String? get unit {
     final split = _nameWithoutBrackets.split('.');
     return split.length > 2 ? split[2] : null;
   }
@@ -210,7 +206,7 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
   ]);
 
   _SyntheticPropertyAst.from(
-    TemplateAst origin,
+    TemplateAst? origin,
     this.name, [
     this.value,
     this.expression,
@@ -219,17 +215,17 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
   ]) : super.from(origin);
 
   @override
-  ExpressionAst<Object> expression;
+  ExpressionAst<Object>? expression;
 
   @override
   final String name;
 
   @override
-  final String value;
+  final String? value;
 
   @override
-  final String postfix;
+  final String? postfix;
 
   @override
-  final String unit;
+  final String? unit;
 }

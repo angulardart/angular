@@ -1,8 +1,9 @@
 import 'dart:html';
 
-import 'package:angular/src/core/linker/app_view_utils.dart';
-import 'package:angular/src/runtime.dart';
 import 'package:meta/dart2js.dart' as dart2js;
+import 'package:angular/src/core/linker/app_view_utils.dart';
+import 'package:angular/src/runtime/dom_helpers.dart';
+import 'package:angular/src/utilities.dart';
 
 /// Clears all component styles from the DOM.
 ///
@@ -22,15 +23,16 @@ void debugClearComponentStyles() {
 /// Stores `styles: [ ... ]`,  `styleUrls: [ ... ]` for a given `@Component`.
 class ComponentStyles {
   /// Callbacks to invoke when [_debugClear] is called.
-  static List<void Function()> _debugClearCallbacks;
+  static List<void Function()>? _debugClearCallbacks;
 
   /// See [debugClearComponentStyles].
   static void _debugClear() {
-    if (_debugClearCallbacks != null) {
-      for (final callback in _debugClearCallbacks) {
+    final debugClearCallbacks = _debugClearCallbacks;
+    if (debugClearCallbacks != null) {
+      for (final callback in debugClearCallbacks) {
         callback();
       }
-      _debugClearCallbacks.clear();
+      debugClearCallbacks.clear();
     }
   }
 
@@ -39,12 +41,11 @@ class ComponentStyles {
   /// Used to remove all component `<style>` elements in the DOM and clear
   /// static component styles in generated views.
   static void debugOnClear(void Function() callback) {
-    _debugClearCallbacks ??= [];
-    _debugClearCallbacks.add(callback);
+    (_debugClearCallbacks ??= []).add(callback);
   }
 
   /// Originating URL of the `@Component`; used in debug builds only.
-  final String _componentUrl;
+  final String? _componentUrl;
 
   /// A `List<String | List<String>>` of all styles for a given component.
   ///
@@ -74,17 +75,17 @@ class ComponentStyles {
   final String _componentId;
 
   /// CSS prefix applied to elements in a template for style encapsulation.
-  final String contentPrefix;
+  final String _contentPrefix;
 
   /// CSS prefix applied to a component's host element for style encapsulation.
-  final String hostPrefix;
+  final String _hostPrefix;
 
   ComponentStyles._(
     this._styles,
     this._componentUrl, [
     this._componentId = '',
-    this.contentPrefix = '',
-    this.hostPrefix = '',
+    this._contentPrefix = '',
+    this._hostPrefix = '',
   ]) {
     _appendStyles();
   }
@@ -95,7 +96,7 @@ class ComponentStyles {
 
   /// Creates a [ComponentStyles] that applies style encapsulation.
   @dart2js.noInline
-  factory ComponentStyles.scoped(List<Object> styles, String componentUrl) {
+  factory ComponentStyles.scoped(List<Object> styles, String? componentUrl) {
     final componentId = '${appViewUtils.appId}-${_nextUniqueId++}';
     return ComponentStyles._(
       styles,
@@ -108,15 +109,55 @@ class ComponentStyles {
 
   /// Creates a [ComponentStyles] that directly appends [styles] to the DOM.
   @dart2js.noInline
-  factory ComponentStyles.unscoped(List<Object> styles, String componentUrl) =
-      _UnscopedComponentStyles;
+  factory ComponentStyles.unscoped(
+    List<Object> styles,
+    String? componentUrl,
+  ) = _UnscopedComponentStyles;
 
-  /// Whether style encapsulation is used by this instance.
-  ///
-  /// TODO: Remove this field, and instead move the shimming code from `AppView`
-  /// into this class, using the polymorphism (and [appendStyles]) to make CSS
-  /// class decisions and not `AppView`.
-  bool get usesStyleEncapsulation => true;
+  /// Adds a CSS shim class to [element].
+  void addContentShimClass(Element element) {
+    updateClassBindingNonHtml(element, _contentPrefix, true);
+  }
+
+  /// An optimized variant of [addShimClass] for [HtmlElement]s.
+  void addContentShimClassHtmlElement(HtmlElement element) {
+    updateClassBinding(element, _contentPrefix, true);
+  }
+
+  /// Adds a CSS shim class to [element].
+  void addHostShimClass(Element element) {
+    updateClassBindingNonHtml(element, _hostPrefix, true);
+  }
+
+  /// An optimized variant of [addHostShimClass] for [HtmlElement]s.
+  void addHostShimClassHtmlElement(HtmlElement element) {
+    updateClassBinding(element, _hostPrefix, true);
+  }
+
+  /// Applies the correct content shimming to [element] for [newClass].
+  void updateChildClass(Element element, String newClass) {
+    // NOTE: We do not use .className=, because that would fail for SvgElement.
+    updateAttribute(element, 'class', '$newClass $_contentPrefix');
+  }
+
+  /// An optimized variant of [updateChildClass] for [HtmlElement]s.
+  void updateChildClassHtmlElement(HtmlElement element, String newClass) {
+    element.className = '$newClass $_contentPrefix';
+  }
+
+  /// Applies the correct host shimming to [element] for [newClass].
+  void updateChildClassForHost(Element element, String newClass) {
+    // NOTE: We do not use .className=, because that would fail for SvgElement.
+    updateAttribute(element, 'class', '$newClass $_hostPrefix');
+  }
+
+  /// An optimized variant of [updateChildClassForHost] for [HtmlElement]s.
+  void updateChildClassForHostHtmlElement(
+    HtmlElement element,
+    String newClass,
+  ) {
+    element.className = '$newClass $_hostPrefix';
+  }
 
   /// Writes styles from this instance to [document.head] as a `<style>` tag.
   @dart2js.noInline
@@ -133,16 +174,63 @@ class ComponentStyles {
         styleElement.remove();
       });
     }
-    document.head.append(styleElement);
+    document.head!.append(styleElement);
   }
 }
 
 class _UnscopedComponentStyles extends ComponentStyles {
-  _UnscopedComponentStyles(List<Object> styles, String componentUrl)
-      : super._(styles, componentUrl);
+  _UnscopedComponentStyles(
+    List<Object> styles,
+    String? componentUrl,
+  ) : super._(styles, componentUrl);
 
   @override
-  bool get usesStyleEncapsulation => false;
+  void addContentShimClass(Element element) {
+    // Intentionally left blank; unscoped syles do not apply shim classes.
+  }
+
+  @override
+  void addContentShimClassHtmlElement(HtmlElement element) {
+    // Intentionally left blank; unscoped syles do not apply shim classes.
+  }
+
+  @override
+  void addHostShimClass(Element element) {
+    // Intentionally left blank; unscoped syles do not apply shim classes.
+  }
+
+  @override
+  void addHostShimClassHtmlElement(HtmlElement element) {
+    // Intentionally left blank; unscoped syles do not apply shim classes.
+  }
+
+  @override
+  void updateChildClass(Element element, String newClass) {
+    // Straight applies the class without any prefixing.
+    // NOTE: We do not use .className=, because that would fail for SvgElement.
+    updateAttribute(element, 'class', newClass);
+  }
+
+  @override
+  void updateChildClassHtmlElement(HtmlElement element, String newClass) {
+    element.className = newClass;
+  }
+
+  @override
+  void updateChildClassForHost(Element element, String newClass) {
+    // Straight applies the class without any prefixing.
+    // NOTE: We do not use .className=, because that would fail for SvgElement.
+    updateAttribute(element, 'class', newClass);
+  }
+
+  @override
+  void updateChildClassForHostHtmlElement(
+    HtmlElement element,
+    String newClass,
+  ) {
+    // Straight applies the class without any prefixing.
+    element.className = newClass;
+  }
 }
 
 /// Flattens and appends [styles] to [target], returning the mutated [target].
@@ -151,7 +239,7 @@ List<String> _flattenStyles(
   List<String> target,
   String componentId,
 ) {
-  if (styles == null || styles.isEmpty) {
+  if (styles.isEmpty) {
     return target;
   }
   for (var i = 0, l = styles.length; i < l; i++) {

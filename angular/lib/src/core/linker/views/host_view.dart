@@ -6,10 +6,10 @@ import 'package:angular/src/core/change_detection/host.dart';
 import 'package:angular/src/core/linker/component_factory.dart';
 import 'package:angular/src/core/linker/view_container.dart';
 import 'package:angular/src/core/linker/view_fragment.dart';
-import 'package:angular/src/di/injector/injector.dart';
-import 'package:angular/src/runtime.dart';
+import 'package:angular/src/di/injector.dart';
+import 'package:angular/src/meta.dart';
 import 'package:angular/src/runtime/dom_helpers.dart';
-import 'package:angular_compiler/v1/src/metadata.dart';
+import 'package:angular/src/utilities.dart';
 
 import 'component_view.dart';
 import 'dynamic_view.dart';
@@ -38,19 +38,15 @@ abstract class HostView<T> extends View implements DynamicView {
   /// The hosted component instance.
   ///
   /// To be instantiated in [build] by the generated implementation.
-  T component;
+  late final T component;
 
   /// The hosted component view.
   ///
   /// To be instantiated in [build] by the generated implementation.
-  ComponentView<T> componentView;
+  late final ComponentView<T> componentView;
 
   /// The host injector provided by this view's creator.
-  // Ideally this field should be final and initialized in the constructor (as
-  // it historically was), but late initializing it in `create()` produces less
-  // generated code.
-  // TODO(b/133171082): make this field `late`.
-  Injector _injector;
+  late final Injector _injector;
 
   final _data = _HostViewData();
 
@@ -63,13 +59,13 @@ abstract class HostView<T> extends View implements DynamicView {
       _data.changeDetectorState == ChangeDetectorState.NeverChecked;
 
   @override
-  int get parentIndex => null;
+  int? get parentIndex => null;
 
   @override
   View get parentView => throw UnsupportedError('$HostView has no parentView');
 
   @override
-  ViewFragment get viewFragment => _data.viewFragment;
+  ViewFragment? get viewFragment => _data.viewFragment;
 
   // Initialization ------------------------------------------------------------
 
@@ -85,7 +81,7 @@ abstract class HostView<T> extends View implements DynamicView {
     _injector = injector;
     build(); // This initializes `component` and `componentView`.
     componentView.createAndProject(component, projectedNodes);
-    return ComponentRef(this, componentView.rootElement, component);
+    return ComponentRef(this, componentView.rootElement, component!);
   }
 
   /// Called by [build] once all root nodes are created.
@@ -98,7 +94,7 @@ abstract class HostView<T> extends View implements DynamicView {
 
   void destroy() {
     final viewContainer = _data.viewContainer;
-    viewContainer?.detachView(viewContainer.nestedViews.indexOf(this));
+    viewContainer?.detachView(viewContainer.nestedViews!.indexOf(this));
     destroyInternalState();
   }
 
@@ -135,7 +131,7 @@ abstract class HostView<T> extends View implements DynamicView {
   // Change detection ----------------------------------------------------------
 
   @override
-  void detectChanges() {
+  void detectChangesDeprecated() {
     if (_data.shouldSkipChangeDetection) return;
 
     // Sanity check in dev-mode that a destroyed view is not checked again.
@@ -159,7 +155,7 @@ abstract class HostView<T> extends View implements DynamicView {
   void detectChangesInCheckAlwaysViews() {
     if (componentView.usesDefaultChangeDetection) {
       // Change detect the component, and any view containers it injects.
-      detectChanges();
+      detectChangesDeprecated();
     }
   }
 
@@ -183,7 +179,7 @@ abstract class HostView<T> extends View implements DynamicView {
   // cycle methods will be generated.
   @override
   void detectChangesInternal() {
-    componentView.detectChanges();
+    componentView.detectChangesDeprecated();
   }
 
   @override
@@ -200,12 +196,12 @@ abstract class HostView<T> extends View implements DynamicView {
   }
 
   @override
-  void detach() {
+  void detachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.Detached;
   }
 
   @override
-  void reattach() {
+  void reattachDeprecated() {
     _data.changeDetectionMode = ChangeDetectionStrategy.CheckAlways;
     markForCheck();
   }
@@ -213,21 +209,21 @@ abstract class HostView<T> extends View implements DynamicView {
   // Dependency injection ------------------------------------------------------
 
   @override
-  Object injectFromAncestry(Object token, Object notFoundValue) =>
-      _injector.get(token, notFoundValue);
+  Object? injectFromAncestry(Object token, Object? notFoundValue) =>
+      unsafeCast(_injector.get(token, notFoundValue));
 
   // View manipulation ---------------------------------------------------------
 
   @override
   void addRootNodesAfter(Node node) {
-    final rootNodes = viewFragment.flattenDomNodes();
+    final rootNodes = viewFragment!.flattenDomNodes();
     insertNodesAsSibling(rootNodes, node);
     domRootRendererIsDirty = true;
   }
 
   @override
   void removeRootNodes() {
-    final rootNodes = viewFragment.flattenDomNodes();
+    final rootNodes = viewFragment!.flattenDomNodes();
     removeNodes(rootNodes);
     domRootRendererIsDirty = domRootRendererIsDirty || rootNodes.isNotEmpty;
   }
@@ -252,13 +248,13 @@ abstract class HostView<T> extends View implements DynamicView {
 @sealed
 class _HostViewData implements DynamicViewData {
   @override
-  ViewContainer viewContainer;
+  ViewContainer? viewContainer;
 
   @override
-  ViewFragment viewFragment;
+  ViewFragment? viewFragment;
 
   /// Storage for any callbacks registered with [addOnDestroyCallback].
-  List<void Function()> _onDestroyCallbacks;
+  List<void Function()>? _onDestroyCallbacks;
 
   @override
   int get changeDetectionMode => _changeDetectionMode;
@@ -291,16 +287,16 @@ class _HostViewData implements DynamicViewData {
   /// Registers a [callback] to be invoked by [destroy].
   @override
   void addOnDestroyCallback(void Function() callback) {
-    _onDestroyCallbacks ??= [];
-    _onDestroyCallbacks.add(callback);
+    (_onDestroyCallbacks ??= []).add(callback);
   }
 
   @override
   void destroy() {
     _destroyed = true;
-    if (_onDestroyCallbacks != null) {
-      for (var i = 0, length = _onDestroyCallbacks.length; i < length; ++i) {
-        _onDestroyCallbacks[i]();
+    final onDestroyCallbacks = _onDestroyCallbacks;
+    if (onDestroyCallbacks != null) {
+      for (var i = 0, length = onDestroyCallbacks.length; i < length; ++i) {
+        onDestroyCallbacks[i]();
       }
     }
   }

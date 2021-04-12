@@ -1,142 +1,141 @@
-@TestOn('browser')
-import 'dart:async';
-
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'binding_test.template.dart' as ng;
 
 void main() {
-  ng.initReflector();
-
   tearDown(disposeAnyRunningTest);
 
   test('should support literals', () async {
-    await _GetValue<TestLiterals>().runTest();
+    await _GetValue(ng.createTestLiteralsFactory()).runTest();
   });
 
   test('should strip quotes from literals', () async {
-    await _GetValue<TestStripQuotes>().runTest();
+    await _GetValue(ng.createTestStripQuotesFactory()).runTest();
   });
 
   test('should support newlines in literals', () async {
-    await _GetValue<TestNewLines>().runTest();
+    await _GetValue(ng.createTestNewLinesFactory()).runTest();
   });
 
   test('should support + operations', () async {
-    await _GetValue<TestAddOperation>().runTest();
+    await _GetValue(ng.createTestAddOperationFactory()).runTest();
   });
 
   test('should support - operations', () async {
-    await _GetValue<TestMinusOperation>().runTest();
+    await _GetValue(ng.createTestMinusOperationFactory()).runTest();
   });
 
   test('should support * operations', () async {
-    await _GetValue<TestMultiplyOperation>().runTest();
+    await _GetValue(ng.createTestMultiplyOperationFactory()).runTest();
   });
 
   test('should support / operations', () async {
-    await _GetValue<TestMultiplyOperation>().runTest();
+    await _GetValue(ng.createTestMultiplyOperationFactory()).runTest();
   });
 
   test('should support % operations', () async {
-    await _GetValue<TestModulusOperation>().runTest();
+    await _GetValue(ng.createTestModulusOperationFactory()).runTest();
   });
 
   test('should support == operations', () async {
-    await _GetValue<TestEqualityOperation>().runTest();
+    await _GetValue(ng.createTestEqualityOperationFactory()).runTest();
   });
 
   test('should support != operations', () async {
-    await _GetValue<TestNotEqualsOperation>().runTest();
+    await _GetValue(ng.createTestNotEqualsOperationFactory()).runTest();
   });
 
   test('should support === operations', () async {
-    await _GetValue<TestIdentityOperation>().runTest();
+    await _GetValue(ng.createTestIdentityOperationFactory()).runTest();
   });
 
   test('should support !== operations', () async {
-    await _GetValue<TestNotIdenticalOperation>().runTest();
+    await _GetValue(ng.createTestNotIdenticalOperationFactory()).runTest();
   });
 
   test('should support > operations', () async {
-    await _GetValue<TestGreaterThanOperation>().runTest();
+    await _GetValue(ng.createTestGreaterThanOperationFactory()).runTest();
   });
 
   test('should support < operations', () async {
-    await _GetValue<TestLessThanOperation>().runTest();
+    await _GetValue(ng.createTestLessThanOperationFactory()).runTest();
   });
 
   test('should support >= operations', () async {
-    await _GetValue<TestGreaterThanOrEqualsOperation>().runTest();
+    await _GetValue(
+      ng.createTestGreaterThanOrEqualsOperationFactory(),
+    ).runTest();
   });
 
   test('should support <= operations', () async {
-    await _GetValue<TestLessThanOrEqualsOperation>().runTest();
+    await _GetValue(ng.createTestLessThanOrEqualsOperationFactory()).runTest();
   });
 
   test('should support && operations', () async {
-    await _GetValue<TestAndOperation>().runTest();
+    await _GetValue(ng.createTestAndOperationFactory()).runTest();
   });
 
   test('should support || operations', () async {
-    await _GetValue<TestOrOperation>().runTest();
+    await _GetValue(ng.createTestOrOperationFactory()).runTest();
   });
 
   test('should support ternary operations', () async {
-    await _GetValue<TestTernaryOperation>().runTest();
+    await _GetValue(ng.createTestTernaryOperationFactory()).runTest();
   });
 
   test('should support ! operations', () async {
-    await _GetValue<TestNegateOperation>().runTest();
+    await _GetValue(ng.createTestNegateOperationFactory()).runTest();
   });
 
   test('should support !! operations', () async {
-    await _GetValue<TestDoubleNegationOperation>().runTest();
+    await _GetValue(ng.createTestDoubleNegationOperationFactory()).runTest();
   });
 
   test('should support keyed access to a map', () async {
-    await _GetValue<TestMapAccess>().runTest();
+    await _GetValue(ng.createTestMapAccessFactory()).runTest();
   });
 
   test('should support keyed access to a list', () async {
-    await _GetValue<TestListAccess>().runTest();
+    await _GetValue(ng.createTestListAccessFactory()).runTest();
   });
 
   test('should support property access', () async {
-    await _GetValue<TestPropertyAccess>().runTest();
+    await _GetValue(ng.createTestPropertyAccessFactory()).runTest();
   });
 
   test('should support chained property access', () async {
-    await _GetValue<TestChainedPropertyAccess>().runTest();
+    await _GetValue(ng.createTestChainedPropertyAccessFactory()).runTest();
   });
 
   test('should support a function call', () async {
-    await _GetValue<TestFunctionCall>().runTest();
+    await _GetValue(ng.createTestFunctionCallFactory()).runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await _GetValue<TestAssignNull>().runTest();
+    await _GetValue(ng.createTestAssignNullFactory()).runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await _GetValue<TestElvisOperation>().runTest();
+    await _GetValue(ng.createTestElvisOperationFactory()).runTest();
   });
 
   test('should support assigning explicitly to null', () async {
-    await _GetValue<TestNullAwareOperation>().runTest();
+    await _GetValue(ng.createTestNullAwareOperationFactory()).runTest();
   });
 }
 
 /// A helper for asserting against a new component that implements [ValueTest].
 class _GetValue<T extends ValueTest> {
-  const _GetValue();
+  final ComponentFactory<T> _factory;
 
-  Future<Null> runTest() async {
-    final fixture = await NgTestBed<T>().create();
+  const _GetValue(this._factory);
+
+  Future<void> runTest() async {
+    final fixture = await NgTestBed(_factory).create();
     await fixture.update(expectAsync1((ValueTest comp) {
-      expect(comp.child.value, comp.expected);
+      expect(comp.child!.value, comp.expected);
     }));
   }
 }
@@ -147,11 +146,11 @@ class _GetValue<T extends ValueTest> {
 )
 class ChildComponent {
   @Input()
-  var value;
+  dynamic value;
 }
 
 abstract class ValueTest {
-  ChildComponent get child;
+  ChildComponent? get child;
 
   dynamic get expected;
 }
@@ -164,7 +163,7 @@ abstract class ValueTest {
 class TestLiterals implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 10;
@@ -178,7 +177,7 @@ class TestLiterals implements ValueTest {
 class TestStripQuotes implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   String get expected => 'string';
@@ -192,7 +191,7 @@ class TestStripQuotes implements ValueTest {
 class TestNewLines implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   String get expected => 'a\n\nb';
@@ -209,7 +208,7 @@ class TestNewLines implements ValueTest {
 class TestAddOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 12;
@@ -223,7 +222,7 @@ class TestAddOperation implements ValueTest {
 class TestMinusOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 8;
@@ -237,7 +236,7 @@ class TestMinusOperation implements ValueTest {
 class TestMultiplyOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 20;
@@ -251,7 +250,7 @@ class TestMultiplyOperation implements ValueTest {
 class TestDivisionOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 5;
@@ -265,7 +264,7 @@ class TestDivisionOperation implements ValueTest {
 class TestModulusOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   int get expected => 1;
@@ -279,7 +278,7 @@ class TestModulusOperation implements ValueTest {
 class TestEqualityOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -293,7 +292,7 @@ class TestEqualityOperation implements ValueTest {
 class TestNotEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   Matcher get expected => isFalse;
@@ -302,12 +301,13 @@ class TestNotEqualsOperation implements ValueTest {
 @Component(
   selector: 'test',
   directives: [ChildComponent],
-  template: '<child [value]="1 === 1"></child>',
+  template: '<child [value]="identical(1, 1)"></child>',
+  exports: [identical],
 )
 class TestIdentityOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -316,12 +316,13 @@ class TestIdentityOperation implements ValueTest {
 @Component(
   selector: 'test',
   directives: [ChildComponent],
-  template: '<child [value]="1 !== 1"></child>',
+  template: '<child [value]="!identical(1, 1)"></child>',
+  exports: [identical],
 )
 class TestNotIdenticalOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   Matcher get expected => isFalse;
@@ -335,7 +336,7 @@ class TestNotIdenticalOperation implements ValueTest {
 class TestLessThanOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -349,7 +350,7 @@ class TestLessThanOperation implements ValueTest {
 class TestGreaterThanOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -363,7 +364,7 @@ class TestGreaterThanOperation implements ValueTest {
 class TestLessThanOrEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -377,7 +378,7 @@ class TestLessThanOrEqualsOperation implements ValueTest {
 class TestGreaterThanOrEqualsOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -391,7 +392,7 @@ class TestGreaterThanOrEqualsOperation implements ValueTest {
 class TestAndOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   Matcher get expected => isFalse;
@@ -405,7 +406,7 @@ class TestAndOperation implements ValueTest {
 class TestOrOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   // Can't inline; we'd get a dead code warning in .template.dart.
   bool get val1 => true;
@@ -423,7 +424,7 @@ class TestOrOperation implements ValueTest {
 class TestNegateOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   Matcher get expected => isFalse;
@@ -437,7 +438,7 @@ class TestNegateOperation implements ValueTest {
 class TestDoubleNegationOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   bool get expected => true;
@@ -451,7 +452,7 @@ class TestDoubleNegationOperation implements ValueTest {
 class TestTernaryOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   String get expected => 'no';
@@ -465,7 +466,7 @@ class TestTernaryOperation implements ValueTest {
 class TestMapAccess implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   Map<String, String> get map => const {'foo': 'bar'};
 
@@ -481,7 +482,7 @@ class TestMapAccess implements ValueTest {
 class TestListAccess implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   List<String> get list => const ['foo', 'bar'];
 
@@ -497,7 +498,7 @@ class TestListAccess implements ValueTest {
 class TestPropertyAccess implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   List<String> get list => const ['foo', 'bar'];
 
@@ -513,7 +514,7 @@ class TestPropertyAccess implements ValueTest {
 class TestChainedPropertyAccess implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   List<String> get list => const ['foo', 'bar'];
 
@@ -529,7 +530,7 @@ class TestChainedPropertyAccess implements ValueTest {
 class TestFunctionCall implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   List<String> get list => const ['foo', 'bar'];
 
@@ -545,7 +546,7 @@ class TestFunctionCall implements ValueTest {
 class TestAssignNull implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   @override
   Matcher get expected => isNull;
@@ -559,7 +560,7 @@ class TestAssignNull implements ValueTest {
 class TestElvisOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   dynamic get map => null;
 
@@ -575,7 +576,7 @@ class TestElvisOperation implements ValueTest {
 class TestNullAwareOperation implements ValueTest {
   @ViewChild(ChildComponent)
   @override
-  ChildComponent child;
+  ChildComponent? child;
 
   dynamic get map => null;
 

@@ -1,11 +1,9 @@
-@TestOn('browser')
-
 import 'dart:async';
 import 'dart:html';
 
-import 'package:angular_test/angular_test.dart';
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
+import 'package:angular_test/angular_test.dart';
 
 import 'directive_integration_test.template.dart' as ng;
 
@@ -13,16 +11,15 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   test('should support nested components', () async {
-    final testBed = NgTestBed.forComponent(ng.createParentComponentFactory());
+    final testBed = NgTestBed(ng.createParentComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'hello');
   });
 
   test('should consume directive input binding', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createBoundDirectiveInputComponentFactory());
+    final testBed = NgTestBed(ng.createBoundDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
-    final directives = testFixture.assertOnlyInstance.directives;
+    final directives = testFixture.assertOnlyInstance.directives!;
     await testFixture.update((component) => component.value = 'New property');
     expect(directives[0].dirProp, 'New property');
     expect(directives[1].dirProp, 'Hi there!');
@@ -31,35 +28,32 @@ void main() {
   });
 
   test('should support multiple directives on a single node', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createMultipleDirectivesComponentFactory());
+    final testBed = NgTestBed(ng.createMultipleDirectivesComponentFactory());
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
-    expect(directive.dirProp, 'Hello world!');
+    expect(directive!.dirProp, 'Hello world!');
     expect(testFixture.text, 'hello');
   });
 
   test('should support directives missing input bindings', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createUnboundDirectiveInputComponentFactory());
+    final testBed = NgTestBed(ng.createUnboundDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, isEmpty);
   });
 
   test('should execute a directive once, even if specified multiple times',
       () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createDuplicateDirectivesComponentFactory());
+    final testBed = NgTestBed(ng.createDuplicateDirectivesComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'noduplicate');
   });
 
   test('should support directives whose selector matches native property',
       () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createOverrideNativePropertyComponentFactory());
+    final testBed =
+        NgTestBed(ng.createOverrideNativePropertyComponentFactory());
     final testFixture = await testBed.create();
-    final directive = testFixture.assertOnlyInstance.directive;
+    final directive = testFixture.assertOnlyInstance.directive!;
     expect(directive.id, 'some_id');
     await testFixture.update((component) => component.value = 'other_id');
     expect(directive.id, 'other_id');
@@ -67,38 +61,36 @@ void main() {
 
   test('should support directives whose selector matches event binding',
       () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createEventDirectiveComponentFactory());
+    final testBed = NgTestBed(ng.createEventDirectiveComponentFactory());
     final testFixture = await testBed.create();
     expect(testFixture.assertOnlyInstance.directive, isNotNull);
   });
 
   test('should read directives metadata from their binding token', () async {
-    final testBed = NgTestBed.forComponent(
-        ng.createRetrievesDependencyFromHostComponentFactory());
+    final testBed =
+        NgTestBed(ng.createRetrievesDependencyFromHostComponentFactory());
     final testFixture = await testBed.create();
     final needsPublicApi = testFixture.assertOnlyInstance.needsPublicApi;
-    expect(needsPublicApi.api, const TypeMatcher<PrivateImpl>());
+    expect(needsPublicApi!.api, const TypeMatcher<PrivateImpl>());
   });
 
   test('should consume pipe binding', () async {
-    final testBed =
-        NgTestBed.forComponent(ng.createPipedDirectiveInputComponentFactory());
+    final testBed = NgTestBed(ng.createPipedDirectiveInputComponentFactory());
     final testFixture = await testBed.create();
     final directive = testFixture.assertOnlyInstance.directive;
-    expect(directive.dirProp, 'aa');
+    expect(directive!.dirProp, 'aa');
   });
 
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = NgTestBed.forComponent(ng.createSimpleButtonFactory());
+    final testBed = NgTestBed(ng.createSimpleButtonFactory());
     await testBed.create();
   });
   test('should not bind attribute matcher when generating host view', () async {
     // This test will fail on DDC if [width] in host template generates
     // invalid code to initialize width.
-    final testBed = NgTestBed.forComponent(ng.createSimpleInputFactory());
+    final testBed = NgTestBed(ng.createSimpleInputFactory());
     await testBed.create();
   });
 }
@@ -109,7 +101,7 @@ void main() {
 )
 class SimpleInput {
   @Input()
-  int width;
+  int? width;
 }
 
 @Component(
@@ -118,7 +110,7 @@ class SimpleInput {
 )
 class SimpleButton {
   @Input()
-  int width;
+  int? width;
 }
 
 @Directive(
@@ -144,7 +136,7 @@ class BoundDirectiveInputComponent {
   String value = 'Initial value';
 
   @ViewChildren(MyDir)
-  List<MyDir> directives;
+  List<MyDir>? directives;
 }
 
 @Injectable()
@@ -160,7 +152,7 @@ class MyService {
   ],
 )
 class ChildComponent {
-  String value;
+  late final String value;
 
   ChildComponent(MyService service) {
     value = service.greeting;
@@ -188,7 +180,7 @@ class MultipleDirectivesComponent {
   String value = 'Hello world!';
 
   @ViewChild(MyDir)
-  MyDir directive;
+  MyDir? directive;
 }
 
 @Component(
@@ -224,7 +216,7 @@ class DuplicateDirectivesComponent {}
 )
 class IdDir {
   @Input()
-  String id;
+  String? id;
 }
 
 @Component(
@@ -238,7 +230,7 @@ class OverrideNativePropertyComponent {
   String value = 'some_id';
 
   @ViewChild(IdDir)
-  IdDir directive;
+  IdDir? directive;
 }
 
 @Directive(
@@ -260,7 +252,7 @@ class EventDir {
 )
 class EventDirectiveComponent {
   @ViewChild(EventDir)
-  EventDir directive;
+  EventDir? directive;
 
   void doNothing() {}
 }
@@ -295,17 +287,19 @@ class NeedsPublicApi {
 )
 class RetrievesDependencyFromHostComponent {
   @ViewChild(NeedsPublicApi)
-  NeedsPublicApi needsPublicApi;
+  NeedsPublicApi? needsPublicApi;
 }
 
 @Pipe('double')
-class DoublePipe implements PipeTransform {
+class DoublePipe {
   String transform(dynamic value) => '$value$value';
 }
 
 @Component(
   selector: 'piped-directive-input',
-  template: '<div my-dir #dir="myDir" [elProp]="value | double"></div>',
+  template: r'''
+    <div my-dir #dir="myDir" [elProp]="$pipe.double(value)"></div>
+    ''',
   directives: [
     MyDir,
   ],
@@ -317,5 +311,5 @@ class PipedDirectiveInputComponent {
   String value = 'a';
 
   @ViewChild('dir')
-  MyDir directive;
+  MyDir? directive;
 }

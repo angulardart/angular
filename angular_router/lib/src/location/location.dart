@@ -40,7 +40,7 @@ import 'location_strategy.dart' show LocationStrategy;
 @Injectable()
 class Location {
   final LocationStrategy locationStrategy;
-  final _subject = StreamController<dynamic>();
+  final _subject = StreamController<Object>();
   final String _baseHref;
 
   Location(this.locationStrategy)
@@ -70,8 +70,6 @@ class Location {
   /// This determines the representation of [path] used to manipulate browser
   /// history and exposed through router states.
   String normalizePath(String path) {
-    if (path == null) return null;
-
     if (!path.startsWith('/')) {
       path = '/$path';
     }
@@ -120,9 +118,9 @@ class Location {
 
   /// Subscribe to the platform's `popState` events.
   Object subscribe(
-    void Function(dynamic) onNext, [
-    void Function(dynamic) onThrow,
-    void Function() onReturn,
+    void Function(Object) onNext, [
+    void Function(Object)? onThrow,
+    void Function()? onReturn,
   ]) {
     return _subject.stream.listen(onNext, onError: onThrow, onDone: onReturn);
   }

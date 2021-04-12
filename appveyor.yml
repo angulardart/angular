@@ -1,6 +1,7 @@
 branches:
   only:
     - master
+    - google
 
 version: '1.0.{build}'
 
@@ -10,7 +11,7 @@ install:
   - cmd: 7z x dart-sdk.zip -o"C:\tools" -y > nul
   - set PATH=%PATH%;C:\tools\dart-sdk\bin
   - set PATH=%PATH%;%APPDATA%\Pub\Cache\bin
-  - cd examples/i18n
+  - cd examples/github_issues
   - pub get && exit 0
 
 build: off
@@ -19,5 +20,5 @@ test_script:
   - pub run build_runner test --fail-on-severe
 
 cache:
-  - examples\i18n\.dart_tool
+  - examples\github_issues\.dart_tool
   - C:\Users\appveyor\AppData\Roaming\Pub\Cache

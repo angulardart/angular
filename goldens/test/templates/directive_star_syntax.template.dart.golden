@@ -1,0 +1,197 @@
+// **************************************************************************
+// Generator: AngularDart Compiler
+// **************************************************************************
+
+import 'directive_star_syntax.dart';
+import 'package:angular/src/reflector.dart' as _ngRef;
+import 'directive_star_syntax.template.dart' as _ref0;
+import 'package:angular/src/core/linker/views/component_view.dart' as import0;
+import 'directive_star_syntax.dart' as import1;
+import 'package:angular/src/core/linker/view_container.dart';
+import 'package:angular/src/common/directives/ng_if.dart';
+import 'package:angular/src/common/directives/ng_for.dart' as import4;
+import 'package:angular/src/core/linker/style_encapsulation.dart' as import5;
+import 'package:angular/src/core/linker/views/view.dart' as import6;
+import 'package:angular/src/core/change_detection/change_detection.dart';
+import 'package:angular/src/utilities.dart' as import8;
+import 'dart:html' as import9;
+import 'package:angular/src/runtime/dom_helpers.dart' as import10;
+import 'package:angular/src/core/linker/template_ref.dart';
+import 'package:angular/src/devtools.dart' as import12;
+import 'package:angular/src/runtime/check_binding.dart' as import13;
+import 'package:angular/angular.dart';
+import 'package:angular/src/core/linker/views/embedded_view.dart' as import15;
+import 'package:angular/src/runtime/text_binding.dart' as import16;
+import 'package:angular/src/core/linker/views/render_view.dart' as import17;
+import 'package:angular/src/runtime/interpolate.dart' as import18;
+import 'dart:core';
+import 'package:angular/src/core/linker/views/host_view.dart' as import20;
+
+final List<Object> styles$GoldenComponent = const [];
+
+class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late final ViewContainer _appEl_0;
+  late final NgIf _NgIf_0_9;
+  late final ViewContainer _appEl_2;
+  late final import4.NgFor _NgFor_2_9;
+  Object? _expr_0;
+  static import5.ComponentStyles? _componentStyles;
+  ViewGoldenComponent0(import6.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
+    this.initComponentStyles();
+    this.rootElement = import8.unsafeCast(import9.document.createElement('golden'));
+  }
+  static String? get _debugComponentUrl {
+    return (import8.isDevMode ? 'asset:goldens/test/templates/directive_star_syntax.dart' : null);
+  }
+
+  @override
+  void build() {
+    final parentRenderNode = this.initViewRoot();
+    final _anchor_0 = import10.appendAnchor(parentRenderNode);
+    this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
+    var _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_GoldenComponent1);
+    this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
+    final doc = import9.document;
+    final _el_1 = import10.appendElement<import9.UListElement>(doc, parentRenderNode, 'ul');
+    final _anchor_2 = import10.appendAnchor(_el_1);
+    this._appEl_2 = ViewContainer(2, 1, this, _anchor_2);
+    var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_GoldenComponent2);
+    this._NgFor_2_9 = import4.NgFor(this._appEl_2, _TemplateRef_2_8);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    if (import12.isDevToolsEnabled) {
+      import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.show);
+    }
+    this._NgIf_0_9.ngIf = _ctx.show;
+    final currVal_0 = _ctx.values;
+    if (import13.checkBinding(this._expr_0, currVal_0, 'values', 'asset:goldens/test/templates/directive_star_syntax.dart')) {
+      if (import12.isDevToolsEnabled) {
+        import12.ComponentInspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_0);
+      }
+      this._NgFor_2_9.ngForOf = currVal_0;
+      this._expr_0 = currVal_0;
+    }
+    if ((!import13.debugThrowIfChanged)) {
+      this._NgFor_2_9.ngDoCheck();
+    }
+    this._appEl_0.detectChangesInNestedViews();
+    this._appEl_2.detectChangesInNestedViews();
+  }
+
+  @override
+  void destroyInternal() {
+    this._appEl_0.destroyNestedViews();
+    this._appEl_2.destroyNestedViews();
+  }
+
+  static void _debugClearComponentStyles() {
+    _componentStyles = null;
+  }
+
+  void initComponentStyles() {
+    var styles = _componentStyles;
+    if ((styles == null)) {
+      _componentStyles = (styles = import5.ComponentStyles.unscoped(styles$GoldenComponent, _debugComponentUrl));
+      if (import8.isDevMode) {
+        import5.ComponentStyles.debugOnClear(_debugClearComponentStyles);
+      }
+    }
+    this.componentStyles = styles;
+  }
+}
+
+const _GoldenComponentNgFactory = ComponentFactory<import1.GoldenComponent>('golden', viewFactory_GoldenComponentHost0);
+ComponentFactory<import1.GoldenComponent> get GoldenComponentNgFactory {
+  return _GoldenComponentNgFactory;
+}
+
+ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
+  return ComponentFactory('golden', viewFactory_GoldenComponentHost0);
+}
+
+class _ViewGoldenComponent1 extends import15.EmbeddedView<import1.GoldenComponent> {
+  final import16.TextBinding _textBinding_2 = import16.TextBinding();
+  _ViewGoldenComponent1(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import9.document;
+    final _el_0 = import8.unsafeCast(doc.createElement('div'));
+    final _text_1 = import10.appendText(_el_0, 'Show some ');
+    _el_0.append(this._textBinding_2.element);
+    final _text_3 = import10.appendText(_el_0, '.');
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final _ctx = this.ctx;
+    this._textBinding_2.updateText(import18.interpolateString0(_ctx.value));
+  }
+}
+
+import15.EmbeddedView<void> viewFactory_GoldenComponent1(import17.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent1(parentView, parentIndex);
+}
+
+class _ViewGoldenComponent2 extends import15.EmbeddedView<import1.GoldenComponent> {
+  final import16.TextBinding _textBinding_1 = import16.TextBinding();
+  final import16.TextBinding _textBinding_3 = import16.TextBinding();
+  final import16.TextBinding _textBinding_5 = import16.TextBinding();
+  _ViewGoldenComponent2(import17.RenderView parentView, int parentIndex) : super(parentView, parentIndex);
+  @override
+  void build() {
+    final doc = import9.document;
+    final _el_0 = import8.unsafeCast(doc.createElement('li'));
+    _el_0.append(this._textBinding_1.element);
+    final _text_2 = import10.appendText(_el_0, ': ');
+    _el_0.append(this._textBinding_3.element);
+    final _text_4 = import10.appendText(_el_0, ' (');
+    _el_0.append(this._textBinding_5.element);
+    final _text_6 = import10.appendText(_el_0, ')');
+    this.initRootNode(_el_0);
+  }
+
+  @override
+  void detectChangesInternal() {
+    final local_index = import8.unsafeCast<int>(this.locals['index']);
+    final local_v = import8.unsafeCast<int>(this.locals['\$implicit']);
+    final local_odd = import8.unsafeCast<bool>(this.locals['odd']);
+    this._textBinding_1.updateTextWithPrimitive(local_index);
+    this._textBinding_3.updateTextWithPrimitive(local_v);
+    this._textBinding_5.updateTextWithPrimitive(local_odd);
+  }
+}
+
+import15.EmbeddedView<void> viewFactory_GoldenComponent2(import17.RenderView parentView, int parentIndex) {
+  return _ViewGoldenComponent2(parentView, parentIndex);
+}
+
+final List<Object> styles$GoldenComponentHost = const [];
+
+class _ViewGoldenComponentHost0 extends import20.HostView<import1.GoldenComponent> {
+  @override
+  void build() {
+    this.componentView = ViewGoldenComponent0(this, 0);
+    final _el_0 = this.componentView.rootElement;
+    this.component = import1.GoldenComponent();
+    this.initRootNode(_el_0);
+  }
+}
+
+import20.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+  return _ViewGoldenComponentHost0();
+}
+
+var _visited = false;
+void initReflector() {
+  if (_visited) {
+    return;
+  }
+  _visited = true;
+
+  _ngRef.registerComponent(GoldenComponent, createGoldenComponentFactory());
+  _ref0.initReflector();
+}

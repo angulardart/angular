@@ -1,6 +1,5 @@
 import 'dart:html';
 
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -12,60 +11,60 @@ void main() {
   ng.initReflector();
 
   group('NgControlNameTest', () {
-    NgTestFixture<NgControlNameTest> fixture;
+    late NgTestFixture<NgControlNameTest> fixture;
 
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed = NgTestBed.forComponent(ng.createNgControlNameTestFactory());
+      var testBed = NgTestBed(ng.createNgControlNameTestFactory());
       fixture = await testBed.create();
     });
 
     test('should reexport control properties', () async {
       await fixture.update((cmp) {
-        expect(cmp.controlName.control, cmp.controlModel);
-        expect(cmp.controlName.value, cmp.controlModel.value);
-        expect(cmp.controlName.valid, cmp.controlModel.valid);
-        expect(cmp.controlName.errors, cmp.controlModel.errors);
-        expect(cmp.controlName.pristine, cmp.controlModel.pristine);
-        expect(cmp.controlName.dirty, cmp.controlModel.dirty);
-        expect(cmp.controlName.touched, cmp.controlModel.touched);
-        expect(cmp.controlName.untouched, cmp.controlModel.untouched);
+        var controlName = cmp.controlName!;
+        expect(controlName.control, cmp.controlModel);
+        expect(controlName.value, cmp.controlModel.value);
+        expect(controlName.valid, cmp.controlModel.valid);
+        expect(controlName.errors, cmp.controlModel.errors);
+        expect(controlName.pristine, cmp.controlModel.pristine);
+        expect(controlName.dirty, cmp.controlModel.dirty);
+        expect(controlName.touched, cmp.controlModel.touched);
+        expect(controlName.untouched, cmp.controlModel.untouched);
       });
     });
 
     test('should disabled element', () async {
-      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+      expect(fixture.assertOnlyInstance.inputElement!.disabled, false);
       await fixture.update((cmp) => cmp.disabled = true);
-      expect(fixture.assertOnlyInstance.inputElement.disabled, true);
+      expect(fixture.assertOnlyInstance.inputElement!.disabled, true);
       await fixture.update((cmp) => cmp.disabled = false);
-      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+      expect(fixture.assertOnlyInstance.inputElement!.disabled, false);
     });
 
     test('should reset element', () async {
       await fixture.update((cmp) => cmp.loginValue = 'new value');
-      expect(fixture.assertOnlyInstance.inputElement.value, 'new value');
-      await fixture.update((cmp) => cmp.controlName.reset());
-      expect(fixture.assertOnlyInstance.inputElement.value, '');
+      expect(fixture.assertOnlyInstance.inputElement!.value, 'new value');
+      await fixture.update((cmp) => cmp.controlName!.reset());
+      expect(fixture.assertOnlyInstance.inputElement!.value, '');
     });
   });
 
   group('NgControl initialization test', () {
-    NgTestFixture<NgControlNameInitTest> fixture;
+    late NgTestFixture<NgControlNameInitTest> fixture;
 
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed =
-          NgTestBed.forComponent(ng.createNgControlNameInitTestFactory());
+      var testBed = NgTestBed(ng.createNgControlNameInitTestFactory());
       fixture = await testBed.create();
     });
 
     test('should initialize with value and not null', () async {
       // Should not throw on initialization with a null value.
       await fixture.update((cmp) {
-        expect(cmp.controlName.value, 'Test');
-        expect(cmp.accessor.value, 'Test');
+        expect(cmp.controlName!.value, 'Test');
+        expect(cmp.accessor!.value, 'Test');
       });
     });
   });
@@ -89,18 +88,18 @@ void main() {
 )
 class NgControlNameTest {
   @ViewChild('login')
-  NgControlName controlName;
+  NgControlName? controlName;
 
   @ViewChild('input')
-  InputElement inputElement;
+  InputElement? inputElement;
 
-  String loginValue;
+  String? loginValue;
 
   ControlGroup formModel = ControlGroup({'login': Control('login')});
 
   bool disabled = false;
 
-  Control get controlModel => formModel.controls['login'];
+  Control get controlModel => formModel.controls['login'] as Control;
 }
 
 @Component(
@@ -117,10 +116,10 @@ class NgControlNameTest {
 )
 class NgControlNameInitTest {
   @ViewChild(NgControlName)
-  NgControlName controlName;
+  NgControlName? controlName;
 
   @ViewChild(TestAccessor)
-  TestAccessor accessor;
+  TestAccessor? accessor;
 }
 
 @Directive(
@@ -132,7 +131,7 @@ class NgControlNameInitTest {
     )
   ],
 )
-class TestAccessor implements ControlValueAccessor {
+class TestAccessor implements ControlValueAccessor<dynamic> {
   dynamic value;
   @override
   void writeValue(value) {

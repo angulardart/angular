@@ -1,7 +1,3 @@
-// Copyright (c) 2016, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
-
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:string_scanner/string_scanner.dart';
@@ -21,28 +17,28 @@ class NgScanner {
   final bool _recoverErrors;
   final RecoveryProtocol _rp = NgAnalyzerRecoveryProtocol();
 
-  NgSimpleToken _current;
-  NgSimpleToken _lastToken;
-  NgSimpleToken _lastErrorToken;
+  NgSimpleToken? _current;
+  NgSimpleToken? _lastToken;
+  NgSimpleToken? _lastErrorToken;
 
   // Storing last notable offsets to better generate exception offsets.
   // Due to the linear parsing nature of Angular, these values are recyclable.
-  int _lastElementStartOffset;
-  NgSimpleToken _lastDecoratorPrefix;
-  int _lastOpenMustacheOffset;
-  int _lastCommentStartOffset;
-  int _lastEqualSignOffset;
+  late int _lastElementStartOffset;
+  NgSimpleToken? _lastDecoratorPrefix;
+  int? _lastOpenMustacheOffset;
+  late int _lastCommentStartOffset;
+  late int _lastEqualSignOffset;
 
-  NgSimpleToken _moveNext() {
+  NgSimpleToken? _moveNext() {
     _lastToken = _current;
-    _current = _reader.next();
+    _current = _reader.next() as NgSimpleToken;
     return _current;
   }
 
   factory NgScanner(
     String html,
     ExceptionHandler exceptionHandler, {
-    Uri sourceUrl,
+    Uri? sourceUrl,
   }) {
     var reader = NgTokenReversibleReader<NgSimpleTokenType>(
         SourceFile.fromString(html, url: sourceUrl),
@@ -55,9 +51,9 @@ class NgScanner {
   NgScanner._(this._reader, this._recoverErrors, this.exceptionHandler);
 
   /// Scans and returns the next token, or `null` if there is none more.
-  NgToken scan() {
+  NgToken? scan() {
     _moveNext();
-    NgToken returnToken;
+    NgToken? returnToken;
 
     while (returnToken == null) {
       switch (_state) {
@@ -143,16 +139,16 @@ class NgScanner {
           returnToken = scanSuffixProperty();
           break;
         case NgScannerState.scanStart:
-          if (_current.type == NgSimpleTokenType.EOF && _reader.isDone) {
+          if (_current!.type == NgSimpleTokenType.EOF && _reader.isDone) {
             _state = NgScannerState.isEndOfFile;
             return null;
-          } else if (_current.type == NgSimpleTokenType.openTagStart ||
-              _current.type == NgSimpleTokenType.closeTagStart) {
+          } else if (_current!.type == NgSimpleTokenType.openTagStart ||
+              _current!.type == NgSimpleTokenType.closeTagStart) {
             returnToken = scanElementStart();
-          } else if (_current.type == NgSimpleTokenType.commentBegin) {
+          } else if (_current!.type == NgSimpleTokenType.commentBegin) {
             returnToken = scanBeforeComment();
-          } else if (_current.type == NgSimpleTokenType.mustacheBegin ||
-              _current.type == NgSimpleTokenType.mustacheEnd) {
+          } else if (_current!.type == NgSimpleTokenType.mustacheBegin ||
+              _current!.type == NgSimpleTokenType.mustacheEnd) {
             // If [NgSimpleTokenType.mustacheEnd], then error - but let
             // scanBeforeInterpolation handle it.
             _state = NgScannerState.scanBeforeInterpolation;
@@ -170,29 +166,29 @@ class NgScanner {
   }
 
   @protected
-  NgToken scanAfterComment() {
-    if (_current.type == NgSimpleTokenType.commentEnd) {
+  NgToken? scanAfterComment() {
+    if (_current!.type == NgSimpleTokenType.commentEnd) {
       _state = NgScannerState.scanStart;
-      return NgToken.commentEnd(_current.offset);
+      return NgToken.commentEnd(_current!.offset);
     }
     // Only triggered by EOF.
     return handleError(
-      NgParserWarningCode.UNTERMINATED_COMMENT,
+      ParserErrorCode.UNTERMINATED_COMMENT,
       _lastCommentStartOffset,
-      _current.offset - _lastCommentStartOffset,
+      _current!.offset - _lastCommentStartOffset,
     );
   }
 
   // TODO: Max: Better handle cases like 'prop]'. Instead of
   // TODO: 'prop []' resolve, resolve as '[prop].
   @protected
-  NgToken scanAfterElementDecorator() {
-    var type = _current.type;
+  NgToken? scanAfterElementDecorator() {
+    var type = _current!.type;
 
     if (type == NgSimpleTokenType.equalSign) {
       _state = NgScannerState.scanElementDecoratorValue;
-      _lastEqualSignOffset = _current.offset;
-      return NgToken.beforeElementDecoratorValue(_current.offset);
+      _lastEqualSignOffset = _current!.offset;
+      return NgToken.beforeElementDecoratorValue(_current!.offset);
     } else if (type == NgSimpleTokenType.tagEnd ||
         type == NgSimpleTokenType.voidCloseTag) {
       return scanElementEndOpen();
@@ -202,7 +198,7 @@ class NgScanner {
       if (nextType == NgSimpleTokenType.equalSign ||
           nextType == NgSimpleTokenType.voidCloseTag ||
           nextType == NgSimpleTokenType.tagEnd) {
-        return NgToken.whitespace(_current.offset, _current.lexeme);
+        return NgToken.whitespace(_current!.offset, _current!.lexeme);
       }
       return scanBeforeElementDecorator();
     }
@@ -218,9 +214,9 @@ class NgScanner {
         type == NgSimpleTokenType.closeBanana ||
         type == NgSimpleTokenType.identifier) {
       return handleError(
-        NgParserWarningCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
+        _current!.offset,
+        _current!.length,
       );
     }
 
@@ -229,31 +225,31 @@ class NgScanner {
         type == NgSimpleTokenType.openTagStart ||
         type == NgSimpleTokenType.closeTagStart) {
       return handleError(
-        NgParserWarningCode.EXPECTED_TAG_CLOSE,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_TAG_CLOSE,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
     if (type == NgSimpleTokenType.doubleQuote ||
         type == NgSimpleTokenType.singleQuote) {
       return handleError(
-        NgParserWarningCode.EXPECTED_EQUAL_SIGN,
-        _lastToken.offset,
-        _current.end - _lastToken.offset,
+        ParserErrorCode.EXPECTED_EQUAL_SIGN,
+        _lastToken!.offset,
+        _current!.end - _lastToken!.offset,
       );
     }
 
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanAfterElementDecoratorValue() {
-    var type = _current.type;
+  NgToken? scanAfterElementDecoratorValue() {
+    var type = _current!.type;
 
     if (type == NgSimpleTokenType.tagEnd ||
         type == NgSimpleTokenType.voidCloseTag) {
@@ -262,7 +258,7 @@ class NgScanner {
       var nextType = _reader.peekType();
       if (nextType == NgSimpleTokenType.voidCloseTag ||
           nextType == NgSimpleTokenType.tagEnd) {
-        return NgToken.whitespace(_current.offset, _current.lexeme);
+        return NgToken.whitespace(_current!.offset, _current!.lexeme);
       }
       return scanBeforeElementDecorator();
     }
@@ -281,9 +277,9 @@ class NgScanner {
         type == NgSimpleTokenType.doubleQuote ||
         type == NgSimpleTokenType.singleQuote) {
       return handleError(
-        NgParserWarningCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
@@ -292,25 +288,25 @@ class NgScanner {
         type == NgSimpleTokenType.openTagStart ||
         type == NgSimpleTokenType.closeTagStart) {
       return handleError(
-        NgParserWarningCode.EXPECTED_TAG_CLOSE,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_TAG_CLOSE,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanAfterElementIdentifierClose() {
-    var type = _current.type;
+  NgToken? scanAfterElementIdentifierClose() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.whitespace) {
       _state = NgScannerState.scanElementEndClose;
-      return NgToken.whitespace(_current.offset, _current.lexeme);
+      return NgToken.whitespace(_current!.offset, _current!.lexeme);
     }
     if (type == NgSimpleTokenType.tagEnd) {
       _state = NgScannerState.scanStart;
@@ -322,34 +318,34 @@ class NgScanner {
         type == NgSimpleTokenType.closeTagStart ||
         type == NgSimpleTokenType.EOF) {
       return handleError(
-        NgParserWarningCode.EXPECTED_AFTER_ELEMENT_IDENTIFIER,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_AFTER_ELEMENT_IDENTIFIER,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
     if (type == NgSimpleTokenType.voidCloseTag) {
       return handleError(
-        NgParserWarningCode.VOID_CLOSE_IN_CLOSE_TAG,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.VOID_CLOSE_IN_CLOSE_TAG,
+        _current!.offset,
+        _current!.length,
       );
     }
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanAfterElementIdentifierOpen() {
-    var type = _current.type;
+  NgToken? scanAfterElementIdentifierOpen() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.whitespace) {
-      if (_reader.peek().type == NgSimpleTokenType.voidCloseTag ||
-          _reader.peek().type == NgSimpleTokenType.tagEnd) {
+      if (_reader.peek()!.type == NgSimpleTokenType.voidCloseTag ||
+          _reader.peek()!.type == NgSimpleTokenType.tagEnd) {
         _state = NgScannerState.scanElementEndOpen;
-        return NgToken.whitespace(_current.offset, _current.lexeme);
+        return NgToken.whitespace(_current!.offset, _current!.lexeme);
       }
       _state = NgScannerState.scanElementDecorator;
       return scanBeforeElementDecorator();
@@ -372,9 +368,9 @@ class NgScanner {
         type == NgSimpleTokenType.doubleQuote ||
         type == NgSimpleTokenType.singleQuote) {
       return handleError(
-        NgParserWarningCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_WHITESPACE_BEFORE_NEW_DECORATOR,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
@@ -383,110 +379,110 @@ class NgScanner {
         type == NgSimpleTokenType.closeTagStart ||
         type == NgSimpleTokenType.EOF) {
       return handleError(
-        NgParserWarningCode.EXPECTED_AFTER_ELEMENT_IDENTIFIER,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.EXPECTED_AFTER_ELEMENT_IDENTIFIER,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanAfterInterpolation() {
-    var type = _current.type;
+  NgToken? scanAfterInterpolation() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.mustacheEnd) {
       _state = NgScannerState.scanStart;
-      return NgToken.interpolationEnd(_current.offset);
+      return NgToken.interpolationEnd(_current!.offset);
     }
 
     if (type == NgSimpleTokenType.EOF ||
         type == NgSimpleTokenType.mustacheBegin ||
         type == NgSimpleTokenType.whitespace) {
       return handleError(
-        NgParserWarningCode.UNTERMINATED_MUSTACHE,
+        ParserErrorCode.UNTERMINATED_MUSTACHE,
         _lastOpenMustacheOffset,
         '{{'.length,
       );
     }
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanBeforeComment() {
-    if (_current.type == NgSimpleTokenType.commentBegin) {
+  NgToken? scanBeforeComment() {
+    if (_current!.type == NgSimpleTokenType.commentBegin) {
       _state = NgScannerState.scanComment;
-      _lastCommentStartOffset = _current.offset;
-      return NgToken.commentStart(_current.offset);
+      _lastCommentStartOffset = _current!.offset;
+      return NgToken.commentStart(_current!.offset);
     }
     // Transient state, should theoretically never hit.
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanBeforeElementDecorator() {
-    if (_current.type == NgSimpleTokenType.whitespace) {
+  NgToken? scanBeforeElementDecorator() {
+    if (_current!.type == NgSimpleTokenType.whitespace) {
       if (_reader.peekType() == NgSimpleTokenType.voidCloseTag ||
           _reader.peekType() == NgSimpleTokenType.tagEnd) {
         _state = NgScannerState.scanAfterElementDecorator;
-        return NgToken.whitespace(_current.offset, _current.lexeme);
+        return NgToken.whitespace(_current!.offset, _current!.lexeme);
       }
       _state = NgScannerState.scanElementDecorator;
-      return NgToken.beforeElementDecorator(_current.offset, _current.lexeme);
+      return NgToken.beforeElementDecorator(_current!.offset, _current!.lexeme);
     }
     // Transient state, should theoretically never hit.
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanBeforeInterpolation() {
-    if (_current.type == NgSimpleTokenType.mustacheBegin) {
+  NgToken? scanBeforeInterpolation() {
+    if (_current!.type == NgSimpleTokenType.mustacheBegin) {
       _state = NgScannerState.scanInterpolation;
-      _lastOpenMustacheOffset = _current.offset;
-      return NgToken.interpolationStart(_current.offset);
+      _lastOpenMustacheOffset = _current!.offset;
+      return NgToken.interpolationStart(_current!.offset);
     }
 
-    var errorToken = _current;
-    if (_current.type == NgSimpleTokenType.text &&
+    var errorToken = _current!;
+    if (_current!.type == NgSimpleTokenType.text &&
         _reader.peekType() == NgSimpleTokenType.mustacheEnd) {
-      errorToken = _reader.peek();
+      errorToken = _reader.peek() as NgSimpleToken;
     }
     return handleError(
-      NgParserWarningCode.UNOPENED_MUSTACHE,
+      ParserErrorCode.UNOPENED_MUSTACHE,
       errorToken.offset,
       errorToken.length,
     );
   }
 
   @protected
-  NgToken scanComment() {
-    if (_current.type == NgSimpleTokenType.text) {
+  NgToken? scanComment() {
+    if (_current!.type == NgSimpleTokenType.text) {
       _state = NgScannerState.scanAfterComment;
-      return NgToken.commentValue(_current.offset, _current.lexeme);
+      return NgToken.commentValue(_current!.offset, _current!.lexeme);
     }
-    if (_current.type == NgSimpleTokenType.commentEnd) {
+    if (_current!.type == NgSimpleTokenType.commentEnd) {
       _state = NgScannerState.scanAfterComment;
       return scanAfterComment();
     }
     // Only EOF should enable error.
     return handleError(
-      NgParserWarningCode.UNTERMINATED_COMMENT,
+      ParserErrorCode.UNTERMINATED_COMMENT,
       _lastCommentStartOffset,
       '<!--'.length,
     );
@@ -494,24 +490,24 @@ class NgScanner {
 
   // Doesn't switch states or check validity of current token.
   NgToken _scanCompoundDecorator() {
-    var offset = _current.offset;
+    var offset = _current!.offset;
     var sb = StringBuffer();
-    sb.write(_current.lexeme);
+    sb.write(_current!.lexeme);
     while (_reader.peekType() == NgSimpleTokenType.period ||
         _reader.peekType() == NgSimpleTokenType.identifier ||
         _reader.peekType() == NgSimpleTokenType.dash ||
         _reader.peekType() == NgSimpleTokenType.percent ||
         _reader.peekType() == NgSimpleTokenType.backSlash) {
       _moveNext();
-      sb.write(_current.lexeme);
+      sb.write(_current!.lexeme);
     }
     return NgToken.elementDecorator(offset, sb.toString());
   }
 
   @protected
-  NgToken scanElementDecorator() {
-    var type = _current.type;
-    var offset = _current.offset;
+  NgToken? scanElementDecorator() {
+    var type = _current!.type;
+    var offset = _current!.offset;
     if (type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanAfterElementDecorator;
       return _scanCompoundDecorator();
@@ -555,9 +551,9 @@ class NgScanner {
         type == NgSimpleTokenType.doubleQuote ||
         type == NgSimpleTokenType.singleQuote) {
       return handleError(
-        NgParserWarningCode.ELEMENT_DECORATOR,
-        _lastToken.offset,
-        _lastToken.length,
+        ParserErrorCode.ELEMENT_DECORATOR,
+        _lastToken!.offset,
+        _lastToken!.length,
       );
     }
 
@@ -565,21 +561,21 @@ class NgScanner {
         type == NgSimpleTokenType.closeParen ||
         type == NgSimpleTokenType.closeBanana) {
       return handleError(
-        NgParserWarningCode.ELEMENT_DECORATOR_SUFFIX_BEFORE_PREFIX,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.ELEMENT_DECORATOR_SUFFIX_BEFORE_PREFIX,
+        _current!.offset,
+        _current!.length,
       );
     }
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanElementDecoratorValue() {
-    var type = _current.type;
+  NgToken? scanElementDecoratorValue() {
+    var type = _current!.type;
     if (_current is NgSimpleQuoteToken) {
       var current = _current as NgSimpleQuoteToken;
       var isDouble = current.type == NgSimpleTokenType.doubleQuote;
@@ -602,19 +598,19 @@ class NgScanner {
           // extend beyond the decorator itself, past EOF, and crash.
           rightQuoteOffset = current.end - 1;
           exceptionHandler.handle(_generateException(
-            NgParserWarningCode.UNCLOSED_QUOTE,
+            ParserErrorCode.UNCLOSED_QUOTE,
             current.offset,
             current.length,
           ));
         } else {
           return handleError(
-            NgParserWarningCode.UNCLOSED_QUOTE,
+            ParserErrorCode.UNCLOSED_QUOTE,
             current.offset,
             current.length,
           );
         }
       } else {
-        rightQuoteOffset = current.quoteEndOffset;
+        rightQuoteOffset = current.quoteEndOffset!;
       }
 
       if (isDouble) {
@@ -632,14 +628,14 @@ class NgScanner {
           leftQuoteToken, innerValueToken, rightQuoteToken);
     }
     if (type == NgSimpleTokenType.whitespace) {
-      return NgToken.whitespace(_current.offset, _current.lexeme);
+      return NgToken.whitespace(_current!.offset, _current!.lexeme);
     }
 
     if (type == NgSimpleTokenType.identifier) {
       return handleError(
-        NgParserWarningCode.ELEMENT_DECORATOR_VALUE_MISSING_QUOTES,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.ELEMENT_DECORATOR_VALUE_MISSING_QUOTES,
+        _current!.offset,
+        _current!.length,
       );
     }
 
@@ -660,26 +656,26 @@ class NgScanner {
         type == NgSimpleTokenType.star ||
         type == NgSimpleTokenType.atSign) {
       return handleError(
-        NgParserWarningCode.ELEMENT_DECORATOR_VALUE,
+        ParserErrorCode.ELEMENT_DECORATOR_VALUE,
         _lastEqualSignOffset,
-        _current.offset - _lastEqualSignOffset,
+        _current!.offset - _lastEqualSignOffset,
       );
     }
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanElementIdentifier({@required bool wasOpenTag}) {
-    var type = _current.type;
+  NgToken? scanElementIdentifier({bool wasOpenTag = false}) {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.identifier) {
       _state = wasOpenTag
           ? NgScannerState.scanAfterElementIdentifierOpen
           : NgScannerState.scanAfterElementIdentifierClose;
-      return NgToken.elementIdentifier(_current.offset, _current.lexeme);
+      return NgToken.elementIdentifier(_current!.offset, _current!.lexeme);
     }
     if (wasOpenTag) {
       if (type == NgSimpleTokenType.openBracket ||
@@ -701,15 +697,15 @@ class NgScanner {
           type == NgSimpleTokenType.doubleQuote ||
           type == NgSimpleTokenType.singleQuote) {
         return handleError(
-          NgParserWarningCode.ELEMENT_IDENTIFIER,
+          ParserErrorCode.ELEMENT_IDENTIFIER,
           _lastElementStartOffset,
-          _current.end - _lastElementStartOffset,
+          _current!.end - _lastElementStartOffset,
         );
       }
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     } else {
       if (type == NgSimpleTokenType.closeTagStart ||
@@ -719,15 +715,15 @@ class NgScanner {
           type == NgSimpleTokenType.EOF ||
           type == NgSimpleTokenType.whitespace) {
         return handleError(
-          NgParserWarningCode.ELEMENT_IDENTIFIER,
+          ParserErrorCode.ELEMENT_IDENTIFIER,
           _lastElementStartOffset,
-          _current.end - _lastElementStartOffset,
+          _current!.end - _lastElementStartOffset,
         );
       }
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
   }
@@ -735,15 +731,15 @@ class NgScanner {
   // This state is technically a duplicate for [scanAfterElementIdentifierClose],
   // but keep for now in case we want to expand on recovery for close tags.
   @protected
-  NgToken scanElementEndClose() {
-    var type = _current.type;
+  NgToken? scanElementEndClose() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.tagEnd) {
       _state = NgScannerState.scanStart;
-      return NgToken.closeElementEnd(_current.offset);
+      return NgToken.closeElementEnd(_current!.offset);
     }
 
     if (type == NgSimpleTokenType.whitespace) {
-      return NgToken.whitespace(_current.offset, _current.lexeme);
+      return NgToken.whitespace(_current!.offset, _current!.lexeme);
     }
 
     if (type == NgSimpleTokenType.commentBegin ||
@@ -751,71 +747,71 @@ class NgScanner {
         type == NgSimpleTokenType.closeTagStart ||
         type == NgSimpleTokenType.EOF) {
       return handleError(
-        NgParserWarningCode.EXPECTED_TAG_CLOSE,
+        ParserErrorCode.EXPECTED_TAG_CLOSE,
         _lastElementStartOffset,
-        _current.end - _lastElementStartOffset,
+        _current!.end - _lastElementStartOffset,
       );
     }
 
     if (type == NgSimpleTokenType.voidCloseTag) {
       return handleError(
-        NgParserWarningCode.VOID_CLOSE_IN_CLOSE_TAG,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.VOID_CLOSE_IN_CLOSE_TAG,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanElementEndOpen() {
-    if (_current.type == NgSimpleTokenType.voidCloseTag) {
+  NgToken? scanElementEndOpen() {
+    if (_current!.type == NgSimpleTokenType.voidCloseTag) {
       _state = NgScannerState.scanStart;
-      return NgToken.openElementEndVoid(_current.offset);
+      return NgToken.openElementEndVoid(_current!.offset);
     }
-    if (_current.type == NgSimpleTokenType.tagEnd) {
+    if (_current!.type == NgSimpleTokenType.tagEnd) {
       _state = NgScannerState.scanStart;
-      return NgToken.openElementEnd(_current.offset);
+      return NgToken.openElementEnd(_current!.offset);
     }
     // Directed state, should theoretically never hit.
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanElementStart() {
-    if (_current.type == NgSimpleTokenType.openTagStart) {
+  NgToken? scanElementStart() {
+    if (_current!.type == NgSimpleTokenType.openTagStart) {
       _state = NgScannerState.scanElementIdentifierOpen;
-      _lastElementStartOffset = _current.offset;
-      return NgToken.openElementStart(_current.offset);
+      _lastElementStartOffset = _current!.offset;
+      return NgToken.openElementStart(_current!.offset);
     }
-    if (_current.type == NgSimpleTokenType.closeTagStart) {
+    if (_current!.type == NgSimpleTokenType.closeTagStart) {
       _state = NgScannerState.scanElementIdentifierClose;
-      _lastElementStartOffset = _current.offset;
-      return NgToken.closeElementStart(_current.offset);
+      _lastElementStartOffset = _current!.offset;
+      return NgToken.closeElementStart(_current!.offset);
     }
     // Transient state, should theoretically never hit.
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanInterpolation() {
-    var type = _current.type;
+  NgToken? scanInterpolation() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.text) {
       _state = NgScannerState.scanAfterInterpolation;
-      return NgToken.interpolationValue(_current.offset, _current.lexeme);
+      return NgToken.interpolationValue(_current!.offset, _current!.lexeme);
     }
 
     if (_current == _lastErrorToken) {
@@ -829,31 +825,31 @@ class NgScanner {
     if (type == NgSimpleTokenType.EOF ||
         type == NgSimpleTokenType.mustacheBegin) {
       return handleError(
-        NgParserWarningCode.UNTERMINATED_MUSTACHE,
+        ParserErrorCode.UNTERMINATED_MUSTACHE,
         _lastOpenMustacheOffset,
         '{{'.length,
       );
     }
     if (type == NgSimpleTokenType.mustacheEnd) {
       return handleError(
-        NgParserWarningCode.EMPTY_INTERPOLATION,
+        ParserErrorCode.EMPTY_INTERPOLATION,
         _lastOpenMustacheOffset,
-        _current.end - _lastOpenMustacheOffset,
+        _current!.end - _lastOpenMustacheOffset!,
       );
     }
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
   @protected
-  NgToken scanSimpleElementDecorator() {
-    var type = _current.type;
+  NgToken? scanSimpleElementDecorator() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanAfterElementDecorator;
-      return NgToken.elementDecorator(_current.offset, _current.lexeme);
+      return NgToken.elementDecorator(_current!.offset, _current!.lexeme);
     }
 
     if (type == NgSimpleTokenType.bang ||
@@ -862,22 +858,22 @@ class NgScanner {
         type == NgSimpleTokenType.period ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.ELEMENT_DECORATOR,
-      _lastToken.offset,
-      _lastToken.length,
-    );
+      ParserErrorCode.ELEMENT_DECORATOR,
+      _lastToken!.offset,
+      _lastToken!.length,
+    )!;
   }
 
   @protected
-  NgToken scanSpecialAnnotationDecorator() {
-    var type = _current.type;
+  NgToken? scanSpecialAnnotationDecorator() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.period ||
         type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanAfterElementDecorator;
@@ -893,22 +889,22 @@ class NgScanner {
         type == NgSimpleTokenType.forwardSlash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
-      _lastDecoratorPrefix.offset,
-      _lastDecoratorPrefix.length,
+      ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+      _lastDecoratorPrefix!.offset,
+      _lastDecoratorPrefix!.length,
     );
   }
 
   @protected
-  NgToken scanSpecialBananaDecorator() {
-    var type = _current.type;
+  NgToken? scanSpecialBananaDecorator() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.period ||
         type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanSuffixBanana;
@@ -924,22 +920,22 @@ class NgScanner {
         type == NgSimpleTokenType.forwardSlash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
-      _lastDecoratorPrefix.offset,
-      _lastDecoratorPrefix.length,
+      ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+      _lastDecoratorPrefix!.offset,
+      _lastDecoratorPrefix!.length,
     );
   }
 
   @protected
-  NgToken scanSpecialEventDecorator() {
-    var type = _current.type;
+  NgToken? scanSpecialEventDecorator() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.period ||
         type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanSuffixEvent;
@@ -955,22 +951,22 @@ class NgScanner {
         type == NgSimpleTokenType.forwardSlash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
-      _lastDecoratorPrefix.offset,
-      _lastDecoratorPrefix.length,
+      ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+      _lastDecoratorPrefix!.offset,
+      _lastDecoratorPrefix!.length,
     );
   }
 
   @protected
-  NgToken scanSpecialPropertyDecorator() {
-    var type = _current.type;
+  NgToken? scanSpecialPropertyDecorator() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.period ||
         type == NgSimpleTokenType.identifier) {
       _state = NgScannerState.scanSuffixProperty;
@@ -986,25 +982,25 @@ class NgScanner {
         type == NgSimpleTokenType.forwardSlash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.ELEMENT_DECORATOR_AFTER_PREFIX,
-      _lastDecoratorPrefix.offset,
-      _lastDecoratorPrefix.length,
+      ParserErrorCode.ELEMENT_DECORATOR_AFTER_PREFIX,
+      _lastDecoratorPrefix!.offset,
+      _lastDecoratorPrefix!.length,
     );
   }
 
   @protected
-  NgToken scanSuffixBanana() {
-    var type = _current.type;
+  NgToken? scanSuffixBanana() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.closeBanana) {
       _state = NgScannerState.scanAfterElementDecorator;
-      return NgToken.bananaSuffix(_current.offset);
+      return NgToken.bananaSuffix(_current!.offset);
     }
 
     if (_current == _lastErrorToken) {
@@ -1016,24 +1012,24 @@ class NgScanner {
         type == NgSimpleTokenType.dash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-        NgParserWarningCode.SUFFIX_BANANA,
-        _lastDecoratorPrefix.offset,
-        _current.offset - _lastDecoratorPrefix.offset);
+        ParserErrorCode.SUFFIX_BANANA,
+        _lastDecoratorPrefix!.offset,
+        _current!.offset - _lastDecoratorPrefix!.offset);
   }
 
   @protected
-  NgToken scanSuffixEvent() {
-    var type = _current.type;
+  NgToken? scanSuffixEvent() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.closeParen) {
       _state = NgScannerState.scanAfterElementDecorator;
-      return NgToken.eventSuffix(_current.offset);
+      return NgToken.eventSuffix(_current!.offset);
     }
 
     if (_current == _lastErrorToken) {
@@ -1045,25 +1041,25 @@ class NgScanner {
         type == NgSimpleTokenType.dash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-      NgParserWarningCode.SUFFIX_EVENT,
-      _lastDecoratorPrefix.offset,
-      _current.offset - _lastDecoratorPrefix.offset,
+      ParserErrorCode.SUFFIX_EVENT,
+      _lastDecoratorPrefix!.offset,
+      _current!.offset - _lastDecoratorPrefix!.offset,
     );
   }
 
   @protected
-  NgToken scanSuffixProperty() {
-    var type = _current.type;
+  NgToken? scanSuffixProperty() {
+    var type = _current!.type;
     if (type == NgSimpleTokenType.closeBracket) {
       _state = NgScannerState.scanAfterElementDecorator;
-      return NgToken.propertySuffix(_current.offset);
+      return NgToken.propertySuffix(_current!.offset);
     }
 
     if (_current == _lastErrorToken) {
@@ -1075,66 +1071,66 @@ class NgScanner {
         type == NgSimpleTokenType.dash ||
         type == NgSimpleTokenType.unexpectedChar) {
       return handleError(
-        NgParserWarningCode.UNEXPECTED_TOKEN,
-        _current.offset,
-        _current.length,
+        ParserErrorCode.UNEXPECTED_TOKEN,
+        _current!.offset,
+        _current!.length,
       );
     }
 
     return handleError(
-        NgParserWarningCode.SUFFIX_PROPERTY,
-        _lastDecoratorPrefix.offset,
-        _current.offset - _lastDecoratorPrefix.offset);
+        ParserErrorCode.SUFFIX_PROPERTY,
+        _lastDecoratorPrefix!.offset,
+        _current!.offset - _lastDecoratorPrefix!.offset);
   }
 
   @protected
-  NgToken scanText() {
-    if (_current.type == NgSimpleTokenType.text ||
-        _current.type == NgSimpleTokenType.whitespace) {
+  NgToken? scanText() {
+    if (_current!.type == NgSimpleTokenType.text ||
+        _current!.type == NgSimpleTokenType.whitespace) {
       if (_reader.peekType() == NgSimpleTokenType.mustacheEnd) {
         _state = NgScannerState.scanBeforeInterpolation;
         return scanBeforeInterpolation();
       }
-      var offset = _current.offset;
+      var offset = _current!.offset;
       var sb = StringBuffer();
-      sb.write(_current.lexeme);
+      sb.write(_current!.lexeme);
       while (_reader.peekType() == NgSimpleTokenType.text ||
           _reader.peekType() == NgSimpleTokenType.whitespace) {
         // Specific use case for this is when newline splits dangling {{
-        sb.write(_moveNext().lexeme);
+        sb.write(_moveNext()!.lexeme);
       }
       _state = NgScannerState.scanStart;
       return NgToken.text(offset, sb.toString());
     }
     // No real errors in scanText state, but just in case.
     return handleError(
-      NgParserWarningCode.UNEXPECTED_TOKEN,
-      _current.offset,
-      _current.length,
+      ParserErrorCode.UNEXPECTED_TOKEN,
+      _current!.offset,
+      _current!.length,
     );
   }
 
-  /// Handles the exception provided by [NgParserWarningCode] and
+  /// Handles the exception provided by [ParserErrorCode] and
   /// positional information. If this value is null, no exception will
   /// be generated, but synthetic token will still be generated.
-  NgToken handleError(
-    NgParserWarningCode errorCode,
-    int offset,
-    int length,
+  NgToken? handleError(
+    ParserErrorCode? errorCode,
+    int? offset,
+    int? length,
   ) {
     var currentState = _state;
     _state = NgScannerState.hasError;
     if (errorCode != null) {
       var e = _generateException(
         errorCode,
-        offset,
-        length,
+        offset!,
+        length!,
       );
       exceptionHandler.handle(e);
     }
 
     if (_recoverErrors) {
-      var solution = _rp.recover(currentState, _current, _reader);
+      var solution = _rp.recover(currentState, _current!, _reader);
       _state = solution.nextState ?? currentState;
       if (solution.tokenToReturn == null) {
         _moveNext();
@@ -1147,9 +1143,9 @@ class NgScanner {
   }
 
   /// Generates an [AngularParserException] using the provided
-  /// [NgParserWarningCode] and positional information.
-  AngularParserException _generateException(
-    NgParserWarningCode errorCode,
+  /// [ParserErrorCode] and positional information.
+  AngularParserException? _generateException(
+    ParserErrorCode errorCode,
     int offset,
     int length,
   ) {

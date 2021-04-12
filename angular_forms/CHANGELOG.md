@@ -1,6 +1,13 @@
 ## 3.0.0
 
-* Stable release
+*   Stable release
+
+## 2.1.5
+
+### New Features
+
+*   Push down `update` stream to NgControl so that code can imperatively listen
+    to view changes.
 
 ## 2.1.4
 

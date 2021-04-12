@@ -5,9 +5,8 @@ perform application tasks.
 
 ### Resources:
 
-* Community/support: [Gitter chat room]
-* GitHub repo (dart-lang/angular):
-  [source code]
+*   Community/support: [Gitter chat room]
+*   GitHub repo (dart-lang/angular): [source code]
 
 [pub_angular_router]: https://pub.dev/packages/angular_router
 [Gitter chat room]: https://gitter.im/dart-lang/angular

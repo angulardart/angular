@@ -1,6 +1,3 @@
-// Copyright (c) 2017, the Dart project authors.  Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 library angular_ast.src.token.tokens;
 
 import '../hash.dart';
@@ -8,12 +5,12 @@ import '../hash.dart';
 part 'lexeme.dart';
 part 'token_types.dart';
 
-abstract class NgBaseToken<TokenType> {
+abstract class NgBaseToken<T> {
   int get offset;
   int get end;
   int get length;
   String get lexeme;
-  TokenType get type;
+  T get type;
 }
 
 /// Represents string tokens that are of interest to the parser.
@@ -209,7 +206,7 @@ class NgSimpleToken implements NgBaseToken<NgSimpleTokenType> {
   @override
   final NgSimpleTokenType type;
   @override
-  String get lexeme => lexemeMap[type];
+  String get lexeme => lexemeMap[type]!;
 
   @override
   String toString() => '#$NgSimpleToken($type) {$offset:$lexeme}';
@@ -244,7 +241,7 @@ class NgSimpleQuoteToken extends _LexemeNgSimpleToken {
   int get contentEnd => contentOffset + contentLength;
 
   /// Offset of right quote; may be `null` to indicate unclosed.
-  final int quoteEndOffset;
+  final int? quoteEndOffset;
 
   NgSimpleQuoteToken(
       NgSimpleTokenType type, int offset, String lexeme, bool isClosed,
@@ -495,7 +492,7 @@ class NgToken implements NgBaseToken<NgTokenType> {
 
   /// What characters were scanned and represent this token.
   @override
-  String get lexeme => lexemeMap[type];
+  String get lexeme => lexemeMap[type]!;
 
   /// Indexed location where the token begins in the original source text.
   @override
@@ -514,23 +511,36 @@ class NgToken implements NgBaseToken<NgTokenType> {
 
 class NgAttributeValueToken extends NgToken {
   factory NgAttributeValueToken.generate(
-      NgToken leftQuote, NgToken innerValue, NgToken rightQuote) {
+    NgToken leftQuote,
+    NgToken? innerValue,
+    NgToken rightQuote,
+  ) {
     return NgAttributeValueToken._(
-        leftQuote.offset, leftQuote, innerValue, rightQuote);
+      leftQuote.offset,
+      leftQuote,
+      innerValue,
+      rightQuote,
+    );
   }
 
-  final NgToken leftQuote;
-  final NgToken innerValue;
-  final NgToken rightQuote;
+  final NgToken? leftQuote;
+  final NgToken? innerValue;
+  final NgToken? rightQuote;
 
   bool get containsErrorSynthetic =>
-      leftQuote.errorSynthetic ||
-      innerValue.errorSynthetic ||
-      rightQuote.errorSynthetic;
+      leftQuote!.errorSynthetic ||
+      innerValue!.errorSynthetic ||
+      rightQuote!.errorSynthetic;
 
   const NgAttributeValueToken._(
-      offset, this.leftQuote, this.innerValue, this.rightQuote)
-      : super._(NgTokenType.elementDecoratorValue, offset);
+    int offset,
+    this.leftQuote,
+    this.innerValue,
+    this.rightQuote,
+  ) : super._(
+          NgTokenType.elementDecoratorValue,
+          offset,
+        );
 
   @override
   bool operator ==(Object o) {
@@ -546,18 +556,19 @@ class NgAttributeValueToken extends NgToken {
   int get hashCode => hash3(leftQuote, innerValue, rightQuote);
 
   @override
-  int get end => rightQuote.end;
+  int get end => rightQuote!.end;
 
   @override
-  int get length => leftQuote.length + innerValue.length + rightQuote.length;
+  int get length => leftQuote!.length + innerValue!.length + rightQuote!.length;
 
   @override
-  String get lexeme => leftQuote.lexeme + innerValue.lexeme + rightQuote.lexeme;
+  String get lexeme =>
+      leftQuote!.lexeme + innerValue!.lexeme + rightQuote!.lexeme;
 
   @override
   String toString() => '#$NgAttributeValueToken($type) {$offset:$lexeme} '
       '[\n\t$leftQuote,\n\t$innerValue,\n\t$rightQuote]';
 
-  bool get isDoubleQuote => leftQuote.type == NgTokenType.doubleQuote;
-  bool get isSingleQuote => leftQuote.type == NgTokenType.singleQuote;
+  bool get isDoubleQuote => leftQuote?.type == NgTokenType.doubleQuote;
+  bool get isSingleQuote => leftQuote?.type == NgTokenType.singleQuote;
 }

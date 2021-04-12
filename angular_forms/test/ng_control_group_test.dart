@@ -1,6 +1,5 @@
 import 'dart:html';
 
-@TestOn('browser')
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -12,26 +11,26 @@ void main() {
   ng.initReflector();
 
   group('NgControlGroup', () {
-    NgTestFixture<NgControlGroupTest> fixture;
+    late NgTestFixture<NgControlGroupTest> fixture;
 
     tearDown(() => disposeAnyRunningTest());
 
     setUp(() async {
-      var testBed =
-          NgTestBed.forComponent(ng.createNgControlGroupTestFactory());
+      var testBed = NgTestBed(ng.createNgControlGroupTestFactory());
       fixture = await testBed.create();
     });
 
     test('should reexport control properties', () async {
       await fixture.update((cmp) {
-        expect(cmp.controlGroup.control, cmp.groupModel);
-        expect(cmp.controlGroup.value, cmp.groupModel.value);
-        expect(cmp.controlGroup.valid, cmp.groupModel.valid);
-        expect(cmp.controlGroup.errors, cmp.groupModel.errors);
-        expect(cmp.controlGroup.pristine, cmp.groupModel.pristine);
-        expect(cmp.controlGroup.dirty, cmp.groupModel.dirty);
-        expect(cmp.controlGroup.touched, cmp.groupModel.touched);
-        expect(cmp.controlGroup.untouched, cmp.groupModel.untouched);
+        var controlGroup = cmp.controlGroup!;
+        expect(controlGroup.control, cmp.groupModel);
+        expect(controlGroup.value, cmp.groupModel.value);
+        expect(controlGroup.valid, cmp.groupModel.valid);
+        expect(controlGroup.errors, cmp.groupModel.errors);
+        expect(controlGroup.pristine, cmp.groupModel.pristine);
+        expect(controlGroup.dirty, cmp.groupModel.dirty);
+        expect(controlGroup.touched, cmp.groupModel.touched);
+        expect(controlGroup.untouched, cmp.groupModel.untouched);
       });
     });
 
@@ -39,11 +38,11 @@ void main() {
       await fixture.update((cmp) {
         cmp.disabled = true;
       });
-      expect(fixture.assertOnlyInstance.inputElement.disabled, true);
+      expect(fixture.assertOnlyInstance.inputElement!.disabled, true);
       await fixture.update((cmp) {
         cmp.disabled = false;
       });
-      expect(fixture.assertOnlyInstance.inputElement.disabled, false);
+      expect(fixture.assertOnlyInstance.inputElement!.disabled, false);
     });
   });
 }
@@ -64,10 +63,10 @@ void main() {
 )
 class NgControlGroupTest {
   @ViewChild('controlGroup')
-  NgControlGroup controlGroup;
+  NgControlGroup? controlGroup;
 
   @ViewChild('input')
-  InputElement inputElement;
+  InputElement? inputElement;
 
   bool disabled = false;
 
@@ -75,5 +74,5 @@ class NgControlGroupTest {
     'group': FormBuilder.controlGroup({'login': Control(null)})
   });
 
-  ControlGroup get groupModel => formModel.controls['group'];
+  ControlGroup get groupModel => formModel.controls['group'] as ControlGroup;
 }

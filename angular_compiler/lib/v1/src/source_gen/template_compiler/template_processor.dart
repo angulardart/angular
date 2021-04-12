@@ -1,10 +1,8 @@
-import 'dart:async';
-
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:angular_compiler/v1/src/compiler/module/ng_compiler_module.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
+import 'package:angular_compiler/v1/src/compiler/module/ng_compiler_module.dart';
 
 import 'resolve_reflectables.dart';
 import 'template_compiler_outputs.dart';
