@@ -1217,6 +1217,10 @@
     throwLateFieldADI: function(fieldName) {
       return H.throwExpression(new H.LateError("Field '" + fieldName + "' has been assigned during initialization."));
     },
+    _Cell$: function() {
+      var t1 = new H._Cell();
+      return t1._value = t1;
+    },
     _Cell: function _Cell() {
       this._value = null;
     },
@@ -8340,8 +8344,11 @@
   };
   G.appInjector_closure0.prototype = {
     call$0: function() {
-      var t1 = $.__appViewUtils;
-      return t1 == null ? H.throwExpression(H.LateError$fieldNI("appViewUtils")) : t1;
+      var t1 = $.$get$appViewUtils(),
+        t2 = t1._value;
+      if (t2 == t1)
+        H.throwExpression(H.LateError$fieldNI(""));
+      return t2;
     },
     $signature: 19
   };
@@ -8359,10 +8366,12 @@
   };
   G.appInjector_closure3.prototype = {
     call$0: function() {
-      var t1 = this.userInjector;
+      var t2,
+        t1 = this.userInjector;
       this.applicationRef.set$finalLocalValue(Y.ApplicationRef$_(this.ngZone, t1.$get$1(0, C.Type_ExceptionHandler_qBE), t1));
+      t2 = $.$get$appViewUtils();
       t1.$get$1(0, C.C_OpaqueToken);
-      $.__appViewUtils = new Q.AppViewUtils();
+      t2._value = new Q.AppViewUtils();
       return t1;
     },
     "call*": "call$0",
@@ -9703,7 +9712,6 @@
     $.Element__parseDocument = null;
     $.Element__parseRange = null;
     $.ChangeDetectionHost__current = null;
-    $.__appViewUtils = null;
     $.ViewGoldenComponent0__componentStyles = null;
   })();
   (function lazyInitializers() {
@@ -9792,6 +9800,9 @@
       t1.initializeEagerly$0();
       t2 = type$.Object;
       return new K.TransitionalAppHost(M._MapInjector$(P.LinkedHashMap_LinkedHashMap$_literal([C.Type_TestabilityRegistry_IMm, t1], t2, t2), null));
+    });
+    _lazyFinal($, "appViewUtils", "$get$appViewUtils", function() {
+      return H._Cell$();
     });
     _lazyFinal($, "ViewGoldenComponent0__message_0", "$get$ViewGoldenComponent0__message_0", function() {
       return T.Intl__message("Message", "en_US", null, null, "meaning");
