@@ -194,18 +194,19 @@ class _UpdateStatementsVisitor
       [o.Expression renderValue]) {
     if (renderValue is o.LiteralExpr) {
       final value = renderValue.value;
-      try {
-        final tabValue = int.parse(value as String);
-        return renderNode
-            .toReadExpr()
-            .prop('tabIndex')
-            .set(o.literal(tabValue))
-            .toStmt();
-      } catch (_) {
-        // TODO(b/128689252): Better error handling.
-        throw ArgumentError.value(renderValue.value, 'renderValue',
-            'tabIndex only supports an int value.');
+      final tabIndex = value is String ? int.tryParse(value) : null;
+      if (tabIndex == null) {
+        // TODO(b/132985972): add source span for context.
+        throw BuildError.withoutContext(
+          'The "tabindex" attribute expects an integer value, but got: '
+          '"$value"',
+        );
       }
+      return renderNode
+          .toReadExpr()
+          .prop('tabIndex')
+          .set(o.literal(tabIndex))
+          .toStmt();
     } else {
       // Assume it's an int field
       // TODO(b/128689252): Validate this during parse / convert to IR.
