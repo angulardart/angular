@@ -9,6 +9,7 @@ void main() {
   final dartfmt = DartFormatter();
   EqualsDart.format = dartfmt.format;
 
+  TokenElement dummyToken = TypeTokenElement(TypeLink('Token', null));
   InjectorEmitter emitter;
 
   setUp(() {
@@ -48,7 +49,7 @@ void main() {
       // provide(Foo, useClass: FooImpl)
       emitter.visitProvideClass(
         0,
-        null,
+        dummyToken,
         refer('Foo'),
         refer('FooImpl'),
         null,
@@ -83,7 +84,7 @@ void main() {
       // provide(FooPrime, useExisting: Foo)
       emitter.visitProvideExisting(
         0,
-        null,
+        dummyToken,
         refer('FooPrime'),
         refer('Foo'),
         refer('Foo'),
@@ -112,7 +113,7 @@ void main() {
       // provide(Foo, useFactory: createFoo)
       emitter.visitProvideFactory(
         0,
-        null,
+        dummyToken,
         refer('Foo'),
         refer('Foo'),
         refer('createFoo'),

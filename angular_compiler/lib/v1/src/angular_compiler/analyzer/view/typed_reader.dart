@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -14,7 +12,7 @@ import '../types.dart';
 /// A statically parsed `Typed` used to specify type arguments on a directive.
 class TypedElement {
   /// An optional identifier used to select specific instances of the directive.
-  final String on;
+  final String? on;
 
   /// The fully typed directive's type.
   final TypeLink typeLink;
@@ -46,7 +44,7 @@ class TypedReader {
 
   /// Parses the value of a compile-time constant `Typed` expression.
   TypedElement parse(DartObject typedObject) {
-    if (!$Typed.isExactlyType(typedObject.type)) {
+    if (!$Typed.isExactlyType(typedObject.type!)) {
       final typeStr = typeToCode(typedObject.type);
       throw BuildError.withoutContext(
         ''
@@ -79,7 +77,7 @@ class TypedReader {
 
   /// Parses a [Symbol], e.g. `#X`.
   TypeLink _parseSymbol(DartObject symbolObject) {
-    final symbol = symbolObject.toSymbolValue();
+    final symbol = symbolObject.toSymbolValue()!;
     // Check that the host component has a matching type parameter to flow.
     if (!_hostElement.typeParameters.any((p) => p.name == symbol)) {
       throw BuildError.withoutContext(
@@ -92,7 +90,7 @@ class TypedReader {
 
   /// Parses a [Type], e.g. `String`.
   TypeLink _parseType(DartObject typeObject) =>
-      linkTypeOf(typeObject.toTypeValue());
+      linkTypeOf(typeObject.toTypeValue()!);
 
   /// Parses a [Typed], e.g. `Typed<List<String>>()`.
   ///
@@ -101,13 +99,13 @@ class TypedReader {
   TypedElement _parseTyped(DartObject typedObject, {bool root = false}) {
     final type = typeArgumentOf(typedObject);
     if (type is ParameterizedType && type.typeArguments.isNotEmpty) {
-      if (root && !$Directive.hasAnnotationOf(type.element)) {
+      if (root && !$Directive.hasAnnotationOf(type.element!)) {
         throw BuildError.withoutContext(
           'Expected a "Typed" expression with a "Component" or "Directive" '
           'annotated type, but got "Typed<${type.name}>"',
         );
       }
-      String on;
+      String? on;
       final reader = ConstantReader(typedObject);
       final onReader = reader.read('on');
       if (onReader.isString) {
@@ -137,7 +135,7 @@ class TypedReader {
       }
       return TypedElement(
         TypeLink(
-          getTypeName(type),
+          getTypeName(type)!,
           getTypeImport(type),
           generics: typeArguments,
           isNullable: type.nullabilitySuffix == NullabilitySuffix.question,

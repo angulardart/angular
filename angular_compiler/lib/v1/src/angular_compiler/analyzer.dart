@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 export 'analyzer/common.dart';
 export 'analyzer/di/dependencies.dart';
 export 'analyzer/di/global_singleton_services.dart';

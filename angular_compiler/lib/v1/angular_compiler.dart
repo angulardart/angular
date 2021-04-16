@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 export 'src/angular_compiler/analyzer.dart'
     show
         getTypeName,

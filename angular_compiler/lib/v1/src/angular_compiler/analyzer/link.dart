@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart' show TypeReference;
@@ -62,7 +60,7 @@ TypeLink linkTypeOf(DartType type) {
   }
 
   return TypeLink(
-    getTypeName(type),
+    getTypeName(type)!,
     getTypeImport(type),
     generics: typeArguments.map(linkTypeOf).toList(),
     isNullable: type.nullabilitySuffix == NullabilitySuffix.question,
@@ -95,7 +93,7 @@ class TypeLink {
   final String symbol;
 
   /// Import path needed to refer to this type. May be `null` for none needed.
-  final String import;
+  final String? import;
 
   /// Generic types, used to represent types such as `List<String>`.
   final List<TypeLink> generics;

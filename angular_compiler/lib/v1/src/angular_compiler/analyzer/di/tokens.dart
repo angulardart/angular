@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -19,11 +17,9 @@ class TokenReader {
   /// Throws an error if [dartType] is a function-type not in [allowed].
   static void assertNotFunctionType(
     DartType dartType, {
-    @required Element on,
-    @required Set<TypeLink> allowed,
+    required Element on,
+    required Set<TypeLink> allowed,
   }) {
-    assert(on != null);
-    assert(allowed != null);
     if (dartType is FunctionType) {
       final toLink = linkTypeOf(dartType);
       if (!allowed.contains(toLink)) {
@@ -44,7 +40,8 @@ class TokenReader {
   /// Returns [object] parsed into a [TokenElement].
   ///
   /// Only a [DartType] or `OpaqueToken` are currently supported.
-  TokenElement parseTokenObject(DartObject object, [ParameterElement element]) {
+  TokenElement parseTokenObject(DartObject object,
+      [ParameterElement? element]) {
     final constant = ConstantReader(object);
     if (constant.isNull) {
       final errorMsg = 'Annotation on element has errors and was unresolvable.';
@@ -61,7 +58,7 @@ class TokenReader {
     if (constant.instanceOf($OpaqueToken)) {
       return _parseOpaqueToken(constant, element);
     }
-    final typeStr = object.type.getDisplayString(withNullability: false);
+    final typeStr = object.type!.getDisplayString(withNullability: false);
     final error =
         'Not a valid token for injection: $object. In previous versions of '
         'AngularDart it was valid to try and inject by other token types '
@@ -77,15 +74,15 @@ class TokenReader {
   }
 
   /// Returns [constant] parsed into an [OpaqueTokenElement].
-  OpaqueTokenElement _parseOpaqueToken(ConstantReader constant, [Element on]) {
+  OpaqueTokenElement _parseOpaqueToken(ConstantReader constant, [Element? on]) {
     final value = constant.objectValue;
-    final valueType = value.type;
-    List<DartType> typeArgs;
+    final valueType = value.type!;
+    late List<DartType> typeArgs;
     if (!$OpaqueToken.isExactlyType(valueType) &&
         !$MultiToken.isExactlyType(valueType)) {
       final clazz = valueType.element;
       if (clazz is ClassElement) {
-        typeArgs = clazz.supertype.typeArguments;
+        typeArgs = clazz.supertype!.typeArguments;
       }
     } else {
       typeArgs = valueType.typeArguments;
@@ -95,7 +92,7 @@ class TokenReader {
     return OpaqueTokenElement(
       uniqueName,
       isMultiToken: constant.instanceOf($MultiToken),
-      classUrl: linkToOpaqueToken(constant.objectValue.type),
+      classUrl: linkToOpaqueToken(constant.objectValue.type!),
       typeUrl: typeArgs.isNotEmpty ? linkTypeOf(typeArgs.first) : null,
     );
   }
@@ -107,7 +104,7 @@ class TokenReader {
   /// generation.
   TypeLink linkToOpaqueToken(DartType type) {
     if (!$OpaqueToken.isAssignableFromType(type)) {
-      throw BuildError.forElement(type.element, 'Must implement OpaqueToken.');
+      throw BuildError.forElement(type.element!, 'Must implement OpaqueToken.');
     }
     if ($OpaqueToken.isExactlyType(type) || $MultiToken.isExactlyType(type)) {
       return linkTypeOf(type);
@@ -115,25 +112,25 @@ class TokenReader {
     final clazz = type.element as ClassElement;
     if (clazz.interfaces.isNotEmpty || clazz.mixins.isNotEmpty) {
       throw BuildError.forElement(
-        type.element,
+        type.element!,
         'A sub-type of OpaqueToken cannot implement or mixin any interfaces.',
       );
     }
     if (clazz.isPrivate || clazz.isAbstract) {
       throw BuildError.forElement(
-        type.element,
+        type.element!,
         'Must not be abstract or a private (i.e. prefixed with `_`) class.',
       );
     }
     if (clazz.constructors.length != 1 ||
         clazz.unnamedConstructor == null ||
-        !clazz.unnamedConstructor.isConst ||
-        clazz.unnamedConstructor.parameters.isNotEmpty ||
+        !clazz.unnamedConstructor!.isConst ||
+        clazz.unnamedConstructor!.parameters.isNotEmpty ||
         clazz.typeParameters.isNotEmpty) {
       var supertypeName =
-          clazz.supertype.getDisplayString(withNullability: false);
+          clazz.supertype!.getDisplayString(withNullability: false);
       throw BuildError.forElement(
-        type.element,
+        type.element!,
         ''
         'A sub-type of OpaqueToken must have a single unnamed const '
         'constructor with no parameters or type parameters. For example, '
@@ -145,10 +142,10 @@ class TokenReader {
         'https://github.com/dart-lang/angular/issues/899',
       );
     }
-    if (!$OpaqueToken.isExactlyType(clazz.supertype) &&
-        !$MultiToken.isExactlyType(clazz.supertype)) {
+    if (!$OpaqueToken.isExactlyType(clazz.supertype!) &&
+        !$MultiToken.isExactlyType(clazz.supertype!)) {
       throw BuildError.forElement(
-        type.element,
+        type.element!,
         ''
         'A sub-type of OpaqueToken must directly extend OpaqueToken or '
         'MultiToken, and cannot extend another class that in turn extends '
@@ -234,14 +231,14 @@ class OpaqueTokenElement implements TokenElement {
   final TypeLink classUrl;
 
   /// What the type argument of the token is.
-  final TypeLink typeUrl;
+  final TypeLink? typeUrl;
 
   @visibleForTesting
   const OpaqueTokenElement(
     this.identifier, {
-    @required this.classUrl,
+    required this.classUrl,
     this.typeUrl = TypeLink.$object,
-    @required this.isMultiToken,
+    required this.isMultiToken,
   });
 
   @override

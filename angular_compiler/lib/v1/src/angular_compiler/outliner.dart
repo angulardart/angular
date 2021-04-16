@@ -1,8 +1,5 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 import 'analyzer.dart';
@@ -42,9 +39,9 @@ class TemplateOutliner implements Builder {
   final bool exportUserCodeFromTemplate;
 
   TemplateOutliner({
-    @required String extension,
-    @required this.exportUserCodeFromTemplate,
-  })  : _extension = extension,
+    required String extension,
+    required this.exportUserCodeFromTemplate,
+  })   : _extension = extension,
         buildExtensions = {
           '.dart': [extension],
         };
@@ -121,7 +118,7 @@ class TemplateOutliner implements Builder {
       if (!d.isDeferred && d.uri != null) {
         var directive = "import '${d.uri}'";
         if (d.prefix != null) {
-          directive += ' as ${d.prefix.name}';
+          directive += ' as ${d.prefix!.name}';
         }
         if (d.combinators.isNotEmpty) {
           final isShow = d.combinators.first is ShowElementCombinator;
