@@ -191,8 +191,9 @@ class NgFor implements DoCheck {
 
   void _perViewChange(EmbeddedViewRef view, CollectionChangeRecord record) {
     view.setLocal('\$implicit', record.item);
-    view.setLocal('even', record.currentIndex!.isEven);
-    view.setLocal('odd', record.currentIndex!.isOdd);
+    var currentIndex = record.currentIndex!;
+    view.setLocal('even', currentIndex.isEven);
+    view.setLocal('odd', currentIndex.isOdd);
   }
 }
 

@@ -8615,7 +8615,7 @@
   };
   R.NgFor.prototype = {
     _applyChanges$1: function(changes) {
-      var i, t1, t2, t3, len,
+      var i, t1, t2, len, t3,
         insertTuples = H.setRuntimeTypeInfo([], type$.JSArray__RecordViewTuple);
       changes.forEachOperation$1(new R.NgFor__applyChanges_closure(this, insertTuples));
       for (i = 0; i < insertTuples.length; ++i) {
@@ -8623,12 +8623,11 @@
         t2 = t1.record;
         t1 = t1.view._embedded_view$_data.locals;
         t1.$indexSet(0, "$implicit", t2.item);
-        t3 = t2.currentIndex;
-        t3.toString;
-        t1.$indexSet(0, "even", (t3 & 1) === 0);
         t2 = t2.currentIndex;
         t2.toString;
-        t1.$indexSet(0, "odd", (t2 & 1) === 1);
+        t2 &= 1;
+        t1.$indexSet(0, "even", t2 === 0);
+        t1.$indexSet(0, "odd", t2 === 1);
       }
       for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
         t3 = t1.nestedViews;
