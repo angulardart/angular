@@ -66,6 +66,56 @@ void main() {
     ]);
   });
 
+  test('should allow optional FactoryProvider deps in injector', () async {
+    await compilesNormally('''
+      import '$ngImport';
+
+      class Engine {
+        Engine(@Optional() String name);
+      }
+
+      Engine createEngine(@Optional() String? name) => Engine(name);
+
+      @GenerateInjector([
+        FactoryProvider(
+          Engine,
+          createEngine,
+          deps: [
+            [String, Optional()],
+          ],
+        ),
+      ])
+      final injectorFactory = null;
+    ''');
+  });
+
+  test('should allow optional FactoryProvider deps in component', () async {
+    await compilesNormally('''
+      import '$ngImport';
+
+      class Engine {
+        Engine(@Optional() String name);
+      }
+
+      Engine createEngine(@Optional() String? name) => Engine(name);
+
+      @Component(
+        selector: 'car',
+        template: '',
+        providers: [
+          FactoryProvider(
+            Engine,
+            createEngine,
+            deps: [
+              [String, Optional()],
+            ],
+          ),
+        ],
+      )
+      class CarComponent {}
+    ''');
+  });
+
   test('should fail on a component with a non-nullable optional', () async {
     await compilesExpecting("""
       import '$ngImport';

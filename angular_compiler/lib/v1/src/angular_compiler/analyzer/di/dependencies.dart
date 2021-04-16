@@ -80,11 +80,6 @@ class DependencyReader {
       bool hasMeta(TypeChecker checker) =>
           metadata.any((m) => checker.isExactlyType(m.type!));
       final isOptional = hasMeta($Optional);
-      _checkForOptionalAndNullable(
-        element,
-        element.type,
-        isOptional: isOptional,
-      );
       positional.add(
         DependencyElement(
           _tokenReader.parseTokenObject(tokenObject),

@@ -602,16 +602,13 @@ class CompileTypeMetadataVisitor
       prefix: prefix,
       emitPrefix: true,
       diDeps: typesOrTokens != null
-          ? typesOrTokens.map((t) => _factoryDiDep(function, t)).toList()
+          ? typesOrTokens.map(_factoryDiDep).toList()
           : _getCompileDiDependencyMetadata(function.parameters, function),
     );
   }
 
   // If deps: const [ ... ] is passed, we use that instead of the parameters.
-  CompileDiDependencyMetadata _factoryDiDep(
-    FunctionTypedElement function,
-    DartObject object,
-  ) {
+  CompileDiDependencyMetadata _factoryDiDep(DartObject object) {
     // Simple case: A dependency is a dart `Type` or an Angular `OpaqueToken`.
     if (object.toTypeValue() != null || _isOpaqueToken(object)) {
       return CompileDiDependencyMetadata(token: _token(object));
@@ -636,11 +633,6 @@ class CompileTypeMetadataVisitor
           isOptional = true;
         }
       }
-      _checkForOptionalAndNullable(
-        function,
-        object.type,
-        isOptional: isOptional,
-      );
       return CompileDiDependencyMetadata(
         token: token,
         isSelf: isSelf,
