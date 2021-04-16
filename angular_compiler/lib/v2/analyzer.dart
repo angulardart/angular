@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
 

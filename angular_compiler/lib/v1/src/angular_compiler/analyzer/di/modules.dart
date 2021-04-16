@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'dart:collection';
 
 import 'package:analyzer/dart/constant/value.dart';

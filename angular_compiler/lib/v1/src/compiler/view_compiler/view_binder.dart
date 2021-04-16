@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'

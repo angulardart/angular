@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import '../compile_metadata.dart' show CompilePipeMetadata;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;

@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'dart:math' as math;
 
 /// Matches asset:<package-name>/<realm>/<path-to-module>

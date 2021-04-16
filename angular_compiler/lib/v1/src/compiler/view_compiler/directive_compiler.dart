@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;

@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 /// Matches HTML attribute values.
 ///
 /// Note that matching the attribute name is left to the caller. This improves

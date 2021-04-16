@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'analyzed_class.dart';
 import 'compile_metadata.dart';
 import 'identifiers.dart';

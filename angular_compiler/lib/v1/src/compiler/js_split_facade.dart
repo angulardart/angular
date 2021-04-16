@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 /// A [String.split] implementation that is like JS' implementation.
 ///
 /// See https://dartpad.dartlang.org/37a53b0d5d4cced6c7312b2b965ed7fd.

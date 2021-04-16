@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import '../messages.dart';
 
 /// URL of the AngularDart GitHub repository.

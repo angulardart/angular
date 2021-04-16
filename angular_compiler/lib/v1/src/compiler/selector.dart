@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'attribute_matcher.dart';
 import 'html_tags.dart' show getHtmlTagDefinition;
 

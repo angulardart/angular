@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 // https://www.w3.org/TR/wai-aria-1.1/#state_prop_def
 const _ariaAttributes = <String>{
   'aria-activedescendant',

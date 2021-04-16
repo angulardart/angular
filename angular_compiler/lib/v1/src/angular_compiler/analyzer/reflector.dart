@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'dart:async';
 
 import 'package:analyzer/dart/element/element.dart';

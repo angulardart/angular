@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 
 /// An abstraction representing a component of a parsed Dart expression.

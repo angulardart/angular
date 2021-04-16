@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/security.dart';
 
 import 'element_schema_registry.dart' show ElementSchemaRegistry;

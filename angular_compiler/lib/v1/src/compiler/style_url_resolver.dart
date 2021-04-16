@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 class StyleWithImports {
   final String style;
   final List<String> styleUrls;

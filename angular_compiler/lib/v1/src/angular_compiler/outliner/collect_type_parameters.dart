@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 // We're not supposed to import the top-level analyzer.dart, but  it's needed
 // for [parseCompiliationUnit], which has no alternatives.
 // ignore: deprecated_member_use

@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 /// What type of generated `AppView` an instance is.
 enum ViewType {
   /// A view that contains the host element with bound component directive.

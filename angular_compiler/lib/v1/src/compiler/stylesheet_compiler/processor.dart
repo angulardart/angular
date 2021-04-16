@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:build/build.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/module/ng_compiler_module.dart';

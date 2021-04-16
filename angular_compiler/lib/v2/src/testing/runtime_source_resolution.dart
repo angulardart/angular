@@ -1,3 +1,6 @@
+// http://go/migrate-deps-first
+// @dart=2.9
+
 /// At runtime (in command-line VM tests) resolves and instruments Dart source.
 ///
 /// For functional tests that instrument the compiler in ad-hoc fashion; for

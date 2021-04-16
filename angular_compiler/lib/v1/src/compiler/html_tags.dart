@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 HtmlTagDefinition getHtmlTagDefinition(String tagName) {
   var result = _tagDefinitions[tagName.toLowerCase()];
   return result ?? const HtmlTagDefinition();

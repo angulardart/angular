@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:source_span/source_span.dart' show SourceSpan;
 import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_compiler/v2/context.dart';

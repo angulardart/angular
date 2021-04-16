@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:source_gen/source_gen.dart';
 
 /// Most metadata is now in this sub-directory.

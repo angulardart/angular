@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/aria_attributes.dart';
 import 'package:angular_compiler/v1/src/compiler/html_events.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
