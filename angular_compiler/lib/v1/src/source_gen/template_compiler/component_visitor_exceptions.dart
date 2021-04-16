@@ -50,14 +50,13 @@ class ComponentVisitorExceptionHandler {
 
 Future<ElementDeclarationResult> _resolvedClassResult(
   Resolver resolver,
-  Element element, [
-  String message,
-]) async {
+  Element element,
+) async {
   AssetId assetId;
   try {
     assetId = await resolver.assetIdForElement(element);
-  } catch (e) {
-    throw BuildError.withoutContext('$e $message');
+  } on UnresolvableAssetException catch (_) {
+    _throwInvalidSummaryError(element.source.fullName);
   }
   // A `part of` dart file is not a standalone dart library. Thus,
   // [library] is null when an error occurs in a `part of` dart file.
@@ -65,7 +64,7 @@ Future<ElementDeclarationResult> _resolvedClassResult(
   // error. The build error below is to reconstruct sufficient information for
   // clients.
   if (!await resolver.isLibrary(assetId)) {
-    throw BuildError.withoutContext('asset $assetId: $message');
+    throw BuildError.withoutContext('Errors in part file $assetId');
   }
   final library = await resolver.libraryFor(
     assetId,
@@ -73,14 +72,17 @@ Future<ElementDeclarationResult> _resolvedClassResult(
   );
   final result = await element.session.getResolvedLibraryByElement(library);
   if (result.state == ResultState.NOT_A_FILE) {
-    // We don't have access to source information in summarized libraries,
-    // but another build step will likely emit the root cause errors.
-    throw BuildError.withoutContext(
-      'Analysis errors in summarized library '
-      '${library.source.fullName}',
-    );
+    _throwInvalidSummaryError(library.source.fullName);
   }
   return result.getElementDeclaration(element);
+}
+
+void _throwInvalidSummaryError(String summaryName) {
+  // We don't have access to source information in summarized libraries,
+  // but another build step will likely emit the root cause errors.
+  throw BuildError.withoutContext(
+    'Errors in summarized library $summaryName',
+  );
 }
 
 abstract class AsyncBuildError {
@@ -284,16 +286,12 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
     ElementDeclarationResult result;
     try {
-      result = await _resolvedClassResult(
-        resolver,
-        indexedAnnotation.element,
-        toString(),
-      );
+      result = await _resolvedClassResult(resolver, indexedAnnotation.element);
     } on BuildError catch (buildError) {
       final annotationSource = indexedAnnotation.annotation.toSource();
-      return BuildError.withoutContext('$buildError\n\n'
-          'This error occurred processing the following annotation:\n'
-          '$annotationSource');
+      return BuildError.withoutContext(
+        '$buildError while compiling $annotationSource: $this',
+      );
     }
 
     var resolvedMetadata = _metadataFromAncestry(result.node);
