@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'attribute_matcher.dart';
 import 'html_tags.dart' show getHtmlTagDefinition;
 
@@ -24,7 +22,7 @@ class _MatcherTuple<T> {
 /// css classes and attribute/value pairs with the purpose
 /// of selecting subsets out of them.
 class CssSelector {
-  String element;
+  String? element;
   final List<String> classNames = [];
   final List<AttributeMatcher> attrs = [];
   final List<CssSelector> notSelectors = [];
@@ -45,7 +43,6 @@ class CssSelector {
     var current = cssSelector;
     var inNot = false;
     for (var match in matcher) {
-      if (match == null) break;
       if (match[1] != null) {
         if (inNot) {
           throw StateError('Nesting :not is not allowed in a selector');
@@ -58,10 +55,10 @@ class CssSelector {
         current.setElement(match[2]);
       }
       if (match[3] != null) {
-        current.addClassName(match[3]);
+        current.addClassName(match[3]!);
       }
       if (match[4] != null) {
-        current.addAttribute(match[4], match[5], match[7]);
+        current.addAttribute(match[4]!, match[5], match[7]);
       }
       if (match[8] != null) {
         inNot = false;
@@ -86,7 +83,7 @@ class CssSelector {
         notSelectors.isEmpty;
   }
 
-  void setElement([String element]) {
+  void setElement([String? element]) {
     this.element = element;
   }
 
@@ -113,13 +110,13 @@ class CssSelector {
         : '<$tagName$attributeBuffer></$tagName>';
   }
 
-  void addAttribute(String name, String matcher, String value) {
+  void addAttribute(String name, String? matcher, String? value) {
     value = value?.toLowerCase();
     if (matcher == null) {
       attrs.add(SetAttributeMatcher(name));
     } else if (matcher == '=') {
       attrs.add(ExactAttributeMatcher(name, value));
-    } else if (value.isNotEmpty) {
+    } else if (value!.isNotEmpty) {
       // The following attribute selectors match nothing if the attribute value
       // is the empty string, so we only add them if they can match.
       switch (matcher) {
@@ -173,9 +170,10 @@ class CssSelector {
 class SelectorMatcher<T> {
   static SelectorMatcher<T> createNotMatcher<T>(
     List<CssSelector> notSelectors,
+    T cbContext,
   ) {
     var notMatcher = SelectorMatcher<T>();
-    notMatcher.addSelectables(notSelectors, null);
+    notMatcher.addSelectables(notSelectors, cbContext);
     return notMatcher;
   }
 
@@ -188,8 +186,8 @@ class SelectorMatcher<T> {
       <String, List<_MatcherTuple<SelectorMatcher<T>>>>{};
   final _listContexts = <SelectorListContext>[];
 
-  void addSelectables(List<CssSelector> cssSelectors, [T callbackCtxt]) {
-    SelectorListContext listContext;
+  void addSelectables(List<CssSelector> cssSelectors, T callbackCtxt) {
+    SelectorListContext? listContext;
     if (cssSelectors.length > 1) {
       listContext = SelectorListContext(cssSelectors);
       _listContexts.add(listContext);
@@ -201,7 +199,7 @@ class SelectorMatcher<T> {
 
   /// Add an object that can be found later on by calling `match`.
   void _addSelectable(CssSelector cssSelector, T callbackCtxt,
-      SelectorListContext listContext) {
+      SelectorListContext? listContext) {
     var matcher = this;
     var element = cssSelector.element;
     var classNames = cssSelector.classNames;
@@ -253,7 +251,7 @@ class SelectorMatcher<T> {
       Map<String, SelectorMatcher<T>> map, String name) {
     var matcher = map[name];
     if (matcher == null) {
-      matcher = SelectorMatcher();
+      matcher = SelectorMatcher<T>();
       map[name] = matcher;
     }
     return matcher;
@@ -262,7 +260,7 @@ class SelectorMatcher<T> {
   /// Find the objects that have been added via `addSelectable`
   /// whose css selector is contained in the given css selector.
   bool match(
-      CssSelector cssSelector, void Function(CssSelector, T) matchedCallback) {
+      CssSelector cssSelector, void Function(CssSelector, T)? matchedCallback) {
     var result = false;
     var element = cssSelector.element;
     var classNames = cssSelector.classNames;
@@ -307,14 +305,14 @@ class SelectorMatcher<T> {
   }
 
   bool _matchTerminal(Map<String, List<SelectorContext<T>>> map, name,
-      CssSelector cssSelector, void Function(CssSelector, T) matchedCallback) {
-    if (map == null || name == null) {
+      CssSelector cssSelector, void Function(CssSelector, T)? matchedCallback) {
+    if (name == null) {
       return false;
     }
     var selectables = map[name];
     var starSelectables = map['*'];
     if (starSelectables != null) {
-      selectables = (List.from(selectables)..addAll(starSelectables));
+      selectables = (List.from(selectables!)..addAll(starSelectables));
     }
     if (selectables == null) {
       return false;
@@ -328,8 +326,8 @@ class SelectorMatcher<T> {
   }
 
   bool _matchPartial(Map<String, SelectorMatcher<T>> map, name,
-      CssSelector cssSelector, void Function(CssSelector, T) matchedCallback) {
-    if (map == null || name == null) {
+      CssSelector cssSelector, void Function(CssSelector, T)? matchedCallback) {
+    if (name == null) {
       return false;
     }
     var nestedSelector = map[name];
@@ -355,17 +353,19 @@ class SelectorListContext {
 class SelectorContext<T> {
   CssSelector selector;
   T cbContext;
-  SelectorListContext listContext;
-  List<CssSelector> notSelectors;
+  SelectorListContext? listContext;
+  late List<CssSelector> notSelectors;
   SelectorContext(this.selector, this.cbContext, this.listContext) {
     notSelectors = selector.notSelectors;
   }
   bool finalize(
-      CssSelector cssSelector, void Function(CssSelector, T) callback) {
+      CssSelector cssSelector, void Function(CssSelector, T)? callback) {
     var result = true;
+    var listContext = this.listContext;
     if (notSelectors.isNotEmpty &&
         (listContext == null || !listContext.alreadyMatched)) {
-      var notMatcher = SelectorMatcher.createNotMatcher(notSelectors);
+      var notMatcher =
+          SelectorMatcher.createNotMatcher(notSelectors, cbContext);
       result = !notMatcher.match(cssSelector, null);
     }
     if (result &&

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 class StyleWithImports {
   final String style;
   final List<String> styleUrls;
@@ -7,7 +5,7 @@ class StyleWithImports {
 }
 
 /// Whether [url] resides within the current package or a dependency.
-bool isStyleUrlResolvable(String url) {
+bool isStyleUrlResolvable(String? url) {
   if (url == null || url.isEmpty || url[0] == '/') return false;
   var schemeMatch = _urlWithSchemaRe.firstMatch(url);
   return schemeMatch == null ||
@@ -18,16 +16,16 @@ bool isStyleUrlResolvable(String url) {
 /// Rewrites style sheets by resolving and removing the @import urls that
 /// are either relative or don't have a `package:` scheme
 StyleWithImports extractStyleUrls(String baseUrl, String cssText) {
-  Uri baseUri;
+  Uri? baseUri;
   var foundUrls = <String>[];
   var modifiedCssText = cssText.replaceAllMapped(_cssImportRe, (m) {
     var url = m[1] ?? m[2];
     if (!isStyleUrlResolvable(url)) {
       // Do not attempt to resolve non-package absolute URLs with URI scheme
-      return m[0];
+      return m[0]!;
     }
     baseUri ??= Uri.parse(baseUrl);
-    foundUrls.add(baseUri.resolve(url).toString());
+    foundUrls.add(baseUri!.resolve(url!).toString());
     return '';
   });
   return StyleWithImports(modifiedCssText, foundUrls);

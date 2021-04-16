@@ -1,6 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-
 // https://www.w3schools.com/jsref/dom_obj_event.asp
 // Updated Aug 5, 2020
 const _nativeEventSet = <String>{

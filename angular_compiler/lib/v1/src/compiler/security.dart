@@ -1,6 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-
 /// A [TemplateSecurityContext] specifies a category of security vulnerabilities
 /// if the content is not sanitized.
 ///

@@ -97,8 +97,8 @@ class MissingDirectiveValidator
   ) {
     final elementSelector = _createElementSelector(astNode);
     return !skipValidationSelectors.every((selector) {
-      var matcher = SelectorMatcher();
-      matcher.addSelectables([selector]);
+      var matcher = SelectorMatcher<void>();
+      matcher.addSelectables([selector], null);
       return matcher.match(elementSelector, null);
     });
   }

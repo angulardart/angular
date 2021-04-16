@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -34,7 +32,7 @@ class AstExceptionHandler extends RecoveringExceptionHandler {
     throw BuildError.fromMultiple(
       exceptions.map(
         (e) => BuildError.forSourceSpan(
-          sourceFile.span(e.offset, e.offset + e.length),
+          sourceFile.span(e.offset!, e.offset! + e.length!),
           e.errorCode.message,
         ),
       ),

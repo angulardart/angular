@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart' show SourceSpan;
 import 'package:angular_ast/angular_ast.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -35,7 +33,7 @@ I18nMetadataBundle parseI18nMetadata(List<AnnotationAst> annotations) {
   }
   // Map metadata builders by attribute name, except for the children metadata
   // builder which has a null key.
-  final builders = <String, _I18nMetadataBuilder>{};
+  final builders = <String?, _I18nMetadataBuilder>{};
   for (final annotation in annotations) {
     final match = i18nRegExp.matchAsPrefix(annotation.name);
     if (match == null) {
@@ -58,10 +56,10 @@ I18nMetadataBundle parseI18nMetadata(List<AnnotationAst> annotations) {
   final childrenMetadata = builders.remove(null)?.build();
   final attributeMetadata = <String, I18nMetadata>{};
   for (final attribute in builders.keys) {
-    final metadata = builders[attribute].build();
+    final metadata = builders[attribute]!.build();
     // Omit any invalid metadata.
     if (metadata != null) {
-      attributeMetadata[attribute] = metadata;
+      attributeMetadata[attribute!] = metadata;
     }
   }
   return I18nMetadataBundle(childrenMetadata, attributeMetadata);
@@ -83,7 +81,7 @@ class I18nMetadata {
   /// This overrides the locale that would otherwise be used for the
   /// translation. This is useful if translations are, or will be, available
   /// before they're allowed to be used.
-  final String locale;
+  final String? locale;
 
   /// The meaning of a message, used to disambiguate equivalent messages.
   ///
@@ -92,7 +90,7 @@ class I18nMetadata {
   /// they are handled as separate translations.
   ///
   /// This value is optional, and may be null if omitted.
-  final String meaning;
+  final String? meaning;
 
   /// The primary source span to which this metadata is attributed.
   ///
@@ -139,7 +137,7 @@ class I18nMetadataBundle {
   /// Internationalization metadata for the node's children.
   ///
   /// Null if the node has no internationalized children.
-  final I18nMetadata forChildren;
+  final I18nMetadata? forChildren;
 
   I18nMetadataBundle(this.forChildren, this.forAttributes);
   I18nMetadataBundle.empty() : this(null, const {});
@@ -152,16 +150,16 @@ class _I18nMetadataBuilder {
   /// For example, matches ".skip" in "@i18n.skip:title".
   static final _parameterRegExp = RegExp(r'\.\w+');
 
-  AnnotationAst description;
-  AnnotationAst locale;
-  AnnotationAst meaning;
-  AnnotationAst skip;
+  AnnotationAst? description;
+  AnnotationAst? locale;
+  AnnotationAst? meaning;
+  AnnotationAst? skip;
 
   /// Builds an immutable representation of the accumulated metadata.
   ///
   /// Returns null and reports an error if the metadata is incomplete or
   /// invalid.
-  I18nMetadata build() {
+  I18nMetadata? build() {
     if (description == null) {
       _reportMissingDescriptionFor(locale);
       _reportMissingDescriptionFor(meaning);
@@ -173,21 +171,21 @@ class _I18nMetadataBuilder {
     // affect the message identity. Two identical messages whose meanings are
     // formatted differently would be treated as distinct messages if the
     // whitespace wasn't normalized.
-    final normalizedDescription = _normalizeWhitespace(description.value);
+    final normalizedDescription = _normalizeWhitespace(description!.value!);
     final normalizedLocale =
-        locale != null ? _normalizeWhitespace(locale.value) : null;
+        locale != null ? _normalizeWhitespace(locale!.value!) : null;
     final normalizedMeaning =
-        meaning != null ? _normalizeWhitespace(meaning.value) : null;
+        meaning != null ? _normalizeWhitespace(meaning!.value!) : null;
     return I18nMetadata(
       normalizedDescription,
-      description.sourceSpan,
+      description!.sourceSpan!,
       locale: normalizedLocale,
       meaning: normalizedMeaning,
       skip: skip != null,
     );
   }
 
-  void _reportMissingDescriptionFor(AnnotationAst annotation) {
+  void _reportMissingDescriptionFor(AnnotationAst? annotation) {
     if (annotation != null) {
       // Remove the parameter to create the corresponding description annotation
       // name.
@@ -196,7 +194,7 @@ class _I18nMetadataBuilder {
         '',
       );
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        annotation.sourceSpan,
+        annotation.sourceSpan!,
         'A corresponding message description (@$descriptionName) is required',
       ));
     }
