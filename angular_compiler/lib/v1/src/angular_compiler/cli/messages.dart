@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
@@ -32,7 +30,7 @@ abstract class Messages {
   /// Returns a message that the following [sourceSpans] were unresolvable.
   String unresolvedSource(
     Iterable<SourceSpanMessageTuple> tuples, {
-    @required String reason,
+    required String reason,
   }) {
     final buffer = StringBuffer(reason)..writeln()..writeln();
     for (final tuple in tuples) {

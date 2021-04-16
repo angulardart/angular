@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
@@ -97,6 +95,6 @@ class Placeholder implements Builder {
   };
 
   @override
-  Future<Object> build(BuildStep buildStep) => buildStep.writeAsString(
+  Future<void> build(BuildStep buildStep) => buildStep.writeAsString(
       buildStep.inputId.changeExtension('.ng_placeholder'), '');
 }

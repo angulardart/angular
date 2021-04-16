@@ -1,6 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-
 /// Supports the compiler running in a command-line interface (CLI).
 ///
 /// Utilities and classes here are not directly related to the compilation

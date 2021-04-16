@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:args/args.dart';
 import 'package:meta/meta.dart';
 
@@ -157,11 +155,11 @@ class CompilerFlags {
     final policyExceptionInPackages = options[_argPolicyExceptionInPackages];
 
     return CompilerFlags(
-      enableDevTools: enableDevTools as bool ?? defaultTo.enableDevTools,
+      enableDevTools: enableDevTools as bool? ?? defaultTo.enableDevTools,
       useLegacyStyleEncapsulation:
-          useLegacyStyle as bool ?? defaultTo.useLegacyStyleEncapsulation,
+          useLegacyStyle as bool? ?? defaultTo.useLegacyStyleEncapsulation,
       forceMinifyWhitespace:
-          forceMinifyWhitespace as bool ?? defaultTo.forceMinifyWhitespace,
+          forceMinifyWhitespace as bool? ?? defaultTo.forceMinifyWhitespace,
       emitComponentFactories: noEmitComponentFactories != true,
       emitInjectableFactories: noEmitInjectableFactories != true,
       policyExceptions: _buildPolicyExceptions(policyExceptions),
@@ -170,14 +168,14 @@ class CompilerFlags {
     );
   }
 
-  static Map<String, Set<String>> _buildPolicyExceptions(Object arguments) {
+  static Map<String, Set<String>> _buildPolicyExceptions(Object? arguments) {
     // No policy exceptions.
     if (arguments == null) {
       return const {};
     }
     // Single policy exception is parsed a String.
     if (arguments is String) {
-      arguments = <String>[arguments as String];
+      arguments = <String>[arguments];
     }
     // Process policy exceptions.
     //

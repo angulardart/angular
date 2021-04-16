@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:build/build.dart' as build;
 import 'package:source_span/source_span.dart';
 
