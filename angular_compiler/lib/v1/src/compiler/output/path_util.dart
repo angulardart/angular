@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'dart:math' as math;
 
 /// Matches asset:<package-name>/<realm>/<path-to-module>
@@ -11,7 +9,7 @@ var _PATH_SEP_RE = RegExp(r'\/');
 /// given an import url such as templateUrl or cssUrls.
 String getImportModulePath(String moduleUrlStr, String importedUrlStr) {
   var absolutePathPrefix = 'package:';
-  var moduleUrl = _AssetUrl.parse(moduleUrlStr, false);
+  var moduleUrl = _AssetUrl.parse(moduleUrlStr, false)!;
   var importedUrl = _AssetUrl.parse(importedUrlStr, true);
   if (importedUrl == null) {
     return importedUrlStr;
@@ -36,10 +34,10 @@ class _AssetUrl {
   final String firstLevelDir;
   final String modulePath;
 
-  static _AssetUrl parse(String url, bool allowNonMatching) {
+  static _AssetUrl? parse(String url, bool allowNonMatching) {
     var match = _ASSET_URL_RE.firstMatch(url);
     if (match != null) {
-      return _AssetUrl(match[1], match[2], match[3]);
+      return _AssetUrl(match[1]!, match[2]!, match[3]!);
     }
     if (allowNonMatching) return null;
     throw StateError('Url $url is not a valid asset: url');

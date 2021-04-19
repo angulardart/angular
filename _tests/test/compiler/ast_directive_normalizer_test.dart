@@ -41,6 +41,7 @@ void main() {
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
       type: CompileTypeMetadata(
+        name: 'A',
         moduleUrl: 'asset:a/lib/a.dart',
       ),
       template: CompileTemplateMetadata(
@@ -64,6 +65,7 @@ void main() {
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
       type: CompileTypeMetadata(
+        name: 'A',
         moduleUrl: 'asset:a/lib/a.dart',
       ),
       template: CompileTemplateMetadata(
@@ -83,6 +85,7 @@ void main() {
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
       type: CompileTypeMetadata(
+        name: 'A',
         moduleUrl: 'asset:a/lib/a.dart',
       ),
       template: CompileTemplateMetadata(),
@@ -95,7 +98,7 @@ void main() {
     normalizer = AstDirectiveNormalizer(reader);
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: CompileTypeMetadata(moduleUrl: 'asset:a/lib/a.dart'),
+      type: CompileTypeMetadata(name: 'A', moduleUrl: 'asset:a/lib/a.dart'),
       template: CompileTemplateMetadata(
         template: r'''
           <ng-content></ng-content>
@@ -122,7 +125,7 @@ void main() {
     normalizer = AstDirectiveNormalizer(reader);
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      type: CompileTypeMetadata(name: 'A', moduleUrl: 'package:a/a.dart'),
       template: CompileTemplateMetadata(
         template: r'''
           <link href="3.css" rel="stylesheet" />
@@ -151,7 +154,7 @@ void main() {
     normalizer = AstDirectiveNormalizer(reader);
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      type: CompileTypeMetadata(name: 'A', moduleUrl: 'package:a/a.dart'),
       template: CompileTemplateMetadata(
         template: '',
         encapsulation: ViewEncapsulation.Emulated,
@@ -171,7 +174,7 @@ void main() {
     normalizer = AstDirectiveNormalizer(reader);
     metadata = CompileDirectiveMetadata(
       metadataType: CompileDirectiveMetadataType.Component,
-      type: CompileTypeMetadata(moduleUrl: 'package:a/a.dart'),
+      type: CompileTypeMetadata(name: 'A', moduleUrl: 'package:a/a.dart'),
       template: CompileTemplateMetadata(
         template: r'''
           <link href="3.css" rel="stylesheet" />

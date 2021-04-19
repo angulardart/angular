@@ -1,7 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
-
 import 'output_ast.dart' as o;
 
 final _singleQuoteEscape = RegExp(r'' "'" r'|\\|\n|\r|\$');
@@ -82,7 +78,7 @@ class EmitterVisitorContext {
     return _classes.removeLast();
   }
 
-  o.ClassStmt get currentClass {
+  o.ClassStmt? get currentClass {
     return _classes.isNotEmpty ? _classes[_classes.length - 1] : null;
   }
 
@@ -113,7 +109,7 @@ abstract class AbstractEmitterVisitor
 
   AbstractEmitterVisitor(
     this._escapeDollarInStrings, {
-    @required this.emitNullSafeSyntax,
+    required this.emitNullSafeSyntax,
   });
 
   @override
@@ -125,11 +121,12 @@ abstract class AbstractEmitterVisitor
 
   @override
   void visitReturnStmt(o.ReturnStatement stmt, EmitterVisitorContext context) {
-    if (stmt.value == null) {
+    var value = stmt.value;
+    if (value == null) {
       context.println('return;${stmt.inlineComment}');
     } else {
       context.print('return ');
-      stmt.value.visitExpression(this, context);
+      value.visitExpression(this, context);
       context.println(';${stmt.inlineComment}');
     }
   }
@@ -145,7 +142,7 @@ abstract class AbstractEmitterVisitor
     context.print('if (');
     stmt.condition.visitExpression(this, context);
     context.print(') {');
-    var hasElseCase = stmt.falseCase != null && stmt.falseCase.isNotEmpty;
+    var hasElseCase = stmt.falseCase.isNotEmpty;
     if (stmt.trueCase.length <= 1 && !hasElseCase) {
       context.print(' ');
       visitAllStatements(stmt.trueCase, context);
@@ -275,14 +272,9 @@ abstract class AbstractEmitterVisitor
       o.InvokeMethodExpr expr, EmitterVisitorContext context) {
     expr.receiver.visitExpression(this, context);
     var name = expr.name;
-    if (expr.builtin != null) {
-      name = getBuiltinMethodName(expr.builtin);
-      if (name == null) {
-        // some builtins just mean to skip the call.
-
-        // e.g. `bind` in Dart.
-        return;
-      }
+    var builtin = expr.builtin;
+    if (builtin != null) {
+      name = getBuiltinMethodName(builtin);
     }
     if (expr.checked) {
       context.print('?');
@@ -338,18 +330,17 @@ abstract class AbstractEmitterVisitor
           throw StateError('Unknown builtin variable ${ast.builtin}');
       }
     }
-    context.print(varName);
+    context.print(varName!);
   }
 
   @override
   void visitReadStaticMemberExpr(
       o.ReadStaticMemberExpr ast, EmitterVisitorContext context) {
-    var varName = ast.name;
-    var t = ast.sourceClass as o.ExternalType;
+    var t = ast.sourceClass as o.ExternalType?;
     if (t != null) {
       context.print('${t.value.name}.');
     }
-    context.print(varName);
+    context.print(ast.name);
   }
 
   @override
@@ -378,7 +369,7 @@ abstract class AbstractEmitterVisitor
   void visitLiteralExpr(o.LiteralExpr ast, EmitterVisitorContext context) {
     var value = ast.value;
     if (value is String) {
-      context.print(escapeSingleQuoteString(value, _escapeDollarInStrings));
+      context.print(escapeSingleQuoteString(value, _escapeDollarInStrings)!);
     } else if (value is o.EscapedString) {
       context.print("'${value.value}'");
     } else if (value == null) {
@@ -529,14 +520,14 @@ abstract class AbstractEmitterVisitor
     var useNewLine = ast.entries.length > 1;
     context.print('{', useNewLine);
     context.incIndent();
-    visitAllObjects((entry) {
-      final firstEntry = entry[0];
+    visitAllObjects((List<dynamic> entry) {
+      final /* String | Expression */ firstEntry = entry[0];
       if (firstEntry is o.Expression) {
         firstEntry.visitExpression(this, context);
       } else {
         final firstEntryCasted = firstEntry as String;
         context.print(
-            escapeSingleQuoteString(firstEntryCasted, _escapeDollarInStrings));
+            escapeSingleQuoteString(firstEntryCasted, _escapeDollarInStrings)!);
       }
       context.print(': ');
       entry[1].visitExpression(this, context);
@@ -554,7 +545,7 @@ abstract class AbstractEmitterVisitor
   }
 
   void visitAllNamedExpressions(
-    List<o.NamedExpr> expressions,
+    List<o.NamedExpr>? expressions,
     EmitterVisitorContext ctx,
     String seperator, {
     bool alwaysAddSeperator = false,
@@ -601,7 +592,7 @@ abstract class AbstractEmitterVisitor
   }
 }
 
-String escapeSingleQuoteString(String input, bool escapeDollar) {
+String? escapeSingleQuoteString(String? input, bool escapeDollar) {
   if (input == null) {
     return null;
   }
