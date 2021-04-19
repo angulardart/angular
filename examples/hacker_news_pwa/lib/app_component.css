@@ -1,0 +1,13 @@
+.notice {
+  text-align: center;
+  color: #212121;
+  position: fixed;
+  top: 100px;
+  width: 100%;
+  max-width: 800px;
+}
+nav a.active {
+  border-bottom: 2px solid #fff;
+  border-top: 2px solid transparent;
+  color: #fff;
+}

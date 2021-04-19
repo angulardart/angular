@@ -1,0 +1,30 @@
+<!-- TODO(b/171230953): Remove null assertions if able. -->
+
+<!-- Loading view -->
+<template [ngIf]="items == null">
+  <div class="notice">Loading...</div>
+</template>
+
+<!-- Loaded empty view -->
+<template [ngIf]="items != null && items!.isEmpty">
+  <div class="notice">There are no more items.</div>
+</template>
+
+<!-- Loaded items view -->
+<template [ngIf]="items != null && items!.isNotEmpty">
+<article *ngForIdentity="let item of items!; let i = index">
+  <span class="rank">{{i + startingRank}}</span>
+  <item [item]="item"></item>
+</article>
+</template>
+
+<footer>
+  <nav>
+    <div *ngIf="previousPageUrl != null"  >
+      <a [routerLink]="previousPageUrl!">Previous</a>
+    </div>
+    <div class="next" *ngIf="nextPageUrl != null">
+      <a [routerLink]="nextPageUrl!">Next</a>
+    </div>
+  </nav>
+</footer>

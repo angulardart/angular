@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+
+button {
+  background: inherit;
+  border: none;
+  padding: 0;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+comment {
+  padding-left: 8px;
+}
+
+.content {
+  border-bottom: 1px solid #eee;
+}
+
+.header {
+  padding: 8px 0;
+}

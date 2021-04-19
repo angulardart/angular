@@ -1,0 +1,21 @@
+import 'package:pageloader3/pageloader.dart';
+
+import 'comment_po.dart';
+import 'item_po.dart';
+
+part 'item_detail_po.g.dart';
+
+@PageObject()
+abstract class ItemDetailPO {
+  ItemDetailPO();
+
+  // ignore: redirect_to_non_class
+  factory ItemDetailPO.create(PageLoaderElement context) = $ItemDetailPO.create;
+
+  @ByTagName('item')
+  ItemPO get itemPO;
+
+  // This prevents selecting recursively nested comments.
+  @ByCss('item-detail > comment')
+  List<CommentPO> get commentPOs;
+}

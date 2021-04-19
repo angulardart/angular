@@ -1,0 +1,15 @@
+<header>
+  <nav>
+    <a href="https://github.com/dart-lang/angular">
+      <img src="/images/logo.svg" alt="Dart logo">
+    </a>
+    <a [routerLink]="newsUrl" routerLinkActive="active">top</a>
+    <a [routerLink]="newUrl" routerLinkActive="active">new</a>
+    <a [routerLink]="showUrl" routerLinkActive="active">show</a>
+    <a [routerLink]="askUrl" routerLinkActive="active">ask</a>
+    <a [routerLink]="jobsUrl" routerLinkActive="active">jobs</a>
+  </nav>
+</header>
+<main>
+  <router-outlet [routes]="routes"></router-outlet>
+</main>

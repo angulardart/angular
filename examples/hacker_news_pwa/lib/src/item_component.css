@@ -1,0 +1,17 @@
+.primary {
+  margin-bottom: .2rem;
+}
+
+.primary a {
+  color: #000;
+  text-decoration: none;
+}
+
+.secondary {
+  color: #555;
+  font-size: .9rem;
+}
+
+.secondary a {
+  color: #555;
+}
