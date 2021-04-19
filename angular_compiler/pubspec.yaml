@@ -10,7 +10,7 @@ dependencies:
   analyzer: ^1.0.0
   args: ^2.0.0
   build: ^2.0.0
-  code_builder: ^3.3.0
+  code_builder: ^4.0.0
   collection: ^1.14.5
   dart_style: ^2.0.0
   logging: ^1.0.0
