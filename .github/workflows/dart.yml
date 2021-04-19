@@ -1310,3 +1310,46 @@ jobs:
       - job_015
       - job_016
       - job_017
+  job_032:
+    name: Notify failure
+    if: "(github.event_name == 'push' || github.event_name == 'schedule') && failure()"
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          curl -H "Content-Type: application/json" -X POST -d \
+            "{'text':'Build failed! ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}'}" \
+            "${CHAT_WEBHOOK_URL}"
+        env:
+          CHAT_WEBHOOK_URL: "${{ secrets.TEAM_CHAT_WEBHOOK_URL }}"
+    needs:
+      - job_001
+      - job_002
+      - job_003
+      - job_004
+      - job_005
+      - job_006
+      - job_007
+      - job_008
+      - job_009
+      - job_010
+      - job_011
+      - job_012
+      - job_013
+      - job_014
+      - job_015
+      - job_016
+      - job_017
+      - job_018
+      - job_019
+      - job_020
+      - job_021
+      - job_022
+      - job_023
+      - job_024
+      - job_025
+      - job_026
+      - job_027
+      - job_028
+      - job_029
+      - job_030
+      - job_031
