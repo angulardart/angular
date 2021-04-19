@@ -27,7 +27,7 @@ dependencies:
 
   build: ^2.0.0
   build_config: '>=0.2.6 <2.0.0' # Runtime dependency with no import
-  code_builder: '^3.0.1'
+  code_builder: ^4.0.0
   csslib: ^0.17.0
   path: ^1.8.0
   pedantic: ^1.10.0
