@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import '../expression_parser/ast.dart'
     show AST, ImplicitReceiver, MethodCall, PropertyRead;
 import 'constants.dart';

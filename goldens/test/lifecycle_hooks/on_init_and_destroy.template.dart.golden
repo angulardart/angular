@@ -35,6 +35,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
   }
@@ -169,6 +174,11 @@ class ViewUsesOnInit0 extends import0.ComponentView<import1.UsesOnInit> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-on-init'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
   }
@@ -236,6 +246,11 @@ class ViewUsesOnDestroy0 extends import0.ComponentView<import1.UsesOnDestroy> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-on-destroy'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart' : null);
   }

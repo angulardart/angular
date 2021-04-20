@@ -24,7 +24,7 @@ class ProviderReader {
 
   /// Returns whether an object represents a `Provider`.
   @protected
-  bool isProvider(DartObject o) => $Provider.isAssignableFromType(o.type);
+  bool isProvider(DartObject o) => $Provider.isAssignableFromType(o.type!);
 
   /// Returns whether an object represents a [Type].
   @protected
@@ -32,15 +32,12 @@ class ProviderReader {
 
   /// Parses a static object representing a `Provider`.
   ProviderElement parseProvider(DartObject o) {
-    if (o == null) {
-      throw ArgumentError.notNull();
-    }
     if (isType(o)) {
       // Represents "Foo", which is legacy short-hand for "ClassProvider(Foo)".
       return _parseTypeAsImplicitClassProvider(o);
     }
     if (!isProvider(o)) {
-      final typeName = getTypeName(o.type);
+      final typeName = getTypeName(o.type!);
       throw FormatException('Expected Provider, got "$typeName".');
     }
     return _parseProvider(o);
@@ -67,7 +64,7 @@ class ProviderReader {
     }
     // const Provider(<token>, useValue: constExpression)
     final useValue = reader.read('useValue');
-    if (useValue == null || useValue.isNull) {
+    if (useValue.isNull) {
       // const Provider(<token>, useValue: null)
       //
       // This pattern is used to "disable" a service, for example:
@@ -87,7 +84,7 @@ class ProviderReader {
     if (token is TypeTokenElement) {
       // Ensure this isn't a FactoryProvider with a null function:
       // https://github.com/dart-lang/angular/issues/1500
-      if (!$Provider.isExactlyType(o.type)) {
+      if (!$Provider.isExactlyType(o.type!)) {
         throw NullFactoryException(o);
       }
       return _parseUseClass(
@@ -129,7 +126,7 @@ class ProviderReader {
   ) {
     return UseClassProviderElement(
       token,
-      _actualProviderType(provider.type, typeArgumentOf(provider), token),
+      _actualProviderType(provider.type!, typeArgumentOf(provider), token),
       linkTypeOf(clazz.thisType),
       dependencies: _dependencyReader.parseDependencies(clazz),
     );
@@ -143,7 +140,7 @@ class ProviderReader {
   ) {
     return UseExistingProviderElement(
       token,
-      _actualProviderType(provider.type, typeArgumentOf(provider), token),
+      _actualProviderType(provider.type!, typeArgumentOf(provider), token),
       _tokenReader.parseTokenObject(object),
     );
   }
@@ -162,7 +159,7 @@ class ProviderReader {
     return UseFactoryProviderElement(
       token,
       _actualProviderType(
-        provider.objectValue.type,
+        provider.objectValue.type!,
         typeArgumentOf(provider.objectValue),
         token,
       ),
@@ -177,12 +174,12 @@ class ProviderReader {
   ProviderElement _parseUseValue(
     TokenElement token,
     DartObject provider,
-    DartObject useValue,
+    DartObject? useValue,
   ) {
     // TODO(matanl): For corner-cases that can't be revived, display error.
     return UseValueProviderElement._(
       token,
-      _actualProviderType(provider.type, typeArgumentOf(provider), token),
+      _actualProviderType(provider.type!, typeArgumentOf(provider), token),
       useValue,
     );
   }
@@ -200,7 +197,7 @@ class ProviderReader {
         dependencies: _dependencyReader.parseDependencies(element),
       );
     }
-    throw BuildError.forElement(element, 'Not a class element');
+    throw BuildError.forElement(element!, 'Not a class element');
   }
 }
 
@@ -210,7 +207,7 @@ abstract class ProviderElement {
   final TokenElement token;
 
   /// The `T` type of `Provider<T>`.
-  final TypeLink providerType;
+  final TypeLink? providerType;
 
   const ProviderElement._(
     this.token,
@@ -242,9 +239,9 @@ class UseClassProviderElement extends ProviderElement {
   @visibleForTesting
   const UseClassProviderElement(
     TokenElement e,
-    TypeLink providerType,
+    TypeLink? providerType,
     this.useClass, {
-    @required this.dependencies,
+    required this.dependencies,
   }) : super._(e, providerType);
 
   @override
@@ -305,9 +302,9 @@ class UseFactoryProviderElement extends ProviderElement {
   @visibleForTesting
   const UseFactoryProviderElement(
     TokenElement e,
-    TypeLink providerType,
+    TypeLink? providerType,
     this.useFactory, {
-    @required this.dependencies,
+    required this.dependencies,
   }) : super._(
           e,
           providerType,
@@ -337,7 +334,7 @@ class UseFactoryProviderElement extends ProviderElement {
 /// A statically parsed `Provider` that describes a constant expression.
 class UseValueProviderElement extends ProviderElement {
   /// A reference to the constant expression or literal to generate.
-  final DartObject useValue;
+  final DartObject? useValue;
 
   // Not visible for testing because its impractical to create one.
   const UseValueProviderElement._(

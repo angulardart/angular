@@ -30,7 +30,7 @@ abstract class Messages {
   /// Returns a message that the following [sourceSpans] were unresolvable.
   String unresolvedSource(
     Iterable<SourceSpanMessageTuple> tuples, {
-    @required String reason,
+    required String reason,
   }) {
     final buffer = StringBuffer(reason)..writeln()..writeln();
     for (final tuple in tuples) {

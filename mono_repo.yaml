@@ -8,6 +8,19 @@ github:
       branches:
         - master
 
+  on_completion:
+    - name: "Notify failure"
+      # Run only if other jobs have failed and this is a push build.
+      if: (github.event_name == 'push' || github.event_name == 'schedule') && failure()
+      runs-on: ubuntu-latest
+      steps:
+        - run: >
+            curl -H "Content-Type: application/json" -X POST -d \
+              "{'text':'Build failed! ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}'}" \
+              "${CHAT_WEBHOOK_URL}"
+          env:
+            CHAT_WEBHOOK_URL: ${{ secrets.TEAM_CHAT_WEBHOOK_URL }}
+
 self_validate: analyze
 merge_stages:
 - analyze

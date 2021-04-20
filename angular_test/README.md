@@ -50,9 +50,9 @@ To use `angular_test`, configure your package's `pubspec.yaml` as follows:
 
 ```yaml
 dev_dependencies:
-  build_runner: ^1.0.0
-  build_test: ^0.10.0
-  build_web_compilers: ^1.0.0
+  build_runner: ^2.0.0
+  build_test: ^2.0.0
+  build_web_compilers: ^3.0.0
 ```
 
 **IMPORTANT**: `angular_test` will not run without these dependencies set.

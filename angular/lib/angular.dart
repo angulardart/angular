@@ -27,6 +27,7 @@ export 'src/core/change_detection.dart';
 export 'src/core/exception_handler.dart' show ExceptionHandler;
 export 'src/core/linker.dart';
 export 'src/core/zone/ng_zone.dart' show NgZone, UncaughtError;
+export 'src/devtools.dart' show enableDevTools;
 export 'src/di/errors.dart' show InjectionError, NoProviderError;
 export 'src/di/injector.dart' show Injector, InjectorFactory;
 export 'src/di/injector/runtime.dart' show ReflectiveInjector;

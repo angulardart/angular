@@ -21,11 +21,11 @@ class ReflectableEmitter {
   /// The library that is being analyzed currently.
   final LibraryReader _library;
 
-  DartEmitter _dartEmitter;
-  LibraryBuilder _libraryBuilder;
-  BlockBuilder _initReflectorBody;
-  StringSink _importBuffer;
-  StringSink _initReflectorBuffer;
+  DartEmitter? _dartEmitter;
+  late LibraryBuilder _libraryBuilder;
+  late BlockBuilder _initReflectorBody;
+  late StringSink _importBuffer;
+  late StringSink _initReflectorBuffer;
 
   Reference _ngRef(String symbol) => refer('_ngRef.$symbol');
 
@@ -42,7 +42,7 @@ class ReflectableEmitter {
   ReflectableEmitter(
     this._output,
     this._library, {
-    Allocator allocator,
+    Allocator? allocator,
     this.reflectorSource = '$_package/src/reflector.dart',
   }) : _allocator = allocator ?? Allocator.none;
 
@@ -59,7 +59,7 @@ class ReflectableEmitter {
 
   /// Creates a manual tear-off of the provided constructor.
   Expression _tearOffConstructor(
-    String constructor,
+    String? constructor,
     DependencyInvocation invocation,
   ) =>
       Method(
@@ -67,7 +67,7 @@ class ReflectableEmitter {
           ..requiredParameters.addAll(
             _parameters(invocation.positional),
           )
-          ..body = refer(constructor)
+          ..body = refer(constructor!)
               .newInstance(Iterable<Expression>.generate(
                 invocation.positional.length,
                 (i) => refer('p$i'),
@@ -177,7 +177,7 @@ class ReflectableEmitter {
     _libraryBuilder.body.add(initReflector.build());
 
     // Write code to output.
-    _libraryBuilder.build().accept(_dartEmitter, _initReflectorBuffer);
+    _libraryBuilder.build().accept(_dartEmitter!, _initReflectorBuffer);
   }
 
   void _linkToOtherInitReflectors() {
@@ -216,9 +216,10 @@ class ReflectableEmitter {
     }
 
     // Legacy support for ReflectiveInjector.
-    if (clazz.factory != null) {
-      _registerConstructor(clazz.factory);
-      _registerParametersForFunction(clazz.factory);
+    var clazzFactory = clazz.factory;
+    if (clazzFactory != null) {
+      _registerConstructor(clazzFactory);
+      _registerParametersForFunction(clazzFactory);
     }
   }
 
@@ -238,7 +239,7 @@ class ReflectableEmitter {
     } else if (bound is MethodElement) {
       name = '${bound.enclosingElement.name}.${bound.name}';
     } else {
-      name = bound.name;
+      name = bound!.name!;
     }
 
     _initReflectorBody.addExpression(
@@ -285,18 +286,19 @@ class ReflectableEmitter {
     throw UnsupportedError('Invalid token type: $token.');
   }
 
-  void _registerConstructor(DependencyInvocation<ConstructorElement> function) {
+  void _registerConstructor(
+      DependencyInvocation<ConstructorElement?> function) {
     // _ngRef.registerFactory(Type, (p0, p1) => new Type(p0, p1));
-    final bound = function.bound;
+    final bound = function.bound!;
     final clazz = bound.returnType;
     var constructor = clazz.name;
     // Support named constructors.
-    if (bound.name?.isNotEmpty == true) {
+    if (bound.name.isNotEmpty == true) {
       constructor = '$constructor.${bound.name}';
     }
     _initReflectorBody.addExpression(
       _registerFactory.call([
-        refer(clazz.name),
+        refer(clazz.name!),
         _tearOffConstructor(constructor, function),
       ]),
     );
@@ -309,16 +311,16 @@ class ReflectableEmitter {
 //
 // Once/if all code is using code_builder, this can be safely removed.
 class SplitDartEmitter extends DartEmitter {
-  final StringSink _writeImports;
+  final StringSink? _writeImports;
 
   SplitDartEmitter(
     this._writeImports, {
     Allocator allocator = Allocator.none,
     bool emitNullSafeSyntax = false,
   }) : super(
-          allocator,
-          false,
-          emitNullSafeSyntax,
+          allocator: allocator,
+          orderDirectives: false,
+          useNullSafetySyntax: emitNullSafeSyntax,
         );
 
   @override

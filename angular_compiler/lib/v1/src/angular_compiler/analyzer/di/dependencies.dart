@@ -32,23 +32,22 @@ class DependencyReader {
   /// configured with an annotation. Returns `null` if no constructor that can
   /// be used is found (i.e. is public).
   @protected
-  ConstructorElement findConstructor(ClassElement element) {
+  ConstructorElement? findConstructor(ClassElement element) {
     // Highest priority is the unnamed (default constructor) if not abstract.
     if (element.unnamedConstructor != null && !element.isAbstract) {
       return element.unnamedConstructor;
     }
     // Otherwise, find the first public constructor.
     // If the class is abstract, find the first public factory constructor.
-    return element.constructors.firstWhere(
-        (e) => e.isPublic && !element.isAbstract || e.isFactory,
-        orElse: () => null);
+    return element.constructors.firstWhereOrNull(
+        (e) => e.isPublic && !element.isAbstract || e.isFactory);
   }
 
   /// Returns parsed dependencies for the provided [element].
   ///
   /// Throws [ArgumentError] if not a `ClassElement` or `ExecutableElement`.
   DependencyInvocation<E> parseDependencies<E extends Element>(
-    Element element,
+    Element? element,
   ) {
     if (element is ClassElement) {
       return _parseClassDependencies(element) as DependencyInvocation<E>;
@@ -57,7 +56,7 @@ class DependencyReader {
       return _parseFunctionDependencies(element) as DependencyInvocation<E>;
     }
     throw BuildError.forElement(
-      element,
+      element!,
       'Only classes or functions are valid as a dependency.',
     );
   }
@@ -79,13 +78,8 @@ class DependencyReader {
         metadata = reader.listValue.sublist(1);
       }
       bool hasMeta(TypeChecker checker) =>
-          metadata.any((m) => checker.isExactlyType(m.type));
+          metadata.any((m) => checker.isExactlyType(m.type!));
       final isOptional = hasMeta($Optional);
-      _checkForOptionalAndNullable(
-        element,
-        element.type,
-        isOptional: isOptional,
-      );
       positional.add(
         DependencyElement(
           _tokenReader.parseTokenObject(tokenObject),
@@ -144,13 +138,12 @@ class DependencyReader {
   static void _checkForOptionalAndNullable(
     Element element,
     DartType type, {
-    @required bool isOptional,
+    required bool isOptional,
   }) {
     if (!CompileContext.current.emitNullSafeCode) {
       // Do not run this check for libraries not opted-in to null safety.
       return;
     }
-    assert(isOptional != null);
     if (type.isExplicitlyNonNullable) {
       // Must *NOT* be @Optional()
       if (isOptional) {
@@ -188,7 +181,7 @@ class DependencyReader {
 }
 
 /// Statically analyzed arguments needed to invoke a constructor or function.
-class DependencyInvocation<E extends Element> {
+class DependencyInvocation<E extends Element?> {
   /// Positional arguments, in order analyzed.
   final List<DependencyElement> positional;
 
@@ -248,7 +241,7 @@ class DependencyElement {
   /// Type of this dependency.
   ///
   /// If `null` a [token] that is [TypeTokenElement] takes precedence.
-  final TypeTokenElement type;
+  final TypeTokenElement? type;
 
   @visibleForTesting
   const DependencyElement(

@@ -48,7 +48,7 @@ DartType getExpressionType(ast.AST expression, AnalyzedClass analyzedClass) {
 /// Returns the element type of [dartType], assuming it implements `Iterable`.
 ///
 /// Returns null otherwise.
-DartType getIterableElementType(DartType dartType) => dartType is InterfaceType
+DartType? getIterableElementType(DartType dartType) => dartType is InterfaceType
     ? dartType.lookUpInheritedGetter('single')?.returnType
     : null;
 
@@ -91,9 +91,7 @@ bool isString(ast.AST expression, AnalyzedClass analyzedClass) {
 }
 
 String typeToCode(DartType type) {
-  if (type == null) {
-    return null;
-  } else if (type.isDynamic) {
+  if (type.isDynamic) {
     return 'dynamic';
   } else if (type is InterfaceType) {
     var typeArguments = type.typeArguments;
@@ -112,19 +110,20 @@ String typeToCode(DartType type) {
   }
 }
 
-PropertyInducingElement _getField(AnalyzedClass clazz, String name) {
+PropertyInducingElement? _getField(AnalyzedClass clazz, String name) {
   var getter =
       clazz._classElement.lookUpGetter(name, clazz._classElement.library);
   return getter?.variable;
 }
 
-MethodElement _getMethod(AnalyzedClass clazz, String name) {
-  return clazz._classElement.lookUpMethod(name, clazz._classElement.library);
+MethodElement? _getMethod(AnalyzedClass clazz, String name) {
+  var element = clazz._classElement;
+  return element.lookUpMethod(name, element.library);
 }
 
 // TODO(het): Make this work with chained expressions.
 /// Returns [true] if [expression] is immutable.
-bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
+bool isImmutable(ast.AST expression, AnalyzedClass? analyzedClass) {
   if (expression is ast.LiteralPrimitive ||
       expression is ast.StaticRead ||
       expression is ast.EmptyExpr) {
@@ -147,7 +146,7 @@ bool isImmutable(ast.AST expression, AnalyzedClass analyzedClass) {
     if (receiver is ast.ImplicitReceiver ||
         (receiver is ast.StaticRead && receiver.id.analyzedClass != null)) {
       var clazz = receiver is ast.StaticRead
-          ? receiver.id.analyzedClass
+          ? receiver.id.analyzedClass!
           : analyzedClass;
       var field = _getField(clazz, expression.name);
       if (field != null) {
@@ -353,7 +352,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitStaticRead(ast.StaticRead ast, _) =>
       ast.id.analyzedClass == null
           ? _dynamicType
-          : ast.id.analyzedClass._classElement.thisType;
+          : ast.id.analyzedClass!._classElement.thisType;
 
   @override
   DartType visitVariableRead(ast.VariableRead ast, _) => _dynamicType;

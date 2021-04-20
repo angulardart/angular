@@ -198,6 +198,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/large_templates.dart' : null);
   }
@@ -3457,6 +3462,11 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('child'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/large_templates.dart' : null);
   }

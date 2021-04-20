@@ -30,15 +30,15 @@ class InjectorEmitter implements InjectorVisitor {
     '$_runtime/injector.dart',
   );
 
-  String _className;
-  String _factoryName;
+  String? _className;
+  String? _factoryName;
 
   final _methodCache = <Method>[];
   final _fieldCache = <Field>[];
   final _injectSelfBody = <Code>[];
 
-  final _multiTokenInvokes = <TokenElement, List<String>>{};
-  final _expressionForToken = <TokenElement, Expression>{};
+  final _multiTokenInvokes = <TokenElement?, List<String>>{};
+  final _expressionForToken = <TokenElement?, Expression>{};
 
   /// Returns the `class ... { ... }` for this generated injector.
   Class createClass() => Class((b) => b
@@ -63,7 +63,7 @@ class InjectorEmitter implements InjectorVisitor {
     ..requiredParameters.add(Parameter((b) => b
       ..name = 'parent'
       ..type = _$Injector))
-    ..body = refer(_className).newInstanceNamed('_', [
+    ..body = refer(_className!).newInstanceNamed('_', [
       refer('parent'),
     ]).code);
 
@@ -120,10 +120,10 @@ class InjectorEmitter implements InjectorVisitor {
   }
 
   @protected
-  static Code _ifIsTokenThen(Expression token, Code then) {
+  static Code _ifIsTokenThen(Expression? token, Code then) {
     return Block.of([
       const Code('if (identical(token, '),
-      lazyCode(() => token.code),
+      lazyCode(() => token!.code),
       const Code(')) {'),
       then,
       const Code('}'),
@@ -140,7 +140,7 @@ class InjectorEmitter implements InjectorVisitor {
   }
 
   void _addToMulti(
-    TokenElement token,
+    TokenElement? token,
     Expression tokenExpression,
     String methodName,
   ) {
@@ -154,7 +154,7 @@ class InjectorEmitter implements InjectorVisitor {
     TokenElement token,
     Expression tokenExpression,
     Reference type,
-    String constructor,
+    String? constructor,
     List<Expression> dependencies,
     bool isMulti,
   ) {
@@ -171,12 +171,13 @@ class InjectorEmitter implements InjectorVisitor {
     );
 
     final methodName = '_get${type.symbol}\$$index';
+    final instance = constructor == null
+        ? type.newInstance(dependencies)
+        : type.newInstanceNamed(constructor, dependencies);
     _methodCache.add(Method((b) => b
       ..name = methodName
       ..returns = type
-      ..body = refer(fieldName)
-          .assignNullAware(type.newInstanceNamed(constructor, dependencies))
-          .code));
+      ..body = refer(fieldName).assignNullAware(instance).code));
 
     if (isMulti) {
       _addToMulti(token, tokenExpression, methodName);
@@ -250,7 +251,7 @@ class InjectorEmitter implements InjectorVisitor {
   @override
   void visitProvideValue(
     int index,
-    TokenElement token,
+    TokenElement? token,
     Expression tokenExpression,
     Reference returnType,
     Expression value,

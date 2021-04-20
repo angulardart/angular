@@ -68,7 +68,6 @@ abstract class BuildError extends Error {
     Element context,
     String message,
   ) {
-    assert(message != null);
     final source = context.source;
     if (source == null || source.contents.data.isEmpty) {
       final warning = source == null
@@ -95,7 +94,7 @@ abstract class BuildError extends Error {
 class _SimpleBuildError extends BuildError {
   final String _message;
 
-  _SimpleBuildError(this._message) : assert(_message != null);
+  _SimpleBuildError(this._message);
 
   @override
   String toString() => _message;
@@ -103,7 +102,7 @@ class _SimpleBuildError extends BuildError {
 
 class _MultipleBuildError extends BuildError {
   final List<BuildError> _errors;
-  final String _header;
+  final String? _header;
 
   _MultipleBuildError(
     this._errors, [
@@ -122,8 +121,7 @@ class _SourceSpanBuildError extends BuildError {
   _SourceSpanBuildError(
     this._sourceSpan,
     this._message,
-  )   : assert(_sourceSpan != null),
-        assert(_message != null);
+  );
 
   @override
   String toString() => _sourceSpan.message(_message);

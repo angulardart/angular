@@ -3,6 +3,7 @@
 /// For functional tests that instrument the compiler in ad-hoc fashion; for
 /// example to expect that given source code produces an error or other
 /// specific output.
+import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -23,7 +24,7 @@ final _packageConfigPath = Platform.environment[_environmentVar];
 final _cachedPackageConfig = _loadPackageConfig();
 
 Future<PackageConfig> _loadPackageConfig() {
-  var config = Isolate.packageConfig.then(loadPackageConfigUri);
+  var config = Isolate.packageConfig.then((uri) => loadPackageConfigUri(uri!));
   return config;
 }
 

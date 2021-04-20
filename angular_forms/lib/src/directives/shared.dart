@@ -26,9 +26,10 @@ void setUpControl(Control control, NgControl dir) {
       '(${dir.path!.join(' -> ')}) or you may be missing formDirectives in '
       'your directives list.');
   control.validator = Validators.compose([control.validator, dir.validator]);
-  dir.valueAccessor!.writeValue(control.value);
+  var valueAccessor = dir.valueAccessor!;
+  valueAccessor.writeValue(control.value);
   // view -> model
-  dir.valueAccessor!.registerOnChange((dynamic newValue, {String? rawValue}) {
+  valueAccessor.registerOnChange((dynamic newValue, {String? rawValue}) {
     dir.viewToModelUpdate(newValue);
     control.updateValue(newValue,
         emitModelToViewChange: false, rawValue: rawValue);
@@ -37,10 +38,10 @@ void setUpControl(Control control, NgControl dir) {
   // model -> view
   control.registerOnChange(
       (dynamic newValue) => dir.valueAccessor?.writeValue(newValue));
-  control.disabledChanges.listen(dir.valueAccessor?.onDisabledChanged);
-  if (control.disabled) dir.valueAccessor!.onDisabledChanged(control.disabled);
+  control.disabledChanges.listen(valueAccessor.onDisabledChanged);
+  if (control.disabled) valueAccessor.onDisabledChanged(control.disabled);
   // touched
-  dir.valueAccessor!.registerOnTouched(() => control.markAsTouched());
+  valueAccessor.registerOnTouched(() => control.markAsTouched());
 }
 
 void setUpControlGroup(AbstractControlGroup control, NgControlGroup dir) {
@@ -48,8 +49,9 @@ void setUpControlGroup(AbstractControlGroup control, NgControlGroup dir) {
 }
 
 void _throwError(AbstractControlDirective? dir, String message) {
-  if (dir?.path != null) {
-    message = "$message (${dir!.path!.join(" -> ")})";
+  var path = dir?.path;
+  if (path != null) {
+    message = "$message (${path.join(" -> ")})";
   }
   throw ArgumentError(message);
 }

@@ -4,11 +4,10 @@ HtmlTagDefinition getHtmlTagDefinition(String tagName) {
 }
 
 class HtmlTagDefinition {
-  final String implicitNamespacePrefix;
+  final String? implicitNamespacePrefix;
   final bool isVoid;
 
-  const HtmlTagDefinition({this.implicitNamespacePrefix, bool isVoid})
-      : isVoid = isVoid ?? false;
+  const HtmlTagDefinition({this.implicitNamespacePrefix, this.isVoid = false});
 }
 // see http://www.w3.org/TR/html51/syntax.html#optional-tags
 

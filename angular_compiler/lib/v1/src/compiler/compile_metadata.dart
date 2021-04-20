@@ -8,30 +8,30 @@ import 'expression_parser/ast.dart' as ast;
 import 'output/output_ast.dart' as o;
 import 'selector.dart' show CssSelector;
 
-final _listsEqual = const ListEquality<Object>().equals;
+final _listsEqual = const ListEquality<Object?>().equals;
 
 abstract class CompileMetadataWithIdentifier {
-  CompileIdentifierMetadata get identifier;
+  CompileIdentifierMetadata? get identifier;
 }
 
 abstract class CompileMetadataWithType extends CompileMetadataWithIdentifier {
-  CompileTypeMetadata get type;
+  CompileTypeMetadata? get type;
 }
 
 class CompileIdentifierMetadata implements CompileMetadataWithIdentifier {
   final bool emitPrefix;
   final List<o.OutputType> typeArguments;
-  final String prefix;
+  final String? prefix;
 
   final String name;
-  final String moduleUrl;
-  final Object value;
+  final String? moduleUrl;
+  final Object? value;
 
   /// If this identifier refers to a class declaration, this is non-null.
-  final AnalyzedClass analyzedClass;
+  final AnalyzedClass? analyzedClass;
 
   CompileIdentifierMetadata({
-    this.name,
+    required this.name,
     this.moduleUrl,
     this.prefix,
     this.emitPrefix = false,
@@ -51,8 +51,8 @@ class CompileDiDependencyMetadata {
   final bool isSkipSelf;
   final bool isOptional;
   final bool isValue;
-  final CompileTokenMetadata token;
-  final Object value;
+  final CompileTokenMetadata? token;
+  final Object? value;
 
   CompileDiDependencyMetadata({
     this.isAttribute = false,
@@ -67,17 +67,17 @@ class CompileDiDependencyMetadata {
 }
 
 class CompileProviderMetadata {
-  final CompileTokenMetadata token;
-  final CompileTypeMetadata useClass;
-  final Object useValue;
-  final CompileTokenMetadata useExisting;
-  final CompileFactoryMetadata useFactory;
-  final List<CompileDiDependencyMetadata> deps;
+  final CompileTokenMetadata? token;
+  final CompileTypeMetadata? useClass;
+  final Object? useValue;
+  final CompileTokenMetadata? useExisting;
+  final CompileFactoryMetadata? useFactory;
+  final List<CompileDiDependencyMetadata?>? deps;
 
   final bool multi;
 
   // TODO(matanl): Refactor to avoid two fields for multi-providers.
-  final CompileTypeMetadata typeArgument;
+  final CompileTypeMetadata? typeArgument;
 
   /// Restricts where the provider is injectable.
   final Visibility visibility;
@@ -124,13 +124,13 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata {
   final String name;
 
   @override
-  final String prefix;
+  final String? prefix;
 
   @override
   final bool emitPrefix;
 
   @override
-  final String moduleUrl;
+  final String? moduleUrl;
 
   @override
   List<o.OutputType> get typeArguments => const [];
@@ -138,7 +138,7 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata {
   final List<CompileDiDependencyMetadata> diDeps;
 
   CompileFactoryMetadata({
-    this.name,
+    required this.name,
     this.moduleUrl,
     this.prefix,
     this.emitPrefix = false,
@@ -149,17 +149,17 @@ class CompileFactoryMetadata implements CompileIdentifierMetadata {
   CompileIdentifierMetadata get identifier => this;
 
   @override
-  AnalyzedClass get analyzedClass => null;
+  AnalyzedClass? get analyzedClass => null;
 
   @override
   Object get value => throw UnsupportedError('Functions do not exist here');
 }
 
 class CompileTokenMetadata implements CompileMetadataWithIdentifier {
-  final Object value;
+  final Object? value;
 
   @override
-  final CompileIdentifierMetadata identifier;
+  final CompileIdentifierMetadata? identifier;
 
   final bool identifierIsInstance;
 
@@ -175,9 +175,9 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
   // String is emitted and compared, and not something more Dart-y like
   // equality. Should be refactored.
   dynamic get assetCacheKey {
+    var identifier = this.identifier;
     if (identifier != null) {
-      return identifier.moduleUrl != null &&
-              Uri.parse(identifier.moduleUrl).scheme != null
+      return identifier.moduleUrl != null
           ? ''
               '${identifier.name}|'
               '${identifier.moduleUrl}|'
@@ -190,9 +190,9 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
     }
   }
 
-  static String _typeAssetKey(o.OutputType t) {
+  static String _typeAssetKey(o.OutputType? t) {
     if (t is o.ExternalType) {
-      final generics = t.value.typeArguments != null
+      final generics = t.value.typeArguments.isNotEmpty
           ? t.value.typeArguments.map(_typeAssetKey).join(',')
           : '[]';
       return 'ExternalType {${t.value.moduleUrl}:${t.value.name}:$generics}';
@@ -205,8 +205,8 @@ class CompileTokenMetadata implements CompileMetadataWithIdentifier {
     return ak != null && ak == token2.assetCacheKey;
   }
 
-  String get name {
-    return value != null ? _sanitizeIdentifier(value) : identifier?.name;
+  String? get name {
+    return value != null ? _sanitizeIdentifier(value!) : identifier?.name;
   }
 
   static String _sanitizeIdentifier(Object name) =>
@@ -240,7 +240,7 @@ class CompileTokenMap<V> {
       final identifier = token.identifier;
       String name;
       if (identifier?.moduleUrl != null && identifier?.name != null) {
-        name = '${identifier.moduleUrl}::${identifier.name}';
+        name = '${identifier!.moduleUrl}::${identifier.name}';
       } else {
         name = '${token.name}';
       }
@@ -261,7 +261,7 @@ class CompileTokenMap<V> {
     }
   }
 
-  V get(CompileTokenMetadata token) {
+  V? get(CompileTokenMetadata token) {
     var ak = token.assetCacheKey;
     return ak != null ? _valueMap[ak] : null;
   }
@@ -280,18 +280,18 @@ class CompileTypeMetadata
   String name;
 
   @override
-  String prefix;
+  String? prefix;
 
   @override
   final bool emitPrefix = false;
 
   @override
-  String moduleUrl;
+  String? moduleUrl;
 
   bool isHost;
 
   @override
-  Type value;
+  Type? value;
 
   List<CompileDiDependencyMetadata> diDeps;
 
@@ -305,7 +305,7 @@ class CompileTypeMetadata
   final List<o.TypeParameter> typeParameters;
 
   CompileTypeMetadata({
-    this.name,
+    required this.name,
     this.moduleUrl,
     this.prefix,
     this.isHost = false,
@@ -322,7 +322,7 @@ class CompileTypeMetadata
   CompileTypeMetadata get type => this;
 
   @override
-  AnalyzedClass get analyzedClass => null;
+  AnalyzedClass? get analyzedClass => null;
 
   @override
   // ignore: hash_and_equals
@@ -353,13 +353,13 @@ class CompileTypeMetadata
 /// Metadata used to type a generic directive.
 class CompileTypedMetadata {
   /// The module URL of the directive this types.
-  final String moduleUrl;
+  final String? moduleUrl;
 
   /// The name of the directive this types.
   final String name;
 
   /// An optional identifier for matching specific instances of the directive.
-  final String on;
+  final String? on;
 
   /// The generic type arguments to be used to instantiate the directive.
   final List<o.OutputType> typeArguments;
@@ -376,7 +376,7 @@ class CompileTypedMetadata {
 /// ContentChild and ContentChildren decorators.
 class CompileQueryMetadata {
   /// List of types or tokens to match.
-  final List<CompileTokenMetadata> selectors;
+  final List<CompileTokenMetadata>? selectors;
 
   /// Whether nested elements should be queried.
   final bool descendants;
@@ -385,7 +385,7 @@ class CompileQueryMetadata {
   final bool first;
 
   /// Name of class member on the component to update with query result.
-  final String propertyName;
+  final String? propertyName;
 
   /// Whether this is typed `dart:html`'s `Element` (or a sub-type).
   final bool isElementType;
@@ -395,7 +395,7 @@ class CompileQueryMetadata {
   /// When we match an element in the template, it typically returns the
   /// component. Using read: parameter we can specifically query for
   /// ViewContainer or TemplateRef for the node.
-  final CompileTokenMetadata read;
+  final CompileTokenMetadata? read;
 
   const CompileQueryMetadata({
     this.selectors,
@@ -409,10 +409,10 @@ class CompileQueryMetadata {
 
 /// Metadata regarding compilation of a template.
 class CompileTemplateMetadata {
-  final ViewEncapsulation encapsulation;
-  final String template;
-  final String templateUrl;
-  final bool preserveWhitespace;
+  final ViewEncapsulation? encapsulation;
+  final String? template;
+  final String? templateUrl;
+  final bool? preserveWhitespace;
   final List<String> styles;
   final List<String> styleUrls;
   final List<String> ngContentSelectors;
@@ -437,15 +437,15 @@ enum CompileDirectiveMetadataType {
 /// Metadata regarding compilation of a directive.
 class CompileDirectiveMetadata implements CompileMetadataWithType {
   @override
-  final CompileTypeMetadata type;
+  final CompileTypeMetadata? type;
 
   /// User-land class where the component annotation originated.
-  final CompileTypeMetadata originType;
+  final CompileTypeMetadata? originType;
 
-  final CompileDirectiveMetadataType metadataType;
-  final String selector;
-  final String exportAs;
-  final int changeDetection;
+  final CompileDirectiveMetadataType? metadataType;
+  final String? selector;
+  final String? exportAs;
+  final int? changeDetection;
   final Map<String, String> inputs;
   final Map<String, CompileTypeMetadata> inputTypes;
   final Map<String, String> outputs;
@@ -457,8 +457,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   final List<CompileIdentifierMetadata> exports;
   final List<CompileQueryMetadata> queries;
   final List<CompileQueryMetadata> viewQueries;
-  final CompileTemplateMetadata template;
-  final AnalyzedClass analyzedClass;
+  final CompileTemplateMetadata? template;
+  final AnalyzedClass? analyzedClass;
 
   /// Restricts where the directive is injectable.
   final Visibility visibility;
@@ -473,11 +473,11 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     this.selector,
     this.exportAs,
     this.changeDetection,
-    this.inputs,
-    this.inputTypes,
-    this.outputs,
-    this.hostBindings,
-    this.hostListeners,
+    this.inputs = const {},
+    this.inputTypes = const {},
+    this.outputs = const {},
+    this.hostBindings = const {},
+    this.hostListeners = const {},
     this.analyzedClass,
     this.template,
     this.visibility = Visibility.all,
@@ -491,7 +491,7 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
   });
 
   CompileDirectiveMetadata.from(CompileDirectiveMetadata other,
-      {AnalyzedClass analyzedClass, CompileTemplateMetadata template})
+      {AnalyzedClass? analyzedClass, CompileTemplateMetadata? template})
       : type = other.type,
         originType = other.originType,
         metadataType = other.metadataType,
@@ -515,15 +515,15 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         isChangeDetectionLink = other.isChangeDetectionLink;
 
   @override
-  CompileIdentifierMetadata get identifier => type;
+  CompileIdentifierMetadata? get identifier => type;
 
   String toPrettyString() {
-    var name = type.name;
+    var name = type!.name;
     if (name.endsWith('Host')) {
       name = name.substring(0, name.length - 4);
     }
-    return '$name in ${type.moduleUrl} '
-        '(changeDetection: ${ChangeDetectionStrategy.toPrettyString(changeDetection)})';
+    return '$name in ${type!.moduleUrl} '
+        '(changeDetection: ${ChangeDetectionStrategy.toPrettyString(changeDetection!)})';
   }
 
   bool get isComponent =>
@@ -540,8 +540,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
       metadataType == CompileDirectiveMetadataType.Directive &&
       hostProperties.isNotEmpty;
 
-  Map<String, ast.AST> _cachedHostAttributes;
-  Map<String, ast.AST> _cachedHostProperties;
+  Map<String, ast.AST>? _cachedHostAttributes;
+  Map<String, ast.AST>? _cachedHostProperties;
 
   /// The subset of `hostBindings` that are immutable bindings.
   ///
@@ -551,16 +551,14 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
     if (_cachedHostAttributes == null) {
       _computeHostBindingImmutability();
     }
-    assert(_cachedHostAttributes != null);
-    return _cachedHostAttributes;
+    return _cachedHostAttributes!;
   }
 
   Map<String, ast.AST> get hostProperties {
     if (_cachedHostProperties == null) {
       _computeHostBindingImmutability();
     }
-    assert(_cachedHostProperties != null);
-    return _cachedHostProperties;
+    return _cachedHostProperties!;
   }
 
   void _computeHostBindingImmutability() {
@@ -591,9 +589,9 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
         if (name.startsWith('attr.')) {
           name = name.substring('attr.'.length);
         }
-        _cachedHostAttributes[name] = value;
+        _cachedHostAttributes![name] = value;
       } else {
-        _cachedHostProperties[name] = value;
+        _cachedHostProperties![name] = value;
       }
     });
   }
@@ -604,8 +602,8 @@ class CompileDirectiveMetadata implements CompileMetadataWithType {
 CompileDirectiveMetadata createHostComponentMeta(
     CompileTypeMetadata componentType,
     String componentSelector,
-    AnalyzedClass analyzedClass,
-    bool preserveWhitespace) {
+    AnalyzedClass? analyzedClass,
+    bool? preserveWhitespace) {
   var template =
       CssSelector.parse(componentSelector)[0].getMatchingElementTemplate();
   return CompileDirectiveMetadata(
@@ -647,17 +645,20 @@ List<CompileTypedMetadata> createHostDirectiveTypes(
     CompileTypedMetadata(
       componentType.name,
       componentType.moduleUrl,
-      componentType.typeParameters.map((t) => t.toType()).toList(),
+      componentType.typeParameters
+          .map((t) => t.toType())
+          .whereNotNull()
+          .toList(),
     )
   ];
 }
 
 class CompilePipeMetadata implements CompileMetadataWithType {
   @override
-  final CompileTypeMetadata type;
-  final o.FunctionType transformType;
-  final String name;
-  final bool pure;
+  final CompileTypeMetadata? type;
+  final o.FunctionType? transformType;
+  final String? name;
+  final bool? pure;
   final List<LifecycleHooks> lifecycleHooks;
 
   CompilePipeMetadata({
@@ -669,7 +670,7 @@ class CompilePipeMetadata implements CompileMetadataWithType {
   });
 
   @override
-  CompileIdentifierMetadata get identifier => type;
+  CompileIdentifierMetadata? get identifier => type;
 }
 
 /// Lifecycle hooks are guaranteed to be called in the following order:

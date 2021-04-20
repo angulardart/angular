@@ -53,8 +53,8 @@ class ReflectableReader {
 
   const ReflectableReader({
     this.dependencyReader = const DependencyReader(),
-    @required this.hasInput,
-    @required this.isLibrary,
+    required this.hasInput,
+    required this.isLibrary,
     this.outputExtension = _defaultOutputExtension,
     this.recordComponentFactories = true,
     this.recordInjectableFactories = true,
@@ -112,8 +112,8 @@ class ReflectableReader {
     );
   }
 
-  ReflectableClass _resolveClass(ClassElement element) {
-    DependencyInvocation<ConstructorElement> factory;
+  ReflectableClass? _resolveClass(ClassElement element) {
+    DependencyInvocation<ConstructorElement>? factory;
     if (_shouldRecordFactory(element) && recordInjectableFactories) {
       if (element.isPrivate) {
         throw BuildError.forElement(
@@ -135,7 +135,7 @@ class ReflectableReader {
     );
   }
 
-  DependencyInvocation<ExecutableElement> _resolveFunction(
+  DependencyInvocation<ExecutableElement>? _resolveFunction(
       ExecutableElement element) {
     if ($Injectable.firstAnnotationOfExact(element) == null) {
       return null;
@@ -157,7 +157,9 @@ class ReflectableReader {
 
   Iterable<DependencyInvocation<ExecutableElement>> _resolveFunctions(
           Iterable<ExecutableElement> elements) =>
-      elements.map(_resolveFunction).where((result) => result != null);
+      elements
+          .map(_resolveFunction)
+          .whereType<DependencyInvocation<ExecutableElement>>();
 
   String _withOutputExtension(String uri) {
     final extensionAt = uri.lastIndexOf('.');
@@ -234,7 +236,7 @@ class ReflectableOutput {
     this.registerFunctions = const [],
   });
 
-  static const _list = ListEquality<Object>();
+  static const _list = ListEquality<Object?>();
 
   @override
   bool operator ==(Object o) =>
@@ -264,7 +266,7 @@ class ReflectableClass {
   final ClassElement element;
 
   /// Factory required to invoke the constructor of the class.
-  final DependencyInvocation<ConstructorElement> factory;
+  final DependencyInvocation<ConstructorElement?>? factory;
 
   /// Name of the class.
   final String name;
@@ -274,9 +276,9 @@ class ReflectableClass {
 
   @visibleForTesting
   const ReflectableClass({
-    @required this.element,
+    required this.element,
     this.factory,
-    @required this.name,
+    required this.name,
     this.registerComponentFactory = false,
   });
 

@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:code_builder/code_builder.dart';

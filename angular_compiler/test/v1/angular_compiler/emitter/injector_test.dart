@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
@@ -7,6 +9,7 @@ void main() {
   final dartfmt = DartFormatter();
   EqualsDart.format = dartfmt.format;
 
+  TokenElement dummyToken = TypeTokenElement(TypeLink('Token', null));
   InjectorEmitter emitter;
 
   setUp(() {
@@ -46,7 +49,7 @@ void main() {
       // provide(Foo, useClass: FooImpl)
       emitter.visitProvideClass(
         0,
-        null,
+        dummyToken,
         refer('Foo'),
         refer('FooImpl'),
         null,
@@ -81,7 +84,7 @@ void main() {
       // provide(FooPrime, useExisting: Foo)
       emitter.visitProvideExisting(
         0,
-        null,
+        dummyToken,
         refer('FooPrime'),
         refer('Foo'),
         refer('Foo'),
@@ -110,7 +113,7 @@ void main() {
       // provide(Foo, useFactory: createFoo)
       emitter.visitProvideFactory(
         0,
-        null,
+        dummyToken,
         refer('Foo'),
         refer('Foo'),
         refer('createFoo'),

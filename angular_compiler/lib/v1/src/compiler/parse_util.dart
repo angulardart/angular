@@ -32,7 +32,7 @@ class AstExceptionHandler extends RecoveringExceptionHandler {
     throw BuildError.fromMultiple(
       exceptions.map(
         (e) => BuildError.forSourceSpan(
-          sourceFile.span(e.offset, e.offset + e.length),
+          sourceFile.span(e.offset!, e.offset! + e.length!),
           e.errorCode.message,
         ),
       ),

@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import '../output/output_ast.dart' as o;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;

@@ -35,9 +35,7 @@ Future<Map<String, String>> collectTypeParameters(
   final resolver = buildStep.resolver;
   for (final directive in directives) {
     typeParameters[directive.name] = '';
-    if (directive.typeParameters != null) {
-      assetsToParse.add(await resolver.assetIdForElement(directive));
-    }
+    assetsToParse.add(await resolver.assetIdForElement(directive));
   }
   // Avoid parsing source if there are no directives with generic type
   // parameters to collect.
@@ -77,8 +75,8 @@ Future<void> _collectTypeParametersFromUnit(
         declaration.typeParameters != null &&
         typeParameters.containsKey(declaration.name.name)) {
       typeParameters[declaration.name.name] = source.substring(
-        declaration.typeParameters.offset,
-        declaration.typeParameters.end,
+        declaration.typeParameters!.offset,
+        declaration.typeParameters!.end,
       );
     }
   }

@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'package:meta/meta.dart';
 
 import '../../compile_metadata.dart';

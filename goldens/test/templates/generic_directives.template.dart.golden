@@ -53,6 +53,11 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -189,6 +194,11 @@ class ViewUntypedComp0 extends import0.ComponentView<import1.UntypedComp> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -250,6 +260,11 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-unyped-comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -332,6 +347,11 @@ class ViewGenericComp0<T> extends import0.ComponentView<import1.GenericComp<T>> 
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -393,6 +413,11 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -478,6 +503,11 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-comp-generic'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -560,6 +590,11 @@ class ViewMappingComp10<K, V> extends import0.ComponentView<import1.MappingComp1
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -622,6 +657,11 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-mapping-comp-1'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -712,6 +752,11 @@ class ViewMappingComp20<K, V> extends import0.ComponentView<import1.MappingComp2
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -773,6 +818,11 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-mapping-comp-2'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -855,6 +905,11 @@ class ViewBoundComp0<T extends num> extends import0.ComponentView<import1.BoundC
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -916,6 +971,11 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-bound-comp-with-bounds'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1001,6 +1061,11 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1083,6 +1148,11 @@ class ViewSelfBoundComp0<A, B extends A> extends import0.ComponentView<import1.S
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1145,6 +1215,11 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1235,6 +1310,11 @@ class ViewFunctionTypeComp0<F> extends import0.ComponentView<import1.FunctionTyp
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1296,6 +1376,11 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-function-type-comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1387,6 +1472,11 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('parent'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1541,6 +1631,11 @@ class ViewNestedChildComp0<T> extends import0.ComponentView<import1.NestedChildC
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1604,6 +1699,11 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-nested-parent-comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1708,6 +1808,11 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-multiple-types-comp'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }
@@ -1808,6 +1913,11 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('uses-generic-change-detector'));
   }
+  @override
+  String get debugComponentTypeName {
+    return this.ctx.runtimeType.toString();
+  }
+
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/templates/generic_directives.dart' : null);
   }

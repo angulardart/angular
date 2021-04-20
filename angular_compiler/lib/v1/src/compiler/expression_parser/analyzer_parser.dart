@@ -44,7 +44,7 @@ class AnalyzerExpressionParser extends ExpressionParser {
   }
 
   @override
-  ast.AST parseInterpolationImpl(
+  ast.AST? parseInterpolationImpl(
     String input,
     String location,
     List<CompileIdentifierMetadata> exports,
@@ -72,9 +72,9 @@ class AnalyzerExpressionParser extends ExpressionParser {
   ast.AST parseExpression(
     String input,
     String location, {
-    bool allowAssignments,
-    bool allowPipes,
-    List<CompileIdentifierMetadata> exports,
+    bool? allowAssignments,
+    bool? allowPipes,
+    List<CompileIdentifierMetadata>? exports,
   }) {
     // TODO(b/159912942): Decide whether to keep this.
     if (input.isEmpty) {
@@ -109,7 +109,7 @@ class AnalyzerExpressionParser extends ExpressionParser {
     }
 
     final function = declared.first as FunctionDeclaration;
-    final innerBody = function.functionExpression?.body;
+    final innerBody = function.functionExpression.body;
 
     // TODO(matanl): Present a better failure if a non-expression is parsed.
     final innerAst = (innerBody as ExpressionFunctionBody).expression;
@@ -127,16 +127,16 @@ class AnalyzerExpressionParser extends ExpressionParser {
     Expression ast,
     String input,
     String location, {
-    bool allowAssignments,
-    bool allowPipes,
-    List<CompileIdentifierMetadata> exports,
+    bool? allowAssignments,
+    bool? allowPipes,
+    List<CompileIdentifierMetadata>? exports,
   }) {
     try {
       return ast.accept(_AngularSubsetVisitor(
         allowAssignments: allowAssignments,
         allowPipes: allowPipes,
         exports: exports,
-      ));
+      ))!;
     } on _SubsetException catch (e) {
       // TODO(matanl): Highlight the offending astNode instead of just printing.
       throw ParseException(e.reason, input, location, e.astNode.toSource());
@@ -205,26 +205,27 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
   ) {
     final result = <String, Map<String, CompileIdentifierMetadata>>{};
     for (final export in exports) {
-      if (export.prefix != null) {
-        (result[export.prefix] ??= {})[export.name] = export;
+      var prefix = export.prefix;
+      if (prefix != null) {
+        (result[prefix] ??= {})[export.name] = export;
       }
     }
     return result;
   }
 
   _AngularSubsetVisitor({
-    bool allowAssignments,
-    bool allowPipes,
-    List<CompileIdentifierMetadata> exports,
+    bool? allowAssignments,
+    bool? allowPipes,
+    List<CompileIdentifierMetadata>? exports,
   })  : allowAssignments = allowAssignments ?? false,
         allowPipes = allowPipes ?? true,
         unprefixedExports = _indexUnprefixed(exports ?? const []),
         prefixedExports = _indexPrefixed(exports ?? const []);
 
   /// Returns [ast.AST] if a name or prefix is registered and matches a symbol.
-  ast.AST _matchExport(
+  ast.AST? _matchExport(
     String prefixOrUnprefixedName, [
-    String nameOrNullIfNotPrefixed,
+    String? nameOrNullIfNotPrefixed,
   ]) {
     final unprefixed = unprefixedExports[prefixOrUnprefixedName];
     if (unprefixed != null) {
@@ -285,7 +286,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
       // I.e. foo.bar.$pipe.
       allowPipes: false,
       methodName: null,
-      receiver: astNode.function.accept(this),
+      receiver: astNode.function.accept(this)!,
     );
   }
 
@@ -308,7 +309,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
         }
       }
       // <identifier>.<identifier>.<method>(callExpression)
-      final receiver = astNode.target.accept(this);
+      final receiver = target.accept(this)!;
       return _createFunctionCall(
         astNode,
         receiver: receiver,
@@ -361,10 +362,14 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
 
   ast.BindingPipe _createPipeUsage(String name, List<Expression> posArgs) {
     return ast.BindingPipe(
-      posArgs.first.accept(this),
+      posArgs.first.accept(this)!,
       name,
       posArgs.length > 1
-          ? posArgs.skip(1).map((e) => e.accept(this)).toList()
+          ? posArgs
+              .skip(1)
+              .map((e) => e.accept(this))
+              .whereType<ast.AST>()
+              .toList()
           : const [],
     );
   }
@@ -375,22 +380,22 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
 
   ast.AST _createFunctionCall(
     InvocationExpression call, {
-    bool allowPipes,
-    @required ast.AST receiver,
-    @required String methodName,
+    bool? allowPipes,
+    required ast.AST receiver,
+    required String? methodName,
   }) {
     allowPipes ??= this.allowPipes;
     if (call.typeArguments != null) {
       return _notSupported('Generic type arguments not supported.', call);
     }
-    final allArgs = call?.argumentList?.arguments ?? const [];
+    final allArgs = call.argumentList.arguments;
     final posArgs = <Expression>[];
     final namedArgs = <NamedExpression>[];
     for (final arg in allArgs) {
       if (arg is NamedExpression) {
         namedArgs.add(arg);
       } else {
-        posArgs.add(arg as Expression);
+        posArgs.add(arg);
       }
     }
     if (receiver is ast.PropertyRead && receiver.name == r'$pipe') {
@@ -401,7 +406,8 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
         namedArgs,
       );
     }
-    final callPos = posArgs.map((a) => a.accept(this)).toList();
+    final callPos =
+        posArgs.map((a) => a.accept(this)).whereType<ast.AST>().toList();
     final callNamed = namedArgs
         .map((a) => ast.NamedExpr(a.name.label.name, a.expression.accept(this)))
         .toList();
@@ -455,7 +461,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
   @override
   ast.AST visitParenthesizedExpression(ParenthesizedExpression astNode) {
     // TODO(b/159912942): Parse correctly.
-    return astNode.expression.accept(this);
+    return astNode.expression.accept(this)!;
   }
 
   @override
@@ -463,7 +469,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
     if (astNode.isCascaded) {
       return _notSupported('Cascade operator is not supported.', astNode);
     }
-    final receiver = astNode.target.accept(this);
+    final receiver = astNode.target!.accept(this)!;
     final property = astNode.propertyName.name;
     if (astNode.isNullAware) {
       return ast.SafePropertyRead(receiver, property);
@@ -475,8 +481,8 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
   @override
   ast.AST visitIndexExpression(IndexExpression astNode) {
     return ast.KeyedRead(
-      astNode.target.accept(this),
-      astNode.index.accept(this),
+      astNode.target!.accept(this)!,
+      astNode.index.accept(this)!,
     );
   }
 
@@ -523,17 +529,16 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
       case TokenType.GT_EQ:
         return ast.Binary(
           astNode.operator.lexeme,
-          astNode.leftOperand.accept(this),
-          astNode.rightOperand.accept(this),
+          astNode.leftOperand.accept(this)!,
+          astNode.rightOperand.accept(this)!,
         );
-        break;
       case TokenType.QUESTION_QUESTION:
         return ast.IfNull(
-          astNode.leftOperand.accept(this),
-          astNode.rightOperand.accept(this),
+          astNode.leftOperand.accept(this)!,
+          astNode.rightOperand.accept(this)!,
         );
       default:
-        return super.visitBinaryExpression(astNode);
+        return super.visitBinaryExpression(astNode)!;
     }
   }
 
@@ -559,19 +564,19 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
     String property;
 
     if (leftHandSide is PropertyAccess) {
-      receiver = leftHandSide.target.accept(this);
+      receiver = leftHandSide.target!.accept(this)!;
       property = leftHandSide.propertyName.name;
     } else if (leftHandSide is PrefixedIdentifier) {
-      receiver = leftHandSide.prefix.accept(this);
+      receiver = leftHandSide.prefix.accept(this)!;
       property = leftHandSide.identifier.name;
     } else if (leftHandSide is SimpleIdentifier) {
       receiver = ast.ImplicitReceiver();
       property = leftHandSide.name;
     } else if (leftHandSide is IndexExpression) {
       return ast.KeyedWrite(
-        leftHandSide.target.accept(this),
-        leftHandSide.index.accept(this),
-        rightHandSide.accept(this),
+        leftHandSide.target!.accept(this)!,
+        leftHandSide.index.accept(this)!,
+        rightHandSide.accept(this)!,
       );
     } else {
       return _notSupported(
@@ -580,16 +585,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
       );
     }
 
-    final expression = rightHandSide.accept(this);
-
-    // These will cause very confusing undebuggable errors later in the compile
-    // process if not eagerly caught. Eventually when we have null-safety we can
-    // remove them.
-
-    ArgumentError.checkNotNull(receiver);
-    ArgumentError.checkNotNull(property);
-    ArgumentError.checkNotNull(expression);
-
+    final expression = rightHandSide.accept(this)!;
     return ast.PropertyWrite(
       receiver,
       property,
@@ -600,15 +596,15 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
   @override
   ast.AST visitConditionalExpression(ConditionalExpression astNode) {
     return ast.Conditional(
-      astNode.condition.accept(this),
-      astNode.thenExpression.accept(this),
-      astNode.elseExpression.accept(this),
+      astNode.condition.accept(this)!,
+      astNode.thenExpression.accept(this)!,
+      astNode.elseExpression.accept(this)!,
     );
   }
 
   @override
   ast.AST visitPrefixExpression(PrefixExpression astNode) {
-    final expression = astNode.operand.accept(this);
+    final expression = astNode.operand.accept(this)!;
     switch (astNode.operator.type) {
       case TokenType.BANG:
         return ast.PrefixNot(expression);
@@ -625,7 +621,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
 
   @override
   ast.AST visitPostfixExpression(PostfixExpression astNode) {
-    final expression = astNode.operand.accept(this);
+    final expression = astNode.operand.accept(this)!;
     switch (astNode.operator.type) {
       case TokenType.BANG:
         return ast.PostfixNotNull(expression);
@@ -637,9 +633,7 @@ class _AngularSubsetVisitor extends GeneralizingAstVisitor<ast.AST> {
     }
   }
 
-  @alwaysThrows
-  // ignore: prefer_void_to_null
-  static Null _notSupported(String reason, AstNode astNode) {
+  static Never _notSupported(String reason, AstNode astNode) {
     throw _SubsetException(reason, astNode);
   }
 }

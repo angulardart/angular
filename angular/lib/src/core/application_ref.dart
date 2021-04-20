@@ -142,18 +142,13 @@ class ApplicationRef extends ChangeDetectionHost {
   R runInZone<R>(R Function() callback) => _ngZone.run(callback);
 }
 
-/// An extension for bridging [ApplicationRef] and the app partitioning API.
-///
-/// This extension is experimental and subject to change.
-extension App on ApplicationRef {
-  /// Returns this app's [NgZone].
-  NgZone get zone => _ngZone;
-}
-
 /// An extension for debugging this app.
 ///
 /// This extension is experimental and subject to change.
 extension DebugApplicationRef on ApplicationRef {
+  /// Returns this app's [NgZone].
+  NgZone get zone => _ngZone;
+
   /// Returns this app's [ExceptionHandler].
   // TODO(b/159650979): move to [App] if deemed an app-wide service.
   ExceptionHandler get exceptionHandler => _exceptionHandler;

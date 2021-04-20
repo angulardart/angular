@@ -21,7 +21,7 @@ class $Messages extends Messages {
 
   @override
   String removeGlobalSingletonService(String service) =>
-      '"${service}" is an app-wide, singleton service provided by the '
+      '"$service" is an app-wide, singleton service provided by the '
       'framework that cannot be overridden or manually provided.\n'
       '\n'
       'If you are providing this service to fix a missing provider error, you '

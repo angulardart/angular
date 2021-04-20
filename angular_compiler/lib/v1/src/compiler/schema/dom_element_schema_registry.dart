@@ -256,28 +256,28 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
 
   @override
   bool hasProperty(String tagName, String propName) {
-    var elementProperties = schema[tagName.toLowerCase()] ?? schema['unknown'];
+    var elementProperties = schema[tagName.toLowerCase()] ?? schema['unknown']!;
     return elementProperties[propName] != null;
   }
 
   @override
   bool hasAttribute(String tagName, String attributeName) {
     var elementAttributes =
-        attributeSchema[tagName.toLowerCase()] ?? attributeSchema['unknown'];
+        attributeSchema[tagName.toLowerCase()] ?? attributeSchema['unknown']!;
     return elementAttributes.contains(attributeName.toLowerCase());
   }
 
   @override
   bool hasEvent(String tagName, String eventName) {
     var elementEvents =
-        eventSchema[tagName.toLowerCase()] ?? eventSchema['unknown'];
+        eventSchema[tagName.toLowerCase()] ?? eventSchema['unknown']!;
     return elementEvents.contains(eventName.toLowerCase());
   }
 
   String _toAttribute(String propertyName) =>
       (_propToAttrMap[propertyName] ?? propertyName).toLowerCase();
 
-  static Map<String, TemplateSecurityContext> _SECURITY_SCHEMA;
+  static final Map<String, TemplateSecurityContext> _SECURITY_SCHEMA = {};
 
   void _registerSecuritySchema(
       TemplateSecurityContext context, List<String> schemaElements) {
@@ -343,8 +343,7 @@ class DomElementSchemaRegistry extends ElementSchemaRegistry {
   /// their appropriate context.
   @override
   TemplateSecurityContext securityContext(String tagName, String propName) {
-    if (_SECURITY_SCHEMA == null) {
-      _SECURITY_SCHEMA = <String, TemplateSecurityContext>{};
+    if (_SECURITY_SCHEMA.isEmpty) {
       _initializeSecuritySchema();
     }
     var key = '$tagName|$propName';

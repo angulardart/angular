@@ -13,7 +13,7 @@ class ParseException extends BuildError {
 
   ParseException(
     String message,
-    String input,
+    String? input,
     String errLocation, [
     dynamic ctxLocation,
   ]) : _message =
@@ -36,7 +36,7 @@ abstract class ExpressionParser {
   /// parseAction('doThing()', ...)
   /// ```
   ASTWithSource parseAction(
-    String input,
+    String? input,
     String location,
     List<CompileIdentifierMetadata> exports,
   ) {
@@ -82,7 +82,7 @@ abstract class ExpressionParser {
   /// ```
   ///
   /// Returns `null` if there were no interpolations in [input].
-  ASTWithSource parseInterpolation(
+  ASTWithSource? parseInterpolation(
     String input,
     String location,
     List<CompileIdentifierMetadata> exports,
@@ -122,7 +122,7 @@ abstract class ExpressionParser {
   ///
   /// Basic validation is already performed that [input] is seemingly valid.
   @visibleForOverriding
-  AST parseInterpolationImpl(
+  AST? parseInterpolationImpl(
     String input,
     String location,
     List<CompileIdentifierMetadata> exports,
@@ -132,7 +132,7 @@ abstract class ExpressionParser {
   ///
   /// Splits a longer multi-expression interpolation into [SplitInterpolation].
   @protected
-  SplitInterpolation splitInterpolation(String input, String location) {
+  SplitInterpolation? splitInterpolation(String input, String location) {
     var parts = jsSplit(input, _findInterpolation);
     if (parts.length <= 1) {
       return null;
@@ -159,9 +159,6 @@ abstract class ExpressionParser {
   }
 
   void _checkNoInterpolation(String input, String location) {
-    if (input == null) {
-      throw ParseException('Expected non-null value', input, location);
-    }
     var parts = jsSplit(input, _findInterpolation);
     if (parts.length > 1) {
       throw ParseException(

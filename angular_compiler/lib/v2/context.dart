@@ -47,10 +47,10 @@ Future<T> runWithContext<T>(
     (e, s) {
       // Convert pkg/source_gen#UnresolvedAnnotationException into a BuildError.
       if (e is UnresolvedAnnotationException) {
-        final eCasted = e as UnresolvedAnnotationException;
+        final eCasted = e;
         final convert = BuildError.forSourceSpan(
           spanForElement(eCasted.annotatedElement),
-          'Could not resolve "${eCasted.annotationSource.text}":\n'
+          'Could not resolve "${eCasted.annotationSource!.text}":\n'
           '${messages.analysisFailureReasons}',
         );
         e = convert;
@@ -143,7 +143,7 @@ abstract class CompileContext {
     _overrideForTesting = null;
   }
 
-  static CompileContext _overrideForTesting;
+  static CompileContext? _overrideForTesting;
 
   /// Currently executing context based on `Zone.current[CompileContext]`.
   ///
@@ -155,10 +155,10 @@ abstract class CompileContext {
   /// thrown.
   static CompileContext get current {
     final context = _overrideForTesting ?? Zone.current[_compileContextKey];
-    if (context != null) {
-      return context as CompileContext;
+    if (context == null) {
+      _failNoCompileContextConfigured();
     }
-    _failNoCompileContextConfigured();
+    return context as CompileContext;
   }
 
   @alwaysThrows
@@ -183,10 +183,10 @@ abstract class CompileContext {
   /// Creates a [CompileContext] for the provided [libraryPath].
   factory CompileContext(
     AssetId libraryPath, {
-    @required Map<String, Set<String>> policyExceptions,
-    @required Map<String, Set<String>> policyExceptionsInPackages,
-    @required bool enableDevTools,
-    @required bool isNullSafe,
+    required Map<String, Set<String>> policyExceptions,
+    required Map<String, Set<String>> policyExceptionsInPackages,
+    required bool enableDevTools,
+    required bool isNullSafe,
   }) {
     return _LibraryCompileContext(
       enableDevTools: enableDevTools,
@@ -278,18 +278,17 @@ class _LibraryCompileContext implements CompileContext {
   final bool isNullSafe;
 
   _LibraryCompileContext({
-    @required this.path,
-    @required this.policyExceptionsPerFiles,
-    @required this.policyExceptionsPerPackages,
-    @required this.enableDevTools,
-    @required this.isNullSafe,
+    required this.path,
+    required this.policyExceptionsPerFiles,
+    required this.policyExceptionsPerPackages,
+    required this.enableDevTools,
+    required this.isNullSafe,
   });
 
   final _recoverableErrors = <BuildError>[];
 
   @override
   void reportAndRecover(BuildError error) {
-    assert(error != null);
     try {
       throw error;
     } on BuildError catch (errorWithStackTrace) {

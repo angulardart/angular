@@ -28,9 +28,6 @@ class InjectorReader {
   /// Returns a list of all injectors needing generation in [element].
   static List<InjectorReader> findInjectors(LibraryElement element) {
     final source = element.source.uri;
-    if (source == null) {
-      throw StateError('Expected a source for $element.');
-    }
     return element.definingCompilationUnit.topLevelVariables
         .where(_shouldGenerateInjector)
         .map((field) => InjectorReader(
@@ -59,9 +56,9 @@ class InjectorReader {
   ///
   /// Workaround for https://github.com/dart-lang/code_builder/issues/148.
   @protected
-  final Uri doNotScope;
+  final Uri? doNotScope;
 
-  List<ProviderElement> _providers;
+  late List<ProviderElement> _providers;
 
   InjectorReader(
     this.field,
@@ -74,8 +71,7 @@ class InjectorReader {
     _providers = _computeProviders(annotation, moduleReader);
   }
 
-  @alwaysThrows
-  void _throwParseError([DartObject context, String message = '']) {
+  Never _throwParseError([DartObject? context, String message = '']) {
     if (message != '') {
       message = '. Additional information: $message';
     }
@@ -89,8 +85,7 @@ class InjectorReader {
     );
   }
 
-  @alwaysThrows
-  void _throwFactoryProvider(DartObject context) {
+  Never _throwFactoryProvider(DartObject context) {
     throw BuildError.forElement(
       field,
       'Invalid provider ($context): an explicit value of `${context.type}` '
@@ -145,7 +140,7 @@ class InjectorReader {
   /// is required because while some URLs can be referenced via `package:`,
   /// others cannot (i.e. those in a `test` directory), so we need to compute
   /// the relative path to them.
-  Reference _referSafe(String symbol, String url) {
+  Reference _referSafe(String symbol, String? url) {
     if (url == null) {
       // The type dynamic has no URL.
       return refer(symbol);
@@ -159,7 +154,7 @@ class InjectorReader {
 
   Reference _referRelative(String symbol, Uri url) {
     // URL segments indicating the origin.
-    final from = p.split(doNotScope.normalizePath().path)..removeLast();
+    final from = p.split(doNotScope!.normalizePath().path)..removeLast();
 
     // URL segments indicating the target.
     final to = p.split(url.path);
@@ -265,7 +260,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType, libraryReader),
+          linkToReference(provider.providerType!, libraryReader),
           actualValue,
           provider.isMulti,
         );
@@ -285,7 +280,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType, libraryReader),
+          linkToReference(provider.providerType!, libraryReader),
           _referSafe(
             provider.useFactory.fragment,
             provider.useFactory.removeFragment().toString(),
@@ -298,7 +293,7 @@ class InjectorReader {
           index,
           provider.token,
           _tokenToIdentifier(provider.token),
-          linkToReference(provider.providerType, libraryReader),
+          linkToReference(provider.providerType!, libraryReader),
           _tokenToIdentifier(provider.redirect),
           provider.isMulti,
         );
@@ -319,7 +314,7 @@ class InjectorReader {
   /// Returns a revivable `const` invocation as a code_builder [Expression].
   Expression _revive(UseValueProviderElement provider, Revivable invocation) {
     if (invocation.isPrivate) {
-      final privateReference = invocation.accessor?.isNotEmpty == true
+      final privateReference = invocation.accessor.isNotEmpty
           ? '${invocation.source}::${invocation.accessor}'
           : '${invocation.source}';
       throw BuildError.withoutContext(''
@@ -358,7 +353,7 @@ class InjectorReader {
     return refer(name, '$import');
   }
 
-  Expression _reviveAny(UseValueProviderElement provider, DartObject object) {
+  Expression _reviveAny(UseValueProviderElement provider, DartObject? object) {
     final reader = ConstantReader(object);
     if (reader.isNull) {
       return literalNull;
@@ -373,7 +368,7 @@ class InjectorReader {
       if (reader.isString) {
         return _reviveString(reader.stringValue);
       } else {
-        return literal(reader.literalValue);
+        return literal(reader.literalValue!);
       }
     }
     if (reader.isType) {
@@ -381,12 +376,7 @@ class InjectorReader {
           'Reviving Types is not supported but tried to revive $object');
     }
     final revive = reader.revive();
-    if (revive != null) {
-      return _revive(provider, revive);
-    }
-    // TODO(matanl): Make the error actionable after source_gen#374.
-    // https://github.com/dart-lang/source_gen/issues/374
-    throw ReviveError('Could not reference const object ($object)');
+    return _revive(provider, revive);
   }
 
   // Manually escape runes that are out of bounds of standard ASCII.
@@ -430,7 +420,7 @@ class InjectorReader {
 
   Expression _reviveMap(
     UseValueProviderElement provider,
-    Map<DartObject, DartObject> map,
+    Map<DartObject?, DartObject?> map,
   ) =>
       literalConstMap(map.map((k, v) =>
           MapEntry(_reviveAny(provider, k), _reviveAny(provider, v))));
@@ -452,7 +442,7 @@ abstract class InjectorVisitor {
     TokenElement token,
     Expression tokenExpression,
     Reference type,
-    String constructor,
+    String? constructor,
     List<Expression> dependencies,
     bool isMulti,
   );
@@ -486,7 +476,7 @@ abstract class InjectorVisitor {
   /// Implement providing [value] when [token] is requested.
   void visitProvideValue(
     int index,
-    TokenElement token,
+    TokenElement? token,
     Expression tokenExpression,
     Reference returnType,
     Expression value,

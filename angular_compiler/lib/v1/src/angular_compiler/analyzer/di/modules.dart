@@ -29,7 +29,7 @@ class ModuleReader {
   /// Validation may not be performed on the underlying elements.
   @protected
   bool isModule(DartObject o) =>
-      isList(o) || o.type?.element != null && $Module.isExactlyType(o.type);
+      isList(o) || o.type?.element != null && $Module.isExactlyType(o.type!);
 
   /// Helper method that can recursively extract [DartObject]s for `Provider`.
   ///
@@ -44,7 +44,7 @@ class ModuleReader {
   /// `Module` versus `List` in the view compiler.
   ///
   /// Returns a lazy iterable of only `Type` or `Provider` objects.
-  Iterable<DartObject> extractProviderObjects(DartObject value) {
+  Iterable<DartObject> extractProviderObjects(DartObject? value) {
     // Guard against being passed a null field.
     if (value == null || value.isNull) {
       return const [];
@@ -59,20 +59,20 @@ class ModuleReader {
   }
 
   Iterable<DartObject> _extractProvidersFromList(DartObject value) {
-    return value.toListValue().map(extractProviderObjects).expand((e) => e);
+    return value.toListValue()!.map(extractProviderObjects).expand((e) => e);
   }
 
   Iterable<DartObject> _extractProvidersFromModule(DartObject value) sync* {
-    final providersField = value.getField('provide');
-    final modulesField = value.getField('include');
+    final providersField = value.getField('provide')!;
+    final modulesField = value.getField('include')!;
     if (!modulesField.isNull) {
       yield* modulesField
-          .toListValue()
+          .toListValue()!
           .map(_extractProvidersFromModule)
           .expand((e) => e);
     }
     if (!providersField.isNull) {
-      yield* providersField.toListValue();
+      yield* providersField.toListValue()!;
     }
   }
 
@@ -94,16 +94,16 @@ class ModuleReader {
   ModuleElement parseModule(DartObject o) {
     if (isList(o)) {
       return _parseList(o);
-    } else if ($Module.isExactlyType(o.type)) {
+    } else if ($Module.isExactlyType(o.type!)) {
       return _parseModule(o);
     } else {
-      final typeName = getTypeName(o.type);
+      final typeName = getTypeName(o.type!);
       throw FormatException('Expected Module, got "$typeName".');
     }
   }
 
   ModuleElement _parseList(DartObject o) {
-    final items = o.toListValue();
+    final items = o.toListValue()!;
     final include =
         items.where((item) => isModule(item)).map(parseModule).toList();
     final provide = items
@@ -119,14 +119,14 @@ class ModuleReader {
     final includeReader = reader.read('include');
     if (!includeReader.isList) {
       var typeStr =
-          reader.objectValue.type.getDisplayString(withNullability: false);
+          reader.objectValue.type!.getDisplayString(withNullability: false);
       throw FormatException("Expected list for 'include' field of $typeStr");
     }
     final include = includeReader.listValue.map(parseModule).toList();
     final provideReader = reader.read('provide');
     if (!provideReader.isList) {
       var typeStr =
-          reader.objectValue.type.getDisplayString(withNullability: false);
+          reader.objectValue.type!.getDisplayString(withNullability: false);
       throw FormatException("Expected list for 'provide' field of $typeStr.");
     }
     final provide =
@@ -144,7 +144,7 @@ class ModuleElement {
   /// A list of other `Module`s included in the module.
   final List<ModuleElement> include;
 
-  ModuleElement({this.provide, this.include});
+  ModuleElement({required this.provide, required this.include});
 
   /// Flattens the module to a list of `Provider`s.
   ///

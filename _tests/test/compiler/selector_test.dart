@@ -23,7 +23,7 @@ void main() {
         matched.add(selector);
         matched.add(context);
       };
-      matcher = SelectorMatcher();
+      matcher = SelectorMatcher<int>();
     });
     test('should select by element name case sensitive', () {
       matcher.addSelectables(s1 = CssSelector.parse('someTag'), 1);

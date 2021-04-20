@@ -20,7 +20,7 @@ String getTypeImport(DartType type) {
 }
 
 /// Forwards and backwards-compatible method of getting the "name" of [type].
-String getTypeName(DartType type) {
+String? getTypeName(DartType type) {
   var aliasElement = type.aliasElement;
   if (aliasElement != null) {
     return aliasElement.name;
@@ -47,13 +47,13 @@ String getTypeName(DartType type) {
 ///
 /// ... both `foo` and `bar` should return the [DartType] for `String`.
 DartType typeArgumentOf(DartObject object, [int index = 0]) {
-  if (object.type.typeArguments.isEmpty) {
+  if (object.type!.typeArguments.isEmpty) {
     return DynamicTypeImpl.instance;
   }
-  return object.type.typeArguments[index];
+  return object.type!.typeArguments[index];
 }
 
-String typeToCode(DartType type) {
+String? typeToCode(DartType? type) {
   if (type == null) {
     return null;
   } else if (type.isDynamic) {
@@ -80,18 +80,18 @@ String typeToCode(DartType type) {
 /// For example:
 ///  * `List` would be `'dart:core#List'`,
 ///  * `Duration.zero` would be `'dart:core#Duration.zero'`.
-Uri urlOf(Element element, [String name]) {
+Uri urlOf(Element? element, [String? name]) {
   if (element?.source == null) {
     return Uri(scheme: 'dart', path: 'core', fragment: 'dynamic');
   }
 
-  var fragment = name ?? element.name;
-  final enclosing = element.enclosingElement;
+  var fragment = name ?? element!.name;
+  final enclosing = element!.enclosingElement;
   if (enclosing is ClassElement) {
     fragment = '${enclosing.name}.$fragment';
   }
 
   // NOTE: element.source.uri might be a file that is not importable (i.e. is
   // a "part"), while element.library.source.uri is always importable.
-  return normalizeUrl(element.library.source.uri).replace(fragment: fragment);
+  return normalizeUrl(element.library!.source.uri).replace(fragment: fragment);
 }

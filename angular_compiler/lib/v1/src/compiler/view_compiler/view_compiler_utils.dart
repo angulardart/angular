@@ -1,3 +1,5 @@
+// http://go/migrate-deps-first
+// @dart=2.9
 import 'dart:collection';
 
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
