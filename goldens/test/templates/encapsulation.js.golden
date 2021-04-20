@@ -4605,7 +4605,7 @@
     },
     ComponentStyles_ComponentStyles$scoped: function(styles, componentUrl) {
       var componentId,
-        t1 = $.$get$appViewUtils()._readField$0().appId + "-",
+        t1 = $.appViewUtils._readField$0().appId + "-",
         t2 = $.ComponentStyles__nextUniqueId;
       $.ComponentStyles__nextUniqueId = t2 + 1;
       componentId = t1 + t2;
@@ -8433,7 +8433,7 @@
   };
   G.appInjector_closure0.prototype = {
     call$0: function() {
-      return $.$get$appViewUtils()._readField$0();
+      return $.appViewUtils._readField$0();
     },
     $signature: 19
   };
@@ -8453,7 +8453,7 @@
     call$0: function() {
       var t1 = this.userInjector;
       this.applicationRef.set$finalLocalValue(Y.ApplicationRef$_(this.ngZone, t1.$get$1(0, C.Type_ExceptionHandler_qBE), t1));
-      $.$get$appViewUtils()._value = new Q.AppViewUtils(t1.$get$1(0, C.C_OpaqueToken));
+      $.appViewUtils._value = new Q.AppViewUtils(t1.$get$1(0, C.C_OpaqueToken));
       return t1;
     },
     "call*": "call$0",
@@ -10069,6 +10069,7 @@
     $._RootZone__rootDelegate = null;
     $._toStringVisiting = H.setRuntimeTypeInfo([], type$.JSArray_Object);
     $.ChangeDetectionHost__current = null;
+    $.appViewUtils = H._Cell$();
     $.ComponentStyles__nextUniqueId = 0;
     $.ViewGoldenComponent0__componentStyles = null;
     $.styles$NoEncapsulation = H.setRuntimeTypeInfo(["    :host {\n      display: inline-flex;\n    }\n    :host(.ltr) .top-section {\n      /*! @noflip */\n      direction: ltr;\n    }\n    [trailing] {\n      font-weight: bold;\n    }\n    ::ng-deep .link {\n      text-decoration: none;\n    }\n    .has-links ::ng-deep .link {\n      text-decoration: none;\n    }\n    "], type$.JSArray_Object);
@@ -10158,9 +10159,6 @@
       t1.initializeEagerly$0();
       t2 = type$.Object;
       return new K.TransitionalAppHost(M._MapInjector$(P.LinkedHashMap_LinkedHashMap$_literal([C.Type_TestabilityRegistry_IMm, t1], t2, t2), null));
-    });
-    _lazyFinal($, "appViewUtils", "$get$appViewUtils", function() {
-      return H._Cell$();
     });
     _lazyFinal($, "_idPlaceholder", "$get$_idPlaceholder", function() {
       return P.RegExp_RegExp("%ID%");
