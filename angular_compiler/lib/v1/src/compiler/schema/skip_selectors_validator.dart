@@ -27,6 +27,8 @@ const List<String> _selectorAllowlist = [
   '[label]',
   // A selector used in filter-bar element's descendant elements.
   '[popup-inside-filter-bar]',
+  // A selector used in scrollable-cards element's descendant elements.
+  '[scrollable-card]',
   // Javascript web chart library.
   'aplos-chart',
   'button[dense]',
