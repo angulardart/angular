@@ -248,7 +248,7 @@
       this._message = t0;
     },
     unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -1192,7 +1192,7 @@
       return "?";
     },
     _unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -2026,9 +2026,6 @@
     _TypeError: function _TypeError(t0) {
       this.__rti$_message = t0;
     },
-    unmangleGlobalNameIfPreservedAnyways: function($name) {
-      return init.mangledGlobalNames[$name];
-    },
     printString: function(string) {
       if (typeof dartPrint == "function") {
         dartPrint(string);
@@ -2136,7 +2133,7 @@
       return string;
     },
     Error_safeToString: function(object) {
-      if (typeof object == "number" || H._isBool(object) || null == object)
+      if (typeof object == "number" || H._isBool(object) || object == null)
         return J.toString$0$(object);
       if (typeof object == "string")
         return JSON.stringify(object);
