@@ -5,6 +5,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:build/build.dart';
+import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
@@ -70,13 +71,14 @@ Future<ElementDeclarationResult> _resolvedClassResult(
     assetId,
     allowSyntaxErrors: true,
   );
-  final result = await element.session.getResolvedLibraryByElement(library);
-  if (result.state == ResultState.NOT_A_FILE) {
-    _throwInvalidSummaryError(library.source.fullName);
+  final result = await element.session.getResolvedLibraryByElement2(library);
+  if (result is ResolvedLibraryResult) {
+    return result.getElementDeclaration(element);
   }
-  return result.getElementDeclaration(element);
+  _throwInvalidSummaryError(library.source.fullName);
 }
 
+@alwaysThrows
 void _throwInvalidSummaryError(String summaryName) {
   // We don't have access to source information in summarized libraries,
   // but another build step will likely emit the root cause errors.
