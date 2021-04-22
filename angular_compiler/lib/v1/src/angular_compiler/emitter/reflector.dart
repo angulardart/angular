@@ -87,7 +87,9 @@ class ReflectableEmitter {
       }
       return Parameter((b) => b
         ..name = 'p${counter++}'
-        ..type = linkToReference(type, _library));
+        ..type = linkToReference(type, _library)
+            // TODO(b/185491084): move this inside linkToReference.
+            .rebuild((b) => b..isNullable = type.isNullable));
     }).toList();
   }
 
