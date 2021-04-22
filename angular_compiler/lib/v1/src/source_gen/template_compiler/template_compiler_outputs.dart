@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/source_module.dart';
 
@@ -9,7 +7,7 @@ class TemplateCompilerOutputs {
   final List<InjectorReader> injectorsOutput;
 
   /// For each `@Component`, how to generate the backing views.
-  final DartSourceOutput templateSource;
+  final DartSourceOutput? templateSource;
 
   /// For each `@Component` and `@Injectable`, how to allow dynamic loading.
   ///

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
@@ -8,7 +6,7 @@ import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v2/context.dart';
 
 /// Returns the [CompileTypeMetadata] appropriate for `T` in `Provider<T>`.
-DartType inferProviderType(DartObject provider, DartObject token) {
+DartType? inferProviderType(DartObject provider, DartObject token) {
   // Complexity of code is two-fold:
   //
   // 1. The analyzer has subtle top-level inference bugs. Sometimes the <T>
@@ -22,7 +20,7 @@ DartType inferProviderType(DartObject provider, DartObject token) {
   //    case.
   //
   // Check for MultiToken<T>.
-  final tokenType = token?.type;
+  final tokenType = token.type;
   if (tokenType != null && $MultiToken.isAssignableFromType(tokenType)) {
     if ($MultiToken.isExactlyType(tokenType)) {
       return tokenType.typeArguments.first;
@@ -30,18 +28,19 @@ DartType inferProviderType(DartObject provider, DartObject token) {
     // Check for a _custom_ MultiToken<T>
     final tokenTypeClass = tokenType.element;
     if (tokenTypeClass is ClassElement) {
-      if (!$MultiToken.isExactlyType(tokenTypeClass.supertype)) {
+      var supertype = tokenTypeClass.supertype!;
+      if (!$MultiToken.isExactlyType(supertype)) {
         // TODO(matanl): When we start using angular_compiler to resolve all
         // of the time remove this message, since we already validate there.
         throw BuildError.forElement(
-            tokenType.element,
+            tokenType.element!,
             'A sub-type of OpaqueToken must directly extend OpaqueToken or '
             'MultiToken, and cannot extend another class that in turn extends '
             'OpaqueToken or MultiToken.\n\n'
             'We may loosten these restrictions in the future. See: '
             'https://github.com/dart-lang/angular/issues/899');
       }
-      return tokenTypeClass.supertype.typeArguments.first;
+      return supertype.typeArguments.first;
     }
   }
   // Lookup Inferred Type (i.e. the <T> recorded for Provider<T>).
@@ -58,7 +57,7 @@ DartType inferProviderType(DartObject provider, DartObject token) {
       $OpaqueToken.isAssignableFromType(tokenType) &&
       // Only apply "auto inference" to "new-type" Providers like
       // Value, Class, Existing, FactoryProvider.
-      !$Provider.isExactlyType(provider.type) &&
+      !$Provider.isExactlyType(provider.type!) &&
       tokenType.typeArguments.isNotEmpty) {
     final opaqueTokenOfT = tokenType.typeArguments.first;
     if (!opaqueTokenOfT.isDynamic) {

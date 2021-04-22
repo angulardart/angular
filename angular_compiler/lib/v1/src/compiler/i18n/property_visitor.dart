@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v2/context.dart';
 
@@ -8,7 +6,7 @@ import 'message.dart';
 import 'metadata.dart';
 
 /// Creates an internationalized message from a bound [value] with [metadata].
-I18nMessage i18nMessageFromPropertyBinding(
+I18nMessage? i18nMessageFromPropertyBinding(
   ASTWithSource value,
   I18nMetadata metadata,
   SourceSpan sourceSpan,

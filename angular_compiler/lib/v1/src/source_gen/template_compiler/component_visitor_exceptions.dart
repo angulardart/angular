@@ -1,11 +1,8 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/analysis/results.dart';
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
 import 'package:build/build.dart';
-import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
@@ -53,11 +50,11 @@ Future<ElementDeclarationResult> _resolvedClassResult(
   Resolver resolver,
   Element element,
 ) async {
-  AssetId assetId;
+  late AssetId assetId;
   try {
     assetId = await resolver.assetIdForElement(element);
   } on UnresolvableAssetException catch (_) {
-    _throwInvalidSummaryError(element.source.fullName);
+    _throwInvalidSummaryError(element.source!.fullName);
   }
   // A `part of` dart file is not a standalone dart library. Thus,
   // [library] is null when an error occurs in a `part of` dart file.
@@ -71,15 +68,14 @@ Future<ElementDeclarationResult> _resolvedClassResult(
     assetId,
     allowSyntaxErrors: true,
   );
-  final result = await element.session.getResolvedLibraryByElement2(library);
+  final result = await element.session!.getResolvedLibraryByElement2(library);
   if (result is ResolvedLibraryResult) {
-    return result.getElementDeclaration(element);
+    return result.getElementDeclaration(element)!;
   }
   _throwInvalidSummaryError(library.source.fullName);
 }
 
-@alwaysThrows
-void _throwInvalidSummaryError(String summaryName) {
+Never _throwInvalidSummaryError(String summaryName) {
   // We don't have access to source information in summarized libraries,
   // but another build step will likely emit the root cause errors.
   throw BuildError.withoutContext(
@@ -90,7 +86,7 @@ void _throwInvalidSummaryError(String summaryName) {
 abstract class AsyncBuildError {
   final String _message;
 
-  AsyncBuildError([this._message]);
+  AsyncBuildError([this._message = '']);
 
   Future<BuildError> resolve(Resolver resolver);
 
@@ -131,16 +127,12 @@ class AngularAnalysisError extends AsyncBuildError {
 
     var resolvedMetadata = _metadataFromAncestry(result.node);
 
-    if (resolvedMetadata == null) {
-      return BuildError.forElement(indexedAnnotation.element, toString());
-    }
-
     var resolvedAnnotation =
         resolvedMetadata[indexedAnnotation.annotationIndex];
 
     // Only include the errors that are inside the annotation.
     return _buildErrorForAnalysisErrors(
-        result.resolvedUnit.errors.where((error) =>
+        result.resolvedUnit!.errors.where((error) =>
             error.offset >= resolvedAnnotation.offset &&
             error.offset <= resolvedAnnotation.end),
         indexedAnnotation.element,
@@ -271,7 +263,7 @@ List<Annotation> _metadataFromAncestry(AstNode node) {
   } else if (node is FormalParameter) {
     return node.metadata;
   }
-  return _metadataFromAncestry(node.parent);
+  return _metadataFromAncestry(node.parent!);
 }
 
 class ErrorMessageForAnnotation extends AsyncBuildError {
@@ -298,12 +290,8 @@ class ErrorMessageForAnnotation extends AsyncBuildError {
 
     var resolvedMetadata = _metadataFromAncestry(result.node);
 
-    if (resolvedMetadata == null) {
-      return BuildError.forElement(indexedAnnotation.element, toString());
-    }
-
     var resolvedAnnotation =
-        resolvedMetadata[annotationIndex].elementAnnotation;
+        resolvedMetadata[annotationIndex].elementAnnotation!;
     return BuildError.forAnnotation(resolvedAnnotation, toString());
   }
 }

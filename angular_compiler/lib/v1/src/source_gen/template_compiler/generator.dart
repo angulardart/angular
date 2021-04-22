@@ -27,7 +27,6 @@ Future<String> generate(
       library.element,
       outputs,
       fileName(buildStep.inputId),
-      library.element.name,
       flags,
     );
   });

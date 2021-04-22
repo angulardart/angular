@@ -11,7 +11,7 @@ dependencies:
   args: ^2.0.0
   build: ^2.0.0
   code_builder: ^4.0.0
-  collection: ^1.14.5
+  collection: ^1.15.0-nullsafety.4
   dart_style: ^2.0.0
   logging: ^1.0.0
   meta: ^1.1.4

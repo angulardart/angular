@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 
@@ -7,7 +5,7 @@ import 'package:build/build.dart';
 ///
 /// Note that this needs to check librarySource instead of just source to handle
 /// part files correctly.
-String moduleUrl(Element element) {
+String? moduleUrl(Element element) {
   // TODO(mfairhurst) delete this check. This is just to preserve goldens when
   // https://dart-review.googlesource.com/c/sdk/+/62730 is rolled out. It has
   // no user-facing effects.
@@ -19,19 +17,17 @@ String moduleUrl(Element element) {
     return null;
   }
   var source = element.librarySource ?? element.source;
-  var uri = source?.uri?.toString();
+  var uri = source?.uri.toString();
   if (uri == null) return null;
   if (Uri.parse(uri).scheme == 'dart') return uri;
   return toAssetUri(_fromUri(uri));
 }
 
 String toAssetUri(AssetId assetId) {
-  if (assetId == null) throw ArgumentError.notNull('assetId');
   return 'asset:${assetId.package}/${assetId.path}';
 }
 
 AssetId _fromUri(String assetUri) {
-  if (assetUri == null) throw ArgumentError.notNull('assetUri');
   if (assetUri.isEmpty) throw ArgumentError.value('(empty string)', 'assetUri');
   var uri = _toAssetScheme(Uri.parse(assetUri));
   return AssetId(uri.pathSegments.first, uri.pathSegments.skip(1).join('/'));
@@ -49,8 +45,6 @@ String fileName(AssetId id) {
 /// The `scheme` of `absoluteUri` is expected to be either 'package' or
 /// 'asset'.
 Uri _toAssetScheme(Uri absoluteUri) {
-  if (absoluteUri == null) throw ArgumentError.notNull('absoluteUri');
-
   if (!absoluteUri.isAbsolute) {
     throw ArgumentError.value(absoluteUri.toString(), 'absoluteUri',
         'Value passed must be an absolute uri');
@@ -76,13 +70,13 @@ Uri _toAssetScheme(Uri absoluteUri) {
 }
 
 /// Returns `uri` with its extension updated to [_templateExtension].
-String toTemplateExtension(String uri) =>
+String? toTemplateExtension(String? uri) =>
     _toExtension(uri, _allExtensions, _templateExtension);
 
 /// Returns `uri` with its extension updated to `toExtension` if its
 /// extension is currently in `fromExtension`.
-String _toExtension(
-    String uri, Iterable<String> fromExtensions, String toExtension) {
+String? _toExtension(
+    String? uri, Iterable<String> fromExtensions, String toExtension) {
   if (uri == null) return null;
   if (uri.endsWith(toExtension)) return uri;
   for (var extension in fromExtensions) {
