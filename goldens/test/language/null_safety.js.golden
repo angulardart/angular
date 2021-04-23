@@ -2671,7 +2671,6 @@
   };
   H._Universe_addRules(init.typeUniverse, JSON.parse('{}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"JSArray":1,"JSUnmodifiableArray":1,"ArrayIterator":1}'));
-  0;
   var type$ = (function rtii() {
     var findType = H.findType;
     return {
