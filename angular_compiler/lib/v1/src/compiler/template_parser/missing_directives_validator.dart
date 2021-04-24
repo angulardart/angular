@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/aria_attributes.dart';
 import 'package:angular_compiler/v1/src/compiler/html_events.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
@@ -7,8 +5,6 @@ import 'package:angular_compiler/v1/src/compiler/schema/skip_selectors_validator
 import 'package:angular_compiler/v1/src/compiler/selector.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart' as ng;
 import 'package:angular_compiler/v1/src/compiler/template_parser/recursive_template_visitor.dart';
-import 'package:angular_compiler/v1/src/compiler/view_compiler/view_compiler_utils.dart'
-    show detectHtmlElementFromTagName;
 import 'package:angular_compiler/v2/context.dart';
 
 /// A validator to catch missing elements, direcitves, attributes, and outputs.
@@ -107,7 +103,7 @@ class MissingDirectiveValidator
     List<ng.DirectiveAst> directives,
   ) =>
       directives.map(
-        (directive) => CssSelector.parse(directive.directive.selector),
+        (directive) => CssSelector.parse(directive.directive.selector!),
       );
 
   static bool _hasMatchedSelector(
@@ -140,8 +136,8 @@ class MissingDirectiveValidator
   }
 
   @override
-  void visitAttr(ng.AttrAst ast, [_MissingDirectiveContext context]) {
-    if (context.elementName.startsWith('@svg')) {
+  void visitAttr(ng.AttrAst ast, [_MissingDirectiveContext? context]) {
+    if (context!.elementName.startsWith('@svg')) {
       return;
     }
     if (!(_matchedSelectorWithAttribute(
@@ -204,10 +200,10 @@ class MissingDirectiveValidator
       selector.replaceFirst('@xhtml:', '');
 
   @override
-  void visitEvent(ng.BoundEventAst ast, [_MissingDirectiveContext context]) {
+  void visitEvent(ng.BoundEventAst ast, [_MissingDirectiveContext? context]) {
     var name = _extractEventName(ast.name);
     if (!(_matchedSelectorWithAttribute(
-            context.skipValidationSelectors, ast.name) ||
+            context!.skipValidationSelectors, ast.name) ||
         // HTML events are not case sensitive.
         isNativeHtmlEvent(name.toLowerCase()) ||
         _registry.hasEvent(context.elementName, name) ||
@@ -245,3 +241,140 @@ class _MissingDirectiveContext {
     this.attributeDeps = const {},
   });
 }
+
+const _htmlTagNames = <String>{
+  'a',
+  'abbr',
+  'acronym',
+  'address',
+  'applet',
+  'area',
+  'article',
+  'aside',
+  'audio',
+  'b',
+  'base',
+  'basefont',
+  'bdi',
+  'bdo',
+  'bgsound',
+  'big',
+  'blockquote',
+  'body',
+  'br',
+  'button',
+  'canvas',
+  'caption',
+  'center',
+  'cite',
+  'code',
+  'col',
+  'colgroup',
+  'command',
+  'data',
+  'datalist',
+  'dd',
+  'del',
+  'details',
+  'dfn',
+  'dialog',
+  'dir',
+  'div',
+  'dl',
+  'dt',
+  'element',
+  'em',
+  'embed',
+  'fieldset',
+  'figcaption',
+  'figure',
+  'font',
+  'footer',
+  'form',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'head',
+  'header',
+  'hr',
+  'i',
+  'iframe',
+  'img',
+  'input',
+  'ins',
+  'kbd',
+  'keygen',
+  'label',
+  'legend',
+  'li',
+  'link',
+  'listing',
+  'main',
+  'map',
+  'mark',
+  'menu',
+  'menuitem',
+  'meta',
+  'meter',
+  'nav',
+  'object',
+  'ol',
+  'optgroup',
+  'option',
+  'output',
+  'p',
+  'param',
+  'picture',
+  'pre',
+  'progress',
+  'q',
+  'rp',
+  'rt',
+  'rtc',
+  'ruby',
+  's',
+  'samp',
+  'script',
+  'section',
+  'select',
+  'shadow',
+  'small',
+  'source',
+  'span',
+  'strong',
+  'style',
+  'sub',
+  'summary',
+  'sup',
+  'table',
+  'tbody',
+  'td',
+  'template',
+  'textarea',
+  'tfoot',
+  'th',
+  'thead',
+  'time',
+  'title',
+  'tr',
+  'track',
+  'tt',
+  'u',
+  'ul',
+  'var',
+  'video',
+  'wbr',
+};
+
+/// Returns true if tag name is HtmlElement.
+///
+/// Returns false if tag name is svg element or other. Used for optimizations.
+/// Should not generate false positives but returning false when unknown is
+/// fine since code will fallback to general Element case.
+// TODO(186022536): remove duplicated code when view_compiler_utils.dart opt-in
+// null safety.
+bool detectHtmlElementFromTagName(String tagName) =>
+    _htmlTagNames.contains(tagName);

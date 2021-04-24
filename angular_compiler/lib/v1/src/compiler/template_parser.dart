@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/js_split_facade.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -29,10 +27,10 @@ class TemplateContext {
   final List<CompileDirectiveMetadata> directives;
 
   TemplateContext({
-    this.parser,
-    this.schemaRegistry,
-    this.component,
-    this.directives,
+    required this.parser,
+    required this.schemaRegistry,
+    required this.component,
+    required this.directives,
   });
 
   List<CompileIdentifierMetadata> get exports => component.exports;
@@ -45,11 +43,11 @@ BoundElementPropertyAst createElementPropertyAst(
   SourceSpan sourceSpan,
   ElementSchemaRegistry schemaRegistry,
 ) {
-  String unit;
-  String namespace;
-  PropertyBindingType bindingType;
-  String boundPropertyName;
-  TemplateSecurityContext securityContext;
+  String? unit;
+  String? namespace;
+  PropertyBindingType? bindingType;
+  String? boundPropertyName;
+  TemplateSecurityContext? securityContext;
   var parts = name.split(_propertyPartsSeparator);
   if (identical(parts.length, 1)) {
     boundPropertyName = schemaRegistry.getMappedPropName(parts[0]);
@@ -136,13 +134,13 @@ List<String> _splitClasses(String classAttrValue) {
 }
 
 CssSelector createElementCssSelector(
-    String elementName, List<List<String>> matchableAttrs) {
+    String elementName, List<List<String?>> matchableAttrs) {
   var cssSelector = CssSelector();
   var elNameNoNs = _splitNsName(elementName)[1];
   cssSelector.setElement(elNameNoNs);
   for (var i = 0; i < matchableAttrs.length; i++) {
-    var attrName = matchableAttrs[i][0];
-    var attrNameNoNs = _splitNsName(attrName)[1];
+    var attrName = matchableAttrs[i][0]!;
+    var attrNameNoNs = _splitNsName(attrName)[1]!;
     var attrValue = matchableAttrs[i][1];
     // [CssSelector] is used both to define selectors, and to describe an
     // element. This is unfortunate as certain attribute selectors don't make
@@ -167,13 +165,13 @@ List<T> removeDuplicates<T>(List<T> items) {
       if (r is CompilePipeMetadata) {
         CompilePipeMetadata rMeta = r;
         var itemMeta = item as CompilePipeMetadata;
-        return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl;
+        return rMeta.type!.name == itemMeta.type!.name &&
+            rMeta.type!.moduleUrl == itemMeta.type!.moduleUrl;
       } else if (r is CompileDirectiveMetadata) {
         CompileDirectiveMetadata rMeta = r;
         var itemMeta = item as CompileDirectiveMetadata;
-        return rMeta.type.name == itemMeta.type.name &&
-            rMeta.type.moduleUrl == itemMeta.type.moduleUrl;
+        return rMeta.type!.name == itemMeta.type!.name &&
+            rMeta.type!.moduleUrl == itemMeta.type!.moduleUrl;
       } else {
         throw ArgumentError();
       }
@@ -185,7 +183,7 @@ List<T> removeDuplicates<T>(List<T> items) {
   return res;
 }
 
-String mergeNsAndName(String prefix, String localName) {
+String mergeNsAndName(String? prefix, String localName) {
   if (prefix == null) return localName;
   // At least one part is empty, this is not a valid namespaced token.
   if (prefix == '' || localName == '') return '$prefix:$localName';
@@ -193,10 +191,10 @@ String mergeNsAndName(String prefix, String localName) {
 }
 
 final _nsPrefixRegExp = RegExp(r'^@([^:]+):(.+)');
-List<String> _splitNsName(String elementName) {
+List<String?> _splitNsName(String elementName) {
   if (elementName[0] != '@') {
     return [null, elementName];
   }
-  var match = _nsPrefixRegExp.firstMatch(elementName);
+  var match = _nsPrefixRegExp.firstMatch(elementName)!;
   return [match[1], match[2]];
 }

@@ -44,7 +44,7 @@ void bindView(
   @required bool bindHostProperties,
 }) {
   var visitor = _ViewBinderVisitor(view.compileView);
-  templateVisitAll(visitor, view.parsedTemplate);
+  templateVisitAll(visitor, view.parsedTemplate, null);
   for (var pipe in view.compileView.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
@@ -84,7 +84,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
 
   @override
   void visitNgContainer(NgContainerAst ast, _) {
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
@@ -109,7 +109,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       bindDirectiveOutputs(
           directive.outputs, directive.providerSource, element.compileElement);
     }
-    templateVisitAll(this, element.parsedTemplate);
+    templateVisitAll(this, element.parsedTemplate, null);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
     for (var directive in element.matchedDirectives) {

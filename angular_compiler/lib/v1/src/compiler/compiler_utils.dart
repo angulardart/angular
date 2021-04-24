@@ -1,11 +1,9 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'compile_metadata.dart';
 
 const moduleSuffix = '.dart';
 
 String templateModuleUrl(CompileTypeMetadata type) {
-  var moduleUrl = type.moduleUrl;
+  var moduleUrl = type.moduleUrl!;
   var urlWithoutSuffix =
       moduleUrl.substring(0, moduleUrl.length - moduleSuffix.length);
   return '$urlWithoutSuffix.template$moduleSuffix';

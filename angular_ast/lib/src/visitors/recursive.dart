@@ -84,7 +84,8 @@ class RecursiveTemplateAstVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitElement(ElementAst astNode, [C? context]) => ElementAst.from(
+  TemplateAst? visitElement(ElementAst astNode, [C? context]) =>
+      ElementAst.from(
         astNode,
         astNode.name,
         visit(astNode.closeComplement),

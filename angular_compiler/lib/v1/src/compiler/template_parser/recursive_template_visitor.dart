@@ -1,15 +1,14 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:meta/meta.dart';
 
 import '../template_ast.dart';
 
 /// A visitor for [TemplateAst] trees that will process each node.
 abstract class RecursiveTemplateVisitor<C>
-    implements TemplateAstVisitor<TemplateAst, C> {
+    implements TemplateAstVisitor<TemplateAst, C?> {
   /// Visits a collection of [TemplateAst] nodes, returning all of those that
   /// are not null.
-  List<T> visitAll<T extends TemplateAst>(Iterable<T> astNodes, [C context]) {
+  List<T>? visitAll<T extends TemplateAst>(Iterable<T?>? astNodes,
+      [C? context]) {
     if (astNodes == null) return null;
 
     final results = <T>[];
@@ -22,20 +21,20 @@ abstract class RecursiveTemplateVisitor<C>
     return results;
   }
 
-  T visit<T extends TemplateAst>(T astNode, [C context]) =>
+  T? visit<T extends TemplateAst>(T? astNode, [C? context]) =>
       astNode?.visit(this, context) as T;
 
   @override
   @mustCallSuper
-  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) =>
+  TemplateAst visitEmbeddedTemplate(EmbeddedTemplateAst ast, C? context) =>
       EmbeddedTemplateAst(
-        visitAll(ast.attrs, context),
-        visitAll(ast.references, context),
-        visitAll(ast.variables, context),
-        visitAll(ast.directives, context),
-        visitAll(ast.providers, context),
+        visitAll(ast.attrs, context)!,
+        visitAll(ast.references, context)!,
+        visitAll(ast.variables, context)!,
+        visitAll(ast.directives, context)!,
+        visitAll(ast.providers, context)!,
         ast.elementProviderUsage,
-        visitAll(ast.children, context),
+        visitAll(ast.children, context)!,
         ast.ngContentIndex,
         ast.sourceSpan,
         ast.matchedNgContentSelectors,
@@ -43,33 +42,33 @@ abstract class RecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  TemplateAst visitElement(ElementAst ast, C context) => ElementAst(
+  TemplateAst visitElement(ElementAst ast, C? context) => ElementAst(
       ast.name,
-      visitAll(ast.attrs, context),
-      visitAll(ast.inputs, context),
-      visitAll(ast.outputs, context),
-      visitAll(ast.references, context),
-      visitAll(ast.directives, context),
-      visitAll(ast.providers, context),
+      visitAll(ast.attrs, context)!,
+      visitAll(ast.inputs, context)!,
+      visitAll(ast.outputs, context)!,
+      visitAll(ast.references, context)!,
+      visitAll(ast.directives, context)!,
+      visitAll(ast.providers, context)!,
       ast.elementProviderUsage,
-      visitAll(ast.children, context),
+      visitAll(ast.children, context)!,
       ast.ngContentIndex,
       ast.sourceSpan,
       ast.matchedNgContentSelectors);
 
   @override
   @mustCallSuper
-  TemplateAst visitDirective(DirectiveAst ast, C context) => DirectiveAst(
+  TemplateAst visitDirective(DirectiveAst ast, C? context) => DirectiveAst(
         ast.directive,
-        inputs: visitAll(ast.inputs, context),
-        outputs: visitAll(ast.outputs, context),
+        inputs: visitAll(ast.inputs, context)!,
+        outputs: visitAll(ast.outputs, context)!,
         sourceSpan: ast.sourceSpan,
       );
 
   @override
   @mustCallSuper
   TemplateAst visitNgContainer(NgContainerAst ast, context) =>
-      NgContainerAst(visitAll(ast.children, context), ast.sourceSpan);
+      NgContainerAst(visitAll(ast.children, context)!, ast.sourceSpan);
 
   @override
   TemplateAst visitNgContent(NgContentAst ast, context) => NgContentAst(
@@ -115,8 +114,8 @@ abstract class RecursiveTemplateVisitor<C>
 // TODO(b/141691580): This should be named `RecursiveTemplateVisitor`, while the
 // existing class should be renamed to indicate that it recreates the AST.
 abstract class InPlaceRecursiveTemplateVisitor<C>
-    implements TemplateAstVisitor<void, C> {
-  void visitAll(Iterable<TemplateAst> astNodes, [C context]) {
+    implements TemplateAstVisitor<void, C?> {
+  void visitAll(Iterable<TemplateAst>? astNodes, [C? context]) {
     if (astNodes == null) return;
     for (final astNode in astNodes) {
       astNode.visit(this, context);
@@ -125,7 +124,7 @@ abstract class InPlaceRecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, C context) {
+  void visitEmbeddedTemplate(EmbeddedTemplateAst ast, C? context) {
     visitAll(ast.attrs, context);
     visitAll(ast.references, context);
     visitAll(ast.variables, context);
@@ -136,7 +135,7 @@ abstract class InPlaceRecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  void visitElement(ElementAst ast, C context) {
+  void visitElement(ElementAst ast, C? context) {
     visitAll(ast.attrs, context);
     visitAll(ast.inputs, context);
     visitAll(ast.outputs, context);
@@ -148,7 +147,7 @@ abstract class InPlaceRecursiveTemplateVisitor<C>
 
   @override
   @mustCallSuper
-  void visitDirective(DirectiveAst ast, C context) {
+  void visitDirective(DirectiveAst ast, C? context) {
     visitAll(ast.inputs, context);
     visitAll(ast.outputs, context);
   }

@@ -2599,8 +2599,8 @@ CompileDirectiveMetadata createCompileDirectiveMetadata({
   String exportAs,
   List<String> inputs,
   List<String> outputs,
-  List<CompileProviderMetadata> providers,
-  List<CompileProviderMetadata> viewProviders,
+  List<CompileProviderMetadata> providers = const [],
+  List<CompileProviderMetadata> viewProviders = const [],
   List<CompileQueryMetadata> queries,
   CompileTemplateMetadata template,
 }) {
