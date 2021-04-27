@@ -142,7 +142,7 @@
   }
   var functionCounter = 0;
   function tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted) {
-    return isIntercepted ? new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new c(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null) : new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "() {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new c(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null);
+    return isIntercepted ? new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null) : new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null);
   }
   function tearOff(funcs, applyTrampolineIndex, reflectionInfo, isStatic, name, isIntercepted) {
     var cache = null;
@@ -2848,6 +2848,9 @@
     get$length$asx: function(receiver) {
       return J.getInterceptor$asx(receiver).get$length(receiver);
     },
+    get$parent$x: function(receiver) {
+      return J.getInterceptor$x(receiver).get$parent(receiver);
+    },
     $eq$: function(receiver, a0) {
       if (receiver == null)
         return a0 == null;
@@ -3197,7 +3200,10 @@
     _nullDoneHandler: function() {
     },
     _rootHandleUncaughtError: function($self, $parent, zone, error, stackTrace) {
-      P._schedulePriorityAsyncCallback(new P._rootHandleUncaughtError_closure(error, stackTrace));
+      P._rootHandleError(error, stackTrace);
+    },
+    _rootHandleError: function(error, stackTrace) {
+      P._schedulePriorityAsyncCallback(new P._rootHandleError_closure(error, stackTrace));
     },
     _rootRun: function($self, $parent, zone, f) {
       var old,
@@ -3263,12 +3269,12 @@
       P._scheduleAsyncCallback(f);
     },
     _rootCreateTimer: function($self, $parent, zone, duration, callback) {
-      callback = zone.bindCallback$1$1(callback, type$.void);
-      return P.Timer__createTimer(duration, callback);
+      return P.Timer__createTimer(duration, C.C__RootZone !== zone ? zone.bindCallback$1$1(callback, type$.void) : callback);
     },
     _rootCreatePeriodicTimer: function($self, $parent, zone, duration, callback) {
       var milliseconds;
-      callback = zone.bindUnaryCallback$2$1(callback, type$.void, type$.Timer);
+      if (C.C__RootZone !== zone)
+        callback = zone.bindUnaryCallback$2$1(callback, type$.void, type$.Timer);
       milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
       return P._TimerImpl$periodic(milliseconds < 0 ? 0 : milliseconds, callback);
     },
@@ -3566,7 +3572,7 @@
       this.$this = t0;
       this.registered = t1;
     },
-    _rootHandleUncaughtError_closure: function _rootHandleUncaughtError_closure(t0, t1) {
+    _rootHandleError_closure: function _rootHandleError_closure(t0, t1) {
       this.error = t0;
       this.stackTrace = t1;
     },
@@ -3576,6 +3582,13 @@
       this.$this = t0;
       this.f = t1;
       this.R = t2;
+    },
+    _RootZone_bindUnaryCallback_closure: function _RootZone_bindUnaryCallback_closure(t0, t1, t2, t3) {
+      var _ = this;
+      _.$this = t0;
+      _.f = t1;
+      _.T = t2;
+      _.R = t3;
     },
     _RootZone_bindCallbackGuarded_closure: function _RootZone_bindCallbackGuarded_closure(t0, t1) {
       this.$this = t0;
@@ -6336,7 +6349,35 @@
   P._RegisterBinaryZoneFunction.prototype = {};
   P._ZoneSpecification.prototype = {$isZoneSpecification: 1};
   P._ZoneDelegate.prototype = {$isZoneDelegate: 1};
-  P._Zone.prototype = {$isZone: 1};
+  P._Zone.prototype = {
+    _processUncaughtError$3: function(zone, error, stackTrace) {
+      var handler, parentDelegate, parentZone, currentZone, e, s, t1, exception,
+        implementation = this.get$_async$_handleUncaughtError(),
+        implZone = implementation.zone;
+      if (implZone === C.C__RootZone) {
+        P._rootHandleError(error, stackTrace);
+        return;
+      }
+      handler = implementation.$function;
+      parentDelegate = implZone.get$_parentDelegate();
+      t1 = J.get$parent$x(implZone);
+      t1.toString;
+      parentZone = t1;
+      currentZone = $.Zone__current;
+      try {
+        $.Zone__current = parentZone;
+        handler.call$5(implZone, parentDelegate, zone, error, stackTrace);
+        $.Zone__current = currentZone;
+      } catch (exception) {
+        e = H.unwrapException(exception);
+        s = H.getTraceFromException(exception);
+        $.Zone__current = currentZone;
+        t1 = error === e ? stackTrace : s;
+        parentZone._processUncaughtError$3(implZone, e, t1);
+      }
+    },
+    $isZone: 1
+  };
   P._CustomZone.prototype = {
     get$_delegate: function() {
       var t1 = this._delegateCache;
@@ -6355,7 +6396,7 @@
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        this.handleUncaughtError$2(e, s);
+        this._processUncaughtError$3(this, e, s);
       }
     },
     runUnaryGuarded$1$2: function(f, arg, $T) {
@@ -6365,7 +6406,7 @@
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        this.handleUncaughtError$2(e, s);
+        this._processUncaughtError$3(this, e, s);
       }
     },
     bindCallback$1$1: function(f, $R) {
@@ -6378,9 +6419,7 @@
       return new P._CustomZone_bindCallbackGuarded_closure(this, this.registerCallback$1$1(f, type$.void));
     },
     handleUncaughtError$2: function(error, stackTrace) {
-      var implementation = this._async$_handleUncaughtError,
-        t1 = implementation.zone;
-      return implementation.$function.call$5(t1, t1.get$_parentDelegate(), this, error, stackTrace);
+      this._processUncaughtError$3(this, error, stackTrace);
     },
     fork$2$specification$zoneValues: function(specification, zoneValues) {
       var implementation = this._fork,
@@ -6470,6 +6509,9 @@
     get$_async$_handleUncaughtError: function() {
       return this._async$_handleUncaughtError;
     },
+    get$parent: function(receiver) {
+      return this.parent;
+    },
     get$_async$_map: function() {
       return this._async$_map;
     }
@@ -6499,7 +6541,7 @@
     $requiredArgCount: 0,
     $signature: 0
   };
-  P._rootHandleUncaughtError_closure.prototype = {
+  P._rootHandleError_closure.prototype = {
     call$0: function() {
       var error = H.wrapException(this.error);
       error.stack = this.stackTrace.toString$0(0);
@@ -6547,6 +6589,9 @@
     get$_async$_handleUncaughtError: function() {
       return C._ZoneFunction_NMc;
     },
+    get$parent: function(_) {
+      return null;
+    },
     get$_async$_map: function() {
       return $.$get$_RootZone__rootMap();
     },
@@ -6562,41 +6607,44 @@
       return this;
     },
     runGuarded$1: function(f) {
-      var e, s, exception, _null = null;
+      var e, s, exception;
       try {
         if (C.C__RootZone === $.Zone__current) {
           f.call$0();
           return;
         }
-        P._rootRun(_null, _null, this, f);
+        P._rootRun(null, null, this, f);
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        P._rootHandleUncaughtError(_null, _null, this, e, s);
+        P._rootHandleError(e, s);
       }
     },
     runUnaryGuarded$1$2: function(f, arg) {
-      var e, s, exception, _null = null;
+      var e, s, exception;
       try {
         if (C.C__RootZone === $.Zone__current) {
           f.call$1(arg);
           return;
         }
-        P._rootRunUnary(_null, _null, this, f, arg);
+        P._rootRunUnary(null, null, this, f, arg);
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        P._rootHandleUncaughtError(_null, _null, this, e, s);
+        P._rootHandleError(e, s);
       }
     },
     bindCallback$1$1: function(f, $R) {
       return new P._RootZone_bindCallback_closure(this, f, $R);
     },
+    bindUnaryCallback$2$1: function(f, $R, $T) {
+      return new P._RootZone_bindUnaryCallback_closure(this, f, $T, $R);
+    },
     bindCallbackGuarded$1: function(f) {
       return new P._RootZone_bindCallbackGuarded_closure(this, f);
     },
     handleUncaughtError$2: function(error, stackTrace) {
-      P._rootHandleUncaughtError(null, null, this, error, stackTrace);
+      P._rootHandleError(error, stackTrace);
     },
     fork$2$specification$zoneValues: function(specification, zoneValues) {
       return P._rootFork(null, null, this, specification, zoneValues);
@@ -6638,6 +6686,15 @@
     },
     $signature: function() {
       return this.R._eval$1("0()");
+    }
+  };
+  P._RootZone_bindUnaryCallback_closure.prototype = {
+    call$1: function(arg) {
+      var _this = this;
+      return _this.$this.runUnary$2$2(_this.f, arg, _this.R, _this.T);
+    },
+    $signature: function() {
+      return this.R._eval$1("@<0>")._bind$1(this.T)._eval$1("1(2)");
     }
   };
   P._RootZone_bindCallbackGuarded_closure.prototype = {
@@ -9279,7 +9336,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure, L.GoldenComponent_closure]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindUnaryCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure, L.GoldenComponent_closure]);
     _inherit(H.NullError, P.TypeError);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -9841,14 +9898,14 @@
   Function.prototype.call$5 = function(a, b, c, d, e) {
     return this(a, b, c, d, e);
   };
-  Function.prototype.call$1$4 = function(a, b, c, d) {
-    return this(a, b, c, d);
-  };
   Function.prototype.call$3$6 = function(a, b, c, d, e, f) {
     return this(a, b, c, d, e, f);
   };
   Function.prototype.call$2$5 = function(a, b, c, d, e) {
     return this(a, b, c, d, e);
+  };
+  Function.prototype.call$1$4 = function(a, b, c, d) {
+    return this(a, b, c, d);
   };
   Function.prototype.call$1$2 = function(a, b) {
     return this(a, b);
