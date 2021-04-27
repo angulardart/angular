@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import '../output/output_ast.dart' as o;
 import 'compile_pipe.dart' show CompilePipe;
 import 'compile_view.dart' show CompileView;
@@ -10,7 +8,7 @@ import 'view_compiler_utils.dart' show getPropertyInView, unsafeCast;
 /// State shared amongst all name resolvers of a view, regardless of scope.
 class _ViewNameResolverState {
   final Map<String, o.Expression> locals = {};
-  final Map<String, o.OutputType> localTypes = {};
+  final Map<String, o.OutputType?> localTypes = {};
   final Map<String, o.DeclareVarStmt> localDeclarations = {};
   final CompileView view;
 
@@ -33,13 +31,13 @@ class ViewNameResolver implements NameResolver {
   /// Creates a scoped name resolver with shared [_state].
   ViewNameResolver._scope(this._state);
 
-  void addLocal(String name, o.Expression e, [o.OutputType type]) {
+  void addLocal(String name, o.Expression e, [o.OutputType? type]) {
     _state.locals[name] = e;
     _state.localTypes[name] = type;
   }
 
   @override
-  o.Expression getLocal(String name) {
+  o.Expression? getLocal(String name) {
     if (name == EventHandlerVars.event.name) {
       return EventHandlerVars.event;
     }
@@ -48,7 +46,7 @@ class ViewNameResolver implements NameResolver {
       var currView = _state.view;
       var result = _state.locals[name];
       while (result == null && currView.declarationElement.view != null) {
-        currView = currView.declarationElement.view;
+        currView = currView.declarationElement.view!;
         result = currView.nameResolver._state.locals[name];
       }
       if (result == null) return null; // No local for `name`.
@@ -69,14 +67,14 @@ class ViewNameResolver implements NameResolver {
       );
     }
     _localsInScope.add(name); // Cache local in this method scope.
-    return o.ReadVarExpr(_state.localDeclarations[name].name);
+    return o.ReadVarExpr(_state.localDeclarations[name]!.name);
   }
 
   @override
   List<o.Statement> getLocalDeclarations() {
     final declarations = <o.Statement>[];
     for (final name in _localsInScope) {
-      declarations.add(_state.localDeclarations[name]);
+      declarations.add(_state.localDeclarations[name]!);
     }
     return declarations;
   }

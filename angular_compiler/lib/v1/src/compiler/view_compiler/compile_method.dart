@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import '../output/output_ast.dart' as o;
 import 'constants.dart';
 
@@ -38,7 +36,7 @@ class CompileMethod {
   }
 
   /// Returns set of variable reads in method.
-  Set<String> findReadVarNames() {
+  Set<String?> findReadVarNames() {
     return o.findReadVarNames(_bodyStatements);
   }
 

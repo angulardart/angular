@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileDirectiveMetadata;
 import 'package:angular_compiler/v1/src/compiler/i18n/message.dart';
@@ -14,9 +12,9 @@ import 'expression_converter.dart' show NameResolver, convertCdExpressionToIr;
 /// An abstract utility for converting bound values to output expressions.
 abstract class BoundValueConverter
     implements ir.BindingSourceVisitor<o.Expression, o.OutputType> {
-  final CompileDirectiveMetadata _metadata;
+  final CompileDirectiveMetadata? _metadata;
   final o.Expression _implicitReceiver;
-  final NameResolver _nameResolver;
+  final NameResolver? _nameResolver;
 
   BoundValueConverter(
     this._metadata,
@@ -33,7 +31,7 @@ abstract class BoundValueConverter
   /// The [nameResolver] is used to uniquely name any variables created during
   /// the process of converting bound values to expressions.
   factory BoundValueConverter.forDirective(
-    CompileDirectiveMetadata metadata,
+    CompileDirectiveMetadata? metadata,
     o.Expression implicitReceiver,
     NameResolver nameResolver,
   ) = _DirectiveBoundValueConverter;
@@ -50,21 +48,21 @@ abstract class BoundValueConverter
   /// Creates a new [BoundValueConverter] with a scoped [NameResolver].
   BoundValueConverter scopeNamespace();
 
-  o.Expression convertSourceToExpression(
-          ir.BindingSource source, o.OutputType type) =>
+  o.Expression? convertSourceToExpression(
+          ir.BindingSource source, o.OutputType? type) =>
       source.accept(this, type);
 
   o.Expression _createI18nMessage(I18nMessage message);
 
   @override
   o.Expression visitBoundExpression(ir.BoundExpression boundExpression,
-          [o.OutputType type]) =>
+          [o.OutputType? type]) =>
       convertCdExpressionToIr(
-        _nameResolver,
+        _nameResolver!,
         _implicitReceiver,
         boundExpression.expression.ast,
         boundExpression.sourceSpan,
-        _metadata,
+        _metadata!,
         boundType: type,
       );
 
@@ -96,7 +94,7 @@ abstract class BoundValueConverter
   /// simple event handlers where the arguments are known to be nothing, or the
   /// event itself.
   o.Expression _tearOffSimpleHandler(o.InvokeMethodExpr method) =>
-      o.ReadPropExpr(method.receiver, method.name);
+      o.ReadPropExpr(method.receiver, method.name!);
 
   @override
   o.Expression visitComplexEventHandler(ir.ComplexEventHandler handler, [_]) {
@@ -106,14 +104,14 @@ abstract class BoundValueConverter
 
   o.Expression _convertToExpression(ir.SimpleEventHandler handler) {
     return convertCdExpressionToIr(
-      _nameResolver,
+      _nameResolver!,
       // If the handler has a directive instance set, then we'll use that as
       // the implicit receiver for the handler expression. Otherwise, we
       // assume the default receiver for the view.
       handler.directiveInstance?.build() ?? _implicitReceiver,
       handler.handler.ast,
       handler.sourceSpan,
-      _metadata,
+      _metadata!,
     );
   }
 
@@ -129,7 +127,7 @@ abstract class BoundValueConverter
     ];
   }
 
-  o.Expression _wrapHandler(o.Expression handlerExpr, int numArgs) =>
+  o.Expression _wrapHandler(o.Expression handlerExpr, int? numArgs) =>
       o.InvokeMemberMethodExpr(
         'eventHandler$numArgs',
         [handlerExpr],
@@ -137,13 +135,13 @@ abstract class BoundValueConverter
 
   o.Expression _createEventHandler(List<o.Statement> statements);
 
-  bool get preserveWhitespace => _metadata.template.preserveWhitespace;
+  bool? get preserveWhitespace => _metadata!.template!.preserveWhitespace;
 }
 
 /// Converts values bound by a directive change detector.
 class _DirectiveBoundValueConverter extends BoundValueConverter {
   _DirectiveBoundValueConverter(
-    CompileDirectiveMetadata metadata,
+    CompileDirectiveMetadata? metadata,
     o.Expression implicitReceiver,
     NameResolver nameResolver,
   ) : super(metadata, implicitReceiver, nameResolver);
@@ -152,7 +150,7 @@ class _DirectiveBoundValueConverter extends BoundValueConverter {
   BoundValueConverter scopeNamespace() => _DirectiveBoundValueConverter(
         _metadata,
         _implicitReceiver,
-        _nameResolver.scope(),
+        _nameResolver!.scope(),
       );
 
   @override
@@ -172,7 +170,7 @@ class _DirectiveBoundValueConverter extends BoundValueConverter {
 class _ViewBoundValueConverter extends BoundValueConverter {
   final CompileView _view;
 
-  _ViewBoundValueConverter(this._view, {NameResolver nameResolver})
+  _ViewBoundValueConverter(this._view, {NameResolver? nameResolver})
       : super(
           _view.component,
           DetectChangesVars.cachedCtx,
@@ -187,10 +185,10 @@ class _ViewBoundValueConverter extends BoundValueConverter {
   o.Expression _createEventHandler(List<o.Statement> statements) =>
       _view.createEventHandler(
         statements,
-        localDeclarations: _nameResolver.getLocalDeclarations(),
+        localDeclarations: _nameResolver!.getLocalDeclarations(),
       );
 
   @override
   BoundValueConverter scopeNamespace() =>
-      _ViewBoundValueConverter(_view, nameResolver: _nameResolver.scope());
+      _ViewBoundValueConverter(_view, nameResolver: _nameResolver!.scope());
 }

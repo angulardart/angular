@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart' show SourceSpan;
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/chars.dart';
@@ -21,7 +19,7 @@ abstract class NameResolver {
   );
 
   /// Returns a variable that references the [name] local.
-  o.Expression getLocal(String name);
+  o.Expression? getLocal(String name);
 
   /// Returns variable declarations for all locals used in this scope.
   List<o.Statement> getLocalDeclarations();
@@ -41,11 +39,10 @@ o.Expression convertCdExpressionToIr(
   NameResolver nameResolver,
   o.Expression implicitReceiver,
   compiler_ast.AST expression,
-  SourceSpan expressionSourceSpan,
+  SourceSpan? expressionSourceSpan,
   CompileDirectiveMetadata metadata, {
-  o.OutputType boundType,
+  o.OutputType? boundType,
 }) {
-  assert(nameResolver != null);
   final visitor = _AstToExpressionVisitor(
     nameResolver,
     implicitReceiver,
@@ -62,7 +59,7 @@ o.Expression convertCdExpressionToIr(
 R _visit<R>(
   compiler_ast.AST ast,
   compiler_ast.AstVisitor<R, bool> visitor,
-  SourceSpan span,
+  SourceSpan? span,
 ) {
   try {
     return ast.visit(visitor, true /* visitingRoot */);
@@ -82,16 +79,14 @@ class _AstToExpressionVisitor
   ///
   /// This is used to support empty expressions for booleans bindings, and type
   /// pure proxy fields for collection literals.
-  final o.OutputType _boundType;
+  final o.OutputType? _boundType;
 
   _AstToExpressionVisitor(
     this._nameResolver,
     this._implicitReceiver,
     this._metadata,
     this._boundType,
-  ) {
-    assert(_nameResolver != null);
-  }
+  );
 
   @override
   o.Expression visitBinary(compiler_ast.Binary ast, _) {
@@ -198,7 +193,7 @@ class _AstToExpressionVisitor
   /// Trim text in preserve whitespace mode if it contains \n preceding
   /// interpolation.
   String _compressWhitespacePreceding(String value) {
-    if (_metadata.template.preserveWhitespace ||
+    if (_metadata.template!.preserveWhitespace! ||
         value.contains('\u00A0') ||
         value.contains(ngSpace) ||
         !value.contains('\n')) return replaceNgSpace(value);
@@ -208,7 +203,7 @@ class _AstToExpressionVisitor
   /// Trim text in preserve whitespace mode if it contains \n following
   /// interpolation.
   String _compressWhitespaceFollowing(String value) {
-    if (_metadata.template.preserveWhitespace ||
+    if (_metadata.template!.preserveWhitespace! ||
         value.contains('\u00A0') ||
         value.contains(ngSpace) ||
         !value.contains('\n')) return replaceNgSpace(value);
@@ -218,7 +213,7 @@ class _AstToExpressionVisitor
   @override
   o.Expression visitInterpolation(compiler_ast.Interpolation ast, _) {
     final expressionsAreString =
-        ast.expressions.every((ast) => isString(ast, _metadata.analyzedClass));
+        ast.expressions.every((ast) => isString(ast, _metadata.analyzedClass!));
 
     final interpolateIdentifiers = expressionsAreString
         ? Interpolation.interpolateString
@@ -370,7 +365,7 @@ class _AstToExpressionVisitor
 
   @override
   o.Expression visitNamedExpr(compiler_ast.NamedExpr ast, _) => o.NamedExpr(
-      ast.name, ast.expression.visit(this, false /*visitingRoot */));
+      ast.name, ast.expression!.visit(this, false /*visitingRoot */));
 
   @override
   o.Expression visitVariableRead(compiler_ast.VariableRead ast, _) =>
@@ -393,13 +388,13 @@ class _AstToExpressionVisitor
     String memberName,
     bool Function(String, AnalyzedClass) isStaticMember,
   ) {
-    return isStaticMember(memberName, _metadata.analyzedClass)
-        ? o.importExpr(_metadata.identifier)
+    return isStaticMember(memberName, _metadata.analyzedClass!)
+        ? o.importExpr(_metadata.identifier!)
         : _implicitReceiver;
   }
 }
 
-bool _isBoolType(o.OutputType type) {
+bool _isBoolType(o.OutputType? type) {
   if (type == o.BOOL_TYPE) return true;
   if (type is o.ExternalType) {
     var name = type.value.name;
@@ -409,9 +404,9 @@ bool _isBoolType(o.OutputType type) {
 }
 
 bool _isPrimitiveCheck(
-    compiler_ast.AST expression, AnalyzedClass analyzedClass) {
+    compiler_ast.AST expression, AnalyzedClass? analyzedClass) {
   return (!isImmutable(expression, analyzedClass) &&
-      (isBool(expression, analyzedClass) ||
+      (isBool(expression, analyzedClass!) ||
           isNumber(expression, analyzedClass) ||
           isDouble(expression, analyzedClass) ||
           isInt(expression, analyzedClass)));

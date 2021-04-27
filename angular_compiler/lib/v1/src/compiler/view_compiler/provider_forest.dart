@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:collection/collection.dart' show ListEquality;
 import 'package:meta/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
@@ -188,7 +186,7 @@ class ProviderInstance {
   final List<CompileTokenMetadata> tokens;
 
   /// The expression of the provided value.
-  final o.Expression expression;
+  final o.Expression? expression;
 }
 
 /// Represents a node in the dependency injection hierarchy of a view.

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/view_compiler/bound_value_converter.dart'
     show BoundValueConverter;
@@ -12,12 +10,12 @@ void bindDirectiveOutputs(
   ProviderSource directiveInstance,
   CompileElement compileElement,
 ) {
-  var view = compileElement.view;
+  var view = compileElement.view!;
   var converter = BoundValueConverter.forView(view);
   for (var output in outputs) {
     var handlerExpr = converter
         .scopeNamespace()
-        .convertSourceToExpression(output.source, output.target.type);
+        .convertSourceToExpression(output.source, output.target.type)!;
     var nodeReference = view.createSubscription(
       isMockLike: (output.target as ir.DirectiveOutput).isMockLike,
     );
@@ -28,12 +26,12 @@ void bindDirectiveOutputs(
 
 void bindRenderOutputs(
     List<ir.Binding> outputs, CompileElement compileElement) {
-  var converter = BoundValueConverter.forView(compileElement.view);
+  var converter = BoundValueConverter.forView(compileElement.view!);
   for (var output in outputs) {
     var handlerExpr = converter
         .scopeNamespace()
-        .convertSourceToExpression(output.source, output.target.type);
-    compileElement.view
+        .convertSourceToExpression(output.source, output.target.type)!;
+    compileElement.view!
         .addEventListener(compileElement.renderNode, output, handlerExpr);
   }
 }

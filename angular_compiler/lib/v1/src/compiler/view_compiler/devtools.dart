@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart';
@@ -16,15 +14,15 @@ import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart';
 /// ```
 ///
 /// Otherwise, this returns null.
-Statement devToolsBindingStatement(
+Statement? devToolsBindingStatement(
   Binding binding,
-  Expression receiver,
+  Expression? receiver,
   Expression value,
 ) {
   var target = binding.target;
   if (target is InputBinding) {
     return IfStmt(importExpr(DevTools.isDevToolsEnabled), [
-      _recordInputStatement(receiver, literal(target.templateName), value),
+      _recordInputStatement(receiver!, literal(target.templateName), value),
     ]);
   }
 

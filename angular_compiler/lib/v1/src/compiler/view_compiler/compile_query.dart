@@ -1,7 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
-
 import '../compile_metadata.dart' show CompileQueryMetadata, CompileTokenMap;
 import '../identifiers.dart';
 import '../output/output_ast.dart' as o;
@@ -22,7 +18,7 @@ class _QueryValue {
   final o.Expression value;
 
   /// A reference to the associated `ChangeDetectorRef` of the query result.
-  final o.Expression changeDetectorRef;
+  final o.Expression? changeDetectorRef;
 
   /// Whether this value is an OnPush component with a `ChangeDetectorRef`.
   bool get hasChangeDetectorRef => changeDetectorRef != null;
@@ -33,7 +29,7 @@ class _NestedQueryValues {
   _NestedQueryValues(this.view);
 
   /// Compiled template associated with [valuesOrTemplates].
-  final CompileView view;
+  final CompileView? view;
 
   /// Values or embedded templates of the query.
   ///
@@ -64,7 +60,7 @@ abstract class CompileQuery {
   /// An expression that accesses the component's instance.
   ///
   /// In practice, this is almost always `this.ctx`.
-  final ProviderSource _boundDirective;
+  final ProviderSource? _boundDirective;
 
   /// Extracted metadata information from the user-code.
   final CompileQueryMetadata metadata;
@@ -78,12 +74,12 @@ abstract class CompileQuery {
   final _NestedQueryValues _values;
 
   factory CompileQuery({
-    @required CompileQueryMetadata metadata,
-    @required ViewStorage storage,
-    @required CompileView queryRoot,
-    @required ProviderSource boundDirective,
-    @required int nodeIndex,
-    @required int queryIndex,
+    required CompileQueryMetadata metadata,
+    required ViewStorage storage,
+    required CompileView queryRoot,
+    required ProviderSource? boundDirective,
+    required int? nodeIndex,
+    required int queryIndex,
   }) {
     return _ListCompileQuery(
       metadata,
@@ -96,11 +92,11 @@ abstract class CompileQuery {
   }
 
   factory CompileQuery.viewQuery({
-    @required CompileQueryMetadata metadata,
-    @required ViewStorage storage,
-    @required CompileView queryRoot,
-    @required ProviderSource boundDirective,
-    @required int queryIndex,
+    required CompileQueryMetadata metadata,
+    required ViewStorage storage,
+    required CompileView queryRoot,
+    required ProviderSource boundDirective,
+    required int queryIndex,
   }) {
     return _ListCompileQuery(
       metadata,
@@ -174,7 +170,7 @@ abstract class CompileQuery {
   void addQueryResult(
     CompileView origin,
     o.Expression result,
-    o.Expression changeDetectorRef,
+    o.Expression? changeDetectorRef,
   ) {
     // Determine if we have a path of embedded templates.
     final elementPath = _resolvePathToRoot(origin);
@@ -262,7 +258,7 @@ abstract class CompileQuery {
   ///
   /// This is required to traverse embedded `<template>` views for query matches.
   o.Expression _mapNestedViews(_NestedQueryValues value) {
-    final appElementN = value.view.declarationElement.appViewContainer;
+    final appElementN = value.view!.declarationElement.appViewContainer!;
     // Should return:
     //
     //   appElementN.mapNestedViews(({view.Type} nestedView) {
@@ -287,7 +283,7 @@ abstract class CompileQuery {
     final adjustedValuesWithChangeDetectorRefs =
         results.withChangeDetectorRefs.map((value) => _QueryValue(
               readFromNestedView(value.value),
-              readFromNestedView(value.changeDetectorRef),
+              readFromNestedView(value.changeDetectorRef!),
             ));
 
     // Choose which function to use based on whether the nested query returns
@@ -299,7 +295,7 @@ abstract class CompileQuery {
     // Invokes `appElementN.mapNestedView`.
     return appElementN.callMethod(mapNestedViews, [
       o.fn(
-        [o.FnParam('nestedView', value.view.classType)],
+        [o.FnParam('nestedView', value.view!.classType)],
         [
           ..._createAddQueryChangeDetectorRefs(
               adjustedValuesWithChangeDetectorRefs),
@@ -325,7 +321,7 @@ abstract class CompileQuery {
   ///   the path to that embedded template. So for example, this might be a
   ///   single `[ViewComponent0]` when nested in a single `<template>` and a
   ///   longer `[ViewComponent0, ViewComponent1]` when nested even deeper.
-  List<CompileElement> _resolvePathToRoot(CompileView view) {
+  List<CompileElement> _resolvePathToRoot(CompileView? view) {
     if (view == _queryRoot) {
       return const [];
     }
@@ -360,7 +356,7 @@ abstract class CompileQuery {
 
 class _ListCompileQuery extends CompileQuery {
   final ViewStorage _storage;
-  final int _nodeIndex;
+  final int? _nodeIndex;
   final int _queryIndex;
 
   /// [CompileView]s that contain a result for this query.
@@ -370,14 +366,14 @@ class _ListCompileQuery extends CompileQuery {
     CompileQueryMetadata metadata,
     this._storage,
     CompileView queryRoot,
-    ProviderSource boundDirective, {
-    @required int nodeIndex,
-    @required int queryIndex,
-  })  : _nodeIndex = nodeIndex,
+    ProviderSource? boundDirective, {
+    required int? nodeIndex,
+    required int queryIndex,
+  })   : _nodeIndex = nodeIndex,
         _queryIndex = queryIndex,
         super._base(metadata, queryRoot, boundDirective);
 
-  ViewStorageItem _dirtyFieldIfNeeded;
+  ViewStorageItem? _dirtyFieldIfNeeded;
 
   ViewStorageItem get _dirtyField {
     return _dirtyFieldIfNeeded ??= _createQueryDirtyField(
@@ -392,12 +388,12 @@ class _ListCompileQuery extends CompileQuery {
   ///
   /// Returns an expression pointing to that field.
   static ViewStorageItem _createQueryDirtyField({
-    @required CompileQueryMetadata metadata,
-    @required ViewStorage storage,
-    @required int nodeIndex,
-    @required int queryIndex,
+    required CompileQueryMetadata metadata,
+    required ViewStorage storage,
+    required int? nodeIndex,
+    required int queryIndex,
   }) {
-    final selector = metadata.selectors.first.name;
+    final selector = metadata.selectors!.first.name;
     // This is to avoid churn in the golden files/output while debugging.
     //
     // We can rename the properties after we decide to keep this code branch.
@@ -482,7 +478,11 @@ class _ListCompileQuery extends CompileQuery {
     }
     return [
       ..._createAddQueryChangeDetectorRefs(results.withChangeDetectorRefs),
-      _boundDirective.build().prop(metadata.propertyName).set(result).toStmt(),
+      _boundDirective!
+          .build()
+          .prop(metadata.propertyName!)
+          .set(result)
+          .toStmt(),
     ];
   }
 
@@ -521,7 +521,7 @@ void addQueryToTokenMap(
   CompileTokenMap<List<CompileQuery>> map,
   CompileQuery query,
 ) {
-  for (final selector in query.metadata.selectors) {
+  for (final selector in query.metadata.selectors!) {
     var entry = map.get(selector);
     if (entry == null) {
       entry = [];
@@ -547,7 +547,7 @@ List<o.Statement> _createAddQueryChangeDetectorRefs(
     for (final query in queriesWithChangeDetectorRefs)
       queryChangeDetectorRefs
           .key(query.value)
-          .set(query.changeDetectorRef)
+          .set(query.changeDetectorRef!)
           .toStmt()
   ];
 }

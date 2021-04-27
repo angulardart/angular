@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'dart:collection';
 
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
@@ -39,7 +37,7 @@ final _renderViewProperties = <String>{
 final _unsafeCastFn = o.importExpr(Runtime.unsafeCast);
 
 /// Returns `unsafeCast<{Cast}>(expression)`.
-o.Expression unsafeCast(o.Expression expression, [o.OutputType cast]) {
+o.Expression unsafeCast(o.Expression expression, [o.OutputType? cast]) {
   return _unsafeCastFn.callFn(
     [expression],
     typeArguments: cast != null ? [cast] : const [],
@@ -54,11 +52,11 @@ o.Expression getPropertyInView(
   if (identical(callingView, definedView)) {
     return property;
   } else {
-    o.Expression viewProp;
+    o.Expression? viewProp;
     var currView = callingView;
     while (!identical(currView, definedView) &&
         currView.declarationElement.view != null) {
-      currView = currView.declarationElement.view;
+      currView = currView.declarationElement.view!;
       viewProp = viewProp == null
           ? o.ReadClassMemberExpr('parentView')
           : viewProp.prop('parentView');
@@ -73,8 +71,8 @@ o.Expression getPropertyInView(
     return replaceReadClassMemberInExpression(
         property,
         (name) => _renderViewProperties.contains(name)
-            ? viewProp
-            : unsafeCast(viewProp, definedView.classType));
+            ? viewProp!
+            : unsafeCast(viewProp!, definedView.classType));
   }
 }
 
@@ -102,7 +100,7 @@ class _ReplaceReadClassMemberTransformer extends o.ExpressionTransformer<void> {
   o.Expression visitReadVarExpr(o.ReadVarExpr ast, _) {
     if (ast is ReadNodeReferenceExpr) {
       ast.node.promoteToClassMember();
-      return _replace(ast.name);
+      return _replace(ast.name!);
     }
     return ast;
   }
@@ -154,10 +152,10 @@ o.Expression debugInjectorWrap(o.Expression identifier, o.Expression wrap) =>
 /// Each generated view of [component], be it component, host, or embedded has
 /// an associated [index] that is used to distinguish between embedded views.
 String getViewFactoryName(CompileDirectiveMetadata component, int index) =>
-    _viewFactoryName(component.type.name, index);
+    _viewFactoryName(component.type!.name, index);
 
 String getHostViewFactoryName(CompileDirectiveMetadata component) =>
-    _viewFactoryName('${component.type.name}Host', 0);
+    _viewFactoryName('${component.type!.name}Host', 0);
 
 String _viewFactoryName(String componentName, int index) =>
     'viewFactory_$componentName$index';
@@ -174,7 +172,7 @@ o.Expression getViewFactory(
   String name,
 ) {
   final viewFactoryVar = o.variable(name);
-  if (component.originType.typeParameters.isEmpty) {
+  if (component.originType!.typeParameters.isEmpty) {
     return viewFactoryVar;
   }
   final parameters = [o.FnParam('parentView'), o.FnParam('parentIndex')];
@@ -183,14 +181,15 @@ o.Expression getViewFactory(
     o.ReturnStatement(o.InvokeFunctionExpr(
       viewFactoryVar,
       arguments,
-      component.originType.typeParameters.map((t) => t.toType()).toList(),
+      component.originType!.typeParameters.map((t) => t.toType()).toList()
+          as List<o.OutputType>,
     )),
   ]);
 }
 
 o.Expression createDiTokenExpression(CompileTokenMetadata token) {
   if (token.identifierIsInstance) {
-    return o.importExpr(token.identifier).instantiate(
+    return o.importExpr(token.identifier!).instantiate(
         // If there is also a value, assume it is the first argument.
         //
         // i.e. const OpaqueToken('literalValue')
@@ -199,13 +198,13 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
         // Add any generic types attached to the type.
         //
         // Only a value of `null` precisely means "no generic types", not [].
-        genericTypes: token.identifier.typeArguments.isNotEmpty
-            ? token.identifier.typeArguments
+        genericTypes: token.identifier!.typeArguments.isNotEmpty
+            ? token.identifier!.typeArguments
             : null);
   } else if (token.value != null) {
     return o.literal(token.value);
   } else {
-    return o.importExpr(token.identifier);
+    return o.importExpr(token.identifier!);
   }
 }
 
@@ -214,10 +213,10 @@ o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
     return o.literal(token.value);
   } else if (token.identifierIsInstance) {
     return o
-        .importExpr(token.identifier)
+        .importExpr(token.identifier!)
         .instantiate([], type: o.importType(token.identifier, []));
   } else {
-    return o.importExpr(token.identifier);
+    return o.importExpr(token.identifier!);
   }
 }
 
@@ -294,7 +293,7 @@ o.Expression convertValueToOutputAst(dynamic value) {
 
 // Detect _PopupSourceDirective_0_6.instance for directives that have
 // change detectors and unwrap to change detector.
-o.Expression unwrapDirectiveInstance(o.Expression directiveInstance) {
+o.Expression? unwrapDirectiveInstance(o.Expression? directiveInstance) {
   if (directiveInstance is o.ReadPropExpr &&
       directiveInstance.name == 'instance' &&
       (directiveInstance.receiver is o.ReadClassMemberExpr ||
@@ -306,7 +305,7 @@ o.Expression unwrapDirectiveInstance(o.Expression directiveInstance) {
 
 // Return instance of directive for both regular directives and directives
 // with ChangeDetector class.
-o.Expression unwrapDirective(o.Expression directiveInstance) {
+o.Expression? unwrapDirective(o.Expression directiveInstance) {
   var instance = unwrapDirectiveInstance(directiveInstance);
   if (instance != null) {
     return instance;
@@ -360,7 +359,7 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
     var isComponent = directiveMeta.isComponent;
     for (var name in directiveMeta.hostAttributes.keys) {
       var canMerge = name == classAttrName || name == styleAttrName;
-      var hasMultiple = mergeCount[name] > 1;
+      var hasMultiple = mergeCount[name]! > 1;
       var shouldMerge = canMerge && hasMultiple;
       // The code for component host bindings is generated at another site, thus
       // we don't need to merge it here if there are no other bindings to the
@@ -377,7 +376,7 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
 
       var value = convertHostAttributeToBinding(
           name,
-          ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]),
+          ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]!),
           directiveMeta.analyzedClass);
       var prevValue = result[name];
       result[name] = prevValue != null
@@ -389,7 +388,7 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
   return _toSortedBindings(result);
 }
 
-String _nameOf(ir.BindingTarget target) {
+String _nameOf(ir.BindingTarget? target) {
   if (target is ir.ClassBinding) {
     return target.name != null ? 'class.${target.name}' : 'class';
   }
@@ -410,14 +409,14 @@ String _nameOf(ir.BindingTarget target) {
 
 void _increment(Map<String, int> mergeCount, String name) {
   mergeCount.putIfAbsent(name, () => 0);
-  mergeCount[name]++;
+  mergeCount[name] = (mergeCount[name] as int) + 1;
 }
 
 ir.Binding _mergeAttributeValue(
   String attrName,
   ir.Binding attr1,
   ir.Binding attr2,
-  AnalyzedClass analyzedClass,
+  AnalyzedClass? analyzedClass,
 ) {
   if (attrName != classAttrName && attrName != styleAttrName) {
     return attr2;
@@ -448,7 +447,7 @@ ir.Binding _mergeAttributeValue(
   }
 }
 
-ast.AST _asAst(ir.BindingSource bindingSource) {
+ast.AST _asAst(ir.BindingSource? bindingSource) {
   if (bindingSource is ir.BoundExpression) {
     return bindingSource.expression.ast;
   } else if (bindingSource is ir.StringLiteral) {
@@ -644,7 +643,7 @@ bool detectHtmlElementFromTagName(String tagName) =>
 /// Pass either [statements] or [readVars]. If [readVars] is null, it will
 /// be computed from [statements]
 List<o.Statement> maybeCachedCtxDeclarationStatement(
-    {Set<String> readVars, List<o.Statement> statements}) {
+    {Set<String?>? readVars, List<o.Statement> statements = const []}) {
   readVars ??= o.findReadVarNames(statements);
   if (readVars.contains(DetectChangesVars.cachedCtx.name)) {
     // Cache [ctx] class field member as typed [_ctx] local for change

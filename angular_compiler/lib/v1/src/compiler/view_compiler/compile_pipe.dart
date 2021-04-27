@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import '../compile_metadata.dart' show CompilePipeMetadata;
 import '../output/output_ast.dart' as o;
 import 'compile_view.dart' show CompileView;
@@ -27,8 +25,8 @@ class CompilePipe {
   ) {
     final compView = view.componentView;
     final meta = _findPipeMeta(compView, name);
-    CompilePipe pipe;
-    if (meta.pure) {
+    CompilePipe? pipe;
+    if (meta.pure!) {
       // pure pipes live on the component view
       pipe = compView.purePipes[name];
       if (pipe == null) {
@@ -56,13 +54,14 @@ class CompilePipe {
         purePipeProxy.view,
         view,
       );
+      final transformType = meta.transformType!;
       // A pipe transform method has one required argument, and a variable
       // number of optional arguments. However, each call site will always
       // invoke the transform method with a fixed number of arguments, so we
       // can use a pure proxy with the same number of required arguments.
       final pureProxyType = o.FunctionType(
-        meta.transformType.returnType,
-        meta.transformType.paramTypes.sublist(0, purePipeProxy.argCount),
+        transformType.returnType,
+        transformType.paramTypes.sublist(0, purePipeProxy.argCount),
       );
       purePipeProxy.view.createPureProxy(
         pipeInstanceSeenFromPureProxy.prop('transform'),
@@ -74,7 +73,7 @@ class CompilePipe {
   }
 
   o.Expression _call(CompileView callingView, List<o.Expression> args) {
-    if (meta.pure) {
+    if (meta.pure ?? false) {
       // PurePipeProxies live on the view that called them.
       final purePipeProxy = _PurePipeProxy(
         callingView,
@@ -94,9 +93,9 @@ class CompilePipe {
 }
 
 CompilePipeMetadata _findPipeMeta(CompileView view, String name) {
-  CompilePipeMetadata pipeMeta;
+  CompilePipeMetadata? pipeMeta;
   for (var i = view.pipeMetas.length - 1; i >= 0; i--) {
-    final localPipeMeta = view.pipeMetas[i];
+    final localPipeMeta = view.pipeMetas[i]!;
     if (localPipeMeta.name == name) {
       pipeMeta = localPipeMeta;
       break;
