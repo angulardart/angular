@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
@@ -41,7 +39,7 @@ class AngularCompiler {
   /// May return `Future(null)` to signify the compilation should result in no
   /// output (such as there were no `@Component()` annotations found in the
   /// target [element]).
-  Future<DartSourceOutput> compile(LibraryElement element) async {
+  Future<DartSourceOutput?> compile(LibraryElement element) async {
     final exceptionHandler = ComponentVisitorExceptionHandler();
 
     // Parse Dart code for @Components and @Directives
@@ -103,10 +101,10 @@ class AngularCompiler {
     NormalizedComponentWithViewDirectives componentWithDirs,
   ) {
     return ir.Component(
-      componentWithDirs.component.type.name,
+      componentWithDirs.component.type!.name,
       encapsulation: _encapsulation(componentWithDirs),
-      styles: componentWithDirs.component.template.styles,
-      styleUrls: componentWithDirs.component.template.styleUrls,
+      styles: componentWithDirs.component.template!.styles,
+      styleUrls: componentWithDirs.component.template!.styleUrls,
       views: [
         _componentView(componentWithDirs),
         _hostView(componentWithDirs.component)
@@ -117,14 +115,14 @@ class AngularCompiler {
   ir.ViewEncapsulation _encapsulation(
     NormalizedComponentWithViewDirectives componentWithDirs,
   ) {
-    switch (componentWithDirs.component.template.encapsulation) {
+    switch (componentWithDirs.component.template!.encapsulation) {
       case ViewEncapsulation.Emulated:
         return ir.ViewEncapsulation.emulated;
       case ViewEncapsulation.None:
         return ir.ViewEncapsulation.none;
       default:
         throw ArgumentError.value(
-          componentWithDirs.component.template.encapsulation,
+          componentWithDirs.component.template!.encapsulation,
         );
     }
   }
@@ -134,11 +132,11 @@ class AngularCompiler {
   ) {
     var parsedTemplate = _templateParser.parse(
       componentWithDirs.component,
-      componentWithDirs.component.template.template,
+      componentWithDirs.component.template!.template!,
       componentWithDirs.directives,
       componentWithDirs.pipes,
-      componentWithDirs.component.type.name,
-      componentWithDirs.component.template.templateUrl,
+      componentWithDirs.component.type!.name,
+      componentWithDirs.component.template!.templateUrl!,
     );
     return ir.ComponentView(
       cmpMetadata: componentWithDirs.component,
@@ -150,31 +148,31 @@ class AngularCompiler {
 
   ir.View _hostView(CompileDirectiveMetadata component) {
     var hostMeta = createHostComponentMeta(
-      component.type,
-      component.selector,
+      component.type!,
+      component.selector!,
       component.analyzedClass,
-      component.template.preserveWhitespace,
+      component.template!.preserveWhitespace,
     );
     var parsedTemplate = _templateParser.parse(
       hostMeta,
-      hostMeta.template.template,
+      hostMeta.template!.template!,
       [component],
       [],
-      hostMeta.type.name,
-      hostMeta.template.templateUrl,
+      hostMeta.type!.name,
+      hostMeta.template!.templateUrl!,
     );
     return ir.HostView(
       cmpMetadata: hostMeta,
       parsedTemplate: parsedTemplate,
-      directiveTypes: createHostDirectiveTypes(component.type),
+      directiveTypes: createHostDirectiveTypes(component.type!),
     );
   }
 
   static String _moduleUrlFor(AngularArtifacts artifacts) {
     if (artifacts.components.isNotEmpty) {
-      return templateModuleUrl(artifacts.components.first.component.type);
+      return templateModuleUrl(artifacts.components.first.component.type!);
     } else if (artifacts.directives.isNotEmpty) {
-      return templateModuleUrl(artifacts.directives.first.type);
+      return templateModuleUrl(artifacts.directives.first.type!);
     } else {
       throw StateError('No components nor injectorModules given');
     }

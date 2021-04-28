@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompilePipeMetadata, LifecycleHooks;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
@@ -16,7 +14,7 @@ void bindDirectiveDetectChangesLifecycleCallbacks(
   CompileElement compileElement,
 ) {
   final detectChangesInInputsMethod =
-      compileElement.view.detectChangesInInputsMethod;
+      compileElement.view!.detectChangesInInputsMethod;
   _bindAfterChanges(directive, detectChangesInInputsMethod);
   _bindOnInit(directive, detectChangesInInputsMethod);
   _bindDoCheck(directive, detectChangesInInputsMethod);
@@ -26,7 +24,7 @@ void _bindAfterChanges(ir.MatchedDirective directive, CompileMethod method) {
   if (directive.hasLifecycle(ir.Lifecycle.afterChanges)) {
     method.addStmt(o.IfStmt(
       DetectChangesVars.changed,
-      [_lifecycleMethod(directive.providerSource, Lifecycles.afterChanges)],
+      [_lifecycleMethod(directive.providerSource!, Lifecycles.afterChanges)],
     ));
   }
 }
@@ -38,7 +36,7 @@ void _bindOnInit(ir.MatchedDirective directive, CompileMethod method) {
     method.addStmt(o.IfStmt(
       notThrowOnChanges.and(DetectChangesVars.firstCheck),
       [
-        _lifecycleMethod(directive.providerSource, Lifecycles.onInit),
+        _lifecycleMethod(directive.providerSource!, Lifecycles.onInit),
       ],
     ));
   }
@@ -47,7 +45,7 @@ void _bindOnInit(ir.MatchedDirective directive, CompileMethod method) {
 void _bindDoCheck(ir.MatchedDirective directive, CompileMethod method) {
   if (directive.hasLifecycle(ir.Lifecycle.doCheck)) {
     method.addStmt(o.IfStmt(notThrowOnChanges, [
-      _lifecycleMethod(directive.providerSource, Lifecycles.doCheck),
+      _lifecycleMethod(directive.providerSource!, Lifecycles.doCheck),
     ]));
   }
 }
@@ -65,17 +63,17 @@ void _bindAfterContentCallbacks(
   ir.MatchedDirective directive,
   CompileElement compileElement,
 ) {
-  final view = compileElement.view;
+  final view = compileElement.view!;
   final lifecycleCallbacks = view.afterContentLifecycleCallbacksMethod;
   if (directive.hasLifecycle(ir.Lifecycle.afterContentInit)) {
     lifecycleCallbacks.addStmtsIfFirstCheck([
-      _lifecycleMethod(directive.providerSource, Lifecycles.afterContentInit),
+      _lifecycleMethod(directive.providerSource!, Lifecycles.afterContentInit),
     ]);
   }
   if (directive.hasLifecycle(ir.Lifecycle.afterContentChecked)) {
     lifecycleCallbacks.addStmt(
       _lifecycleMethod(
-          directive.providerSource, Lifecycles.afterContentChecked),
+          directive.providerSource!, Lifecycles.afterContentChecked),
     );
   }
 }
@@ -84,16 +82,16 @@ void _bindAfterViewCallbacks(
   ir.MatchedDirective directive,
   CompileElement compileElement,
 ) {
-  final view = compileElement.view;
+  final view = compileElement.view!;
   final lifecycleCallbacks = view.afterViewLifecycleCallbacksMethod;
   if (directive.hasLifecycle(ir.Lifecycle.afterViewInit)) {
     lifecycleCallbacks.addStmtsIfFirstCheck([
-      _lifecycleMethod(directive.providerSource, Lifecycles.afterViewInit),
+      _lifecycleMethod(directive.providerSource!, Lifecycles.afterViewInit),
     ]);
   }
   if (directive.hasLifecycle(ir.Lifecycle.afterViewChecked)) {
     lifecycleCallbacks.addStmt(_lifecycleMethod(
-        directive.providerSource, Lifecycles.afterViewChecked));
+        directive.providerSource!, Lifecycles.afterViewChecked));
   }
 }
 
@@ -103,8 +101,8 @@ void _bindDestroyCallbacks(
   CompileElement compileElement,
 ) {
   if (directive.hasLifecycle(ir.Lifecycle.onDestroy)) {
-    compileElement.view.destroyMethod.addStmt(
-        _lifecycleMethod(directive.providerSource, Lifecycles.onDestroy));
+    compileElement.view!.destroyMethod.addStmt(
+        _lifecycleMethod(directive.providerSource!, Lifecycles.onDestroy));
   }
 }
 

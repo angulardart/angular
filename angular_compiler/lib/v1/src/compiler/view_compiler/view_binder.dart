@@ -1,6 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
@@ -40,17 +37,17 @@ import 'property_binder.dart'
 /// views.
 void bindView(
   ir.View view,
-  ElementSchemaRegistry schemaRegistry, {
-  @required bool bindHostProperties,
+  ElementSchemaRegistry? schemaRegistry, {
+  required bool bindHostProperties,
 }) {
-  var visitor = _ViewBinderVisitor(view.compileView);
+  var visitor = _ViewBinderVisitor(view.compileView!);
   templateVisitAll(visitor, view.parsedTemplate, null);
-  for (var pipe in view.compileView.pipes) {
+  for (var pipe in view.compileView!.pipes) {
     bindPipeDestroyLifecycleCallbacks(pipe.meta, pipe.instance, pipe.view);
   }
 
   if (bindHostProperties) {
-    _bindViewHostProperties(view.compileView, schemaRegistry);
+    _bindViewHostProperties(view.compileView!, schemaRegistry!);
   }
 }
 
@@ -89,46 +86,48 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
 
   @override
   void visitElement(ElementAst ast, _) {
-    var compileElement = view.nodes[_nodeIndex++] as CompileElement;
-    var element =
-        convertElement(ast, compileElement, view.component.analyzedClass);
+    var element = convertElement(
+        ast,
+        view.nodes[_nodeIndex++] as CompileElement,
+        view.component.analyzedClass);
+    var compileElement = element.compileElement!;
 
-    bindRenderInputs(element.inputs, element.compileElement);
-    bindRenderOutputs(element.outputs, element.compileElement);
+    bindRenderInputs(element.inputs, compileElement);
+    bindRenderOutputs(element.outputs, compileElement);
 
     for (var directive in element.matchedDirectives) {
       bindDirectiveInputs(
         directive.inputs,
         directive,
-        element.compileElement,
-        isHostComponent: element.compileElement.view.viewType == ViewType.host,
+        compileElement,
+        isHostComponent: compileElement.view!.viewType == ViewType.host,
       );
-      bindDirectiveDetectChangesLifecycleCallbacks(
-          directive, element.compileElement);
-      bindDirectiveHostProps(directive, element.compileElement);
+      bindDirectiveDetectChangesLifecycleCallbacks(directive, compileElement);
+      bindDirectiveHostProps(directive, compileElement);
       bindDirectiveOutputs(
-          directive.outputs, directive.providerSource, element.compileElement);
+          directive.outputs, directive.providerSource!, compileElement);
     }
     templateVisitAll(this, element.parsedTemplate, null);
     // afterContent and afterView lifecycles need to be called bottom up
     // so that children are notified before parents
     for (var directive in element.matchedDirectives) {
-      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
+      bindDirectiveAfterChildrenCallbacks(directive, compileElement);
     }
   }
 
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
-    var compileElement = view.nodes[_nodeIndex++] as CompileElement;
     var element = convertEmbeddedTemplate(
-        ast, compileElement, view.component.analyzedClass);
+        ast,
+        view.nodes[_nodeIndex++] as CompileElement,
+        view.component.analyzedClass);
+    var compileElement = element.compileElement!;
     for (var directive in element.matchedDirectives) {
-      bindDirectiveInputs(directive.inputs, directive, element.compileElement);
-      bindDirectiveDetectChangesLifecycleCallbacks(
-          directive, element.compileElement);
+      bindDirectiveInputs(directive.inputs, directive, compileElement);
+      bindDirectiveDetectChangesLifecycleCallbacks(directive, compileElement);
       bindDirectiveOutputs(
-          directive.outputs, directive.providerSource, element.compileElement);
-      bindDirectiveAfterChildrenCallbacks(directive, element.compileElement);
+          directive.outputs, directive.providerSource!, compileElement);
+      bindDirectiveAfterChildrenCallbacks(directive, compileElement);
     }
     var embeddedView = element.children.first as ir.EmbeddedView;
     bindView(embeddedView, null, bindHostProperties: false);
@@ -178,13 +177,11 @@ void _bindViewHostProperties(
     CompileView view, ElementSchemaRegistry schemaRegistry) {
   if (view.viewIndex != 0 || view.viewType != ViewType.component) return;
   var hostProps = view.component.hostProperties;
-  if (hostProps == null) return;
-
   var hostProperties = <BoundElementPropertyAst>[];
 
   var span = SourceSpan(SourceLocation(0), SourceLocation(0), '');
   hostProps.forEach((String propName, ast.AST expression) {
-    var elementName = view.component.selector;
+    var elementName = view.component.selector!;
     hostProperties.add(createElementPropertyAst(
       elementName,
       propName,

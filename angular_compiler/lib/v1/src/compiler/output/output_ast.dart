@@ -953,7 +953,7 @@ class TypeParameter {
   TypeParameter(this.name, {this.bound});
 
   /// Converts this type parameter to a type.
-  OutputType? toType() => importType(CompileIdentifierMetadata(name: name));
+  OutputType toType() => importType(CompileIdentifierMetadata(name: name))!;
 }
 
 class ClassStmt extends Statement {

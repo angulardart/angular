@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
@@ -25,12 +23,10 @@ class _ViewStyleLinker {
   final CompileView _view;
   final o.ClassStmt _class;
 
-  const _ViewStyleLinker(this._view, this._class)
-      : assert(_view != null),
-        assert(_class != null);
+  const _ViewStyleLinker(this._view, this._class);
 
   bool get _hasScopedStyles =>
-      _view.component.template.encapsulation == ViewEncapsulation.Emulated;
+      _view.component.template!.encapsulation == ViewEncapsulation.Emulated;
 
   o.ExternalExpr get _styleType => o.importExpr(_hasScopedStyles
       ? StyleEncapsulation.componentStylesScoped
@@ -41,7 +37,7 @@ class _ViewStyleLinker {
     // bindings, which may attempt to update styles in the constructor body.
     // As an easy hack to ensure this, we just insert this call at the beginning
     // of the constructor body.
-    _class.constructorMethod.body.insert(
+    _class.constructorMethod!.body.insert(
       0,
       o.InvokeMemberMethodExpr(_initComponentStyles, const []).toStmt(),
     );
@@ -59,7 +55,7 @@ class _ViewStyleLinker {
           o.ReturnStatement(
             o.ConditionalExpr(
               o.importExpr(Runtime.isDevMode),
-              o.literal(_view.component.type.moduleUrl),
+              o.literal(_view.component.type!.moduleUrl),
               o.NULL_EXPR,
             ),
           ),

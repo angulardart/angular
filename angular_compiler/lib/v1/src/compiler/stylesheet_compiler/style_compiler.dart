@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show CompileIdentifierMetadata;
@@ -107,5 +105,5 @@ class StyleCompiler {
 ///
 /// Styles are assigned to style_componentTypeName variables and
 /// passed onto ViewUtils.createRenderComponentType for creating the prototype.
-String _getStylesVarName([String componentName]) =>
+String _getStylesVarName([String? componentName]) =>
     componentName != null ? 'styles\$$componentName' : 'styles';

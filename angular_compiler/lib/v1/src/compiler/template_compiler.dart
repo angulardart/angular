@@ -1,7 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
-
 import 'compile_metadata.dart'
     show CompileDirectiveMetadata, CompileTypedMetadata, CompilePipeMetadata;
 import 'compiler_utils.dart' show stylesModuleUrl;
@@ -22,10 +18,9 @@ class AngularArtifacts {
   final List<CompileDirectiveMetadata> directives;
 
   const AngularArtifacts({
-    @required this.components,
-    @required this.directives,
-  })  : assert(components != null),
-        assert(directives != null);
+    required this.components,
+    required this.directives,
+  });
 
   /// Whether the input has no component and directives.
   bool get isEmpty => components.isEmpty && directives.isEmpty;
@@ -43,14 +38,11 @@ class NormalizedComponentWithViewDirectives {
   final List<CompilePipeMetadata> pipes;
 
   const NormalizedComponentWithViewDirectives({
-    @required this.component,
-    @required this.directives,
-    @required this.directiveTypes,
-    @required this.pipes,
-  })  : assert(component != null),
-        assert(directives != null),
-        assert(directiveTypes != null),
-        assert(pipes != null);
+    required this.component,
+    required this.directives,
+    required this.directiveTypes,
+    required this.pipes,
+  });
 }
 
 /// Compiles view templates for `@Component()`-annotated classes.

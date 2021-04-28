@@ -645,10 +645,7 @@ List<CompileTypedMetadata> createHostDirectiveTypes(
     CompileTypedMetadata(
       componentType.name,
       componentType.moduleUrl,
-      componentType.typeParameters
-          .map((t) => t.toType())
-          .whereNotNull()
-          .toList(),
+      componentType.typeParameters.map((t) => t.toType()).toList(),
     )
   ];
 }

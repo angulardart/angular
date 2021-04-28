@@ -1,6 +1,4 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
@@ -75,7 +73,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   ProviderForest get providers => ProviderForest.from(_providerStack.first);
 
   void _addRootNodeAndProject(
-      CompileNode node, int ngContentIndex, CompileElement parent) {
+      CompileNode node, int? ngContentIndex, CompileElement parent) {
     var vcAppEl = (node is CompileElement && node.hasViewContainer)
         ? node.appViewContainer
         : null;
@@ -120,7 +118,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
   }
 
-  bool _maybeSkipNode(CompileElement parent, int ngContentIndex) {
+  bool _maybeSkipNode(CompileElement parent, int? ngContentIndex) {
     if (!_isRootNode(parent) &&
         parent.component != null &&
         ngContentIndex == null) {
@@ -135,12 +133,12 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       String nodeDescription, TemplateAst ast, CompileElement parent) {
     logWarning(ast.sourceSpan.message('Dead code in template: '
         '$nodeDescription is a child of a non-projecting '
-        'component (${parent.component.selector}) and will not '
+        'component (${parent.component!.selector}) and will not '
         'be added to the DOM.'));
   }
 
   void _visitText(
-      ir.Binding binding, CompileElement parent, int ngContentIndex) {
+      ir.Binding binding, CompileElement parent, int? ngContentIndex) {
     var nodeIndex = _view.nodes.length;
     var renderNode = _nodeReference(binding, parent, nodeIndex);
     var compileNode = CompileNode(parent, _view, nodeIndex, renderNode);
@@ -168,10 +166,11 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   @override
   void visitNgContent(NgContentAst ast, CompileElement parent) {
     _view.projectNodesIntoElement(parent, ast.index, ast.ngContentIndex);
-    if (ast.reference != null) {
+    final reference = ast.reference;
+    if (reference != null) {
       final provider = _view.createNgContentRefProvider(ast.index);
       final providerAst = ProviderAst(
-        provider.token,
+        provider.token!,
         false,
         [provider],
         ProviderAstType.Builtin,
@@ -189,7 +188,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
           [providerAst],
           false,
           false,
-          [ast.reference]);
+          [reference]);
 
       _view.nodes.add(compileElement);
 
@@ -233,7 +232,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
   NodeReference _elementReference(
     ElementAst ast,
     int nodeIndex, {
-    @required bool isComponent,
+    required bool isComponent,
   }) {
     return NodeReference(
       _view.storage,
@@ -245,10 +244,9 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     );
   }
 
-  CompileDirectiveMetadata _componentFromDirectives(
+  CompileDirectiveMetadata? _componentFromDirectives(
           List<CompileDirectiveMetadata> directives) =>
-      directives.firstWhere((directive) => directive.isComponent,
-          orElse: () => null);
+      directives.firstWhereOrNull((directive) => directive.isComponent);
 
   /// Should be called before visiting the children of [element].
   void _beforeChildren(CompileElement element) {
@@ -258,7 +256,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
 
   /// Should be called after visiting the children of [element].
   void _afterChildren(CompileElement element) {
-    final childNodeCount = _view.nodes.length - element.nodeIndex - 1;
+    final childNodeCount = _view.nodes.length - element.nodeIndex! - 1;
     element.afterChildren(childNodeCount);
     final childProviderNodes = _providerStack.removeLast();
     final providerNode =
@@ -333,7 +331,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     // component views. Host views always have exactly one child component view,
     // which is created by hand-written code in `HostView.create()`.
     if (!isHostView) {
-      final componentInstance = compileElement.getComponent();
+      final componentInstance = compileElement.getComponent()!;
       final projectedNodes = o.literalArr(
         compileElement.contentNodesByNgContentIndex
             .map(createFlatArrayForProjectNodes)
@@ -429,7 +427,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     _addRootNodeAndProject(compileElement, ast.ngContentIndex, parent);
 
     var metadata = CompileDirectiveMetadata.from(_view.component,
-        analyzedClass: AnalyzedClass.from(_view.component.analyzedClass,
+        analyzedClass: AnalyzedClass.from(_view.component.analyzedClass!,
             additionalLocals: {
               for (var v in ast.variables) v.name: v.dartType,
             }));
@@ -549,11 +547,11 @@ o.ClassStmt createViewClass(CompileView view, ExpressionParser parser) {
   ];
   if (view.viewType == ViewType.component &&
       view.detectHostChangesMethod != null) {
-    final methodStatements = view.detectHostChangesMethod.finish();
+    final methodStatements = view.detectHostChangesMethod!.finish();
     viewMethods.add(
       o.ClassMethod(
         'detectHostChanges',
-        [o.FnParam(DetectChangesVars.firstCheck.name, o.BOOL_TYPE)],
+        [o.FnParam(DetectChangesVars.firstCheck.name!, o.BOOL_TYPE)],
         [
           ...maybeCachedCtxDeclarationStatement(statements: methodStatements),
           ...methodStatements,
@@ -562,14 +560,11 @@ o.ClassStmt createViewClass(CompileView view, ExpressionParser parser) {
     );
   }
   for (final method in viewMethods) {
-    if (method.body != null) {
-      NodeReferenceStorageVisitor.visitScopedStatements(method.body);
-    }
+    NodeReferenceStorageVisitor.visitScopedStatements(
+        method.body as List<o.Statement>);
   }
   for (final getter in view.getters) {
-    if (getter.body != null) {
-      NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
-    }
+    NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
   }
   final viewGetters = [
     ...view.getters,
@@ -597,17 +592,15 @@ o.ClassStmt createViewClass(CompileView view, ExpressionParser parser) {
     view.storage.fields,
     viewGetters,
     viewConstructor,
-    viewMethods
-        .where((method) => method.body != null && method.body.isNotEmpty)
-        .toList(),
-    typeParameters: view.component.originType.typeParameters,
+    viewMethods.where((method) => method.body.isNotEmpty).toList(),
+    typeParameters: view.component.originType!.typeParameters,
   );
   initStyleEncapsulation(view, viewClass);
   return viewClass;
 }
 
 /// Generates a constructor AST for [view].
-o.Constructor _createViewConstructor(CompileView view) {
+o.Constructor? _createViewConstructor(CompileView view) {
   switch (view.viewType) {
     case ViewType.component:
       return _createComponentViewConstructor(view);
@@ -623,11 +616,11 @@ o.Constructor _createViewConstructor(CompileView view) {
 }
 
 o.Constructor _createComponentViewConstructor(CompileView view) {
-  final tagName = _tagNameFromComponentSelector(view.component.selector);
+  final tagName = _tagNameFromComponentSelector(view.component.selector!);
   if (tagName.isEmpty) {
     throw BuildError.withoutContext(
       'Component selector is missing tag name in '
-      '${view.component.identifier.name} '
+      '${view.component.identifier!.name} '
       'selector:${view.component.selector}',
     );
   }
@@ -653,11 +646,11 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
   return o.Constructor(
     params: [
       o.FnParam(
-        ViewConstructorVars.parentView.name,
+        ViewConstructorVars.parentView.name!,
         o.importType(Views.view),
       ),
       o.FnParam(
-        ViewConstructorVars.parentIndex.name,
+        ViewConstructorVars.parentIndex.name!,
         o.INT_TYPE,
       ),
     ],
@@ -676,11 +669,11 @@ o.Constructor _createEmbeddedViewConstructor(CompileView view) {
   return o.Constructor(
     params: [
       o.FnParam(
-        ViewConstructorVars.parentView.name,
+        ViewConstructorVars.parentView.name!,
         o.importType(Views.renderView),
       ),
       o.FnParam(
-        ViewConstructorVars.parentIndex.name,
+        ViewConstructorVars.parentIndex.name!,
         o.INT_TYPE,
       ),
     ],
@@ -712,7 +705,8 @@ String _tagNameFromComponentSelector(String selector) {
   final selectors = CssSelector.parse(selector);
   // Return the first parsed element selector.
   for (final selector in selectors) {
-    if (selector.element != null) return selector.element;
+    final element = selector.element;
+    if (element != null) return element;
   }
   // TODO(b/144125308): should we throw here if there's no element selector?
   // Otherwise, just return the original selector as-is.
@@ -729,7 +723,8 @@ List<o.Statement> _generateDestroyMethod(CompileView view) {
     // child component view.
     if (view.viewType != ViewType.host)
       for (var viewChild in view.viewChildren)
-        viewChild.componentView.callMethod('destroyInternalState', []).toStmt(),
+        viewChild.componentView!
+            .callMethod('destroyInternalState', []).toStmt(),
     ...view.destroyMethod.finish(),
   ];
 }
@@ -757,8 +752,8 @@ o.Statement _createEmbeddedViewFactory(
     CompileView view, o.ClassStmt viewClass) {
   final parentViewType = o.importType(Views.renderView);
   final parameters = [
-    o.FnParam(ViewConstructorVars.parentView.name, parentViewType),
-    o.FnParam(ViewConstructorVars.parentIndex.name, o.INT_TYPE),
+    o.FnParam(ViewConstructorVars.parentView.name!, parentViewType),
+    o.FnParam(ViewConstructorVars.parentIndex.name!, o.INT_TYPE),
   ];
   // Unlike host view factories, the return type of an embedded view factory
   // doesn't need to include its component type. This is because we only need
@@ -882,7 +877,7 @@ List<o.Statement> _generateBuildMethod(
 /// Returns a statement, if necessary, to record subscriptions or root nodes.
 ///
 /// Returns null if no statement is necessary.
-o.Statement _generateInitStatement(CompileView view) {
+o.Statement? _generateInitStatement(CompileView view) {
   switch (view.viewType) {
     case ViewType.component:
       // Component views have no root nodes, so we only need to record
@@ -916,7 +911,6 @@ o.Statement _generateInitStatement(CompileView view) {
           ],
         ).toStmt();
       }
-      break;
     case ViewType.host:
       return o.InvokeMemberMethodExpr('initRootNode', [
         // Host views should have exactly one root node.
@@ -961,7 +955,7 @@ void _writeComponentHostEventListeners(
   CompileView view,
   ExpressionParser parser,
   List<o.Statement> statements, {
-  @required o.Expression rootEl,
+  required o.Expression rootEl,
 }) {
   var component = view.component;
   var converter = BoundValueConverter.forView(view);
@@ -969,7 +963,7 @@ void _writeComponentHostEventListeners(
     var boundEvent = _parseEvent(component, eventName, parser);
 
     var handlerExpr = converter.convertSourceToExpression(
-        boundEvent.source, boundEvent.target.type);
+        boundEvent.source, boundEvent.target.type)!;
 
     statements.addAll(bindingToUpdateStatements(
       boundEvent,
@@ -990,10 +984,11 @@ ir.Binding _parseEvent(CompileDirectiveMetadata component, String eventName,
 }
 
 o.OutputType contextType(CompileView view) {
+  final type = view.component.originType!;
   return o.importType(
-    view.component.originType,
-    view.component.originType.typeParameters.map((t) => t.toType()).toList(),
-  );
+    type,
+    type.typeParameters.map((t) => t.toType()).toList(),
+  )!;
 }
 
 int _getChangeDetectionMode(CompileView view) {

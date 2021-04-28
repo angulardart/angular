@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
@@ -22,15 +20,15 @@ class DirectiveConverter {
 
   ir.Directive convertDirectiveToIR(CompileDirectiveMetadata directiveMeta) =>
       ir.Directive(
-        name: directiveMeta.identifier.name,
-        typeParameters: directiveMeta.originType.typeParameters,
+        name: directiveMeta.identifier!.name,
+        typeParameters: directiveMeta.originType!.typeParameters,
         hostProperties: _hostProperties(
             directiveMeta.hostProperties, directiveMeta.analyzedClass),
         metadata: directiveMeta,
       );
 
   List<ir.Binding> _hostProperties(
-      Map<String, ast.AST> hostProps, AnalyzedClass analyzedClass) {
+      Map<String, ast.AST> hostProps, AnalyzedClass? analyzedClass) {
     // TODO(b/130184376): Create better HostProperties representation in
     //  CompileMetadata.
     final hostProperties = hostProps.entries.map((entry) {

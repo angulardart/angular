@@ -181,8 +181,7 @@ o.Expression getViewFactory(
     o.ReturnStatement(o.InvokeFunctionExpr(
       viewFactoryVar,
       arguments,
-      component.originType!.typeParameters.map((t) => t.toType()).toList()
-          as List<o.OutputType>,
+      component.originType!.typeParameters.map((t) => t.toType()).toList(),
     )),
   ]);
 }

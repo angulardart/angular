@@ -10,7 +10,7 @@ class _ViewNameResolverState {
   final Map<String, o.Expression> locals = {};
   final Map<String, o.OutputType?> localTypes = {};
   final Map<String, o.DeclareVarStmt> localDeclarations = {};
-  final CompileView view;
+  final CompileView? view;
 
   /// Used to generate unique field names for property bindings.
   var bindingCount = 0;
@@ -26,7 +26,7 @@ class ViewNameResolver implements NameResolver {
   final _ViewNameResolverState _state;
 
   /// Creates a name resolver for [view].
-  ViewNameResolver(CompileView view) : _state = _ViewNameResolverState(view);
+  ViewNameResolver(CompileView? view) : _state = _ViewNameResolverState(view);
 
   /// Creates a scoped name resolver with shared [_state].
   ViewNameResolver._scope(this._state);
@@ -43,14 +43,14 @@ class ViewNameResolver implements NameResolver {
     }
     if (!_state.localDeclarations.containsKey(name)) {
       // Check if a local for `name` exists.
-      var currView = _state.view;
+      var currView = _state.view!;
       var result = _state.locals[name];
       while (result == null && currView.declarationElement.view != null) {
         currView = currView.declarationElement.view!;
         result = currView.nameResolver._state.locals[name];
       }
       if (result == null) return null; // No local for `name`.
-      var expression = getPropertyInView(result, _state.view, currView);
+      var expression = getPropertyInView(result, _state.view!, currView);
       final type = currView.nameResolver._state.localTypes[name];
       if (type != null && type != o.DYNAMIC_TYPE) {
         expression = unsafeCast(expression, type);
@@ -85,7 +85,8 @@ class ViewNameResolver implements NameResolver {
     o.Expression input,
     List<o.Expression> args,
   ) {
-    return CompilePipe.createCallPipeExpression(_state.view, name, input, args);
+    return CompilePipe.createCallPipeExpression(
+        _state.view!, name, input, args);
   }
 
   @override
