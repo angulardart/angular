@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
@@ -18,15 +16,15 @@ void main() {
   );
 
   group('should parse provider from', () {
-    List<DartObject> providers;
+    late List<DartObject> providers;
     const reader = ProviderReader();
 
-    ClassElement $Example;
-    ClassElement $ExamplePrime;
-    ClassElement $DependencyA;
-    ClassElement $DependencyB;
-    FunctionElement $createExample;
-    MethodElement $Example_create;
+    late ClassElement $Example;
+    late ClassElement $ExamplePrime;
+    late ClassElement $DependencyA;
+    late ClassElement $DependencyB;
+    late FunctionElement $createExample;
+    late MethodElement $Example_create;
 
     setUpAll(() async {
       final testLib = await resolveLibrary(r'''
@@ -99,13 +97,14 @@ void main() {
           ),
         ];
       ''');
-      $Example = testLib.getType('Example');
-      $ExamplePrime = testLib.getType('ExamplePrime');
-      $DependencyA = testLib.getType('DependencyA');
-      $DependencyB = testLib.getType('DependencyB');
+      $Example = testLib.getType('Example')!;
+      $ExamplePrime = testLib.getType('ExamplePrime')!;
+      $DependencyA = testLib.getType('DependencyA')!;
+      $DependencyB = testLib.getType('DependencyB')!;
       $createExample = testLib.definingCompilationUnit.functions.first;
-      $Example_create = $Example.getMethod('create');
-      providers = $Example.metadata.first.computeConstantValue().toListValue();
+      $Example_create = $Example.getMethod('create')!;
+      providers =
+          $Example.metadata.first.computeConstantValue()!.toListValue()!;
     });
 
     test('a type (implicit provider)', () {
@@ -116,7 +115,7 @@ void main() {
           null,
           linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
-            $Example.unnamedConstructor,
+            $Example.unnamedConstructor!,
             const [],
           ),
         ),
@@ -131,7 +130,7 @@ void main() {
           null,
           linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
-            $Example.unnamedConstructor,
+            $Example.unnamedConstructor!,
             const [],
           ),
         ),
@@ -146,7 +145,7 @@ void main() {
           null,
           linkTypeOf($ExamplePrime.thisType),
           dependencies: DependencyInvocation(
-            $ExamplePrime.unnamedConstructor,
+            $ExamplePrime.unnamedConstructor!,
             const [],
           ),
         ),
@@ -239,21 +238,21 @@ void main() {
         useValue.token,
         TypeTokenElement(const TypeLink('Duration', 'dart:core')),
       );
-      expect(useValue.useValue.type.name, 'Duration');
+      expect(useValue.useValue!.type!.name, 'Duration');
     });
 
     test('using useValue: ... to define a literal', () {
       final useValue = reader.parseProvider(
         providers[7],
       ) as UseValueProviderElement;
-      expect(useValue.useValue.toStringValue(), 'Hello World');
+      expect(useValue.useValue!.toStringValue(), 'Hello World');
     });
 
     test('using useValue: ... to define a literal and constant invocation', () {
       final useValue = reader.parseProvider(
         providers[8],
       ) as UseValueProviderElement;
-      expect(useValue.useValue.toListValue(), isNotEmpty);
+      expect(useValue.useValue!.toListValue(), isNotEmpty);
     });
 
     test('using an OpaqueToken instead of a Type', () {
@@ -268,7 +267,7 @@ void main() {
           null,
           linkTypeOf($Example.thisType),
           dependencies: DependencyInvocation(
-            $Example.unnamedConstructor,
+            $Example.unnamedConstructor!,
             const [],
           ),
         ),

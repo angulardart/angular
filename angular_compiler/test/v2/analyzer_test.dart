@@ -1,8 +1,5 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:meta/meta.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v2/analyzer.dart';
 import 'package:angular_compiler/v2/testing.dart';
@@ -10,13 +7,13 @@ import 'package:angular_compiler/v2/testing.dart';
 void main() {
   group('NullableDartType', () {
     test('a missing type ("null") should not be explicitly anything', () {
-      DartType noType;
+      DartType? noType;
       expect(noType.isExplicitlyNonNullable, isFalse);
       expect(noType.isExplicitlyNullable, isFalse);
     });
 
     Future<void> testDynamicIsNotExplicit({
-      @required bool enableNullSafety,
+      required bool enableNullSafety,
     }) async {
       final lib = await resolve(
         '''

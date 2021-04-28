@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/nullability_suffix.dart';
@@ -12,7 +10,7 @@ import '../../src/resolve.dart';
 
 void main() {
   group('should parse tokens from a constant representing a', () {
-    List<DartObject> tokens;
+    late List<DartObject> tokens;
     final reader = const TokenReader();
 
     setUpAll(() async {
@@ -30,7 +28,7 @@ void main() {
       class Example {
         const Example();
       }
-    ''')).metadata.first.computeConstantValue().toListValue();
+    '''))!.metadata.first.computeConstantValue()!.toListValue()!;
     });
 
     test('Type', () {
@@ -72,7 +70,7 @@ void main() {
 
   group('linkToOpaqueToken', () {
     final linkToOpaqueToken = const TokenReader().linkToOpaqueToken;
-    LibraryElement library;
+    late LibraryElement library;
 
     setUpAll(() async {
       library = await resolveLibrary(r'''
@@ -118,7 +116,7 @@ void main() {
     });
 
     InterfaceType instantiateClass(String name) {
-      final element = library.getType(name);
+      final element = library.getType(name)!;
       return element.instantiate(
         typeArguments: List.filled(
           element.typeParameters.length,

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -20,7 +18,6 @@ void main() {
 
   test('should record a factory', () async {
     final testLib = await resolveLibrary(r'''
-      // @dart=2.9
       @Injectable()
       Duration getDuration(DateTime date) => null;
 
@@ -50,7 +47,6 @@ void main() {
 
   test('should record a class', () async {
     final testLib = await resolveLibrary(r'''
-      // @dart=2.9
       @Injectable()
       class Example {
         Example(Duration duration);
@@ -80,9 +76,9 @@ void main() {
   });
 
   group('for linking', () {
-    Set<String> _fakeInputs;
-    Set<String> _fakeIsLibrary;
-    ReflectableReader reader;
+    late Set<String> _fakeInputs;
+    late Set<String> _fakeIsLibrary;
+    late ReflectableReader reader;
 
     setUp(() {
       _fakeInputs = <String>{};
@@ -95,7 +91,6 @@ void main() {
 
     test('should always link to an imported .template.dart', () async {
       final testLib = await resolveLibrary(r'''
-        // @dart=2.9
         import 'foo.template.dart';
         export 'bar.template.dart';
       ''');
@@ -112,7 +107,6 @@ void main() {
     test('should link to a file that has a .template.dart on disk', () async {
       _fakeIsLibrary.add('foo.template.dart');
       final testLib = await resolveLibrary(r'''
-        // @dart=2.9
         import 'foo.dart';
         import 'bar.dart';
       ''');
@@ -128,7 +122,6 @@ void main() {
     test('should link to a file that will have a .template.dart', () async {
       _fakeInputs.add('foo.dart');
       final testLib = await resolveLibrary(r'''
-        // @dart=2.9
         import 'foo.dart';
         import 'bar.dart';
       ''');
@@ -143,7 +136,7 @@ void main() {
   });
 
   group('errors', () {
-    ReflectableReader reader;
+    late ReflectableReader reader;
 
     var pleaseThrow = 'please.throw';
     setUp(() {
@@ -159,7 +152,6 @@ void main() {
 
     test('should throw on invalid asset it', () async {
       final testLib = await resolveLibrary('''
-        // @dart=2.9
         import 'package:$pleaseThrow/file.dart';
       ''');
       expect(
@@ -170,7 +162,7 @@ void main() {
             'toString()',
             allOf(
               contains('Could not parse URI'),
-              contains('line 5, column 9'),
+              contains('line 4, column 9'),
             ),
           ),
         ),
@@ -179,7 +171,6 @@ void main() {
 
     test('should throw on private injectable class', () async {
       final testLib = await resolveLibrary(r'''
-        // @dart=2.9
         @Injectable()
         class _Example {
           Example(Duration duration);
@@ -193,7 +184,7 @@ void main() {
             'toString()',
             allOf(
               contains('Private classes can not be @Injectable'),
-              contains('line 6, column 15'),
+              contains('line 5, column 15'),
             ),
           ),
         ),

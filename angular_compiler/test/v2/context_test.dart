@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:build/build.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v2/context.dart';
@@ -213,16 +211,6 @@ void main() {
         () async => 'Done',
       );
       expect(result, 'Done');
-    });
-
-    test('should complete with "null" on an unhandled error', () async {
-      final result = await runWithContext(
-        CompileContext.forTesting(),
-        () async {
-          throw Error();
-        },
-      );
-      expect(result, isNull);
     });
   });
 }

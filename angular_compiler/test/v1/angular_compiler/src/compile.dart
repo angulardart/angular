@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build_test/build_test.dart';
 import 'package:logging/logging.dart';
@@ -28,7 +26,7 @@ Future<T> runsNormally<T>(Future<T> Function() run) {
 /// Similar to [runNormally] as it verifies no warnings or errors.
 Future<void> compilesNormally(
   String source,
-  Future<void> Function(LibraryElement) run,
+  Future<void> Function(LibraryElement?) run,
 ) {
   return resolveLibrary(source).then((lib) => runsNormally(() => run(lib)));
 }
@@ -58,8 +56,8 @@ Future<T> _recordLogs<T>(
 Future<void> compilesExpecting(
   String source,
   Future<void> Function(LibraryElement) run, {
-  Object /* Matcher | List<Matcher> | List<String> */ errors,
-  Object /* Matcher | List<Matcher> | List<String> */ warnings,
+  Object? /* Matcher | List<Matcher> | List<String> */ errors,
+  Object? /* Matcher | List<Matcher> | List<String> */ warnings,
 }) {
   return resolveLibrary(source).then((lib) {
     return runsExpecting(
@@ -73,8 +71,8 @@ Future<void> compilesExpecting(
 /// Executes the [run] function, and expects specified [errors] or [warnings].
 Future<T> runsExpecting<T>(
   Future<T> Function() run, {
-  Object /* Matcher | List<Matcher> | List<String> */ errors,
-  Object /* Matcher | List<Matcher> | List<String> */ warnings,
+  Object? /* Matcher | List<Matcher> | List<String> */ errors,
+  Object? /* Matcher | List<Matcher> | List<String> */ warnings,
 }) {
   errors ??= anything;
   warnings ??= anything;

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:build/build.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v2/testing.dart';
@@ -8,7 +6,6 @@ void main() {
   test('should resolve a component', () async {
     final library = await resolve(
       '''
-      // @dart=2.9
       @Component(
         selector: 'example',
         template: 'Hello World',
@@ -18,11 +15,11 @@ void main() {
     );
     expect(
       library
-          .getType('Example')
+          .getType('Example')!
           .metadata
           .first
-          .computeConstantValue()
-          .getField('template')
+          .computeConstantValue()!
+          .getField('template')!
           .toStringValue(),
       'Hello World',
     );
@@ -31,7 +28,6 @@ void main() {
   test('should fail to resolve a component', () async {
     final library = await resolve(
       '''
-      // @dart=2.9
       @Component(
         selector: 'example',
         template: 'Hello World',
@@ -41,7 +37,7 @@ void main() {
       includeAngularDeps: false,
     );
     expect(
-      library.getType('Example').metadata.first.computeConstantValue(),
+      library.getType('Example')!.metadata.first.computeConstantValue(),
       isNull,
       reason: 'Angular was not loaded',
     );
@@ -50,7 +46,6 @@ void main() {
   test('should resolve code in another file', () async {
     final library = await resolve(
       '''
-        // @dart=2.9
         import 'another.dart';
         @Component(
           selector: 'example',
@@ -62,14 +57,14 @@ void main() {
         AssetId('test_lib', 'lib/another.dart'): 'class Base {}'
       },
     );
-    final clazz = library.getType('Example');
+    final clazz = library.getType('Example')!;
     expect(
       clazz.metadata.first
-          .computeConstantValue()
-          .getField('template')
+          .computeConstantValue()!
+          .getField('template')!
           .toStringValue(),
       'Hello World',
     );
-    expect(clazz.supertype.element.name, 'Base');
+    expect(clazz.supertype!.element.name, 'Base');
   });
 }
