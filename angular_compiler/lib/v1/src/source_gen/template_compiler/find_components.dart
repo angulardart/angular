@@ -97,14 +97,6 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
     }
   }
 
-  @override
-  void visitFunctionElement(FunctionElement element) {
-    final directive = element.accept(_visitor());
-    if (directive != null) {
-      directives.add(directive);
-    }
-  }
-
   List<CompileDirectiveMetadata> _visitDirectives(ClassElement element) {
     final values = _getResolvedArgumentsOrFail(element, 'directives');
     return visitAll(values, (value) {
