@@ -663,11 +663,6 @@ class _BindDirectivesVisitor
       null;
 
   @override
-  ng.TemplateAst visitExpression(ast.ExpressionAst<Object> astNode,
-          [_ParseContext? _]) =>
-      throw UnimplementedError('Don\'t know how to handle expressions.');
-
-  @override
   ng.TemplateAst visitStar(ast.StarAst astNode, [_ParseContext? _]) =>
       throw UnimplementedError('Don\'t know how to handle stars.');
 

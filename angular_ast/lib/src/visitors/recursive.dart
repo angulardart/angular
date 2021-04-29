@@ -105,12 +105,8 @@ class RecursiveTemplateAstVisitor<C>
         astNode,
         astNode.name,
         astNode.value,
-        visit(astNode.expression),
         astNode.reductions,
       );
-
-  @override
-  TemplateAst visitExpression(ExpressionAst<Object> astNode, [_]) => astNode;
 
   @override
   @mustCallSuper
@@ -118,7 +114,6 @@ class RecursiveTemplateAstVisitor<C>
       InterpolationAst.from(
         astNode,
         astNode.value,
-        visit(astNode.expression),
       );
 
   @override
@@ -130,7 +125,6 @@ class RecursiveTemplateAstVisitor<C>
         astNode,
         astNode.name,
         astNode.value,
-        visit(astNode.expression),
         astNode.postfix,
         astNode.unit,
       );

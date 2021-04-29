@@ -14,7 +14,6 @@ export 'src/ast.dart'
         EmbeddedContentAst,
         EmbeddedTemplateAst,
         EventAst,
-        ExpressionAst,
         InterpolationAst,
         LetBindingAst,
         ParsedAnnotationAst,

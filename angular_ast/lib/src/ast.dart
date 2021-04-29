@@ -5,7 +5,6 @@ export 'ast/container.dart' show ContainerAst;
 export 'ast/content.dart' show EmbeddedContentAst, ParsedEmbeddedContentAst;
 export 'ast/element.dart' show ElementAst, ParsedElementAst;
 export 'ast/event.dart' show EventAst, ParsedEventAst;
-export 'ast/expression.dart' show ExpressionAst;
 export 'ast/interface.dart'
     show
         ParsedDecoratorAst,

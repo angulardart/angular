@@ -62,9 +62,6 @@ abstract class TemplateAstVisitor<R, C> {
   /// Visits all event ASTs.
   R visitEvent(EventAst astNode, [C? context]);
 
-  /// Visits all expression ASTs.
-  R visitExpression(ExpressionAst<Object> astNode, [C? context]);
-
   /// Visits all interpolation ASTs.
   R visitInterpolation(InterpolationAst astNode, [C? context]);
 

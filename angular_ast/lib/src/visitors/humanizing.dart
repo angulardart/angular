@@ -187,12 +187,6 @@ class HumanizingTemplateAstVisitor
   }
 
   @override
-  String visitExpression(ExpressionAst<Object> astNode, [_]) {
-    // TODO: Restore once we have a working expression parser in this package.
-    return '';
-  }
-
-  @override
   String visitInterpolation(InterpolationAst astNode, [_]) {
     return '{{${astNode.value}}}';
   }

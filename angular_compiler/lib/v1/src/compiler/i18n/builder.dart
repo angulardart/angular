@@ -112,11 +112,6 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   }
 
   @override
-  void visitExpression(_, [__]) {
-    throw UnimplementedError();
-  }
-
-  @override
   void visitInterpolation(InterpolationAst astNode, [_]) {
     _reportUnpermitted(astNode);
   }

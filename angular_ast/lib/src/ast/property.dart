@@ -14,7 +14,6 @@ abstract class PropertyAst implements TemplateAst {
   factory PropertyAst(
     String name, [
     String? value,
-    ExpressionAst<Object>? expression,
     String? postfix,
     String? unit,
   ]) = _SyntheticPropertyAst;
@@ -24,7 +23,6 @@ abstract class PropertyAst implements TemplateAst {
     TemplateAst? origin,
     String name, [
     String? value,
-    ExpressionAst<Object>? expression,
     String? postfix,
     String? unit,
   ]) = _SyntheticPropertyAst.from;
@@ -42,25 +40,18 @@ abstract class PropertyAst implements TemplateAst {
   @override
   bool operator ==(Object o) {
     if (o is PropertyAst) {
-      return expression == o.expression &&
-          name == o.name &&
-          postfix == o.postfix &&
-          unit == o.unit;
+      return name == o.name && postfix == o.postfix && unit == o.unit;
     }
     return false;
   }
 
   @override
-  int get hashCode => hash4(expression, name, postfix, unit);
+  int get hashCode => hash3(name, postfix, unit);
 
   @override
   R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitProperty(this, context);
   }
-
-  /// Bound expression; optional for backwards compatibility.
-  ExpressionAst<Object>? get expression;
-  set expression(ExpressionAst<Object>? expression);
 
   /// Name of the property being set.
   String get name;
@@ -91,13 +82,10 @@ abstract class PropertyAst implements TemplateAst {
   @override
   String toString() {
     if (unit != null) {
-      return '$PropertyAst {$name.$postfix.$unit="$expression"}';
+      return '$PropertyAst {$name.$postfix.$unit}';
     }
     if (postfix != null) {
-      return '$PropertyAst {$name.$postfix="$expression"}';
-    }
-    if (expression != null) {
-      return '$PropertyAst {$name="$expression"}';
+      return '$PropertyAst {$name.$postfix}';
     }
     return '$PropertyAst {$name}';
   }
@@ -142,10 +130,6 @@ class ParsedPropertyAst extends TemplateAst
             sourceFile) {
     if (_nameWithoutBrackets.split('.').length > 3) {}
   }
-
-  /// ExpressionAst of `"value"`; may be `null` to have no value.
-  @override
-  ExpressionAst<Object>? expression;
 
   String get _nameWithoutBrackets => nameToken.lexeme;
 
@@ -200,7 +184,6 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
   _SyntheticPropertyAst(
     this.name, [
     this.value,
-    this.expression,
     this.postfix,
     this.unit,
   ]);
@@ -209,13 +192,9 @@ class _SyntheticPropertyAst extends SyntheticTemplateAst with PropertyAst {
     TemplateAst? origin,
     this.name, [
     this.value,
-    this.expression,
     this.postfix,
     this.unit,
   ]) : super.from(origin);
-
-  @override
-  ExpressionAst<Object>? expression;
 
   @override
   final String name;
