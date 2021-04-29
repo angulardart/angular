@@ -37,7 +37,7 @@ jobs:
       - name: mono_repo self validate
         run: pub global run mono_repo generate --validate
   job_002:
-    name: "analyze; Dart dev; PKGS: angular_router, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_test, examples/hello_world; `dartanalyzer --fatal-warnings .`"
+    name: "analyze; Dart dev; PKGS: angular_router, _tests, angular, angular_ast, angular_compiler, angular_forms, angular_test, examples/hello_world; `dartanalyzer .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -60,75 +60,75 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
-      - name: "angular_router; dartanalyzer --fatal-warnings ."
+      - name: angular_router; dartanalyzer .
         if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
         working-directory: angular_router
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: _tests_pub_upgrade
         name: "_tests; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; dartanalyzer --fatal-warnings ."
+      - name: _tests; dartanalyzer .
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_pub_upgrade
         name: "angular; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular
         run: pub upgrade --no-precompile
-      - name: "angular; dartanalyzer --fatal-warnings ."
+      - name: angular; dartanalyzer .
         if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
         working-directory: angular
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_ast_pub_upgrade
         name: "angular_ast; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
-      - name: "angular_ast; dartanalyzer --fatal-warnings ."
+      - name: angular_ast; dartanalyzer .
         if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
         working-directory: angular_ast
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_compiler_pub_upgrade
         name: "angular_compiler; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
-      - name: "angular_compiler; dartanalyzer --fatal-warnings ."
+      - name: angular_compiler; dartanalyzer .
         if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
         working-directory: angular_compiler
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_forms_pub_upgrade
         name: "angular_forms; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
-      - name: "angular_forms; dartanalyzer --fatal-warnings ."
+      - name: angular_forms; dartanalyzer .
         if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
         working-directory: angular_forms
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_test_pub_upgrade
         name: "angular_test; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
-      - name: "angular_test; dartanalyzer --fatal-warnings ."
+      - name: angular_test; dartanalyzer .
         if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
         working-directory: angular_test
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: examples_hello_world_pub_upgrade
         name: "examples/hello_world; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade --no-precompile
-      - name: "examples/hello_world; dartanalyzer --fatal-warnings ."
+      - name: examples/hello_world; dartanalyzer .
         if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
         working-directory: examples/hello_world
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
   job_003:
-    name: "analyze; Dart 2.12.0; PKGS: angular_forms, angular, angular_ast, _tests, angular_compiler, angular_router, examples/hello_world, angular_test; `dartanalyzer --fatal-warnings .`"
+    name: "analyze; Dart 2.12.0; PKGS: angular_forms, angular, angular_ast, _tests, angular_compiler, angular_router, examples/hello_world, angular_test; `dartanalyzer .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -151,73 +151,73 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade --no-precompile
-      - name: "angular_forms; dartanalyzer --fatal-warnings ."
+      - name: angular_forms; dartanalyzer .
         if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
         working-directory: angular_forms
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_pub_upgrade
         name: "angular; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular
         run: pub upgrade --no-precompile
-      - name: "angular; dartanalyzer --fatal-warnings ."
+      - name: angular; dartanalyzer .
         if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
         working-directory: angular
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_ast_pub_upgrade
         name: "angular_ast; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_ast
         run: pub upgrade --no-precompile
-      - name: "angular_ast; dartanalyzer --fatal-warnings ."
+      - name: angular_ast; dartanalyzer .
         if: "always() && steps.angular_ast_pub_upgrade.conclusion == 'success'"
         working-directory: angular_ast
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: _tests_pub_upgrade
         name: "_tests; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; dartanalyzer --fatal-warnings ."
+      - name: _tests; dartanalyzer .
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_compiler_pub_upgrade
         name: "angular_compiler; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade --no-precompile
-      - name: "angular_compiler; dartanalyzer --fatal-warnings ."
+      - name: angular_compiler; dartanalyzer .
         if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
         working-directory: angular_compiler
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_router_pub_upgrade
         name: "angular_router; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade --no-precompile
-      - name: "angular_router; dartanalyzer --fatal-warnings ."
+      - name: angular_router; dartanalyzer .
         if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
         working-directory: angular_router
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: examples_hello_world_pub_upgrade
         name: "examples/hello_world; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade --no-precompile
-      - name: "examples/hello_world; dartanalyzer --fatal-warnings ."
+      - name: examples/hello_world; dartanalyzer .
         if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
         working-directory: examples/hello_world
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
       - id: angular_test_pub_upgrade
         name: "angular_test; pub upgrade --no-precompile"
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade --no-precompile
-      - name: "angular_test; dartanalyzer --fatal-warnings ."
+      - name: angular_test; dartanalyzer .
         if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
         working-directory: angular_test
-        run: dartanalyzer --fatal-warnings .
+        run: dartanalyzer .
   job_004:
     name: "build; Dart dev; PKG: angular_ast; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
