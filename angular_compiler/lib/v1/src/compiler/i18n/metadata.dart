@@ -178,7 +178,7 @@ class _I18nMetadataBuilder {
         meaning != null ? _normalizeWhitespace(meaning!.value!) : null;
     return I18nMetadata(
       normalizedDescription,
-      description!.sourceSpan!,
+      description!.sourceSpan,
       locale: normalizedLocale,
       meaning: normalizedMeaning,
       skip: skip != null,
@@ -194,7 +194,7 @@ class _I18nMetadataBuilder {
         '',
       );
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        annotation.sourceSpan!,
+        annotation.sourceSpan,
         'A corresponding message description (@$descriptionName) is required',
       ));
     }

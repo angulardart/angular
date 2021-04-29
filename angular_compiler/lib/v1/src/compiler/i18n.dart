@@ -25,7 +25,7 @@ List<ng.TemplateAst> internationalize(
   final i18nMessage = _message(parent.childNodes, metadata);
   if (i18nMessage == null) {
     CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-      parent.sourceSpan!,
+      parent.sourceSpan,
       'Internationalized messages must contain text',
     ));
     return [];

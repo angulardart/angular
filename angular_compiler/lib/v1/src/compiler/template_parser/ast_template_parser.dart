@@ -93,7 +93,7 @@ class AstTemplateParser {
       directives,
       compMeta,
       filteredAst,
-      parsedAst.first.sourceSpan!,
+      parsedAst.first.sourceSpan,
     );
     CompileContext.current.throwRecoverableErrors();
 
@@ -290,7 +290,7 @@ class _BindDirectivesVisitor
       null /* elementProviderUsage */,
       _visitChildren(astNode, elementContext),
       _findNgContentIndexForElement(astNode, parentContext),
-      astNode.sourceSpan!,
+      astNode.sourceSpan,
       parentContext.matchedNgContentSelectors,
       skipOnPushValidation: skipOnPushValidation,
       skipSchemaValidationForSelector: skipSchemaValidationForSelector!,
@@ -304,7 +304,7 @@ class _BindDirectivesVisitor
   ) {
     if (!context.templateContext.component.isOnPush) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        annotation.sourceSpan!,
+        annotation.sourceSpan,
         'Can only be used in the template of a component using '
         '"ChangeDetectionStrategy.OnPush"',
       ));
@@ -312,12 +312,12 @@ class _BindDirectivesVisitor
     var componentAst = _ParseContext._firstComponent(context.boundDirectives);
     if (componentAst == null) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        annotation.sourceSpan!,
+        annotation.sourceSpan,
         'Can only be applied to a component element',
       ));
     } else if (componentAst.directive.isOnPush) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        annotation.sourceSpan!,
+        annotation.sourceSpan,
         'Can only be applied to a component using '
         '"ChangeDetectionStrategy.Default"',
       ));
@@ -357,12 +357,12 @@ class _BindDirectivesVisitor
         elementContext.elementName,
         attribute.name,
         boundValue,
-        attribute.sourceSpan!,
+        attribute.sourceSpan,
         elementContext.templateContext.schemaRegistry,
       );
     } on ParseException catch (e) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        attribute.sourceSpan!,
+        attribute.sourceSpan,
         e.toString(),
       ));
       return null;
@@ -402,7 +402,7 @@ class _BindDirectivesVisitor
         _ParseContext.forContainer(astNode, parentContext!);
     return ng.NgContainerAst(
       _visitChildren(astNode, containerContext),
-      astNode.sourceSpan!,
+      astNode.sourceSpan,
     );
   }
 
@@ -427,7 +427,7 @@ class _BindDirectivesVisitor
       null /* elementProviderUsage */,
       _visitChildren(astNode, embeddedContext),
       _findNgContentIndexForTemplate(astNode, parentContext),
-      astNode.sourceSpan!,
+      astNode.sourceSpan,
       parentContext.matchedNgContentSelectors,
     );
   }
@@ -467,7 +467,7 @@ class _BindDirectivesVisitor
     return ng.NgContentAst(
         ngContentCount++,
         _findNgContentIndexForEmbeddedContent(context, astNode),
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         astNode.reference?.accept(this, context) as ng.ReferenceAst?);
   }
 
@@ -496,10 +496,10 @@ class _BindDirectivesVisitor
         return null;
       }
       return ng.BoundEventAst(
-          _getEventName(astNode), handler, astNode.sourceSpan!);
+          _getEventName(astNode), handler, astNode.sourceSpan);
     } on ParseException catch (e) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         e.toString(),
       ));
       return null;
@@ -549,7 +549,7 @@ class _BindDirectivesVisitor
     if (astNode.mustaches?.isNotEmpty ?? false) return null;
     context!.bindLiteralToDirective(astNode);
     final value = _createAttributeValue(astNode, context);
-    return ng.AttrAst(astNode.name, value, astNode.sourceSpan!);
+    return ng.AttrAst(astNode.name, value, astNode.sourceSpan);
   }
 
   ng.AttributeValue<Object> _createAttributeValue(
@@ -590,7 +590,7 @@ class _BindDirectivesVisitor
               "did you mean to write 'of' instead of 'in'?";
         }
         CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-          astNode.sourceSpan!,
+          astNode.sourceSpan,
           message,
         ));
         return null;
@@ -600,12 +600,12 @@ class _BindDirectivesVisitor
         context.elementName,
         _getPropertyName(astNode),
         boundValue,
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         context.templateContext.schemaRegistry,
       );
     } on ParseException catch (e) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         e.toString(),
       ));
       return null;
@@ -615,7 +615,7 @@ class _BindDirectivesVisitor
   @override
   ng.TemplateAst visitLetBinding(ast.LetBindingAst astNode,
           [_ParseContext? _]) =>
-      ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan!);
+      ng.VariableAst(astNode.name, astNode.value, astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitReference(ast.ReferenceAst astNode,
@@ -623,12 +623,12 @@ class _BindDirectivesVisitor
       ng.ReferenceAst(
           astNode.variable,
           context!.identifierForReference(astNode.identifier),
-          astNode.sourceSpan!);
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst visitText(ast.TextAst astNode, [_ParseContext? context]) =>
       ng.TextAst(astNode.value, context!.findNgContentIndex(_textCssSelector),
-          astNode.sourceSpan!);
+          astNode.sourceSpan);
 
   @override
   ng.TemplateAst? visitInterpolation(ast.InterpolationAst astNode,
@@ -639,10 +639,10 @@ class _BindDirectivesVisitor
           _location(astNode),
           context.templateContext.exports)!;
       return ng.BoundTextAst(element,
-          context.findNgContentIndex(_textCssSelector), astNode.sourceSpan!);
+          context.findNgContentIndex(_textCssSelector), astNode.sourceSpan);
     } on ParseException catch (e) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         e.toString(),
       ));
       return null;
@@ -787,7 +787,7 @@ class _ParseContext {
     );
     var hostListeners = _collectHostListeners(
       boundDirectives,
-      element.sourceSpan!,
+      element.sourceSpan,
       element.name,
       _location(element),
       templateContext,
@@ -824,7 +824,7 @@ class _ParseContext {
 
     var hostListeners = _collectHostListeners(
       boundDirectives,
-      template.sourceSpan!,
+      template.sourceSpan,
       _templateElement,
       _location(template),
       templateContext,
@@ -881,7 +881,7 @@ class _ParseContext {
           boundDirectives, astNode.name, value, astNode.sourceSpan);
 
   bool _bindToDirective(List<ng.DirectiveAst> directives, String name,
-      ng.BoundValue value, SourceSpan? sourceSpan) {
+      ng.BoundValue value, SourceSpan sourceSpan) {
     var foundMatch = false;
     directive:
     for (var directive in directives) {
@@ -890,7 +890,7 @@ class _ParseContext {
         if (templateName == name) {
           _removeExisting(directive.inputs, templateName);
           directive.inputs.add(ng.BoundDirectivePropertyAst(
-              directiveName, templateName!, value, sourceSpan!));
+              directiveName, templateName!, value, sourceSpan));
           foundMatch = true;
           continue directive;
         }
@@ -907,7 +907,7 @@ class _ParseContext {
   ///
   /// Returns [true] if one or more matches are found.
   bool bindEventToDirective(
-      String name, SourceSpan? sourceSpan, ng.EventHandler handler) {
+      String name, SourceSpan sourceSpan, ng.EventHandler handler) {
     var foundMatch = false;
     directive:
     for (var directive in boundDirectives) {
@@ -918,7 +918,7 @@ class _ParseContext {
             directiveName,
             templateName!,
             handler,
-            sourceSpan!,
+            sourceSpan,
           ));
           foundMatch = true;
           continue directive;
@@ -931,14 +931,14 @@ class _ParseContext {
   ng.BoundValue createBoundValue(
     String name,
     ASTWithSource? value,
-    SourceSpan? sourceSpan,
+    SourceSpan sourceSpan,
   ) {
     if (i18nMetadata!.forAttributes.containsKey(name)) {
       final metadata = i18nMetadata!.forAttributes[name]!;
       final message = i18nMessageFromPropertyBinding(
         value!,
         metadata,
-        sourceSpan!,
+        sourceSpan,
       )!;
       return ng.BoundI18nMessage(message);
     } else {
@@ -973,7 +973,7 @@ class _ParseContext {
 
   static List<ng.DirectiveAst> _toAst(
           Iterable<CompileDirectiveMetadata> directiveMetas,
-          SourceSpan? sourceSpan,
+          SourceSpan sourceSpan,
           String elementName,
           String location,
           TemplateContext templateContext) =>
@@ -982,7 +982,7 @@ class _ParseContext {
                 directive,
                 inputs: [],
                 outputs: [],
-                sourceSpan: sourceSpan!,
+                sourceSpan: sourceSpan,
               ))
           .toList();
 
@@ -1158,7 +1158,7 @@ String _location(ast.TemplateAst? astNode) {
   if (astNode.isSynthetic) {
     return _location((astNode as ast.SyntheticTemplateAst).origin);
   }
-  return astNode.sourceSpan!.sourceUrl.toString();
+  return astNode.sourceSpan.sourceUrl.toString();
 }
 
 String _getPropertyName(ast.PropertyAst astNode) {
@@ -1183,7 +1183,7 @@ class _ElementFilter extends ast.RecursiveTemplateAstVisitor<void> {
   ast.ElementAst? visitElement(ast.ElementAst astNode, [_]) {
     if (_filterElement(astNode)) {
       // TODO: Add a flag to upgrade this to an error.
-      final warning = astNode.sourceSpan!.message(
+      final warning = astNode.sourceSpan.message(
         ''
         'Ignoring <${astNode.name}>, as this element is unsafe to bind in '
         'a template without proper sanitization. This may become an error '
@@ -1384,7 +1384,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
             astNode.name.startsWith(i18nDescriptionPrefix)) &&
         (astNode.value == null || astNode.value!.trim().isEmpty)) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'Requires a value describing the message to help translators',
       ));
     }
@@ -1392,7 +1392,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
             astNode.name.startsWith(i18nLocalePrefix)) &&
         (astNode.value == null || astNode.value!.trim().isEmpty)) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'Requires a value to specify a locale',
       ));
     }
@@ -1400,7 +1400,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
             astNode.name.startsWith(i18nMeaningPrefix)) &&
         (astNode.value == null || astNode.value!.trim().isEmpty)) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'While optional, when specified the meaning must be non-empty to '
         'disambiguate from other equivalent messages',
       ));
@@ -1408,7 +1408,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
     if (astNode.name == 'skipSchemaValidationFor' &&
         (astNode.value == null || astNode.value!.trim().isEmpty)) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'Requires a CSS selector value that is used to allow custom tags, '
         'attributes, and events',
       ));
@@ -1418,7 +1418,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
         astNode.name == 'skipOnPushValidation' ||
         astNode.name == 'skipSchemaValidationFor')) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'Invalid annotation',
       ));
     }
@@ -1429,13 +1429,13 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
   ast.TemplateAst visitEvent(ast.EventAst astNode, [_]) {
     if (_getEventName(astNode).contains(':')) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         '":" is not allowed in event names: ${_getEventName(astNode)}',
       ));
     }
     if (astNode.value == null || astNode.value!.isEmpty) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         'events must have a bound expresssion: ${_getEventName(astNode)}',
       ));
     }
@@ -1446,7 +1446,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
   ast.TemplateAst visitReference(ast.ReferenceAst astNode, [_]) {
     if (astNode.variable.contains('-')) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         '"-" is not allowed in reference names',
       ));
     }
@@ -1458,7 +1458,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
     for (final attribute in attributes) {
       if (seenAttributes.contains(attribute.name)) {
         CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-          attribute.sourceSpan!,
+          attribute.sourceSpan,
           'Found multiple attributes with the same name: ${attribute.name}.',
         ));
       } else {
@@ -1473,7 +1473,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
       final propertyName = _getPropertyName(property);
       if (seenProperties.contains(propertyName)) {
         CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-          property.sourceSpan!,
+          property.sourceSpan,
           'Found multiple properties with the same name: $propertyName.',
         ));
       } else {
@@ -1488,7 +1488,7 @@ class _TemplateValidator extends ast.RecursiveTemplateAstVisitor<void> {
       final eventName = _getEventName(event);
       if (seenEvents.contains(eventName)) {
         CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-          event.sourceSpan!,
+          event.sourceSpan,
           'Found multiple events with the same name: $eventName. You should '
           'merge the handlers into a single statement.',
         ));

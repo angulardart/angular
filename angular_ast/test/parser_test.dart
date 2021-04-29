@@ -304,7 +304,7 @@ void main() {
     final template = '<p $source></p>';
     final ast = parse(template).single as ElementAst;
     final annotation = ast.annotations.single;
-    expect(annotation.sourceSpan!.text, source);
+    expect(annotation.sourceSpan.text, source);
   });
 
   test('should parse an annotation with a compound name', () {
