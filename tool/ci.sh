@@ -74,7 +74,11 @@ for PKG in ${PKGS}; do
         echo 'pub run build_runner test --fail-on-severe -- -P ci'
         pub run build_runner test --fail-on-severe -- -P ci || EXIT_CODE=$?
         ;;
-      dartanalyzer)
+      dartanalyzer_0)
+        echo 'dartanalyzer --fatal-hints .'
+        dartanalyzer --fatal-hints . || EXIT_CODE=$?
+        ;;
+      dartanalyzer_1)
         echo 'dartanalyzer .'
         dartanalyzer . || EXIT_CODE=$?
         ;;

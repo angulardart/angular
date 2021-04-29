@@ -56,9 +56,7 @@ bool matchAnnotation(TypeChecker typeChecker, ElementAnnotation annotation) {
         'Could not determine type of annotation. It resolved to '
         '${annotation.computeConstantValue()}. '
         'Are you missing a dependency?';
-    if (annotation is ElementAnnotationImpl &&
-        annotation.annotationAst != null &&
-        annotation.librarySource != null) {
+    if (annotation is ElementAnnotationImpl) {
       message += ''
           '\n'
           '${annotation.annotationAst.toSource()} in '

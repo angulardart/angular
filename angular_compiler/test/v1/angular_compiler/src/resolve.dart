@@ -31,8 +31,7 @@ Future<LibraryElement> resolveLibrary(String source) async {
       library _test;
       import '$angular';\n\n$source
     ''',
-      (resolver) =>
-          resolver.findLibraryByName('_test') as FutureOr<LibraryElement>,
+      (resolver) async => (await resolver.findLibraryByName('_test'))!,
       inputId: AssetId('test_lib', 'lib/test_lib.dart'),
       packageConfig: packageConfig,
     ),
