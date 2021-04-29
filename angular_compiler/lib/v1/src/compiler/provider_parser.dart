@@ -531,7 +531,6 @@ CompileTokenMap<List<CompileQueryMetadata>> _getContentQueries(
     List<CompileDirectiveMetadata> directives) {
   var contentQueries = CompileTokenMap<List<CompileQueryMetadata>>();
   for (var directive in directives) {
-    if (directive.queries == null) continue;
     for (var query in directive.queries) {
       _addQueryToTokenMap(contentQueries, query);
     }
