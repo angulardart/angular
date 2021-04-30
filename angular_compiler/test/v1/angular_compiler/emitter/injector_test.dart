@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
@@ -10,7 +8,7 @@ void main() {
   EqualsDart.format = dartfmt.format;
 
   TokenElement dummyToken = TypeTokenElement(TypeLink('Token', null));
-  InjectorEmitter emitter;
+  late InjectorEmitter emitter;
 
   setUp(() {
     emitter = InjectorEmitter()..visitMeta('FooInjector', 'fooInjector');

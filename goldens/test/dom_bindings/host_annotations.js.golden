@@ -142,7 +142,7 @@
   }
   var functionCounter = 0;
   function tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted) {
-    return isIntercepted ? new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new c(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null) : new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "() {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new c(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null);
+    return isIntercepted ? new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null) : new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null);
   }
   function tearOff(funcs, applyTrampolineIndex, reflectionInfo, isStatic, name, isIntercepted) {
     var cache = null;
@@ -282,7 +282,7 @@
       this.__internal$_name = t0;
     },
     unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -503,7 +503,7 @@
       message = H.quoteStringForRegExp(message.replace(String({}), "$receiver$"));
       match = message.match(/\\\$[a-zA-Z]+\\\$/g);
       if (match == null)
-        match = H.setRuntimeTypeInfo([], type$.JSArray_String);
+        match = H._setArrayType([], type$.JSArray_String);
       $arguments = match.indexOf("\\$arguments\\$");
       argumentsExpr = match.indexOf("\\$argumentsExpr\\$");
       expr = match.indexOf("\\$expr\\$");
@@ -1403,7 +1403,7 @@
       result._named = substitutedNamed;
       return result;
     },
-    setRuntimeTypeInfo: function(target, rti) {
+    _setArrayType: function(target, rti) {
       target[init.arrayRti] = rti;
       return target;
     },
@@ -1758,7 +1758,7 @@
       if (bounds != null) {
         boundsLength = bounds.length;
         if (genericContext == null) {
-          genericContext = H.setRuntimeTypeInfo([], type$.JSArray_String);
+          genericContext = H._setArrayType([], type$.JSArray_String);
           outerContextLength = null;
         } else
           outerContextLength = genericContext.length;
@@ -1867,7 +1867,7 @@
       return "?";
     },
     _unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -2704,9 +2704,6 @@
     _TypeError: function _TypeError(t0) {
       this.__rti$_message = t0;
     },
-    unmangleGlobalNameIfPreservedAnyways: function($name) {
-      return init.mangledGlobalNames[$name];
-    },
     printString: function(string) {
       if (typeof dartPrint == "function") {
         dartPrint(string);
@@ -2785,7 +2782,7 @@
       return J.JSArray_JSArray$markFixed(new Array($length), $E);
     },
     JSArray_JSArray$markFixed: function(allocation, $E) {
-      return J.JSArray_markFixedList(H.setRuntimeTypeInfo(allocation, $E._eval$1("JSArray<0>")));
+      return J.JSArray_markFixedList(H._setArrayType(allocation, $E._eval$1("JSArray<0>")));
     },
     JSArray_markFixedList: function(list) {
       list.fixed$length = Array;
@@ -2864,6 +2861,9 @@
     },
     get$length$asx: function(receiver) {
       return J.getInterceptor$asx(receiver).get$length(receiver);
+    },
+    get$parent$x: function(receiver) {
+      return J.getInterceptor$x(receiver).get$parent(receiver);
     },
     $eq$: function(receiver, a0) {
       if (receiver == null)
@@ -3229,7 +3229,10 @@
     _nullDoneHandler: function() {
     },
     _rootHandleUncaughtError: function($self, $parent, zone, error, stackTrace) {
-      P._schedulePriorityAsyncCallback(new P._rootHandleUncaughtError_closure(error, stackTrace));
+      P._rootHandleError(error, stackTrace);
+    },
+    _rootHandleError: function(error, stackTrace) {
+      P._schedulePriorityAsyncCallback(new P._rootHandleError_closure(error, stackTrace));
     },
     _rootRun: function($self, $parent, zone, f) {
       var old,
@@ -3295,12 +3298,12 @@
       P._scheduleAsyncCallback(f);
     },
     _rootCreateTimer: function($self, $parent, zone, duration, callback) {
-      callback = zone.bindCallback$1$1(callback, type$.void);
-      return P.Timer__createTimer(duration, callback);
+      return P.Timer__createTimer(duration, C.C__RootZone !== zone ? zone.bindCallback$1$1(callback, type$.void) : callback);
     },
     _rootCreatePeriodicTimer: function($self, $parent, zone, duration, callback) {
       var milliseconds;
-      callback = zone.bindUnaryCallback$2$1(callback, type$.void, type$.Timer);
+      if (C.C__RootZone !== zone)
+        callback = zone.bindUnaryCallback$2$1(callback, type$.void, type$.Timer);
       milliseconds = C.JSInt_methods._tdivFast$1(duration._duration, 1000);
       return P._TimerImpl$periodic(milliseconds < 0 ? 0 : milliseconds, callback);
     },
@@ -3640,7 +3643,7 @@
       this.$this = t0;
       this.registered = t1;
     },
-    _rootHandleUncaughtError_closure: function _rootHandleUncaughtError_closure(t0, t1) {
+    _rootHandleError_closure: function _rootHandleError_closure(t0, t1) {
       this.error = t0;
       this.stackTrace = t1;
     },
@@ -3650,6 +3653,13 @@
       this.$this = t0;
       this.f = t1;
       this.R = t2;
+    },
+    _RootZone_bindUnaryCallback_closure: function _RootZone_bindUnaryCallback_closure(t0, t1, t2, t3) {
+      var _ = this;
+      _.$this = t0;
+      _.f = t1;
+      _.T = t2;
+      _.R = t3;
     },
     _RootZone_bindCallbackGuarded_closure: function _RootZone_bindCallbackGuarded_closure(t0, t1) {
       this.$this = t0;
@@ -3692,7 +3702,7 @@
           return "(...)";
         return leftDelimiter + "..." + rightDelimiter;
       }
-      parts = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      parts = H._setArrayType([], type$.JSArray_String);
       $._toStringVisiting.push(iterable);
       try {
         P._iterablePartsToStrings(iterable, parts);
@@ -3893,7 +3903,7 @@
     },
     List_List$from: function(elements, $E) {
       var t1,
-        list = H.setRuntimeTypeInfo([], $E._eval$1("JSArray<0>"));
+        list = H._setArrayType([], $E._eval$1("JSArray<0>"));
       for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
         list.push(t1.get$current(t1));
       return list;
@@ -3905,8 +3915,8 @@
     List_List$_of: function(elements, $E) {
       var list, t1;
       if (Array.isArray(elements))
-        return H.setRuntimeTypeInfo(elements.slice(0), $E._eval$1("JSArray<0>"));
-      list = H.setRuntimeTypeInfo([], $E._eval$1("JSArray<0>"));
+        return H._setArrayType(elements.slice(0), $E._eval$1("JSArray<0>"));
+      list = H._setArrayType([], $E._eval$1("JSArray<0>"));
       for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
         list.push(t1.get$current(t1));
       return list;
@@ -3930,7 +3940,7 @@
       return new P.NoSuchMethodError(receiver, memberName, positionalArguments, namedArguments);
     },
     Error_safeToString: function(object) {
-      if (typeof object == "number" || H._isBool(object) || null == object)
+      if (typeof object == "number" || H._isBool(object) || object == null)
         return J.toString$0$(object);
       if (typeof object == "string")
         return JSON.stringify(object);
@@ -4429,7 +4439,7 @@
       t2 = P.StreamController_StreamController$broadcast(true, t2);
       t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
       t6 = $.Zone__current;
-      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H.setRuntimeTypeInfo([], type$.JSArray__WrappedTimer));
+      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
       t2 = type$.nullable_Object;
       t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
       if (t5.__NgZone__innerZone == null)
@@ -4486,7 +4496,7 @@
     }},
   Y = {
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
-      var t1 = new Y.ApplicationRef(H.setRuntimeTypeInfo([], type$.JSArray_of_void_Function), H.setRuntimeTypeInfo([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H.setRuntimeTypeInfo([], type$.JSArray_ChangeDetectorRef));
+      var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
       t1.ApplicationRef$_$3(_ngZone, _exceptionHandler, _injector);
       return t1;
     },
@@ -4684,7 +4694,7 @@
     },
     _KeyEventsHandler__parse: function($name) {
       var t1, domEventName, normalizedKey,
-        parts = H.setRuntimeTypeInfo($name.toLowerCase().split("."), type$.JSArray_String);
+        parts = H._setArrayType($name.toLowerCase().split("."), type$.JSArray_String);
       if (!!parts.fixed$length)
         H.throwExpression(P.UnsupportedError$("removeAt"));
       t1 = parts.length;
@@ -6608,7 +6618,35 @@
   P._RegisterBinaryZoneFunction.prototype = {};
   P._ZoneSpecification.prototype = {$isZoneSpecification: 1};
   P._ZoneDelegate.prototype = {$isZoneDelegate: 1};
-  P._Zone.prototype = {$isZone: 1};
+  P._Zone.prototype = {
+    _processUncaughtError$3: function(zone, error, stackTrace) {
+      var handler, parentDelegate, parentZone, currentZone, e, s, t1, exception,
+        implementation = this.get$_async$_handleUncaughtError(),
+        implZone = implementation.zone;
+      if (implZone === C.C__RootZone) {
+        P._rootHandleError(error, stackTrace);
+        return;
+      }
+      handler = implementation.$function;
+      parentDelegate = implZone.get$_parentDelegate();
+      t1 = J.get$parent$x(implZone);
+      t1.toString;
+      parentZone = t1;
+      currentZone = $.Zone__current;
+      try {
+        $.Zone__current = parentZone;
+        handler.call$5(implZone, parentDelegate, zone, error, stackTrace);
+        $.Zone__current = currentZone;
+      } catch (exception) {
+        e = H.unwrapException(exception);
+        s = H.getTraceFromException(exception);
+        $.Zone__current = currentZone;
+        t1 = error === e ? stackTrace : s;
+        parentZone._processUncaughtError$3(implZone, e, t1);
+      }
+    },
+    $isZone: 1
+  };
   P._CustomZone.prototype = {
     get$_delegate: function() {
       var t1 = this._delegateCache;
@@ -6627,7 +6665,7 @@
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        this.handleUncaughtError$2(e, s);
+        this._processUncaughtError$3(this, e, s);
       }
     },
     runUnaryGuarded$1$2: function(f, arg, $T) {
@@ -6637,7 +6675,7 @@
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        this.handleUncaughtError$2(e, s);
+        this._processUncaughtError$3(this, e, s);
       }
     },
     bindCallback$1$1: function(f, $R) {
@@ -6650,9 +6688,7 @@
       return new P._CustomZone_bindCallbackGuarded_closure(this, this.registerCallback$1$1(f, type$.void));
     },
     handleUncaughtError$2: function(error, stackTrace) {
-      var implementation = this._async$_handleUncaughtError,
-        t1 = implementation.zone;
-      return implementation.$function.call$5(t1, t1.get$_parentDelegate(), this, error, stackTrace);
+      this._processUncaughtError$3(this, error, stackTrace);
     },
     fork$2$specification$zoneValues: function(specification, zoneValues) {
       var implementation = this._fork,
@@ -6742,6 +6778,9 @@
     get$_async$_handleUncaughtError: function() {
       return this._async$_handleUncaughtError;
     },
+    get$parent: function(receiver) {
+      return this.parent;
+    },
     get$_async$_map: function() {
       return this._async$_map;
     }
@@ -6771,7 +6810,7 @@
     $requiredArgCount: 0,
     $signature: 0
   };
-  P._rootHandleUncaughtError_closure.prototype = {
+  P._rootHandleError_closure.prototype = {
     call$0: function() {
       var error = H.wrapException(this.error);
       error.stack = this.stackTrace.toString$0(0);
@@ -6819,6 +6858,9 @@
     get$_async$_handleUncaughtError: function() {
       return C._ZoneFunction_NMc;
     },
+    get$parent: function(_) {
+      return null;
+    },
     get$_async$_map: function() {
       return $.$get$_RootZone__rootMap();
     },
@@ -6834,41 +6876,44 @@
       return this;
     },
     runGuarded$1: function(f) {
-      var e, s, exception, _null = null;
+      var e, s, exception;
       try {
         if (C.C__RootZone === $.Zone__current) {
           f.call$0();
           return;
         }
-        P._rootRun(_null, _null, this, f);
+        P._rootRun(null, null, this, f);
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        P._rootHandleUncaughtError(_null, _null, this, e, s);
+        P._rootHandleError(e, s);
       }
     },
     runUnaryGuarded$1$2: function(f, arg) {
-      var e, s, exception, _null = null;
+      var e, s, exception;
       try {
         if (C.C__RootZone === $.Zone__current) {
           f.call$1(arg);
           return;
         }
-        P._rootRunUnary(_null, _null, this, f, arg);
+        P._rootRunUnary(null, null, this, f, arg);
       } catch (exception) {
         e = H.unwrapException(exception);
         s = H.getTraceFromException(exception);
-        P._rootHandleUncaughtError(_null, _null, this, e, s);
+        P._rootHandleError(e, s);
       }
     },
     bindCallback$1$1: function(f, $R) {
       return new P._RootZone_bindCallback_closure(this, f, $R);
     },
+    bindUnaryCallback$2$1: function(f, $R, $T) {
+      return new P._RootZone_bindUnaryCallback_closure(this, f, $T, $R);
+    },
     bindCallbackGuarded$1: function(f) {
       return new P._RootZone_bindCallbackGuarded_closure(this, f);
     },
     handleUncaughtError$2: function(error, stackTrace) {
-      P._rootHandleUncaughtError(null, null, this, error, stackTrace);
+      P._rootHandleError(error, stackTrace);
     },
     fork$2$specification$zoneValues: function(specification, zoneValues) {
       return P._rootFork(null, null, this, specification, zoneValues);
@@ -6910,6 +6955,15 @@
     },
     $signature: function() {
       return this.R._eval$1("0()");
+    }
+  };
+  P._RootZone_bindUnaryCallback_closure.prototype = {
+    call$1: function(arg) {
+      var _this = this;
+      return _this.$this.runUnary$2$2(_this.f, arg, _this.R, _this.T);
+    },
+    $signature: function() {
+      return this.R._eval$1("@<0>")._bind$1(this.T)._eval$1("1(2)");
     }
   };
   P._RootZone_bindCallbackGuarded_closure.prototype = {
@@ -7732,7 +7786,7 @@
       }
     },
     get$keys: function(receiver) {
-      var keys = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      var keys = H._setArrayType([], type$.JSArray_String);
       this.forEach$1(receiver, new W.MidiInputMap_keys_closure(keys));
       return keys;
     },
@@ -7762,7 +7816,7 @@
       }
     },
     get$keys: function(receiver) {
-      var keys = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      var keys = H._setArrayType([], type$.JSArray_String);
       this.forEach$1(receiver, new W.MidiOutputMap_keys_closure(keys));
       return keys;
     },
@@ -7898,7 +7952,7 @@
       }
     },
     get$keys: function(receiver) {
-      var keys = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      var keys = H._setArrayType([], type$.JSArray_String);
       this.forEach$1(receiver, new W.RtcStatsReport_keys_closure(keys));
       return keys;
     },
@@ -7990,7 +8044,7 @@
       }
     },
     get$keys: function(receiver) {
-      var keys = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      var keys = H._setArrayType([], type$.JSArray_String);
       this.forEach$1(receiver, new W.Storage_keys_closure(keys));
       return keys;
     },
@@ -8495,7 +8549,7 @@
       }
     },
     get$keys: function(receiver) {
-      var keys = H.setRuntimeTypeInfo([], type$.JSArray_String);
+      var keys = H._setArrayType([], type$.JSArray_String);
       this.forEach$1(receiver, new P.AudioParamMap_keys_closure(keys));
       return keys;
     },
@@ -8636,7 +8690,7 @@
       t1 = component._hostView;
       t2 = t1._data;
       t3 = t2._onDestroyCallbacks;
-      t2 = t3 == null ? t2._onDestroyCallbacks = H.setRuntimeTypeInfo([], type$.JSArray_of_void_Function) : t3;
+      t2 = t3 == null ? t2._onDestroyCallbacks = H._setArrayType([], type$.JSArray_of_void_Function) : t3;
       t2.push(new Y.ApplicationRef__loadedRootComponent_closure(_this, component, node));
       _this._changeDetectors.push(t1);
       _this.tick$0();
@@ -8890,7 +8944,7 @@
   M.ComponentLoader.prototype = {};
   O.ComponentStyles.prototype = {
     _appendStyles$0: function() {
-      var target = H.setRuntimeTypeInfo([], type$.JSArray_String),
+      var target = H._setArrayType([], type$.JSArray_String),
         styles = C.JSArray_methods.join$0(O._flattenStyles(this._styles, target, "")),
         t1 = document,
         styleElement = t1.createElement("style");
@@ -8990,7 +9044,7 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("componentView")) : t1;
     },
     initRootNode$1: function(nodeOrViewContainer) {
-      D.ViewFragment_ViewFragment(H.setRuntimeTypeInfo([nodeOrViewContainer], type$.JSArray_Object));
+      D.ViewFragment_ViewFragment(H._setArrayType([nodeOrViewContainer], type$.JSArray_Object));
     },
     detectChangesDeprecated$0: function() {
       var t2,
@@ -9473,7 +9527,7 @@
       this._runCallbacksIfStable$1(false);
     },
     _watchForStability$1: function(callback) {
-      this._callWhenStable = H.setRuntimeTypeInfo([callback], type$.JSArray_of_void_Function_bool);
+      this._callWhenStable = H._setArrayType([callback], type$.JSArray_of_void_Function_bool);
       this._testability$_ngZone._outerZone.run$1$1(new T.Testability__watchForStability_closure(this), type$.Null);
     },
     _runCallbacksIfStable$1: function(didWork) {
@@ -9551,10 +9605,10 @@
       self.deopt("onClickNoArguments");
     },
     onDblClickInferArgument$1: function($event) {
-      self.deopt(H.setRuntimeTypeInfo(["onDblClickInferArgument", $event], type$.JSArray_Object));
+      self.deopt(H._setArrayType(["onDblClickInferArgument", $event], type$.JSArray_Object));
     },
     onMouseDownManualArgument$1: function($event) {
-      self.deopt(H.setRuntimeTypeInfo(["onMouseDownManualArgument", $event], type$.JSArray_Object));
+      self.deopt(H._setArrayType(["onMouseDownManualArgument", $event], type$.JSArray_Object));
     },
     onSpecialKeyHandler$0: function() {
       self.deopt("onSpecialKeyHandler");
@@ -9608,7 +9662,7 @@
       _this.get$_compView_0().create$1(0, _this.get$_HasOutput_0_5());
       t2 = _this.get$_HasOutput_0_5();
       t3 = _this.__ViewGoldenComponent0__ListensToOutput_0_6;
-      _this.initSubscriptions$1(H.setRuntimeTypeInfo([t2.fooEvents.listen$1(_this.eventHandler0$1$1((t3 == null ? H.throwExpression(H.LateError$fieldNI(_s20_)) : t3).get$onCustomEvent(), t1))], type$.JSArray_StreamSubscription_void));
+      _this.initSubscriptions$1(H._setArrayType([t2.fooEvents.listen$1(_this.eventHandler0$1$1((t3 == null ? H.throwExpression(H.LateError$fieldNI(_s20_)) : t3).get$onCustomEvent(), t1))], type$.JSArray_StreamSubscription_void));
       t1 = type$.Event;
       t2 = J.getInterceptor$x(parentRenderNode);
       t2.addEventListener$2(parentRenderNode, "click", _this.eventHandler0$1$1(_ctx.get$onClickNoArguments(), t1));
@@ -9622,7 +9676,7 @@
     },
     _handleEvent_0$1: function($$event) {
       this.get$ctx();
-      self.deopt(H.setRuntimeTypeInfo(["onMouseUpMultipleArguments", $$event, "Hello"], type$.JSArray_Object));
+      self.deopt(H._setArrayType(["onMouseUpMultipleArguments", $$event, "Hello"], type$.JSArray_Object));
     }
   };
   Z._ViewGoldenComponentHost0.prototype = {
@@ -9773,7 +9827,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inheritMany(H.ConstantMap, [H.ConstantStringMap, H.GeneralConstantMap]);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._StreamController__subscribe_closure, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleUncaughtError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, A.RenderView_eventHandler0_closure, A.RenderView_eventHandler1_closure, A.RenderView_eventHandler1__closure, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, L.EventManager_addEventListener_closure, L._KeyEventsHandler_addEventListener_closure, L._modifiers_closure, L._modifiers_closure0, L._modifiers_closure1, L._modifiers_closure2, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._StreamController__subscribe_closure, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindUnaryCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, A.RenderView_eventHandler0_closure, A.RenderView_eventHandler1_closure, A.RenderView_eventHandler1__closure, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, L.EventManager_addEventListener_closure, L._KeyEventsHandler_addEventListener_closure, L._modifiers_closure, L._modifiers_closure0, L._modifiers_closure1, L._modifiers_closure2, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure]);
     _inherit(H.NullError, P.TypeError);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -10138,10 +10192,10 @@
     C.C__RootZone = new P._RootZone();
     C.C__StringStackTrace = new P._StringStackTrace();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<List<Object>>"));
-    C.List_empty = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_Object);
-    C.List_empty1 = H.setRuntimeTypeInfo(makeConstList([]), type$.JSArray_dynamic);
-    C.List_empty2 = H.setRuntimeTypeInfo(makeConstList([]), H.findType("JSArray<Symbol0>"));
+    C.List_empty0 = H._setArrayType(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty = H._setArrayType(makeConstList([]), type$.JSArray_Object);
+    C.List_empty1 = H._setArrayType(makeConstList([]), type$.JSArray_dynamic);
+    C.List_empty2 = H._setArrayType(makeConstList([]), H.findType("JSArray<Symbol0>"));
     C.Map_empty = new H.ConstantStringMap(0, {}, C.List_empty2, H.findType("ConstantStringMap<Symbol0,@>"));
     C.Map_qswwi = new H.GeneralConstantMap([8, "backspace", 9, "tab", 12, "clear", 13, "enter", 16, "shift", 17, "control", 18, "alt", 19, "pause", 20, "capslock", 27, "escape", 32, "space", 33, "pageup", 34, "pagedown", 35, "end", 36, "home", 37, "arrowleft", 38, "arrowup", 39, "arrowright", 40, "arrowdown", 45, "insert", 46, "delete", 65, "a", 66, "b", 67, "c", 68, "d", 69, "e", 70, "f", 71, "g", 72, "h", 73, "i", 74, "j", 75, "k", 76, "l", 77, "m", 78, "n", 79, "o", 80, "p", 81, "q", 82, "r", 83, "s", 84, "t", 85, "u", 86, "v", 87, "w", 88, "x", 89, "y", 90, "z", 91, "os", 93, "contextmenu", 96, "0", 97, "1", 98, "2", 99, "3", 100, "4", 101, "5", 102, "6", 103, "7", 104, "8", 105, "9", 106, "*", 107, "+", 109, "-", 110, "dot", 111, "/", 112, "f1", 113, "f2", 114, "f3", 115, "f4", 116, "f5", 117, "f6", 118, "f7", 119, "f8", 120, "f9", 121, "f10", 122, "f11", 123, "f12", 144, "numlock", 145, "scrolllock"], H.findType("GeneralConstantMap<int,String>"));
     C.Symbol_call = new H.Symbol("call");
@@ -10184,7 +10238,7 @@
     $._isInCallbackLoop = false;
     $.Zone__current = C.C__RootZone;
     $._RootZone__rootDelegate = null;
-    $._toStringVisiting = H.setRuntimeTypeInfo([], type$.JSArray_Object);
+    $._toStringVisiting = H._setArrayType([], type$.JSArray_Object);
     $.ChangeDetectionHost__current = null;
     $.appViewUtils = H._Cell$();
     $._KeyEventsHandler__cache = P.LinkedHashMap_LinkedHashMap$_empty(type$.String, H.findType("_ParsedEvent?"));
@@ -10378,14 +10432,14 @@
   Function.prototype.call$5 = function(a, b, c, d, e) {
     return this(a, b, c, d, e);
   };
-  Function.prototype.call$1$4 = function(a, b, c, d) {
-    return this(a, b, c, d);
-  };
   Function.prototype.call$3$6 = function(a, b, c, d, e, f) {
     return this(a, b, c, d, e, f);
   };
   Function.prototype.call$2$5 = function(a, b, c, d, e) {
     return this(a, b, c, d, e);
+  };
+  Function.prototype.call$1$4 = function(a, b, c, d) {
+    return this(a, b, c, d);
   };
   Function.prototype.call$1$2 = function(a, b) {
     return this(a, b);

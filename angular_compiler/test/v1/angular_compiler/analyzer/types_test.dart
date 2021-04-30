@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
@@ -8,11 +6,10 @@ import '../src/resolve.dart';
 
 void main() {
   group('should resolve', () {
-    LibraryElement testLib;
+    late LibraryElement testLib;
 
     setUpAll(() async {
       testLib = await resolveLibrary(r'''
-        // @dart=2.9 
         @Directive()
         class ADirective {}
 
@@ -35,17 +32,17 @@ void main() {
     });
 
     test('@Directive', () {
-      final aDirective = testLib.getType('ADirective');
+      final aDirective = testLib.getType('ADirective')!;
       expect($Directive.firstAnnotationOfExact(aDirective), isNotNull);
     });
 
     test('@Component', () {
-      final aComponent = testLib.getType('AComponent');
+      final aComponent = testLib.getType('AComponent')!;
       expect($Component.firstAnnotationOfExact(aComponent), isNotNull);
     });
 
     test('@Injectable', () {
-      final anInjectable = testLib.getType('AnInjectable');
+      final anInjectable = testLib.getType('AnInjectable')!;
       expect($Injectable.firstAnnotationOfExact(anInjectable), isNotNull);
     });
 

@@ -1,9 +1,9 @@
-// http://go/migrate-deps-first
-// @dart=2.9
+import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build_test/build_test.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
+import 'package:mockito/mockito.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
@@ -21,7 +21,8 @@ void main() {
   // We don't have a true "source" library to use in these tests. Its OK.
   //
   // (Normally this is used to determine relative import paths, etc)
-  final nullLibrary = LibraryReader(null);
+  // TODO(b/186587400): Refactor the mock object now owned by AngularDart team.
+  final nullLibrary = LibraryReader(MockLibraryElement());
 
   test('should support a no-op', () {
     final output = ReflectableOutput();
@@ -568,3 +569,5 @@ void main() {
     });
   });
 }
+
+class MockLibraryElement extends Mock implements LibraryElement {}

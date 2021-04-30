@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:source_gen/source_gen.dart';
@@ -52,15 +50,13 @@ bool matchAnnotation(TypeChecker typeChecker, ElementAnnotation annotation) {
   final object = annotation.computeConstantValue();
   // TODO(b/123715184) Surface the constantEvaluationErrors.
   try {
-    return typeChecker.isExactlyType(object.type);
+    return typeChecker.isExactlyType(object!.type!);
   } catch (_) {
     var message = ''
         'Could not determine type of annotation. It resolved to '
         '${annotation.computeConstantValue()}. '
         'Are you missing a dependency?';
-    if (annotation is ElementAnnotationImpl &&
-        annotation.annotationAst != null &&
-        annotation.librarySource != null) {
+    if (annotation is ElementAnnotationImpl) {
       message += ''
           '\n'
           '${annotation.annotationAst.toSource()} in '

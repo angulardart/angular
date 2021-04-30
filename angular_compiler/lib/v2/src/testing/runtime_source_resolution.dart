@@ -7,8 +7,6 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:analyzer/dart/analysis/results.dart';
-import 'package:analyzer/dart/analysis/utilities.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:build/experiments.dart';
@@ -98,31 +96,5 @@ Future<LibraryElement> resolve(
     ),
     ['non-nullable'],
   );
-  // Library not loaded. Check to see if the source is valid first.
-  if (result == null) {
-    final result = parseString(
-      content: dartSource,
-      path: _assetToPath(_defaultAssetId),
-      throwIfDiagnostics: false,
-    );
-    throw _FailedAnalysisError(dartSource, result);
-  }
   return result;
-}
-
-// Intentionally private since we don't want this to expect-ed in tests.
-class _FailedAnalysisError extends Error {
-  final String _dartSource;
-  final ParseStringResult _parseResult;
-
-  _FailedAnalysisError(this._dartSource, this._parseResult);
-
-  @override
-  String toString() {
-    if (_parseResult.errors.isEmpty) {
-      return 'Library could not be loaded. Source:\n\n```\n$_dartSource\n```';
-    }
-    final parseErrors = _parseResult.errors.join('\n  -');
-    return 'Library could not be loaded. Errors:\n\n  - $parseErrors';
-  }
 }

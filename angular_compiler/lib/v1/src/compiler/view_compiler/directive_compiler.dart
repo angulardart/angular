@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
@@ -53,11 +51,11 @@ class DirectiveCompiler {
     return o.ClassStmt(
       _changeDetectorClassName(directive),
       o.importExpr(Identifiers.DirectiveChangeDetector),
-      storage.fields ?? const [],
+      storage.fields,
       const [],
       constructor,
       viewMethods,
-      typeParameters: directive.typeParameters,
+      typeParameters: directive.typeParameters!,
     );
   }
 
@@ -70,8 +68,8 @@ class DirectiveCompiler {
     NodeReference el,
   ) {
     final instanceType = o.importType(
-      directive.metadata.type.identifier,
-      directive.typeParameters.map((t) => t.toType()).toList(),
+      directive.metadata!.type!.identifier,
+      directive.typeParameters!.map((t) => t.toType()).toList(),
     );
     storage.allocate(
       'instance',
@@ -90,7 +88,7 @@ class DirectiveCompiler {
     CompileViewStorage storage,
     NodeReference el,
   ) {
-    final hostProperties = directive.hostProperties;
+    final hostProperties = directive.hostProperties!;
     if (hostProperties.isEmpty) {
       return [];
     }
@@ -126,7 +124,7 @@ class DirectiveCompiler {
 
   /// Determines whether this is the first time the view was checked for change.
   static final _firstCheckVarStmt = o.DeclareVarStmt(
-    DetectChangesVars.firstCheck.name,
+    DetectChangesVars.firstCheck.name!,
     o.variable('view').prop('firstCheck'),
     o.BOOL_TYPE,
   );
@@ -150,12 +148,12 @@ class DirectiveNameResolver extends ViewNameResolver {
   DirectiveNameResolver() : super(null);
 
   @override
-  void addLocal(String name, o.Expression e, [o.OutputType type]) {
+  void addLocal(String name, o.Expression e, [o.OutputType? type]) {
     throw UnsupportedError('Locals are not supported in directives');
   }
 
   @override
-  o.Expression getLocal(String name) {
+  o.Expression? getLocal(String name) {
     if (name == EventHandlerVars.event.name) {
       return EventHandlerVars.event;
     }

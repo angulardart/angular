@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
@@ -11,12 +9,12 @@ void main() {
   group('ModuleReader', () {
     const reader = ModuleReader();
 
-    ClassElement $Example;
-    ClassElement $Dependency;
-    DartObject $listModule;
-    DartObject $newModuleA;
-    DartObject $newModuleB;
-    DartObject $newModuleC;
+    late ClassElement $Example;
+    late ClassElement $Dependency;
+    late DartObject $listModule;
+    late DartObject $newModuleA;
+    late DartObject $newModuleB;
+    late DartObject $newModuleC;
 
     setUpAll(() async {
       final testLib = await resolveLibrary(r'''
@@ -63,12 +61,12 @@ void main() {
           ],
         );
       ''');
-      $Example = testLib.getType('Example');
-      $Dependency = testLib.getType('Dependency');
-      $listModule = $Example.metadata.first.computeConstantValue();
-      $newModuleA = $Example.metadata[1].computeConstantValue();
-      $newModuleB = $Example.metadata[2].computeConstantValue();
-      $newModuleC = $Example.metadata[3].computeConstantValue();
+      $Example = testLib.getType('Example')!;
+      $Dependency = testLib.getType('Dependency')!;
+      $listModule = $Example.metadata.first.computeConstantValue()!;
+      $newModuleA = $Example.metadata[1].computeConstantValue()!;
+      $newModuleB = $Example.metadata[2].computeConstantValue()!;
+      $newModuleC = $Example.metadata[3].computeConstantValue()!;
     });
 
     group('should parse module', () {
@@ -81,7 +79,7 @@ void main() {
               null,
               linkTypeOf($Example.thisType),
               dependencies: DependencyInvocation(
-                $Example.unnamedConstructor,
+                $Example.unnamedConstructor!,
                 const [],
               ),
             )
@@ -93,7 +91,7 @@ void main() {
                   null,
                   linkTypeOf($Dependency.thisType),
                   dependencies: DependencyInvocation(
-                    $Dependency.unnamedConstructor,
+                    $Dependency.unnamedConstructor!,
                     const [],
                   ),
                 )
@@ -115,7 +113,7 @@ void main() {
                   null,
                   linkTypeOf($Dependency.thisType),
                   dependencies: DependencyInvocation(
-                    $Dependency.unnamedConstructor,
+                    $Dependency.unnamedConstructor!,
                     const [],
                   ),
                 )
@@ -138,7 +136,7 @@ void main() {
                   null,
                   linkTypeOf($Example.thisType),
                   dependencies: DependencyInvocation(
-                    $Example.unnamedConstructor,
+                    $Example.unnamedConstructor!,
                     const [],
                   ),
                 )
@@ -151,7 +149,7 @@ void main() {
                       null,
                       linkTypeOf($Dependency.thisType),
                       dependencies: DependencyInvocation(
-                        $Dependency.unnamedConstructor,
+                        $Dependency.unnamedConstructor!,
                         const [],
                       ),
                     )
@@ -180,16 +178,17 @@ void main() {
     String extractProviderStrings(DartObject value) {
       final result = _extractProviderObjects(value);
       return result.map((o) {
-        if (o.toTypeValue() != null) {
-          return o.toTypeValue().name;
+        var value = o.toTypeValue();
+        if (value != null) {
+          return value.name;
         }
-        return o.getField('token').toTypeValue().name;
+        return o.getField('token')!.toTypeValue()!.name;
       }).join(', ');
     }
 
-    DartObject aListOfProviders;
-    DartObject aModuleOfProviders;
-    DartObject nestedListsAndModules;
+    late DartObject aListOfProviders;
+    late DartObject aModuleOfProviders;
+    late DartObject nestedListsAndModules;
 
     setUpAll(() async {
       final testLib = await resolveLibrary(r'''
@@ -232,11 +231,10 @@ void main() {
         class B {}
         class C {}
       ''');
-      final testObjects = testLib
-          .getType('Example')
+      final testObjects = List<DartObject>.from(testLib
+          .getType('Example')!
           .metadata
-          .map((e) => e.computeConstantValue())
-          .toList();
+          .map((e) => e.computeConstantValue()));
       aListOfProviders = testObjects[0];
       aModuleOfProviders = testObjects[1];
       nestedListsAndModules = testObjects[2];

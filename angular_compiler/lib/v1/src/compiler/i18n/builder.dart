@@ -36,7 +36,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
     if (astNode.name == i18nDescription ||
         astNode.name.startsWith(i18nDescriptionPrefix)) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         "Internationalized messages can't be nested",
       ));
     }
@@ -46,7 +46,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   void visitAttribute(AttributeAst astNode, [StringBuffer? context]) {
     if (astNode.mustaches != null && astNode.mustaches!.isNotEmpty) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         "Interpolations aren't permitted in internationalized messages",
       ));
       return;
@@ -80,7 +80,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   void visitElement(ElementAst astNode, [_]) {
     if (astNode.isVoidElement) {
       CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan!,
+        astNode.sourceSpan,
         "Void elements aren't permitted in internationalized messages",
       ));
       return;
@@ -109,11 +109,6 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
   @override
   void visitEvent(EventAst astNode, [_]) {
     _reportUnpermitted(astNode);
-  }
-
-  @override
-  void visitExpression(_, [__]) {
-    throw UnimplementedError();
   }
 
   @override
@@ -169,7 +164,7 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   static void _reportUnpermitted(TemplateAst astNode) {
     CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-      astNode.sourceSpan!,
+      astNode.sourceSpan,
       'Not permitted in internationalized messages',
     ));
   }

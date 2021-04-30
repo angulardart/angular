@@ -1,5 +1,5 @@
-// http://go/migrate-deps-first
-// @dart=2.9
+import 'package:collection/collection.dart' show IterableExtension;
+
 import 'analyzed_class.dart';
 import 'compile_metadata.dart';
 import 'identifiers.dart';
@@ -16,16 +16,18 @@ class OptimizeTemplateAstVisitor
 
   @override
   TemplateAst visitEmbeddedTemplate(
-      EmbeddedTemplateAst ast, CompileDirectiveMetadata component) {
+      EmbeddedTemplateAst ast, CompileDirectiveMetadata? component) {
+    component = component!;
     _typeNgForLocals(component, ast.directives, ast.variables);
 
     // Add the local variables to the [CompileDirectiveMetadata] used in
     // children embedded templates.
     var scoped = CompileDirectiveMetadata.from(component,
         analyzedClass: AnalyzedClass.from(
-          component.analyzedClass,
+          component.analyzedClass!,
           additionalLocals: {
-            for (var v in ast.variables) v.name: v.dartType,
+            for (var v in ast.variables)
+              if (v.dartType != null) v.name: v.dartType!,
           },
         ));
 
@@ -43,13 +45,11 @@ void _typeNgForLocals(
   List<DirectiveAst> directives,
   List<VariableAst> variables,
 ) {
-  final ngFor = directives.firstWhere(
-      (directive) =>
-          directive.directive.type.moduleUrl ==
-          Identifiers.NG_FOR_DIRECTIVE.moduleUrl,
-      orElse: () => null);
+  final ngFor = directives.firstWhereOrNull((directive) =>
+      directive.directive.type!.moduleUrl ==
+      Identifiers.NG_FOR_DIRECTIVE.moduleUrl);
   if (ngFor == null) return; // No `NgFor` to optimize.
-  BoundExpression ngForOfValue;
+  BoundExpression? ngForOfValue;
   for (final input in ngFor.inputs) {
     if (input.templateName == 'ngForOf') {
       final boundValue = input.value;
@@ -64,7 +64,7 @@ void _typeNgForLocals(
     return;
   }
   final ngForOfType =
-      getExpressionType(ngForOfValue.expression.ast, component.analyzedClass);
+      getExpressionType(ngForOfValue.expression.ast, component.analyzedClass!);
   // Augment locals set by `NgFor` with type information.
   for (var variable in variables) {
     switch (variable.value) {
@@ -75,14 +75,14 @@ void _typeNgForLocals(
       case 'index':
       case 'count':
         // These locals are always integers.
-        variable.dartType = intType(component.analyzedClass);
+        variable.dartType = intType(component.analyzedClass!);
         break;
       case 'first':
       case 'last':
       case 'even':
       case 'odd':
         // These locals are always booleans.
-        variable.dartType = boolType(component.analyzedClass);
+        variable.dartType = boolType(component.analyzedClass!);
         break;
     }
   }

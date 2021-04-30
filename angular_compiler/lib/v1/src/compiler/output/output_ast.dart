@@ -208,7 +208,7 @@ abstract class Expression {
     List<Expression> params, {
     List<NamedExpr> namedParams = const [],
     OutputType? type,
-    List<OutputType> genericTypes = const [],
+    List<OutputType>? genericTypes,
   }) {
     return InstantiateExpr(
       this,
@@ -521,14 +521,14 @@ class InvokeFunctionExpr extends Expression {
 class InstantiateExpr extends Expression {
   final Expression classExpr;
   final List<Expression> args;
-  final List<OutputType> typeArguments;
+  final List<OutputType>? typeArguments;
   final List<NamedExpr> namedArgs;
 
   InstantiateExpr(
     this.classExpr,
     this.args, {
     OutputType? type,
-    this.typeArguments = const [],
+    this.typeArguments,
     this.namedArgs = const [],
   }) : super(type);
 
@@ -953,7 +953,7 @@ class TypeParameter {
   TypeParameter(this.name, {this.bound});
 
   /// Converts this type parameter to a type.
-  OutputType? toType() => importType(CompileIdentifierMetadata(name: name));
+  OutputType toType() => importType(CompileIdentifierMetadata(name: name))!;
 }
 
 class ClassStmt extends Statement {

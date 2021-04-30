@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/type.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/output/convert.dart';
@@ -28,7 +26,7 @@ abstract class TemplateAst {
 /// A segment of text within the template.
 class TextAst implements TemplateAst {
   final String value;
-  final int ngContentIndex;
+  final int? ngContentIndex;
   @override
   final SourceSpan sourceSpan;
 
@@ -42,7 +40,7 @@ class TextAst implements TemplateAst {
 /// A bound expression within the text of a template.
 class BoundTextAst implements TemplateAst {
   final ASTWithSource value;
-  final int ngContentIndex;
+  final int? ngContentIndex;
   @override
   final SourceSpan sourceSpan;
 
@@ -56,7 +54,7 @@ class BoundTextAst implements TemplateAst {
 /// A segment of internationalized text within a template.
 class I18nTextAst implements TemplateAst {
   final I18nMessage value;
-  final int ngContentIndex;
+  final int? ngContentIndex;
   @override
   final SourceSpan sourceSpan;
 
@@ -104,14 +102,14 @@ class AttrAst implements TemplateAst {
 
 /// A binding for an element property (e.g. [property]='expression').
 class BoundElementPropertyAst implements TemplateAst {
-  final String namespace;
-  final String name;
-  final PropertyBindingType type;
+  final String? namespace;
+  final String? name;
+  final PropertyBindingType? type;
   final BoundValue value;
-  final String unit;
+  final String? unit;
   @override
   final SourceSpan sourceSpan;
-  final TemplateSecurityContext securityContext;
+  final TemplateSecurityContext? securityContext;
 
   BoundElementPropertyAst(this.namespace, this.name, this.type,
       this.securityContext, this.value, this.unit, this.sourceSpan);
@@ -153,7 +151,7 @@ class EventHandler {
   ///
   /// Otherwise, it is assumed that the context of the event handler is the
   /// default Component currently being compiled.
-  final CompileDirectiveMetadata hostDirective;
+  final CompileDirectiveMetadata? hostDirective;
 
   EventHandler(this.expression, [this.hostDirective]);
 }
@@ -161,7 +159,7 @@ class EventHandler {
 /// A reference declaration on an element (e.g. #someName='expression').
 class ReferenceAst implements TemplateAst {
   final String name;
-  final CompileTokenMetadata value;
+  final CompileTokenMetadata? value;
   @override
   final SourceSpan sourceSpan;
 
@@ -187,11 +185,11 @@ class VariableAst implements TemplateAst {
   /// Locals are stored in a dynamic map, thus retain no type annotation. If
   /// [dartType] is non-null, it's used to generate a type annotation for the
   /// local variable declaration.
-  DartType dartType;
+  DartType? dartType;
 
-  OutputType get type => fromDartType(dartType, resolveBounds: false);
+  OutputType? get type => fromDartType(dartType, resolveBounds: false);
 
-  VariableAst(this.name, String value, this.sourceSpan)
+  VariableAst(this.name, String? value, this.sourceSpan)
       : value = value != null && value.isNotEmpty ? value : implicitValue;
 
   @override
@@ -208,9 +206,9 @@ class ElementAst implements TemplateAst {
   final List<ReferenceAst> references;
   final List<DirectiveAst> directives;
   final List<ProviderAst> providers;
-  final ElementProviderUsage elementProviderUsage;
+  final ElementProviderUsage? elementProviderUsage;
   final List<TemplateAst> children;
-  final int ngContentIndex;
+  final int? ngContentIndex;
   @override
   final SourceSpan sourceSpan;
 
@@ -277,8 +275,8 @@ class EmbeddedTemplateAst implements TemplateAst {
   final List<DirectiveAst> directives;
   final List<ProviderAst> providers;
   final List<TemplateAst> children;
-  final ElementProviderUsage elementProviderUsage;
-  final int ngContentIndex;
+  final ElementProviderUsage? elementProviderUsage;
+  final int? ngContentIndex;
 
   /// Selectors from `select` or `ngProjectAs` on an `<ng-content>` into which
   /// this embedded element is projected.
@@ -300,7 +298,8 @@ class EmbeddedTemplateAst implements TemplateAst {
     this.matchedNgContentSelectors,
   );
 
-  bool get hasViewContainer => elementProviderUsage.requiresViewContainer;
+  bool get hasViewContainer =>
+      elementProviderUsage?.requiresViewContainer ?? false;
 
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>
@@ -415,7 +414,8 @@ class DirectiveAst implements TemplateAst {
   @override
   final SourceSpan sourceSpan;
 
-  DirectiveAst(this.directive, {this.inputs, this.outputs, this.sourceSpan});
+  DirectiveAst(this.directive,
+      {required this.inputs, required this.outputs, required this.sourceSpan});
 
   bool get hasHostProperties => directive.hostProperties.isNotEmpty;
 
@@ -435,7 +435,7 @@ class ProviderAst implements TemplateAst {
   ///
   /// Note this may be null, in which case the expected type is generally
   /// available from a related expression or piece of metadata.
-  final CompileTypeMetadata typeArgument;
+  final CompileTypeMetadata? typeArgument;
 
   /// Whether provider should be eagerly created at build time.
   ///
@@ -470,7 +470,7 @@ class ProviderAst implements TemplateAst {
     this.providers,
     this.providerType,
     this.sourceSpan, {
-    this.eager,
+    required this.eager,
     this.isReferencedOutsideBuild = true,
     this.typeArgument,
     this.visibleForInjection = false,
@@ -510,11 +510,11 @@ enum ProviderAstType {
 /// a template).
 class NgContentAst implements TemplateAst {
   final int index;
-  final int ngContentIndex;
+  final int? ngContentIndex;
   @override
   final SourceSpan sourceSpan;
 
-  final ReferenceAst reference;
+  final ReferenceAst? reference;
 
   NgContentAst(this.index, this.ngContentIndex, this.sourceSpan,
       [this.reference]);
@@ -562,8 +562,7 @@ abstract class TemplateAstVisitor<R, C> {
 /// Visit every node in a list of [TemplateAst]s with the given
 /// [TemplateAstVisitor].
 List<R> templateVisitAll<R, C>(
-    TemplateAstVisitor<R, C> visitor, List<TemplateAst> asts,
-    [C context]) {
+    TemplateAstVisitor<R, C> visitor, List<TemplateAst> asts, C context) {
   var result = <R>[];
   for (var ast in asts) {
     var astResult = ast.visit(visitor, context);

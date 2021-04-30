@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
@@ -26,9 +24,9 @@ import 'package:angular_compiler/v2/context.dart';
 /// inputs that need the underlying directive for context.
 List<ir.Binding> convertAllToBinding(
   List<ast.TemplateAst> nodes, {
-  AnalyzedClass analyzedClass,
-  CompileDirectiveMetadata directive,
-  CompileElement compileElement,
+  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata? directive,
+  CompileElement? compileElement,
 }) =>
     ast.templateVisitAll(
       _ToBindingVisitor(),
@@ -38,7 +36,7 @@ List<ir.Binding> convertAllToBinding(
 
 /// Converts a single [ast.TemplateAst] node into an [ir.Binding] instance.
 ir.Binding convertToBinding(
-        ast.TemplateAst node, AnalyzedClass analyzedClass) =>
+        ast.TemplateAst node, AnalyzedClass? analyzedClass) =>
     node.visit(
       _ToBindingVisitor(),
       _IrBindingContext(analyzedClass, null, null),
@@ -49,7 +47,7 @@ ir.Binding convertToBinding(
 /// Currently host attributes are represented as a map from [name] to [value].
 // TODO(b/130184376): Create a better HostAttribute representation.
 ir.Binding convertHostAttributeToBinding(String name,
-        expression_ast.ASTWithSource value, AnalyzedClass analyzedClass) =>
+        expression_ast.ASTWithSource value, AnalyzedClass? analyzedClass) =>
     ir.Binding(
         source: ir.BoundExpression(value, null, analyzedClass),
         target: _attributeName(name));
@@ -115,27 +113,27 @@ class _ToBindingVisitor
       );
 
   ir.BindingTarget _propertyToIr(ast.BoundElementPropertyAst boundProp) {
-    switch (boundProp.type) {
+    final name = boundProp.name!;
+    final securityContext = boundProp.securityContext!;
+    switch (boundProp.type!) {
       case ast.PropertyBindingType.property:
-        if (boundProp.name == 'className') {
+        if (name == 'className') {
           return ir.ClassBinding();
         }
-        return ir.PropertyBinding(boundProp.name, boundProp.securityContext);
+        return ir.PropertyBinding(name, securityContext);
       case ast.PropertyBindingType.attribute:
-        if (boundProp.name == 'class') {
+        if (name == 'class') {
           return ir.ClassBinding();
         }
-        return ir.AttributeBinding(boundProp.name,
+        return ir.AttributeBinding(name,
             namespace: boundProp.namespace,
             isConditional: _isConditionalAttribute(boundProp),
-            securityContext: boundProp.securityContext);
+            securityContext: securityContext);
       case ast.PropertyBindingType.cssClass:
-        return ir.ClassBinding(name: boundProp.name);
+        return ir.ClassBinding(name: name);
       case ast.PropertyBindingType.style:
-        return ir.StyleBinding(boundProp.name, boundProp.unit);
+        return ir.StyleBinding(name, boundProp.unit);
     }
-    throw ArgumentError.value(
-        boundProp.type, 'type', 'Unknown ${ast.PropertyBindingType}');
   }
 
   bool _isConditionalAttribute(ast.BoundElementPropertyAst boundProp) =>
@@ -150,15 +148,15 @@ class _ToBindingVisitor
         target: ir.InputBinding(
           input.memberName,
           input.templateName,
-          _inputType(context.directive, input),
+          _inputType(context.directive!, input),
         ),
-        isDirect: _isDirectBinding(context.directive, input.memberName),
+        isDirect: _isDirectBinding(context.directive!, input.memberName),
       );
 
-  o.OutputType _inputType(
+  o.OutputType? _inputType(
       CompileDirectiveMetadata directive, ast.BoundDirectivePropertyAst input) {
     // TODO(alorenzen): Determine if we actually need this special case.
-    if (directive.identifier.name == 'NgIf' && input.memberName == 'ngIf') {
+    if (directive.identifier!.name == 'NgIf' && input.memberName == 'ngIf') {
       return o.BOOL_TYPE;
     }
     var inputTypeMeta = directive.inputTypes[input.memberName];
@@ -172,7 +170,7 @@ class _ToBindingVisitor
     // Optimization specifically for NgIf. Since the directive already performs
     // change detection we can directly update it's input.
     // TODO: generalize to SingleInputDirective mixin.
-    if (directive.identifier.name == 'NgIf' && directiveName == 'ngIf') {
+    if (directive.identifier!.name == 'NgIf' && directiveName == 'ngIf') {
       return true;
     }
     return false;
@@ -181,7 +179,7 @@ class _ToBindingVisitor
   ir.BindingSource _boundValueToIr(
     ast.BoundValue value,
     SourceSpan sourceSpan,
-    AnalyzedClass analyzedClass,
+    AnalyzedClass? analyzedClass,
   ) {
     if (value is ast.BoundExpression) {
       return ir.BoundExpression(value.expression, sourceSpan, analyzedClass);
@@ -199,7 +197,7 @@ class _ToBindingVisitor
         source:
             _handlerFor(ast.templateName, ast.handler, ast.sourceSpan, context),
         target: ir.DirectiveOutput(
-            ast.memberName, context.directive.analyzedClass.isMockLike),
+            ast.memberName, context.directive!.analyzedClass!.isMockLike),
       );
 
   @override
@@ -248,11 +246,11 @@ class _ToBindingVisitor
 }
 
 class _IrBindingContext {
-  final AnalyzedClass analyzedClass;
+  final AnalyzedClass? analyzedClass;
 
   /// The target directive for any Input/Output bindings.
-  final CompileDirectiveMetadata directive;
-  final CompileElement compileElement;
+  final CompileDirectiveMetadata? directive;
+  final CompileElement? compileElement;
 
   _IrBindingContext(this.analyzedClass, this.directive, this.compileElement);
 
@@ -261,13 +259,13 @@ class _IrBindingContext {
   ///
   /// This is mainly used for looking up the directive context for a
   /// HostListener.
-  ProviderSource directiveInstance(CompileDirectiveMetadata directive) {
+  ProviderSource? directiveInstance(CompileDirectiveMetadata? directive) {
     return compileElement?.getDirectiveSource(directive);
   }
 }
 
 ir.BindingTarget _attributeName(String name) {
-  String attrNs;
+  String? attrNs;
   if (name.startsWith('@') && name.contains(':')) {
     var nameParts = name.substring(1).split(':');
     attrNs = nameParts[0];
@@ -302,7 +300,7 @@ void _throwIfConditional(bool isConditional, String name) {
 ir.EventHandler _handlerFor(
   String eventName,
   ast.EventHandler handler,
-  SourceSpan sourceSpan,
+  SourceSpan? sourceSpan,
   _IrBindingContext context,
 ) {
   var handlerAst = _handlerExpression(handler, context);
@@ -329,7 +327,7 @@ expression_ast.ASTWithSource _handlerExpression(
   }
   return rewriteTearOff(
     handlerAst,
-    handler.hostDirective?.analyzedClass ?? context.analyzedClass,
+    handler.hostDirective?.analyzedClass ?? context.analyzedClass!,
   );
 }
 

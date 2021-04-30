@@ -75,7 +75,7 @@ class MinimizeWhitespaceVisitor extends RecursiveTemplateAstVisitor<bool> {
         annotations: astNode.annotations,
       );
     }
-    return super.visitElement(astNode, true);
+    return super.visitElement(astNode, true)!;
   }
 
   @override

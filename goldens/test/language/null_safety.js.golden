@@ -142,7 +142,7 @@
   }
   var functionCounter = 0;
   function tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted) {
-    return isIntercepted ? new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new c(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null) : new Function("funcs", "applyTrampolineIndex", "reflectionInfo", "name", "H", "c", "return function tearOff_" + name + functionCounter++ + "() {" + "if (c === null) c = " + "H.closureFromTearOff" + "(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new c(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H, null);
+    return isIntercepted ? new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null) : new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null);
   }
   function tearOff(funcs, applyTrampolineIndex, reflectionInfo, isStatic, name, isIntercepted) {
     var cache = null;
@@ -248,7 +248,7 @@
       this._message = t0;
     },
     unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -1192,7 +1192,7 @@
       return "?";
     },
     _unminifyOrTag: function(rawClassName) {
-      var preserved = H.unmangleGlobalNameIfPreservedAnyways(rawClassName);
+      var preserved = init.mangledGlobalNames[rawClassName];
       if (preserved != null)
         return preserved;
       return rawClassName;
@@ -2026,9 +2026,6 @@
     _TypeError: function _TypeError(t0) {
       this.__rti$_message = t0;
     },
-    unmangleGlobalNameIfPreservedAnyways: function($name) {
-      return init.mangledGlobalNames[$name];
-    },
     printString: function(string) {
       if (typeof dartPrint == "function") {
         dartPrint(string);
@@ -2136,7 +2133,7 @@
       return string;
     },
     Error_safeToString: function(object) {
-      if (typeof object == "number" || H._isBool(object) || null == object)
+      if (typeof object == "number" || H._isBool(object) || object == null)
         return J.toString$0$(object);
       if (typeof object == "string")
         return JSON.stringify(object);
@@ -2674,7 +2671,6 @@
   };
   H._Universe_addRules(init.typeUniverse, JSON.parse('{}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"JSArray":1,"JSUnmodifiableArray":1,"ArrayIterator":1}'));
-  0;
   var type$ = (function rtii() {
     var findType = H.findType;
     return {

@@ -1,7 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
-
 import '../../compile_metadata.dart';
 import '../../i18n/message.dart';
 import '../../output/output_ast.dart' as o;
@@ -23,7 +19,7 @@ class ProviderResolver {
   /// The resolver of [_host]'s parent.
   ///
   /// This may be used to resolve tokens that aren't provided by this resolver.
-  final ProviderResolver _parent;
+  final ProviderResolver? _parent;
 
   /// Maps from a provider token to expression that will return instance
   /// at runtime. Builtin(s) are populated eagerly, ProviderAst based
@@ -45,7 +41,7 @@ class ProviderResolver {
   bool isAliasedProvider(CompileTokenMetadata token) =>
       _aliasedProviders.containsKey(token);
 
-  List<CompileTokenMetadata> getAliases(CompileTokenMetadata providerToken) =>
+  List<CompileTokenMetadata>? getAliases(CompileTokenMetadata providerToken) =>
       _aliases.get(providerToken);
 
   /// Adds a builtin local provider for a template node.
@@ -53,7 +49,7 @@ class ProviderResolver {
     _instances.add(token, BuiltInSource(token, providerValue));
   }
 
-  ProviderSource get(CompileTokenMetadata token) => _instances.get(token);
+  ProviderSource? get(CompileTokenMetadata token) => _instances.get(token);
 
   /// Given a list of directives (and component itself), adds providers for
   /// each directive at this node. Code generators that want to build
@@ -75,13 +71,13 @@ class ProviderResolver {
       // expressions.
       var providerSources = <ProviderSource>[];
       var isLocalAlias = false;
-      CompileDirectiveMetadata directiveMetadata;
+      CompileDirectiveMetadata? directiveMetadata;
       for (var provider in resolvedProvider.providers) {
         ProviderSource providerSource;
         if (provider.useExisting != null) {
           // If this provider is just an alias for another provider on this
           // component, we don't need to generate a getter.
-          if (_instances.containsKey(provider.useExisting) &&
+          if (_instances.containsKey(provider.useExisting!) &&
               !resolvedProvider.multiProvider) {
             isLocalAlias = true;
             break;
@@ -95,7 +91,7 @@ class ProviderResolver {
           providerSource =
               _addFactoryProvider(provider, resolvedProvider.providerType);
         } else if (provider.useClass != null) {
-          var classType = provider.useClass.identifier;
+          var classType = provider.useClass!.identifier;
           providerSource = _addClassProvider(
             provider,
             resolvedProvider.providerType,
@@ -111,7 +107,7 @@ class ProviderResolver {
           }
         } else {
           providerSource = ExpressionProviderSource(
-              provider.token, convertValueToOutputAst(provider.useValue));
+              provider.token!, convertValueToOutputAst(provider.useValue));
         }
         providerSources.add(providerSource);
       }
@@ -120,16 +116,16 @@ class ProviderResolver {
         // on the same view class, so just add the existing reference for this
         // token.
         var provider = resolvedProvider.providers.single;
-        var alias = provider.useExisting;
+        var alias = provider.useExisting!;
         if (_aliasedProviders.containsKey(alias)) {
-          alias = _aliasedProviders.get(alias);
+          alias = _aliasedProviders.get(alias)!;
         }
         if (!_aliases.containsKey(alias)) {
           _aliases.add(alias, <CompileTokenMetadata>[]);
         }
-        _aliases.get(alias).add(provider.token);
+        _aliases.get(alias)!.add(provider.token!);
         _aliasedProviders.add(resolvedProvider.token, alias);
-        _instances.add(resolvedProvider.token, _instances.get(alias));
+        _instances.add(resolvedProvider.token, _instances.get(alias)!);
       } else {
         var token = resolvedProvider.token;
         _instances.add(
@@ -143,39 +139,39 @@ class ProviderResolver {
   ProviderSource _addFactoryProvider(
       CompileProviderMetadata provider, ProviderAstType providerType) {
     var parameters = <ProviderSource>[];
-    for (var paramDep in provider.deps ?? provider.useFactory.diDeps) {
-      parameters.add(_getDependency(paramDep));
+    for (var paramDep in provider.deps ?? provider.useFactory!.diDeps) {
+      parameters.add(_getDependency(paramDep!));
     }
     return FactoryProviderSource(
-        provider.token, provider.useFactory, parameters);
+        provider.token!, provider.useFactory, parameters);
   }
 
   ProviderSource _addClassProvider(
     CompileProviderMetadata provider,
     ProviderAstType providerType, {
-    List<o.OutputType> typeArguments,
+    List<o.OutputType> typeArguments = const [],
   }) {
-    var paramDeps = provider.deps ?? provider.useClass.diDeps;
+    var paramDeps = provider.deps ?? provider.useClass!.diDeps;
     // Resolve constructor parameters for class.
     var parameters = <ProviderSource>[];
     for (var paramDep in paramDeps) {
-      parameters.add(_getDependency(paramDep));
+      parameters.add(_getDependency(paramDep!));
     }
     return ClassProviderSource(
-      provider.token,
+      provider.token!,
       provider.useClass,
       parameters,
       typeArguments: typeArguments,
     );
   }
 
-  ProviderSource _getLocalDependency(CompileTokenMetadata token) {
+  ProviderSource? _getLocalDependency(CompileTokenMetadata? token) {
     return token != null ? _instances.get(token) : null;
   }
 
   ProviderSource _getDependency(CompileDiDependencyMetadata dep) {
-    var currProviders = this;
-    ProviderSource result;
+    ProviderResolver? currProviders = this;
+    ProviderSource? result;
     if (dep.isValue) {
       final value = dep.value;
       // This is a bit of a hack, but it's much simpler than refactoring the
@@ -194,9 +190,9 @@ class ProviderResolver {
       result = _getLocalDependency(dep.token);
     }
     // check parent elements
-    while (result == null && currProviders._parent._parent != null) {
+    while (result == null && currProviders!._parent!._parent != null) {
       currProviders = currProviders._parent;
-      result = currProviders._getLocalDependency(dep.token);
+      result = currProviders!._getLocalDependency(dep.token);
     }
     // Ask host to build a ProviderSource that injects the instance
     // dynamically through injectorGet call.
@@ -214,14 +210,14 @@ abstract class ProviderResolverHost {
   /// Creates an eager instance for a provider and returns reference to source.
   ProviderSource createProviderInstance(
       ProviderAst resolvedProvider,
-      CompileDirectiveMetadata directiveMetadata,
+      CompileDirectiveMetadata? directiveMetadata,
       List<ProviderSource> providerValueExpressions,
       int uniqueId);
 
   /// Creates ProviderSource to call injectorGet on parent view that contains
   /// source NodeProviders.
-  ProviderSource createDynamicInjectionSource(ProviderResolver source,
-      ProviderSource value, CompileTokenMetadata token, bool optional);
+  ProviderSource createDynamicInjectionSource(ProviderResolver? source,
+      ProviderSource? value, CompileTokenMetadata? token, bool optional);
 
   /// Creates an expression that returns the internationalized [message].
   o.Expression createI18nMessage(I18nMessage message);
@@ -242,12 +238,12 @@ class BuiltInSource extends ProviderSource {
 /// expressions.
 class ExpressionProviderSource extends ProviderSource {
   final o.Expression _value;
-  final o.Expression _changeDetectorRef;
+  final o.Expression? _changeDetectorRef;
 
   ExpressionProviderSource(
-    CompileTokenMetadata token,
+    CompileTokenMetadata? token,
     this._value, {
-    o.Expression changeDetectorRef,
+    o.Expression? changeDetectorRef,
   })  : _changeDetectorRef = changeDetectorRef,
         super(token);
 
@@ -255,7 +251,7 @@ class ExpressionProviderSource extends ProviderSource {
   o.Expression build() => _value;
 
   @override
-  o.Expression buildChangeDetectorRef() => _changeDetectorRef;
+  o.Expression? buildChangeDetectorRef() => _changeDetectorRef;
 }
 
 bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
@@ -268,7 +264,7 @@ bool _hasDynamicDependencies(Iterable<ProviderSource> sources) {
 }
 
 class FactoryProviderSource extends ProviderSource {
-  final CompileFactoryMetadata _factory;
+  final CompileFactoryMetadata? _factory;
   final List<ProviderSource> _parameters;
 
   FactoryProviderSource(
@@ -281,9 +277,9 @@ class FactoryProviderSource extends ProviderSource {
     for (var s in _parameters) {
       paramExpressions.add(s.build());
     }
-    final create = o.importExpr(_factory).callFn(paramExpressions);
+    final create = o.importExpr(_factory!).callFn(paramExpressions);
     if (hasDynamicDependencies) {
-      return debugInjectorWrap(createDiTokenExpression(token), create);
+      return debugInjectorWrap(createDiTokenExpression(token!), create);
     }
     return create;
   }
@@ -293,7 +289,7 @@ class FactoryProviderSource extends ProviderSource {
 }
 
 class ClassProviderSource extends ProviderSource {
-  final CompileTypeMetadata _classType;
+  final CompileTypeMetadata? _classType;
   final List<ProviderSource> _parameters;
   final List<o.OutputType> _typeArguments;
 
@@ -301,7 +297,7 @@ class ClassProviderSource extends ProviderSource {
     CompileTokenMetadata token,
     this._classType,
     this._parameters, {
-    List<o.OutputType> typeArguments,
+    List<o.OutputType> typeArguments = const [],
   })  : _typeArguments = typeArguments,
         super(token);
 
@@ -311,14 +307,14 @@ class ClassProviderSource extends ProviderSource {
     for (var s in _parameters) {
       paramExpressions.add(s.build());
     }
-    final clazz = o.importExpr(_classType);
+    final clazz = o.importExpr(_classType!);
     final create = clazz.instantiate(
       paramExpressions,
       type: o.importType(_classType),
       genericTypes: _typeArguments,
     );
     if (hasDynamicDependencies) {
-      return debugInjectorWrap(createDiTokenExpression(token), create);
+      return debugInjectorWrap(createDiTokenExpression(token!), create);
     }
     return create;
   }
@@ -330,28 +326,28 @@ class ClassProviderSource extends ProviderSource {
 /// Source for injectable values resolved by dynamic lookup (`injectorGet`).
 class DynamicProviderSource extends ProviderSource {
   final CompileElement _element;
-  final ProviderResolver _resolver;
-  final ProviderSource _source;
+  final ProviderResolver? _resolver;
+  final ProviderSource? _source;
   final bool _isOptional;
 
   DynamicProviderSource(
-    CompileTokenMetadata token,
+    CompileTokenMetadata? token,
     this._element,
     this._resolver,
     this._source, {
-    @required bool isOptional,
-  })  : _isOptional = isOptional,
+    required bool isOptional,
+  })   : _isOptional = isOptional,
         super(token);
 
   @override
   o.Expression build() {
     final value = _source?.build() ?? _injectFromViewParent();
-    final parent = _element.findElementByResolver(_resolver);
-    return getPropertyInView(value, _element.view, parent.view);
+    final parent = _element.findElementByResolver(_resolver)!;
+    return getPropertyInView(value, _element.view!, parent.view!);
   }
 
   o.Expression _injectFromViewParent() {
-    return injectFromViewParentInjector(_element.view, token, _isOptional);
+    return injectFromViewParentInjector(_element.view!, token!, _isOptional);
   }
 
   @override

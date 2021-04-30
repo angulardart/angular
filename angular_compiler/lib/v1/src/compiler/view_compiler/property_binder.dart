@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart';
@@ -28,8 +26,8 @@ import 'view_name_resolver.dart';
 void bindAndWriteToRenderer(
   List<ir.Binding> bindings,
   BoundValueConverter converter,
-  o.Expression appViewInstance,
-  NodeReference renderNode,
+  o.Expression? appViewInstance,
+  NodeReference? renderNode,
   bool isHtmlElement,
   ViewNameResolver nameResolver,
   ViewStorage storage,
@@ -73,14 +71,14 @@ void bindAndWriteToRenderer(
 }
 
 void bindRenderText(
-    ir.Binding binding, CompileNode compileNode, CompileView view) {
+    ir.Binding binding, CompileNode compileNode, CompileView? view) {
   if (binding.source.isImmutable) {
     // We already set the value to the text node at creation
     return;
   }
   _directBinding(
     binding,
-    BoundValueConverter.forView(view),
+    BoundValueConverter.forView(view!),
     view.detectChangesRenderPropertiesMethod,
     o.THIS_EXPR,
     compileNode.renderNode,
@@ -94,7 +92,7 @@ void bindRenderInputs(
       ? o.THIS_EXPR
       : compileElement.componentView;
   var renderNode = compileElement.renderNode;
-  var view = compileElement.view;
+  var view = compileElement.view!;
   var converter = BoundValueConverter.forView(view);
   bindAndWriteToRenderer(
     bindings,
@@ -111,11 +109,11 @@ void bindRenderInputs(
 void bindDirectiveInputs(
   List<ir.Binding> inputs,
   ir.MatchedDirective directive,
-  CompileElement compileElement, {
+  CompileElement? compileElement, {
   bool isHostComponent = false,
 }) {
   if (!directive.hasInputs) return;
-  var view = compileElement.view;
+  var view = compileElement!.view!;
   var detectChangesInInputsMethod = view.detectChangesInInputsMethod;
   var afterChanges = directive.hasLifecycle(ir.Lifecycle.afterChanges);
   var isOnPushComp = directive.isComponent && directive.isOnPush;
@@ -132,7 +130,7 @@ void bindDirectiveInputs(
   bindAndWriteToRenderer(
     inputs,
     BoundValueConverter.forView(view),
-    directive.providerSource.build(),
+    directive.providerSource!.build(),
     null,
     false,
     view.nameResolver,
@@ -143,7 +141,7 @@ void bindDirectiveInputs(
   );
   if (isOnPushComp) {
     detectChangesInInputsMethod.addStmt(o.IfStmt(DetectChangesVars.changed, [
-      compileElement.componentView.callMethod('markAsCheckOnce', []).toStmt()
+      compileElement.componentView!.callMethod('markAsCheckOnce', []).toStmt()
     ]));
   }
 }
@@ -152,12 +150,12 @@ void _directBinding(
   ir.Binding binding,
   BoundValueConverter converter,
   CompileMethod method,
-  o.Expression appViewInstance,
-  NodeReference renderNode,
+  o.Expression? appViewInstance,
+  NodeReference? renderNode,
   bool isHtmlElement,
 ) {
   var expression =
-      converter.convertSourceToExpression(binding.source, binding.target.type);
+      converter.convertSourceToExpression(binding.source, binding.target.type)!;
   var updateStatements = bindingToUpdateStatements(
     binding,
     appViewInstance,
@@ -180,8 +178,8 @@ void _checkBinding(
     ir.Binding binding,
     BoundValueConverter converter,
     ViewNameResolver nameResolver,
-    o.Expression appViewInstance,
-    NodeReference renderNode,
+    o.Expression? appViewInstance,
+    NodeReference? renderNode,
     bool isHtmlElement,
     bool calcChanged,
     ViewStorage storage,
@@ -198,7 +196,7 @@ void _checkBinding(
   var currValExpr = _createCurrValueExpr(bindingIndex);
 
   var updatedExpr = _maybeOptimizeInterpolation(
-      binding.source, currValExpr, converter, binding.target.type);
+      binding.source, currValExpr, converter, binding.target.type)!;
 
   var updateStmts = bindingToUpdateStatements(
     binding,
@@ -305,21 +303,21 @@ void _bind(
   ViewStorage storage,
   o.ReadVarExpr currValExpr,
   o.ReadClassMemberExpr fieldExpr,
-  o.Expression checkExpression,
+  o.Expression? checkExpression,
   o.Expression checkBindingExpr,
   bool isImmutable,
   bool isNullable,
   List<o.Statement> actions,
   CompileMethod method,
   CompileMethod literalMethod, {
-  o.OutputType fieldType,
+  o.OutputType? fieldType,
   bool isHostComponent = false,
 }) {
   if (isImmutable) {
     // If the expression is immutable, it will never change, so we can run it
     // once on the first change detection.
     if (!isHostComponent) {
-      _bindLiteral(checkExpression, actions, currValExpr.name, fieldExpr.name,
+      _bindLiteral(checkExpression!, actions, currValExpr.name!, fieldExpr.name,
           literalMethod, isNullable);
     }
     return;
@@ -396,13 +394,13 @@ void bindDirectiveHostProps(
   }
   o.Expression detectHostChanges;
   if (directive.isComponent) {
-    detectHostChanges = compileElement.componentView.callMethod(
+    detectHostChanges = compileElement.componentView!.callMethod(
       'detectHostChanges',
       [DetectChangesVars.firstCheck],
     );
   } else {
     final directiveInstance =
-        unwrapDirectiveInstance(directive.providerSource.build());
+        unwrapDirectiveInstance(directive.providerSource!.build());
     // For @Component-annotated classes that extend @Directive classes, i.e.:
     //
     // @Directive(...)
@@ -424,13 +422,13 @@ void bindDirectiveHostProps(
       'detectHostChanges',
       [
         compileElement.component != null
-            ? compileElement.componentView
+            ? compileElement.componentView!
             : o.THIS_EXPR,
         compileElement.renderNode.toReadExpr(),
       ],
     );
   }
-  compileElement.view.detectChangesRenderPropertiesMethod.addStmt(
+  compileElement.view!.detectChangesRenderPropertiesMethod.addStmt(
     detectHostChanges.toStmt(),
   );
 }
@@ -463,17 +461,17 @@ bool _shouldInterpolateAfterCheck(ir.BindingSource source) =>
 // The reason to exclude immutable binding source is because [bindLiteral]
 // method would replace current variable to checkExpression. It results in
 // binding interpolate method twice.
-o.Expression _maybeOptimizeInterpolation(
+o.Expression? _maybeOptimizeInterpolation(
     ir.BindingSource source,
     o.ReadVarExpr currValExpr,
     BoundValueConverter converter,
-    o.OutputType type) {
+    o.OutputType? type) {
   if (!_shouldInterpolateAfterCheck(source)) {
     return currValExpr;
   }
   final oldSource = source as ir.BoundExpression;
   final oldInterpolation = oldSource.expression.ast as ast.Interpolation;
   final interpolationSource = oldSource.withNewExpression(ast.Interpolation(
-      oldInterpolation.strings, [ast.VariableRead(currValExpr.name)]));
+      oldInterpolation.strings, [ast.VariableRead(currValExpr.name!)]));
   return converter.convertSourceToExpression(interpolationSource, type);
 }

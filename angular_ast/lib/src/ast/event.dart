@@ -17,7 +17,6 @@ abstract class EventAst implements TemplateAst {
   factory EventAst(
     String name,
     String? value, [
-    ExpressionAst<Object>? expression,
     List<String> reductions,
   ]) = _SyntheticEventAst;
 
@@ -26,7 +25,6 @@ abstract class EventAst implements TemplateAst {
     TemplateAst origin,
     String name,
     String? value, [
-    ExpressionAst<Object>? expression,
     List<String> reductions,
   ]) = _SyntheticEventAst.from;
 
@@ -44,20 +42,15 @@ abstract class EventAst implements TemplateAst {
   bool operator ==(Object o) =>
       o is EventAst &&
       name == o.name &&
-      expression == o.expression &&
       _listEquals.equals(reductions, o.reductions);
 
   @override
-  int get hashCode => hash3(name, expression, reductions);
+  int get hashCode => hash2(name, reductions);
 
   @override
   R accept<R, C>(TemplateAstVisitor<R, C?> visitor, [C? context]) {
     return visitor.visitEvent(this, context);
   }
-
-  /// Bound expression.
-  ExpressionAst<Object>? get expression;
-  set expression(ExpressionAst<Object>? expression);
 
   /// Name of the event being listened to.
   String get name;
@@ -73,9 +66,9 @@ abstract class EventAst implements TemplateAst {
   @override
   String toString() {
     if (reductions.isNotEmpty) {
-      return '$EventAst {$name.${reductions.join(',')}="$value", Expression=$expression}';
+      return '$EventAst {$name.${reductions.join(',')}="$value"}';
     }
-    return '$EventAst {$name=$value, Expression=$expression}';
+    return '$EventAst {$name=$value}';
   }
 }
 
@@ -121,10 +114,6 @@ class ParsedEventAst extends TemplateAst
   String get _nameWithoutParentheses {
     return nameToken.lexeme;
   }
-
-  /// ExpressionAst of `"expression"`; may be `null` to have no value.
-  @override
-  ExpressionAst<Object>? expression;
 
   /// Name `eventName` in `(eventName.reductions)`.
   @override
@@ -174,15 +163,11 @@ class _SyntheticEventAst extends SyntheticTemplateAst with EventAst {
   final String? value;
 
   @override
-  ExpressionAst<Object>? expression;
-
-  @override
   final List<String> reductions;
 
   _SyntheticEventAst(
     this.name,
     this.value, [
-    this.expression,
     this.reductions = const [],
   ]);
 
@@ -190,7 +175,6 @@ class _SyntheticEventAst extends SyntheticTemplateAst with EventAst {
     TemplateAst origin,
     this.name,
     this.value, [
-    this.expression,
     this.reductions = const [],
   ]) : super.from(origin);
 }

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:build/build.dart' hide AssetReader;
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';

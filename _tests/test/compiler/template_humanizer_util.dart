@@ -9,13 +9,13 @@ final _expressionUnparser = Unparser();
 
 List<dynamic> humanizeTplAst(List<TemplateAst> templateAsts) {
   var humanizer = _TemplateHumanizer(false);
-  templateVisitAll(humanizer, templateAsts);
+  templateVisitAll(humanizer, templateAsts, null);
   return humanizer.result;
 }
 
 List<dynamic> humanizeTplAstSourceSpans(List<TemplateAst> templateAsts) {
   var humanizer = _TemplateHumanizer(true);
-  templateVisitAll(humanizer, templateAsts);
+  templateVisitAll(humanizer, templateAsts, null);
   return humanizer.result;
 }
 
@@ -28,7 +28,7 @@ class _TemplateHumanizer implements TemplateAstVisitor<void, void> {
   void visitNgContainer(NgContainerAst ast, _) {
     var res = <dynamic>[NgContainerAst];
     result.add(_appendContext(ast, res));
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
@@ -41,23 +41,23 @@ class _TemplateHumanizer implements TemplateAstVisitor<void, void> {
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var res = <dynamic>[EmbeddedTemplateAst];
     result.add(_appendContext(ast, res));
-    templateVisitAll(this, ast.attrs);
-    templateVisitAll(this, ast.references);
-    templateVisitAll(this, ast.variables);
-    templateVisitAll(this, ast.directives);
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.attrs, null);
+    templateVisitAll(this, ast.references, null);
+    templateVisitAll(this, ast.variables, null);
+    templateVisitAll(this, ast.directives, null);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
   void visitElement(ElementAst ast, _) {
     var res = [ElementAst, ast.name];
     result.add(_appendContext(ast, res));
-    templateVisitAll(this, ast.attrs);
-    templateVisitAll(this, ast.inputs);
-    templateVisitAll(this, ast.outputs);
-    templateVisitAll(this, ast.references);
-    templateVisitAll(this, ast.directives);
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.attrs, null);
+    templateVisitAll(this, ast.inputs, null);
+    templateVisitAll(this, ast.outputs, null);
+    templateVisitAll(this, ast.references, null);
+    templateVisitAll(this, ast.directives, null);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
@@ -135,8 +135,8 @@ class _TemplateHumanizer implements TemplateAstVisitor<void, void> {
   void visitDirective(DirectiveAst ast, _) {
     var res = [DirectiveAst, ast.directive];
     result.add(_appendContext(ast, res));
-    templateVisitAll(this, ast.inputs);
-    templateVisitAll(this, ast.outputs);
+    templateVisitAll(this, ast.inputs, null);
+    templateVisitAll(this, ast.outputs, null);
   }
 
   @override
@@ -204,7 +204,7 @@ String sourceInfo(TemplateAst ast) {
 
 List<dynamic> humanizeContentProjection(List<TemplateAst> templateAsts) {
   var humanizer = _TemplateContentProjectionHumanizer();
-  templateVisitAll(humanizer, templateAsts);
+  templateVisitAll(humanizer, templateAsts, null);
   return humanizer.result;
 }
 
@@ -214,7 +214,7 @@ class _TemplateContentProjectionHumanizer
 
   @override
   void visitNgContainer(NgContainerAst ast, _) {
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
@@ -225,13 +225,13 @@ class _TemplateContentProjectionHumanizer
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     result.add(['template', ast.ngContentIndex]);
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override
   void visitElement(ElementAst ast, _) {
     result.add([ast.name, ast.ngContentIndex]);
-    templateVisitAll(this, ast.children);
+    templateVisitAll(this, ast.children, null);
   }
 
   @override

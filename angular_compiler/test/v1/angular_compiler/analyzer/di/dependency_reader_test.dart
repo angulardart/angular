@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
@@ -18,7 +16,7 @@ void main() {
 
   group('should parse dependencies from', () {
     final reader = const DependencyReader();
-    LibraryElement library;
+    late LibraryElement library;
 
     setUpAll(() async {
       library = await resolveLibrary(r'''
@@ -68,7 +66,7 @@ void main() {
       ''');
     });
 
-    ClassElement classNamed(String name) => library.getType(name);
+    ClassElement? classNamed(String name) => library.getType(name);
 
     FunctionElement functionNamed(String name) =>
         library.definingCompilationUnit.functions
@@ -214,7 +212,7 @@ void main() {
     });
 
     test('a static method with no parameters', () {
-      final method = classNamed('Creator').getMethod('createExample0');
+      final method = classNamed('Creator')!.getMethod('createExample0');
       final deps = reader.parseDependencies(method);
       expect(deps.bound, const TypeMatcher<MethodElement>());
       expect(deps.positional, isEmpty);
@@ -222,7 +220,7 @@ void main() {
     });
 
     test('a static method with one parameter', () {
-      final method = classNamed('Creator').getMethod('createExample1');
+      final method = classNamed('Creator')!.getMethod('createExample1');
       final deps = reader.parseDependencies(method);
       expect(deps.bound, const TypeMatcher<MethodElement>());
       expect(deps.positional, [
@@ -236,7 +234,7 @@ void main() {
     });
 
     test('a static method with two parameters, of which one is named', () {
-      final method = classNamed('Creator').getMethod('createExample2');
+      final method = classNamed('Creator')!.getMethod('createExample2');
       final deps = reader.parseDependencies(method);
       expect(deps.bound, const TypeMatcher<MethodElement>());
       expect(deps.positional, [
@@ -250,7 +248,7 @@ void main() {
     });
 
     test('a static method with a parameter annotated with @Host', () {
-      final method = classNamed('Creator').getMethod('createExampleHost');
+      final method = classNamed('Creator')!.getMethod('createExampleHost');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -263,7 +261,7 @@ void main() {
     });
 
     test('a static method with a parameter annotated with @Optional', () {
-      final method = classNamed('Creator').getMethod('createExampleOptional');
+      final method = classNamed('Creator')!.getMethod('createExampleOptional');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -280,7 +278,7 @@ void main() {
     });
 
     test('a static method with a parameter annotated with @Self', () {
-      final method = classNamed('Creator').getMethod('createExampleSelf');
+      final method = classNamed('Creator')!.getMethod('createExampleSelf');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -293,7 +291,7 @@ void main() {
     });
 
     test('a static method with a parameter annotated with @SkipSelf', () {
-      final method = classNamed('Creator').getMethod('createExampleSkipSelf');
+      final method = classNamed('Creator')!.getMethod('createExampleSkipSelf');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -306,7 +304,7 @@ void main() {
     });
 
     test('a static method with a parameter annotated with @Inject', () {
-      final method = classNamed('Creator').getMethod('createExampleInject');
+      final method = classNamed('Creator')!.getMethod('createExampleInject');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -324,7 +322,7 @@ void main() {
 
     test('a static method with a parameter annotated with an OpaqueToken', () {
       final method =
-          classNamed('Creator').getMethod('createExampleInjectToken');
+          classNamed('Creator')!.getMethod('createExampleInjectToken');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(
@@ -342,7 +340,7 @@ void main() {
 
     test('a static method with an untyped parameter annotated with @Inject',
         () {
-      final method = classNamed('Creator').getMethod('createExampleDynamic');
+      final method = classNamed('Creator')!.getMethod('createExampleDynamic');
       final deps = reader.parseDependencies(method);
       expect(deps.positional, [
         DependencyElement(

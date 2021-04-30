@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/error/error.dart';
@@ -19,13 +17,13 @@ import 'component_visitor_exceptions.dart';
 /// will not issue warnings to the exception handler.
 class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
   final ComponentVisitorExceptionHandler _exceptionHandler;
-  final DartObject constantValue;
+  final DartObject? constantValue;
   final List<AnalysisError> constantEvaluationErrors;
 
   AnnotationInformation(T element, ElementAnnotation annotation,
       int annotationIndex, this._exceptionHandler)
       : constantValue = annotation.computeConstantValue(),
-        constantEvaluationErrors = annotation.constantEvaluationErrors,
+        constantEvaluationErrors = annotation.constantEvaluationErrors ?? [],
         super(element, annotation, annotationIndex);
 
   bool get isInputType => _isTypeExactly($Input);
@@ -53,13 +51,13 @@ class AnnotationInformation<T extends Element> extends IndexedAnnotation<T> {
       }
       return false;
     }
-    return typeChecker.isExactlyType(constantValue.type);
+    return typeChecker.isExactlyType(constantValue!.type!);
   }
 }
 
 /// Returns the [AnnotationInformation] for the first annotation on [element]
 /// that matches [test] or null if no such annotation exists.
-AnnotationInformation<T> annotationWhere<T extends Element>(
+AnnotationInformation<T>? annotationWhere<T extends Element>(
     T element,
     bool Function(ElementAnnotation) test,
     ComponentVisitorExceptionHandler exceptionHandler) {

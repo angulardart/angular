@@ -1,6 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
-import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart'
     as analyzed;
@@ -19,7 +16,7 @@ import '../output/output_ast.dart' as o;
 
 /// Base class for all intermediate representation (IR) data model classes.
 abstract class IRNode {
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]);
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]);
 }
 
 /// Top-level object to encapsulate the IR objects created by the frontend and
@@ -31,7 +28,7 @@ class Library implements IRNode {
   Library(this.components, this.directives);
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitLibrary(this, context);
 }
 
@@ -52,18 +49,18 @@ class Component implements IRNode {
       this.styleUrls = const []});
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitComponent(this, context);
 }
 
 class Directive implements IRNode {
-  final String name;
+  final String? name;
 
-  final List<o.TypeParameter> typeParameters;
+  final List<o.TypeParameter>? typeParameters;
 
-  final CompileDirectiveMetadata metadata;
+  final CompileDirectiveMetadata? metadata;
 
-  final List<Binding> hostProperties;
+  final List<Binding>? hostProperties;
 
   Directive({
     this.name,
@@ -77,10 +74,10 @@ class Directive implements IRNode {
   /// [DirectiveChangeDetector] classes should only be generated if they
   /// reduce the amount of duplicate code. Therefore we check for the presence
   /// of host bindings to move from each call site to a single method.
-  bool get requiresDirectiveChangeDetector => hostProperties.isNotEmpty;
+  bool get requiresDirectiveChangeDetector => hostProperties!.isNotEmpty;
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C?> visitor, [CO? context]) =>
       visitor.visitDirective(this, context);
 }
 
@@ -104,13 +101,13 @@ enum ViewEncapsulation {
 abstract class View extends IRNode {
   List<IRNode> get children;
 
-  CompileView compileView;
+  CompileView? compileView;
 
   // TODO(alorenzen): Replace with IR model classes.
-  CompileDirectiveMetadata get cmpMetadata;
+  CompileDirectiveMetadata? get cmpMetadata;
   List<TemplateAst> get parsedTemplate;
   List<CompileTypedMetadata> get directiveTypes;
-  List<CompilePipeMetadata> get pipes;
+  List<CompilePipeMetadata?> get pipes;
 }
 
 class ComponentView implements View {
@@ -123,20 +120,20 @@ class ComponentView implements View {
   @override
   final List<CompileTypedMetadata> directiveTypes;
   @override
-  final List<CompilePipeMetadata> pipes;
+  final List<CompilePipeMetadata?> pipes;
 
   @override
-  CompileView compileView;
+  CompileView? compileView;
 
   ComponentView(
       {this.children = const [],
-      @required this.cmpMetadata,
+      required this.cmpMetadata,
       this.parsedTemplate = const [],
       this.directiveTypes = const [],
       this.pipes = const []});
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitComponentView(this, context);
 }
 
@@ -151,16 +148,16 @@ class HostView implements View {
   final List<CompilePipeMetadata> pipes = const [];
 
   @override
-  CompileView compileView;
+  CompileView? compileView;
 
   HostView({
-    @required this.cmpMetadata,
+    required this.cmpMetadata,
     this.parsedTemplate = const [],
     this.directiveTypes = const [],
   });
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitHostView(this, context);
 
   @override
@@ -174,19 +171,19 @@ class EmbeddedView implements View {
   final List<TemplateAst> parsedTemplate;
 
   @override
-  final CompileDirectiveMetadata cmpMetadata = null;
+  final CompileDirectiveMetadata? cmpMetadata = null;
   @override
   final List<CompileTypedMetadata> directiveTypes = const [];
   @override
   final List<CompilePipeMetadata> pipes = const [];
 
   @override
-  CompileView compileView;
+  CompileView? compileView;
 
   EmbeddedView(this.parsedTemplate) : children = const [];
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitEmbeddedView(this, context);
 }
 
@@ -195,7 +192,7 @@ class EmbeddedView implements View {
 /// This may represent an HTML element, such as `<div>`, or a Component
 /// instance.
 class Element implements IRNode {
-  final CompileElement compileElement;
+  final CompileElement? compileElement;
   final List<Binding> inputs;
   final List<Binding> outputs;
   final List<MatchedDirective> matchedDirectives;
@@ -215,7 +212,7 @@ class Element implements IRNode {
   );
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitElement(this, context);
 }
 
@@ -227,7 +224,7 @@ class MatchedDirective implements IRNode {
   /// Source of the directive in the compiled output.
   ///
   /// Necessary to bind calls to the correct class instance.
-  final ProviderSource providerSource;
+  final ProviderSource? providerSource;
   final List<Binding> inputs;
   final List<Binding> outputs;
   final Set<Lifecycle> lifecycles;
@@ -241,20 +238,20 @@ class MatchedDirective implements IRNode {
   final bool isOnPush;
 
   MatchedDirective({
-    @required this.providerSource,
-    @required this.inputs,
-    @required this.outputs,
-    @required this.lifecycles,
-    @required this.hasInputs,
-    @required this.hasHostProperties,
-    @required this.isComponent,
-    @required this.isOnPush,
+    required this.providerSource,
+    required this.inputs,
+    required this.outputs,
+    required this.lifecycles,
+    required this.hasInputs,
+    required this.hasHostProperties,
+    required this.isComponent,
+    required this.isOnPush,
   });
 
   bool hasLifecycle(Lifecycle lifecycle) => lifecycles.contains(lifecycle);
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitMatchedDirective(this, context);
 }
 
@@ -285,31 +282,31 @@ class Binding implements IRNode {
   /// itself.
   final bool isDirect;
 
-  Binding({this.source, this.target, this.isDirect = false});
+  Binding({required this.source, required this.target, this.isDirect = false});
 
   @override
-  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO context]) =>
+  R accept<R, C, CO extends C>(IRVisitor<R, C> visitor, [CO? context]) =>
       visitor.visitBinding(this, context);
 }
 
 abstract class BindingTarget extends IRNode {
   TemplateSecurityContext get securityContext;
-  o.OutputType get type;
+  o.OutputType? get type;
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-      [CO context]);
+      [CO? context]);
 }
 
 class TextBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitTextBinding(this, context);
 }
 
@@ -319,11 +316,11 @@ class HtmlBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitHtmlBinding(this, context);
 }
 
@@ -332,7 +329,7 @@ class ClassBinding implements BindingTarget {
   ///
   /// If name is null, then we treat this as a [className]='"foo"' or
   /// [attr.class]='foo'.
-  final String name;
+  final String? name;
 
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
@@ -341,7 +338,7 @@ class ClassBinding implements BindingTarget {
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitClassBinding(this, context);
 
   /// When a class name is specified, then the [BindingSource] is a boolean to
@@ -357,53 +354,53 @@ class TabIndexBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.none;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitTabIndexBinding(this, context);
 }
 
 class StyleBinding implements BindingTarget {
   final String name;
-  final String unit;
+  final String? unit;
 
   @override
   final TemplateSecurityContext securityContext = TemplateSecurityContext.style;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   StyleBinding(this.name, this.unit);
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitStyleBinding(this, context);
 }
 
 class AttributeBinding implements BindingTarget {
-  final String namespace;
+  final String? namespace;
   final String name;
 
   final bool isConditional;
   @override
   final TemplateSecurityContext securityContext;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   AttributeBinding(
     this.name, {
-    String namespace,
+    String? namespace,
     this.isConditional = false,
-    @required this.securityContext,
+    required this.securityContext,
   }) : namespace = namespaceUris[namespace];
 
   bool get hasNamespace => namespace != null;
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitAttributeBinding(this, context);
 }
 
@@ -412,13 +409,13 @@ class PropertyBinding implements BindingTarget {
   @override
   final TemplateSecurityContext securityContext;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 
   PropertyBinding(this.name, this.securityContext);
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitPropertyBinding(this, context);
 }
 
@@ -448,7 +445,7 @@ class InputBinding implements BindingTarget {
   final String templateName;
 
   @override
-  final o.OutputType type;
+  final o.OutputType? type;
 
   @override
   final securityContext = TemplateSecurityContext.none;
@@ -457,7 +454,7 @@ class InputBinding implements BindingTarget {
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitInputBinding(this, context);
 }
 
@@ -469,7 +466,7 @@ abstract class BoundEvent implements BindingTarget {
   @override
   final securityContext = TemplateSecurityContext.none;
   @override
-  final o.OutputType type = null;
+  final o.OutputType? type = null;
 }
 
 class NativeEvent extends BoundEvent {
@@ -477,7 +474,7 @@ class NativeEvent extends BoundEvent {
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitNativeEvent(this, context);
 }
 
@@ -486,7 +483,7 @@ class CustomEvent extends BoundEvent {
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitCustomEvent(this, context);
 }
 
@@ -505,7 +502,7 @@ class DirectiveOutput extends BoundEvent {
 
   @override
   R accept<R, C, CO extends C>(BindingTargetVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitDirectiveOutput(this, context);
 }
 
@@ -520,7 +517,7 @@ abstract class BindingSource extends IRNode {
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-      [CO context]);
+      [CO? context]);
 }
 
 class BoundI18nMessage implements BindingSource {
@@ -545,7 +542,7 @@ class BoundI18nMessage implements BindingSource {
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitBoundI18nMessage(this, context);
 }
 
@@ -579,15 +576,15 @@ class StringLiteral extends BoundLiteral {
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitStringLiteral(this, context);
 }
 
 /// A [BindingSource] which represents a general-purpose expression.
 class BoundExpression implements BindingSource {
   final ast.ASTWithSource expression;
-  final SourceSpan sourceSpan;
-  final analyzed.AnalyzedClass _analyzedClass;
+  final SourceSpan? sourceSpan;
+  final analyzed.AnalyzedClass? _analyzedClass;
 
   BoundExpression(this.expression, this.sourceSpan, this._analyzedClass);
 
@@ -614,23 +611,23 @@ class BoundExpression implements BindingSource {
   bool get isNullable => analyzed.canBeNull(expression.ast);
 
   @override
-  bool get isString => analyzed.isString(expression.ast, _analyzedClass);
+  bool get isString => analyzed.isString(expression.ast, _analyzedClass!);
 
   @override
-  bool get isBool => analyzed.isBool(expression.ast, _analyzedClass);
+  bool get isBool => analyzed.isBool(expression.ast, _analyzedClass!);
 
   @override
-  bool get isNumber => analyzed.isNumber(expression.ast, _analyzedClass);
+  bool get isNumber => analyzed.isNumber(expression.ast, _analyzedClass!);
 
   @override
-  bool get isDouble => analyzed.isDouble(expression.ast, _analyzedClass);
+  bool get isDouble => analyzed.isDouble(expression.ast, _analyzedClass!);
 
   @override
-  bool get isInt => analyzed.isInt(expression.ast, _analyzedClass);
+  bool get isInt => analyzed.isInt(expression.ast, _analyzedClass!);
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitBoundExpression(this, context);
 
   BoundExpression withNewExpression(ast.AST expression) => BoundExpression(
@@ -645,7 +642,7 @@ abstract class EventHandler implements BindingSource {
   ///
   /// The returned [EventHandler] may or may not be a new instance, based on the
   /// implementation of subclasses.
-  EventHandler merge(EventHandler handler);
+  EventHandler merge(EventHandler? handler);
 
   @override
   final bool isImmutable = false;
@@ -670,21 +667,21 @@ abstract class EventHandler implements BindingSource {
 /// In generated code, this can be expressed as a "tear-off" expression.
 class SimpleEventHandler extends EventHandler {
   final ast.ASTWithSource handler;
-  final SourceSpan sourceSpan;
-  final ProviderSource directiveInstance;
+  final SourceSpan? sourceSpan;
+  final ProviderSource? directiveInstance;
 
-  final int numArgs;
+  final int? numArgs;
 
   SimpleEventHandler(this.handler, this.sourceSpan,
       {this.directiveInstance, this.numArgs});
 
   @override
-  EventHandler merge(EventHandler handler) =>
+  EventHandler merge(EventHandler? handler) =>
       ComplexEventHandler._([this, handler]);
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitSimpleEventHandler(this, context);
 }
 
@@ -698,12 +695,12 @@ class SimpleEventHandler extends EventHandler {
 /// In generated code, this requires a generated method to wrap the event
 /// handlers.
 class ComplexEventHandler extends EventHandler {
-  final List<EventHandler> handlers;
+  final List<EventHandler?> handlers;
 
   ComplexEventHandler._(this.handlers);
 
-  ComplexEventHandler.forAst(ast.ASTWithSource handler, SourceSpan sourceSpan,
-      {ProviderSource directiveInstance})
+  ComplexEventHandler.forAst(ast.ASTWithSource handler, SourceSpan? sourceSpan,
+      {ProviderSource? directiveInstance})
       : this._([
           SimpleEventHandler(
             handler,
@@ -713,53 +710,54 @@ class ComplexEventHandler extends EventHandler {
         ]);
 
   @override
-  EventHandler merge(EventHandler handler) {
+  EventHandler merge(EventHandler? handler) {
     handlers.add(handler);
     return this;
   }
 
   @override
   R accept<R, C, CO extends C>(BindingSourceVisitor<R, C> visitor,
-          [CO context]) =>
+          [CO? context]) =>
       visitor.visitComplexEventHandler(this, context);
 }
 
 abstract class BindingTargetVisitor<R, C> {
-  R visitTextBinding(TextBinding textBinding, [C context]);
-  R visitHtmlBinding(HtmlBinding htmlBinding, [C context]);
-  R visitClassBinding(ClassBinding classBinding, [C context]);
-  R visitTabIndexBinding(TabIndexBinding tabIndexBinding, [C context]);
-  R visitStyleBinding(StyleBinding styleBinding, [C context]);
-  R visitAttributeBinding(AttributeBinding attributeBinding, [C context]);
-  R visitPropertyBinding(PropertyBinding propertyBinding, [C context]);
-  R visitInputBinding(InputBinding inputBinding, [C context]);
-  R visitNativeEvent(NativeEvent nativeEvent, [C context]);
-  R visitCustomEvent(CustomEvent customEvent, [C context]);
-  R visitDirectiveOutput(DirectiveOutput directiveOutput, [C context]);
+  R visitTextBinding(TextBinding textBinding, [C? context]);
+  R visitHtmlBinding(HtmlBinding htmlBinding, [C? context]);
+  R visitClassBinding(ClassBinding classBinding, [C? context]);
+  R visitTabIndexBinding(TabIndexBinding tabIndexBinding, [C? context]);
+  R visitStyleBinding(StyleBinding styleBinding, [C? context]);
+  R visitAttributeBinding(AttributeBinding attributeBinding, [C? context]);
+  R visitPropertyBinding(PropertyBinding propertyBinding, [C? context]);
+  R visitInputBinding(InputBinding inputBinding, [C? context]);
+  R visitNativeEvent(NativeEvent nativeEvent, [C? context]);
+  R visitCustomEvent(CustomEvent customEvent, [C? context]);
+  R visitDirectiveOutput(DirectiveOutput directiveOutput, [C? context]);
 }
 
 abstract class BindingSourceVisitor<R, C> {
-  R visitBoundI18nMessage(BoundI18nMessage boundI18nMessage, [C context]);
-  R visitStringLiteral(StringLiteral stringLiteral, [C context]);
-  R visitBoundExpression(BoundExpression boundExpression, [C context]);
-  R visitSimpleEventHandler(SimpleEventHandler simpleEventHandler, [C context]);
+  R visitBoundI18nMessage(BoundI18nMessage boundI18nMessage, [C? context]);
+  R visitStringLiteral(StringLiteral stringLiteral, [C? context]);
+  R visitBoundExpression(BoundExpression boundExpression, [C? context]);
+  R visitSimpleEventHandler(SimpleEventHandler simpleEventHandler,
+      [C? context]);
   R visitComplexEventHandler(ComplexEventHandler complexEventHandler,
-      [C context]);
+      [C? context]);
 }
 
 abstract class IRVisitor<R, C> extends Object
     with BindingTargetVisitor<R, C>, BindingSourceVisitor<R, C> {
-  R visitLibrary(Library library, [C context]);
+  R visitLibrary(Library library, [C? context]);
 
-  R visitComponent(Component component, [C context]);
+  R visitComponent(Component component, [C? context]);
   R visitDirective(Directive directive, C context);
 
-  R visitComponentView(ComponentView componentView, [C context]);
-  R visitHostView(HostView hostView, [C context]);
-  R visitEmbeddedView(EmbeddedView embeddedView, [C context]);
+  R visitComponentView(ComponentView componentView, [C? context]);
+  R visitHostView(HostView hostView, [C? context]);
+  R visitEmbeddedView(EmbeddedView embeddedView, [C? context]);
 
-  R visitElement(Element element, [C context]);
-  R visitMatchedDirective(MatchedDirective matchedDirective, [C context]);
+  R visitElement(Element element, [C? context]);
+  R visitMatchedDirective(MatchedDirective matchedDirective, [C? context]);
 
-  R visitBinding(Binding binding, [C context]);
+  R visitBinding(Binding binding, [C? context]);
 }

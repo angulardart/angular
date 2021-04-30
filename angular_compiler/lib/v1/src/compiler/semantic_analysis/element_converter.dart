@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/optimize_ir/merge_events.dart';
@@ -12,7 +10,7 @@ import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_element.d
 ir.Element convertElement(
   ast.ElementAst elementAst,
   CompileElement compileElement,
-  AnalyzedClass analyzedClass,
+  AnalyzedClass? analyzedClass,
 ) {
   var inputs = convertAllToBinding(
     elementAst.inputs,
@@ -42,7 +40,7 @@ ir.Element convertElement(
 ir.Element convertEmbeddedTemplate(
   ast.EmbeddedTemplateAst embeddedTemplate,
   CompileElement compileElement,
-  AnalyzedClass analyzedClass,
+  AnalyzedClass? analyzedClass,
 ) {
   var directives = convertMatchedDirectives(
       embeddedTemplate.directives, compileElement, analyzedClass);

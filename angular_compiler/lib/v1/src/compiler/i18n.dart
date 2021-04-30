@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:source_span/source_span.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_compiler/v2/context.dart';
@@ -22,7 +20,7 @@ export 'i18n/metadata.dart';
 List<ng.TemplateAst> internationalize(
   ast.StandaloneTemplateAst parent,
   I18nMetadata metadata,
-  int ngContentIndex,
+  int? ngContentIndex,
 ) {
   final i18nMessage = _message(parent.childNodes, metadata);
   if (i18nMessage == null) {
@@ -42,7 +40,7 @@ List<ng.TemplateAst> internationalize(
 }
 
 /// Creates an internationalized messages from [nodes].
-I18nMessage _message(
+I18nMessage? _message(
   List<ast.StandaloneTemplateAst> nodes,
   I18nMetadata metadata,
 ) {
@@ -60,7 +58,7 @@ bool _isText(List<ast.StandaloneTemplateAst> nodes) =>
     nodes.length == 1 && nodes[0] is ast.TextAst;
 
 /// Creates an internationalized message from [nodes] that contain nested HTML.
-I18nMessage _htmlMessage(
+I18nMessage? _htmlMessage(
   List<ast.StandaloneTemplateAst> nodes,
   I18nMetadata metadata,
 ) {

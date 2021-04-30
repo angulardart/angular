@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart' as core;
@@ -21,7 +19,7 @@ import 'package:angular_compiler/v1/src/compiler/view_compiler/ir/provider_sourc
 List<ir.MatchedDirective> convertMatchedDirectives(
   Iterable<ast.DirectiveAst> directives,
   CompileElement compileElement,
-  AnalyzedClass analyzedClass,
+  AnalyzedClass? analyzedClass,
 ) {
   final matchedDirectives = <ir.MatchedDirective>[];
   var index = -1;
@@ -47,9 +45,9 @@ List<ir.MatchedDirective> convertMatchedDirectives(
 /// compiled.
 ir.MatchedDirective convertMatchedDirective(
   ast.DirectiveAst directive,
-  ProviderSource providerSource,
+  ProviderSource? providerSource,
   CompileElement compileElement,
-  AnalyzedClass analyzedClass,
+  AnalyzedClass? analyzedClass,
 ) {
   var inputs = convertAllToBinding(
     directive.inputs,

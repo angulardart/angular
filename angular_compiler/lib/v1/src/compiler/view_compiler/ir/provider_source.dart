@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 
@@ -9,7 +7,7 @@ import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 /// This allows us to hide the hierarchical nature of provider lookups and
 /// the actual resolution from view compiler backend.
 abstract class ProviderSource {
-  final CompileTokenMetadata token;
+  final CompileTokenMetadata? token;
 
   ProviderSource(this.token);
 
@@ -23,7 +21,7 @@ abstract class ProviderSource {
   /// implement `ChangeDetectorRef.markChildForCheck()`.
   ///
   /// Returns null otherwise.
-  o.Expression buildChangeDetectorRef() => null;
+  o.Expression? buildChangeDetectorRef() => null;
 
   /// Whether a dynamic `injectorGet(...)` is required to resolve this provider.
   ///

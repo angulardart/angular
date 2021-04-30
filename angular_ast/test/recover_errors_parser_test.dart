@@ -610,7 +610,7 @@ void main() {
 
     final foo = p.attributes.first;
     // The recovered text used to span an invalid range and cause a crash.
-    expect(foo.sourceSpan!.text, 'foo="bar></p>');
+    expect(foo.sourceSpan.text, 'foo="bar></p>');
 
     final exceptions = recoveringExceptionHandler.exceptions;
     expect(exceptions, hasLength(3));

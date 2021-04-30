@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 
@@ -16,7 +14,6 @@ void main() {
   test('should catch a @HostBinding on a private member', () async {
     await expectBuildError(
       '''
-      // @dart=2.9
       class Comp {
         @HostBinding('attr.title')
         var _cantTouchThis;
@@ -32,7 +29,6 @@ void main() {
   test('should catch a @HostListener on a private member', () async {
     await expectBuildError(
       '''
-      // @dart=2.9
       class Comp {
         @HostListener('click')
         void _cantTouchThis() {}
@@ -48,7 +44,6 @@ void main() {
   test('should catch a @HostListener on a static method', () async {
     await expectBuildError(
       '''
-      // @dart=2.9
       class Comp {
         @HostListener('click')
         static void onClick() {}

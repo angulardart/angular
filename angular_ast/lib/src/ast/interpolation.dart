@@ -11,14 +11,12 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
   /// Create a new synthetic [InterpolationAst] with a bound [expression].
   factory InterpolationAst(
     String value,
-    ExpressionAst<Object>? expression,
   ) = _SyntheticInterpolationAst;
 
   /// Create a new synthetic [InterpolationAst] that originated from [origin].
   factory InterpolationAst.from(
     TemplateAst origin,
     String value,
-    ExpressionAst<Object>? expression,
   ) = _SyntheticInterpolationAst.from;
 
   /// Create a new [InterpolationAst] parsed from tokens in [sourceFile].
@@ -34,31 +32,22 @@ abstract class InterpolationAst implements StandaloneTemplateAst {
     return visitor.visitInterpolation(this, context);
   }
 
-  /// Bound expression.
-  ExpressionAst<Object>? get expression;
-  set expression(ExpressionAst<Object>? expression);
-
   /// Bound String value used in expression; used to preserve offsets
   String get value;
 
   @override
   bool operator ==(Object o) {
-    return o is InterpolationAst &&
-        o.value == value &&
-        o.expression == expression;
+    return o is InterpolationAst && o.value == value;
   }
 
   @override
-  int get hashCode => expression!.hashCode;
+  int get hashCode => value.hashCode;
 
   @override
   String toString() => '$InterpolationAst {$value}';
 }
 
 class ParsedInterpolationAst extends TemplateAst with InterpolationAst {
-  @override
-  ExpressionAst<Object>? expression;
-
   final NgToken valueToken;
 
   ParsedInterpolationAst(
@@ -74,15 +63,11 @@ class ParsedInterpolationAst extends TemplateAst with InterpolationAst {
 
 class _SyntheticInterpolationAst extends SyntheticTemplateAst
     with InterpolationAst {
-  @override
-  ExpressionAst<Object>? expression;
-
-  _SyntheticInterpolationAst(this.value, this.expression);
+  _SyntheticInterpolationAst(this.value);
 
   _SyntheticInterpolationAst.from(
     TemplateAst origin,
     this.value,
-    this.expression,
   ) : super.from(origin);
 
   @override

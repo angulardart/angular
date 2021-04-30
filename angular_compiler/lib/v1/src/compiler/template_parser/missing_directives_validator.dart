@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular_compiler/v1/src/compiler/aria_attributes.dart';
 import 'package:angular_compiler/v1/src/compiler/html_events.dart';
 import 'package:angular_compiler/v1/src/compiler/schema/element_schema_registry.dart';
@@ -7,8 +5,7 @@ import 'package:angular_compiler/v1/src/compiler/schema/skip_selectors_validator
 import 'package:angular_compiler/v1/src/compiler/selector.dart';
 import 'package:angular_compiler/v1/src/compiler/template_ast.dart' as ng;
 import 'package:angular_compiler/v1/src/compiler/template_parser/recursive_template_visitor.dart';
-import 'package:angular_compiler/v1/src/compiler/view_compiler/view_compiler_utils.dart'
-    show detectHtmlElementFromTagName;
+import 'package:angular_compiler/v1/src/compiler/view_compiler/view_compiler_utils.dart';
 import 'package:angular_compiler/v2/context.dart';
 
 /// A validator to catch missing elements, direcitves, attributes, and outputs.
@@ -107,7 +104,7 @@ class MissingDirectiveValidator
     List<ng.DirectiveAst> directives,
   ) =>
       directives.map(
-        (directive) => CssSelector.parse(directive.directive.selector),
+        (directive) => CssSelector.parse(directive.directive.selector!),
       );
 
   static bool _hasMatchedSelector(
@@ -140,8 +137,8 @@ class MissingDirectiveValidator
   }
 
   @override
-  void visitAttr(ng.AttrAst ast, [_MissingDirectiveContext context]) {
-    if (context.elementName.startsWith('@svg')) {
+  void visitAttr(ng.AttrAst ast, [_MissingDirectiveContext? context]) {
+    if (context!.elementName.startsWith('@svg')) {
       return;
     }
     if (!(_matchedSelectorWithAttribute(
@@ -204,10 +201,10 @@ class MissingDirectiveValidator
       selector.replaceFirst('@xhtml:', '');
 
   @override
-  void visitEvent(ng.BoundEventAst ast, [_MissingDirectiveContext context]) {
+  void visitEvent(ng.BoundEventAst ast, [_MissingDirectiveContext? context]) {
     var name = _extractEventName(ast.name);
     if (!(_matchedSelectorWithAttribute(
-            context.skipValidationSelectors, ast.name) ||
+            context!.skipValidationSelectors, ast.name) ||
         // HTML events are not case sensitive.
         isNativeHtmlEvent(name.toLowerCase()) ||
         _registry.hasEvent(context.elementName, name) ||

@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:test/test.dart';
@@ -14,8 +12,8 @@ void main() {
   group('should generate injector with', () {
     final dartfmt = DartFormatter();
     EqualsDart.format = dartfmt.format;
-    InjectorEmitter emitter;
-    List<InjectorReader> injectors;
+    late InjectorEmitter emitter;
+    late List<InjectorReader> injectors;
 
     setUp(() {
       emitter = InjectorEmitter();
@@ -68,8 +66,8 @@ void main() {
   });
 
   group('exceptions', () {
-    InjectorEmitter emitter;
-    InjectorReader injector;
+    late InjectorEmitter emitter;
+    late InjectorReader injector;
 
     setUp(() {
       emitter = InjectorEmitter();

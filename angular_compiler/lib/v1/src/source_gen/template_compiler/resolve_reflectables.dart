@@ -1,8 +1,5 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
@@ -13,14 +10,14 @@ import 'package:angular_compiler/v1/cli.dart';
 /// be referenced and linked in the generator `initReflector()` function in each
 /// `.template.dart` file.
 Future<ReflectableOutput> resolveReflectables({
-  @required LibraryElement from,
-  @required CompilerFlags flags,
-  @required BuildStep buildStep,
+  required LibraryElement from,
+  required CompilerFlags flags,
+  required BuildStep buildStep,
 }) {
   // Resolves the URI in the context of [buildStep].
   //
   // Returns null if the URI is unsupported.
-  AssetId tryResolvedAsset(String uri) {
+  AssetId? tryResolvedAsset(String uri) {
     try {
       return AssetId.resolve(Uri.parse(uri), from: buildStep.inputId);
     } on UnsupportedError catch (_) {
@@ -41,7 +38,7 @@ Future<ReflectableOutput> resolveReflectables({
     // a generated b.template.dart that we need to import/initReflector().
     hasInput: (uri) async {
       final placeholder = tryResolvedAsset(_ngPlaceholderName(uri));
-      if (_assetNotResolved(placeholder)) {
+      if (placeholder == null) {
         return false;
       }
       return buildStep.canRead(placeholder);
@@ -51,7 +48,7 @@ Future<ReflectableOutput> resolveReflectables({
     // to it and call initReflector().
     isLibrary: (uri) {
       final assetId = tryResolvedAsset(uri);
-      if (_assetNotResolved(assetId)) {
+      if (assetId == null) {
         return Future.value(false);
       }
       return buildStep.resolver.isLibrary(assetId);
@@ -60,9 +57,6 @@ Future<ReflectableOutput> resolveReflectables({
 
   return reader.resolve(from);
 }
-
-/// Whether [AssetId.resolve] is valid for a given input [id].
-bool _assetNotResolved(AssetId id) => id == null;
 
 /// Given `a.dart` returns `a.ng_placeholder`.
 String _ngPlaceholderName(String uri) {

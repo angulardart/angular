@@ -1,5 +1,4 @@
-// http://go/migrate-deps-first
-// @dart=2.9
+import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
 
@@ -18,8 +17,8 @@ final packageConfigFuture = Platform
             .environment['ANGULAR_PACKAGE_CONFIG_PATH'] !=
         null
     ? loadPackageConfigUri(
-        Uri.base.resolve(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']))
-    : Isolate.packageConfig.then(loadPackageConfigUri);
+        Uri.base.resolve(Platform.environment['ANGULAR_PACKAGE_CONFIG_PATH']!))
+    : Isolate.packageConfig.then((uri) => loadPackageConfigUri(uri!));
 
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
@@ -32,7 +31,7 @@ Future<LibraryElement> resolveLibrary(String source) async {
       library _test;
       import '$angular';\n\n$source
     ''',
-      (resolver) => resolver.findLibraryByName('_test'),
+      (resolver) async => (await resolver.findLibraryByName('_test'))!,
       inputId: AssetId('test_lib', 'lib/test_lib.dart'),
       packageConfig: packageConfig,
     ),
@@ -43,9 +42,9 @@ Future<LibraryElement> resolveLibrary(String source) async {
 /// Resolves [source] code as-if it is implemented with an AngularDart import.
 ///
 /// Returns first `class` in the file, or by [name] if given.
-Future<ClassElement> resolveClass(
+Future<ClassElement?> resolveClass(
   String source, [
-  String name,
+  String? name,
 ]) async {
   final library = await resolveLibrary(source);
   return name != null
@@ -58,7 +57,7 @@ Future<ClassElement> resolveClass(
 /// Returns first top-level constant field in the file, or by [name] if given.
 Future<TopLevelVariableElement> resolveField(
   String source, [
-  String name,
+  String? name,
 ]) async {
   final library = await resolveLibrary(source);
   return name == null

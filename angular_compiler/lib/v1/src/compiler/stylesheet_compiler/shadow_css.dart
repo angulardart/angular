@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:csslib/parser.dart';
 import 'package:csslib/visitor.dart';
 import 'package:angular_compiler/v1/cli.dart';
@@ -104,7 +102,7 @@ String shimShadowCss(
 /// Returns the declaration for property [name] in [group].
 ///
 /// Returns [null] if not found.
-Declaration _getDeclaration(DeclarationGroup group, String name) {
+Declaration? _getDeclaration(DeclarationGroup group, String name) {
   for (var declaration in group.declarations) {
     if (declaration is Declaration && declaration.property == name) {
       return declaration;
@@ -129,7 +127,7 @@ String _unquote(String value) {
 ///
 /// The declaration expression must be a literal term. Returns [null] if
 /// unsuccessful.
-SelectorGroup _parseSelectorGroupFrom(Declaration declaration) {
+SelectorGroup? _parseSelectorGroupFrom(Declaration declaration) {
   var expressions = (declaration.expression as Expressions).expressions;
   if (expressions.isEmpty || expressions.first is! LiteralTerm) return null;
   var selectorLiteral = expressions.first as LiteralTerm;
@@ -141,7 +139,7 @@ SelectorGroup _parseSelectorGroupFrom(Declaration declaration) {
 /// [declarationGroup].
 ///
 /// If [remove] is [true], the declaration is removed from [declarationGroup].
-SelectorGroup _selectorGroupForProperty(
+SelectorGroup? _selectorGroupForProperty(
     DeclarationGroup declarationGroup, String propertyName,
     {bool remove = false}) {
   var declaration = _getDeclaration(declarationGroup, propertyName);
@@ -157,7 +155,7 @@ SelectorGroup _selectorGroupForProperty(
 
   var selectorGroup = _parseSelectorGroupFrom(declaration);
   if (selectorGroup == null) {
-    logWarning(declaration.expression.span.message('Not a valid selector'));
+    logWarning(declaration.expression!.span!.message('Not a valid selector'));
     return null;
   }
 
@@ -271,7 +269,7 @@ class _ComplexSelector {
 /// invalid selectors that are impossible to shim (i.e. :host(div):host(p), a
 /// valid but meaningless selector which can't be shimmed).
 class _CompoundSelector {
-  int combinator;
+  late int combinator;
   List<SimpleSelectorSequence> _sequences = [];
 
   _CompoundSelector() : combinator = TokenKind.COMBINATOR_NONE;
@@ -335,14 +333,14 @@ class _CompoundSelector {
     if ((x is ElementSelector && y is ElementSelector) ||
         (x is NamespaceSelector && y is NamespaceSelector)) {
       logWarning('Compound selector contains multiple type selectors:\n'
-          '${x.span.message('')}\n'
-          '${y.span.message('')}');
+          '${x.span!.message('')}\n'
+          '${y.span!.message('')}');
       return 0;
     } else if (x is PseudoElementSelector && y is PseudoElementSelector) {
       logWarning(
           'Compound selector contains multiple pseudo element selectors:\n'
-          '${x.span.message('')}\n'
-          '${y.span.message('')}');
+          '${x.span!.message('')}\n'
+          '${y.span!.message('')}');
       return 0;
     } else if (x is PseudoElementSelector ||
         y is ElementSelector ||
@@ -581,20 +579,20 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
   final _unscopedSelectorGroups = <SelectorGroup>{};
 
   void _shimPolyfillNextSelector(List<TreeNode> list) {
-    SelectorGroup nextSelectorGroup;
+    SelectorGroup? nextSelectorGroup;
 
     // Apply 'polyfill-next-selector' transformations.
     for (var node in list) {
       if (node is RuleSet) {
+        var selectorGroup = node.selectorGroup!;
         if (nextSelectorGroup != null) {
           // Override selector.
-          node.selectorGroup.selectors
+          selectorGroup.selectors
             ..clear()
             ..addAll(nextSelectorGroup.selectors);
           // Consume selector so subsequent selectors aren't overwritten.
           nextSelectorGroup = null;
-        } else if (_matchesElement(
-            node.selectorGroup, 'polyfill-next-selector')) {
+        } else if (_matchesElement(selectorGroup, 'polyfill-next-selector')) {
           nextSelectorGroup =
               _selectorGroupForProperty(node.declarationGroup, 'content');
         }
@@ -603,21 +601,22 @@ class _LegacyShadowTransformer extends _ShadowTransformer {
 
     // Remove 'polyfill-next-selector' rule sets.
     list.removeWhere((node) => node is RuleSet
-        ? _matchesElement(node.selectorGroup, 'polyfill-next-selector')
+        ? _matchesElement(node.selectorGroup!, 'polyfill-next-selector')
         : false);
   }
 
   void _shimPolyfillUnscopedRule(RuleSet ruleSet) {
-    if (_matchesElement(ruleSet.selectorGroup, 'polyfill-unscoped-rule')) {
+    var selectorGroup = ruleSet.selectorGroup!;
+    if (_matchesElement(selectorGroup, 'polyfill-unscoped-rule')) {
       var contentSelectorGroup = _selectorGroupForProperty(
           ruleSet.declarationGroup, 'content',
           remove: true);
       if (contentSelectorGroup != null) {
-        ruleSet.selectorGroup.selectors
+        selectorGroup.selectors
           ..clear()
           ..addAll(contentSelectorGroup.selectors);
       }
-      _unscopedSelectorGroups.add(ruleSet.selectorGroup);
+      _unscopedSelectorGroups.add(selectorGroup);
     }
   }
 

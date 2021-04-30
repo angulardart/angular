@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:test/test.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
@@ -11,7 +9,6 @@ const testImport = 'asset:test_lib/lib/test_lib.dart';
 
 Future<TypedElement> parse(String source) async {
   final amendedSource = '''
-    // @dart=2.9
     @Component()
     class GenericComponent<T> {}
 
@@ -20,11 +17,11 @@ Future<TypedElement> parse(String source) async {
 
     $source
   ''';
-  final element = await resolveClass(amendedSource, 'Example');
+  final element = (await resolveClass(amendedSource, 'Example'))!;
   final typedReader = TypedReader(element);
   final typedValue = element.metadata
-      .firstWhere((annotation) => annotation.element.name == 'typed')
-      .computeConstantValue();
+      .firstWhere((annotation) => annotation.element!.name == 'typed')
+      .computeConstantValue()!;
   return typedReader.parse(typedValue);
 }
 
@@ -33,7 +30,6 @@ void main() {
     group('Typed()', () {
       test('with single concrete type argument', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent<String>>();
 
           @typed
@@ -54,7 +50,6 @@ void main() {
       });
       test('with multiple concrete type arguments', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericDirective<String, Object>>();
 
           @typed
@@ -76,7 +71,6 @@ void main() {
       });
       test('with nested concrete type arguments', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent<List<String>>>();
 
           @typed
@@ -103,7 +97,6 @@ void main() {
       });
       test('with "on"', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent<String>>(on: 'strings');
 
           @typed
@@ -128,7 +121,6 @@ void main() {
     group('Typed.of()', () {
       test('with single Symbol argument', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent>.of([#X]);
 
           @typed
@@ -149,7 +141,6 @@ void main() {
       });
       test('with single Type argument', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent>.of([int]);
 
           @typed
@@ -170,7 +161,6 @@ void main() {
       });
       test('with single Typed argument', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent>.of([Typed<List<int>>()]);
 
           @typed
@@ -197,7 +187,6 @@ void main() {
       });
       test('with nested Typed argument', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent>.of([
             Typed<Map>.of([String, #X]),
           ]);
@@ -227,7 +216,6 @@ void main() {
       });
       test('with "on"', () async {
         final typedElement = await parse('''
-          // @dart=2.9
           const typed = Typed<GenericComponent>.of([#X], on: 'flow');
 
           @typed
@@ -252,16 +240,15 @@ void main() {
 
   group('throws', () {
     Future<void> parseTyped(LibraryElement element) async {
-      final example = element.getType('Example');
+      final example = element.getType('Example')!;
       final typedReader = TypedReader(example);
-      final typedValue = example.metadata.first.computeConstantValue();
+      final typedValue = example.metadata.first.computeConstantValue()!;
       typedReader.parse(typedValue);
     }
 
     test('if expression isn\'t of type "Typed"', () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         const typed = 12;
 
         @typed
@@ -276,7 +263,6 @@ void main() {
     test('if a concrete type is used as a type argument of "Typed"', () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         @Directive()
         class ConcreteDirective {}
         const typed = Typed<ConcreteDirective>();
@@ -296,7 +282,6 @@ void main() {
     test('if a non-existent type parameter is flowed', () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([#X]);
@@ -316,7 +301,6 @@ void main() {
     test("if a type argument isn't a supported type", () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([12]);
@@ -336,7 +320,6 @@ void main() {
     test('if "Typed.on" is specified anywhere other than the root', () async {
       await compilesExpecting(
         '''
-       // @dart=2.9
        @Component()
         class GenericComponent<T> {}
         const typed = Typed<GenericComponent>.of([
@@ -358,7 +341,6 @@ void main() {
     test('if "Typed" isn\'t applied to a directive', () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         const typed = Typed<List<int>>();
 
         @typed
@@ -376,7 +358,6 @@ void main() {
     test('if a private type argument is used', () async {
       await compilesExpecting(
         '''
-        // @dart=2.9
         @Component()
         class GenericComponent<T> {}
         class _Private {}

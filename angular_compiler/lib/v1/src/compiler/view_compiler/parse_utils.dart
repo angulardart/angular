@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import '../expression_parser/ast.dart'
     show AST, ImplicitReceiver, MethodCall, PropertyRead;
 import 'constants.dart';
@@ -23,7 +21,7 @@ HandlerType handlerTypeFromExpression(AST handler) {
   if (eventHandler is! MethodCall) {
     return HandlerType.notSimple;
   }
-  var call = eventHandler as MethodCall;
+  var call = eventHandler;
   if (call.receiver is! ImplicitReceiver || call.namedArgs.isNotEmpty) {
     return HandlerType.notSimple;
   }
@@ -37,7 +35,7 @@ HandlerType handlerTypeFromExpression(AST handler) {
   if (singleArg is! PropertyRead) {
     return HandlerType.notSimple;
   }
-  var property = singleArg as PropertyRead;
+  var property = singleArg;
   if (property.name == EventHandlerVars.event.name &&
       property.receiver is ImplicitReceiver) {
     return HandlerType.simpleOneArg;

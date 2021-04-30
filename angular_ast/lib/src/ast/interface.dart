@@ -29,7 +29,7 @@ abstract class TemplateAst {
   /// Includes all *significant* parts of the source text, including child nodes
   /// and identifying characters. May not include pre or post whitespace or
   /// delimiters.
-  SourceSpan? get sourceSpan {
+  SourceSpan get sourceSpan {
     return _sourceFile.span(beginToken!.offset, endToken!.end);
   }
 
@@ -118,7 +118,7 @@ abstract class SyntheticTemplateAst implements TemplateAst {
   final bool isSynthetic = true;
 
   @override
-  SourceSpan? get sourceSpan {
+  SourceSpan get sourceSpan {
     if (origin != null) {
       return origin!.sourceSpan;
     }

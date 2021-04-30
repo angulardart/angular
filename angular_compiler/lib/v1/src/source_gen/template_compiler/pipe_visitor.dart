@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
@@ -22,7 +20,7 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
   PipeVisitor(this._library, this._exceptionHandler);
 
   @override
-  CompilePipeMetadata visitClassElement(ClassElement element) {
+  CompilePipeMetadata? visitClassElement(ClassElement element) {
     final annotationInfo = annotationWhere(element, isPipe, _exceptionHandler);
 
     if (annotationInfo == null) return null;
@@ -44,11 +42,11 @@ class PipeVisitor extends RecursiveElementVisitor<CompilePipeMetadata> {
     return _createPipeMetadata(annotationInfo);
   }
 
-  CompilePipeMetadata _createPipeMetadata(
+  CompilePipeMetadata? _createPipeMetadata(
     AnnotationInformation<ClassElement> annotation,
   ) {
     var elementType = annotation.element.thisType;
-    FunctionType transformType;
+    FunctionType? transformType;
     final transformMethod = elementType.lookUpInheritedMethod('transform');
     if (transformMethod != null) {
       // The pipe defines a 'transform' method.

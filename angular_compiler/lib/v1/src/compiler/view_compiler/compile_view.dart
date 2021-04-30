@@ -1,8 +1,5 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
@@ -72,9 +69,9 @@ final notThrowOnChanges = o.not(o.importExpr(Runtime.debugThrowIfChanged));
 
 /// A reference to an HTML, Text, or View node created during `AppView.build()`.
 class NodeReference {
-  final CompileViewStorage _storage;
-  final o.Expression _initialValue;
-  final o.OutputType _type;
+  final CompileViewStorage? _storage;
+  final o.Expression? _initialValue;
+  final o.OutputType? _type;
   final String _name;
 
   NodeReferenceVisibility _visibility = NodeReferenceVisibility.build;
@@ -101,7 +98,7 @@ class NodeReference {
   NodeReference.textNode(
     this._storage,
     int nodeIndex, {
-    o.Expression initialValue,
+    o.Expression? initialValue,
   })  : _type = o.importType(Identifiers.HTML_TEXT_NODE),
         _name = '_text_$nodeIndex',
         _initialValue = initialValue;
@@ -140,7 +137,7 @@ class NodeReference {
   /// Create a [NodeReference] for a node passed as a parameter.
   factory NodeReference.parameter(
     CompileViewStorage _storage,
-    o.OutputType type,
+    o.OutputType? type,
     String name,
   ) = _ParameterNodeReference;
 
@@ -167,7 +164,7 @@ class NodeReference {
     final initialValue = _initialValue;
     final hasInitialValue = initialValue != null && initialValue != o.NULL_EXPR;
     _visibility = NodeReferenceVisibility.classPublic;
-    _storage.allocate(
+    _storage!.allocate(
       _name,
       outputType: _type,
       // All of our NodeReferences are shallowly immutable, that is, they are
@@ -188,7 +185,7 @@ class NodeReference {
 /// This is used in DirectiveChangeDetector.
 class _ParameterNodeReference extends NodeReference {
   _ParameterNodeReference(
-      CompileViewStorage storage, o.OutputType type, String name)
+      CompileViewStorage storage, o.OutputType? type, String name)
       : super._parameter(storage, type, name);
 
   @override
@@ -224,7 +221,7 @@ class ReadNodeReferenceExpr extends o.ReadVarExpr {
   @override
   R visitExpression<R, C>(o.ExpressionVisitor<R, C> visitor, C context) {
     return node._visibility == NodeReferenceVisibility.classPublic
-        ? o.ReadClassMemberExpr(name, type).visitExpression(visitor, context)
+        ? o.ReadClassMemberExpr(name!, type).visitExpression(visitor, context)
         : visitor.visitReadVarExpr(this, context);
   }
 }
@@ -236,27 +233,27 @@ class ReadNodeReferenceExpr extends o.ReadVarExpr {
 class WriteNodeReferenceStmt extends o.DeclareVarStmt {
   final NodeReference node;
 
-  WriteNodeReferenceStmt(this.node, o.Expression value)
+  WriteNodeReferenceStmt(this.node, o.Expression? value)
       : super(node._name, value, null, const [o.StmtModifier.Final]);
 
   @override
   R visitStatement<R, C>(o.StatementVisitor<R, C> visitor, C context) {
     return node._visibility == NodeReferenceVisibility.classPublic
-        ? o.WriteClassMemberExpr(name, value)
+        ? o.WriteClassMemberExpr(name, value!)
             .toStmt()
             .visitStatement(visitor, context)
         : visitor.visitDeclareVarStmt(this, context);
   }
 
   @override
-  WriteNodeReferenceStmt withValue(o.Expression replacement) {
+  WriteNodeReferenceStmt withValue(o.Expression? replacement) {
     return WriteNodeReferenceStmt(node, replacement);
   }
 }
 
 /// AST visitor which promotes inaccessible NodeReferences to class members.
 class NodeReferenceStorageVisitor extends o.RecursiveExpressionVisitor<void> {
-  final NodeReferenceStorageVisitor parent;
+  final NodeReferenceStorageVisitor? parent;
   final scope = <NodeReference>{};
 
   NodeReferenceStorageVisitor(this.parent);
@@ -265,7 +262,7 @@ class NodeReferenceStorageVisitor extends o.RecursiveExpressionVisitor<void> {
   o.Expression visitReadVarExpr(o.ReadVarExpr ast, _) {
     if (ast is ReadNodeReferenceExpr) {
       var node = ast.node;
-      var visitor = this;
+      NodeReferenceStorageVisitor? visitor = this;
       while (visitor != null && !visitor.scope.contains(node)) {
         visitor = visitor.parent;
       }
@@ -309,7 +306,7 @@ class NodeReferenceStorageVisitor extends o.RecursiveExpressionVisitor<void> {
   }
 
   static void visitScopedStatements(List<o.Statement> stmts,
-      [NodeReferenceStorageVisitor parent]) {
+      [NodeReferenceStorageVisitor? parent]) {
     final visitor = NodeReferenceStorageVisitor(parent);
     for (var stmt in stmts) {
       stmt.visitStatement(visitor, null);
@@ -336,7 +333,7 @@ class AppViewReference {
 
   void allocate(
     CompileViewStorage storage, {
-    @required o.OutputType outputType,
+    o.OutputType? outputType,
   }) {
     storage.allocate(
       _name,
@@ -355,7 +352,7 @@ class AppViewReference {
 class CompileView {
   final CompileDirectiveMetadata component;
   final CompilerFlags genConfig;
-  final List<CompilePipeMetadata> pipeMetas;
+  final List<CompilePipeMetadata?> pipeMetas;
   final o.Expression styles;
 
   /// Defines type arguments for generic directives in this view.
@@ -371,14 +368,14 @@ class CompileView {
   ///
   /// When assigned, this field is used to generate the `injectorGetInternal()`
   /// method.
-  ProviderForest providers;
+  ProviderForest? providers;
 
   int viewIndex;
   CompileElement declarationElement;
   List<VariableAst> templateVariables;
-  ViewType viewType;
-  CompileTokenMap<List<CompileQuery>> viewQueries;
-  CompileViewStorage storage;
+  late ViewType viewType;
+  late CompileTokenMap<List<CompileQuery>> viewQueries;
+  late CompileViewStorage storage;
 
   /// Contains references to view children so we can generate code for
   /// change detection and destroy.
@@ -391,7 +388,7 @@ class CompileView {
   /// a visitor method in view_builder.dart adds a node to this list, the
   /// corresponding visitor method in view_binder.dart increments the index to
   /// its current node.
-  List<CompileNode> nodes = [];
+  List<CompileNode?> nodes = [];
 
   /// List of references to top level nodes in view.
   List<o.Expression> rootNodesOrViewContainers = [];
@@ -407,7 +404,7 @@ class CompileView {
   final dirtyParentQueriesMethod = CompileMethod();
   final detectChangesInInputsMethod = CompileMethod();
   final detectChangesRenderPropertiesMethod = CompileMethod();
-  CompileMethod detectHostChangesMethod;
+  CompileMethod? detectHostChangesMethod;
   final afterContentLifecycleCallbacksMethod = CompileMethod();
   final afterViewLifecycleCallbacksMethod = CompileMethod();
   final destroyMethod = CompileMethod();
@@ -420,19 +417,19 @@ class CompileView {
   List<o.ClassGetter> getters = [];
   List<o.Expression> subscriptions = [];
   bool subscribesToMockLike = false;
-  CompileView componentView;
+  late CompileView componentView;
   var purePipes = <String, CompilePipe>{};
   List<CompilePipe> pipes = [];
-  String className;
-  o.OutputType classType;
-  o.Expression viewFactory;
-  String viewFactoryName;
+  late String className;
+  late o.OutputType classType;
+  late o.Expression viewFactory;
+  late String viewFactoryName;
   var pipeCount = 0;
-  ViewNameResolver nameResolver;
+  late ViewNameResolver nameResolver;
   static final defaultDocVarName = 'doc';
 
   /// Local variable name used to refer to document. null if not created yet.
-  String docVarName;
+  String? docVarName;
 
   CompileView(
     this.component,
@@ -448,8 +445,8 @@ class CompileView {
     storage = CompileViewStorage();
     viewType = _getViewType(component, viewIndex);
     className = '${viewIndex == 0 && viewType != ViewType.host ? '' : '_'}'
-        'View${component.type.name}$viewIndex';
-    classType = o.importType(CompileIdentifierMetadata(name: className));
+        'View${component.type!.name}$viewIndex';
+    classType = o.importType(CompileIdentifierMetadata(name: className))!;
     viewFactoryName = getViewFactoryName(component, viewIndex);
     viewFactory = getViewFactory(component, viewFactoryName);
     switch (viewType) {
@@ -459,7 +456,7 @@ class CompileView {
         break;
       default:
         // An embedded template uses it's declaration element's componentView.
-        componentView = declarationElement.view.componentView;
+        componentView = declarationElement.view!.componentView;
         break;
     }
     viewQueries = CompileTokenMap<List<CompileQuery>>();
@@ -519,7 +516,7 @@ class CompileView {
   /// already been created.
   o.Expression createI18nMessage(I18nMessage message) {
     if (_i18nMessages.containsKey(message)) {
-      return _i18nMessages[message];
+      return _i18nMessages[message]!;
     }
     final args = [
       _textExpression(message),
@@ -748,7 +745,7 @@ class CompileView {
           [o.StmtModifier.Private]);
 
   final _eventParam = o.FnParam(
-    EventHandlerVars.event.name,
+    EventHandlerVars.event.name!,
     o.importType(null),
   );
 
@@ -773,12 +770,12 @@ class CompileView {
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
-    if (parent != null && parent != o.NULL_EXPR) {
+    if (parent != o.NULL_EXPR) {
       o.Expression createExpr;
       final createParams = <o.Expression>[o.ReadVarExpr(docVarName), parent];
 
       CompileIdentifierMetadata createAndAppendMethod;
-      o.OutputType coerceToTypedElement;
+      o.OutputType? coerceToTypedElement;
       switch (tagName) {
         case 'div':
           createAndAppendMethod = DomHelpers.appendDiv;
@@ -818,7 +815,7 @@ class CompileView {
   o.Statement _createLocalDocumentVar() {
     docVarName = defaultDocVarName;
     return o.DeclareVarStmt(
-      docVarName,
+      docVarName!,
       o.importExpr(Identifiers.HTML_DOCUMENT),
       null,
       const [o.StmtModifier.Final],
@@ -827,7 +824,7 @@ class CompileView {
 
   /// Creates an html node with a namespace and appends to parent element.
   void createElementNs(CompileElement parent, NodeReference elementRef,
-      int nodeIndex, String ns, String tagName, TemplateAst ast) {
+      int nodeIndex, String? ns, String tagName, TemplateAst ast) {
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
     }
@@ -848,9 +845,10 @@ class CompileView {
       NodeReference elementRef,
       int nodeIndex,
       ElementAst ast) {
+    var childComponentType = childComponent.type!;
     var componentViewIdentifier = CompileIdentifierMetadata(
-        name: 'View${childComponent.type.name}0',
-        moduleUrl: templateModuleUrl(childComponent.type));
+        name: 'View${childComponentType.name}0',
+        moduleUrl: templateModuleUrl(childComponentType));
 
     o.ReadClassMemberExpr componentViewExpr;
     if (viewType == ViewType.host) {
@@ -861,7 +859,7 @@ class CompileView {
       final appViewRef = AppViewReference(parent, nodeIndex);
       // Type arguments (if any) can be applied to the field that stores the view
       final componentTypeArguments = lookupTypeArgumentsOf(
-        childComponent.type,
+        childComponentType,
         ast,
       );
       final componentViewType = o.importType(
@@ -915,7 +913,7 @@ class CompileView {
     NodeReference nodeReference,
     int nodeIndex,
     bool isPrivate, [
-    int parentNodeIndex,
+    int? parentNodeIndex,
   ]) {
     var renderNode = nodeReference.toReadExpr();
     var fieldName = '_appEl_$nodeIndex';
@@ -1005,7 +1003,7 @@ class CompileView {
           useValue: _createNgContentRefExpr(nodeIndex));
 
   void projectNodesIntoElement(
-      CompileElement target, int sourceAstIndex, int ngContentIndex) {
+      CompileElement target, int sourceAstIndex, int? ngContentIndex) {
     // The projected nodes originate from a different view, so we don't
     // have debug information for them.
     var parentRenderNode = _getParentRenderNode(target);
@@ -1034,7 +1032,7 @@ class CompileView {
   void shimCssForNode(NodeReference nodeReference, int nodeIndex,
       CompileIdentifierMetadata nodeType) {
     if (isRootNodeOfHost(nodeIndex)) return;
-    if (component.template.encapsulation == ViewEncapsulation.Emulated) {
+    if (component.template!.encapsulation == ViewEncapsulation.Emulated) {
       // Set ng_content class for CSS shim.
       var shimMethod =
           nodeType != Identifiers.HTML_ELEMENT ? 'addShimC' : 'addShimE';
@@ -1058,7 +1056,7 @@ class CompileView {
     NodeReference node,
     ir.Binding binding,
     o.Expression handler, [
-    o.Expression directiveInstance,
+    o.Expression? directiveInstance,
   ]) {
     _createMethod.addStmts(bindingToUpdateStatements(
         binding, directiveInstance, node, false, handler));
@@ -1084,7 +1082,7 @@ class CompileView {
   ///
   o.Expression createProvider(
     String propName,
-    CompileDirectiveMetadata directiveMetadata,
+    CompileDirectiveMetadata? directiveMetadata,
     ProviderAst provider,
     List<o.Expression> providerValueExpressions,
     bool isMulti,
@@ -1092,13 +1090,13 @@ class CompileView {
     CompileElement compileElement,
   ) {
     o.Expression resolvedProviderValueExpr;
-    o.OutputType type;
+    o.OutputType? type;
     if (isMulti) {
       resolvedProviderValueExpr = o.literalArr(providerValueExpressions);
       type = o.ArrayType(provider.typeArgument != null
           ? o.importType(
               provider.typeArgument,
-              provider.typeArgument.typeArguments,
+              provider.typeArgument!.typeArguments,
             )
           : o.DYNAMIC_TYPE);
     } else {
@@ -1109,14 +1107,14 @@ class CompileView {
         type = o.importType(
           directiveMetadata.originType,
           lookupTypeArgumentsOf(
-            directiveMetadata.originType,
+            directiveMetadata.originType!,
             compileElement.sourceAst,
           ),
         );
       } else if (provider.typeArgument != null) {
         type = o.importType(
           provider.typeArgument,
-          provider.typeArgument.typeArguments,
+          provider.typeArgument!.typeArguments,
         );
       } else {
         type = resolvedProviderValueExpr.type;
@@ -1130,23 +1128,23 @@ class CompileView {
             directiveMetadata != null &&
             directiveMetadata.requiresDirectiveChangeDetector;
 
-    CompileIdentifierMetadata changeDetectorClass;
-    o.OutputType changeDetectorType;
+    late CompileIdentifierMetadata changeDetectorClass;
+    o.OutputType? changeDetectorType;
     if (providerHasChangeDetector) {
       changeDetectorClass = CompileIdentifierMetadata(
-          name: directiveMetadata.identifier.name + 'NgCd',
+          name: directiveMetadata!.identifier!.name + 'NgCd',
           moduleUrl:
-              toTemplateExtension(directiveMetadata.identifier.moduleUrl));
+              toTemplateExtension(directiveMetadata.identifier!.moduleUrl));
       changeDetectorType = o.importType(
         changeDetectorClass,
         lookupTypeArgumentsOf(
-          directiveMetadata.originType,
+          directiveMetadata.originType!,
           compileElement.sourceAst,
         ),
       );
     }
 
-    List<o.Expression> changeDetectorParams;
+    late List<o.Expression> changeDetectorParams;
     if (providerHasChangeDetector) {
       changeDetectorParams = [resolvedProviderValueExpr];
     }
@@ -1214,7 +1212,7 @@ class CompileView {
     } else {
       // We don't have to eagerly initialize this object. Add an uninitialized
       // class field and provide a getter to construct the provider on demand.
-      final cachedType = providerHasChangeDetector ? changeDetectorType : type;
+      final cachedType = providerHasChangeDetector ? changeDetectorType! : type;
       final internalField = storage.allocate(
         '_$propName',
         outputType: cachedType.asNullable(),
@@ -1260,13 +1258,13 @@ class CompileView {
 
   void createPipeInstance(String name, CompilePipeMetadata pipeMeta) {
     var usesInjectorGet = false;
-    final deps = pipeMeta.type.diDeps.map((diDep) {
-      if (diDep.token
+    final deps = pipeMeta.type!.diDeps.map((diDep) {
+      if (diDep.token!
           .equalsTo(identifierToken(Identifiers.ChangeDetectorRef))) {
         return o.THIS_EXPR;
       }
       usesInjectorGet = true;
-      return injectFromViewParentInjector(this, diDep.token, diDep.isOptional);
+      return injectFromViewParentInjector(this, diDep.token!, diDep.isOptional);
     }).toList();
     final pipeInstance = storage.allocate(
       name,
@@ -1277,7 +1275,7 @@ class CompileView {
         o.StmtModifier.Final,
       ],
     );
-    final typeExpression = o.importExpr(pipeMeta.type);
+    final typeExpression = o.importExpr(pipeMeta.type!);
     if (usesInjectorGet) {
       _createMethod.addStmt(debugInjectorEnter(typeExpression));
     }
@@ -1296,7 +1294,7 @@ class CompileView {
     o.Expression fn,
     int argCount,
     o.ReadClassMemberExpr pureProxyProp, {
-    o.OutputType pureProxyType,
+    o.OutputType? pureProxyType,
   }) {
     var proxy = storage.allocate(
       pureProxyProp.name,
@@ -1323,7 +1321,7 @@ class CompileView {
     String elementName,
     NodeReference nodeReference,
     List<ir.Binding> bindings, {
-    @required bool isHtmlElement,
+    required bool isHtmlElement,
   }) {
     for (var binding in bindings) {
       _createMethod.addStmts(createAttributeStatements(
@@ -1339,7 +1337,7 @@ class CompileView {
     ir.Binding binding,
     String elementName,
     NodeReference renderNode, {
-    @required bool isHtmlElement,
+    required bool isHtmlElement,
   }) {
     var expression = _toExpression(binding.source, o.THIS_EXPR);
     return bindingToUpdateStatements(
@@ -1363,8 +1361,8 @@ class CompileView {
         for (final viewContainer in viewContainers)
           viewContainer.callMethod(methodName, []).toStmt(),
         for (final viewChild in viewChildren)
-          if (viewChild.component.isChangeDetectionLink)
-            viewChild.componentView.callMethod(methodName, []).toStmt(),
+          if (viewChild.component!.isChangeDetectionLink)
+            viewChild.componentView!.callMethod(methodName, []).toStmt(),
       ],
     ];
   }
@@ -1412,7 +1410,7 @@ class CompileView {
     // Add view child change detection calls.
     for (var viewChild in viewChildren) {
       statements.add(
-          viewChild.componentView.callMethod('detectChanges', []).toStmt());
+          viewChild.componentView!.callMethod('detectChanges', []).toStmt());
     }
 
     var afterViewStmts =
@@ -1433,7 +1431,7 @@ class CompileView {
           .toDeclStmt(o.BOOL_TYPE));
     }
     if (readVars.contains(DetectChangesVars.firstCheck.name)) {
-      varStmts.add(o.DeclareVarStmt(DetectChangesVars.firstCheck.name,
+      varStmts.add(o.DeclareVarStmt(DetectChangesVars.firstCheck.name!,
           o.THIS_EXPR.prop('firstCheck'), o.BOOL_TYPE));
     }
     return List.from(varStmts)..addAll(statements);
@@ -1444,9 +1442,9 @@ class CompileView {
     return o.ClassMethod(
       'injectorGetInternal',
       [
-        o.FnParam(InjectMethodVars.token.name, o.DYNAMIC_TYPE),
-        o.FnParam(InjectMethodVars.nodeIndex.name, o.INT_TYPE),
-        o.FnParam(InjectMethodVars.notFoundResult.name, o.DYNAMIC_TYPE)
+        o.FnParam(InjectMethodVars.token.name!, o.DYNAMIC_TYPE),
+        o.FnParam(InjectMethodVars.nodeIndex.name!, o.INT_TYPE),
+        o.FnParam(InjectMethodVars.notFoundResult.name!, o.DYNAMIC_TYPE)
       ],
       _addReturnValueIfNotEmpty(statements, InjectMethodVars.notFoundResult),
       o.DYNAMIC_TYPE,
@@ -1479,7 +1477,7 @@ class CompileView {
   void _initializeAndAppendNode(
     CompileElement parentElement,
     NodeReference nodeReference, [
-    o.Expression value,
+    o.Expression? value,
   ]) {
     if (value != null) {
       _createMethod.addStmt(nodeReference.toWriteStmt(value));
@@ -1498,7 +1496,7 @@ class CompileView {
   /// Returns an empty list if no matching type arguments are found.
   List<o.OutputType> lookupTypeArgumentsOf(
     CompileTypeMetadata rawDirectiveType,
-    TemplateAst hostAst,
+    TemplateAst? hostAst,
   ) {
     if (rawDirectiveType.typeParameters.isEmpty) {
       return [];
@@ -1512,7 +1510,7 @@ class CompileView {
     // Given two `Typed` configurations that match the same directive:
     //  * One that specifies `on` takes precedence over one that doesn't.
     //  * Otherwise the first match takes precedence over any others.
-    List<o.OutputType> firstMatchingTypeArguments;
+    List<o.OutputType>? firstMatchingTypeArguments;
     for (final directiveType in directiveTypes) {
       if (directiveType.name == rawDirectiveType.name &&
           directiveType.moduleUrl == rawDirectiveType.moduleUrl) {
@@ -1549,7 +1547,7 @@ ViewType _getViewType(
     CompileDirectiveMetadata component, int embeddedTemplateIndex) {
   if (embeddedTemplateIndex > 0) {
     return ViewType.embedded;
-  } else if (component.type.isHost) {
+  } else if (component.type!.isHost) {
     return ViewType.host;
   } else {
     return ViewType.component;
@@ -1579,9 +1577,9 @@ class CompileViewStorage implements ViewStorage {
   @override
   ViewStorageItem allocate(
     String name, {
-    o.OutputType outputType = o.OBJECT_TYPE,
-    List<o.StmtModifier> modifiers,
-    o.Expression initializer,
+    o.OutputType? outputType = o.OBJECT_TYPE,
+    required List<o.StmtModifier> modifiers,
+    o.Expression? initializer,
   }) {
     fields.add(
       o.ClassField(

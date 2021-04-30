@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'package:angular/src/meta.dart';
 import 'package:angular_ast/angular_ast.dart' as ast;
 import 'package:angular_compiler/v1/angular_compiler.dart';
@@ -28,7 +26,7 @@ class AstDirectiveNormalizer {
     return CompileDirectiveMetadata.from(
       directive,
       template: await _normalizeTemplate(
-        directive.type,
+        directive.type!,
         directive.template,
       ),
     );
@@ -36,25 +34,27 @@ class AstDirectiveNormalizer {
 
   Future<CompileTemplateMetadata> _normalizeTemplate(
     CompileTypeMetadata directiveType,
-    CompileTemplateMetadata template,
+    CompileTemplateMetadata? template,
   ) async {
     template ??= CompileTemplateMetadata(template: '');
-    if (template.styles != null && template.styles.isNotEmpty) {
+    if (template.styles.isNotEmpty) {
       await _validateStyleUrlsNotMeant(template.styles, directiveType);
     }
-    if (template.template != null) {
-      await _validateTemplateUrlNotMeant(template.template, directiveType);
+    var inlineTemplate = template.template;
+    if (inlineTemplate != null) {
+      await _validateTemplateUrlNotMeant(inlineTemplate, directiveType);
       return _normalizeLoadedTemplate(
         directiveType,
         template,
-        template.template,
-        directiveType.moduleUrl,
+        inlineTemplate,
+        directiveType.moduleUrl!,
       );
     }
-    if (template.templateUrl != null) {
+    var templateUrl = template.templateUrl;
+    if (templateUrl != null) {
       final sourceAbsoluteUrl = _reader.resolveUrl(
-        directiveType.moduleUrl,
-        template.templateUrl,
+        directiveType.moduleUrl!,
+        templateUrl,
       );
       return _normalizeLoadedTemplate(
         directiveType,
@@ -94,10 +94,10 @@ class AstDirectiveNormalizer {
     if (styles.every((s) => s.contains('\n') || !s.endsWith('.css'))) {
       return;
     }
-    return Future.wait(
+    await Future.wait(
       styles.map((content) async {
         final canRead = await _reader.canRead(
-          _reader.resolveUrl(directiveType.moduleUrl, content),
+          _reader.resolveUrl(directiveType.moduleUrl!, content),
         );
         if (canRead) {
           logWarning(
@@ -120,7 +120,7 @@ class AstDirectiveNormalizer {
       return;
     }
     final canRead = await _reader.canRead(
-      _reader.resolveUrl(directiveType.moduleUrl, content),
+      _reader.resolveUrl(directiveType.moduleUrl!, content),
     );
     if (canRead) {
       logWarning(
@@ -148,7 +148,7 @@ class AstDirectiveNormalizer {
 
     final allExternalStyles = _resolveExternalStylesheets(
       templateMeta,
-      directiveType.moduleUrl,
+      directiveType.moduleUrl!,
     );
 
     // Optimization: Turn off encapsulation when there are no styles to apply.
@@ -221,7 +221,7 @@ class _FindAllNgContentSelectors extends ast.RecursiveTemplateAstVisitor<void> {
     ast.EmbeddedContentAst astNode, [
     _,
   ]) {
-    ngContentSelectors.add(astNode.selector);
+    ngContentSelectors.add(astNode.selector!);
     return astNode;
   }
 }

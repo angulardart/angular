@@ -8,7 +8,7 @@ import 'expression_parser/ast.dart' as ast;
 /// needed for the view compiler to find types for expressions.
 class AnalyzedClass {
   final ClassElement _classElement;
-  final Map<String, DartType> locals;
+  final Map<String, DartType?> locals;
 
   /// Whether this class has mock-like behavior.
   ///
@@ -30,7 +30,7 @@ class AnalyzedClass {
   });
 
   AnalyzedClass.from(AnalyzedClass other,
-      {Map<String, DartType> additionalLocals = const {}})
+      {Map<String, DartType?> additionalLocals = const {}})
       : _classElement = other._classElement,
         isMockLike = other.isMockLike,
         locals = {}..addAll(other.locals)..addAll(additionalLocals);
@@ -245,7 +245,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   final DartType _dynamicType;
   final DartType _stringType;
   final InterfaceType _implicitReceiverType;
-  final Map<String, DartType> _variables;
+  final Map<String, DartType?> _variables;
 
   _TypeResolver(ClassElement classElement, this._variables)
       : _dynamicType = classElement.library.typeProvider.dynamicType,

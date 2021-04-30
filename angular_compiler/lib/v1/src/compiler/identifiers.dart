@@ -1,5 +1,3 @@
-// http://go/migrate-deps-first
-// @dart=2.9
 import 'compile_metadata.dart'
     show CompileIdentifierMetadata, CompileTokenMetadata;
 
@@ -368,6 +366,6 @@ class Identifiers {
   static final NgContentRefToken = identifierToken(Identifiers.NgContentRef);
 }
 
-CompileTokenMetadata identifierToken(CompileIdentifierMetadata identifier) {
+CompileTokenMetadata identifierToken(CompileIdentifierMetadata? identifier) {
   return CompileTokenMetadata(identifier: identifier);
 }
