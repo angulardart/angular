@@ -233,16 +233,22 @@ class ProviderElementContext implements ElementProviderUsage {
       } else if (provider.useFactory != null) {
         var dependencies = provider.deps ?? provider.useFactory!.diDeps;
         transformedDeps = [];
-        for (var dep in dependencies) {
-          transformedDeps
-              .add(_getDependency(resolvedProvider.providerType, dep!, eager)!);
+        for (var dependency in dependencies) {
+          var dep =
+              _getDependency(resolvedProvider.providerType, dependency!, eager);
+          if (dep != null) {
+            transformedDeps.add(dep);
+          }
         }
       } else if (provider.useClass != null) {
         var dependencies = provider.deps ?? provider.useClass!.diDeps;
         transformedDeps = [];
-        for (var dep in dependencies) {
-          transformedDeps
-              .add(_getDependency(resolvedProvider.providerType, dep!, eager)!);
+        for (var dependency in dependencies) {
+          var dep =
+              _getDependency(resolvedProvider.providerType, dependency!, eager);
+          if (dep != null) {
+            transformedDeps.add(dep);
+          }
         }
       }
       transformedProviders.add(_transformProvider(provider,
