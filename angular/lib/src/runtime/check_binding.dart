@@ -63,7 +63,7 @@ void debugCheckBindings([bool enabled = true]) {
   _debugCheckAllExpressionsAndReportExpressionContext = enabled;
 }
 
-const _goLink = 'go/angular-dart/advanced/debugging.md#debugCheckBindings';
+const _goLink = 'go/angulardart/dev/debugging#debugCheckBindings';
 
 /// Returns whether [oldValue] is considered "changed" compared to [newValue].
 ///
