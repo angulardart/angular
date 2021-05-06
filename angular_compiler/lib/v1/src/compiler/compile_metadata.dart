@@ -76,7 +76,7 @@ class CompileProviderMetadata {
 
   final bool multi;
 
-  // TODO(matanl): Refactor to avoid two fields for multi-providers.
+  // Ideally refactor to avoid two fields for multi-providers.
   final CompileTypeMetadata? typeArgument;
 
   /// Restricts where the provider is injectable.

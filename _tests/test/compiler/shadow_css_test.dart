@@ -62,7 +62,6 @@ String normalizeCSS(String css) {
 /// Shims [css] and compares to the [expected] output for both current and
 /// legacy encapsulation.
 void shimAndExpect(String css, String expected, {String expectedLegacy}) {
-  // TODO(matanl): Add common log testing functionality to lib/.
   runZoned(() {
     var actual = shimShadowCss(css, content, host);
     var actualLegacy =
@@ -74,7 +73,6 @@ void shimAndExpect(String css, String expected, {String expectedLegacy}) {
 
 /// Shims [css] and compares to the [expected] output for legacy syntax only.
 void legacyShimAndExpect(String css, String expected) {
-  // TODO(matanl): Add common log testing functionality to lib/.
   runZoned(() {
     var actual =
         shimShadowCss(css, content, host, useLegacyEncapsulation: true);

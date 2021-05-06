@@ -9,7 +9,6 @@ Matcher hasTextContent(String expected) => _HasTextContent(expected);
 final throwsNoProviderError = throwsA(_isNoProviderError);
 final _isNoProviderError = const TypeMatcher<NoProviderError>();
 
-// TODO(matanl): Add matcher to new test infrastructure.
 class _HasTextContent extends Matcher {
   final String expectedText;
 

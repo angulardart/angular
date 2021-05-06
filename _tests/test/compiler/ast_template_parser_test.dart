@@ -79,7 +79,6 @@ void main() {
 
   ParseTemplate _parse;
 
-  // TODO(matanl): Add common log testing functionality to lib/.
   List<TemplateAst> parse(
     String template, [
     List<CompileDirectiveMetadata> directive,

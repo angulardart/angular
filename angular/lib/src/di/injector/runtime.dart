@@ -236,7 +236,6 @@ class _RuntimeInjector extends HierarchicalInjector
         token = annotation;
       }
     }
-    // TODO(matanl): Assert that there is no invalid combination.
     Object? result;
     errors.debugInjectorEnter(token);
     final orElse = isOptional ? null : throwIfNotFound;

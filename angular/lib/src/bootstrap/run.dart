@@ -77,8 +77,6 @@ Injector appInjector(
 /// An implementation of [Injector] that invokes closures.
 ///
 /// ... right now this is a workaround for the ApplicationRef issue above.
-///
-/// TODO(matanl): Consider making this a user-accessible injector type.
 @Immutable()
 class _LazyInjector extends HierarchicalInjector {
   final Map<Object, Object Function()> _providers;

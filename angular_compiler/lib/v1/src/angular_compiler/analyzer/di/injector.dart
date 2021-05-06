@@ -189,7 +189,6 @@ class InjectorReader {
   }
 
   List<Expression> _computeDependencies(Iterable<DependencyElement> deps) {
-    // TODO(matanl): Optimize.
     return deps.map((dep) {
       if (dep.self) {
         if (dep.optional) {
