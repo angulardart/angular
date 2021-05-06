@@ -1378,6 +1378,17 @@ void main() {
             ),
           );
         });
+
+        test('should report error for unsupported bound value', () {
+          expect(
+            () => parse('<div [title]="f(x)" @i18n:title="Description"></div>'),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains('only support string literals'),
+              ),
+            ),
+          );
+        });
       });
 
       test('catch invalid annotations', () {

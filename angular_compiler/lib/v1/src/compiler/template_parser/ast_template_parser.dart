@@ -350,6 +350,10 @@ class _BindDirectivesVisitor
               elementContext.templateContext.exports);
       var boundValue = elementContext.createBoundValue(
           attribute.name, parsedInterpolation, attribute.sourceSpan);
+      // May be null if the binding produced a recoverable error.
+      if (boundValue == null) {
+        return null;
+      }
       if (elementContext.bindInterpolationToDirective(attribute, boundValue)) {
         return null;
       }
@@ -573,7 +577,10 @@ class _BindDirectivesVisitor
           context.templateContext.exports);
       var boundValue = context.createBoundValue(
           astNode.name, parsedValue, astNode.sourceSpan);
-
+      // May return null if this binding produced a recoverable error.
+      if (boundValue == null) {
+        return null;
+      }
       // Attempt binding to a directive input.
       if (context.bindPropertyToDirective(astNode, boundValue)) return null;
 
@@ -865,8 +872,10 @@ class _ParseContext {
             astNode.value,
             _location(astNode),
           );
+    // We assumed this won't produce a recoverable error and return null because
+    // we know the value is a literal.
     final boundValue =
-        createBoundValue(astNode.name, parsedValue, astNode.sourceSpan);
+        createBoundValue(astNode.name, parsedValue, astNode.sourceSpan)!;
     _bindToDirective(
         boundDirectives, astNode.name, boundValue, astNode.sourceSpan);
   }
@@ -928,7 +937,8 @@ class _ParseContext {
     return foundMatch;
   }
 
-  ng.BoundValue createBoundValue(
+  /// May return null if the value is internationalized but not a literal.
+  ng.BoundValue? createBoundValue(
     String name,
     ASTWithSource? value,
     SourceSpan sourceSpan,
@@ -939,8 +949,8 @@ class _ParseContext {
         value!,
         metadata,
         sourceSpan,
-      )!;
-      return ng.BoundI18nMessage(message);
+      );
+      return message != null ? ng.BoundI18nMessage(message) : null;
     } else {
       return ng.BoundExpression(value!);
     }
