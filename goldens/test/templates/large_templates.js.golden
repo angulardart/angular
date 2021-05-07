@@ -232,7 +232,137 @@
         return holders[i][name];
     }
   }
-  var C = {},
+  var A = {RenderView: function RenderView() {
+    }, View: function View() {
+    }, _ElementInjector: function _ElementInjector(t0, t1) {
+      this._view = t0;
+      this._nodeIndex = t1;
+    },
+    noProviderError: function(token) {
+      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
+    }
+  },
+  C = {},
+  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
+      this._hostView = t0;
+      this._nativeElement = t1;
+      this.$ti = t2;
+    }, ComponentFactory: function ComponentFactory(t0, t1) {
+      this.selector = t0;
+      this._viewFactory = t1;
+    }, TemplateRef: function TemplateRef(t0, t1) {
+      this._template_ref$_viewContainer = t0;
+      this._template_ref$_viewFactory = t1;
+    },
+    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
+      return new D.ViewFragment(nodesOrViewContainers);
+    },
+    ViewFragment__flattenDomNodes: function(target, nodes) {
+      var i;
+      for (i = 0; i < 1; ++i)
+        target.push(nodes[i]);
+      return target;
+    },
+    ViewFragment: function ViewFragment(t0) {
+      this._nodesOrViewContainers = t0;
+    }
+  },
+  E = {
+    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
+      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
+    },
+    ComponentView: function ComponentView() {
+    },
+    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
+      var _ = this;
+      _.parentView = t0;
+      _.parentIndex = t1;
+      _.___ComponentViewData_projectedNodes = null;
+      _._changeDetectionMode = t2;
+      _._changeDetectorState = 0;
+      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
+    },
+    _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
+      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
+    },
+    EmbeddedView: function EmbeddedView() {
+    },
+    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.ctx = t0;
+      _.componentStyles = t1;
+      _.parentView = t2;
+      _.parentIndex = t3;
+      _.projectedNodes = t4;
+      _.locals = t5;
+      _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
+      _._embedded_view$_changeDetectorState = 0;
+      _._embedded_view$_shouldSkipChangeDetection = _._destroyed = false;
+    }
+  },
+  G = {
+    _createNgZone: function() {
+      var t5, t6, _null = null,
+        t1 = new P.Object(),
+        t2 = type$.void,
+        t3 = P.StreamController_StreamController$broadcast(true, t2),
+        t4 = P.StreamController_StreamController$broadcast(true, t2);
+      t2 = P.StreamController_StreamController$broadcast(true, t2);
+      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
+      t6 = $.Zone__current;
+      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
+      t2 = type$.nullable_Object;
+      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
+      if (t5.__NgZone__innerZone == null)
+        t5.__NgZone__innerZone = t2;
+      else
+        H.throwExpression(H.LateError$fieldAI("_innerZone"));
+      return t5;
+    },
+    appInjector: function(userProvidedInjector) {
+      var applicationRef, ngZone, t2, userInjector, injector,
+        t1 = $.$get$appGlobals();
+      t1 = U.minimalApp().call$1(t1._hostInjector);
+      applicationRef = new H._Cell();
+      applicationRef._value = applicationRef;
+      ngZone = G._createNgZone();
+      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
+      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
+      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
+      return injector;
+    },
+    _identityInjector: function($parent) {
+      return $parent;
+    },
+    appInjector_closure: function appInjector_closure(t0) {
+      this.applicationRef = t0;
+    },
+    appInjector_closure0: function appInjector_closure0() {
+    },
+    appInjector_closure1: function appInjector_closure1(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure2: function appInjector_closure2(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
+      this.applicationRef = t0;
+      this.ngZone = t1;
+      this.userInjector = t2;
+    },
+    _LazyInjector: function _LazyInjector(t0, t1) {
+      this._providers = t0;
+      this._parent = t1;
+    },
+    HostView: function HostView() {
+    },
+    _HostViewData: function _HostViewData() {
+      var _ = this;
+      _._onDestroyCallbacks = _.viewFragment = null;
+      _._host_view$_changeDetectorState = 0;
+      _._host_view$_shouldSkipChangeDetection = _._host_view$_destroyed = false;
+    }
+  },
   H = {JS_CONST: function JS_CONST() {
     },
     LateError$fieldNI: function(fieldName) {
@@ -2925,6 +3055,72 @@
     JSString: function JSString() {
     }
   },
+  K = {NgIf: function NgIf(t0, t1) {
+      this._templateRef = t0;
+      this._viewContainer = t1;
+      this._prevCondition = false;
+    }, TransitionalAppHost: function TransitionalAppHost(t0) {
+      this._hostInjector = t0;
+    }},
+  L = {OpaqueToken: function OpaqueToken(t0) {
+      this.$ti = t0;
+    },
+    main: function() {
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", Q.large_templates_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
+    },
+    GoldenComponent: function GoldenComponent() {
+    },
+    ChildComponent: function ChildComponent() {
+    }
+  },
+  M = {ChangeDetectionHost: function ChangeDetectionHost() {
+    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._box_0 = t0;
+      _.$this = t1;
+      _.callback = t2;
+      _.completer = t3;
+      _.R = t4;
+    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
+      this.completer = t0;
+      this.R = t1;
+    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
+      this.$this = t0;
+      this.completer = t1;
+    }, ComponentLoader: function ComponentLoader() {
+    },
+    _MapInjector$: function(providers, $parent) {
+      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
+      t1.addAll$1(0, providers);
+      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
+    },
+    Injector: function Injector() {
+    },
+    HierarchicalInjector: function HierarchicalInjector() {
+    },
+    _EmptyInjector: function _EmptyInjector() {
+    },
+    _MapInjector: function _MapInjector(t0, t1) {
+      this._injector$_providers = t0;
+      this._parent = t1;
+    }
+  },
+  O = {
+    _UnscopedComponentStyles$: function(styles, componentUrl) {
+      var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
+      t1._appendStyles$0();
+      return t1;
+    },
+    _flattenStyles: function(styles, target, componentId) {
+      return target;
+    },
+    ComponentStyles: function ComponentStyles() {
+    },
+    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
+      this._componentUrl = t0;
+      this._styles = t1;
+    }
+  },
   P = {
     _AsyncRun__initializeScheduleImmediate: function() {
       var div, span, t1 = {};
@@ -4093,465 +4289,6 @@
         return P._convertDartFunctionFast(f);
     }
   },
-  W = {
-    _JenkinsSmiHash_combine: function(hash, value) {
-      hash = hash + value & 536870911;
-      hash = hash + ((hash & 524287) << 10) & 536870911;
-      return hash ^ hash >>> 6;
-    },
-    _JenkinsSmiHash_hash4: function(a, b, c, d) {
-      var t1 = W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(0, a), b), c), d),
-        hash = t1 + ((t1 & 67108863) << 3) & 536870911;
-      hash ^= hash >>> 11;
-      return hash + ((hash & 16383) << 15) & 536870911;
-    },
-    HtmlElement: function HtmlElement() {
-    },
-    AccessibleNodeList: function AccessibleNodeList() {
-    },
-    AnchorElement: function AnchorElement() {
-    },
-    AreaElement: function AreaElement() {
-    },
-    Blob: function Blob() {
-    },
-    CharacterData: function CharacterData() {
-    },
-    CssPerspective: function CssPerspective() {
-    },
-    CssRule: function CssRule() {
-    },
-    CssStyleDeclaration: function CssStyleDeclaration() {
-    },
-    CssStyleDeclarationBase: function CssStyleDeclarationBase() {
-    },
-    CssStyleValue: function CssStyleValue() {
-    },
-    CssTransformComponent: function CssTransformComponent() {
-    },
-    CssTransformValue: function CssTransformValue() {
-    },
-    CssUnparsedValue: function CssUnparsedValue() {
-    },
-    DataTransferItemList: function DataTransferItemList() {
-    },
-    DomException: function DomException() {
-    },
-    DomRectList: function DomRectList() {
-    },
-    DomRectReadOnly: function DomRectReadOnly() {
-    },
-    DomStringList: function DomStringList() {
-    },
-    DomTokenList: function DomTokenList() {
-    },
-    Element: function Element() {
-    },
-    EventTarget: function EventTarget() {
-    },
-    File: function File() {
-    },
-    FileList: function FileList() {
-    },
-    FileWriter: function FileWriter() {
-    },
-    FormElement: function FormElement() {
-    },
-    Gamepad: function Gamepad() {
-    },
-    History: function History() {
-    },
-    HtmlCollection: function HtmlCollection() {
-    },
-    Location: function Location() {
-    },
-    MediaList: function MediaList() {
-    },
-    MidiInputMap: function MidiInputMap() {
-    },
-    MidiInputMap_keys_closure: function MidiInputMap_keys_closure(t0) {
-      this.keys = t0;
-    },
-    MidiOutputMap: function MidiOutputMap() {
-    },
-    MidiOutputMap_keys_closure: function MidiOutputMap_keys_closure(t0) {
-      this.keys = t0;
-    },
-    MimeType: function MimeType() {
-    },
-    MimeTypeArray: function MimeTypeArray() {
-    },
-    Node: function Node() {
-    },
-    NodeList: function NodeList() {
-    },
-    Plugin: function Plugin() {
-    },
-    PluginArray: function PluginArray() {
-    },
-    RtcStatsReport: function RtcStatsReport() {
-    },
-    RtcStatsReport_keys_closure: function RtcStatsReport_keys_closure(t0) {
-      this.keys = t0;
-    },
-    SelectElement: function SelectElement() {
-    },
-    SourceBuffer: function SourceBuffer() {
-    },
-    SourceBufferList: function SourceBufferList() {
-    },
-    SpeechGrammar: function SpeechGrammar() {
-    },
-    SpeechGrammarList: function SpeechGrammarList() {
-    },
-    SpeechRecognitionResult: function SpeechRecognitionResult() {
-    },
-    Storage: function Storage() {
-    },
-    Storage_keys_closure: function Storage_keys_closure(t0) {
-      this.keys = t0;
-    },
-    StyleSheet: function StyleSheet() {
-    },
-    TextTrack: function TextTrack() {
-    },
-    TextTrackCue: function TextTrackCue() {
-    },
-    TextTrackCueList: function TextTrackCueList() {
-    },
-    TextTrackList: function TextTrackList() {
-    },
-    TimeRanges: function TimeRanges() {
-    },
-    Touch: function Touch() {
-    },
-    TouchList: function TouchList() {
-    },
-    TrackDefaultList: function TrackDefaultList() {
-    },
-    Url: function Url() {
-    },
-    VideoTrackList: function VideoTrackList() {
-    },
-    _CssRuleList: function _CssRuleList() {
-    },
-    _DomRect: function _DomRect() {
-    },
-    _GamepadList: function _GamepadList() {
-    },
-    _NamedNodeMap: function _NamedNodeMap() {
-    },
-    _SpeechRecognitionResultList: function _SpeechRecognitionResultList() {
-    },
-    _StyleSheetList: function _StyleSheetList() {
-    },
-    ImmutableListMixin: function ImmutableListMixin() {
-    },
-    FixedSizeListIterator: function FixedSizeListIterator(t0, t1) {
-      var _ = this;
-      _._array = t0;
-      _._html$_length = t1;
-      _._position = -1;
-      _._html$_current = null;
-    },
-    _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase: function _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase() {
-    },
-    _DomRectList_Interceptor_ListMixin: function _DomRectList_Interceptor_ListMixin() {
-    },
-    _DomRectList_Interceptor_ListMixin_ImmutableListMixin: function _DomRectList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _DomStringList_Interceptor_ListMixin: function _DomStringList_Interceptor_ListMixin() {
-    },
-    _DomStringList_Interceptor_ListMixin_ImmutableListMixin: function _DomStringList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _FileList_Interceptor_ListMixin: function _FileList_Interceptor_ListMixin() {
-    },
-    _FileList_Interceptor_ListMixin_ImmutableListMixin: function _FileList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _HtmlCollection_Interceptor_ListMixin: function _HtmlCollection_Interceptor_ListMixin() {
-    },
-    _HtmlCollection_Interceptor_ListMixin_ImmutableListMixin: function _HtmlCollection_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _MidiInputMap_Interceptor_MapMixin: function _MidiInputMap_Interceptor_MapMixin() {
-    },
-    _MidiOutputMap_Interceptor_MapMixin: function _MidiOutputMap_Interceptor_MapMixin() {
-    },
-    _MimeTypeArray_Interceptor_ListMixin: function _MimeTypeArray_Interceptor_ListMixin() {
-    },
-    _MimeTypeArray_Interceptor_ListMixin_ImmutableListMixin: function _MimeTypeArray_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _NodeList_Interceptor_ListMixin: function _NodeList_Interceptor_ListMixin() {
-    },
-    _NodeList_Interceptor_ListMixin_ImmutableListMixin: function _NodeList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _PluginArray_Interceptor_ListMixin: function _PluginArray_Interceptor_ListMixin() {
-    },
-    _PluginArray_Interceptor_ListMixin_ImmutableListMixin: function _PluginArray_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _RtcStatsReport_Interceptor_MapMixin: function _RtcStatsReport_Interceptor_MapMixin() {
-    },
-    _SourceBufferList_EventTarget_ListMixin: function _SourceBufferList_EventTarget_ListMixin() {
-    },
-    _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin: function _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin() {
-    },
-    _SpeechGrammarList_Interceptor_ListMixin: function _SpeechGrammarList_Interceptor_ListMixin() {
-    },
-    _SpeechGrammarList_Interceptor_ListMixin_ImmutableListMixin: function _SpeechGrammarList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _Storage_Interceptor_MapMixin: function _Storage_Interceptor_MapMixin() {
-    },
-    _TextTrackCueList_Interceptor_ListMixin: function _TextTrackCueList_Interceptor_ListMixin() {
-    },
-    _TextTrackCueList_Interceptor_ListMixin_ImmutableListMixin: function _TextTrackCueList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    _TextTrackList_EventTarget_ListMixin: function _TextTrackList_EventTarget_ListMixin() {
-    },
-    _TextTrackList_EventTarget_ListMixin_ImmutableListMixin: function _TextTrackList_EventTarget_ListMixin_ImmutableListMixin() {
-    },
-    _TouchList_Interceptor_ListMixin: function _TouchList_Interceptor_ListMixin() {
-    },
-    _TouchList_Interceptor_ListMixin_ImmutableListMixin: function _TouchList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    __CssRuleList_Interceptor_ListMixin: function __CssRuleList_Interceptor_ListMixin() {
-    },
-    __CssRuleList_Interceptor_ListMixin_ImmutableListMixin: function __CssRuleList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    __GamepadList_Interceptor_ListMixin: function __GamepadList_Interceptor_ListMixin() {
-    },
-    __GamepadList_Interceptor_ListMixin_ImmutableListMixin: function __GamepadList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    __NamedNodeMap_Interceptor_ListMixin: function __NamedNodeMap_Interceptor_ListMixin() {
-    },
-    __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin: function __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    __SpeechRecognitionResultList_Interceptor_ListMixin: function __SpeechRecognitionResultList_Interceptor_ListMixin() {
-    },
-    __SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin: function __SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin() {
-    },
-    __StyleSheetList_Interceptor_ListMixin: function __StyleSheetList_Interceptor_ListMixin() {
-    },
-    __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin: function __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin() {
-    }
-  },
-  U = {
-    minimalApp: function() {
-      return new U.minimalApp_closure();
-    },
-    _createRandomAppId: function() {
-      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
-      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
-    },
-    minimalApp_closure: function minimalApp_closure() {
-    },
-    _createRandomAppId_char: function _createRandomAppId_char(t0) {
-      this.random = t0;
-    },
-    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
-      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
-      if (stackTrace != null)
-        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
-    },
-    ExceptionHandler: function ExceptionHandler() {
-    },
-    JsTestability: function JsTestability() {
-    }
-  },
-  G = {
-    _createNgZone: function() {
-      var t5, t6, _null = null,
-        t1 = new P.Object(),
-        t2 = type$.void,
-        t3 = P.StreamController_StreamController$broadcast(true, t2),
-        t4 = P.StreamController_StreamController$broadcast(true, t2);
-      t2 = P.StreamController_StreamController$broadcast(true, t2);
-      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
-      t6 = $.Zone__current;
-      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
-      t2 = type$.nullable_Object;
-      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
-      if (t5.__NgZone__innerZone == null)
-        t5.__NgZone__innerZone = t2;
-      else
-        H.throwExpression(H.LateError$fieldAI("_innerZone"));
-      return t5;
-    },
-    appInjector: function(userProvidedInjector) {
-      var applicationRef, ngZone, t2, userInjector, injector,
-        t1 = $.$get$appGlobals();
-      t1 = U.minimalApp().call$1(t1._hostInjector);
-      applicationRef = new H._Cell();
-      applicationRef._value = applicationRef;
-      ngZone = G._createNgZone();
-      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
-      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
-      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
-      return injector;
-    },
-    _identityInjector: function($parent) {
-      return $parent;
-    },
-    appInjector_closure: function appInjector_closure(t0) {
-      this.applicationRef = t0;
-    },
-    appInjector_closure0: function appInjector_closure0() {
-    },
-    appInjector_closure1: function appInjector_closure1(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure2: function appInjector_closure2(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
-      this.applicationRef = t0;
-      this.ngZone = t1;
-      this.userInjector = t2;
-    },
-    _LazyInjector: function _LazyInjector(t0, t1) {
-      this._providers = t0;
-      this._parent = t1;
-    },
-    HostView: function HostView() {
-    },
-    _HostViewData: function _HostViewData() {
-      var _ = this;
-      _._onDestroyCallbacks = _.viewFragment = null;
-      _._host_view$_changeDetectorState = 0;
-      _._host_view$_shouldSkipChangeDetection = _._host_view$_destroyed = false;
-    }
-  },
-  K = {NgIf: function NgIf(t0, t1) {
-      this._templateRef = t0;
-      this._viewContainer = t1;
-      this._prevCondition = false;
-    }, TransitionalAppHost: function TransitionalAppHost(t0) {
-      this._hostInjector = t0;
-    }},
-  Y = {
-    ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
-      var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
-      t1.ApplicationRef$_$3(_ngZone, _exceptionHandler, _injector);
-      return t1;
-    },
-    ApplicationRef: function ApplicationRef(t0, t1, t2, t3, t4, t5) {
-      var _ = this;
-      _._disposeListeners = t0;
-      _._rootComponents = t1;
-      _._exceptionHandler = t2;
-      _._injector = t3;
-      _._ngZone = t4;
-      _._lastCaughtTrace = _._lastCaughtException = _._lastGuardedView = _.__ApplicationRef__onMicroSub = _.__ApplicationRef__onErrorSub = null;
-      _._runningTick = false;
-      _._changeDetectors = t5;
-    },
-    ApplicationRef$__closure: function ApplicationRef$__closure(t0) {
-      this.$this = t0;
-    },
-    ApplicationRef$__closure0: function ApplicationRef$__closure0(t0) {
-      this.$this = t0;
-    },
-    ApplicationRef_bootstrap_closure: function ApplicationRef_bootstrap_closure(t0, t1, t2) {
-      this.$this = t0;
-      this.componentFactory = t1;
-      this.T = t2;
-    },
-    ApplicationRef__loadedRootComponent_closure: function ApplicationRef__loadedRootComponent_closure(t0, t1, t2) {
-      this.$this = t0;
-      this.component = t1;
-      this.node = t2;
-    },
-    NgZone: function NgZone(t0, t1, t2, t3, t4, t5, t6) {
-      var _ = this;
-      _._thisZoneKey = t0;
-      _._onTurnStart = t1;
-      _._onMicrotaskEmpty = t2;
-      _._onTurnDone = t3;
-      _._onUncaughtError = t4;
-      _._outerZone = t5;
-      _.__NgZone__innerZone = null;
-      _._hasPendingMacrotasks = _._hasPendingMicrotasks = false;
-      _._isStable = true;
-      _._nesting = 0;
-      _._isRunning = false;
-      _._pendingMicrotasks = 0;
-      _._pendingTimers = t6;
-    },
-    NgZone__scheduleMicrotask_safeMicrotask: function NgZone__scheduleMicrotask_safeMicrotask(t0, t1) {
-      this.$this = t0;
-      this.fn = t1;
-    },
-    NgZone__run_closure: function NgZone__run_closure(t0, t1, t2) {
-      this.$this = t0;
-      this.fn = t1;
-      this.R = t2;
-    },
-    NgZone__runUnary_closure: function NgZone__runUnary_closure(t0, t1, t2, t3) {
-      var _ = this;
-      _.$this = t0;
-      _.fn = t1;
-      _.T = t2;
-      _.R = t3;
-    },
-    NgZone__runBinary_closure: function NgZone__runBinary_closure(t0, t1, t2, t3, t4) {
-      var _ = this;
-      _.$this = t0;
-      _.fn = t1;
-      _.T1 = t2;
-      _.T2 = t3;
-      _.R = t4;
-    },
-    NgZone__createTimer_onDone: function NgZone__createTimer_onDone(t0, t1) {
-      this.$this = t0;
-      this.wrappedTimer = t1;
-    },
-    NgZone__createTimer_callback: function NgZone__createTimer_callback(t0, t1) {
-      this.fn = t0;
-      this.onDone = t1;
-    },
-    NgZone__checkStable_closure: function NgZone__checkStable_closure(t0) {
-      this.$this = t0;
-    },
-    _WrappedTimer: function _WrappedTimer(t0, t1) {
-      this._timer = t0;
-      this._ng_zone$_onCancel = t1;
-    },
-    UncaughtError: function UncaughtError(t0, t1) {
-      this.error = t0;
-      this.stackTrace = t1;
-    }
-  },
-  M = {ChangeDetectionHost: function ChangeDetectionHost() {
-    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
-      var _ = this;
-      _._box_0 = t0;
-      _.$this = t1;
-      _.callback = t2;
-      _.completer = t3;
-      _.R = t4;
-    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
-      this.completer = t0;
-      this.R = t1;
-    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
-      this.$this = t0;
-      this.completer = t1;
-    }, ComponentLoader: function ComponentLoader() {
-    },
-    _MapInjector$: function(providers, $parent) {
-      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
-      t1.addAll$1(0, providers);
-      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
-    },
-    Injector: function Injector() {
-    },
-    HierarchicalInjector: function HierarchicalInjector() {
-    },
-    _EmptyInjector: function _EmptyInjector() {
-    },
-    _MapInjector: function _MapInjector(t0, t1) {
-      this._injector$_providers = t0;
-      this._parent = t1;
-    }
-  },
   Q = {AppViewUtils: function AppViewUtils() {
     },
     viewFactory_GoldenComponent1: function(parentView, parentIndex) {
@@ -5181,107 +4918,6 @@
       _._component_view$_data = t0;
     }
   },
-  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
-      this._hostView = t0;
-      this._nativeElement = t1;
-      this.$ti = t2;
-    }, ComponentFactory: function ComponentFactory(t0, t1) {
-      this.selector = t0;
-      this._viewFactory = t1;
-    }, TemplateRef: function TemplateRef(t0, t1) {
-      this._template_ref$_viewContainer = t0;
-      this._template_ref$_viewFactory = t1;
-    },
-    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
-      return new D.ViewFragment(nodesOrViewContainers);
-    },
-    ViewFragment__flattenDomNodes: function(target, nodes) {
-      var i;
-      for (i = 0; i < 1; ++i)
-        target.push(nodes[i]);
-      return target;
-    },
-    ViewFragment: function ViewFragment(t0) {
-      this._nodesOrViewContainers = t0;
-    }
-  },
-  O = {
-    _UnscopedComponentStyles$: function(styles, componentUrl) {
-      var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
-      t1._appendStyles$0();
-      return t1;
-    },
-    _flattenStyles: function(styles, target, componentId) {
-      return target;
-    },
-    ComponentStyles: function ComponentStyles() {
-    },
-    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
-      this._componentUrl = t0;
-      this._styles = t1;
-    }
-  },
-  V = {ViewContainer: function ViewContainer(t0, t1, t2) {
-      var _ = this;
-      _.index = t0;
-      _.parentView = t1;
-      _.nativeElement = t2;
-      _.nestedViews = null;
-    }},
-  E = {
-    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
-      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
-    },
-    ComponentView: function ComponentView() {
-    },
-    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
-      var _ = this;
-      _.parentView = t0;
-      _.parentIndex = t1;
-      _.___ComponentViewData_projectedNodes = null;
-      _._changeDetectionMode = t2;
-      _._changeDetectorState = 0;
-      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
-    },
-    _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
-      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
-    },
-    EmbeddedView: function EmbeddedView() {
-    },
-    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
-      var _ = this;
-      _.ctx = t0;
-      _.componentStyles = t1;
-      _.parentView = t2;
-      _.parentIndex = t3;
-      _.projectedNodes = t4;
-      _.locals = t5;
-      _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
-      _._embedded_view$_changeDetectorState = 0;
-      _._embedded_view$_shouldSkipChangeDetection = _._destroyed = false;
-    }
-  },
-  A = {RenderView: function RenderView() {
-    }, View: function View() {
-    }, _ElementInjector: function _ElementInjector(t0, t1) {
-      this._view = t0;
-      this._nodeIndex = t1;
-    },
-    noProviderError: function(token) {
-      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
-    }
-  },
-  L = {OpaqueToken: function OpaqueToken(t0) {
-      this.$ti = t0;
-    },
-    main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", Q.large_templates_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
-    },
-    GoldenComponent: function GoldenComponent() {
-    },
-    ChildComponent: function ChildComponent() {
-    }
-  },
   T = {
     _JSTestabilityProxy__getAngularTestability: function(element) {
       var t1, i, t2, result,
@@ -5411,8 +5047,372 @@
       else
         T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
     }
+  },
+  U = {
+    minimalApp: function() {
+      return new U.minimalApp_closure();
+    },
+    _createRandomAppId: function() {
+      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
+      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
+    },
+    minimalApp_closure: function minimalApp_closure() {
+    },
+    _createRandomAppId_char: function _createRandomAppId_char(t0) {
+      this.random = t0;
+    },
+    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
+      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
+      if (stackTrace != null)
+        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    ExceptionHandler: function ExceptionHandler() {
+    },
+    JsTestability: function JsTestability() {
+    }
+  },
+  V = {ViewContainer: function ViewContainer(t0, t1, t2) {
+      var _ = this;
+      _.index = t0;
+      _.parentView = t1;
+      _.nativeElement = t2;
+      _.nestedViews = null;
+    }},
+  W = {
+    _JenkinsSmiHash_combine: function(hash, value) {
+      hash = hash + value & 536870911;
+      hash = hash + ((hash & 524287) << 10) & 536870911;
+      return hash ^ hash >>> 6;
+    },
+    _JenkinsSmiHash_hash4: function(a, b, c, d) {
+      var t1 = W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(W._JenkinsSmiHash_combine(0, a), b), c), d),
+        hash = t1 + ((t1 & 67108863) << 3) & 536870911;
+      hash ^= hash >>> 11;
+      return hash + ((hash & 16383) << 15) & 536870911;
+    },
+    HtmlElement: function HtmlElement() {
+    },
+    AccessibleNodeList: function AccessibleNodeList() {
+    },
+    AnchorElement: function AnchorElement() {
+    },
+    AreaElement: function AreaElement() {
+    },
+    Blob: function Blob() {
+    },
+    CharacterData: function CharacterData() {
+    },
+    CssPerspective: function CssPerspective() {
+    },
+    CssRule: function CssRule() {
+    },
+    CssStyleDeclaration: function CssStyleDeclaration() {
+    },
+    CssStyleDeclarationBase: function CssStyleDeclarationBase() {
+    },
+    CssStyleValue: function CssStyleValue() {
+    },
+    CssTransformComponent: function CssTransformComponent() {
+    },
+    CssTransformValue: function CssTransformValue() {
+    },
+    CssUnparsedValue: function CssUnparsedValue() {
+    },
+    DataTransferItemList: function DataTransferItemList() {
+    },
+    DomException: function DomException() {
+    },
+    DomRectList: function DomRectList() {
+    },
+    DomRectReadOnly: function DomRectReadOnly() {
+    },
+    DomStringList: function DomStringList() {
+    },
+    DomTokenList: function DomTokenList() {
+    },
+    Element: function Element() {
+    },
+    EventTarget: function EventTarget() {
+    },
+    File: function File() {
+    },
+    FileList: function FileList() {
+    },
+    FileWriter: function FileWriter() {
+    },
+    FormElement: function FormElement() {
+    },
+    Gamepad: function Gamepad() {
+    },
+    History: function History() {
+    },
+    HtmlCollection: function HtmlCollection() {
+    },
+    Location: function Location() {
+    },
+    MediaList: function MediaList() {
+    },
+    MidiInputMap: function MidiInputMap() {
+    },
+    MidiInputMap_keys_closure: function MidiInputMap_keys_closure(t0) {
+      this.keys = t0;
+    },
+    MidiOutputMap: function MidiOutputMap() {
+    },
+    MidiOutputMap_keys_closure: function MidiOutputMap_keys_closure(t0) {
+      this.keys = t0;
+    },
+    MimeType: function MimeType() {
+    },
+    MimeTypeArray: function MimeTypeArray() {
+    },
+    Node: function Node() {
+    },
+    NodeList: function NodeList() {
+    },
+    Plugin: function Plugin() {
+    },
+    PluginArray: function PluginArray() {
+    },
+    RtcStatsReport: function RtcStatsReport() {
+    },
+    RtcStatsReport_keys_closure: function RtcStatsReport_keys_closure(t0) {
+      this.keys = t0;
+    },
+    SelectElement: function SelectElement() {
+    },
+    SourceBuffer: function SourceBuffer() {
+    },
+    SourceBufferList: function SourceBufferList() {
+    },
+    SpeechGrammar: function SpeechGrammar() {
+    },
+    SpeechGrammarList: function SpeechGrammarList() {
+    },
+    SpeechRecognitionResult: function SpeechRecognitionResult() {
+    },
+    Storage: function Storage() {
+    },
+    Storage_keys_closure: function Storage_keys_closure(t0) {
+      this.keys = t0;
+    },
+    StyleSheet: function StyleSheet() {
+    },
+    TextTrack: function TextTrack() {
+    },
+    TextTrackCue: function TextTrackCue() {
+    },
+    TextTrackCueList: function TextTrackCueList() {
+    },
+    TextTrackList: function TextTrackList() {
+    },
+    TimeRanges: function TimeRanges() {
+    },
+    Touch: function Touch() {
+    },
+    TouchList: function TouchList() {
+    },
+    TrackDefaultList: function TrackDefaultList() {
+    },
+    Url: function Url() {
+    },
+    VideoTrackList: function VideoTrackList() {
+    },
+    _CssRuleList: function _CssRuleList() {
+    },
+    _DomRect: function _DomRect() {
+    },
+    _GamepadList: function _GamepadList() {
+    },
+    _NamedNodeMap: function _NamedNodeMap() {
+    },
+    _SpeechRecognitionResultList: function _SpeechRecognitionResultList() {
+    },
+    _StyleSheetList: function _StyleSheetList() {
+    },
+    ImmutableListMixin: function ImmutableListMixin() {
+    },
+    FixedSizeListIterator: function FixedSizeListIterator(t0, t1) {
+      var _ = this;
+      _._array = t0;
+      _._html$_length = t1;
+      _._position = -1;
+      _._html$_current = null;
+    },
+    _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase: function _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase() {
+    },
+    _DomRectList_Interceptor_ListMixin: function _DomRectList_Interceptor_ListMixin() {
+    },
+    _DomRectList_Interceptor_ListMixin_ImmutableListMixin: function _DomRectList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _DomStringList_Interceptor_ListMixin: function _DomStringList_Interceptor_ListMixin() {
+    },
+    _DomStringList_Interceptor_ListMixin_ImmutableListMixin: function _DomStringList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _FileList_Interceptor_ListMixin: function _FileList_Interceptor_ListMixin() {
+    },
+    _FileList_Interceptor_ListMixin_ImmutableListMixin: function _FileList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _HtmlCollection_Interceptor_ListMixin: function _HtmlCollection_Interceptor_ListMixin() {
+    },
+    _HtmlCollection_Interceptor_ListMixin_ImmutableListMixin: function _HtmlCollection_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _MidiInputMap_Interceptor_MapMixin: function _MidiInputMap_Interceptor_MapMixin() {
+    },
+    _MidiOutputMap_Interceptor_MapMixin: function _MidiOutputMap_Interceptor_MapMixin() {
+    },
+    _MimeTypeArray_Interceptor_ListMixin: function _MimeTypeArray_Interceptor_ListMixin() {
+    },
+    _MimeTypeArray_Interceptor_ListMixin_ImmutableListMixin: function _MimeTypeArray_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _NodeList_Interceptor_ListMixin: function _NodeList_Interceptor_ListMixin() {
+    },
+    _NodeList_Interceptor_ListMixin_ImmutableListMixin: function _NodeList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _PluginArray_Interceptor_ListMixin: function _PluginArray_Interceptor_ListMixin() {
+    },
+    _PluginArray_Interceptor_ListMixin_ImmutableListMixin: function _PluginArray_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _RtcStatsReport_Interceptor_MapMixin: function _RtcStatsReport_Interceptor_MapMixin() {
+    },
+    _SourceBufferList_EventTarget_ListMixin: function _SourceBufferList_EventTarget_ListMixin() {
+    },
+    _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin: function _SourceBufferList_EventTarget_ListMixin_ImmutableListMixin() {
+    },
+    _SpeechGrammarList_Interceptor_ListMixin: function _SpeechGrammarList_Interceptor_ListMixin() {
+    },
+    _SpeechGrammarList_Interceptor_ListMixin_ImmutableListMixin: function _SpeechGrammarList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _Storage_Interceptor_MapMixin: function _Storage_Interceptor_MapMixin() {
+    },
+    _TextTrackCueList_Interceptor_ListMixin: function _TextTrackCueList_Interceptor_ListMixin() {
+    },
+    _TextTrackCueList_Interceptor_ListMixin_ImmutableListMixin: function _TextTrackCueList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    _TextTrackList_EventTarget_ListMixin: function _TextTrackList_EventTarget_ListMixin() {
+    },
+    _TextTrackList_EventTarget_ListMixin_ImmutableListMixin: function _TextTrackList_EventTarget_ListMixin_ImmutableListMixin() {
+    },
+    _TouchList_Interceptor_ListMixin: function _TouchList_Interceptor_ListMixin() {
+    },
+    _TouchList_Interceptor_ListMixin_ImmutableListMixin: function _TouchList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    __CssRuleList_Interceptor_ListMixin: function __CssRuleList_Interceptor_ListMixin() {
+    },
+    __CssRuleList_Interceptor_ListMixin_ImmutableListMixin: function __CssRuleList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    __GamepadList_Interceptor_ListMixin: function __GamepadList_Interceptor_ListMixin() {
+    },
+    __GamepadList_Interceptor_ListMixin_ImmutableListMixin: function __GamepadList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    __NamedNodeMap_Interceptor_ListMixin: function __NamedNodeMap_Interceptor_ListMixin() {
+    },
+    __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin: function __NamedNodeMap_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    __SpeechRecognitionResultList_Interceptor_ListMixin: function __SpeechRecognitionResultList_Interceptor_ListMixin() {
+    },
+    __SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin: function __SpeechRecognitionResultList_Interceptor_ListMixin_ImmutableListMixin() {
+    },
+    __StyleSheetList_Interceptor_ListMixin: function __StyleSheetList_Interceptor_ListMixin() {
+    },
+    __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin: function __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin() {
+    }
+  },
+  Y = {
+    ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
+      var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
+      t1.ApplicationRef$_$3(_ngZone, _exceptionHandler, _injector);
+      return t1;
+    },
+    ApplicationRef: function ApplicationRef(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _._disposeListeners = t0;
+      _._rootComponents = t1;
+      _._exceptionHandler = t2;
+      _._injector = t3;
+      _._ngZone = t4;
+      _._lastCaughtTrace = _._lastCaughtException = _._lastGuardedView = _.__ApplicationRef__onMicroSub = _.__ApplicationRef__onErrorSub = null;
+      _._runningTick = false;
+      _._changeDetectors = t5;
+    },
+    ApplicationRef$__closure: function ApplicationRef$__closure(t0) {
+      this.$this = t0;
+    },
+    ApplicationRef$__closure0: function ApplicationRef$__closure0(t0) {
+      this.$this = t0;
+    },
+    ApplicationRef_bootstrap_closure: function ApplicationRef_bootstrap_closure(t0, t1, t2) {
+      this.$this = t0;
+      this.componentFactory = t1;
+      this.T = t2;
+    },
+    ApplicationRef__loadedRootComponent_closure: function ApplicationRef__loadedRootComponent_closure(t0, t1, t2) {
+      this.$this = t0;
+      this.component = t1;
+      this.node = t2;
+    },
+    NgZone: function NgZone(t0, t1, t2, t3, t4, t5, t6) {
+      var _ = this;
+      _._thisZoneKey = t0;
+      _._onTurnStart = t1;
+      _._onMicrotaskEmpty = t2;
+      _._onTurnDone = t3;
+      _._onUncaughtError = t4;
+      _._outerZone = t5;
+      _.__NgZone__innerZone = null;
+      _._hasPendingMacrotasks = _._hasPendingMicrotasks = false;
+      _._isStable = true;
+      _._nesting = 0;
+      _._isRunning = false;
+      _._pendingMicrotasks = 0;
+      _._pendingTimers = t6;
+    },
+    NgZone__scheduleMicrotask_safeMicrotask: function NgZone__scheduleMicrotask_safeMicrotask(t0, t1) {
+      this.$this = t0;
+      this.fn = t1;
+    },
+    NgZone__run_closure: function NgZone__run_closure(t0, t1, t2) {
+      this.$this = t0;
+      this.fn = t1;
+      this.R = t2;
+    },
+    NgZone__runUnary_closure: function NgZone__runUnary_closure(t0, t1, t2, t3) {
+      var _ = this;
+      _.$this = t0;
+      _.fn = t1;
+      _.T = t2;
+      _.R = t3;
+    },
+    NgZone__runBinary_closure: function NgZone__runBinary_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _.$this = t0;
+      _.fn = t1;
+      _.T1 = t2;
+      _.T2 = t3;
+      _.R = t4;
+    },
+    NgZone__createTimer_onDone: function NgZone__createTimer_onDone(t0, t1) {
+      this.$this = t0;
+      this.wrappedTimer = t1;
+    },
+    NgZone__createTimer_callback: function NgZone__createTimer_callback(t0, t1) {
+      this.fn = t0;
+      this.onDone = t1;
+    },
+    NgZone__checkStable_closure: function NgZone__checkStable_closure(t0) {
+      this.$this = t0;
+    },
+    _WrappedTimer: function _WrappedTimer(t0, t1) {
+      this._timer = t0;
+      this._ng_zone$_onCancel = t1;
+    },
+    UncaughtError: function UncaughtError(t0, t1) {
+      this.error = t0;
+      this.stackTrace = t1;
+    }
   };
-  var holders = [C, H, J, P, W, U, G, K, Y, M, Q, D, O, V, E, A, L, T];
+  var holders = [A, C, D, E, G, H, J, K, L, M, O, P, Q, T, U, V, W, Y];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};

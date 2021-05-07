@@ -232,7 +232,316 @@
         return holders[i][name];
     }
   }
-  var C = {},
+  var A = {RenderView: function RenderView() {
+    }, View: function View() {
+    }, _ElementInjector: function _ElementInjector(t0, t1) {
+      this._view = t0;
+      this._nodeIndex = t1;
+    },
+    viewFactory_GoldenComponentHost0: function() {
+      return new A._ViewGoldenComponentHost0(new G._HostViewData());
+    },
+    ViewGenericComp0$: function(parentView, parentIndex, $T) {
+      var t2,
+        t1 = new A.ViewGenericComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewGenericComp0<0>")),
+        styles = $.ViewGenericComp0__componentStyles;
+      if (styles == null)
+        styles = $.ViewGenericComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = document.createElement("comp");
+      t1.__ComponentView_rootElement = t2;
+      return t1;
+    },
+    ViewNestedChildComp0$: function(parentView, parentIndex, $T) {
+      var t2,
+        t1 = new A.ViewNestedChildComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewNestedChildComp0<0>")),
+        styles = $.ViewNestedChildComp0__componentStyles;
+      if (styles == null)
+        styles = $.ViewNestedChildComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = document.createElement("child");
+      t1.__ComponentView_rootElement = t2;
+      return t1;
+    },
+    ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
+      var _ = this;
+      _.__ViewGoldenComponent0__UsesGenericChangeDetector_9_5 = _.__ViewGoldenComponent0__compView_9 = _.__ViewGoldenComponent0__UsesMultipleTypesComp_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__UsesNestedParentComp_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__UsesFunctionTypeComp_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__UsesBoundCompWithBounds_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__UsesMappingComp2_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__UsesMappingComp1_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__UsesGenericCompGeneric_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__UsesGenericComp_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__UsesUntypedComp_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
+      var _ = this;
+      _.__HostView_component = $;
+      _.__HostView__injector = _.__HostView_componentView = null;
+      _._data = t0;
+    },
+    ViewUntypedComp0: function ViewUntypedComp0(t0) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewUsesUntypedComp0: function ViewUsesUntypedComp0(t0) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesUntypedComp0__UntypedComp_0_5 = _.__ViewUsesUntypedComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewGenericComp0: function ViewGenericComp0(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesGenericComp0: function ViewUsesGenericComp0(t0) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesGenericComp0__GenericComp_0_5 = _.__ViewUsesGenericComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewUsesGenericCompGeneric0: function ViewUsesGenericCompGeneric0(t0, t1) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesGenericCompGeneric0__GenericComp_0_5 = _.__ViewUsesGenericCompGeneric0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewMappingComp10: function ViewMappingComp10(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesMappingComp10: function ViewUsesMappingComp10(t0) {
+      var _ = this;
+      _._expr_1 = _._expr_0 = _.__ViewUsesMappingComp10__MappingComp1_0_5 = _.__ViewUsesMappingComp10__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewMappingComp20: function ViewMappingComp20(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesMappingComp20: function ViewUsesMappingComp20(t0) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesMappingComp20__MappingComp2_0_5 = _.__ViewUsesMappingComp20__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewBoundComp0: function ViewBoundComp0(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesBoundCompWithBounds0: function ViewUsesBoundCompWithBounds0(t0) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesBoundCompWithBounds0__BoundComp_0_5 = _.__ViewUsesBoundCompWithBounds0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewFunctionTypeComp0: function ViewFunctionTypeComp0(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesFunctionTypeComp0: function ViewUsesFunctionTypeComp0(t0) {
+      var _ = this;
+      _._expr_0 = _.__ViewUsesFunctionTypeComp0__FunctionTypeComp_0_5 = _.__ViewUsesFunctionTypeComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewNestedParentComp0: function ViewNestedParentComp0(t0, t1) {
+      var _ = this;
+      _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewNestedParentComp0__NgFor_2_9 = _.__ViewNestedParentComp0__appEl_2 = _.__ViewNestedParentComp0__NestedChildComp_1_5 = _.__ViewNestedParentComp0__compView_1 = _.__ViewNestedParentComp0__NestedChildComp_0_5 = _.__ViewNestedParentComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewNestedParentComp0_build_closure: function ViewNestedParentComp0_build_closure(t0) {
+      this.$this = t0;
+    },
+    _ViewNestedParentComp1: function _ViewNestedParentComp1(t0, t1) {
+      var _ = this;
+      _._expr_0 = _.___ViewNestedParentComp1__NestedChildComp_0_5 = _.___ViewNestedParentComp1__compView_0 = null;
+      _._embedded_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewNestedChildComp0: function ViewNestedChildComp0(t0, t1) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+      _.$ti = t1;
+    },
+    ViewUsesNestedParentComp0: function ViewUsesNestedParentComp0(t0) {
+      var _ = this;
+      _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewUsesNestedParentComp0__NestedParentComp_0_5 = _.__ViewUsesNestedParentComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewUsesMultipleTypesComp0: function ViewUsesMultipleTypesComp0(t0) {
+      var _ = this;
+      _._expr_1 = _._expr_0 = _.__ViewUsesMultipleTypesComp0__GenericComp_1_5 = _.__ViewUsesMultipleTypesComp0__compView_1 = _.__ViewUsesMultipleTypesComp0__GenericComp_0_5 = _.__ViewUsesMultipleTypesComp0__compView_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewUsesGenericChangeDetector0: function ViewUsesGenericChangeDetector0(t0) {
+      var _ = this;
+      _.__ViewUsesGenericChangeDetector0__el_0 = _._expr_0 = _.__ViewUsesGenericChangeDetector0__GenericDirective_0_5 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    GenericDirectiveNgCd: function GenericDirectiveNgCd(t0) {
+      this.instance = t0;
+      this._expr_0 = null;
+    },
+    noProviderError: function(token) {
+      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
+    }
+  },
+  C = {},
+  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
+      this._hostView = t0;
+      this._nativeElement = t1;
+      this.$ti = t2;
+    }, ComponentFactory: function ComponentFactory(t0, t1) {
+      this.selector = t0;
+      this._viewFactory = t1;
+    }, TemplateRef: function TemplateRef(t0, t1) {
+      this._template_ref$_viewContainer = t0;
+      this._template_ref$_viewFactory = t1;
+    },
+    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
+      return new D.ViewFragment(nodesOrViewContainers);
+    },
+    ViewFragment__flattenDomNodes: function(target, nodes) {
+      var i;
+      for (i = 0; i < 1; ++i)
+        target.push(nodes[i]);
+      return target;
+    },
+    ViewFragment: function ViewFragment(t0) {
+      this._nodesOrViewContainers = t0;
+    }
+  },
+  E = {DirectiveChangeDetector: function DirectiveChangeDetector() {
+    },
+    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
+      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
+    },
+    ComponentView: function ComponentView() {
+    },
+    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
+      var _ = this;
+      _.parentView = t0;
+      _.parentIndex = t1;
+      _.___ComponentViewData_projectedNodes = null;
+      _._changeDetectionMode = t2;
+      _._changeDetectorState = 0;
+      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
+    },
+    _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
+      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
+    },
+    EmbeddedView: function EmbeddedView() {
+    },
+    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
+      var _ = this;
+      _.ctx = t0;
+      _.componentStyles = t1;
+      _.parentView = t2;
+      _.parentIndex = t3;
+      _.projectedNodes = t4;
+      _.locals = t5;
+      _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
+      _._embedded_view$_changeDetectorState = 0;
+      _._embedded_view$_shouldSkipChangeDetection = _._embedded_view$_destroyed = false;
+    }
+  },
+  G = {
+    _createNgZone: function() {
+      var t5, t6, _null = null,
+        t1 = new P.Object(),
+        t2 = type$.void,
+        t3 = P.StreamController_StreamController$broadcast(true, t2),
+        t4 = P.StreamController_StreamController$broadcast(true, t2);
+      t2 = P.StreamController_StreamController$broadcast(true, t2);
+      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
+      t6 = $.Zone__current;
+      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
+      t2 = type$.nullable_Object;
+      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
+      if (t5.__NgZone__innerZone == null)
+        t5.__NgZone__innerZone = t2;
+      else
+        H.throwExpression(H.LateError$fieldAI("_innerZone"));
+      return t5;
+    },
+    appInjector: function(userProvidedInjector) {
+      var applicationRef, ngZone, t2, userInjector, injector,
+        t1 = $.$get$appGlobals();
+      t1 = U.minimalApp().call$1(t1._hostInjector);
+      applicationRef = new H._Cell();
+      applicationRef._value = applicationRef;
+      ngZone = G._createNgZone();
+      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
+      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
+      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
+      return injector;
+    },
+    _identityInjector: function($parent) {
+      return $parent;
+    },
+    appInjector_closure: function appInjector_closure(t0) {
+      this.applicationRef = t0;
+    },
+    appInjector_closure0: function appInjector_closure0() {
+    },
+    appInjector_closure1: function appInjector_closure1(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure2: function appInjector_closure2(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
+      this.applicationRef = t0;
+      this.ngZone = t1;
+      this.userInjector = t2;
+    },
+    _LazyInjector: function _LazyInjector(t0, t1) {
+      this._providers = t0;
+      this._parent = t1;
+    },
+    HostView: function HostView() {
+    },
+    _HostViewData: function _HostViewData() {
+      var _ = this;
+      _._onDestroyCallbacks = _.viewFragment = null;
+      _._host_view$_changeDetectorState = 0;
+      _._host_view$_shouldSkipChangeDetection = _._destroyed = false;
+    }
+  },
   H = {JS_CONST: function JS_CONST() {
     },
     LateError$fieldNI: function(fieldName) {
@@ -2925,6 +3234,131 @@
     JSString: function JSString() {
     }
   },
+  K = {TransitionalAppHost: function TransitionalAppHost(t0) {
+      this._hostInjector = t0;
+    }},
+  L = {OpaqueToken: function OpaqueToken(t0) {
+      this.$ti = t0;
+    },
+    main: function() {
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", A.generic_directives_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
+    },
+    UsesFunctionTypeComp__function: function($name) {
+      self.deopt($name);
+    },
+    GoldenComponent: function GoldenComponent() {
+    },
+    UntypedComp: function UntypedComp() {
+    },
+    UsesUntypedComp: function UsesUntypedComp(t0) {
+      this.binding = t0;
+    },
+    GenericComp: function GenericComp(t0) {
+      this.$ti = t0;
+    },
+    UsesGenericComp: function UsesGenericComp(t0) {
+      this.binding = t0;
+    },
+    UsesGenericCompGeneric: function UsesGenericCompGeneric(t0, t1) {
+      this.binding = t0;
+      this.$ti = t1;
+    },
+    MappingComp1: function MappingComp1(t0) {
+      this.$ti = t0;
+    },
+    UsesMappingComp1: function UsesMappingComp1(t0, t1) {
+      this.bindKey = t0;
+      this.bindValue = t1;
+    },
+    MappingComp2: function MappingComp2(t0) {
+      this.$ti = t0;
+    },
+    UsesMappingComp2: function UsesMappingComp2(t0) {
+      this.binding = t0;
+    },
+    BoundComp: function BoundComp(t0) {
+      this.$ti = t0;
+    },
+    UsesBoundCompWithBounds: function UsesBoundCompWithBounds(t0) {
+      this.binding = t0;
+    },
+    FunctionTypeComp: function FunctionTypeComp(t0) {
+      this.$ti = t0;
+    },
+    UsesFunctionTypeComp: function UsesFunctionTypeComp() {
+    },
+    NestedParentComp: function NestedParentComp(t0) {
+      var _ = this;
+      _.moreInputs = _.input2 = _.input1 = null;
+      _.$ti = t0;
+    },
+    NestedChildComp: function NestedChildComp(t0) {
+      this.$ti = t0;
+    },
+    UsesNestedParentComp: function UsesNestedParentComp(t0, t1, t2) {
+      this.binding1 = t0;
+      this.binding2 = t1;
+      this.moreBindings = t2;
+    },
+    UsesMultipleTypesComp: function UsesMultipleTypesComp(t0, t1) {
+      this.name = t0;
+      this.index = t1;
+    },
+    GenericDirective: function GenericDirective() {
+      this.input = null;
+    },
+    UsesGenericChangeDetector: function UsesGenericChangeDetector(t0) {
+      this.value = t0;
+    }
+  },
+  M = {ChangeDetectionHost: function ChangeDetectionHost() {
+    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._box_0 = t0;
+      _.$this = t1;
+      _.callback = t2;
+      _.completer = t3;
+      _.R = t4;
+    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
+      this.completer = t0;
+      this.R = t1;
+    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
+      this.$this = t0;
+      this.completer = t1;
+    }, ComponentLoader: function ComponentLoader() {
+    },
+    _MapInjector$: function(providers, $parent) {
+      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
+      t1.addAll$1(0, providers);
+      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
+    },
+    Injector: function Injector() {
+    },
+    HierarchicalInjector: function HierarchicalInjector() {
+    },
+    _EmptyInjector: function _EmptyInjector() {
+    },
+    _MapInjector: function _MapInjector(t0, t1) {
+      this._injector$_providers = t0;
+      this._parent = t1;
+    }
+  },
+  O = {
+    _UnscopedComponentStyles$: function(styles, componentUrl) {
+      var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
+      t1._appendStyles$0();
+      return t1;
+    },
+    _flattenStyles: function(styles, target, componentId) {
+      return target;
+    },
+    ComponentStyles: function ComponentStyles() {
+    },
+    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
+      this._componentUrl = t0;
+      this._styles = t1;
+    }
+  },
   P = {
     _AsyncRun__initializeScheduleImmediate: function() {
       var div, span, t1 = {};
@@ -4103,6 +4537,233 @@
         return P._convertDartFunctionFast(f);
     }
   },
+  Q = {AppViewUtils: function AppViewUtils() {
+    }},
+  R = {NgFor: function NgFor(t0, t1) {
+      var _ = this;
+      _._viewContainer = t0;
+      _._ngForOf = _._differ = null;
+      _._templateRef = t1;
+    }, NgFor__applyChanges_closure: function NgFor__applyChanges_closure(t0, t1) {
+      this.$this = t0;
+      this.insertTuples = t1;
+    }, NgFor__applyChanges_closure0: function NgFor__applyChanges_closure0(t0) {
+      this.$this = t0;
+    }, _RecordViewTuple: function _RecordViewTuple(t0, t1) {
+      this.view = t0;
+      this.record = t1;
+    },
+    _trackByIdentity: function(index, item) {
+      return item;
+    },
+    _getPreviousIndex: function(item, addRemoveOffset, moveOffsets) {
+      var t1, moveOffset,
+        previousIndex = item.previousIndex;
+      if (previousIndex == null)
+        return null;
+      if (moveOffsets != null && previousIndex < moveOffsets.length) {
+        if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
+          return H.ioore(moveOffsets, previousIndex);
+        t1 = moveOffsets[previousIndex];
+        t1.toString;
+        moveOffset = t1;
+      } else
+        moveOffset = 0;
+      return previousIndex + addRemoveOffset + moveOffset;
+    },
+    DefaultIterableDiffer: function DefaultIterableDiffer(t0) {
+      var _ = this;
+      _._trackByFn = t0;
+      _._identityChangesTail = _._identityChangesHead = _._removalsTail = _._removalsHead = _._movesTail = _._movesHead = _._additionsTail = _._additionsHead = _._itTail = _._itHead = _._previousItHead = _._unlinkedRecords = _._linkedRecords = _._default_iterable_differ$_length = null;
+    },
+    CollectionChangeRecord: function CollectionChangeRecord(t0, t1) {
+      var _ = this;
+      _.item = t0;
+      _.trackById = t1;
+      _._nextIdentityChange = _._nextMoved = _._nextAdded = _._nextRemoved = _._prevRemoved = _._nextDup = _._prevDup = _._default_iterable_differ$_next = _._prev = _._nextPrevious = _.previousIndex = _.currentIndex = null;
+    },
+    _DuplicateItemRecordList: function _DuplicateItemRecordList() {
+      this._tail = this._head = null;
+    },
+    _DuplicateMap: function _DuplicateMap(t0) {
+      this._default_iterable_differ$_map = t0;
+    }
+  },
+  T = {
+    _JSTestabilityProxy__getAngularTestability: function(element) {
+      var t1, i, t2, result,
+        registry = self.self.ngTestabilityRegistries;
+      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
+        t2 = t1.$index(registry, i);
+        t2.toString;
+        result = t2.getAngularTestability.apply(t2, [element]);
+        if (result != null)
+          return result;
+      }
+      throw H.wrapException(P.StateError$("Could not find testability for element."));
+    },
+    _JSTestabilityProxy__getAllAngularTestabilities: function() {
+      var t1, i, t2, testabilities, $length, j,
+        registry = self.self.ngTestabilityRegistries,
+        result = [];
+      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
+        t2 = t1.$index(registry, i);
+        t2.toString;
+        testabilities = t2.getAllAngularTestabilities.apply(t2, []);
+        $length = testabilities.length;
+        for (j = 0; j < $length; ++j)
+          result.push(testabilities[j]);
+      }
+      return result;
+    },
+    _JSTestabilityProxy__whenAllStable: function(callback) {
+      var decrement, _i, testability, _box_0 = {},
+        testabilities = T._JSTestabilityProxy__getAllAngularTestabilities(),
+        pendingStable = testabilities.length;
+      _box_0.pendingStable = pendingStable;
+      _box_0.anyDidWork = false;
+      decrement = new T._JSTestabilityProxy__whenAllStable_decrement(_box_0, callback);
+      for (_i = 0; _i < testabilities.length; testabilities.length === pendingStable || (0, H.throwConcurrentModificationError)(testabilities), ++_i) {
+        testability = testabilities[_i];
+        testability.toString;
+        testability.whenStable.apply(testability, [P.allowInterop(decrement)]);
+      }
+    },
+    _JSTestabilityProxy__createRegistry: function(registry) {
+      var object = {};
+      object.getAngularTestability = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAngularTestability(registry));
+      object.getAllAngularTestabilities = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities(registry));
+      return object;
+    },
+    _extension_0_asJsApi: function(_this) {
+      return {isStable: P.allowInterop(new T._extension_0_asJsApi_closure(_this)), whenStable: P.allowInterop(_this.get$whenStable(_this))};
+    },
+    _JSTestabilityProxy: function _JSTestabilityProxy() {
+    },
+    _JSTestabilityProxy__whenAllStable_decrement: function _JSTestabilityProxy__whenAllStable_decrement(t0, t1) {
+      this._box_0 = t0;
+      this.callback = t1;
+    },
+    _JSTestabilityProxy__createRegistry_getAngularTestability: function _JSTestabilityProxy__createRegistry_getAngularTestability(t0) {
+      this.registry = t0;
+    },
+    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities(t0) {
+      this.registry = t0;
+    },
+    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure() {
+    },
+    _extension_0_asJsApi_closure: function _extension_0_asJsApi_closure(t0) {
+      this._this = t0;
+    },
+    Testability: function Testability(t0) {
+      this._testability$_ngZone = t0;
+      this._callWhenStable = null;
+    },
+    Testability__watchForStability_closure: function Testability__watchForStability_closure(t0) {
+      this.$this = t0;
+    },
+    Testability__watchForStability__closure: function Testability__watchForStability__closure(t0) {
+      this.$this = t0;
+    },
+    Testability__watchForStability___closure: function Testability__watchForStability___closure(t0) {
+      this.$this = t0;
+    },
+    Testability__runCallbacksIfStable_closure: function Testability__runCallbacksIfStable_closure(t0, t1) {
+      this.$this = t0;
+      this.didWork = t1;
+    },
+    TestabilityRegistry: function TestabilityRegistry(t0) {
+      this._appRoots = t0;
+      this._proxy = null;
+    },
+    updateAttribute: function(element, attribute, value) {
+      if (value == null)
+        element.removeAttribute(attribute);
+      else
+        T.setAttribute(element, attribute, value);
+      $.domRootRendererIsDirty = true;
+    },
+    setAttribute: function(element, attribute, value) {
+      element.setAttribute(attribute, value);
+    },
+    appendAnchor: function($parent) {
+      var t1 = document;
+      return $parent.appendChild(t1.createComment(""));
+    },
+    appendDiv: function(doc, $parent) {
+      var t1 = doc.createElement("div");
+      return $parent.appendChild(t1);
+    },
+    insertNodesBefore: function(nodes, $parent, sibling) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        $parent.insertBefore(nodes[i], sibling);
+      }
+    },
+    appendNodes: function(nodes, $parent) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        $parent.appendChild(nodes[i]);
+      }
+    },
+    removeNodes: function(nodes) {
+      var l, i, t1, t2;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        t1 = nodes[i];
+        t2 = t1.parentNode;
+        if (t2 != null)
+          t2.removeChild(t1);
+      }
+    },
+    insertNodesAsSibling: function(nodes, sibling) {
+      var nextSibling,
+        parentOfSibling = sibling.parentNode;
+      if (nodes.length === 0 || parentOfSibling == null)
+        return;
+      nextSibling = sibling.nextSibling;
+      if (nextSibling == null)
+        T.appendNodes(nodes, parentOfSibling);
+      else
+        T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
+    }
+  },
+  U = {
+    minimalApp: function() {
+      return new U.minimalApp_closure();
+    },
+    _createRandomAppId: function() {
+      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
+      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
+    },
+    minimalApp_closure: function minimalApp_closure() {
+    },
+    _createRandomAppId_char: function _createRandomAppId_char(t0) {
+      this.random = t0;
+    },
+    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
+      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
+      if (stackTrace != null)
+        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    ExceptionHandler: function ExceptionHandler() {
+    },
+    JsTestability: function JsTestability() {
+    }
+  },
+  V = {ViewContainer: function ViewContainer(t0, t1, t2) {
+      var _ = this;
+      _.index = t0;
+      _.parentView = t1;
+      _.nativeElement = t2;
+      _.nestedViews = null;
+    }},
   W = {
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = hash + value & 536870911;
@@ -4343,146 +5004,6 @@
     __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin: function __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin() {
     }
   },
-  U = {
-    minimalApp: function() {
-      return new U.minimalApp_closure();
-    },
-    _createRandomAppId: function() {
-      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
-      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
-    },
-    minimalApp_closure: function minimalApp_closure() {
-    },
-    _createRandomAppId_char: function _createRandomAppId_char(t0) {
-      this.random = t0;
-    },
-    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
-      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
-      if (stackTrace != null)
-        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
-    },
-    ExceptionHandler: function ExceptionHandler() {
-    },
-    JsTestability: function JsTestability() {
-    }
-  },
-  G = {
-    _createNgZone: function() {
-      var t5, t6, _null = null,
-        t1 = new P.Object(),
-        t2 = type$.void,
-        t3 = P.StreamController_StreamController$broadcast(true, t2),
-        t4 = P.StreamController_StreamController$broadcast(true, t2);
-      t2 = P.StreamController_StreamController$broadcast(true, t2);
-      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
-      t6 = $.Zone__current;
-      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
-      t2 = type$.nullable_Object;
-      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
-      if (t5.__NgZone__innerZone == null)
-        t5.__NgZone__innerZone = t2;
-      else
-        H.throwExpression(H.LateError$fieldAI("_innerZone"));
-      return t5;
-    },
-    appInjector: function(userProvidedInjector) {
-      var applicationRef, ngZone, t2, userInjector, injector,
-        t1 = $.$get$appGlobals();
-      t1 = U.minimalApp().call$1(t1._hostInjector);
-      applicationRef = new H._Cell();
-      applicationRef._value = applicationRef;
-      ngZone = G._createNgZone();
-      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
-      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
-      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
-      return injector;
-    },
-    _identityInjector: function($parent) {
-      return $parent;
-    },
-    appInjector_closure: function appInjector_closure(t0) {
-      this.applicationRef = t0;
-    },
-    appInjector_closure0: function appInjector_closure0() {
-    },
-    appInjector_closure1: function appInjector_closure1(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure2: function appInjector_closure2(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
-      this.applicationRef = t0;
-      this.ngZone = t1;
-      this.userInjector = t2;
-    },
-    _LazyInjector: function _LazyInjector(t0, t1) {
-      this._providers = t0;
-      this._parent = t1;
-    },
-    HostView: function HostView() {
-    },
-    _HostViewData: function _HostViewData() {
-      var _ = this;
-      _._onDestroyCallbacks = _.viewFragment = null;
-      _._host_view$_changeDetectorState = 0;
-      _._host_view$_shouldSkipChangeDetection = _._destroyed = false;
-    }
-  },
-  R = {NgFor: function NgFor(t0, t1) {
-      var _ = this;
-      _._viewContainer = t0;
-      _._ngForOf = _._differ = null;
-      _._templateRef = t1;
-    }, NgFor__applyChanges_closure: function NgFor__applyChanges_closure(t0, t1) {
-      this.$this = t0;
-      this.insertTuples = t1;
-    }, NgFor__applyChanges_closure0: function NgFor__applyChanges_closure0(t0) {
-      this.$this = t0;
-    }, _RecordViewTuple: function _RecordViewTuple(t0, t1) {
-      this.view = t0;
-      this.record = t1;
-    },
-    _trackByIdentity: function(index, item) {
-      return item;
-    },
-    _getPreviousIndex: function(item, addRemoveOffset, moveOffsets) {
-      var t1, moveOffset,
-        previousIndex = item.previousIndex;
-      if (previousIndex == null)
-        return null;
-      if (moveOffsets != null && previousIndex < moveOffsets.length) {
-        if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
-          return H.ioore(moveOffsets, previousIndex);
-        t1 = moveOffsets[previousIndex];
-        t1.toString;
-        moveOffset = t1;
-      } else
-        moveOffset = 0;
-      return previousIndex + addRemoveOffset + moveOffset;
-    },
-    DefaultIterableDiffer: function DefaultIterableDiffer(t0) {
-      var _ = this;
-      _._trackByFn = t0;
-      _._identityChangesTail = _._identityChangesHead = _._removalsTail = _._removalsHead = _._movesTail = _._movesHead = _._additionsTail = _._additionsHead = _._itTail = _._itHead = _._previousItHead = _._unlinkedRecords = _._linkedRecords = _._default_iterable_differ$_length = null;
-    },
-    CollectionChangeRecord: function CollectionChangeRecord(t0, t1) {
-      var _ = this;
-      _.item = t0;
-      _.trackById = t1;
-      _._nextIdentityChange = _._nextMoved = _._nextAdded = _._nextRemoved = _._prevRemoved = _._nextDup = _._prevDup = _._default_iterable_differ$_next = _._prev = _._nextPrevious = _.previousIndex = _.currentIndex = null;
-    },
-    _DuplicateItemRecordList: function _DuplicateItemRecordList() {
-      this._tail = this._head = null;
-    },
-    _DuplicateMap: function _DuplicateMap(t0) {
-      this._default_iterable_differ$_map = t0;
-    }
-  },
-  K = {TransitionalAppHost: function TransitionalAppHost(t0) {
-      this._hostInjector = t0;
-    }},
   Y = {
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
       var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
@@ -4575,529 +5096,8 @@
       this.error = t0;
       this.stackTrace = t1;
     }
-  },
-  E = {DirectiveChangeDetector: function DirectiveChangeDetector() {
-    },
-    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
-      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
-    },
-    ComponentView: function ComponentView() {
-    },
-    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
-      var _ = this;
-      _.parentView = t0;
-      _.parentIndex = t1;
-      _.___ComponentViewData_projectedNodes = null;
-      _._changeDetectionMode = t2;
-      _._changeDetectorState = 0;
-      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
-    },
-    _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
-      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
-    },
-    EmbeddedView: function EmbeddedView() {
-    },
-    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
-      var _ = this;
-      _.ctx = t0;
-      _.componentStyles = t1;
-      _.parentView = t2;
-      _.parentIndex = t3;
-      _.projectedNodes = t4;
-      _.locals = t5;
-      _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
-      _._embedded_view$_changeDetectorState = 0;
-      _._embedded_view$_shouldSkipChangeDetection = _._embedded_view$_destroyed = false;
-    }
-  },
-  M = {ChangeDetectionHost: function ChangeDetectionHost() {
-    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
-      var _ = this;
-      _._box_0 = t0;
-      _.$this = t1;
-      _.callback = t2;
-      _.completer = t3;
-      _.R = t4;
-    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
-      this.completer = t0;
-      this.R = t1;
-    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
-      this.$this = t0;
-      this.completer = t1;
-    }, ComponentLoader: function ComponentLoader() {
-    },
-    _MapInjector$: function(providers, $parent) {
-      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
-      t1.addAll$1(0, providers);
-      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
-    },
-    Injector: function Injector() {
-    },
-    HierarchicalInjector: function HierarchicalInjector() {
-    },
-    _EmptyInjector: function _EmptyInjector() {
-    },
-    _MapInjector: function _MapInjector(t0, t1) {
-      this._injector$_providers = t0;
-      this._parent = t1;
-    }
-  },
-  Q = {AppViewUtils: function AppViewUtils() {
-    }},
-  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
-      this._hostView = t0;
-      this._nativeElement = t1;
-      this.$ti = t2;
-    }, ComponentFactory: function ComponentFactory(t0, t1) {
-      this.selector = t0;
-      this._viewFactory = t1;
-    }, TemplateRef: function TemplateRef(t0, t1) {
-      this._template_ref$_viewContainer = t0;
-      this._template_ref$_viewFactory = t1;
-    },
-    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
-      return new D.ViewFragment(nodesOrViewContainers);
-    },
-    ViewFragment__flattenDomNodes: function(target, nodes) {
-      var i;
-      for (i = 0; i < 1; ++i)
-        target.push(nodes[i]);
-      return target;
-    },
-    ViewFragment: function ViewFragment(t0) {
-      this._nodesOrViewContainers = t0;
-    }
-  },
-  O = {
-    _UnscopedComponentStyles$: function(styles, componentUrl) {
-      var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
-      t1._appendStyles$0();
-      return t1;
-    },
-    _flattenStyles: function(styles, target, componentId) {
-      return target;
-    },
-    ComponentStyles: function ComponentStyles() {
-    },
-    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
-      this._componentUrl = t0;
-      this._styles = t1;
-    }
-  },
-  V = {ViewContainer: function ViewContainer(t0, t1, t2) {
-      var _ = this;
-      _.index = t0;
-      _.parentView = t1;
-      _.nativeElement = t2;
-      _.nestedViews = null;
-    }},
-  A = {RenderView: function RenderView() {
-    }, View: function View() {
-    }, _ElementInjector: function _ElementInjector(t0, t1) {
-      this._view = t0;
-      this._nodeIndex = t1;
-    },
-    viewFactory_GoldenComponentHost0: function() {
-      return new A._ViewGoldenComponentHost0(new G._HostViewData());
-    },
-    ViewGenericComp0$: function(parentView, parentIndex, $T) {
-      var t2,
-        t1 = new A.ViewGenericComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewGenericComp0<0>")),
-        styles = $.ViewGenericComp0__componentStyles;
-      if (styles == null)
-        styles = $.ViewGenericComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.__ComponentView_componentStyles = styles;
-      t2 = document.createElement("comp");
-      t1.__ComponentView_rootElement = t2;
-      return t1;
-    },
-    ViewNestedChildComp0$: function(parentView, parentIndex, $T) {
-      var t2,
-        t1 = new A.ViewNestedChildComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewNestedChildComp0<0>")),
-        styles = $.ViewNestedChildComp0__componentStyles;
-      if (styles == null)
-        styles = $.ViewNestedChildComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
-      t1.__ComponentView_componentStyles = styles;
-      t2 = document.createElement("child");
-      t1.__ComponentView_rootElement = t2;
-      return t1;
-    },
-    ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
-      var _ = this;
-      _.__ViewGoldenComponent0__UsesGenericChangeDetector_9_5 = _.__ViewGoldenComponent0__compView_9 = _.__ViewGoldenComponent0__UsesMultipleTypesComp_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__UsesNestedParentComp_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__UsesFunctionTypeComp_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__UsesBoundCompWithBounds_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__UsesMappingComp2_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__UsesMappingComp1_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__UsesGenericCompGeneric_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__UsesGenericComp_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__UsesUntypedComp_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
-      var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
-      _._data = t0;
-    },
-    ViewUntypedComp0: function ViewUntypedComp0(t0) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewUsesUntypedComp0: function ViewUsesUntypedComp0(t0) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesUntypedComp0__UntypedComp_0_5 = _.__ViewUsesUntypedComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewGenericComp0: function ViewGenericComp0(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesGenericComp0: function ViewUsesGenericComp0(t0) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesGenericComp0__GenericComp_0_5 = _.__ViewUsesGenericComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewUsesGenericCompGeneric0: function ViewUsesGenericCompGeneric0(t0, t1) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesGenericCompGeneric0__GenericComp_0_5 = _.__ViewUsesGenericCompGeneric0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewMappingComp10: function ViewMappingComp10(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesMappingComp10: function ViewUsesMappingComp10(t0) {
-      var _ = this;
-      _._expr_1 = _._expr_0 = _.__ViewUsesMappingComp10__MappingComp1_0_5 = _.__ViewUsesMappingComp10__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewMappingComp20: function ViewMappingComp20(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesMappingComp20: function ViewUsesMappingComp20(t0) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesMappingComp20__MappingComp2_0_5 = _.__ViewUsesMappingComp20__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewBoundComp0: function ViewBoundComp0(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesBoundCompWithBounds0: function ViewUsesBoundCompWithBounds0(t0) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesBoundCompWithBounds0__BoundComp_0_5 = _.__ViewUsesBoundCompWithBounds0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewFunctionTypeComp0: function ViewFunctionTypeComp0(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesFunctionTypeComp0: function ViewUsesFunctionTypeComp0(t0) {
-      var _ = this;
-      _._expr_0 = _.__ViewUsesFunctionTypeComp0__FunctionTypeComp_0_5 = _.__ViewUsesFunctionTypeComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewNestedParentComp0: function ViewNestedParentComp0(t0, t1) {
-      var _ = this;
-      _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewNestedParentComp0__NgFor_2_9 = _.__ViewNestedParentComp0__appEl_2 = _.__ViewNestedParentComp0__NestedChildComp_1_5 = _.__ViewNestedParentComp0__compView_1 = _.__ViewNestedParentComp0__NestedChildComp_0_5 = _.__ViewNestedParentComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewNestedParentComp0_build_closure: function ViewNestedParentComp0_build_closure(t0) {
-      this.$this = t0;
-    },
-    _ViewNestedParentComp1: function _ViewNestedParentComp1(t0, t1) {
-      var _ = this;
-      _._expr_0 = _.___ViewNestedParentComp1__NestedChildComp_0_5 = _.___ViewNestedParentComp1__compView_0 = null;
-      _._embedded_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewNestedChildComp0: function ViewNestedChildComp0(t0, t1) {
-      var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-      _.$ti = t1;
-    },
-    ViewUsesNestedParentComp0: function ViewUsesNestedParentComp0(t0) {
-      var _ = this;
-      _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewUsesNestedParentComp0__NestedParentComp_0_5 = _.__ViewUsesNestedParentComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewUsesMultipleTypesComp0: function ViewUsesMultipleTypesComp0(t0) {
-      var _ = this;
-      _._expr_1 = _._expr_0 = _.__ViewUsesMultipleTypesComp0__GenericComp_1_5 = _.__ViewUsesMultipleTypesComp0__compView_1 = _.__ViewUsesMultipleTypesComp0__GenericComp_0_5 = _.__ViewUsesMultipleTypesComp0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    ViewUsesGenericChangeDetector0: function ViewUsesGenericChangeDetector0(t0) {
-      var _ = this;
-      _.__ViewUsesGenericChangeDetector0__el_0 = _._expr_0 = _.__ViewUsesGenericChangeDetector0__GenericDirective_0_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._component_view$_data = t0;
-    },
-    GenericDirectiveNgCd: function GenericDirectiveNgCd(t0) {
-      this.instance = t0;
-      this._expr_0 = null;
-    },
-    noProviderError: function(token) {
-      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
-    }
-  },
-  L = {OpaqueToken: function OpaqueToken(t0) {
-      this.$ti = t0;
-    },
-    main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", A.generic_directives_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
-    },
-    UsesFunctionTypeComp__function: function($name) {
-      self.deopt($name);
-    },
-    GoldenComponent: function GoldenComponent() {
-    },
-    UntypedComp: function UntypedComp() {
-    },
-    UsesUntypedComp: function UsesUntypedComp(t0) {
-      this.binding = t0;
-    },
-    GenericComp: function GenericComp(t0) {
-      this.$ti = t0;
-    },
-    UsesGenericComp: function UsesGenericComp(t0) {
-      this.binding = t0;
-    },
-    UsesGenericCompGeneric: function UsesGenericCompGeneric(t0, t1) {
-      this.binding = t0;
-      this.$ti = t1;
-    },
-    MappingComp1: function MappingComp1(t0) {
-      this.$ti = t0;
-    },
-    UsesMappingComp1: function UsesMappingComp1(t0, t1) {
-      this.bindKey = t0;
-      this.bindValue = t1;
-    },
-    MappingComp2: function MappingComp2(t0) {
-      this.$ti = t0;
-    },
-    UsesMappingComp2: function UsesMappingComp2(t0) {
-      this.binding = t0;
-    },
-    BoundComp: function BoundComp(t0) {
-      this.$ti = t0;
-    },
-    UsesBoundCompWithBounds: function UsesBoundCompWithBounds(t0) {
-      this.binding = t0;
-    },
-    FunctionTypeComp: function FunctionTypeComp(t0) {
-      this.$ti = t0;
-    },
-    UsesFunctionTypeComp: function UsesFunctionTypeComp() {
-    },
-    NestedParentComp: function NestedParentComp(t0) {
-      var _ = this;
-      _.moreInputs = _.input2 = _.input1 = null;
-      _.$ti = t0;
-    },
-    NestedChildComp: function NestedChildComp(t0) {
-      this.$ti = t0;
-    },
-    UsesNestedParentComp: function UsesNestedParentComp(t0, t1, t2) {
-      this.binding1 = t0;
-      this.binding2 = t1;
-      this.moreBindings = t2;
-    },
-    UsesMultipleTypesComp: function UsesMultipleTypesComp(t0, t1) {
-      this.name = t0;
-      this.index = t1;
-    },
-    GenericDirective: function GenericDirective() {
-      this.input = null;
-    },
-    UsesGenericChangeDetector: function UsesGenericChangeDetector(t0) {
-      this.value = t0;
-    }
-  },
-  T = {
-    _JSTestabilityProxy__getAngularTestability: function(element) {
-      var t1, i, t2, result,
-        registry = self.self.ngTestabilityRegistries;
-      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
-        t2 = t1.$index(registry, i);
-        t2.toString;
-        result = t2.getAngularTestability.apply(t2, [element]);
-        if (result != null)
-          return result;
-      }
-      throw H.wrapException(P.StateError$("Could not find testability for element."));
-    },
-    _JSTestabilityProxy__getAllAngularTestabilities: function() {
-      var t1, i, t2, testabilities, $length, j,
-        registry = self.self.ngTestabilityRegistries,
-        result = [];
-      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
-        t2 = t1.$index(registry, i);
-        t2.toString;
-        testabilities = t2.getAllAngularTestabilities.apply(t2, []);
-        $length = testabilities.length;
-        for (j = 0; j < $length; ++j)
-          result.push(testabilities[j]);
-      }
-      return result;
-    },
-    _JSTestabilityProxy__whenAllStable: function(callback) {
-      var decrement, _i, testability, _box_0 = {},
-        testabilities = T._JSTestabilityProxy__getAllAngularTestabilities(),
-        pendingStable = testabilities.length;
-      _box_0.pendingStable = pendingStable;
-      _box_0.anyDidWork = false;
-      decrement = new T._JSTestabilityProxy__whenAllStable_decrement(_box_0, callback);
-      for (_i = 0; _i < testabilities.length; testabilities.length === pendingStable || (0, H.throwConcurrentModificationError)(testabilities), ++_i) {
-        testability = testabilities[_i];
-        testability.toString;
-        testability.whenStable.apply(testability, [P.allowInterop(decrement)]);
-      }
-    },
-    _JSTestabilityProxy__createRegistry: function(registry) {
-      var object = {};
-      object.getAngularTestability = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAngularTestability(registry));
-      object.getAllAngularTestabilities = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities(registry));
-      return object;
-    },
-    _extension_0_asJsApi: function(_this) {
-      return {isStable: P.allowInterop(new T._extension_0_asJsApi_closure(_this)), whenStable: P.allowInterop(_this.get$whenStable(_this))};
-    },
-    _JSTestabilityProxy: function _JSTestabilityProxy() {
-    },
-    _JSTestabilityProxy__whenAllStable_decrement: function _JSTestabilityProxy__whenAllStable_decrement(t0, t1) {
-      this._box_0 = t0;
-      this.callback = t1;
-    },
-    _JSTestabilityProxy__createRegistry_getAngularTestability: function _JSTestabilityProxy__createRegistry_getAngularTestability(t0) {
-      this.registry = t0;
-    },
-    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities(t0) {
-      this.registry = t0;
-    },
-    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure() {
-    },
-    _extension_0_asJsApi_closure: function _extension_0_asJsApi_closure(t0) {
-      this._this = t0;
-    },
-    Testability: function Testability(t0) {
-      this._testability$_ngZone = t0;
-      this._callWhenStable = null;
-    },
-    Testability__watchForStability_closure: function Testability__watchForStability_closure(t0) {
-      this.$this = t0;
-    },
-    Testability__watchForStability__closure: function Testability__watchForStability__closure(t0) {
-      this.$this = t0;
-    },
-    Testability__watchForStability___closure: function Testability__watchForStability___closure(t0) {
-      this.$this = t0;
-    },
-    Testability__runCallbacksIfStable_closure: function Testability__runCallbacksIfStable_closure(t0, t1) {
-      this.$this = t0;
-      this.didWork = t1;
-    },
-    TestabilityRegistry: function TestabilityRegistry(t0) {
-      this._appRoots = t0;
-      this._proxy = null;
-    },
-    updateAttribute: function(element, attribute, value) {
-      if (value == null)
-        element.removeAttribute(attribute);
-      else
-        T.setAttribute(element, attribute, value);
-      $.domRootRendererIsDirty = true;
-    },
-    setAttribute: function(element, attribute, value) {
-      element.setAttribute(attribute, value);
-    },
-    appendAnchor: function($parent) {
-      var t1 = document;
-      return $parent.appendChild(t1.createComment(""));
-    },
-    appendDiv: function(doc, $parent) {
-      var t1 = doc.createElement("div");
-      return $parent.appendChild(t1);
-    },
-    insertNodesBefore: function(nodes, $parent, sibling) {
-      var l, i;
-      for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
-          return H.ioore(nodes, i);
-        $parent.insertBefore(nodes[i], sibling);
-      }
-    },
-    appendNodes: function(nodes, $parent) {
-      var l, i;
-      for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
-          return H.ioore(nodes, i);
-        $parent.appendChild(nodes[i]);
-      }
-    },
-    removeNodes: function(nodes) {
-      var l, i, t1, t2;
-      for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
-          return H.ioore(nodes, i);
-        t1 = nodes[i];
-        t2 = t1.parentNode;
-        if (t2 != null)
-          t2.removeChild(t1);
-      }
-    },
-    insertNodesAsSibling: function(nodes, sibling) {
-      var nextSibling,
-        parentOfSibling = sibling.parentNode;
-      if (nodes.length === 0 || parentOfSibling == null)
-        return;
-      nextSibling = sibling.nextSibling;
-      if (nextSibling == null)
-        T.appendNodes(nodes, parentOfSibling);
-      else
-        T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
-    }
   };
-  var holders = [C, H, J, P, W, U, G, R, K, Y, E, M, Q, D, O, V, A, L, T];
+  var holders = [A, C, D, E, G, H, J, K, L, M, O, P, Q, R, T, U, V, W, Y];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
