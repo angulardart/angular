@@ -34,6 +34,9 @@ String? getTypeName(DartType type) {
   if (type is InterfaceType) {
     return type.element.name;
   }
+  if (type is VoidType) {
+    return 'void';
+  }
   throw UnimplementedError('(${type.runtimeType}) $type');
 }
 
