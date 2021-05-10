@@ -115,6 +115,19 @@ void main() {
     ]);
   });
 
+  test('should throw when ng-content select has no value', () async {
+    reader = FakeAssetReader();
+    normalizer = AstDirectiveNormalizer(reader);
+    metadata = CompileDirectiveMetadata(
+      metadataType: CompileDirectiveMetadataType.Component,
+      type: CompileTypeMetadata(name: 'A', moduleUrl: 'asset:a/lib/a.dart'),
+      template: CompileTemplateMetadata(
+        template: '<ng-content select></ng-content>',
+      ),
+    );
+    expect(normalizer.normalizeDirective(metadata), throwsBuildError);
+  });
+
   test('should read all external stylesheets', () async {
     reader = FakeAssetReader({
       'package:a/1.css': '',
