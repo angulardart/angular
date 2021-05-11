@@ -1947,7 +1947,7 @@
           argumentsText += sep;
           if (named[i + 1])
             argumentsText += "required ";
-          argumentsText += J.$add$ansx(H._rtiToString(named[i + 2], genericContext), " ") + named[i];
+          argumentsText += J.$add$ns(H._rtiToString(named[i + 2], genericContext), " ") + named[i];
         }
         argumentsText += "}";
       }
@@ -1978,7 +1978,7 @@
         questionArgument = rti._primary;
         s = H._rtiToString(questionArgument, genericContext);
         argumentKind = questionArgument._kind;
-        return J.$add$ansx(argumentKind === 11 || argumentKind === 12 ? C.JSString_methods.$add("(", s) + ")" : s, "?");
+        return J.$add$ns(argumentKind === 11 || argumentKind === 12 ? C.JSString_methods.$add("(", s) + ")" : s, "?");
       }
       if (kind === 8)
         return "FutureOr<" + H.S(H._rtiToString(rti._primary, genericContext)) + ">";
@@ -2922,24 +2922,6 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
-    getInterceptor$ansx: function(receiver) {
-      if (typeof receiver == "number")
-        return J.JSNumber.prototype;
-      if (typeof receiver == "string")
-        return J.JSString.prototype;
-      if (receiver == null)
-        return receiver;
-      if (receiver.constructor == Array)
-        return J.JSArray.prototype;
-      if (typeof receiver != "object") {
-        if (typeof receiver == "function")
-          return J.JavaScriptFunction.prototype;
-        return receiver;
-      }
-      if (receiver instanceof P.Object)
-        return receiver;
-      return J.getNativeInterceptor(receiver);
-    },
     getInterceptor$asx: function(receiver) {
       if (typeof receiver == "string")
         return J.JSString.prototype;
@@ -2970,6 +2952,17 @@
         return receiver;
       return J.getNativeInterceptor(receiver);
     },
+    getInterceptor$ns: function(receiver) {
+      if (typeof receiver == "number")
+        return J.JSNumber.prototype;
+      if (typeof receiver == "string")
+        return J.JSString.prototype;
+      if (receiver == null)
+        return receiver;
+      if (!(receiver instanceof P.Object))
+        return J.UnknownJavaScriptObject.prototype;
+      return receiver;
+    },
     getInterceptor$x: function(receiver) {
       if (receiver == null)
         return receiver;
@@ -2994,10 +2987,10 @@
     get$parent$x: function(receiver) {
       return J.getInterceptor$x(receiver).get$parent(receiver);
     },
-    $add$ansx: function(receiver, a0) {
+    $add$ns: function(receiver, a0) {
       if (typeof receiver == "number" && typeof a0 == "number")
         return receiver + a0;
-      return J.getInterceptor$ansx(receiver).$add(receiver, a0);
+      return J.getInterceptor$ns(receiver).$add(receiver, a0);
     },
     $eq$: function(receiver, a0) {
       if (receiver == null)

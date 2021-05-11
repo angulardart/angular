@@ -5507,7 +5507,7 @@
   };
   H.LinkedHashMapKeyIterator.prototype = {
     get$current: function(_) {
-      return H._instanceType(this)._precomputed1._as(this.__js_helper$_current);
+      return this.__js_helper$_current;
     },
     moveNext$0: function() {
       var cell, _this = this,

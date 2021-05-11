@@ -4657,10 +4657,8 @@
     __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin: function __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin() {
     }
   },
-  X = {UninitializedLocaleData: function UninitializedLocaleData(t0, t1, t2) {
-      this.message = t0;
-      this.fallbackData = t1;
-      this._badMessages = t2;
+  X = {UninitializedLocaleData: function UninitializedLocaleData(t0) {
+      this._badMessages = t0;
     }},
   Y = {
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
@@ -5441,7 +5439,7 @@
   };
   H.LinkedHashMapKeyIterator.prototype = {
     get$current: function(_) {
-      return H._instanceType(this)._precomputed1._as(this.__js_helper$_current);
+      return this.__js_helper$_current;
     },
     moveNext$0: function() {
       var cell, _this = this,
@@ -9856,7 +9854,7 @@
       return P.HashMap_HashMap(t1, t1);
     });
     _lazy($, "messageLookup", "$get$messageLookup", function() {
-      return new X.UninitializedLocaleData("initializeMessages(<locale>)", null, H._setArrayType([], type$.JSArray_String));
+      return new X.UninitializedLocaleData(H._setArrayType([], type$.JSArray_String));
     });
     _lazyFinal($, "appGlobals", "$get$appGlobals", function() {
       var t2,
