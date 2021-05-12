@@ -241,9 +241,9 @@
     viewFactory_GoldenComponentHost0: function() {
       return new A._ViewGoldenComponentHost0(new G._HostViewData());
     },
-    ViewGenericComp0$: function(parentView, parentIndex, $T) {
+    ViewGenericComp0$: function(parentView, parentIndex) {
       var t2,
-        t1 = new A.ViewGenericComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewGenericComp0<0>")),
+        t1 = new A.ViewGenericComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3)),
         styles = $.ViewGenericComp0__componentStyles;
       if (styles == null)
         styles = $.ViewGenericComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -252,9 +252,9 @@
       t1.__ComponentView_rootElement = t2;
       return t1;
     },
-    ViewNestedChildComp0$: function(parentView, parentIndex, $T) {
+    ViewNestedChildComp0$: function(parentView, parentIndex) {
       var t2,
-        t1 = new A.ViewNestedChildComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3), $T._eval$1("ViewNestedChildComp0<0>")),
+        t1 = new A.ViewNestedChildComp0(E._ComponentViewData__ComponentViewData(parentView, parentIndex, 3)),
         styles = $.ViewNestedChildComp0__componentStyles;
       if (styles == null)
         styles = $.ViewNestedChildComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -289,12 +289,11 @@
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
-    ViewGenericComp0: function ViewGenericComp0(t0, t1) {
+    ViewGenericComp0: function ViewGenericComp0(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesGenericComp0: function ViewUsesGenericComp0(t0) {
       var _ = this;
@@ -311,12 +310,11 @@
       _._component_view$_data = t0;
       _.$ti = t1;
     },
-    ViewMappingComp10: function ViewMappingComp10(t0, t1) {
+    ViewMappingComp10: function ViewMappingComp10(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesMappingComp10: function ViewUsesMappingComp10(t0) {
       var _ = this;
@@ -325,12 +323,11 @@
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
-    ViewMappingComp20: function ViewMappingComp20(t0, t1) {
+    ViewMappingComp20: function ViewMappingComp20(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesMappingComp20: function ViewUsesMappingComp20(t0) {
       var _ = this;
@@ -339,12 +336,11 @@
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
-    ViewBoundComp0: function ViewBoundComp0(t0, t1) {
+    ViewBoundComp0: function ViewBoundComp0(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesBoundCompWithBounds0: function ViewUsesBoundCompWithBounds0(t0) {
       var _ = this;
@@ -353,12 +349,11 @@
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
     },
-    ViewFunctionTypeComp0: function ViewFunctionTypeComp0(t0, t1) {
+    ViewFunctionTypeComp0: function ViewFunctionTypeComp0(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesFunctionTypeComp0: function ViewUsesFunctionTypeComp0(t0) {
       var _ = this;
@@ -384,12 +379,11 @@
       _._embedded_view$_data = t0;
       _.$ti = t1;
     },
-    ViewNestedChildComp0: function ViewNestedChildComp0(t0, t1) {
+    ViewNestedChildComp0: function ViewNestedChildComp0(t0) {
       var _ = this;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
-      _.$ti = t1;
     },
     ViewUsesNestedParentComp0: function ViewUsesNestedParentComp0(t0) {
       var _ = this;
@@ -8891,16 +8885,15 @@
         currentIndex.toString;
         t3 = t1._template_ref$_viewContainer;
         view = t1._template_ref$_viewFactory.call$2(t3.parentView, t3.index);
-        t3 = view.$ti;
-        t1 = A.ViewNestedChildComp0$(view, 0, t3._precomputed1);
+        t3 = A.ViewNestedChildComp0$(view, 0);
         if (view.___ViewNestedParentComp1__compView_0 == null)
-          view.___ViewNestedParentComp1__compView_0 = t1;
+          view.___ViewNestedParentComp1__compView_0 = t3;
         else
           H.throwExpression(H.LateError$fieldAI("_compView_0"));
         t1 = view.get$_compView_0();
         _el_0 = t1.get$rootElement(t1);
         if (view.___ViewNestedParentComp1__NestedChildComp_0_5 == null)
-          view.___ViewNestedParentComp1__NestedChildComp_0_5 = new L.NestedChildComp(t3._eval$1("NestedChildComp<1>"));
+          view.___ViewNestedParentComp1__NestedChildComp_0_5 = new L.NestedChildComp(view.$ti._eval$1("NestedChildComp<1>"));
         else
           H.throwExpression(H.LateError$fieldAI("_NestedChildComp_0_5"));
         view.get$_compView_0().create$1(0, view.get$_NestedChildComp_0_5());
@@ -10747,7 +10740,7 @@
     build$0: function() {
       var _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = A.ViewGenericComp0$(_this, 0, type$.int);
+        t1 = A.ViewGenericComp0$(_this, 0);
       if (_this.__ViewUsesGenericComp0__compView_0 == null)
         _this.__ViewUsesGenericComp0__compView_0 = t1;
       else
@@ -10786,16 +10779,15 @@
     build$0: function() {
       var _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = _this.$ti,
-        t2 = A.ViewGenericComp0$(_this, 0, t1._eval$1("List<1>"));
+        t1 = A.ViewGenericComp0$(_this, 0);
       if (_this.__ViewUsesGenericCompGeneric0__compView_0 == null)
-        _this.__ViewUsesGenericCompGeneric0__compView_0 = t2;
+        _this.__ViewUsesGenericCompGeneric0__compView_0 = t1;
       else
         H.throwExpression(H.LateError$fieldAI("_compView_0"));
-      t2 = _this.get$_compView_0();
-      parentRenderNode.appendChild(t2.get$rootElement(t2));
+      t1 = _this.get$_compView_0();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
       if (_this.__ViewUsesGenericCompGeneric0__GenericComp_0_5 == null)
-        _this.__ViewUsesGenericCompGeneric0__GenericComp_0_5 = new L.GenericComp(t1._eval$1("GenericComp<List<1>>"));
+        _this.__ViewUsesGenericCompGeneric0__GenericComp_0_5 = new L.GenericComp(_this.$ti._eval$1("GenericComp<List<1>>"));
       else
         H.throwExpression(H.LateError$fieldAI("_GenericComp_0_5"));
       _this.get$_compView_0().create$1(0, _this.get$_GenericComp_0_5());
@@ -10831,7 +10823,7 @@
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new A.ViewMappingComp10(E._ComponentViewData__ComponentViewData(_this, 0, 3), type$.ViewMappingComp10_int_String),
+        t1 = new A.ViewMappingComp10(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewMappingComp10__componentStyles;
       if (styles == null)
         styles = $.ViewMappingComp10__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -10888,7 +10880,7 @@
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new A.ViewMappingComp20(E._ComponentViewData__ComponentViewData(_this, 0, 3), type$.ViewMappingComp20_int_String),
+        t1 = new A.ViewMappingComp20(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewMappingComp20__componentStyles;
       if (styles == null)
         styles = $.ViewMappingComp20__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -10938,7 +10930,7 @@
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new A.ViewBoundComp0(E._ComponentViewData__ComponentViewData(_this, 0, 3), type$.ViewBoundComp0_num),
+        t1 = new A.ViewBoundComp0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewBoundComp0__componentStyles;
       if (styles == null)
         styles = $.ViewBoundComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -10988,7 +10980,7 @@
     build$0: function() {
       var t2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = new A.ViewFunctionTypeComp0(E._ComponentViewData__ComponentViewData(_this, 0, 3), type$.ViewFunctionTypeComp0_String),
+        t1 = new A.ViewFunctionTypeComp0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
         styles = $.ViewFunctionTypeComp0__componentStyles;
       if (styles == null)
         styles = $.ViewFunctionTypeComp0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
@@ -11047,24 +11039,22 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgFor_2_9")) : t1;
     },
     build$0: function() {
-      var _anchor_2, _this = this,
+      var t2, _anchor_2, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = _this.$ti,
-        t2 = t1._precomputed1,
-        t3 = A.ViewNestedChildComp0$(_this, 0, t2);
+        t1 = A.ViewNestedChildComp0$(_this, 0);
       if (_this.__ViewNestedParentComp0__compView_0 == null)
-        _this.__ViewNestedParentComp0__compView_0 = t3;
+        _this.__ViewNestedParentComp0__compView_0 = t1;
       else
         H.throwExpression(H.LateError$fieldAI("_compView_0"));
-      t3 = _this.get$_compView_0();
-      parentRenderNode.appendChild(t3.get$rootElement(t3));
-      t1 = t1._eval$1("NestedChildComp<1>");
+      t1 = _this.get$_compView_0();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      t1 = _this.$ti._eval$1("NestedChildComp<1>");
       if (_this.__ViewNestedParentComp0__NestedChildComp_0_5 == null)
         _this.__ViewNestedParentComp0__NestedChildComp_0_5 = new L.NestedChildComp(t1);
       else
         H.throwExpression(H.LateError$fieldAI("_NestedChildComp_0_5"));
       _this.get$_compView_0().create$1(0, _this.get$_NestedChildComp_0_5());
-      t2 = A.ViewNestedChildComp0$(_this, 1, t2);
+      t2 = A.ViewNestedChildComp0$(_this, 1);
       if (_this.__ViewNestedParentComp0__compView_1 == null)
         _this.__ViewNestedParentComp0__compView_1 = t2;
       else
@@ -11235,7 +11225,7 @@
     build$0: function() {
       var _this = this,
         parentRenderNode = _this.initViewRoot$0(),
-        t1 = A.ViewGenericComp0$(_this, 0, type$.String);
+        t1 = A.ViewGenericComp0$(_this, 0);
       if (_this.__ViewUsesMultipleTypesComp0__compView_0 == null)
         _this.__ViewUsesMultipleTypesComp0__compView_0 = t1;
       else
@@ -11247,7 +11237,7 @@
       else
         H.throwExpression(H.LateError$fieldAI("_GenericComp_0_5"));
       _this.get$_compView_0().create$1(0, _this.get$_GenericComp_0_5());
-      t1 = A.ViewGenericComp0$(_this, 1, type$.int);
+      t1 = A.ViewGenericComp0$(_this, 1);
       if (_this.__ViewUsesMultipleTypesComp0__compView_1 == null)
         _this.__ViewUsesMultipleTypesComp0__compView_1 = t1;
       else
@@ -11576,8 +11566,8 @@
     leafTags: null,
     arrayRti: typeof Symbol == "function" && typeof Symbol() == "symbol" ? Symbol("$ti") : "$ti"
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_LinkedIdentityHashMap":{"JsLinkedHashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[],"ChangeDetectorRef":[]},"EmbeddedView":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"HostView":{"DynamicView":[],"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"ComponentView":["GoldenComponent"],"RenderView":[],"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"DynamicView":[],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewUntypedComp0":{"ComponentView":["UntypedComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesUntypedComp0":{"ComponentView":["UsesUntypedComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewGenericComp0":{"ComponentView":["GenericComp<1>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericComp0":{"ComponentView":["UsesGenericComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericCompGeneric0":{"ComponentView":["UsesGenericCompGeneric<1>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewMappingComp10":{"ComponentView":["MappingComp1<1,2>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMappingComp10":{"ComponentView":["UsesMappingComp1"],"RenderView":[],"ChangeDetectorRef":[]},"ViewMappingComp20":{"ComponentView":["MappingComp2<1,2>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMappingComp20":{"ComponentView":["UsesMappingComp2"],"RenderView":[],"ChangeDetectorRef":[]},"ViewBoundComp0":{"ComponentView":["BoundComp<1>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesBoundCompWithBounds0":{"ComponentView":["UsesBoundCompWithBounds"],"RenderView":[],"ChangeDetectorRef":[]},"ViewFunctionTypeComp0":{"ComponentView":["FunctionTypeComp<1>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesFunctionTypeComp0":{"ComponentView":["UsesFunctionTypeComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewNestedParentComp0":{"ComponentView":["NestedParentComp<1>"],"RenderView":[],"ChangeDetectorRef":[]},"_ViewNestedParentComp1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewNestedChildComp0":{"ComponentView":["NestedChildComp<1>"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesNestedParentComp0":{"ComponentView":["UsesNestedParentComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMultipleTypesComp0":{"ComponentView":["UsesMultipleTypesComp"],"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericChangeDetector0":{"ComponentView":["UsesGenericChangeDetector"],"RenderView":[],"ChangeDetectorRef":[]},"DynamicView":{"ChangeDetectorRef":[]}}'));
-  H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"_RectangleBase":1,"ComponentFactory":1,"EmbeddedView":1,"_EmbeddedViewData":1,"GenericDirective":1,"GenericDirectiveNgCd":1}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_LinkedIdentityHashMap":{"JsLinkedHashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[],"ChangeDetectorRef":[]},"EmbeddedView":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"HostView":{"DynamicView":[],"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"DynamicView":[],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewUntypedComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesUntypedComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewGenericComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericCompGeneric0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewMappingComp10":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMappingComp10":{"RenderView":[],"ChangeDetectorRef":[]},"ViewMappingComp20":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMappingComp20":{"RenderView":[],"ChangeDetectorRef":[]},"ViewBoundComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesBoundCompWithBounds0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewFunctionTypeComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesFunctionTypeComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewNestedParentComp0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewNestedParentComp1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewNestedChildComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesNestedParentComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesMultipleTypesComp0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewUsesGenericChangeDetector0":{"RenderView":[],"ChangeDetectorRef":[]},"DynamicView":{"ChangeDetectorRef":[]}}'));
+  H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"_RectangleBase":1,"ComponentFactory":1,"ComponentView":1,"EmbeddedView":1,"_EmbeddedViewData":1,"GenericDirective":1,"ViewGenericComp0":1,"ViewMappingComp10":2,"ViewMappingComp20":2,"ViewBoundComp0":1,"ViewFunctionTypeComp0":1,"ViewNestedChildComp0":1,"GenericDirectiveNgCd":1}'));
   var string$ = {
     Cannot: "Cannot fire new event. Controller is already firing an event"
   };
@@ -11626,10 +11616,6 @@
       UncaughtError: findType("UncaughtError"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
       UsesGenericCompGeneric_dynamic: findType("UsesGenericCompGeneric<@>"),
-      ViewBoundComp0_num: findType("ViewBoundComp0<num>"),
-      ViewFunctionTypeComp0_String: findType("ViewFunctionTypeComp0<String>"),
-      ViewMappingComp10_int_String: findType("ViewMappingComp10<int,String>"),
-      ViewMappingComp20_int_String: findType("ViewMappingComp20<int,String>"),
       ViewNestedParentComp0_int: findType("ViewNestedParentComp0<int>"),
       ViewUsesGenericCompGeneric0_dynamic: findType("ViewUsesGenericCompGeneric0<@>"),
       _DuplicateItemRecordList: findType("_DuplicateItemRecordList"),
