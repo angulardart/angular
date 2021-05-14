@@ -224,14 +224,6 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  function getGlobalFromName(name) {
-    for (var i = 0; i < holders.length; i++) {
-      if (holders[i] == C)
-        continue;
-      if (holders[i][name])
-        return holders[i][name];
-    }
-  }
   var C = {},
   H = {JS_CONST: function JS_CONST() {
     },
@@ -608,7 +600,12 @@
     throwLateFieldADI: function(fieldName) {
       return H.throwExpression(H.LateError$fieldADI(fieldName));
     },
-    _Cell: function _Cell() {
+    _Cell$named: function(_name) {
+      var t1 = new H._Cell(_name);
+      return t1._value = t1;
+    },
+    _Cell: function _Cell(t0) {
+      this.__late_helper$_name = t0;
       this._value = null;
     },
     Rti__getQuestionFromStar: function(universe, rti) {
@@ -2249,8 +2246,9 @@
       queue.push(foo);
     },
     funcWithLateFinalLocal: function(queue) {
-      var foo = new H._Cell();
-      foo._value = foo;
+      var foo = H._Cell$named("foo");
+      if (foo._value !== foo)
+        H.throwExpression(new H.LateError("Local '" + foo.__late_helper$_name + "' has already been initialized."));
       foo._value = new R.Foo(new R.funcWithLateFinalLocal_onCallback(queue, foo));
       queue.push(foo._readLocal$0());
     },
@@ -2422,7 +2420,7 @@
     _readLocal$0: function() {
       var t1 = this._value;
       if (t1 === this)
-        throw H.wrapException(new H.LateError("Local '' has not been initialized."));
+        throw H.wrapException(new H.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
       return t1;
     }
   };
@@ -2664,7 +2662,6 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    getTypeFromName: getGlobalFromName,
     metadata: [],
     types: [],
     arrayRti: typeof Symbol == "function" && typeof Symbol() == "symbol" ? Symbol("$ti") : "$ti"

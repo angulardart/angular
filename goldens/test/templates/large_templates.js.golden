@@ -224,14 +224,6 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  function getGlobalFromName(name) {
-    for (var i = 0; i < holders.length; i++) {
-      if (holders[i] == C)
-        continue;
-      if (holders[i][name])
-        return holders[i][name];
-    }
-  }
   var A = {RenderView: function RenderView() {
     }, View: function View() {
     }, _ElementInjector: function _ElementInjector(t0, t1) {
@@ -323,8 +315,7 @@
       var applicationRef, ngZone, t2, userInjector, injector,
         t1 = $.$get$appGlobals();
       t1 = U.minimalApp().call$1(t1._hostInjector);
-      applicationRef = new H._Cell();
-      applicationRef._value = applicationRef;
+      applicationRef = H._Cell$named("applicationRef");
       ngZone = G._createNgZone();
       t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
       userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
@@ -1344,11 +1335,12 @@
     throwLateFieldADI: function(fieldName) {
       return H.throwExpression(new H.LateError("Field '" + fieldName + "' has been assigned during initialization."));
     },
-    _Cell$: function() {
-      var t1 = new H._Cell();
+    _Cell$named: function(_name) {
+      var t1 = new H._Cell(_name);
       return t1._value = t1;
     },
-    _Cell: function _Cell() {
+    _Cell: function _Cell(t0) {
+      this.__late_helper$_name = t0;
       this._value = null;
     },
     _checkValidIndex: function(index, list, $length) {
@@ -6144,13 +6136,14 @@
     _readLocal$0: function() {
       var t1 = this._value;
       if (t1 === this)
-        throw H.wrapException(new H.LateError("Local '' has not been initialized."));
+        throw H.wrapException(new H.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
       return t1;
     },
     set$finalLocalValue: function(v) {
-      if (this._value !== this)
-        throw H.wrapException(new H.LateError("Local '' has already been initialized."));
-      this._value = v;
+      var _this = this;
+      if (_this._value !== _this)
+        throw H.wrapException(new H.LateError("Local '" + _this.__late_helper$_name + "' has already been initialized."));
+      _this._value = v;
     }
   };
   H.NativeTypedData.prototype = {};
@@ -9024,7 +9017,7 @@
     call$0: function() {
       var t1 = $.appViewUtils._value;
       if (t1 == $.appViewUtils)
-        H.throwExpression(H.LateError$fieldNI(""));
+        H.throwExpression(H.LateError$fieldNI($.appViewUtils.__late_helper$_name));
       return t1;
     },
     $signature: 19
@@ -9788,12 +9781,10 @@
       this._onUncaughtError.add$1(0, new Y.UncaughtError(error, trace));
     },
     _createTimer$5: function($self, $parent, zone, duration, fn) {
-      var t1, implementation, implZone,
-        wrappedTimer = new H._Cell();
-      wrappedTimer._value = wrappedTimer;
-      t1 = new Y.NgZone__createTimer_onDone(this, wrappedTimer);
-      implementation = $parent._delegationTarget.get$_async$_createTimer();
-      implZone = implementation.zone;
+      var wrappedTimer = H._Cell$named("wrappedTimer"),
+        t1 = new Y.NgZone__createTimer_onDone(this, wrappedTimer),
+        implementation = $parent._delegationTarget.get$_async$_createTimer(),
+        implZone = implementation.zone;
       wrappedTimer.set$finalLocalValue(new Y._WrappedTimer(implementation.$function.call$5(implZone, implZone.get$_parentDelegate(), zone, duration, new Y.NgZone__createTimer_callback(fn, t1)), t1));
       this._pendingTimers.push(wrappedTimer._readLocal$0());
       this._hasPendingMacrotasks = true;
@@ -14898,7 +14889,6 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    getTypeFromName: getGlobalFromName,
     metadata: [],
     types: ["EmbeddedView<~>(RenderView,int)", "~()", "Null()", "~(String,@)", "~(~())", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "ApplicationRef()", "Null(~())", "~(String,String)", "@(@,String)", "String()", "@(String)", "AppViewUtils()", "@(@)", "Testability()", "Injector()", "~(UncaughtError)", "Null(Object,StackTrace)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_Future<@>(@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "JsTestability(Testability)", "HostView<GoldenComponent>()", "~(@,@)", "~(Object?,Object?)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object(Element)", "List<Object?>()", "~(Symbol0,@)", "bool()"],
     interceptorsByTag: null,
@@ -15150,7 +15140,7 @@
     $._RootZone__rootDelegate = null;
     $._toStringVisiting = H._setArrayType([], type$.JSArray_Object);
     $.ChangeDetectionHost__current = null;
-    $.appViewUtils = H._Cell$();
+    $.appViewUtils = H._Cell$named("appViewUtils");
     $.domRootRendererIsDirty = false;
     $.ViewGoldenComponent0__componentStyles = null;
     $.ViewChildComponent0__componentStyles = null;
