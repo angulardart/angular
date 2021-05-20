@@ -54,6 +54,9 @@ class ComponentInspector {
   /// Used to retain [ComponentView] instances between requests.
   final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
 
+  /// Additional locations in the DOM to search for components.
+  final _externalContentRoots = <Element>[];
+
   ApplicationRef? _applicationRef;
 
   /// Designates an [applicationRef] to inspect.
@@ -92,6 +95,7 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
   void _dispose() {
     _applicationRef = null;
     _referenceCounter.dispose();
+    _externalContentRoots.clear();
   }
 
   /// Frees all object references held by a group.
@@ -179,6 +183,15 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
     _elementToComponentView[view.rootElement] = view;
   }
 
+  /// Registers [element] as an additional location to search for components.
+  ///
+  /// This method should only be used to register elements that are not
+  /// contained by the app's root component(s).
+  void registerExternalContentRoot(Element element) {
+    assert(!_externalContentRoots.contains(element));
+    _externalContentRoots.add(element);
+  }
+
   /// Records the latest [value] assigned to input [name] on [component].
   void recordInput(Object component, String name, Object? value) {
     final inputs = _componentToInputs[component] ??= {};
@@ -231,6 +244,11 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
         component.location,
         NodeFilter.SHOW_ELEMENT,
       );
+      _collectJson(treeWalker, groupName, json);
+    }
+
+    for (final element in _externalContentRoots) {
+      final treeWalker = TreeWalker(element, NodeFilter.SHOW_ELEMENT);
       _collectJson(treeWalker, groupName, json);
     }
     return json;

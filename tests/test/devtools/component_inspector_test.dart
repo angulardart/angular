@@ -1,3 +1,5 @@
+import 'dart:html' as html;
+
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/devtools.dart';
@@ -254,6 +256,86 @@ void main() {
           }
         }
       }
+    });
+
+    html.Element createExternalContentRoot() {
+      final root = html.DivElement();
+      html.document.body!.append(root);
+      registerExternalContentRoot(root);
+      return root;
+    }
+
+    group('external content root', () {
+      late html.Element container;
+      late NgTestFixture<TestExternalContentRoots> testFixture;
+
+      setUp(() async {
+        container = createExternalContentRoot();
+        final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+        testFixture = await testBed.create();
+      });
+
+      tearDown(() {
+        container.remove();
+      });
+
+      test('with no components', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.noComponentTemplateRef!,
+          );
+        });
+
+        final components = ComponentInspector.instance.getComponents(groupName);
+        expect(components, hasLength(1));
+      });
+
+      test('with one component', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.oneComponentTemplateRef!,
+          );
+        });
+
+        final components = ComponentInspector.instance.getComponents(groupName);
+        expect(components, hasLength(2));
+      });
+
+      test('with multiple components', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.multipleComponentTemplateRef!,
+          );
+        });
+
+        final components = ComponentInspector.instance.getComponents(groupName);
+        expect(components, hasLength(3));
+      });
+    });
+
+    test('multiple external content roots', () async {
+      final containerOne = createExternalContentRoot();
+      final containerTwo = createExternalContentRoot();
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+
+      await testFixture.update((component) {
+        component
+          ..initExternalContent(
+            containerOne,
+            component.oneComponentTemplateRef!,
+          )
+          ..initExternalContent(
+            containerTwo,
+            component.oneComponentTemplateRef!,
+          );
+      });
+
+      final components = ComponentInspector.instance.getComponents(groupName);
+      expect(components, hasLength(3));
     });
   });
 
@@ -526,6 +608,46 @@ class TestProjectedContent4 {}
   ''',
 )
 class TestProjectedContent5 {}
+
+@Component(
+  selector: 'test-external-content-roots',
+  template: '''
+    <template #none>
+      <p>Hello, world!</p>
+    </template>
+    <template #one>
+      <test-2></test-2>
+    </template>
+    <template #multiple>
+      <test-2></test-2>
+      <div>
+        <test-2></test-2>
+      </div>
+    </template>
+  ''',
+  directives: [TestComponentViews2],
+)
+class TestExternalContentRoots {
+  TestExternalContentRoots(this._viewContainerRef);
+
+  final ViewContainerRef _viewContainerRef;
+
+  @ViewChild('none')
+  TemplateRef? noComponentTemplateRef;
+
+  @ViewChild('one')
+  TemplateRef? oneComponentTemplateRef;
+
+  @ViewChild('multiple')
+  TemplateRef? multipleComponentTemplateRef;
+
+  void initExternalContent(html.Element container, TemplateRef content) {
+    final viewRef = _viewContainerRef.createEmbeddedView(content);
+    for (final node in viewRef.rootNodes) {
+      container.append(node);
+    }
+  }
+}
 
 @Component(
   selector: 'test-inputs',

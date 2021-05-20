@@ -31,6 +31,16 @@ void enableDevTools() {
   }
 }
 
+/// Registers [element] as an additional location to search for components.
+///
+/// This method should only be used to register elements that are not contained
+/// by the app's root component(s).
+void registerExternalContentRoot(html.Element element) {
+  if (isDevMode) {
+    ComponentInspector.instance.registerExternalContentRoot(element);
+  }
+}
+
 /// Specifies a function to look up an element by component ID in JavaScript.
 @JS('getAngularComponentElement')
 external set _getComponentElement(
