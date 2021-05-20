@@ -104,7 +104,7 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
   /// Registers service protocol extensions for inspecting components.
   void _registerServiceExtensions() {
     _registerObjectGroupServiceExtension('disposeGroup', _disposeGroup);
-    _registerObjectGroupServiceExtension('getComponents', _getComponents);
+    _registerObjectGroupServiceExtension('getComponents', getComponents);
   }
 
   /// Registers a service extension [handler] that manages a group of objects.
@@ -219,19 +219,12 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
     return _componentToInputs[component] ?? {};
   }
 
-  /// A public version of [_getComponents] for testing.
-  ///
-  /// This is used for testing without a service protocol extension.
-  @visibleForTesting
-  List<Map<String, Object>> getComponents(String groupName) {
-    return _getComponents(groupName);
-  }
-
   /// Returns a JSON representation of the component tree.
   ///
   /// All components referenced in the JSON representation are kept alive at
   /// least until [groupName] is disposed.
-  List<Map<String, Object>> _getComponents(String groupName) {
+  @visibleForTesting
+  List<Map<String, Object>> getComponents(String groupName) {
     final json = <Map<String, Object>>[];
     for (final component in _applicationRef!.rootComponents) {
       final treeWalker = TreeWalker(
