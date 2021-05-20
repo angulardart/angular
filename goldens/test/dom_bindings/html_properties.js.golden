@@ -1721,7 +1721,7 @@
       return H.createRuntimeType(H._Universe_eval(init.typeUniverse, recipe, false));
     },
     _installSpecializedIsTest: function(object) {
-      var t1, unstarred, isFn, testRti = this;
+      var t1, unstarred, isFn, $name, testRti = this;
       if (testRti === type$.Object)
         return H._finishIsFn(testRti, object, H._isObject);
       if (!H.isStrongTopType(testRti))
@@ -1746,9 +1746,11 @@
       if (isFn != null)
         return H._finishIsFn(testRti, object, isFn);
       if (unstarred._kind === 9) {
-        t1 = unstarred._primary;
+        $name = unstarred._primary;
         if (unstarred._rest.every(H.isTopType)) {
-          testRti._specializedTestResource = "$is" + t1;
+          testRti._specializedTestResource = "$is" + $name;
+          if ($name === "List")
+            return H._finishIsFn(testRti, object, H._isListTestViaProperty);
           return H._finishIsFn(testRti, object, H._isTestViaProperty);
         }
       } else if (t1 === 7)
@@ -1814,6 +1816,17 @@
       var tag, testRti = this;
       if (object == null)
         return H._nullIs(testRti);
+      tag = testRti._specializedTestResource;
+      if (object instanceof P.Object)
+        return !!object[tag];
+      return !!J.getInterceptor$(object)[tag];
+    },
+    _isListTestViaProperty: function(object) {
+      var tag, testRti = this;
+      if (object == null)
+        return H._nullIs(testRti);
+      if (Array.isArray(object))
+        return true;
       tag = testRti._specializedTestResource;
       if (object instanceof P.Object)
         return !!object[tag];
@@ -10559,7 +10572,6 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    metadata: [],
     types: ["~()", "Null()", "~(String,@)", "~(~())", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "String()", "~(Symbol0,@)", "Null(~())", "~(String,String)", "String(Match)", "@(@,String)", "@(String)", "ApplicationRef()", "AppViewUtils()", "@(@)", "Testability()", "Injector()", "~(UncaughtError)", "Null(Object,StackTrace)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_Future<@>(@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "HostView<GoldenComponent>()", "bool()", "~(@,@)", "~(Object?,Object?)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object(Element)", "List<Object?>()", "JsTestability(Testability)"],
     interceptorsByTag: null,
     leafTags: null,
