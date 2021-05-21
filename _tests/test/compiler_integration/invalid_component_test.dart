@@ -1,9 +1,9 @@
 // @dart=2.9
 
-import 'package:term_glyph/term_glyph.dart' as term_glyph;
-import 'package:test/test.dart';
 import 'package:_tests/compiler.dart';
 import 'package:angular_compiler/v2/context.dart';
+import 'package:term_glyph/term_glyph.dart' as term_glyph;
+import 'package:test/test.dart';
 
 void main() {
   setUpAll(() {
@@ -44,8 +44,8 @@ void main() {
 
       @Component(
         selector: 'bad-comp',
-        directives:  [
-          const UndeclaredIdentifier(),
+        directives: const [
+          UndeclaredIdentifier(),
         ],
         template: '',
       )
@@ -54,7 +54,7 @@ void main() {
       allOf([
         // This is an UnresolvedExpressionException, but it should
         // be an AnalysisError, reading "@Component-annotated" instead.
-        contains('Compiling @Component annotated class "BadComp" failed'),
+        contains('Compiling @Component-annotated class "BadComp" failed'),
         // Once b/134096969 is fixed, these expectations should be true:
         // contains('Compiling @Component-annotated class "BadComp" failed'),
         // containsSourceLocation(6, 11), // points to 'const Undeclared..'
