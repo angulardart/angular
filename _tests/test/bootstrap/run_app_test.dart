@@ -45,7 +45,6 @@ void main() {
     jsTestability.whenStable(allowInterop(expectAsync1((didWork) {
       expect(didWork, isFalse, reason: 'Immediate invocation (no work)');
 
-      // TODO(matanl): As part of documenting Testability, figure this out.
       Future(expectAsync0(() {
         verifyDomAndStyles(innerText: 'Hello Universe!');
       }));
@@ -190,8 +189,6 @@ class StubExceptionHandler implements ExceptionHandler {
     lastCaughtException = exception;
   }
 }
-
-// TODO(matanl): Refactor testability, and re-use a JS interface.
 
 @JS()
 external JsTestability getAngularTestability(Element e);

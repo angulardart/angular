@@ -141,7 +141,6 @@ class Provider<T extends Object> {
   /// See [buildAtRuntime] for the implementation invoked in the framework.
   @protected
   Object _buildAtRuntime(RuntimeInjectorBuilder builder) {
-    // TODO(matanl): Sub-class to optimize the other provider implementations.
     if (!identical(useValue, noValueProvided)) {
       return builder.useValue(useValue);
     }

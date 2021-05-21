@@ -79,7 +79,6 @@ void main() {
 
   ParseTemplate _parse;
 
-  // TODO(matanl): Add common log testing functionality to lib/.
   List<TemplateAst> parse(
     String template, [
     List<CompileDirectiveMetadata> directive,
@@ -1374,6 +1373,17 @@ void main() {
                 (e) => '$e'.contains(
                   'A corresponding message description (@i18n:title) is required',
                 ),
+              ),
+            ),
+          );
+        });
+
+        test('should report error for unsupported bound value', () {
+          expect(
+            () => parse('<div [title]="f(x)" @i18n:title="Description"></div>'),
+            throwsA(
+              predicate(
+                (e) => '$e'.contains('only support string literals'),
               ),
             ),
           );

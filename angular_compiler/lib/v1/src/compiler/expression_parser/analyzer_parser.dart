@@ -76,7 +76,6 @@ class AnalyzerExpressionParser extends ExpressionParser {
     bool? allowPipes,
     List<CompileIdentifierMetadata>? exports,
   }) {
-    // TODO(b/159912942): Decide whether to keep this.
     if (input.isEmpty) {
       return ast.EmptyExpr();
     }
@@ -96,7 +95,6 @@ class AnalyzerExpressionParser extends ExpressionParser {
       ),
     );
     if (result.errors.isNotEmpty) {
-      // TODO(matanl): Format this failure much nicer.
       throw ParseException(
         result.errors.map((e) => e.message).join('\n'),
         input,
@@ -111,7 +109,6 @@ class AnalyzerExpressionParser extends ExpressionParser {
     final function = declared.first as FunctionDeclaration;
     final innerBody = function.functionExpression.body;
 
-    // TODO(matanl): Present a better failure if a non-expression is parsed.
     final innerAst = (innerBody as ExpressionFunctionBody).expression;
     return _convertAndValididateExpression(
       innerAst,
@@ -138,7 +135,6 @@ class AnalyzerExpressionParser extends ExpressionParser {
         exports: exports,
       ))!;
     } on _SubsetException catch (e) {
-      // TODO(matanl): Highlight the offending astNode instead of just printing.
       throw ParseException(e.reason, input, location, e.astNode.toSource());
     }
   }

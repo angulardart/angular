@@ -279,8 +279,6 @@ class CompileTypeMetadataVisitor
   }
 
   o.Expression? _getUseValue(DartObject provider) {
-    // TODO(matanl): This is no longer strictly necessary; refactor out.
-    // Will require a bit more extensive testing.
     if (_hasNoUseValue(provider)) {
       return null;
     }

@@ -112,7 +112,6 @@ class TemplateOutliner implements Builder {
         ..writeln();
     }
 
-    // TODO(matanl): Add this as a helper function in angular_compiler.
     output.writeln('// Required for "type inference" (scoping).');
     for (final d in library.imports) {
       if (!d.isDeferred && d.uri != null) {

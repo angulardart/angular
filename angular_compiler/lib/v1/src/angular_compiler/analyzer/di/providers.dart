@@ -176,7 +176,6 @@ class ProviderReader {
     DartObject provider,
     DartObject? useValue,
   ) {
-    // TODO(matanl): For corner-cases that can't be revived, display error.
     return UseValueProviderElement._(
       token,
       _actualProviderType(provider.type!, typeArgumentOf(provider), token),

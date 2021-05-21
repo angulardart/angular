@@ -221,7 +221,14 @@ class _FindAllNgContentSelectors extends ast.RecursiveTemplateAstVisitor<void> {
     ast.EmbeddedContentAst astNode, [
     _,
   ]) {
-    ngContentSelectors.add(astNode.selector!);
+    final selector = astNode.selector;
+    if (selector == null) {
+      throw BuildError.forSourceSpan(
+        astNode.sourceSpan,
+        'The "select" attribute must have a value or be omitted',
+      );
+    }
+    ngContentSelectors.add(selector);
     return astNode;
   }
 }
