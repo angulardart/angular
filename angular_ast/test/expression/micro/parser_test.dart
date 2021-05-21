@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
-import 'package:angular_ast/src/ast.dart';
 import 'package:angular_ast/src/expression/micro/ast.dart';
 import 'package:angular_ast/src/expression/micro/parser.dart';
 

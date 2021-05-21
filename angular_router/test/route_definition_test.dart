@@ -1,6 +1,5 @@
 import 'package:test/test.dart';
 import 'package:angular/angular.dart';
-import 'package:angular_router/angular_router.dart';
 import 'package:angular_router/src/route_definition.dart';
 
 import 'route_definition_test.template.dart'
