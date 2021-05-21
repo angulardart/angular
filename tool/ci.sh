@@ -1,12 +1,23 @@
 #!/bin/bash
-# Created with package:mono_repo v3.4.7
+# Created with package:mono_repo v4.0.0
 
 # Support built in commands on windows out of the box.
+# When it is a flutter repo (check the pubspec.yaml for "sdk: flutter")
+# then "flutter" is called instead of "pub".
+# This assumes that the Flutter SDK has been installed in a previous step.
 function pub() {
-  if [[ $TRAVIS_OS_NAME == "windows" ]]; then
-    command pub.bat "$@"
+  if grep -Fq "sdk: flutter" "${PWD}/pubspec.yaml"; then
+    if [[ $TRAVIS_OS_NAME == "windows" ]]; then
+      command flutter.bat pub "$@"
+    else
+      command flutter pub "$@"
+    fi
   else
-    command pub "$@"
+    if [[ $TRAVIS_OS_NAME == "windows" ]]; then
+      command pub.bat "$@"
+    else
+      command pub "$@"
+    fi
   fi
 }
 function dartfmt() {
@@ -63,8 +74,8 @@ for PKG in ${PKGS}; do
         pub run build_runner build --fail-on-severe || EXIT_CODE=$?
         ;;
       command_1)
-        echo 'pub run build_runner test --fail-on-severe -- -P vm'
-        pub run build_runner test --fail-on-severe -- -P vm || EXIT_CODE=$?
+        echo 'pub run test -P vm'
+        pub run test -P vm || EXIT_CODE=$?
         ;;
       command_2)
         echo 'pub run build_runner test --fail-on-severe -- -P browser'

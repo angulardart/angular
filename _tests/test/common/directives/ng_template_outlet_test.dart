@@ -1,7 +1,6 @@
 import 'package:test/test.dart';
 import 'package:_tests/matchers.dart';
 import 'package:angular/angular.dart';
-import 'package:angular/src/common/directives/ng_template_outlet.dart';
 import 'package:angular_test/angular_test.dart';
 
 import 'ng_template_outlet_test.template.dart' as ng;

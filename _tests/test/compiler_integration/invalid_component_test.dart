@@ -44,20 +44,16 @@ void main() {
 
       @Component(
         selector: 'bad-comp',
-        directives:  [
-          const UndeclaredIdentifier(),
+        directives: const [
+          UndeclaredIdentifier(),
         ],
         template: '',
       )
       class BadComp {}
     ''', errors: [
       allOf([
-        // This is an UnresolvedExpressionException, but it should
-        // be an AnalysisError, reading "@Component-annotated" instead.
-        contains('Compiling @Component annotated class "BadComp" failed'),
-        // Once b/134096969 is fixed, these expectations should be true:
-        // contains('Compiling @Component-annotated class "BadComp" failed'),
-        // containsSourceLocation(6, 11), // points to 'const Undeclared..'
+        contains('Compiling @Component-annotated class "BadComp" failed'),
+        containsSourceLocation(6, 11), // points to 'const Undeclared..'
       ]),
     ]);
   });
