@@ -74,8 +74,8 @@ for PKG in ${PKGS}; do
         pub run build_runner build --fail-on-severe || EXIT_CODE=$?
         ;;
       command_1)
-        echo 'pub run build_runner test --fail-on-severe -- -P vm'
-        pub run build_runner test --fail-on-severe -- -P vm || EXIT_CODE=$?
+        echo 'pub run test -P vm'
+        pub run test -P vm || EXIT_CODE=$?
         ;;
       command_2)
         echo 'pub run build_runner test --fail-on-severe -- -P browser'

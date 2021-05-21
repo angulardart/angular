@@ -1261,7 +1261,7 @@ jobs:
       - job_018
       - job_019
   job_031:
-    name: "unit_test; Dart dev; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P vm`"
+    name: "unit_test; Dart dev; PKG: _tests; `pub run test -P vm`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -1284,10 +1284,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P vm"
+      - name: "_tests; pub run test -P vm"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P vm
+        run: pub run test -P vm
     needs:
       - job_001
       - job_002
@@ -1309,7 +1309,7 @@ jobs:
       - job_018
       - job_019
   job_032:
-    name: "unit_test; Dart 2.12.0; PKG: _tests; `pub run build_runner test --fail-on-severe -- -P vm`"
+    name: "unit_test; Dart 2.12.0; PKG: _tests; `pub run test -P vm`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -1332,10 +1332,10 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade --no-precompile
-      - name: "_tests; pub run build_runner test --fail-on-severe -- -P vm"
+      - name: "_tests; pub run test -P vm"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: pub run build_runner test --fail-on-severe -- -P vm
+        run: pub run test -P vm
     needs:
       - job_001
       - job_002

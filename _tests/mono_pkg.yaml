@@ -8,5 +8,5 @@ stages:
 - build:
   - command: pub run build_runner build --fail-on-severe
 - unit_test:
-  - command: pub run build_runner test --fail-on-severe -- -P vm
+  - command: pub run test -P vm
   - command: pub run build_runner test --fail-on-severe -- -P browser
