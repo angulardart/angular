@@ -36,7 +36,7 @@ void enableDevTools() {
 /// This method should only be used to register elements that are not contained
 /// by the app's root component(s).
 void registerExternalContentRoot(html.Element element) {
-  if (isDevMode) {
+  if (isDevToolsEnabled) {
     ComponentInspector.instance.registerExternalContentRoot(element);
   }
 }
