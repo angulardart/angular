@@ -65,10 +65,13 @@ class ComponentInspector {
   /// must invoke [ApplicationRef.dispose] on the [applicationRef] before
   /// inspecting another.
   void inspect(ApplicationRef applicationRef) {
-    assert(_applicationRef == null, '''
+    if (_applicationRef != null) {
+      window.console.error('''
 AngularDart DevTools does not yet support apps with multiple runApp()
 invocations. Please contact dart-framework-eng@ if you encounter this error.
 ''');
+      return;
+    }
 
     // Post an event for each zone turn in the app, but no more frequently
     // than this interval. Despite wanting to signal when the zone turn is
