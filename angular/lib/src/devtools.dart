@@ -33,11 +33,11 @@ void enableDevTools() {
 
 /// Registers [element] as an additional location to search for components.
 ///
-/// This method should only be used to register elements that are not contained
-/// by the app's root component(s).
-void registerExternalContentRoot(html.Element element) {
+/// This method should be used to register elements that are not contained by
+/// the app's root component.
+void registerContentRoot(html.Element element) {
   if (isDevToolsEnabled) {
-    ComponentInspector.instance.registerExternalContentRoot(element);
+    ComponentInspector.instance.registerContentRoot(element);
   }
 }
 

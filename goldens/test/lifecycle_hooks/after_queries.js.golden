@@ -4967,6 +4967,13 @@
         H.throwExpression(P.UnsupportedError$("add"));
       receiver.push(value);
     },
+    removeAt$1: function(receiver, index) {
+      if (!!receiver.fixed$length)
+        H.throwExpression(P.UnsupportedError$("removeAt"));
+      if (index < 0 || index >= receiver.length)
+        throw H.wrapException(P.RangeError$value(index, null));
+      return receiver.splice(index, 1)[0];
+    },
     remove$1: function(receiver, element) {
       var i;
       if (!!receiver.fixed$length)
@@ -8919,11 +8926,8 @@
         } else
           index = i;
         t1 = _this.nestedViews;
-        if (!!t1.fixed$length)
-          H.throwExpression(P.UnsupportedError$("removeAt"));
-        if (index < 0 || index >= t1.length)
-          H.throwExpression(P.RangeError$value(index, null));
-        t1 = t1.splice(index, 1)[0];
+        t1.toString;
+        t1 = C.JSArray_methods.removeAt$1(t1, index);
         t1.removeRootNodes$0();
         t1.wasRemoved$0();
         t1.destroyInternalState$0();

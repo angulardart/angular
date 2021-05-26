@@ -258,10 +258,10 @@ void main() {
       }
     });
 
-    html.Element createExternalContentRoot() {
+    html.Element createContentRoot({html.Element? parent}) {
       final root = html.DivElement();
-      html.document.body!.append(root);
-      registerExternalContentRoot(root);
+      (parent ?? html.document.body!).append(root);
+      registerContentRoot(root);
       return root;
     }
 
@@ -270,7 +270,7 @@ void main() {
       late NgTestFixture<TestExternalContentRoots> testFixture;
 
       setUp(() async {
-        container = createExternalContentRoot();
+        container = createContentRoot();
         final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
         testFixture = await testBed.create();
       });
@@ -317,8 +317,8 @@ void main() {
     });
 
     test('multiple external content roots', () async {
-      final containerOne = createExternalContentRoot();
-      final containerTwo = createExternalContentRoot();
+      final containerOne = createContentRoot();
+      final containerTwo = createContentRoot();
       final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
       final testFixture = await testBed.create();
 
@@ -330,6 +330,47 @@ void main() {
           )
           ..initExternalContent(
             containerTwo,
+            component.oneComponentTemplateRef!,
+          );
+      });
+
+      final components = ComponentInspector.instance.getComponents(groupName);
+      expect(components, hasLength(3));
+    });
+
+    test('is coalesced by existing content root', () async {
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+      final container = createContentRoot(parent: testFixture.rootElement);
+
+      await testFixture.update((component) {
+        component.initExternalContent(
+          container,
+          component.oneComponentTemplateRef!,
+        );
+      });
+
+      final components = ComponentInspector.instance.getComponents(groupName);
+      expect(components, hasLength(1));
+    });
+
+    test('coalesces existing content roots', () async {
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+      final childContainer = html.DivElement();
+      final parentContainer = testFixture.rootElement.parent!
+        ..append(childContainer);
+      registerContentRoot(childContainer);
+      registerContentRoot(parentContainer);
+
+      await testFixture.update((component) {
+        component
+          ..initExternalContent(
+            parentContainer,
+            component.oneComponentTemplateRef!,
+          )
+          ..initExternalContent(
+            childContainer,
             component.oneComponentTemplateRef!,
           );
       });

@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:meta/dart2js.dart' as dart2js;
 import 'package:angular/src/core/exception_handler.dart';
+import 'package:angular/src/devtools.dart';
 import 'package:angular/src/di/injector.dart';
 import 'package:angular/src/testability.dart';
 import 'package:angular/src/utilities.dart';
@@ -98,6 +99,9 @@ class ApplicationRef extends ChangeDetectionHost {
   }
 
   void _loadedRootComponent(ComponentRef<void> component, Element? node) {
+    if (isDevToolsEnabled) {
+      ComponentInspector.instance.registerContentRoot(component.location);
+    }
     _rootComponents.add(component);
     component.onDestroy(() {
       _destroyedRootComponent(component);
@@ -152,9 +156,6 @@ extension DebugApplicationRef on ApplicationRef {
   /// Returns this app's [ExceptionHandler].
   // TODO(b/159650979): move to [App] if deemed an app-wide service.
   ExceptionHandler get exceptionHandler => _exceptionHandler;
-
-  /// Returns this app's root components registered with [bootstrap].
-  List<ComponentRef<void>> get rootComponents => _rootComponents;
 }
 
 /// An extension for testing this app.
