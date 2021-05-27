@@ -100,7 +100,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
     final values = _getResolvedArgumentsOrFail(element, 'directives');
     return visitAll(values, (value) {
       return typeDeclarationOf(value)?.accept(_visitor());
-    }).whereType<CompileDirectiveMetadata>().toList();
+    });
   }
 
   List<CompileTypedMetadata> _visitDirectiveTypes(ClassElement element) {
@@ -118,7 +118,7 @@ class _NormalizedComponentVisitor extends RecursiveElementVisitor<void> {
     return visitAll(values, (value) {
       return typeDeclarationOf(value)
           ?.accept(PipeVisitor(_library, _exceptionHandler));
-    }).whereType<CompilePipeMetadata>().toList();
+    });
   }
 
   /// Returns the arguments assigned to [field], ensuring they're resolved.
@@ -210,9 +210,9 @@ class _ComponentVisitor
   final _setterInputs = <String, String>{};
   final _inputs = <String, String>{};
   final _inputTypes = <String, CompileTypeMetadata>{};
-  final _outputs = <String, String?>{};
-  final _hostBindings = <String?, ast.AST>{};
-  final _hostListeners = <String?, String>{};
+  final _outputs = <String, String>{};
+  final _hostBindings = <String, ast.AST>{};
+  final _hostListeners = <String, String>{};
   final _queries = <CompileQueryMetadata>[];
   final _viewQueries = <CompileQueryMetadata>[];
 
@@ -512,7 +512,7 @@ class _ComponentVisitor
       value,
       'hostPropertyName',
       defaultTo: element.name,
-    );
+    )!;
     // Allows using static members for @HostBinding. For example:
     //
     // class Foo {
@@ -537,7 +537,7 @@ class _ComponentVisitor
   }
 
   void _addHostListener(MethodElement element, DartObject value) {
-    var eventName = coerceString(value, 'eventName');
+    var eventName = coerceString(value, 'eventName')!;
     var methodName = element.name;
     var methodArgs = coerceStringList(value, 'args');
     if (methodArgs.isEmpty && element.parameters.length == 1) {
@@ -558,7 +558,7 @@ class _ComponentVisitor
   /// may be provided to restrict a different set of property bindings than
   /// [bindings].
   void _addPropertyBindingTo(
-    Map<String, String?> bindings,
+    Map<String, String> bindings,
     ElementAnnotation annotation,
     Element element, {
     Map<String, String>? immutableBindings,
@@ -566,7 +566,7 @@ class _ComponentVisitor
     final value = annotation.computeConstantValue();
     final propertyName = element.displayName;
     final bindingName =
-        coerceString(value, 'bindingPropertyName', defaultTo: propertyName);
+        coerceString(value, 'bindingPropertyName', defaultTo: propertyName)!;
     _prohibitBindingChange(element.enclosingElement as ClassElement?,
         propertyName, bindingName, immutableBindings ?? bindings);
     bindings[propertyName] = bindingName;
@@ -671,15 +671,13 @@ class _ComponentVisitor
       changeDetection: changeDetection,
       inputs: _inputs,
       inputTypes: _inputTypes,
-      outputs: _outputs as Map<String, String>,
-      hostBindings: _hostBindings as Map<String, ast.AST>,
-      hostListeners: _hostListeners as Map<String, String>,
+      outputs: _outputs,
+      hostBindings: _hostBindings,
+      hostListeners: _hostListeners,
       analyzedClass: analyzedClass,
       lifecycleHooks: lifecycleHooks,
-      providers: _extractProviders(directiveInfo, 'providers')
-          as List<CompileProviderMetadata>,
-      viewProviders: _extractProviders(directiveInfo, 'viewProviders')
-          as List<CompileProviderMetadata>,
+      providers: _extractProviders(directiveInfo, 'providers'),
+      viewProviders: _extractProviders(directiveInfo, 'viewProviders'),
       exports: _extractExports(directiveInfo),
       queries: _queries,
       viewQueries: _viewQueries,
@@ -778,7 +776,7 @@ class _ComponentVisitor
     );
   }
 
-  List<CompileProviderMetadata?> _extractProviders(
+  List<CompileProviderMetadata> _extractProviders(
     AnnotationInformation annotationInfo,
     String providerField,
   ) =>

@@ -148,7 +148,7 @@ DartObject? getField(DartObject? object, String field) {
 /// If the DartObject is a list, then it will recursively visitAll
 /// on that list. Otherwise, then it will call [recuseFn] on the object.
 List<T> visitAll<T>(
-    Iterable<DartObject> objs, T Function(DartObject) recurseFn) {
+    Iterable<DartObject> objs, T? Function(DartObject) recurseFn) {
   var metadata = <T>[];
   for (var obj in objs) {
     var maybeList = obj.toListValue();
