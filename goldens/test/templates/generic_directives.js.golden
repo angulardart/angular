@@ -1878,6 +1878,8 @@
       var tag, testRti = this;
       if (object == null)
         return H._nullIs(testRti);
+      if (typeof object != "object")
+        return false;
       if (Array.isArray(object))
         return true;
       tag = testRti._specializedTestResource;
