@@ -50,10 +50,14 @@ String? getTypeName(DartType type) {
 ///
 /// ... both `foo` and `bar` should return the [DartType] for `String`.
 DartType typeArgumentOf(DartObject object, [int index = 0]) {
-  if (object.type!.typeArguments.isEmpty) {
-    return DynamicTypeImpl.instance;
+  var type = object.type;
+  if (type is ParameterizedType) {
+    var typeArguments = type.typeArguments;
+    if (typeArguments.isNotEmpty) {
+      return type.typeArguments[index];
+    }
   }
-  return object.type!.typeArguments[index];
+  return DynamicTypeImpl.instance;
 }
 
 String? typeToCode(DartType? type) {
