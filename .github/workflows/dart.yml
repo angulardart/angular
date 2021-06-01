@@ -119,22 +119,22 @@ jobs:
         working-directory: examples/hello_world
         run: dartanalyzer --fatal-hints .
   job_003:
-    name: "analyze; Dart 2.12.4; PKG: angular_forms; `dartanalyzer --fatal-hints .`"
+    name: "analyze; Dart 2.13.1; PKG: angular_forms; `dartanalyzer --fatal-hints .`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2.1.5
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms;commands:dartanalyzer_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms;commands:dartanalyzer_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: dart-lang/setup-dart@v1.0
         with:
-          sdk: "2.12.4"
+          sdk: "2.13.1"
       - id: checkout
         uses: actions/checkout@v2.3.4
       - id: angular_forms_pub_upgrade
@@ -731,22 +731,22 @@ jobs:
       - job_005
       - job_006
   job_020:
-    name: "build; Dart 2.12.4; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
+    name: "build; Dart 2.13.1; PKG: angular_forms; `pub run build_runner build --fail-on-severe`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2.1.5
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms;commands:command_0"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms;commands:command_0"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: dart-lang/setup-dart@v1.0
         with:
-          sdk: "2.12.4"
+          sdk: "2.13.1"
       - id: checkout
         uses: actions/checkout@v2.3.4
       - id: angular_forms_pub_upgrade
@@ -1207,22 +1207,22 @@ jobs:
       - job_019
       - job_020
   job_030:
-    name: "unit_test; Dart 2.12.4; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P ci`"
+    name: "unit_test; Dart 2.13.1; PKG: angular_forms; `pub run build_runner test --fail-on-severe -- -P ci`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
         uses: actions/cache@v2.1.5
         with:
           path: "~/.pub-cache/hosted"
-          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms;commands:command_3"
+          key: "os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms;commands:command_3"
           restore-keys: |
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4;packages:angular_forms
-            os:ubuntu-latest;pub-cache-hosted;dart:2.12.4
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1;packages:angular_forms
+            os:ubuntu-latest;pub-cache-hosted;dart:2.13.1
             os:ubuntu-latest;pub-cache-hosted
             os:ubuntu-latest
       - uses: dart-lang/setup-dart@v1.0
         with:
-          sdk: "2.12.4"
+          sdk: "2.13.1"
       - id: checkout
         uses: actions/checkout@v2.3.4
       - id: angular_forms_pub_upgrade
