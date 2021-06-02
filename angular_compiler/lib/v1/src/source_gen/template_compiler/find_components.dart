@@ -404,7 +404,7 @@ class _ComponentVisitor
       CompileContext.current.reportAndRecover(BuildError.forElement(
         field,
         'Inputs cannot be "late final".\n\n'
-        'See go/angular-dart-null-safety-draft.',
+        'See go/angular-dart-null-safety-faq#inputs.',
       ));
     }
   }
@@ -414,7 +414,7 @@ class _ComponentVisitor
       CompileContext.current.reportAndRecover(BuildError.forElement(
         member,
         'ViewChild and ContentChild queries must be nullable.\n\n'
-        'See go/angular-dart-null-safety-draft.',
+        'See go/angular-dart-null-safety-faq#viewchild-contentchild.',
       ));
     }
   }
@@ -424,7 +424,7 @@ class _ComponentVisitor
       CompileContext.current.reportAndRecover(BuildError.forElement(
         field,
         'View and content queries cannot be "late".\n\n'
-        'See go/angular-dart-null-safety-draft.',
+        'See go/angular-dart-null-safety-faq.',
       ));
     }
   }
