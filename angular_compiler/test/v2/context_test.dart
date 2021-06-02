@@ -74,49 +74,23 @@ void main() {
     });
 
     group('emitNullSafeCode', () {
-      test('should be false by default', () {
-        final context = CompileContext(
-          AssetId('foo', 'lib/bar.dart'),
-          enableDevTools: false,
-          isNullSafe: false,
-          policyExceptions: {},
-          policyExceptionsInPackages: {},
-        );
-        expect(context.emitNullSafeCode, isFalse);
-      });
-
       test('should be false if the source library is not opted-in', () {
         final context = CompileContext(
           AssetId('foo.sub', 'lib/bar.dart'),
           enableDevTools: false,
           isNullSafe: false,
-          policyExceptions: {
-            'EMIT_NULL_SAFE': {'foo/sub/lib/bar.dart'},
-          },
+          policyExceptions: {},
           policyExceptionsInPackages: {},
         );
         expect(context.emitNullSafeCode, isFalse);
       });
 
-      test('should be false if the source library is not allow-listed', () {
+      test('should be true if the source library opted-in', () {
         final context = CompileContext(
           AssetId('foo.sub', 'lib/bar.dart'),
           enableDevTools: false,
           isNullSafe: true,
           policyExceptions: {},
-          policyExceptionsInPackages: {},
-        );
-        expect(context.emitNullSafeCode, isFalse);
-      }, tags: 'fails-on-ci');
-
-      test('should be true if the opted-in and allow-listed', () {
-        final context = CompileContext(
-          AssetId('foo.sub', 'lib/bar.dart'),
-          enableDevTools: false,
-          isNullSafe: true,
-          policyExceptions: {
-            'EMIT_NULL_SAFE': {'foo/sub/lib/bar.dart'},
-          },
           policyExceptionsInPackages: {},
         );
         expect(context.emitNullSafeCode, isTrue);
