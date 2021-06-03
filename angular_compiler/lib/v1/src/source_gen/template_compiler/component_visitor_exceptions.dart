@@ -105,7 +105,8 @@ class AngularAnalysisError extends AsyncBuildError {
     final annotationSource = indexedAnnotation.annotation.toSource();
 
     var hasOffsetInformation =
-        constantEvaluationErrors.any((error) => error.offset != 0);
+        constantEvaluationErrors.any((error) => error.offset >= 0);
+
     // If this code is called from a tool using [AnalysisResolvers], then
     //   1) [constantEvaluationErrors] already has source location information
     //   2) [ResolvedLibraryResultImpl] will NOT have the errors.
