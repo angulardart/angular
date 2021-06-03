@@ -1,8 +1,6 @@
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular_compiler/v1/src/angular_compiler/cli/messages.dart';
-import 'package:angular_compiler/v2/asset.dart';
 import 'package:angular_compiler/v2/context.dart';
 
 import 'flags.dart';
@@ -40,24 +38,8 @@ class Compiler implements Generator {
         isNullSafe: isNullSafe,
         enableDevTools: _flags.enableDevTools,
       ),
-      () {
-        if (isNullSafe && !CompileContext.current.emitNullSafeCode) {
-          _refuseToCompileNullSafeCodeWithoutAllowList(
-            buildStep.inputId.toRelativeUrl(),
-          );
-        }
-        return _build(library, buildStep, _flags);
-      },
+      () => _build(library, buildStep, _flags),
     );
-  }
-
-  static void _refuseToCompileNullSafeCodeWithoutAllowList(
-    String asset,
-  ) {
-    // TODO(b/155658157): Once the bootstrap script is removed, remove this.
-    if (asset.endsWith('.dart.browser_test.dart')) {
-      return;
-    }
   }
 
   /// Returns the compiler wrapped as a [Builder].

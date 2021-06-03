@@ -55,7 +55,7 @@ class ComponentInspector {
   final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
 
   /// Additional locations in the DOM to search for components.
-  final _externalContentRoots = <Element>[];
+  final _contentRoots = <Element>[];
 
   ApplicationRef? _applicationRef;
 
@@ -65,10 +65,13 @@ class ComponentInspector {
   /// must invoke [ApplicationRef.dispose] on the [applicationRef] before
   /// inspecting another.
   void inspect(ApplicationRef applicationRef) {
-    assert(_applicationRef == null, '''
+    if (_applicationRef != null) {
+      window.console.error('''
 AngularDart DevTools does not yet support apps with multiple runApp()
 invocations. Please contact dart-framework-eng@ if you encounter this error.
 ''');
+      return;
+    }
 
     // Post an event for each zone turn in the app, but no more frequently
     // than this interval. Despite wanting to signal when the zone turn is
@@ -95,7 +98,7 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
   void _dispose() {
     _applicationRef = null;
     _referenceCounter.dispose();
-    _externalContentRoots.clear();
+    _contentRoots.clear();
   }
 
   /// Frees all object references held by a group.
@@ -183,13 +186,19 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
     _elementToComponentView[view.rootElement] = view;
   }
 
-  /// Registers [element] as an additional location to search for components.
-  ///
-  /// This method should only be used to register elements that are not
-  /// contained by the app's root component(s).
-  void registerExternalContentRoot(Element element) {
-    assert(!_externalContentRoots.contains(element));
-    _externalContentRoots.add(element);
+  /// Registers [element] as a location to search for components.
+  void registerContentRoot(Element element) {
+    for (var i = _contentRoots.length - 1; i >= 0; i--) {
+      final root = _contentRoots[i];
+      if (root.contains(element)) {
+        /// The element is already visited when searching for components.
+        return;
+      } else if (element.contains(root)) {
+        /// Remove any existing content roots contained by the new one.
+        _contentRoots.removeAt(i);
+      }
+    }
+    _contentRoots.add(element);
   }
 
   /// Records the latest [value] assigned to input [name] on [component].
@@ -239,15 +248,7 @@ invocations. Please contact dart-framework-eng@ if you encounter this error.
   @visibleForTesting
   List<Map<String, Object>> getComponents(String groupName) {
     final json = <Map<String, Object>>[];
-    for (final component in _applicationRef!.rootComponents) {
-      final treeWalker = TreeWalker(
-        component.location,
-        NodeFilter.SHOW_ELEMENT,
-      );
-      _collectJson(treeWalker, groupName, json);
-    }
-
-    for (final element in _externalContentRoots) {
+    for (final element in _contentRoots) {
       final treeWalker = TreeWalker(element, NodeFilter.SHOW_ELEMENT);
       _collectJson(treeWalker, groupName, json);
     }

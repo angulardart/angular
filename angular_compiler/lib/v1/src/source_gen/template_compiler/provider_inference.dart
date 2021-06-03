@@ -22,7 +22,7 @@ DartType? inferProviderType(DartObject provider, DartObject token) {
   // Check for MultiToken<T>.
   final tokenType = token.type;
   if (tokenType != null && $MultiToken.isAssignableFromType(tokenType)) {
-    if ($MultiToken.isExactlyType(tokenType)) {
+    if (tokenType is InterfaceType && $MultiToken.isExactlyType(tokenType)) {
       return tokenType.typeArguments.first;
     }
     // Check for a _custom_ MultiToken<T>
@@ -44,16 +44,19 @@ DartType? inferProviderType(DartObject provider, DartObject token) {
     }
   }
   // Lookup Inferred Type (i.e. the <T> recorded for Provider<T>).
-  final providerOfTArgs = provider.type?.typeArguments ?? const [];
-  if (providerOfTArgs.isNotEmpty) {
-    final genericType = providerOfTArgs.first;
-    // If type inference fails it might resolve to dynamic or Object.
-    if (!genericType.isDynamic && !genericType.isDartCoreObject) {
-      return genericType;
+  var providerType = provider.type;
+  if (providerType is InterfaceType) {
+    final providerOfTArgs = providerType.typeArguments;
+    if (providerOfTArgs.isNotEmpty) {
+      final genericType = providerOfTArgs.first;
+      // If type inference fails it might resolve to dynamic or Object.
+      if (!genericType.isDynamic && !genericType.isDartCoreObject) {
+        return genericType;
+      }
     }
   }
   // Fallback and try to extract from OpaqueToken<T>.
-  if (tokenType != null &&
+  if (tokenType is InterfaceType &&
       $OpaqueToken.isAssignableFromType(tokenType) &&
       // Only apply "auto inference" to "new-type" Providers like
       // Value, Class, Existing, FactoryProvider.

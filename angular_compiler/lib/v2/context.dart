@@ -343,15 +343,7 @@ class _LibraryCompileContext implements CompileContext {
   }
 
   @override
-  bool get emitNullSafeCode {
-    var emitNullSafeCode = isNullSafe;
-    return emitNullSafeCode;
-  }
-
-  bool get _emitNullSafeCodeWithPolicyChecks {
-    const key = 'EMIT_NULL_SAFE';
-    return hasPolicyException(key) || hasPolicyExceptionInPackage(key);
-  }
+  bool get emitNullSafeCode => isNullSafe;
 
   @override
   bool get isDevToolsEnabled {

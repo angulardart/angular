@@ -224,8 +224,7 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  var C = {},
-  H = {JS_CONST: function JS_CONST() {
+  var H = {JS_CONST: function JS_CONST() {
     },
     LateError$fieldADI: function(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
@@ -916,6 +915,8 @@
       var tag, testRti = this;
       if (object == null)
         return H._nullIs(testRti);
+      if (typeof object != "object")
+        return false;
       if (Array.isArray(object))
         return true;
       tag = testRti._specializedTestResource;
@@ -2291,8 +2292,9 @@
       this.queue = t0;
       this.foo = t1;
     }
-  };
-  var holders = [C, H, J, P, R];
+  },
+  C = {};
+  var holders = [H, J, P, R, C];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -2678,7 +2680,7 @@
     types: [],
     arrayRti: typeof Symbol == "function" && typeof Symbol() == "symbol" ? Symbol("$ti") : "$ti"
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse("{}"));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"JSArray":1,"JSUnmodifiableArray":1,"ArrayIterator":1}'));
   var type$ = (function rtii() {
     var findType = H.findType;

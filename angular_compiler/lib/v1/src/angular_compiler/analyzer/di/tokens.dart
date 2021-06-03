@@ -84,8 +84,10 @@ class TokenReader {
       if (clazz is ClassElement) {
         typeArgs = clazz.supertype!.typeArguments;
       }
-    } else {
+    } else if (valueType is InterfaceType) {
       typeArgs = valueType.typeArguments;
+    } else {
+      typeArgs = const <DartType>[];
     }
     final uniqueName = constant.read('_uniqueName').stringValue;
 

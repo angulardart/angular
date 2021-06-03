@@ -655,10 +655,9 @@ class CompileTypeMetadataVisitor
         .where((field) => field.isEnumConstant && !field.isSynthetic);
   }
 
-  bool _isEnum(ParameterizedType? type) =>
-      type is InterfaceType && type.element.isEnum;
+  bool _isEnum(DartType? type) => type is InterfaceType && type.element.isEnum;
 
-  bool _isProtobufEnum(ParameterizedType? type) {
+  bool _isProtobufEnum(DartType? type) {
     return type is InterfaceType &&
         const TypeChecker.fromUrl('package:protobuf/protobuf.dart#ProtobufEnum')
             .isExactlyType(type.superclass!);
