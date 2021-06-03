@@ -224,134 +224,7 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  var A = {RenderView: function RenderView() {
-    }, View: function View() {
-    }, _ElementInjector: function _ElementInjector(t0, t1) {
-      this._view = t0;
-      this._nodeIndex = t1;
-    },
-    noProviderError: function(token) {
-      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
-    }
-  },
-  B = {
-    main: function() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", E.i18n_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
-    },
-    GoldenComponent: function GoldenComponent() {
-    },
-    MessageDirective: function MessageDirective() {
-    }
-  },
-  C = {},
-  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
-      this._hostView = t0;
-      this._nativeElement = t1;
-      this.$ti = t2;
-    }, ComponentFactory: function ComponentFactory(t0, t1) {
-      this.selector = t0;
-      this._viewFactory = t1;
-    },
-    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
-      return new D.ViewFragment();
-    },
-    ViewFragment: function ViewFragment() {
-    }
-  },
-  E = {
-    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
-      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
-    },
-    ComponentView: function ComponentView() {
-    },
-    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
-      var _ = this;
-      _.parentView = t0;
-      _.parentIndex = t1;
-      _.___ComponentViewData_projectedNodes = null;
-      _._changeDetectionMode = t2;
-      _._changeDetectorState = 0;
-      _._shouldSkipChangeDetection = false;
-    },
-    viewFactory_GoldenComponentHost0: function() {
-      return new E._ViewGoldenComponentHost0(new G._HostViewData());
-    },
-    ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
-      var _ = this;
-      _.__ViewGoldenComponent0__MessageDirective_7_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._data = t0;
-    },
-    _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
-      var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
-      _._host_view$_data = t0;
-    }
-  },
-  G = {
-    _createNgZone: function() {
-      var t5, t6, _null = null,
-        t1 = new P.Object(),
-        t2 = type$.void,
-        t3 = P.StreamController_StreamController$broadcast(true, t2),
-        t4 = P.StreamController_StreamController$broadcast(true, t2);
-      t2 = P.StreamController_StreamController$broadcast(true, t2);
-      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
-      t6 = $.Zone__current;
-      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
-      t2 = type$.nullable_Object;
-      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
-      if (t5.__NgZone__innerZone == null)
-        t5.__NgZone__innerZone = t2;
-      else
-        H.throwExpression(H.LateError$fieldAI("_innerZone"));
-      return t5;
-    },
-    appInjector: function(userProvidedInjector) {
-      var applicationRef, ngZone, t2, userInjector, injector,
-        t1 = $.$get$appGlobals();
-      t1 = U.minimalApp().call$1(t1._hostInjector);
-      applicationRef = H._Cell$named("applicationRef");
-      ngZone = G._createNgZone();
-      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
-      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
-      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
-      return injector;
-    },
-    _identityInjector: function($parent) {
-      return $parent;
-    },
-    appInjector_closure: function appInjector_closure(t0) {
-      this.applicationRef = t0;
-    },
-    appInjector_closure0: function appInjector_closure0() {
-    },
-    appInjector_closure1: function appInjector_closure1(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure2: function appInjector_closure2(t0) {
-      this.ngZone = t0;
-    },
-    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
-      this.applicationRef = t0;
-      this.ngZone = t1;
-      this.userInjector = t2;
-    },
-    _LazyInjector: function _LazyInjector(t0, t1) {
-      this._providers = t0;
-      this._parent = t1;
-    },
-    HostView: function HostView() {
-    },
-    _HostViewData: function _HostViewData() {
-      this._onDestroyCallbacks = null;
-      this._host_view$_changeDetectorState = 0;
-      this._host_view$_shouldSkipChangeDetection = false;
-    }
-  },
-  H = {JS_CONST: function JS_CONST() {
+  var H = {JS_CONST: function JS_CONST() {
     },
     LateError$fieldNI: function(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
@@ -3062,55 +2935,6 @@
     JSString: function JSString() {
     }
   },
-  K = {TransitionalAppHost: function TransitionalAppHost(t0) {
-      this._hostInjector = t0;
-    }},
-  L = {OpaqueToken: function OpaqueToken(t0) {
-      this.$ti = t0;
-    }},
-  M = {ChangeDetectionHost: function ChangeDetectionHost() {
-    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
-      var _ = this;
-      _._box_0 = t0;
-      _.$this = t1;
-      _.callback = t2;
-      _.completer = t3;
-      _.R = t4;
-    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
-      this.completer = t0;
-      this.R = t1;
-    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
-      this.$this = t0;
-      this.completer = t1;
-    }, ComponentLoader: function ComponentLoader() {
-    },
-    _MapInjector$: function(providers, $parent) {
-      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
-      t1.addAll$1(0, providers);
-      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
-    },
-    Injector: function Injector() {
-    },
-    HierarchicalInjector: function HierarchicalInjector() {
-    },
-    _EmptyInjector: function _EmptyInjector() {
-    },
-    _MapInjector: function _MapInjector(t0, t1) {
-      this._injector$_providers = t0;
-      this._parent = t1;
-    }
-  },
-  O = {
-    _flattenStyles: function(styles, target, componentId) {
-      return target;
-    },
-    ComponentStyles: function ComponentStyles() {
-    },
-    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
-      this._componentUrl = t0;
-      this._styles = t1;
-    }
-  },
   P = {
     _AsyncRun__initializeScheduleImmediate: function() {
       var div, span, t1 = {};
@@ -4274,141 +4098,6 @@
         return P._convertDartFunctionFast(f);
     }
   },
-  Q = {AppViewUtils: function AppViewUtils() {
-    }},
-  T = {
-    _JSTestabilityProxy__getAngularTestability: function(element) {
-      var t1, i, t2, result,
-        registry = self.self.ngTestabilityRegistries;
-      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
-        t2 = t1.$index(registry, i);
-        t2.toString;
-        result = t2.getAngularTestability.apply(t2, [element]);
-        if (result != null)
-          return result;
-      }
-      throw H.wrapException(P.StateError$("Could not find testability for element."));
-    },
-    _JSTestabilityProxy__getAllAngularTestabilities: function() {
-      var t1, i, t2, testabilities, $length, j,
-        registry = self.self.ngTestabilityRegistries,
-        result = [];
-      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
-        t2 = t1.$index(registry, i);
-        t2.toString;
-        testabilities = t2.getAllAngularTestabilities.apply(t2, []);
-        $length = testabilities.length;
-        for (j = 0; j < $length; ++j)
-          result.push(testabilities[j]);
-      }
-      return result;
-    },
-    _JSTestabilityProxy__whenAllStable: function(callback) {
-      var decrement, _i, testability, _box_0 = {},
-        testabilities = T._JSTestabilityProxy__getAllAngularTestabilities(),
-        pendingStable = testabilities.length;
-      _box_0.pendingStable = pendingStable;
-      _box_0.anyDidWork = false;
-      decrement = new T._JSTestabilityProxy__whenAllStable_decrement(_box_0, callback);
-      for (_i = 0; _i < testabilities.length; testabilities.length === pendingStable || (0, H.throwConcurrentModificationError)(testabilities), ++_i) {
-        testability = testabilities[_i];
-        testability.toString;
-        testability.whenStable.apply(testability, [P.allowInterop(decrement)]);
-      }
-    },
-    _JSTestabilityProxy__createRegistry: function(registry) {
-      var object = {};
-      object.getAngularTestability = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAngularTestability(registry));
-      object.getAllAngularTestabilities = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities(registry));
-      return object;
-    },
-    _extension_0_asJsApi: function(_this) {
-      return {isStable: P.allowInterop(new T._extension_0_asJsApi_closure(_this)), whenStable: P.allowInterop(_this.get$whenStable(_this))};
-    },
-    _JSTestabilityProxy: function _JSTestabilityProxy() {
-    },
-    _JSTestabilityProxy__whenAllStable_decrement: function _JSTestabilityProxy__whenAllStable_decrement(t0, t1) {
-      this._box_0 = t0;
-      this.callback = t1;
-    },
-    _JSTestabilityProxy__createRegistry_getAngularTestability: function _JSTestabilityProxy__createRegistry_getAngularTestability(t0) {
-      this.registry = t0;
-    },
-    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities(t0) {
-      this.registry = t0;
-    },
-    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure() {
-    },
-    _extension_0_asJsApi_closure: function _extension_0_asJsApi_closure(t0) {
-      this._this = t0;
-    },
-    Testability: function Testability(t0) {
-      this._testability$_ngZone = t0;
-      this._callWhenStable = null;
-    },
-    Testability__watchForStability_closure: function Testability__watchForStability_closure(t0) {
-      this.$this = t0;
-    },
-    Testability__watchForStability__closure: function Testability__watchForStability__closure(t0) {
-      this.$this = t0;
-    },
-    Testability__watchForStability___closure: function Testability__watchForStability___closure(t0) {
-      this.$this = t0;
-    },
-    Testability__runCallbacksIfStable_closure: function Testability__runCallbacksIfStable_closure(t0, t1) {
-      this.$this = t0;
-      this.didWork = t1;
-    },
-    TestabilityRegistry: function TestabilityRegistry(t0) {
-      this._appRoots = t0;
-      this._proxy = null;
-    },
-    Intl__message: function(messageText, locale, $name, args, meaning) {
-      $.$get$messageLookup();
-      return messageText;
-    },
-    setAttribute: function(element, attribute, value) {
-      element.setAttribute(attribute, value);
-    },
-    createText: function(contents) {
-      return document.createTextNode(contents);
-    },
-    appendText: function($parent, text) {
-      return $parent.appendChild(T.createText(text));
-    },
-    appendDiv: function(doc, $parent) {
-      var t1 = doc.createElement("div");
-      return $parent.appendChild(t1);
-    },
-    appendElement: function(doc, $parent, tagName) {
-      var t1 = doc.createElement(tagName);
-      return $parent.appendChild(t1);
-    }
-  },
-  U = {
-    minimalApp: function() {
-      return new U.minimalApp_closure();
-    },
-    _createRandomAppId: function() {
-      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
-      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
-    },
-    minimalApp_closure: function minimalApp_closure() {
-    },
-    _createRandomAppId_char: function _createRandomAppId_char(t0) {
-      this.random = t0;
-    },
-    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
-      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
-      if (stackTrace != null)
-        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
-      return t1.charCodeAt(0) == 0 ? t1 : t1;
-    },
-    ExceptionHandler: function ExceptionHandler() {
-    },
-    JsTestability: function JsTestability() {
-    }
-  },
   W = {
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = hash + value & 536870911;
@@ -4660,6 +4349,94 @@
       this.fallbackData = t1;
       this._badMessages = t2;
     }},
+  U = {
+    minimalApp: function() {
+      return new U.minimalApp_closure();
+    },
+    _createRandomAppId: function() {
+      var t1 = new U._createRandomAppId_char(C.C__JSRandom);
+      return H.S(t1.call$0()) + H.S(t1.call$0()) + H.S(t1.call$0());
+    },
+    minimalApp_closure: function minimalApp_closure() {
+    },
+    _createRandomAppId_char: function _createRandomAppId_char(t0) {
+      this.random = t0;
+    },
+    ExceptionHandler_exceptionToString: function(exception, stackTrace, reason) {
+      var t1 = "" + ("EXCEPTION: " + H.S(exception) + "\n");
+      if (stackTrace != null)
+        t1 = t1 + "STACKTRACE: \n" + (J.toString$0$(stackTrace) + "\n");
+      return t1.charCodeAt(0) == 0 ? t1 : t1;
+    },
+    ExceptionHandler: function ExceptionHandler() {
+    },
+    JsTestability: function JsTestability() {
+    }
+  },
+  G = {
+    _createNgZone: function() {
+      var t5, t6, _null = null,
+        t1 = new P.Object(),
+        t2 = type$.void,
+        t3 = P.StreamController_StreamController$broadcast(true, t2),
+        t4 = P.StreamController_StreamController$broadcast(true, t2);
+      t2 = P.StreamController_StreamController$broadcast(true, t2);
+      t5 = P.StreamController_StreamController$broadcast(true, type$.UncaughtError);
+      t6 = $.Zone__current;
+      t5 = new Y.NgZone(t1, t3, t4, t2, t5, t6, H._setArrayType([], type$.JSArray__WrappedTimer));
+      t2 = type$.nullable_Object;
+      t2 = t6.fork$2$specification$zoneValues(new P._ZoneSpecification(t5.get$_handleUncaughtError(), t5.get$_run(), t5.get$_runUnary(), t5.get$_runBinary(), _null, _null, _null, _null, t5.get$_ng_zone$_scheduleMicrotask(), t5.get$_createTimer(), _null, _null, _null), P.LinkedHashMap_LinkedHashMap$_literal([t1, true], t2, t2));
+      if (t5.__NgZone__innerZone == null)
+        t5.__NgZone__innerZone = t2;
+      else
+        H.throwExpression(H.LateError$fieldAI("_innerZone"));
+      return t5;
+    },
+    appInjector: function(userProvidedInjector) {
+      var applicationRef, ngZone, t2, userInjector, injector,
+        t1 = $.$get$appGlobals();
+      t1 = U.minimalApp().call$1(t1._hostInjector);
+      applicationRef = H._Cell$named("applicationRef");
+      ngZone = G._createNgZone();
+      t2 = P.LinkedHashMap_LinkedHashMap$_literal([C.Type_ApplicationRef_Aij, new G.appInjector_closure(applicationRef), C.Type_AppViewUtils_NWH, new G.appInjector_closure0(), C.Type_NgZone_6ty, new G.appInjector_closure1(ngZone), C.Type_Testability_h8g, new G.appInjector_closure2(ngZone)], type$.Object, type$.Object_Function);
+      userInjector = userProvidedInjector.call$1(new G._LazyInjector(t2, t1));
+      injector = ngZone.get$_innerZone().run$1$1(new G.appInjector_closure3(applicationRef, ngZone, userInjector), type$.Injector);
+      return injector;
+    },
+    _identityInjector: function($parent) {
+      return $parent;
+    },
+    appInjector_closure: function appInjector_closure(t0) {
+      this.applicationRef = t0;
+    },
+    appInjector_closure0: function appInjector_closure0() {
+    },
+    appInjector_closure1: function appInjector_closure1(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure2: function appInjector_closure2(t0) {
+      this.ngZone = t0;
+    },
+    appInjector_closure3: function appInjector_closure3(t0, t1, t2) {
+      this.applicationRef = t0;
+      this.ngZone = t1;
+      this.userInjector = t2;
+    },
+    _LazyInjector: function _LazyInjector(t0, t1) {
+      this._providers = t0;
+      this._parent = t1;
+    },
+    HostView: function HostView() {
+    },
+    _HostViewData: function _HostViewData() {
+      this._onDestroyCallbacks = null;
+      this._host_view$_changeDetectorState = 0;
+      this._host_view$_shouldSkipChangeDetection = false;
+    }
+  },
+  K = {TransitionalAppHost: function TransitionalAppHost(t0) {
+      this._hostInjector = t0;
+    }},
   Y = {
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
       var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
@@ -4752,8 +4529,231 @@
       this.error = t0;
       this.stackTrace = t1;
     }
-  };
-  var holders = [A, B, C, D, E, G, H, J, K, L, M, O, P, Q, T, U, W, X, Y];
+  },
+  M = {ChangeDetectionHost: function ChangeDetectionHost() {
+    }, ChangeDetectionHost_run_closure: function ChangeDetectionHost_run_closure(t0, t1, t2, t3, t4) {
+      var _ = this;
+      _._box_0 = t0;
+      _.$this = t1;
+      _.callback = t2;
+      _.completer = t3;
+      _.R = t4;
+    }, ChangeDetectionHost_run__closure: function ChangeDetectionHost_run__closure(t0, t1) {
+      this.completer = t0;
+      this.R = t1;
+    }, ChangeDetectionHost_run__closure0: function ChangeDetectionHost_run__closure0(t0, t1) {
+      this.$this = t0;
+      this.completer = t1;
+    }, ComponentLoader: function ComponentLoader() {
+    },
+    _MapInjector$: function(providers, $parent) {
+      var t1 = new P._IdentityHashMap(type$._IdentityHashMap_Object_Object);
+      t1.addAll$1(0, providers);
+      return new M._MapInjector(t1, $parent == null ? C.C__EmptyInjector : $parent);
+    },
+    Injector: function Injector() {
+    },
+    HierarchicalInjector: function HierarchicalInjector() {
+    },
+    _EmptyInjector: function _EmptyInjector() {
+    },
+    _MapInjector: function _MapInjector(t0, t1) {
+      this._injector$_providers = t0;
+      this._parent = t1;
+    }
+  },
+  Q = {AppViewUtils: function AppViewUtils() {
+    }},
+  D = {ComponentRef: function ComponentRef(t0, t1, t2) {
+      this._hostView = t0;
+      this._nativeElement = t1;
+      this.$ti = t2;
+    }, ComponentFactory: function ComponentFactory(t0, t1) {
+      this.selector = t0;
+      this._viewFactory = t1;
+    },
+    ViewFragment_ViewFragment: function(nodesOrViewContainers) {
+      return new D.ViewFragment();
+    },
+    ViewFragment: function ViewFragment() {
+    }
+  },
+  O = {
+    _flattenStyles: function(styles, target, componentId) {
+      return target;
+    },
+    ComponentStyles: function ComponentStyles() {
+    },
+    _UnscopedComponentStyles: function _UnscopedComponentStyles(t0, t1) {
+      this._componentUrl = t0;
+      this._styles = t1;
+    }
+  },
+  E = {
+    _ComponentViewData__ComponentViewData: function(parentView, parentIndex, changeDetectionMode) {
+      return new E._ComponentViewData(parentView, parentIndex, changeDetectionMode);
+    },
+    ComponentView: function ComponentView() {
+    },
+    _ComponentViewData: function _ComponentViewData(t0, t1, t2) {
+      var _ = this;
+      _.parentView = t0;
+      _.parentIndex = t1;
+      _.___ComponentViewData_projectedNodes = null;
+      _._changeDetectionMode = t2;
+      _._changeDetectorState = 0;
+      _._shouldSkipChangeDetection = false;
+    },
+    viewFactory_GoldenComponentHost0: function() {
+      return new E._ViewGoldenComponentHost0(new G._HostViewData());
+    },
+    ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
+      var _ = this;
+      _.__ViewGoldenComponent0__MessageDirective_7_5 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._data = t0;
+    },
+    _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
+      var _ = this;
+      _.__HostView_component = $;
+      _.__HostView__injector = _.__HostView_componentView = null;
+      _._host_view$_data = t0;
+    }
+  },
+  A = {RenderView: function RenderView() {
+    }, View: function View() {
+    }, _ElementInjector: function _ElementInjector(t0, t1) {
+      this._view = t0;
+      this._nodeIndex = t1;
+    },
+    noProviderError: function(token) {
+      return new P.ArgumentError(false, null, null, "No provider found for " + token.toString$0(0));
+    }
+  },
+  L = {OpaqueToken: function OpaqueToken(t0) {
+      this.$ti = t0;
+    }},
+  T = {
+    _JSTestabilityProxy__getAngularTestability: function(element) {
+      var t1, i, t2, result,
+        registry = self.self.ngTestabilityRegistries;
+      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
+        t2 = t1.$index(registry, i);
+        t2.toString;
+        result = t2.getAngularTestability.apply(t2, [element]);
+        if (result != null)
+          return result;
+      }
+      throw H.wrapException(P.StateError$("Could not find testability for element."));
+    },
+    _JSTestabilityProxy__getAllAngularTestabilities: function() {
+      var t1, i, t2, testabilities, $length, j,
+        registry = self.self.ngTestabilityRegistries,
+        result = [];
+      for (t1 = J.getInterceptor$asx(registry), i = 0; i < t1.get$length(registry); ++i) {
+        t2 = t1.$index(registry, i);
+        t2.toString;
+        testabilities = t2.getAllAngularTestabilities.apply(t2, []);
+        $length = testabilities.length;
+        for (j = 0; j < $length; ++j)
+          result.push(testabilities[j]);
+      }
+      return result;
+    },
+    _JSTestabilityProxy__whenAllStable: function(callback) {
+      var decrement, _i, testability, _box_0 = {},
+        testabilities = T._JSTestabilityProxy__getAllAngularTestabilities(),
+        pendingStable = testabilities.length;
+      _box_0.pendingStable = pendingStable;
+      _box_0.anyDidWork = false;
+      decrement = new T._JSTestabilityProxy__whenAllStable_decrement(_box_0, callback);
+      for (_i = 0; _i < testabilities.length; testabilities.length === pendingStable || (0, H.throwConcurrentModificationError)(testabilities), ++_i) {
+        testability = testabilities[_i];
+        testability.toString;
+        testability.whenStable.apply(testability, [P.allowInterop(decrement)]);
+      }
+    },
+    _JSTestabilityProxy__createRegistry: function(registry) {
+      var object = {};
+      object.getAngularTestability = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAngularTestability(registry));
+      object.getAllAngularTestabilities = P.allowInterop(new T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities(registry));
+      return object;
+    },
+    _extension_0_asJsApi: function(_this) {
+      return {isStable: P.allowInterop(new T._extension_0_asJsApi_closure(_this)), whenStable: P.allowInterop(_this.get$whenStable(_this))};
+    },
+    _JSTestabilityProxy: function _JSTestabilityProxy() {
+    },
+    _JSTestabilityProxy__whenAllStable_decrement: function _JSTestabilityProxy__whenAllStable_decrement(t0, t1) {
+      this._box_0 = t0;
+      this.callback = t1;
+    },
+    _JSTestabilityProxy__createRegistry_getAngularTestability: function _JSTestabilityProxy__createRegistry_getAngularTestability(t0) {
+      this.registry = t0;
+    },
+    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities(t0) {
+      this.registry = t0;
+    },
+    _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure: function _JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure() {
+    },
+    _extension_0_asJsApi_closure: function _extension_0_asJsApi_closure(t0) {
+      this._this = t0;
+    },
+    Testability: function Testability(t0) {
+      this._testability$_ngZone = t0;
+      this._callWhenStable = null;
+    },
+    Testability__watchForStability_closure: function Testability__watchForStability_closure(t0) {
+      this.$this = t0;
+    },
+    Testability__watchForStability__closure: function Testability__watchForStability__closure(t0) {
+      this.$this = t0;
+    },
+    Testability__watchForStability___closure: function Testability__watchForStability___closure(t0) {
+      this.$this = t0;
+    },
+    Testability__runCallbacksIfStable_closure: function Testability__runCallbacksIfStable_closure(t0, t1) {
+      this.$this = t0;
+      this.didWork = t1;
+    },
+    TestabilityRegistry: function TestabilityRegistry(t0) {
+      this._appRoots = t0;
+      this._proxy = null;
+    },
+    Intl__message: function(messageText, locale, $name, args, meaning) {
+      $.$get$messageLookup();
+      return messageText;
+    },
+    setAttribute: function(element, attribute, value) {
+      element.setAttribute(attribute, value);
+    },
+    createText: function(contents) {
+      return document.createTextNode(contents);
+    },
+    appendText: function($parent, text) {
+      return $parent.appendChild(T.createText(text));
+    },
+    appendDiv: function(doc, $parent) {
+      var t1 = doc.createElement("div");
+      return $parent.appendChild(t1);
+    },
+    appendElement: function(doc, $parent, tagName) {
+      var t1 = doc.createElement(tagName);
+      return $parent.appendChild(t1);
+    }
+  },
+  B = {
+    main: function() {
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", E.i18n_template__viewFactory_GoldenComponentHost0$closure()), type$.GoldenComponent);
+    },
+    GoldenComponent: function GoldenComponent() {
+    },
+    MessageDirective: function MessageDirective() {
+    }
+  },
+  C = {};
+  var holders = [H, J, P, W, X, U, G, K, Y, M, Q, D, O, E, A, L, T, B, C];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
