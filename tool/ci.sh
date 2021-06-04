@@ -1,5 +1,5 @@
 #!/bin/bash
-# Created with package:mono_repo v4.0.0
+# Created with package:mono_repo v4.1.0
 
 # Support built in commands on windows out of the box.
 # When it is a flutter repo (check the pubspec.yaml for "sdk: flutter")
@@ -16,7 +16,7 @@ function pub() {
     if [[ $TRAVIS_OS_NAME == "windows" ]]; then
       command pub.bat "$@"
     else
-      command pub "$@"
+      command dart pub "$@"
     fi
   fi
 }
@@ -58,11 +58,11 @@ for PKG in ${PKGS}; do
     exit 64
   fi
 
-  pub upgrade --no-precompile || EXIT_CODE=$?
+  dart pub upgrade || EXIT_CODE=$?
 
   if [[ ${EXIT_CODE} -ne 0 ]]; then
-    echo -e "\033[31mPKG: ${PKG}; 'pub upgrade' - FAILED  (${EXIT_CODE})\033[0m"
-    FAILURES+=("${PKG}; 'pub upgrade'")
+    echo -e "\033[31mPKG: ${PKG}; 'dart pub upgrade' - FAILED  (${EXIT_CODE})\033[0m"
+    FAILURES+=("${PKG}; 'dart pub upgrade'")
   else
     for TASK in "$@"; do
       EXIT_CODE=0
@@ -86,12 +86,12 @@ for PKG in ${PKGS}; do
         pub run build_runner test --fail-on-severe -- -P ci || EXIT_CODE=$?
         ;;
       dartanalyzer_0)
-        echo 'dartanalyzer --fatal-hints .'
-        dartanalyzer --fatal-hints . || EXIT_CODE=$?
+        echo 'dart analyze --fatal-hints .'
+        dart analyze --fatal-hints . || EXIT_CODE=$?
         ;;
       dartanalyzer_1)
-        echo 'dartanalyzer .'
-        dartanalyzer . || EXIT_CODE=$?
+        echo 'dart analyze .'
+        dart analyze . || EXIT_CODE=$?
         ;;
       *)
         echo -e "\033[31mUnknown TASK '${TASK}' - TERMINATING JOB\033[0m"
