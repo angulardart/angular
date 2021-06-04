@@ -37,7 +37,7 @@ jobs:
       - name: mono_repo self validate
         run: dart pub global run mono_repo generate --validate
   job_002:
-    name: "analyze; Dart 2.12.0; PKGS: _tests, angular, angular_compiler, angular_router, angular_test, examples/hello_world; `dart analyze --fatal-hints .`"
+    name: "analyze; Dart 2.12.0; PKGS: _tests, angular, angular_compiler, angular_router, angular_test, examples/hello_world; `dart analyze --fatal-infos`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -60,55 +60,55 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade
-      - name: "_tests; dart analyze --fatal-hints ."
+      - name: "_tests; dart analyze --fatal-infos"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_pub_upgrade
         name: angular; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular
         run: pub upgrade
-      - name: "angular; dart analyze --fatal-hints ."
+      - name: "angular; dart analyze --fatal-infos"
         if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
         working-directory: angular
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_compiler_pub_upgrade
         name: angular_compiler; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade
-      - name: "angular_compiler; dart analyze --fatal-hints ."
+      - name: "angular_compiler; dart analyze --fatal-infos"
         if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
         working-directory: angular_compiler
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_router_pub_upgrade
         name: angular_router; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade
-      - name: "angular_router; dart analyze --fatal-hints ."
+      - name: "angular_router; dart analyze --fatal-infos"
         if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
         working-directory: angular_router
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_test_pub_upgrade
         name: angular_test; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade
-      - name: "angular_test; dart analyze --fatal-hints ."
+      - name: "angular_test; dart analyze --fatal-infos"
         if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
         working-directory: angular_test
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: examples_hello_world_pub_upgrade
         name: examples/hello_world; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade
-      - name: "examples/hello_world; dart analyze --fatal-hints ."
+      - name: "examples/hello_world; dart analyze --fatal-infos"
         if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
         working-directory: examples/hello_world
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
   job_003:
     name: "analyze; Dart 2.12.0; PKG: angular_ast; `dart analyze .`"
     runs-on: ubuntu-latest
@@ -138,7 +138,7 @@ jobs:
         working-directory: angular_ast
         run: dart analyze .
   job_004:
-    name: "analyze; Dart dev; PKGS: _tests, angular, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world; `dart analyze --fatal-hints .`"
+    name: "analyze; Dart dev; PKGS: _tests, angular, angular_compiler, angular_forms, angular_router, angular_test, examples/hello_world; `dart analyze --fatal-infos`"
     runs-on: ubuntu-latest
     steps:
       - name: Cache Pub hosted dependencies
@@ -161,64 +161,64 @@ jobs:
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: _tests
         run: pub upgrade
-      - name: "_tests; dart analyze --fatal-hints ."
+      - name: "_tests; dart analyze --fatal-infos"
         if: "always() && steps._tests_pub_upgrade.conclusion == 'success'"
         working-directory: _tests
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_pub_upgrade
         name: angular; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular
         run: pub upgrade
-      - name: "angular; dart analyze --fatal-hints ."
+      - name: "angular; dart analyze --fatal-infos"
         if: "always() && steps.angular_pub_upgrade.conclusion == 'success'"
         working-directory: angular
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_compiler_pub_upgrade
         name: angular_compiler; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_compiler
         run: pub upgrade
-      - name: "angular_compiler; dart analyze --fatal-hints ."
+      - name: "angular_compiler; dart analyze --fatal-infos"
         if: "always() && steps.angular_compiler_pub_upgrade.conclusion == 'success'"
         working-directory: angular_compiler
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_forms_pub_upgrade
         name: angular_forms; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_forms
         run: pub upgrade
-      - name: "angular_forms; dart analyze --fatal-hints ."
+      - name: "angular_forms; dart analyze --fatal-infos"
         if: "always() && steps.angular_forms_pub_upgrade.conclusion == 'success'"
         working-directory: angular_forms
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_router_pub_upgrade
         name: angular_router; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_router
         run: pub upgrade
-      - name: "angular_router; dart analyze --fatal-hints ."
+      - name: "angular_router; dart analyze --fatal-infos"
         if: "always() && steps.angular_router_pub_upgrade.conclusion == 'success'"
         working-directory: angular_router
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: angular_test_pub_upgrade
         name: angular_test; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: angular_test
         run: pub upgrade
-      - name: "angular_test; dart analyze --fatal-hints ."
+      - name: "angular_test; dart analyze --fatal-infos"
         if: "always() && steps.angular_test_pub_upgrade.conclusion == 'success'"
         working-directory: angular_test
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
       - id: examples_hello_world_pub_upgrade
         name: examples/hello_world; pub upgrade
         if: "always() && steps.checkout.conclusion == 'success'"
         working-directory: examples/hello_world
         run: pub upgrade
-      - name: "examples/hello_world; dart analyze --fatal-hints ."
+      - name: "examples/hello_world; dart analyze --fatal-infos"
         if: "always() && steps.examples_hello_world_pub_upgrade.conclusion == 'success'"
         working-directory: examples/hello_world
-        run: dart analyze --fatal-hints .
+        run: dart analyze --fatal-infos
   job_005:
     name: "analyze; Dart dev; PKG: angular_ast; `dart analyze .`"
     runs-on: ubuntu-latest

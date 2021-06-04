@@ -86,8 +86,8 @@ for PKG in ${PKGS}; do
         pub run build_runner test --fail-on-severe -- -P ci || EXIT_CODE=$?
         ;;
       dartanalyzer_0)
-        echo 'dart analyze --fatal-hints .'
-        dart analyze --fatal-hints . || EXIT_CODE=$?
+        echo 'dart analyze --fatal-infos'
+        dart analyze --fatal-infos || EXIT_CODE=$?
         ;;
       dartanalyzer_1)
         echo 'dart analyze .'
