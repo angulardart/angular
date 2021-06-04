@@ -224,7 +224,8 @@
     typesOffset = init.types.length;
     hunk(hunkHelpers, init, holders, $);
   }
-  var H = {JS_CONST: function JS_CONST() {
+  var C = {},
+  H = {JS_CONST: function JS_CONST() {
     },
     LateError$fieldADI: function(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
@@ -2292,9 +2293,8 @@
       this.queue = t0;
       this.foo = t1;
     }
-  },
-  C = {};
-  var holders = [H, J, P, R, C];
+  };
+  var holders = [C, H, J, P, R];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};

@@ -11,7 +11,7 @@ analyzer:
     unused_element: warning
     unused_field: warning
     unused_local_variable: warning
-  
+
     # Permanent exclusions: Unlikely to removed.
     # =====================
     # Allow importing .template.dart files without an [explicit] analyzer error.
@@ -23,8 +23,6 @@ analyzer:
 
     # Security exclusions: We are security reviewed separate from these lints.
     # =====================
-    avoid_dynamic_execution: ignore
-    avoid_unsafe_apis: ignore
     unsafe_html: ignore
 
     # Temporary exclusions: Can be removed in the future.
