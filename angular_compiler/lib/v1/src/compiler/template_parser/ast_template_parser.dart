@@ -1684,3 +1684,8 @@ class _BoundHostListener {
     this.sourceSpan,
   );
 }
+
+/// Returns the matched components with this element ast in the [directives].
+List<CompileDirectiveMetadata> matchElementDirectives(
+        List<CompileDirectiveMetadata> directives, ast.ElementAst astNode) =>
+    _ParseContext._matchElementDirectives(directives, astNode);
