@@ -249,16 +249,39 @@
     ViewFragment_ViewFragment: function(nodesOrViewContainers) {
       return new D.ViewFragment(nodesOrViewContainers);
     },
+    ViewFragment_appendDomNodes: function(target, nodesOrViewContainers) {
+      var i, node, nestedViews, length0, n,
+        t1 = J.getInterceptor$asx(nodesOrViewContainers),
+        $length = t1.get$length(nodesOrViewContainers);
+      for (i = 0; i < $length; ++i) {
+        node = t1.$index(nodesOrViewContainers, i);
+        if (node instanceof V.ViewContainer) {
+          target.appendChild(node.nativeElement);
+          nestedViews = node.nestedViews;
+          if (nestedViews != null) {
+            length0 = nestedViews.length;
+            for (n = 0; n < length0; ++n) {
+              if (n >= nestedViews.length)
+                return H.ioore(nestedViews, n);
+              nestedViews[n].get$viewFragment().appendDomNodesInto$1(target);
+            }
+          }
+        } else
+          target.appendChild(node);
+      }
+    },
     ViewFragment__flattenDomNodes: function(target, nodes) {
-      var i, node, nestedViews, $length, n;
-      for (i = 0; i < 1; ++i) {
-        node = nodes[i];
+      var i, node, nestedViews, length0, n,
+        t1 = J.getInterceptor$asx(nodes),
+        $length = t1.get$length(nodes);
+      for (i = 0; i < $length; ++i) {
+        node = t1.$index(nodes, i);
         if (node instanceof V.ViewContainer) {
           target.push(node.nativeElement);
           nestedViews = node.nestedViews;
           if (nestedViews != null) {
-            $length = nestedViews.length;
-            for (n = 0; n < $length; ++n) {
+            length0 = nestedViews.length;
+            for (n = 0; n < length0; ++n) {
               if (n >= nestedViews.length)
                 return H.ioore(nestedViews, n);
               D.ViewFragment__flattenDomNodes(target, nestedViews[n].get$viewFragment()._nodesOrViewContainers);
@@ -285,8 +308,8 @@
       _.parentIndex = t1;
       _.___ComponentViewData_projectedNodes = null;
       _._changeDetectionMode = t2;
-      _._component_view$_changeDetectorState = 0;
-      _._component_view$_shouldSkipChangeDetection = _._component_view$_destroyed = false;
+      _._changeDetectorState = 0;
+      _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
     },
     _EmbeddedViewData__EmbeddedViewData: function(parentView, parentIndex) {
       return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
@@ -302,8 +325,8 @@
       _.projectedNodes = t4;
       _.locals = t5;
       _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
-      _._changeDetectorState = 0;
-      _._shouldSkipChangeDetection = _._destroyed = false;
+      _._embedded_view$_changeDetectorState = 0;
+      _._embedded_view$_shouldSkipChangeDetection = _._destroyed = false;
     }
   },
   G = {
@@ -358,6 +381,10 @@
     _LazyInjector: function _LazyInjector(t0, t1) {
       this._providers = t0;
       this._parent = t1;
+    },
+    NgContentRef: function NgContentRef(t0, t1) {
+      this._renderView = t0;
+      this._ng_content_ref$_index = t1;
     },
     HostView: function HostView() {
     },
@@ -3025,8 +3052,8 @@
     add$1$ax: function(receiver, a0) {
       return J.getInterceptor$ax(receiver).add$1(receiver, a0);
     },
-    forEach$1$x: function(receiver, a0) {
-      return J.getInterceptor$x(receiver).forEach$1(receiver, a0);
+    forEach$1$ax: function(receiver, a0) {
+      return J.getInterceptor$ax(receiver).forEach$1(receiver, a0);
     },
     noSuchMethod$1$: function(receiver, a0) {
       return J.getInterceptor$(receiver).noSuchMethod$1(receiver, a0);
@@ -3091,7 +3118,21 @@
     },
     GoldenComponent: function GoldenComponent() {
     },
+    EmbeddedQueries: function EmbeddedQueries() {
+    },
     AnotherDirective: function AnotherDirective() {
+    },
+    NestedNgForQueriesList: function NestedNgForQueriesList(t0) {
+      this.items = t0;
+    },
+    StaticSingleQuery: function StaticSingleQuery() {
+    },
+    DynamicSingleQuery: function DynamicSingleQuery() {
+    },
+    ContentQuery: function ContentQuery() {
+    },
+    ContentHasReference: function ContentHasReference() {
+      this.ref = null;
     }
   },
   M = {ChangeDetectionHost: function ChangeDetectionHost() {
@@ -3126,7 +3167,21 @@
       this._parent = t1;
     }
   },
+  N = {
+    TextBinding$: function() {
+      return new N.TextBinding(document.createTextNode(""));
+    },
+    TextBinding: function TextBinding(t0) {
+      this._currentValue = "";
+      this.element = t0;
+    }
+  },
   O = {
+    _UnscopedComponentStyles$: function(styles, componentUrl) {
+      var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
+      t1._appendStyles$0();
+      return t1;
+    },
     _flattenStyles: function(styles, target, componentId) {
       return target;
     },
@@ -3834,6 +3889,9 @@
     LinkedHashMap_LinkedHashMap$_empty: function($K, $V) {
       return new H.JsLinkedHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("JsLinkedHashMap<1,2>"));
     },
+    _LinkedIdentityHashMap__LinkedIdentityHashMap$es6: function($K, $V) {
+      return new P._LinkedIdentityHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("_LinkedIdentityHashMap<1,2>"));
+    },
     HashMap_HashMap$from: function(other, $K, $V) {
       var result = P.HashMap_HashMap($K, $V);
       other.forEach$1(0, new P.HashMap_HashMap$from_closure(result, $K, $V));
@@ -3973,7 +4031,7 @@
         $._toStringVisiting.push(m);
         result._contents += "{";
         t1.first = true;
-        J.forEach$1$x(m, new P.MapBase_mapToString_closure(t1, result));
+        J.forEach$1$ax(m, new P.MapBase_mapToString_closure(t1, result));
         result._contents += "}";
       } finally {
         if (0 >= $._toStringVisiting.length)
@@ -4008,6 +4066,13 @@
       _._collection$_keys = t1;
       _._offset = 0;
       _._collection$_current = null;
+    },
+    _LinkedIdentityHashMap: function _LinkedIdentityHashMap(t0) {
+      var _ = this;
+      _.__js_helper$_length = 0;
+      _._last = _._first = _.__js_helper$_rest = _._nums = _._strings = null;
+      _._modifications = 0;
+      _.$ti = t0;
     },
     HashMap_HashMap$from_closure: function HashMap_HashMap$from_closure(t0, t1, t2) {
       this.result = t0;
@@ -4307,6 +4372,56 @@
   },
   Q = {AppViewUtils: function AppViewUtils() {
     }},
+  R = {NgFor: function NgFor(t0, t1) {
+      var _ = this;
+      _._ng_for$_viewContainer = t0;
+      _._ngForOf = _._differ = null;
+      _._ng_for$_templateRef = t1;
+    }, NgFor__applyChanges_closure: function NgFor__applyChanges_closure(t0, t1) {
+      this.$this = t0;
+      this.insertTuples = t1;
+    }, NgFor__applyChanges_closure0: function NgFor__applyChanges_closure0(t0) {
+      this.$this = t0;
+    }, _RecordViewTuple: function _RecordViewTuple(t0, t1) {
+      this.view = t0;
+      this.record = t1;
+    },
+    _trackByIdentity: function(index, item) {
+      return item;
+    },
+    _getPreviousIndex: function(item, addRemoveOffset, moveOffsets) {
+      var t1, moveOffset,
+        previousIndex = item.previousIndex;
+      if (previousIndex == null)
+        return null;
+      if (moveOffsets != null && previousIndex < moveOffsets.length) {
+        if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
+          return H.ioore(moveOffsets, previousIndex);
+        t1 = moveOffsets[previousIndex];
+        t1.toString;
+        moveOffset = t1;
+      } else
+        moveOffset = 0;
+      return previousIndex + addRemoveOffset + moveOffset;
+    },
+    DefaultIterableDiffer: function DefaultIterableDiffer(t0) {
+      var _ = this;
+      _._trackByFn = t0;
+      _._identityChangesTail = _._identityChangesHead = _._removalsTail = _._removalsHead = _._movesTail = _._movesHead = _._additionsTail = _._additionsHead = _._itTail = _._itHead = _._previousItHead = _._unlinkedRecords = _._linkedRecords = _._default_iterable_differ$_length = null;
+    },
+    CollectionChangeRecord: function CollectionChangeRecord(t0, t1) {
+      var _ = this;
+      _.item = t0;
+      _.trackById = t1;
+      _._nextIdentityChange = _._nextMoved = _._nextAdded = _._nextRemoved = _._prevRemoved = _._nextDup = _._prevDup = _._default_iterable_differ$_next = _._prev = _._nextPrevious = _.previousIndex = _.currentIndex = null;
+    },
+    _DuplicateItemRecordList: function _DuplicateItemRecordList() {
+      this._tail = this._head = null;
+    },
+    _DuplicateMap: function _DuplicateMap(t0) {
+      this._default_iterable_differ$_map = t0;
+    }
+  },
   S = {
     viewFactory_GoldenComponent1: function(parentView, parentIndex) {
       return new S._ViewGoldenComponent1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
@@ -4314,13 +4429,28 @@
     viewFactory_GoldenComponentHost0: function() {
       return new S._ViewGoldenComponentHost0(new G._HostViewData());
     },
+    viewFactory_NestedNgForQueriesList1: function(parentView, parentIndex) {
+      return new S._ViewNestedNgForQueriesList1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
+    viewFactory_NestedNgForQueriesList2: function(parentView, parentIndex) {
+      return new S._ViewNestedNgForQueriesList2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
+    viewFactory_NestedNgForQueriesList3: function(parentView, parentIndex) {
+      return new S._ViewNestedNgForQueriesList3(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
+    viewFactory_StaticSingleQuery1: function(parentView, parentIndex) {
+      return new S._ViewStaticSingleQuery1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
+    viewFactory_DynamicSingleQuery1: function(parentView, parentIndex) {
+      return new S._ViewDynamicSingleQuery1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+    },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
       _._viewQuery_q3_5_isDirty = _._viewQuery_AnotherDirective_4_isDirty = true;
-      _.__ViewGoldenComponent0__NgIf_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__AnotherDirective_1_5 = _.__ViewGoldenComponent0__AnotherDirective_0_5 = null;
+      _.__ViewGoldenComponent0__ContentHasReference_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__ContentQuery_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__DynamicSingleQuery_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__StaticSingleQuery_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__NestedNgForQueriesList_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__EmbeddedQueries_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__NgIf_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__AnotherDirective_1_5 = _.__ViewGoldenComponent0__AnotherDirective_0_5 = null;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
-      _._data = t0;
+      _._component_view$_data = t0;
     },
     ViewGoldenComponent0_detectChangesInternal_closure: function ViewGoldenComponent0_detectChangesInternal_closure() {
     },
@@ -4334,7 +4464,78 @@
       var _ = this;
       _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
-      _._host_view$_data = t0;
+      _._data = t0;
+    },
+    ViewEmbeddedQueries0: function ViewEmbeddedQueries0(t0) {
+      var _ = this;
+      _._viewQuery_AnotherDirective_0_isDirty = true;
+      _.__ViewEmbeddedQueries0__appEl_2 = _.__ViewEmbeddedQueries0__appEl_1 = _.__ViewEmbeddedQueries0__AnotherDirective_0_5 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewEmbeddedQueries0_detectChangesInternal_closure: function ViewEmbeddedQueries0_detectChangesInternal_closure() {
+    },
+    ViewEmbeddedQueries0_detectChangesInternal_closure0: function ViewEmbeddedQueries0_detectChangesInternal_closure0() {
+    },
+    ViewNestedNgForQueriesList0: function ViewNestedNgForQueriesList0(t0) {
+      var _ = this;
+      _.__ViewNestedNgForQueriesList0__NgIf_0_9 = _.__ViewNestedNgForQueriesList0__appEl_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    _ViewNestedNgForQueriesList1: function _ViewNestedNgForQueriesList1(t0) {
+      this.___ViewNestedNgForQueriesList1__NgIf_1_9 = this.___ViewNestedNgForQueriesList1__appEl_1 = null;
+      this._embedded_view$_data = t0;
+    },
+    _ViewNestedNgForQueriesList2: function _ViewNestedNgForQueriesList2(t0) {
+      this.___ViewNestedNgForQueriesList2__NgFor_1_9 = this.___ViewNestedNgForQueriesList2__appEl_1 = null;
+      this._embedded_view$_data = t0;
+    },
+    _ViewNestedNgForQueriesList3: function _ViewNestedNgForQueriesList3(t0) {
+      this.___ViewNestedNgForQueriesList3__AnotherDirective_1_5 = null;
+      this._embedded_view$_data = t0;
+    },
+    ViewStaticSingleQuery0: function ViewStaticSingleQuery0(t0) {
+      var _ = this;
+      _.__ViewStaticSingleQuery0__NgIf_1_9 = _.__ViewStaticSingleQuery0__appEl_1 = _.__ViewStaticSingleQuery0__AnotherDirective_0_5 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    _ViewStaticSingleQuery1: function _ViewStaticSingleQuery1(t0) {
+      this.___ViewStaticSingleQuery1__AnotherDirective_0_5 = null;
+      this._embedded_view$_data = t0;
+    },
+    ViewDynamicSingleQuery0: function ViewDynamicSingleQuery0(t0) {
+      var _ = this;
+      _._viewQuery_AnotherDirective_0_isDirty = true;
+      _.__ViewDynamicSingleQuery0__AnotherDirective_2_5 = _.__ViewDynamicSingleQuery0__AnotherDirective_1_5 = _.__ViewDynamicSingleQuery0__NgIf_0_9 = _.__ViewDynamicSingleQuery0__appEl_0 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewDynamicSingleQuery0_detectChangesInternal_closure: function ViewDynamicSingleQuery0_detectChangesInternal_closure() {
+    },
+    _ViewDynamicSingleQuery1: function _ViewDynamicSingleQuery1(t0) {
+      this.___ViewDynamicSingleQuery1__AnotherDirective_1_5 = this.___ViewDynamicSingleQuery1__AnotherDirective_0_5 = null;
+      this._embedded_view$_data = t0;
+    },
+    ViewContentQuery0: function ViewContentQuery0(t0) {
+      var _ = this;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t0;
+    },
+    ViewContentHasReference0: function ViewContentHasReference0(t0, t1, t2) {
+      var _ = this;
+      _._textBinding_2 = t0;
+      _._textBinding_4 = t1;
+      _.__ViewContentHasReference0__NgContentRef_0_5 = null;
+      _.__ComponentView_ctx = $;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _._component_view$_data = t2;
     }
   },
   T = {
@@ -4424,13 +4625,39 @@
       this._appRoots = t0;
       this._proxy = null;
     },
+    createText: function(contents) {
+      return document.createTextNode(contents);
+    },
+    appendText: function($parent, text) {
+      return $parent.appendChild(T.createText(text));
+    },
     appendAnchor: function($parent) {
       var t1 = document;
       return $parent.appendChild(t1.createComment(""));
     },
+    appendDiv: function(doc, $parent) {
+      var t1 = doc.createElement("div");
+      return $parent.appendChild(t1);
+    },
     appendElement: function(doc, $parent, tagName) {
       var t1 = doc.createElement(tagName);
       return $parent.appendChild(t1);
+    },
+    insertNodesBefore: function(nodes, $parent, sibling) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        $parent.insertBefore(nodes[i], sibling);
+      }
+    },
+    appendNodes: function(nodes, $parent) {
+      var l, i;
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
+        $parent.appendChild(nodes[i]);
+      }
     },
     removeNodes: function(nodes) {
       var l, i, t1, t2;
@@ -4442,6 +4669,17 @@
         if (t2 != null)
           t2.removeChild(t1);
       }
+    },
+    insertNodesAsSibling: function(nodes, sibling) {
+      var nextSibling,
+        parentOfSibling = sibling.parentNode;
+      if (nodes.length === 0 || parentOfSibling == null)
+        return;
+      nextSibling = sibling.nextSibling;
+      if (nextSibling == null)
+        T.appendNodes(nodes, parentOfSibling);
+      else
+        T.insertNodesBefore(nodes, parentOfSibling, nextSibling);
     }
   },
   U = {
@@ -4717,9 +4955,11 @@
   },
   X = {
     flattenNodes: function(nodes, $T) {
-      var i, items, k, j,
+      var l, i, items, k, j,
         result = H._setArrayType([], $T._eval$1("JSArray<0>"));
-      for (i = 0; i < 2; ++i) {
+      for (l = nodes.length, i = 0; i < l; ++i) {
+        if (i >= nodes.length)
+          return H.ioore(nodes, i);
         items = nodes[i];
         for (k = items.length, j = 0; j < k; ++j) {
           if (j >= items.length)
@@ -4825,7 +5065,7 @@
   },
   Z = {ElementRef: function ElementRef() {
     }};
-  var holders = [A, C, D, E, G, H, J, K, L, M, O, P, Q, S, T, U, V, W, X, Y, Z];
+  var holders = [A, C, D, E, G, H, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -4896,6 +5136,13 @@
         throw H.wrapException(P.RangeError$value(index, null));
       return receiver.splice(index, 1)[0];
     },
+    insert$2: function(receiver, index, value) {
+      if (!!receiver.fixed$length)
+        H.throwExpression(P.UnsupportedError$("insert"));
+      if (index < 0 || index > receiver.length)
+        throw H.wrapException(P.RangeError$value(index, null));
+      receiver.splice(index, 0, value);
+    },
     remove$1: function(receiver, element) {
       var i;
       if (!!receiver.fixed$length)
@@ -4942,6 +5189,28 @@
       if (receiver.length > 0)
         return receiver[0];
       throw H.wrapException(H.IterableElementError_noElement());
+    },
+    get$last: function(receiver) {
+      var t1 = receiver.length;
+      if (t1 > 0)
+        return receiver[t1 - 1];
+      throw H.wrapException(H.IterableElementError_noElement());
+    },
+    indexOf$1: function(receiver, element) {
+      var i,
+        $length = receiver.length;
+      if (0 >= $length)
+        return -1;
+      for (i = 0; i < $length; ++i) {
+        if (i >= receiver.length)
+          return H.ioore(receiver, i);
+        if (J.$eq$(receiver[i], element))
+          return i;
+      }
+      return -1;
+    },
+    get$isNotEmpty: function(receiver) {
+      return receiver.length !== 0;
     },
     toString$0: function(receiver) {
       return P.IterableBase_iterableToFullString(receiver, "[", "]");
@@ -5219,7 +5488,7 @@
       this.$arguments.push(argument);
       ++t1.argumentCount;
     },
-    $signature: 2
+    $signature: 3
   };
   H.TypeErrorDecoder.prototype = {
     matchTypeError$1: function(message) {
@@ -5425,6 +5694,39 @@
         }
       }
     },
+    remove$1: function(_, key) {
+      var _this = this;
+      if (typeof key == "string")
+        return _this._removeHashTableEntry$2(_this._strings, key);
+      else if (typeof key == "number" && (key & 0x3ffffff) === key)
+        return _this._removeHashTableEntry$2(_this._nums, key);
+      else
+        return _this.internalRemove$1(key);
+    },
+    internalRemove$1: function(key) {
+      var hash, bucket, index, cell, _this = this,
+        rest = _this.__js_helper$_rest;
+      if (rest == null)
+        return null;
+      hash = _this.internalComputeHashCode$1(key);
+      bucket = _this._getTableBucket$2(rest, hash);
+      index = _this.internalFindBucketIndex$2(bucket, key);
+      if (index < 0)
+        return null;
+      cell = bucket.splice(index, 1)[0];
+      _this._unlinkCell$1(cell);
+      if (bucket.length === 0)
+        _this._deleteTableEntry$2(rest, hash);
+      return cell.hashMapCellValue;
+    },
+    clear$0: function(_) {
+      var _this = this;
+      if (_this.__js_helper$_length > 0) {
+        _this._strings = _this._nums = _this.__js_helper$_rest = _this._first = _this._last = null;
+        _this.__js_helper$_length = 0;
+        _this._modified$0();
+      }
+    },
     forEach$1: function(_, action) {
       var _this = this,
         cell = _this._first,
@@ -5443,6 +5745,17 @@
       else
         cell.hashMapCellValue = value;
     },
+    _removeHashTableEntry$2: function(table, key) {
+      var cell;
+      if (table == null)
+        return null;
+      cell = this._getTableCell$2(table, key);
+      if (cell == null)
+        return null;
+      this._unlinkCell$1(cell);
+      this._deleteTableEntry$2(table, key);
+      return cell.hashMapCellValue;
+    },
     _modified$0: function() {
       this._modifications = this._modifications + 1 & 67108863;
     },
@@ -5460,6 +5773,21 @@
       ++_this.__js_helper$_length;
       _this._modified$0();
       return cell;
+    },
+    _unlinkCell$1: function(cell) {
+      var _this = this,
+        previous = cell._previous,
+        next = cell._next;
+      if (previous == null)
+        _this._first = next;
+      else
+        previous._next = next;
+      if (next == null)
+        _this._last = previous;
+      else
+        next._previous = previous;
+      --_this.__js_helper$_length;
+      _this._modified$0();
     },
     internalComputeHashCode$1: function(key) {
       return J.get$hashCode$(key) & 0x3ffffff;
@@ -5545,19 +5873,19 @@
     call$1: function(o) {
       return this.getTag(o);
     },
-    $signature: 19
+    $signature: 21
   };
   H.initHooks_closure0.prototype = {
     call$2: function(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 14
+    $signature: 16
   };
   H.initHooks_closure1.prototype = {
     call$1: function(tag) {
       return this.prototypeForTag(tag);
     },
-    $signature: 16
+    $signature: 20
   };
   H._Cell.prototype = {
     _readLocal$0: function() {
@@ -5679,7 +6007,7 @@
       t1.storedCallback = null;
       f.call$0();
     },
-    $signature: 4
+    $signature: 5
   };
   P._AsyncRun__initializeScheduleImmediate_closure.prototype = {
     call$1: function(callback) {
@@ -5689,7 +6017,7 @@
       t2 = this.span;
       t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
     },
-    $signature: 20
+    $signature: 61
   };
   P._AsyncRun__scheduleImmediateJsOverride_internalCallback.prototype = {
     call$0: function() {
@@ -5697,7 +6025,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback.prototype = {
     call$0: function() {
@@ -5705,7 +6033,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   P._TimerImpl.prototype = {
     _TimerImpl$2: function(milliseconds, callback) {
@@ -5748,7 +6076,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   P.AsyncError.prototype = {
     toString$0: function(_) {
@@ -6118,7 +6446,7 @@
         t1._completeError$2(error, stackTrace);
       }
     },
-    $signature: 4
+    $signature: 5
   };
   P._Future__chainForeignFuture_closure0.prototype = {
     call$2: function(error, stackTrace) {
@@ -6126,7 +6454,7 @@
     },
     "call*": "call$2",
     $requiredArgCount: 2,
-    $signature: 56
+    $signature: 26
   };
   P._Future__chainForeignFuture_closure1.prototype = {
     call$0: function() {
@@ -6199,7 +6527,7 @@
     call$1: function(_) {
       return this.originalSource;
     },
-    $signature: 24
+    $signature: 33
   };
   P._Future__propagateToListeners_handleValueCallback.prototype = {
     call$0: function() {
@@ -7009,11 +7337,28 @@
       }
     }
   };
+  P._LinkedIdentityHashMap.prototype = {
+    internalComputeHashCode$1: function(key) {
+      return H.objectHashCode(key) & 1073741823;
+    },
+    internalFindBucketIndex$2: function(bucket, key) {
+      var $length, i, t1;
+      if (bucket == null)
+        return -1;
+      $length = bucket.length;
+      for (i = 0; i < $length; ++i) {
+        t1 = bucket[i].hashMapCellKey;
+        if (t1 == null ? key == null : t1 === key)
+          return i;
+      }
+      return -1;
+    }
+  };
   P.HashMap_HashMap$from_closure.prototype = {
     call$2: function(k, v) {
       this.result.$indexSet(0, this.K._as(k), this.V._as(v));
     },
-    $signature: 31
+    $signature: 39
   };
   P.ListMixin.prototype = {
     get$iterator: function(receiver) {
@@ -7021,6 +7366,14 @@
     },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
+    },
+    get$isNotEmpty: function(receiver) {
+      return this.get$length(receiver) !== 0;
+    },
+    get$last: function(receiver) {
+      if (this.get$length(receiver) === 0)
+        throw H.wrapException(H.IterableElementError_noElement());
+      return this.$index(receiver, this.get$length(receiver) - 1);
     },
     add$1: function(receiver, element) {
       var t1 = this.get$length(receiver);
@@ -7044,7 +7397,7 @@
       t1._contents = t2 + ": ";
       t1._contents += H.S(v);
     },
-    $signature: 38
+    $signature: 40
   };
   P.MapMixin.prototype = {
     forEach$1: function(receiver, action) {
@@ -7089,7 +7442,7 @@
       t1._contents += P.Error_safeToString(value);
       t2.comma = ", ";
     },
-    $signature: 39
+    $signature: 44
   };
   P.Duration.prototype = {
     $eq: function(_, other) {
@@ -7409,6 +7762,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -7495,6 +7854,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -7531,6 +7896,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7571,6 +7942,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7619,7 +7996,7 @@
     call$2: function(k, v) {
       return this.keys.push(k);
     },
-    $signature: 2
+    $signature: 3
   };
   W.MidiOutputMap.prototype = {
     $index: function(receiver, key) {
@@ -7649,7 +8026,7 @@
     call$2: function(k, v) {
       return this.keys.push(k);
     },
-    $signature: 2
+    $signature: 3
   };
   W.MimeType.prototype = {$isMimeType: 1};
   W.MimeTypeArray.prototype = {
@@ -7666,6 +8043,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7718,6 +8101,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -7747,6 +8136,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7785,7 +8180,7 @@
     call$2: function(k, v) {
       return this.keys.push(k);
     },
-    $signature: 2
+    $signature: 3
   };
   W.SelectElement.prototype = {
     get$length: function(receiver) {
@@ -7807,6 +8202,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7832,6 +8233,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7897,6 +8304,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -7920,6 +8333,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7950,6 +8369,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -7989,6 +8414,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -8095,6 +8526,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -8118,6 +8555,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -8143,6 +8586,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
         return H.ioore(receiver, index);
@@ -8166,6 +8615,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       if (index < 0 || index >= receiver.length)
@@ -8264,6 +8719,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
     },
@@ -8285,6 +8746,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
@@ -8312,6 +8779,12 @@
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
+    },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
     },
@@ -8333,6 +8806,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
@@ -8381,7 +8860,7 @@
     call$2: function(k, v) {
       return this.keys.push(k);
     },
-    $signature: 2
+    $signature: 3
   };
   P.AudioTrackList.prototype = {
     get$length: function(receiver) {
@@ -8412,6 +8891,12 @@
     },
     set$length: function(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
+    },
+    get$last: function(receiver) {
+      var len = receiver.length;
+      if (len > 0)
+        return receiver[len - 1];
+      throw H.wrapException(P.StateError$("No elements"));
     },
     elementAt$1: function(receiver, index) {
       return this.$index(receiver, index);
@@ -8447,7 +8932,7 @@
         H.throwExpression(H.LateError$fieldNI($.appViewUtils.__late_helper$_name));
       return t1;
     },
-    $signature: 13
+    $signature: 19
   };
   G.appInjector_closure1.prototype = {
     call$0: function() {
@@ -8459,7 +8944,7 @@
     call$0: function() {
       return new T.Testability(this.ngZone);
     },
-    $signature: 21
+    $signature: 14
   };
   G.appInjector_closure3.prototype = {
     call$0: function() {
@@ -8484,13 +8969,103 @@
       return result.call$0();
     }
   };
+  R.NgFor.prototype = {
+    _applyChanges$1: function(changes) {
+      var i, t1, t2, len, t3,
+        insertTuples = H._setArrayType([], type$.JSArray__RecordViewTuple);
+      changes.forEachOperation$1(new R.NgFor__applyChanges_closure(this, insertTuples));
+      for (i = 0; i < insertTuples.length; ++i) {
+        t1 = insertTuples[i];
+        t2 = t1.record;
+        t1 = t1.view._embedded_view$_data.locals;
+        t1.$indexSet(0, "$implicit", t2.item);
+        t2 = t2.currentIndex;
+        t2.toString;
+        t2 &= 1;
+        t1.$indexSet(0, "even", t2 === 0);
+        t1.$indexSet(0, "odd", t2 === 1);
+      }
+      for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
+        t3 = t1.nestedViews;
+        if (i >= t3.length)
+          return H.ioore(t3, i);
+        t3 = t3[i]._embedded_view$_data.locals;
+        t3.$indexSet(0, "first", i === 0);
+        t3.$indexSet(0, "last", i === t2);
+        t3.$indexSet(0, "index", i);
+        t3.$indexSet(0, "count", len);
+      }
+      changes.forEachIdentityChange$1(new R.NgFor__applyChanges_closure0(this));
+    }
+  };
+  R.NgFor__applyChanges_closure.prototype = {
+    call$3: function(item, adjustedPreviousIndex, currentIndex) {
+      var t1, t2, viewRef, index, t3, previousIndex, refRenderNode, _this = this;
+      if (item.previousIndex == null) {
+        t1 = _this.$this;
+        t2 = t1._ng_for$_viewContainer;
+        currentIndex.toString;
+        viewRef = t1._ng_for$_templateRef.createEmbeddedView$0();
+        if (currentIndex === -1)
+          index = t2.get$length(t2);
+        else
+          index = currentIndex;
+        t2._attachView$2(viewRef, index);
+        _this.insertTuples.push(new R._RecordViewTuple(viewRef, item));
+      } else {
+        t1 = _this.$this._ng_for$_viewContainer;
+        if (currentIndex == null) {
+          adjustedPreviousIndex.toString;
+          t1.remove$1(0, adjustedPreviousIndex);
+        } else {
+          adjustedPreviousIndex.toString;
+          t2 = t1.nestedViews;
+          if (adjustedPreviousIndex < 0 || adjustedPreviousIndex >= t2.length)
+            return H.ioore(t2, adjustedPreviousIndex);
+          t2 = t2[adjustedPreviousIndex];
+          index = currentIndex === -1 ? t1.get$length(t1) : currentIndex;
+          t3 = t1.nestedViews;
+          t3.toString;
+          previousIndex = C.JSArray_methods.indexOf$1(t3, t2);
+          if (previousIndex === -1)
+            H.throwExpression(P.StateError$("View is not a member of this container"));
+          C.JSArray_methods.removeAt$1(t3, previousIndex);
+          C.JSArray_methods.insert$2(t3, index, t2);
+          refRenderNode = t1._findRenderNode$2(t3, index);
+          if (refRenderNode != null)
+            t2.addRootNodesAfter$1(refRenderNode);
+          t2.wasMoved$0();
+          _this.insertTuples.push(new R._RecordViewTuple(t2, item));
+        }
+      }
+    },
+    $signature: 23
+  };
+  R.NgFor__applyChanges_closure0.prototype = {
+    call$1: function(record) {
+      var t2,
+        t1 = record.currentIndex;
+      t1.toString;
+      t2 = this.$this._ng_for$_viewContainer.nestedViews;
+      if (t1 >= t2.length)
+        return H.ioore(t2, t1);
+      t2[t1]._embedded_view$_data.locals.$indexSet(0, "$implicit", record.item);
+    },
+    $signature: 24
+  };
+  R._RecordViewTuple.prototype = {};
   K.NgIf.prototype = {
     set$ngIf: function(newCondition) {
-      var t1 = this._prevCondition;
-      if (!t1)
+      var _this = this,
+        t1 = _this._prevCondition;
+      if (t1 === newCondition)
         return;
-      this._viewContainer.clear$0(0);
-      this._prevCondition = false;
+      t1 = _this._viewContainer;
+      if (newCondition)
+        t1._attachView$2(_this._templateRef.createEmbeddedView$0(), t1.get$length(t1));
+      else
+        t1.clear$0(0);
+      _this._prevCondition = newCondition;
     }
   };
   K.TransitionalAppHost.prototype = {};
@@ -8518,7 +9093,7 @@
       var t1, t2, t3, _this = this;
       _this._rootComponents.push(component);
       t1 = component._hostView;
-      t2 = t1._host_view$_data;
+      t2 = t1._data;
       t3 = t2._onDestroyCallbacks;
       t2 = t3 == null ? t2._onDestroyCallbacks = H._setArrayType([], type$.JSArray_of_void_Function) : t3;
       t2.push(new Y.ApplicationRef__loadedRootComponent_closure(_this, component, node));
@@ -8540,7 +9115,7 @@
       if (typeof console != "undefined")
         window.console.error(t2);
     },
-    $signature: 23
+    $signature: 25
   };
   Y.ApplicationRef$__closure0.prototype = {
     call$1: function(_) {
@@ -8551,7 +9126,7 @@
   };
   Y.ApplicationRef_bootstrap_closure.prototype = {
     call$0: function() {
-      var t4, styles, t5, t6, _el_0, t7, parentRenderNode, _el_1, _anchor_2, t8, replacement, component, existing, replacement0, testability, registry,
+      var t4, styles, t5, t6, _el_0, replacement, component, existing, replacement0, testability, registry,
         t1 = this.componentFactory,
         t2 = this.$this,
         t3 = t2._injector,
@@ -8562,11 +9137,8 @@
         H.throwExpression(H.LateError$fieldAI("_injector"));
       t4 = new S.ViewGoldenComponent0(E._ComponentViewData__ComponentViewData(hostView, 0, 3));
       styles = $.ViewGoldenComponent0__componentStyles;
-      if (styles == null) {
-        styles = new O._UnscopedComponentStyles(null, C.List_empty);
-        styles._appendStyles$0();
-        $.ViewGoldenComponent0__componentStyles = styles;
-      }
+      if (styles == null)
+        styles = $.ViewGoldenComponent0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, null);
       t4.__ComponentView_componentStyles = styles;
       t5 = document;
       t6 = t5.createElement("golden");
@@ -8582,48 +9154,9 @@
       else
         H.throwExpression(H.LateError$fieldAI("component"));
       hostView.get$component();
-      t4 = type$.JSArray_AnotherDirective;
-      self.deopt(H._setArrayType([], t4));
+      self.deopt(H._setArrayType([], type$.JSArray_AnotherDirective));
       hostView.initRootNode$1(_el_0);
-      t6 = hostView.get$componentView();
-      t7 = hostView.get$component();
-      if (t6.__ComponentView_ctx === $)
-        t6.__ComponentView_ctx = t7;
-      else
-        H.throwExpression(H.LateError$fieldAI("ctx"));
-      t7 = t6._data;
-      if (t7.___ComponentViewData_projectedNodes == null)
-        t7.___ComponentViewData_projectedNodes = C.List_empty0;
-      else
-        H.throwExpression(H.LateError$fieldAI("projectedNodes"));
-      t6.get$ctx();
-      parentRenderNode = t6.initViewRoot$0();
-      t6.project$2(parentRenderNode, 0);
-      T.appendElement(t5, parentRenderNode, "another");
-      if (t6.__ViewGoldenComponent0__AnotherDirective_0_5 == null)
-        t6.__ViewGoldenComponent0__AnotherDirective_0_5 = new L.AnotherDirective();
-      else
-        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
-      _el_1 = T.appendElement(t5, parentRenderNode, "another");
-      if (t6.__ViewGoldenComponent0__AnotherDirective_1_5 == null)
-        t6.__ViewGoldenComponent0__AnotherDirective_1_5 = new L.AnotherDirective();
-      else
-        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_1_5"));
-      _anchor_2 = T.appendAnchor(parentRenderNode);
-      if (t6.__ViewGoldenComponent0__appEl_2 == null)
-        t6.__ViewGoldenComponent0__appEl_2 = new V.ViewContainer(2, t6, _anchor_2);
-      else
-        H.throwExpression(H.LateError$fieldAI("_appEl_2"));
-      t7 = t6.get$_appEl_2();
-      t8 = t6.get$_appEl_2();
-      if (t6.__ViewGoldenComponent0__NgIf_2_9 == null)
-        t6.__ViewGoldenComponent0__NgIf_2_9 = new K.NgIf(new D.TemplateRef(t7, S.queries_template__viewFactory_GoldenComponent1$closure()), t8);
-      else
-        H.throwExpression(H.LateError$fieldAI("_NgIf_2_9"));
-      self.deopt(H._setArrayType([t6.get$_AnotherDirective_1_5()], t4));
-      self.deopt(t6.get$_AnotherDirective_1_5());
-      self.deopt(new Z.ElementRef());
-      self.deopt(_el_1);
+      hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
       replacement = t4.get$rootElement(t4);
       hostView.get$component().toString;
@@ -8659,6 +9192,408 @@
         J.remove$0$ax(t1);
     },
     $signature: 0
+  };
+  R.DefaultIterableDiffer.prototype = {
+    get$length: function(_) {
+      return this._default_iterable_differ$_length;
+    },
+    forEachOperation$1: function(fn) {
+      var t2, t3, record, adjPreviousIndex, currentIndex, localMovePreviousIndex, localCurrentIndex, i, offset, j, index, previousIndex, _null = null,
+        nextIt = this._itHead,
+        nextRemove = this._removalsHead,
+        t1 = type$.JSArray_nullable_int,
+        moveOffsets = _null,
+        sizeDeficit = moveOffsets,
+        addRemoveOffset = 0;
+      while (true) {
+        t2 = nextIt == null;
+        if (!(!t2 || nextRemove != null))
+          break;
+        if (nextRemove != null)
+          if (!t2) {
+            t2 = nextIt.currentIndex;
+            t2.toString;
+            t3 = R._getPreviousIndex(nextRemove, addRemoveOffset, moveOffsets);
+            t3.toString;
+            t3 = t2 < t3;
+            t2 = t3;
+          } else
+            t2 = false;
+        else
+          t2 = true;
+        record = t2 ? nextIt : nextRemove;
+        adjPreviousIndex = R._getPreviousIndex(record, addRemoveOffset, moveOffsets);
+        currentIndex = record.currentIndex;
+        if (record == nextRemove) {
+          --addRemoveOffset;
+          nextRemove = nextRemove._nextRemoved;
+        } else {
+          nextIt = nextIt._default_iterable_differ$_next;
+          if (record.previousIndex == null)
+            ++addRemoveOffset;
+          else {
+            if (moveOffsets == null)
+              moveOffsets = H._setArrayType([], t1);
+            adjPreviousIndex.toString;
+            localMovePreviousIndex = adjPreviousIndex - addRemoveOffset;
+            currentIndex.toString;
+            localCurrentIndex = currentIndex - addRemoveOffset;
+            if (localMovePreviousIndex !== localCurrentIndex) {
+              for (i = 0; i < localMovePreviousIndex; ++i) {
+                t2 = moveOffsets.length;
+                if (i < t2) {
+                  t3 = moveOffsets[i];
+                  t3.toString;
+                  offset = t3;
+                } else {
+                  if (t2 > i)
+                    moveOffsets[i] = 0;
+                  else {
+                    sizeDeficit = i - t2 + 1;
+                    for (j = 0; j < sizeDeficit; ++j)
+                      moveOffsets.push(_null);
+                    t2 = moveOffsets.length;
+                    if (i >= t2)
+                      return H.ioore(moveOffsets, i);
+                    moveOffsets[i] = 0;
+                  }
+                  offset = 0;
+                }
+                index = offset + i;
+                if (localCurrentIndex <= index && index < localMovePreviousIndex) {
+                  if (i >= t2)
+                    return H.ioore(moveOffsets, i);
+                  moveOffsets[i] = offset + 1;
+                }
+              }
+              previousIndex = record.previousIndex;
+              sizeDeficit = previousIndex - moveOffsets.length + 1;
+              for (j = 0; j < sizeDeficit; ++j)
+                moveOffsets.push(_null);
+              if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
+                return H.ioore(moveOffsets, previousIndex);
+              moveOffsets[previousIndex] = localCurrentIndex - localMovePreviousIndex;
+            }
+          }
+        }
+        if (adjPreviousIndex != currentIndex)
+          fn.call$3(record, adjPreviousIndex, currentIndex);
+      }
+    },
+    forEachIdentityChange$1: function(fn) {
+      var record;
+      for (record = this._identityChangesHead; record != null; record = record._nextIdentityChange)
+        fn.call$1(record);
+    },
+    check$1: function(_, collection) {
+      var record, $length, t1, t2, t3, t4, index, item, itemTrackBy, t5, _this = this;
+      _this._reset$0();
+      record = _this._itHead;
+      $length = collection.length;
+      _this._default_iterable_differ$_length = $length;
+      for (t1 = _this._trackByFn, t2 = record, t3 = false, t4 = 0; t4 < $length; index = t4 + 1, t4 = index, t2 = record) {
+        if (t4 >= collection.length)
+          return H.ioore(collection, t4);
+        item = collection[t4];
+        itemTrackBy = t1.call$2(t4, item);
+        if (t2 != null) {
+          t5 = t2.trackById;
+          t5 = t5 == null ? itemTrackBy != null : t5 !== itemTrackBy;
+        } else
+          t5 = true;
+        if (t5) {
+          record = _this._mismatch$4(t2, item, itemTrackBy, t4);
+          t2 = record;
+          t3 = true;
+        } else {
+          if (t3)
+            t2 = _this._verifyReinsertion$4(t2, item, itemTrackBy, t4);
+          t5 = t2.item;
+          if (t5 == null ? item != null : t5 !== item) {
+            t2.item = item;
+            t5 = _this._identityChangesTail;
+            if (t5 == null)
+              _this._identityChangesTail = _this._identityChangesHead = t2;
+            else
+              _this._identityChangesTail = t5._nextIdentityChange = t2;
+          }
+        }
+        record = t2._default_iterable_differ$_next;
+      }
+      t1 = t2;
+      _this._truncate$1(t1);
+      return _this.get$isDirty();
+    },
+    get$isDirty: function() {
+      var _this = this;
+      return _this._additionsHead != null || _this._movesHead != null || _this._removalsHead != null || _this._identityChangesHead != null;
+    },
+    _reset$0: function() {
+      var record, record0, nextRecord, _this = this;
+      if (_this.get$isDirty()) {
+        for (record = _this._previousItHead = _this._itHead; record != null; record = record0) {
+          record0 = record._default_iterable_differ$_next;
+          record._nextPrevious = record0;
+        }
+        for (record = _this._additionsHead; record != null; record = record._nextAdded)
+          record.previousIndex = record.currentIndex;
+        _this._additionsHead = _this._additionsTail = null;
+        for (record = _this._movesHead; record != null; record = nextRecord) {
+          record.previousIndex = record.currentIndex;
+          nextRecord = record._nextMoved;
+        }
+        _this._identityChangesHead = _this._identityChangesTail = _this._removalsHead = _this._removalsTail = _this._movesHead = _this._movesTail = null;
+      }
+    },
+    _mismatch$4: function(record, item, itemTrackBy, index) {
+      var previousRecord, t1, _this = this;
+      if (record == null)
+        previousRecord = _this._itTail;
+      else {
+        previousRecord = record._prev;
+        _this._addToRemovals$1(_this._unlink$1(record));
+      }
+      t1 = _this._linkedRecords;
+      record = t1 == null ? null : t1.$get$2(0, itemTrackBy, index);
+      if (record != null) {
+        t1 = record.item;
+        if (t1 == null ? item != null : t1 !== item)
+          _this._addIdentityChange$2(record, item);
+        _this._unlink$1(record);
+        _this._insertAfter$3(record, previousRecord, index);
+        _this._addToMoves$2(record, index);
+      } else {
+        t1 = _this._unlinkedRecords;
+        record = t1 == null ? null : t1.$get$1(0, itemTrackBy);
+        if (record != null) {
+          t1 = record.item;
+          if (t1 == null ? item != null : t1 !== item)
+            _this._addIdentityChange$2(record, item);
+          _this._reinsertAfter$3(record, previousRecord, index);
+        } else {
+          record = new R.CollectionChangeRecord(item, itemTrackBy);
+          _this._insertAfter$3(record, previousRecord, index);
+          t1 = _this._additionsTail;
+          if (t1 == null)
+            _this._additionsTail = _this._additionsHead = record;
+          else
+            _this._additionsTail = t1._nextAdded = record;
+        }
+      }
+      return record;
+    },
+    _verifyReinsertion$4: function(record, item, itemTrackBy, index) {
+      var t1 = this._unlinkedRecords,
+        reinsertRecord = t1 == null ? null : t1.$get$1(0, itemTrackBy);
+      if (reinsertRecord != null)
+        record = this._reinsertAfter$3(reinsertRecord, record._prev, index);
+      else if (record.currentIndex !== index) {
+        record.currentIndex = index;
+        this._addToMoves$2(record, index);
+      }
+      return record;
+    },
+    _truncate$1: function(record) {
+      var nextRecord, t1, _this = this;
+      for (; record != null; record = nextRecord) {
+        nextRecord = record._default_iterable_differ$_next;
+        _this._addToRemovals$1(_this._unlink$1(record));
+      }
+      t1 = _this._unlinkedRecords;
+      if (t1 != null)
+        t1._default_iterable_differ$_map.clear$0(0);
+      t1 = _this._additionsTail;
+      if (t1 != null)
+        t1._nextAdded = null;
+      t1 = _this._movesTail;
+      if (t1 != null)
+        t1._nextMoved = null;
+      t1 = _this._itTail;
+      if (t1 != null)
+        t1._default_iterable_differ$_next = null;
+      t1 = _this._removalsTail;
+      if (t1 != null)
+        t1._nextRemoved = null;
+      t1 = _this._identityChangesTail;
+      if (t1 != null)
+        t1._nextIdentityChange = null;
+    },
+    _reinsertAfter$3: function(record, prevRecord, index) {
+      var prev, next, _this = this,
+        t1 = _this._unlinkedRecords;
+      if (t1 != null)
+        t1.remove$1(0, record);
+      prev = record._prevRemoved;
+      next = record._nextRemoved;
+      if (prev == null)
+        _this._removalsHead = next;
+      else
+        prev._nextRemoved = next;
+      if (next == null)
+        _this._removalsTail = prev;
+      else
+        next._prevRemoved = prev;
+      _this._insertAfter$3(record, prevRecord, index);
+      _this._addToMoves$2(record, index);
+      return record;
+    },
+    _insertAfter$3: function(record, prevRecord, index) {
+      var _this = this,
+        t1 = prevRecord == null,
+        next = t1 ? _this._itHead : prevRecord._default_iterable_differ$_next;
+      record._default_iterable_differ$_next = next;
+      record._prev = prevRecord;
+      if (next == null)
+        _this._itTail = record;
+      else
+        next._prev = record;
+      if (t1)
+        _this._itHead = record;
+      else
+        prevRecord._default_iterable_differ$_next = record;
+      t1 = _this._linkedRecords;
+      (t1 == null ? _this._linkedRecords = new R._DuplicateMap(P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(type$.dynamic, type$._DuplicateItemRecordList)) : t1).put$1(0, record);
+      record.currentIndex = index;
+      return record;
+    },
+    _unlink$1: function(record) {
+      var prev, next,
+        t1 = this._linkedRecords;
+      if (t1 != null)
+        t1.remove$1(0, record);
+      prev = record._prev;
+      next = record._default_iterable_differ$_next;
+      if (prev == null)
+        this._itHead = next;
+      else
+        prev._default_iterable_differ$_next = next;
+      if (next == null)
+        this._itTail = prev;
+      else
+        next._prev = prev;
+      return record;
+    },
+    _addToMoves$2: function(record, toIndex) {
+      var t1, _this = this;
+      if (record.previousIndex === toIndex)
+        return record;
+      t1 = _this._movesTail;
+      if (t1 == null)
+        _this._movesTail = _this._movesHead = record;
+      else
+        _this._movesTail = t1._nextMoved = record;
+      return record;
+    },
+    _addToRemovals$1: function(record) {
+      var _this = this,
+        t1 = _this._unlinkedRecords;
+      (t1 == null ? _this._unlinkedRecords = new R._DuplicateMap(P._LinkedIdentityHashMap__LinkedIdentityHashMap$es6(type$.dynamic, type$._DuplicateItemRecordList)) : t1).put$1(0, record);
+      record._nextRemoved = record.currentIndex = null;
+      t1 = _this._removalsTail;
+      if (t1 == null) {
+        _this._removalsTail = _this._removalsHead = record;
+        record._prevRemoved = null;
+      } else {
+        record._prevRemoved = t1;
+        _this._removalsTail = t1._nextRemoved = record;
+      }
+      return record;
+    },
+    _addIdentityChange$2: function(record, item) {
+      var t1, _this = this;
+      record.item = item;
+      t1 = _this._identityChangesTail;
+      if (t1 == null)
+        _this._identityChangesTail = _this._identityChangesHead = record;
+      else
+        _this._identityChangesTail = t1._nextIdentityChange = record;
+      return record;
+    },
+    toString$0: function(_) {
+      var t1 = this.super$Object$toString(0);
+      return t1;
+    }
+  };
+  R.CollectionChangeRecord.prototype = {
+    toString$0: function(_) {
+      var _this = this,
+        t1 = _this.previousIndex,
+        t2 = _this.currentIndex,
+        t3 = _this.item;
+      return t1 == t2 ? J.toString$0$(t3) : H.S(t3) + "[" + H.S(_this.previousIndex) + "->" + H.S(_this.currentIndex) + "]";
+    }
+  };
+  R._DuplicateItemRecordList.prototype = {
+    $get$2: function(_, trackById, afterIndex) {
+      var record, t1, t2;
+      for (record = this._head, t1 = afterIndex != null; record != null; record = record._nextDup) {
+        if (t1) {
+          t2 = record.currentIndex;
+          t2.toString;
+          t2 = afterIndex < t2;
+        } else
+          t2 = true;
+        if (t2) {
+          t2 = record.trackById;
+          t2 = t2 == null ? trackById == null : t2 === trackById;
+        } else
+          t2 = false;
+        if (t2)
+          return record;
+      }
+      return null;
+    }
+  };
+  R._DuplicateMap.prototype = {
+    put$1: function(_, record) {
+      var key = record.trackById,
+        t1 = this._default_iterable_differ$_map,
+        duplicates = t1.$index(0, key);
+      if (duplicates == null) {
+        duplicates = new R._DuplicateItemRecordList();
+        t1.$indexSet(0, key, duplicates);
+      }
+      if (duplicates._head == null) {
+        duplicates._head = duplicates._tail = record;
+        record._prevDup = record._nextDup = null;
+      } else {
+        t1 = duplicates._tail;
+        t1._nextDup = record;
+        record._prevDup = t1;
+        record._nextDup = null;
+        duplicates._tail = record;
+      }
+    },
+    $get$2: function(_, trackById, afterIndex) {
+      var recordList = this._default_iterable_differ$_map.$index(0, trackById);
+      return recordList == null ? null : recordList.$get$2(0, trackById, afterIndex);
+    },
+    $get$1: function($receiver, trackById) {
+      return this.$get$2($receiver, trackById, null);
+    },
+    remove$1: function(_, record) {
+      var prev, next,
+        key = record.trackById,
+        t1 = this._default_iterable_differ$_map,
+        t2 = t1.$index(0, key);
+      t2.toString;
+      prev = record._prevDup;
+      next = record._nextDup;
+      if (prev == null)
+        t2._head = next;
+      else
+        prev._nextDup = next;
+      if (next == null)
+        t2._tail = prev;
+      else
+        next._prevDup = prev;
+      if (t2._head == null)
+        t1.remove$1(0, key);
+      return record;
+    },
+    toString$0: function(_) {
+      return "_DuplicateMap(" + this._default_iterable_differ$_map.toString$0(0) + ")";
+    }
   };
   M.ChangeDetectionHost.prototype = {
     tick$0: function() {
@@ -8767,7 +9702,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   M.ChangeDetectionHost_run__closure.prototype = {
     call$1: function(result) {
@@ -8790,7 +9725,7 @@
     },
     "call*": "call$2",
     $requiredArgCount: 2,
-    $signature: 25
+    $signature: 27
   };
   U.ExceptionHandler.prototype = {
     call$3: function(exception, stackTrace, reason) {
@@ -8814,6 +9749,25 @@
   D.ComponentFactory.prototype = {};
   M.ComponentLoader.prototype = {};
   Z.ElementRef.prototype = {};
+  G.NgContentRef.prototype = {
+    get$hasContent: function() {
+      var nodesToProject, i, nestedViews,
+        t1 = this._renderView._component_view$_data.get$projectedNodes(),
+        t2 = this._ng_content_ref$_index;
+      if (t2 >= t1.length)
+        return H.ioore(t1, t2);
+      nodesToProject = t1[t2];
+      for (i = 0; false; ++i) {
+        if (i >= 0)
+          return H.ioore(nodesToProject, i);
+        nestedViews = nodesToProject[i].get$nestedViews();
+        t1 = nestedViews.get$isNotEmpty(nestedViews);
+        if (t1)
+          return true;
+      }
+      return false;
+    }
+  };
   O.ComponentStyles.prototype = {
     _appendStyles$0: function() {
       var target = H._setArrayType([], type$.JSArray_String),
@@ -8825,7 +9779,14 @@
     }
   };
   O._UnscopedComponentStyles.prototype = {};
-  D.TemplateRef.prototype = {};
+  D.TemplateRef.prototype = {
+    createEmbeddedView$0: function() {
+      var t1 = this._template_ref$_viewContainer,
+        view = this._template_ref$_viewFactory.call$2(t1.parentView, t1.index);
+      view.build$0();
+      return view;
+    }
+  };
   V.ViewContainer.prototype = {
     get$length: function(_) {
       var nested = this.nestedViews;
@@ -8852,6 +9813,17 @@
           return H.ioore(nested, i);
         nested[i].destroyInternalState$0();
       }
+    },
+    remove$1: function(_, index) {
+      var t1;
+      if (index === -1)
+        index = this.get$length(this) - 1;
+      t1 = this.nestedViews;
+      t1.toString;
+      t1 = C.JSArray_methods.removeAt$1(t1, index);
+      t1.removeRootNodes$0();
+      t1.wasRemoved$0();
+      t1.destroyInternalState$0();
     },
     clear$0: function(_) {
       var i, nested, index, t1, _this = this;
@@ -8881,9 +9853,50 @@
         result.push(callback.call$1(nestedViews[i]));
       }
       return result;
+    },
+    _findRenderNode$2: function(views, index) {
+      var t1;
+      if (index > 0) {
+        t1 = index - 1;
+        if (t1 >= views.length)
+          return H.ioore(views, t1);
+        t1 = views[t1].get$viewFragment().findLastDomNode$0();
+      } else
+        t1 = this.nativeElement;
+      return t1;
+    },
+    _attachView$2: function(view, viewIndex) {
+      var refRenderNode, _this = this,
+        views = _this.nestedViews;
+      if (views == null)
+        views = H._setArrayType([], type$.JSArray_DynamicView);
+      C.JSArray_methods.insert$2(views, viewIndex, view);
+      refRenderNode = _this._findRenderNode$2(views, viewIndex);
+      _this.nestedViews = views;
+      if (refRenderNode != null)
+        view.addRootNodesAfter$1(refRenderNode);
+      view.wasInserted$1(_this);
     }
   };
   D.ViewFragment.prototype = {
+    appendDomNodesInto$1: function(target) {
+      D.ViewFragment_appendDomNodes(target, this._nodesOrViewContainers);
+    },
+    findLastDomNode$0: function() {
+      var lastNode, nestedViews,
+        nodesOrViewContainers = this._nodesOrViewContainers,
+        t1 = J.getInterceptor$ax(nodesOrViewContainers);
+      if (t1.get$isNotEmpty(nodesOrViewContainers)) {
+        lastNode = t1.get$last(nodesOrViewContainers);
+        if (lastNode instanceof V.ViewContainer) {
+          nestedViews = lastNode.nestedViews;
+          t1 = nestedViews != null && nestedViews.length !== 0 ? (nestedViews && C.JSArray_methods).get$last(nestedViews).get$viewFragment().findLastDomNode$0() : lastNode.nativeElement;
+        } else
+          t1 = lastNode;
+        return t1;
+      } else
+        return null;
+    },
     flattenDomNodes$0: function() {
       return D.ViewFragment__flattenDomNodes(H._setArrayType([], type$.JSArray_Node), this._nodesOrViewContainers);
     }
@@ -8902,24 +9915,49 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("rootElement")) : t1;
     },
     get$projectedNodes: function() {
-      var t1 = this._data.___ComponentViewData_projectedNodes;
+      var t1 = this._component_view$_data.___ComponentViewData_projectedNodes;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("projectedNodes")) : t1;
     },
     get$parentView: function() {
-      return this._data.parentView;
+      return this._component_view$_data.parentView;
     },
     get$parentIndex: function() {
-      return this._data.parentIndex;
+      return this._component_view$_data.parentIndex;
+    },
+    build$0: function() {
+    },
+    create$1: function(_, component) {
+      this.createAndProject$2(component, C.List_empty0);
+    },
+    createAndProject$2: function(component, projectedNodes) {
+      var t1, _this = this;
+      if (_this.__ComponentView_ctx === $)
+        _this.__ComponentView_ctx = component;
+      else
+        H.throwExpression(H.LateError$fieldAI("ctx"));
+      t1 = _this._component_view$_data;
+      if (t1.___ComponentViewData_projectedNodes == null)
+        t1.___ComponentViewData_projectedNodes = projectedNodes;
+      else
+        H.throwExpression(H.LateError$fieldAI("projectedNodes"));
+      _this.build$0();
     },
     initViewRoot$0: function() {
       var hostElement = this.get$rootElement(this);
       this.get$componentStyles();
       return hostElement;
     },
+    destroyInternalState$0: function() {
+      var t1 = this._component_view$_data;
+      if (!t1._component_view$_destroyed) {
+        t1.destroy$0();
+        this.destroyInternal$0();
+      }
+    },
     detectChangesDeprecated$0: function() {
       var t2,
-        t1 = this._data;
-      if (t1._component_view$_shouldSkipChangeDetection)
+        t1 = this._component_view$_data;
+      if (t1._shouldSkipChangeDetection)
         return;
       t2 = $.ChangeDetectionHost__current;
       if ((t2 == null ? null : t2._lastGuardedView) != null)
@@ -8935,13 +9973,17 @@
       t1.set$changeDetectorState(1);
     },
     disableChangeDetection$0: function() {
-      this._data.set$changeDetectorState(2);
+      this._component_view$_data.set$changeDetectorState(2);
     }
   };
   E._ComponentViewData.prototype = {
+    get$projectedNodes: function() {
+      var t1 = this.___ComponentViewData_projectedNodes;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("projectedNodes")) : t1;
+    },
     set$changeDetectorState: function(state) {
-      if (this._component_view$_changeDetectorState !== state) {
-        this._component_view$_changeDetectorState = state;
+      if (this._changeDetectorState !== state) {
+        this._changeDetectorState = state;
         this._updateShouldSkipChangeDetection$0();
       }
     },
@@ -8950,7 +9992,7 @@
     },
     _updateShouldSkipChangeDetection$0: function() {
       var t1 = this._changeDetectionMode;
-      this._component_view$_shouldSkipChangeDetection = t1 === 2 || t1 === 4 || this._component_view$_changeDetectorState === 2;
+      this._shouldSkipChangeDetection = t1 === 2 || t1 === 4 || this._changeDetectorState === 2;
     }
   };
   E.EmbeddedView.prototype = {
@@ -8972,30 +10014,53 @@
     get$viewFragment: function() {
       return this._embedded_view$_data.viewFragment;
     },
+    initRootNode$1: function(rootNodeOrViewContainer) {
+      this.initRootNodesAndSubscriptions$2(H._setArrayType([rootNodeOrViewContainer], type$.JSArray_Object), null);
+    },
+    initRootNodesAndSubscriptions$2: function(rootNodesOrViewContainers, subscriptions) {
+      var t1 = this._embedded_view$_data;
+      t1.viewFragment = D.ViewFragment_ViewFragment(rootNodesOrViewContainers);
+      t1.subscriptions = subscriptions;
+    },
     destroyInternalState$0: function() {
       var t1 = this._embedded_view$_data;
       if (!t1._destroyed) {
         t1.destroy$0();
+        this.destroyInternal$0();
         this.dirtyParentQueriesInternal$0();
       }
     },
     detectChangesDeprecated$0: function() {
       var t2,
         t1 = this._embedded_view$_data;
-      if (t1._shouldSkipChangeDetection)
+      if (t1._embedded_view$_shouldSkipChangeDetection)
         return;
       t2 = $.ChangeDetectionHost__current;
       if ((t2 == null ? null : t2._lastGuardedView) != null)
         this.detectCrash$0();
+      else
+        this.detectChangesInternal$0();
       t1.set$changeDetectorState(1);
     },
     disableChangeDetection$0: function() {
       this._embedded_view$_data.set$changeDetectorState(2);
     },
+    addRootNodesAfter$1: function(node) {
+      T.insertNodesAsSibling(this._embedded_view$_data.viewFragment.flattenDomNodes$0(), node);
+      $.domRootRendererIsDirty = true;
+    },
     removeRootNodes$0: function() {
       var rootNodes = this._embedded_view$_data.viewFragment.flattenDomNodes$0();
       T.removeNodes(rootNodes);
       $.domRootRendererIsDirty = $.domRootRendererIsDirty || rootNodes.length !== 0;
+    },
+    dirtyParentQueriesInternal$0: function() {
+    },
+    wasInserted$1: function(viewContainer) {
+      this.dirtyParentQueriesInternal$0();
+    },
+    wasMoved$0: function() {
+      this.dirtyParentQueriesInternal$0();
     },
     wasRemoved$0: function() {
       this.dirtyParentQueriesInternal$0();
@@ -9004,9 +10069,9 @@
   };
   E._EmbeddedViewData.prototype = {
     set$changeDetectorState: function(state) {
-      if (this._changeDetectorState !== state) {
-        this._changeDetectorState = state;
-        this._shouldSkipChangeDetection = state === 2;
+      if (this._embedded_view$_changeDetectorState !== state) {
+        this._embedded_view$_changeDetectorState = state;
+        this._embedded_view$_shouldSkipChangeDetection = state === 2;
       }
     },
     destroy$0: function() {
@@ -9031,27 +10096,21 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("componentView")) : t1;
     },
     get$viewFragment: function() {
-      return this._host_view$_data.viewFragment;
+      return this._data.viewFragment;
     },
     initRootNode$1: function(nodeOrViewContainer) {
-      this._host_view$_data.viewFragment = D.ViewFragment_ViewFragment(H._setArrayType([nodeOrViewContainer], type$.JSArray_Object));
+      this._data.viewFragment = D.ViewFragment_ViewFragment(H._setArrayType([nodeOrViewContainer], type$.JSArray_Object));
     },
     destroyInternalState$0: function() {
-      var t2,
-        t1 = this._host_view$_data;
+      var t1 = this._data;
       if (!t1._host_view$_destroyed) {
         t1.destroy$0();
-        t1 = this.get$componentView();
-        t2 = t1._data;
-        if (!t2._component_view$_destroyed) {
-          t2.destroy$0();
-          t1.get$_appEl_2().destroyNestedViews$0();
-        }
+        this.get$componentView().destroyInternalState$0();
       }
     },
     detectChangesDeprecated$0: function() {
       var t2,
-        t1 = this._host_view$_data;
+        t1 = this._data;
       if (t1._host_view$_shouldSkipChangeDetection)
         return;
       t2 = $.ChangeDetectionHost__current;
@@ -9065,16 +10124,22 @@
       this.get$componentView().detectChangesDeprecated$0();
     },
     disableChangeDetection$0: function() {
-      this._host_view$_data.set$changeDetectorState(2);
+      this._data.set$changeDetectorState(2);
     },
     injectFromAncestry$2: function(token, notFoundValue) {
       var t1 = this.__HostView__injector;
       return (t1 == null ? H.throwExpression(H.LateError$fieldNI("_injector")) : t1).$get$2(0, token, notFoundValue);
     },
+    addRootNodesAfter$1: function(node) {
+      T.insertNodesAsSibling(this._data.viewFragment.flattenDomNodes$0(), node);
+      $.domRootRendererIsDirty = true;
+    },
     removeRootNodes$0: function() {
-      var rootNodes = this._host_view$_data.viewFragment.flattenDomNodes$0();
+      var rootNodes = this._data.viewFragment.flattenDomNodes$0();
       T.removeNodes(rootNodes);
       $.domRootRendererIsDirty = $.domRootRendererIsDirty || rootNodes.length !== 0;
+    },
+    wasInserted$1: function(viewContainer) {
     },
     wasRemoved$0: function() {
     },
@@ -9101,14 +10166,35 @@
   };
   A.RenderView.prototype = {
     project$2: function(target, index) {
-      this.get$projectedNodes();
-      return;
+      var nodesToProjectIntoTarget, i, node, nestedViews, $length, n,
+        projectedNodesByContentIndex = this.get$projectedNodes();
+      if (index >= projectedNodesByContentIndex.length)
+        return;
+      nodesToProjectIntoTarget = projectedNodesByContentIndex[index];
+      for (i = 0; false; ++i) {
+        if (i >= 0)
+          return H.ioore(nodesToProjectIntoTarget, i);
+        node = nodesToProjectIntoTarget[i];
+        target.appendChild(node.nativeElement);
+        nestedViews = node.nestedViews;
+        if (nestedViews != null) {
+          $length = nestedViews.length;
+          for (n = 0; n < $length; ++n) {
+            if (n >= nestedViews.length)
+              return H.ioore(nestedViews, n);
+            nestedViews[n].get$viewFragment().appendDomNodesInto$1(target);
+          }
+        }
+      }
+      $.domRootRendererIsDirty = true;
     },
     injectFromAncestry$2: function(token, notFoundValue) {
       return this.get$parentView().inject$3(token, this.get$parentIndex(), notFoundValue);
     }
   };
   A.View.prototype = {
+    destroyInternal$0: function() {
+    },
     detectChangesInternal$0: function() {
     },
     detectCrash$0: function() {
@@ -9318,7 +10404,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   Y._WrappedTimer.prototype = {};
   Y.UncaughtError.prototype = {};
@@ -9368,6 +10454,15 @@
       return this.super$Object$toString(0);
     }
   };
+  N.TextBinding.prototype = {
+    updateText$1: function(newValue) {
+      var t1 = this._currentValue;
+      if (t1 !== newValue) {
+        this.element.textContent = newValue;
+        this._currentValue = newValue;
+      }
+    }
+  };
   U.JsTestability.prototype = {};
   T._JSTestabilityProxy.prototype = {
     findTestabilityInTree$2: function(registry, element) {
@@ -9387,7 +10482,7 @@
       if (--t1.pendingStable === 0)
         this.callback.call$1(t1.anyDidWork);
     },
-    $signature: 32
+    $signature: 34
   };
   T._JSTestabilityProxy__createRegistry_getAngularTestability.prototype = {
     call$1: function(element) {
@@ -9396,7 +10491,7 @@
         dartTestability = t2 == null ? null : t2.findTestabilityInTree$2(t1, element);
       return dartTestability == null ? null : T._extension_0_asJsApi(dartTestability);
     },
-    $signature: 33
+    $signature: 35
   };
   T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities.prototype = {
     call$0: function() {
@@ -9407,13 +10502,13 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 34
+    $signature: 36
   };
   T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure.prototype = {
     call$1: function(t) {
       return T._extension_0_asJsApi(t);
     },
-    $signature: 35
+    $signature: 37
   };
   T._extension_0_asJsApi_closure.prototype = {
     call$0: function() {
@@ -9422,7 +10517,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 36
+    $signature: 38
   };
   T.Testability.prototype = {
     whenStable$1: function(_, callback) {
@@ -9460,7 +10555,7 @@
     },
     "call*": "call$0",
     $requiredArgCount: 0,
-    $signature: 1
+    $signature: 2
   };
   T.Testability__watchForStability__closure.prototype = {
     call$1: function(_) {
@@ -9508,7 +10603,13 @@
     }
   };
   L.GoldenComponent.prototype = {};
+  L.EmbeddedQueries.prototype = {};
   L.AnotherDirective.prototype = {};
+  L.NestedNgForQueriesList.prototype = {};
+  L.StaticSingleQuery.prototype = {};
+  L.DynamicSingleQuery.prototype = {};
+  L.ContentQuery.prototype = {};
+  L.ContentHasReference.prototype = {};
   S.ViewGoldenComponent0.prototype = {
     get$_AnotherDirective_1_5: function() {
       var t1 = this.__ViewGoldenComponent0__AnotherDirective_1_5;
@@ -9521,6 +10622,194 @@
     get$_NgIf_2_9: function() {
       var t1 = this.__ViewGoldenComponent0__NgIf_2_9;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_2_9")) : t1;
+    },
+    get$_compView_3: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_3;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_3")) : t1;
+    },
+    get$_compView_4: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_4;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_4")) : t1;
+    },
+    get$_compView_5: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_5")) : t1;
+    },
+    get$_compView_6: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_6;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_6")) : t1;
+    },
+    get$_compView_7: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_7;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_7")) : t1;
+    },
+    get$_compView_8: function() {
+      var t1 = this.__ViewGoldenComponent0__compView_8;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_8")) : t1;
+    },
+    build$0: function() {
+      var parentRenderNode, doc, _el_1, _anchor_2, t1, t2, styles, t3, _this = this, _null = null,
+        _s20_ = "_EmbeddedQueries_3_5",
+        _s27_ = "_NestedNgForQueriesList_4_5",
+        _s22_ = "_StaticSingleQuery_5_5",
+        _s23_ = "_DynamicSingleQuery_6_5",
+        _s17_ = "_ContentQuery_7_5",
+        _s24_ = "_ContentHasReference_8_5";
+      _this.get$ctx();
+      parentRenderNode = _this.initViewRoot$0();
+      _this.project$2(parentRenderNode, 0);
+      doc = document;
+      T.appendElement(doc, parentRenderNode, "another");
+      if (_this.__ViewGoldenComponent0__AnotherDirective_0_5 == null)
+        _this.__ViewGoldenComponent0__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
+      _el_1 = T.appendElement(doc, parentRenderNode, "another");
+      if (_this.__ViewGoldenComponent0__AnotherDirective_1_5 == null)
+        _this.__ViewGoldenComponent0__AnotherDirective_1_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_1_5"));
+      _anchor_2 = T.appendAnchor(parentRenderNode);
+      if (_this.__ViewGoldenComponent0__appEl_2 == null)
+        _this.__ViewGoldenComponent0__appEl_2 = new V.ViewContainer(2, _this, _anchor_2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_2"));
+      t1 = _this.get$_appEl_2();
+      t2 = _this.get$_appEl_2();
+      if (_this.__ViewGoldenComponent0__NgIf_2_9 == null)
+        _this.__ViewGoldenComponent0__NgIf_2_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_GoldenComponent1$closure()), t2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgIf_2_9"));
+      t1 = new S.ViewEmbeddedQueries0(E._ComponentViewData__ComponentViewData(_this, 3, 3));
+      styles = $.ViewEmbeddedQueries0__componentStyles;
+      if (styles == null)
+        styles = $.ViewEmbeddedQueries0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = doc.createElement("embedded-queries");
+      t1.__ComponentView_rootElement = t2;
+      if (_this.__ViewGoldenComponent0__compView_3 == null)
+        _this.__ViewGoldenComponent0__compView_3 = t1;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_3"));
+      t1 = _this.get$_compView_3();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      if (_this.__ViewGoldenComponent0__EmbeddedQueries_3_5 == null)
+        _this.__ViewGoldenComponent0__EmbeddedQueries_3_5 = new L.EmbeddedQueries();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s20_));
+      t1 = _this.get$_compView_3();
+      t2 = _this.__ViewGoldenComponent0__EmbeddedQueries_3_5;
+      t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s20_)) : t2);
+      t1 = new S.ViewNestedNgForQueriesList0(E._ComponentViewData__ComponentViewData(_this, 4, 3));
+      styles = $.ViewNestedNgForQueriesList0__componentStyles;
+      if (styles == null)
+        styles = $.ViewNestedNgForQueriesList0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = doc.createElement("nested-ng-for-queries");
+      t1.__ComponentView_rootElement = t2;
+      if (_this.__ViewGoldenComponent0__compView_4 == null)
+        _this.__ViewGoldenComponent0__compView_4 = t1;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_4"));
+      t1 = _this.get$_compView_4();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      t1 = H._setArrayType([1, 2, 3], type$.JSArray_int);
+      if (_this.__ViewGoldenComponent0__NestedNgForQueriesList_4_5 == null)
+        _this.__ViewGoldenComponent0__NestedNgForQueriesList_4_5 = new L.NestedNgForQueriesList(t1);
+      else
+        H.throwExpression(H.LateError$fieldAI(_s27_));
+      t1 = _this.get$_compView_4();
+      t2 = _this.__ViewGoldenComponent0__NestedNgForQueriesList_4_5;
+      t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s27_)) : t2);
+      t1 = new S.ViewStaticSingleQuery0(E._ComponentViewData__ComponentViewData(_this, 5, 3));
+      styles = $.ViewStaticSingleQuery0__componentStyles;
+      if (styles == null)
+        styles = $.ViewStaticSingleQuery0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = doc.createElement("static-single-query");
+      t1.__ComponentView_rootElement = t2;
+      if (_this.__ViewGoldenComponent0__compView_5 == null)
+        _this.__ViewGoldenComponent0__compView_5 = t1;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_5"));
+      t1 = _this.get$_compView_5();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      if (_this.__ViewGoldenComponent0__StaticSingleQuery_5_5 == null)
+        _this.__ViewGoldenComponent0__StaticSingleQuery_5_5 = new L.StaticSingleQuery();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s22_));
+      t1 = _this.get$_compView_5();
+      t2 = _this.__ViewGoldenComponent0__StaticSingleQuery_5_5;
+      t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s22_)) : t2);
+      t1 = new S.ViewDynamicSingleQuery0(E._ComponentViewData__ComponentViewData(_this, 6, 3));
+      styles = $.ViewDynamicSingleQuery0__componentStyles;
+      if (styles == null)
+        styles = $.ViewDynamicSingleQuery0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = doc.createElement("dynamic-single-query");
+      t1.__ComponentView_rootElement = t2;
+      if (_this.__ViewGoldenComponent0__compView_6 == null)
+        _this.__ViewGoldenComponent0__compView_6 = t1;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_6"));
+      t1 = _this.get$_compView_6();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      if (_this.__ViewGoldenComponent0__DynamicSingleQuery_6_5 == null)
+        _this.__ViewGoldenComponent0__DynamicSingleQuery_6_5 = new L.DynamicSingleQuery();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s23_));
+      t1 = _this.get$_compView_6();
+      t2 = _this.__ViewGoldenComponent0__DynamicSingleQuery_6_5;
+      t1.create$1(0, t2 == null ? H.throwExpression(H.LateError$fieldNI(_s23_)) : t2);
+      t1 = new S.ViewContentQuery0(E._ComponentViewData__ComponentViewData(_this, 7, 3));
+      styles = $.ViewContentQuery0__componentStyles;
+      if (styles == null)
+        styles = $.ViewContentQuery0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t1.__ComponentView_componentStyles = styles;
+      t2 = doc.createElement("content-query");
+      t1.__ComponentView_rootElement = t2;
+      if (_this.__ViewGoldenComponent0__compView_7 == null)
+        _this.__ViewGoldenComponent0__compView_7 = t1;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_7"));
+      t1 = _this.get$_compView_7();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      if (_this.__ViewGoldenComponent0__ContentQuery_7_5 == null)
+        _this.__ViewGoldenComponent0__ContentQuery_7_5 = new L.ContentQuery();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s17_));
+      t1 = _this.get$_compView_7();
+      t2 = _this.__ViewGoldenComponent0__ContentQuery_7_5;
+      if (t2 == null)
+        t2 = H.throwExpression(H.LateError$fieldNI(_s17_));
+      t3 = type$.JSArray_List_Object;
+      t1.createAndProject$2(t2, H._setArrayType([C.List_empty], t3));
+      t2 = new S.ViewContentHasReference0(N.TextBinding$(), N.TextBinding$(), E._ComponentViewData__ComponentViewData(_this, 8, 3));
+      styles = $.ViewContentHasReference0__componentStyles;
+      if (styles == null)
+        styles = $.ViewContentHasReference0__componentStyles = O._UnscopedComponentStyles$(C.List_empty, _null);
+      t2.__ComponentView_componentStyles = styles;
+      t1 = doc.createElement("content-has-reference");
+      t2.__ComponentView_rootElement = t1;
+      if (_this.__ViewGoldenComponent0__compView_8 == null)
+        _this.__ViewGoldenComponent0__compView_8 = t2;
+      else
+        H.throwExpression(H.LateError$fieldAI("_compView_8"));
+      t1 = _this.get$_compView_8();
+      parentRenderNode.appendChild(t1.get$rootElement(t1));
+      if (_this.__ViewGoldenComponent0__ContentHasReference_8_5 == null)
+        _this.__ViewGoldenComponent0__ContentHasReference_8_5 = new L.ContentHasReference();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s24_));
+      t1 = _this.get$_compView_8();
+      t2 = _this.__ViewGoldenComponent0__ContentHasReference_8_5;
+      if (t2 == null)
+        t2 = H.throwExpression(H.LateError$fieldNI(_s24_));
+      t1.createAndProject$2(t2, H._setArrayType([C.List_empty], t3));
+      self.deopt(H._setArrayType([_this.get$_AnotherDirective_1_5()], type$.JSArray_AnotherDirective));
+      self.deopt(_this.get$_AnotherDirective_1_5());
+      self.deopt(new Z.ElementRef());
+      self.deopt(_el_1);
     },
     detectChangesInternal$0: function() {
       var t1, t2, _this = this;
@@ -9540,24 +10829,48 @@
         self.deopt(t1.length !== 0 ? C.JSArray_methods.get$first(t1) : null);
         _this._viewQuery_q3_5_isDirty = false;
       }
+      _this.get$_compView_3().detectChangesDeprecated$0();
+      _this.get$_compView_4().detectChangesDeprecated$0();
+      _this.get$_compView_5().detectChangesDeprecated$0();
+      _this.get$_compView_6().detectChangesDeprecated$0();
+      _this.get$_compView_7().detectChangesDeprecated$0();
+      _this.get$_compView_8().detectChangesDeprecated$0();
+    },
+    destroyInternal$0: function() {
+      var _this = this;
+      _this.get$_appEl_2().destroyNestedViews$0();
+      _this.get$_compView_3().destroyInternalState$0();
+      _this.get$_compView_4().destroyInternalState$0();
+      _this.get$_compView_5().destroyInternalState$0();
+      _this.get$_compView_6().destroyInternalState$0();
+      _this.get$_compView_7().destroyInternalState$0();
+      _this.get$_compView_8().destroyInternalState$0();
     }
   };
   S.ViewGoldenComponent0_detectChangesInternal_closure.prototype = {
     call$1: function(nestedView) {
       return nestedView.get$_AnotherDirective_0_5();
     },
-    $signature: 12
+    $signature: 13
   };
   S.ViewGoldenComponent0_detectChangesInternal_closure0.prototype = {
     call$1: function(nestedView) {
       return nestedView.get$_AnotherDirective_0_5();
     },
-    $signature: 12
+    $signature: 13
   };
   S._ViewGoldenComponent1.prototype = {
     get$_AnotherDirective_0_5: function() {
       var t1 = this.___ViewGoldenComponent1__AnotherDirective_0_5;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
+    build$0: function() {
+      var _el_0 = document.createElement("another");
+      if (this.___ViewGoldenComponent1__AnotherDirective_0_5 == null)
+        this.___ViewGoldenComponent1__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
+      this.initRootNode$1(_el_0);
     },
     dirtyParentQueriesInternal$0: function() {
       var t1 = this._embedded_view$_data.parentView;
@@ -9565,6 +10878,361 @@
     }
   };
   S._ViewGoldenComponentHost0.prototype = {};
+  S.ViewEmbeddedQueries0.prototype = {
+    get$_appEl_1: function() {
+      var t1 = this.__ViewEmbeddedQueries0__appEl_1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
+    },
+    get$_appEl_2: function() {
+      var t1 = this.__ViewEmbeddedQueries0__appEl_2;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_2")) : t1;
+    },
+    build$0: function() {
+      var _anchor_1, _anchor_2, _this = this,
+        parentRenderNode = _this.initViewRoot$0();
+      T.appendElement(document, parentRenderNode, "another");
+      if (_this.__ViewEmbeddedQueries0__AnotherDirective_0_5 == null)
+        _this.__ViewEmbeddedQueries0__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
+      _anchor_1 = T.appendAnchor(parentRenderNode);
+      if (_this.__ViewEmbeddedQueries0__appEl_1 == null)
+        _this.__ViewEmbeddedQueries0__appEl_1 = new V.ViewContainer(1, _this, _anchor_1);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_1"));
+      _this.get$_appEl_1();
+      _anchor_2 = T.appendAnchor(parentRenderNode);
+      if (_this.__ViewEmbeddedQueries0__appEl_2 == null)
+        _this.__ViewEmbeddedQueries0__appEl_2 = new V.ViewContainer(2, _this, _anchor_2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_2"));
+      _this.get$_appEl_2();
+    },
+    detectChangesInternal$0: function() {
+      var t1, t2, _this = this;
+      _this.get$ctx();
+      if (_this._viewQuery_AnotherDirective_0_isDirty) {
+        t1 = _this.__ViewEmbeddedQueries0__AnotherDirective_0_5;
+        t2 = type$.AnotherDirective;
+        self.deopt(X.flattenNodes(H._setArrayType([H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1], type$.JSArray_AnotherDirective), _this.get$_appEl_1().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure(), t2, type$._ViewEmbeddedQueries1), _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure0(), t2, type$._ViewEmbeddedQueries2)], type$.JSArray_List_AnotherDirective), t2));
+        _this._viewQuery_AnotherDirective_0_isDirty = false;
+      }
+    }
+  };
+  S.ViewEmbeddedQueries0_detectChangesInternal_closure.prototype = {
+    call$1: function(nestedView) {
+      var t1 = nestedView.___ViewEmbeddedQueries1__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
+    $signature: 62
+  };
+  S.ViewEmbeddedQueries0_detectChangesInternal_closure0.prototype = {
+    call$1: function(nestedView) {
+      var t1 = nestedView.___ViewEmbeddedQueries2__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
+    $signature: 42
+  };
+  S.ViewNestedNgForQueriesList0.prototype = {
+    get$_appEl_0: function() {
+      var t1 = this.__ViewNestedNgForQueriesList0__appEl_0;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_0")) : t1;
+    },
+    get$_NgIf_0_9: function() {
+      var t1 = this.__ViewNestedNgForQueriesList0__NgIf_0_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_0_9")) : t1;
+    },
+    build$0: function() {
+      var _anchor_0, t1, t2, _this = this;
+      _this.get$ctx();
+      _anchor_0 = T.appendAnchor(_this.initViewRoot$0());
+      if (_this.__ViewNestedNgForQueriesList0__appEl_0 == null)
+        _this.__ViewNestedNgForQueriesList0__appEl_0 = new V.ViewContainer(0, _this, _anchor_0);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_0"));
+      t1 = _this.get$_appEl_0();
+      t2 = _this.get$_appEl_0();
+      if (_this.__ViewNestedNgForQueriesList0__NgIf_0_9 == null)
+        _this.__ViewNestedNgForQueriesList0__NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_NestedNgForQueriesList1$closure()), t2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgIf_0_9"));
+      self.deopt(H._setArrayType([], type$.JSArray_AnotherDirective));
+    },
+    detectChangesInternal$0: function() {
+      this.get$ctx();
+      this.get$_NgIf_0_9().set$ngIf(true);
+      this.get$_appEl_0().detectChangesInNestedViews$0();
+    },
+    destroyInternal$0: function() {
+      this.get$_appEl_0().destroyNestedViews$0();
+    }
+  };
+  S._ViewNestedNgForQueriesList1.prototype = {
+    get$_appEl_1: function() {
+      var t1 = this.___ViewNestedNgForQueriesList1__appEl_1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
+    },
+    get$_NgIf_1_9: function() {
+      var t1 = this.___ViewNestedNgForQueriesList1__NgIf_1_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_1_9")) : t1;
+    },
+    build$0: function() {
+      var t1, t2, _this = this,
+        _el_0 = document.createElement("div"),
+        _anchor_1 = T.appendAnchor(_el_0);
+      if (_this.___ViewNestedNgForQueriesList1__appEl_1 == null)
+        _this.___ViewNestedNgForQueriesList1__appEl_1 = new V.ViewContainer(1, _this, _anchor_1);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_1"));
+      t1 = _this.get$_appEl_1();
+      t2 = _this.get$_appEl_1();
+      if (_this.___ViewNestedNgForQueriesList1__NgIf_1_9 == null)
+        _this.___ViewNestedNgForQueriesList1__NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_NestedNgForQueriesList2$closure()), t2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgIf_1_9"));
+      _this.initRootNode$1(_el_0);
+    },
+    detectChangesInternal$0: function() {
+      this.get$_NgIf_1_9().set$ngIf(true);
+      this.get$_appEl_1().detectChangesInNestedViews$0();
+    },
+    destroyInternal$0: function() {
+      this.get$_appEl_1().destroyNestedViews$0();
+    }
+  };
+  S._ViewNestedNgForQueriesList2.prototype = {
+    get$_appEl_1: function() {
+      var t1 = this.___ViewNestedNgForQueriesList2__appEl_1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
+    },
+    get$_NgFor_1_9: function() {
+      var t1 = this.___ViewNestedNgForQueriesList2__NgFor_1_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgFor_1_9")) : t1;
+    },
+    build$0: function() {
+      var t1, t2, _this = this,
+        _el_0 = document.createElement("div"),
+        _anchor_1 = T.appendAnchor(_el_0);
+      if (_this.___ViewNestedNgForQueriesList2__appEl_1 == null)
+        _this.___ViewNestedNgForQueriesList2__appEl_1 = new V.ViewContainer(1, _this, _anchor_1);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_1"));
+      t1 = _this.get$_appEl_1();
+      t2 = _this.get$_appEl_1();
+      if (_this.___ViewNestedNgForQueriesList2__NgFor_1_9 == null)
+        _this.___ViewNestedNgForQueriesList2__NgFor_1_9 = new R.NgFor(t2, new D.TemplateRef(t1, S.queries_template__viewFactory_NestedNgForQueriesList3$closure()));
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgFor_1_9"));
+      _this.initRootNode$1(_el_0);
+    },
+    detectChangesInternal$0: function() {
+      var t2, differ, changes, _this = this,
+        t1 = _this._embedded_view$_data;
+      if (t1._embedded_view$_changeDetectorState === 0) {
+        t2 = _this.get$_NgFor_1_9();
+        t2._ngForOf = t1.ctx.items;
+        if (t2._differ == null && true)
+          t2._differ = new R.DefaultIterableDiffer(R.default_iterable_differ___trackByIdentity$closure());
+      }
+      t1 = _this.get$_NgFor_1_9();
+      differ = t1._differ;
+      if (differ != null) {
+        t2 = t1._ngForOf;
+        changes = differ.check$1(0, t2 == null ? C.List_empty2 : t2) ? differ : null;
+        if (changes != null)
+          t1._applyChanges$1(changes);
+      }
+      _this.get$_appEl_1().detectChangesInNestedViews$0();
+    },
+    destroyInternal$0: function() {
+      this.get$_appEl_1().destroyNestedViews$0();
+    }
+  };
+  S._ViewNestedNgForQueriesList3.prototype = {
+    build$0: function() {
+      var doc = document,
+        _el_0 = doc.createElement("div");
+      T.appendElement(doc, _el_0, "another");
+      if (this.___ViewNestedNgForQueriesList3__AnotherDirective_1_5 == null)
+        this.___ViewNestedNgForQueriesList3__AnotherDirective_1_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_1_5"));
+      this.initRootNode$1(_el_0);
+    }
+  };
+  S.ViewStaticSingleQuery0.prototype = {
+    get$_appEl_1: function() {
+      var t1 = this.__ViewStaticSingleQuery0__appEl_1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
+    },
+    get$_NgIf_1_9: function() {
+      var t1 = this.__ViewStaticSingleQuery0__NgIf_1_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_1_9")) : t1;
+    },
+    build$0: function() {
+      var parentRenderNode, _anchor_1, t1, t2, _this = this,
+        _s21_ = "_AnotherDirective_0_5";
+      _this.get$ctx();
+      parentRenderNode = _this.initViewRoot$0();
+      T.appendElement(document, parentRenderNode, "another");
+      if (_this.__ViewStaticSingleQuery0__AnotherDirective_0_5 == null)
+        _this.__ViewStaticSingleQuery0__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI(_s21_));
+      _anchor_1 = T.appendAnchor(parentRenderNode);
+      if (_this.__ViewStaticSingleQuery0__appEl_1 == null)
+        _this.__ViewStaticSingleQuery0__appEl_1 = new V.ViewContainer(1, _this, _anchor_1);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_1"));
+      t1 = _this.get$_appEl_1();
+      t2 = _this.get$_appEl_1();
+      if (_this.__ViewStaticSingleQuery0__NgIf_1_9 == null)
+        _this.__ViewStaticSingleQuery0__NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_StaticSingleQuery1$closure()), t2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgIf_1_9"));
+      t1 = _this.__ViewStaticSingleQuery0__AnotherDirective_0_5;
+      self.deopt(t1 == null ? H.throwExpression(H.LateError$fieldNI(_s21_)) : t1);
+    },
+    detectChangesInternal$0: function() {
+      this.get$ctx();
+      this.get$_NgIf_1_9().set$ngIf(false);
+      this.get$_appEl_1().detectChangesInNestedViews$0();
+    },
+    destroyInternal$0: function() {
+      this.get$_appEl_1().destroyNestedViews$0();
+    }
+  };
+  S._ViewStaticSingleQuery1.prototype = {
+    build$0: function() {
+      var _el_0 = document.createElement("another");
+      if (this.___ViewStaticSingleQuery1__AnotherDirective_0_5 == null)
+        this.___ViewStaticSingleQuery1__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
+      this.initRootNode$1(_el_0);
+    }
+  };
+  S.ViewDynamicSingleQuery0.prototype = {
+    get$_appEl_0: function() {
+      var t1 = this.__ViewDynamicSingleQuery0__appEl_0;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_0")) : t1;
+    },
+    get$_NgIf_0_9: function() {
+      var t1 = this.__ViewDynamicSingleQuery0__NgIf_0_9;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_0_9")) : t1;
+    },
+    build$0: function() {
+      var t1, t2, doc, _this = this,
+        parentRenderNode = _this.initViewRoot$0(),
+        _anchor_0 = T.appendAnchor(parentRenderNode);
+      if (_this.__ViewDynamicSingleQuery0__appEl_0 == null)
+        _this.__ViewDynamicSingleQuery0__appEl_0 = new V.ViewContainer(0, _this, _anchor_0);
+      else
+        H.throwExpression(H.LateError$fieldAI("_appEl_0"));
+      t1 = _this.get$_appEl_0();
+      t2 = _this.get$_appEl_0();
+      if (_this.__ViewDynamicSingleQuery0__NgIf_0_9 == null)
+        _this.__ViewDynamicSingleQuery0__NgIf_0_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_DynamicSingleQuery1$closure()), t2);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgIf_0_9"));
+      doc = document;
+      T.appendElement(doc, parentRenderNode, "another");
+      if (_this.__ViewDynamicSingleQuery0__AnotherDirective_1_5 == null)
+        _this.__ViewDynamicSingleQuery0__AnotherDirective_1_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_1_5"));
+      T.appendElement(doc, parentRenderNode, "another");
+      if (_this.__ViewDynamicSingleQuery0__AnotherDirective_2_5 == null)
+        _this.__ViewDynamicSingleQuery0__AnotherDirective_2_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_2_5"));
+    },
+    detectChangesInternal$0: function() {
+      var t1, t2, t3, _this = this;
+      _this.get$ctx();
+      _this.get$_NgIf_0_9().set$ngIf(false);
+      _this.get$_appEl_0().detectChangesInNestedViews$0();
+      if (_this._viewQuery_AnotherDirective_0_isDirty) {
+        t1 = type$.AnotherDirective;
+        t2 = _this.get$_appEl_0().mapNestedViewsWithSingleResult$2$1(new S.ViewDynamicSingleQuery0_detectChangesInternal_closure(), t1, type$._ViewDynamicSingleQuery1);
+        t3 = _this.__ViewDynamicSingleQuery0__AnotherDirective_1_5;
+        t1 = X.flattenNodes(H._setArrayType([t2, H._setArrayType([t3 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t3], type$.JSArray_AnotherDirective)], type$.JSArray_List_AnotherDirective), t1);
+        self.deopt(t1.length !== 0 ? C.JSArray_methods.get$first(t1) : null);
+        _this._viewQuery_AnotherDirective_0_isDirty = false;
+      }
+    },
+    destroyInternal$0: function() {
+      this.get$_appEl_0().destroyNestedViews$0();
+    }
+  };
+  S.ViewDynamicSingleQuery0_detectChangesInternal_closure.prototype = {
+    call$1: function(nestedView) {
+      var t1 = nestedView.___ViewDynamicSingleQuery1__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
+    $signature: 43
+  };
+  S._ViewDynamicSingleQuery1.prototype = {
+    build$0: function() {
+      var _el_1, _this = this,
+        doc = document,
+        _el_0 = doc.createElement("another");
+      if (_this.___ViewDynamicSingleQuery1__AnotherDirective_0_5 == null)
+        _this.___ViewDynamicSingleQuery1__AnotherDirective_0_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
+      _el_1 = doc.createElement("another");
+      if (_this.___ViewDynamicSingleQuery1__AnotherDirective_1_5 == null)
+        _this.___ViewDynamicSingleQuery1__AnotherDirective_1_5 = new L.AnotherDirective();
+      else
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_1_5"));
+      _this.initRootNodesAndSubscriptions$2(H._setArrayType([_el_0, _el_1], type$.JSArray_Object), null);
+    },
+    dirtyParentQueriesInternal$0: function() {
+      this._embedded_view$_data.parentView._viewQuery_AnotherDirective_0_isDirty = true;
+    }
+  };
+  S.ViewContentQuery0.prototype = {
+    build$0: function() {
+      var parentRenderNode, _el_0;
+      this.get$ctx();
+      parentRenderNode = this.initViewRoot$0();
+      _el_0 = T.appendDiv(document, parentRenderNode);
+      this.project$2(_el_0, 0);
+      self.deopt(_el_0);
+    }
+  };
+  S.ViewContentHasReference0.prototype = {
+    get$_NgContentRef_0_5: function() {
+      var t1 = this.__ViewContentHasReference0__NgContentRef_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgContentRef_0_5")) : t1;
+    },
+    build$0: function() {
+      var _this = this,
+        _ctx = _this.get$ctx(),
+        parentRenderNode = _this.initViewRoot$0();
+      _this.project$2(parentRenderNode, 0);
+      if (_this.__ViewContentHasReference0__NgContentRef_0_5 == null)
+        _this.__ViewContentHasReference0__NgContentRef_0_5 = new G.NgContentRef(_this, 0);
+      else
+        H.throwExpression(H.LateError$fieldAI("_NgContentRef_0_5"));
+      T.appendText(parentRenderNode, " ");
+      parentRenderNode.appendChild(_this._textBinding_2.element);
+      T.appendText(parentRenderNode, " ");
+      parentRenderNode.appendChild(_this._textBinding_4.element);
+      _ctx.ref = _this.get$_NgContentRef_0_5();
+    },
+    detectChangesInternal$0: function() {
+      var _this = this,
+        _ctx = _this.get$ctx(),
+        t1 = _this.get$_NgContentRef_0_5().get$hasContent();
+      t1 = "" + t1;
+      _this._textBinding_2.updateText$1(t1);
+      t1 = _ctx.ref.get$hasContent();
+      t1 = "" + t1;
+      _this._textBinding_4.updateText$1(t1);
+    }
+  };
   (function aliases() {
     var _ = J.Interceptor.prototype;
     _.super$Interceptor$toString = _.toString$0;
@@ -9584,63 +11252,69 @@
       _instance_0_u = hunkHelpers._instance_0u,
       _instance = hunkHelpers.installInstanceTearOff,
       _instance_1_i = hunkHelpers._instance_1i;
-    _static_1(P, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 3);
-    _static_1(P, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 3);
-    _static_1(P, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 3);
+    _static_1(P, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 4);
+    _static_1(P, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 4);
+    _static_1(P, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 4);
     _static_0(P, "async___startMicrotaskLoop$closure", "_startMicrotaskLoop", 0);
-    _static_1(P, "async___nullDataHandler$closure", "_nullDataHandler", 40);
-    _static_2(P, "async___nullErrorHandler$closure", "_nullErrorHandler", 5);
+    _static_1(P, "async___nullDataHandler$closure", "_nullDataHandler", 45);
+    _static_2(P, "async___nullErrorHandler$closure", "_nullErrorHandler", 6);
     _static_0(P, "async___nullDoneHandler$closure", "_nullDoneHandler", 0);
-    _static(P, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 41, 0);
+    _static(P, "async___rootHandleUncaughtError$closure", 5, null, ["call$5"], ["_rootHandleUncaughtError"], 46, 0);
     _static(P, "async___rootRun$closure", 4, null, ["call$1$4", "call$4"], ["_rootRun", function($self, $parent, zone, f) {
       return P._rootRun($self, $parent, zone, f, type$.dynamic);
-    }], 42, 1);
+    }], 47, 1);
     _static(P, "async___rootRunUnary$closure", 5, null, ["call$2$5", "call$5"], ["_rootRunUnary", function($self, $parent, zone, f, arg) {
       return P._rootRunUnary($self, $parent, zone, f, arg, type$.dynamic, type$.dynamic);
-    }], 43, 1);
+    }], 48, 1);
     _static(P, "async___rootRunBinary$closure", 6, null, ["call$3$6", "call$6"], ["_rootRunBinary", function($self, $parent, zone, f, arg1, arg2) {
       return P._rootRunBinary($self, $parent, zone, f, arg1, arg2, type$.dynamic, type$.dynamic, type$.dynamic);
-    }], 44, 1);
+    }], 49, 1);
     _static(P, "async___rootRegisterCallback$closure", 4, null, ["call$1$4", "call$4"], ["_rootRegisterCallback", function($self, $parent, zone, f) {
       return P._rootRegisterCallback($self, $parent, zone, f, type$.dynamic);
-    }], 45, 0);
+    }], 50, 0);
     _static(P, "async___rootRegisterUnaryCallback$closure", 4, null, ["call$2$4", "call$4"], ["_rootRegisterUnaryCallback", function($self, $parent, zone, f) {
       return P._rootRegisterUnaryCallback($self, $parent, zone, f, type$.dynamic, type$.dynamic);
-    }], 46, 0);
+    }], 51, 0);
     _static(P, "async___rootRegisterBinaryCallback$closure", 4, null, ["call$3$4", "call$4"], ["_rootRegisterBinaryCallback", function($self, $parent, zone, f) {
       return P._rootRegisterBinaryCallback($self, $parent, zone, f, type$.dynamic, type$.dynamic, type$.dynamic);
-    }], 47, 0);
-    _static(P, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 48, 0);
-    _static(P, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 49, 0);
+    }], 52, 0);
+    _static(P, "async___rootErrorCallback$closure", 5, null, ["call$5"], ["_rootErrorCallback"], 53, 0);
+    _static(P, "async___rootScheduleMicrotask$closure", 4, null, ["call$4"], ["_rootScheduleMicrotask"], 54, 0);
     _static(P, "async___rootCreateTimer$closure", 5, null, ["call$5"], ["_rootCreateTimer"], 11, 0);
-    _static(P, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 50, 0);
-    _static(P, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 51, 0);
-    _static(P, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 52, 0);
-    _instance_2_u(P._Future.prototype, "get$_completeError", "_completeError$2", 5);
+    _static(P, "async___rootCreatePeriodicTimer$closure", 5, null, ["call$5"], ["_rootCreatePeriodicTimer"], 55, 0);
+    _static(P, "async___rootPrint$closure", 4, null, ["call$4"], ["_rootPrint"], 56, 0);
+    _static(P, "async___rootFork$closure", 5, null, ["call$5"], ["_rootFork"], 57, 0);
+    _instance_2_u(P._Future.prototype, "get$_completeError", "_completeError$2", 6);
     _instance_0_u(P._DoneStreamSubscription.prototype, "get$_sendDone", "_sendDone$0", 0);
     _static_0(G, "run___createNgZone$closure", "_createNgZone", 9);
     _static_1(G, "run___identityInjector$closure", "_identityInjector", 8);
+    _static_2(R, "default_iterable_differ___trackByIdentity$closure", "_trackByIdentity", 58);
     _instance_0_u(M.ChangeDetectionHost.prototype, "get$tick", "tick$0", 0);
     var _;
-    _instance(_ = Y.NgZone.prototype, "get$_ng_zone$_scheduleMicrotask", 0, 4, null, ["call$4"], ["_ng_zone$_scheduleMicrotask$4"], 26, 0);
-    _instance(_, "get$_run", 0, 4, null, ["call$1$4", "call$4"], ["_run$1$4", "_run$4"], 27, 0);
-    _instance(_, "get$_runUnary", 0, 5, null, ["call$2$5", "call$5"], ["_runUnary$2$5", "_runUnary$5"], 28, 0);
-    _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 29, 0);
-    _instance(_, "get$_handleUncaughtError", 0, 5, null, ["call$5"], ["_handleUncaughtError$5"], 30, 0);
+    _instance(_ = Y.NgZone.prototype, "get$_ng_zone$_scheduleMicrotask", 0, 4, null, ["call$4"], ["_ng_zone$_scheduleMicrotask$4"], 28, 0);
+    _instance(_, "get$_run", 0, 4, null, ["call$1$4", "call$4"], ["_run$1$4", "_run$4"], 29, 0);
+    _instance(_, "get$_runUnary", 0, 5, null, ["call$2$5", "call$5"], ["_runUnary$2$5", "_runUnary$5"], 30, 0);
+    _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 31, 0);
+    _instance(_, "get$_handleUncaughtError", 0, 5, null, ["call$5"], ["_handleUncaughtError$5"], 32, 0);
     _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 11, 0);
-    _static_1(T, "testability__JSTestabilityProxy__getAngularTestability$closure", "_JSTestabilityProxy__getAngularTestability", 53);
-    _static_0(T, "testability__JSTestabilityProxy__getAllAngularTestabilities$closure", "_JSTestabilityProxy__getAllAngularTestabilities", 54);
-    _static_1(T, "testability__JSTestabilityProxy__whenAllStable$closure", "_JSTestabilityProxy__whenAllStable", 6);
-    _instance_1_i(T.Testability.prototype, "get$whenStable", "whenStable$1", 6);
-    _static_2(S, "queries_template__viewFactory_GoldenComponent1$closure", "viewFactory_GoldenComponent1", 55);
-    _static_0(S, "queries_template__viewFactory_GoldenComponentHost0$closure", "viewFactory_GoldenComponentHost0", 37);
+    _static_1(T, "testability__JSTestabilityProxy__getAngularTestability$closure", "_JSTestabilityProxy__getAngularTestability", 59);
+    _static_0(T, "testability__JSTestabilityProxy__getAllAngularTestabilities$closure", "_JSTestabilityProxy__getAllAngularTestabilities", 60);
+    _static_1(T, "testability__JSTestabilityProxy__whenAllStable$closure", "_JSTestabilityProxy__whenAllStable", 12);
+    _instance_1_i(T.Testability.prototype, "get$whenStable", "whenStable$1", 12);
+    _static_2(S, "queries_template__viewFactory_GoldenComponent1$closure", "viewFactory_GoldenComponent1", 1);
+    _static_0(S, "queries_template__viewFactory_GoldenComponentHost0$closure", "viewFactory_GoldenComponentHost0", 41);
+    _static_2(S, "queries_template__viewFactory_NestedNgForQueriesList1$closure", "viewFactory_NestedNgForQueriesList1", 1);
+    _static_2(S, "queries_template__viewFactory_NestedNgForQueriesList2$closure", "viewFactory_NestedNgForQueriesList2", 1);
+    _static_2(S, "queries_template__viewFactory_NestedNgForQueriesList3$closure", "viewFactory_NestedNgForQueriesList3", 1);
+    _static_2(S, "queries_template__viewFactory_StaticSingleQuery1$closure", "viewFactory_StaticSingleQuery1", 1);
+    _static_2(S, "queries_template__viewFactory_DynamicSingleQuery1$closure", "viewFactory_DynamicSingleQuery1", 1);
   })();
   (function inheritance() {
     var _mixin = hunkHelpers.mixin,
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.Duration, P.StackOverflowError, P._Exception, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, M.Injector, K.NgIf, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, Z.ElementRef, O.ComponentStyles, D.TemplateRef, D.ViewFragment, A.View, E._ComponentViewData, E._EmbeddedViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.AnotherDirective]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.Duration, P.StackOverflowError, P._Exception, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, M.Injector, R.NgFor, R._RecordViewTuple, K.NgIf, K.TransitionalAppHost, M.ChangeDetectionHost, R.DefaultIterableDiffer, R.CollectionChangeRecord, R._DuplicateItemRecordList, R._DuplicateMap, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, Z.ElementRef, G.NgContentRef, O.ComponentStyles, D.TemplateRef, D.ViewFragment, A.View, E._ComponentViewData, E._EmbeddedViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, N.TextBinding, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.EmbeddedQueries, L.AnotherDirective, L.NestedNgForQueriesList, L.StaticSingleQuery, L.DynamicSingleQuery, L.ContentQuery, L.ContentHasReference]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.CssStyleValue, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, U.JsTestability]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
@@ -9653,7 +11327,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindUnaryCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure, S.ViewGoldenComponent0_detectChangesInternal_closure, S.ViewGoldenComponent0_detectChangesInternal_closure0]);
+    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindUnaryCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, R.NgFor__applyChanges_closure, R.NgFor__applyChanges_closure0, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure, S.ViewGoldenComponent0_detectChangesInternal_closure, S.ViewGoldenComponent0_detectChangesInternal_closure0, S.ViewEmbeddedQueries0_detectChangesInternal_closure, S.ViewEmbeddedQueries0_detectChangesInternal_closure0, S.ViewDynamicSingleQuery0_detectChangesInternal_closure]);
     _inherit(H.NullError, P.TypeError);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -9678,6 +11352,7 @@
     _inherit(P._StreamImplEvents, P._PendingEvents);
     _inheritMany(P._Zone, [P._CustomZone, P._RootZone]);
     _inherit(P._IdentityHashMap, P._HashMap);
+    _inherit(P._LinkedIdentityHashMap, H.JsLinkedHashMap);
     _inheritMany(P.ArgumentError, [P.RangeError, P.IndexError]);
     _inheritMany(W.EventTarget, [W.Node, W.FileWriter, W.SourceBuffer, W._SourceBufferList_EventTarget_ListMixin, W.TextTrack, W.TextTrackCue, W._TextTrackList_EventTarget_ListMixin, W.VideoTrackList, P.AudioTrackList, P.BaseAudioContext]);
     _inheritMany(W.Node, [W.Element, W.CharacterData]);
@@ -9745,8 +11420,8 @@
     _inherit(V.ViewContainer, M.ComponentLoader);
     _inheritMany(A.View, [A.RenderView, G.HostView]);
     _inheritMany(A.RenderView, [E.ComponentView, E.EmbeddedView]);
-    _inherit(S.ViewGoldenComponent0, E.ComponentView);
-    _inherit(S._ViewGoldenComponent1, E.EmbeddedView);
+    _inheritMany(E.ComponentView, [S.ViewGoldenComponent0, S.ViewEmbeddedQueries0, S.ViewNestedNgForQueriesList0, S.ViewStaticSingleQuery0, S.ViewDynamicSingleQuery0, S.ViewContentQuery0, S.ViewContentHasReference0]);
+    _inheritMany(E.EmbeddedView, [S._ViewGoldenComponent1, S._ViewNestedNgForQueriesList1, S._ViewNestedNgForQueriesList2, S._ViewNestedNgForQueriesList3, S._ViewStaticSingleQuery1, S._ViewDynamicSingleQuery1]);
     _inherit(S._ViewGoldenComponentHost0, G.HostView);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin, P.ListMixin);
     _mixin(H._NativeTypedArrayOfDouble_NativeTypedArray_ListMixin_FixedLengthListMixin, H.FixedLengthListMixin);
@@ -9808,12 +11483,12 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "Null()", "~(String,@)", "~(~())", "Null(@)", "~(Object,StackTrace)", "~(~(bool))", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "AnotherDirective(_ViewGoldenComponent1)", "AppViewUtils()", "@(@,String)", "~(String,String)", "@(String)", "String()", "ApplicationRef()", "@(@)", "Null(~())", "Testability()", "Injector()", "~(UncaughtError)", "_Future<@>(@)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(@,@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "JsTestability(Testability)", "bool()", "HostView<GoldenComponent>()", "~(Object?,Object?)", "~(Symbol0,@)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object(Element)", "List<Object?>()", "EmbeddedView<~>(RenderView,int)", "Null(Object,StackTrace)"],
+    types: ["~()", "EmbeddedView<~>(RenderView,int)", "Null()", "~(String,@)", "~(~())", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "AnotherDirective(_ViewGoldenComponent1)", "Testability()", "~(String,String)", "@(@,String)", "String()", "ApplicationRef()", "AppViewUtils()", "@(String)", "@(@)", "Injector()", "~(CollectionChangeRecord,int?,int?)", "~(CollectionChangeRecord)", "~(UncaughtError)", "Null(Object,StackTrace)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "_Future<@>(@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "JsTestability(Testability)", "bool()", "~(@,@)", "~(Object?,Object?)", "HostView<GoldenComponent>()", "AnotherDirective(_ViewEmbeddedQueries2)", "AnotherDirective(_ViewDynamicSingleQuery1)", "~(Symbol0,@)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object?(int,@)", "Object(Element)", "List<Object?>()", "Null(~())", "AnotherDirective(_ViewEmbeddedQueries1)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: typeof Symbol == "function" && typeof Symbol() == "symbol" ? Symbol("$ti") : "$ti"
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[],"ChangeDetectorRef":[]},"EmbeddedView":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"HostView":{"DynamicView":[],"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"_ViewGoldenComponent1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewGoldenComponent0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"DynamicView":[],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"DynamicView":{"ChangeDetectorRef":[]}}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_LinkedIdentityHashMap":{"JsLinkedHashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[],"ChangeDetectorRef":[]},"EmbeddedView":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"HostView":{"DynamicView":[],"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"_ViewGoldenComponent1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"_ViewEmbeddedQueries1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"_ViewEmbeddedQueries2":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"_ViewDynamicSingleQuery1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewGoldenComponent0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"DynamicView":[],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewEmbeddedQueries0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewNestedNgForQueriesList0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewNestedNgForQueriesList1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"_ViewNestedNgForQueriesList2":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"_ViewNestedNgForQueriesList3":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewStaticSingleQuery0":{"RenderView":[],"ChangeDetectorRef":[]},"_ViewStaticSingleQuery1":{"RenderView":[],"DynamicView":[],"ChangeDetectorRef":[]},"ViewDynamicSingleQuery0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewContentQuery0":{"RenderView":[],"ChangeDetectorRef":[]},"ViewContentHasReference0":{"RenderView":[],"ChangeDetectorRef":[]},"DynamicView":{"ChangeDetectorRef":[]}}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"_RectangleBase":1,"ComponentFactory":1,"ComponentView":1,"EmbeddedView":1,"_EmbeddedViewData":1}'));
   var string$ = {
     Cannot: "Cannot fire new event. Controller is already firing an event"
@@ -9833,12 +11508,17 @@
       JSArray_AnotherDirective: findType("JSArray<AnotherDirective>"),
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
+      JSArray_DynamicView: findType("JSArray<DynamicView>"),
       JSArray_List_AnotherDirective: findType("JSArray<List<AnotherDirective>>"),
+      JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Node: findType("JSArray<Node>"),
       JSArray_Object: findType("JSArray<Object>"),
       JSArray_String: findType("JSArray<String>"),
+      JSArray__RecordViewTuple: findType("JSArray<_RecordViewTuple>"),
       JSArray__WrappedTimer: findType("JSArray<_WrappedTimer>"),
       JSArray_dynamic: findType("JSArray<@>"),
+      JSArray_int: findType("JSArray<int>"),
+      JSArray_nullable_int: findType("JSArray<int?>"),
       JSArray_of_void_Function: findType("JSArray<~()>"),
       JSArray_of_void_Function_bool: findType("JSArray<~(bool)>"),
       JSNull: findType("JSNull"),
@@ -9855,8 +11535,12 @@
       Timer: findType("Timer"),
       UncaughtError: findType("UncaughtError"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
+      _DuplicateItemRecordList: findType("_DuplicateItemRecordList"),
       _Future_int: findType("_Future<int>"),
       _IdentityHashMap_Object_Object: findType("_IdentityHashMap<Object,Object>"),
+      _ViewDynamicSingleQuery1: findType("_ViewDynamicSingleQuery1"),
+      _ViewEmbeddedQueries1: findType("_ViewEmbeddedQueries1"),
+      _ViewEmbeddedQueries2: findType("_ViewEmbeddedQueries2"),
       _ViewGoldenComponent1: findType("_ViewGoldenComponent1"),
       bool: findType("bool"),
       double: findType("double"),
@@ -10014,7 +11698,7 @@
     C.C__RootZone = new P._RootZone();
     C.C__StringStackTrace = new P._StringStackTrace();
     C.Duration_0 = new P.Duration(0);
-    C.List_empty0 = H._setArrayType(makeConstList([]), H.findType("JSArray<List<Object>>"));
+    C.List_empty0 = H._setArrayType(makeConstList([]), type$.JSArray_List_Object);
     C.List_empty = H._setArrayType(makeConstList([]), type$.JSArray_Object);
     C.List_empty1 = H._setArrayType(makeConstList([]), H.findType("JSArray<0&>"));
     C.List_empty2 = H._setArrayType(makeConstList([]), type$.JSArray_dynamic);
@@ -10065,6 +11749,12 @@
     $.appViewUtils = H._Cell$named("appViewUtils");
     $.domRootRendererIsDirty = false;
     $.ViewGoldenComponent0__componentStyles = null;
+    $.ViewEmbeddedQueries0__componentStyles = null;
+    $.ViewNestedNgForQueriesList0__componentStyles = null;
+    $.ViewStaticSingleQuery0__componentStyles = null;
+    $.ViewDynamicSingleQuery0__componentStyles = null;
+    $.ViewContentQuery0__componentStyles = null;
+    $.ViewContentHasReference0__componentStyles = null;
   })();
   (function lazyInitializers() {
     var _lazyFinal = hunkHelpers.lazyFinal;

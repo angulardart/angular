@@ -20,6 +20,12 @@ void main() {
   selector: 'golden',
   directives: [
     AnotherDirective,
+    EmbeddedQueries,
+    NestedNgForQueriesList,
+    StaticSingleQuery,
+    DynamicSingleQuery,
+    ContentQuery,
+    ContentHasReference,
     NgIf,
   ],
   template: r'''
@@ -27,6 +33,13 @@ void main() {
     <another #q1></another>
     <another #q2></another>
     <another #q3 *ngIf="someValue"></another>
+
+    <embedded-queries></embedded-queries>
+    <nested-ng-for-queries></nested-ng-for-queries>
+    <static-single-query></static-single-query>
+    <dynamic-single-query></dynamic-single-query>
+    <content-query></content-query>
+    <content-has-reference></content-has-reference>
   ''',
 )
 class GoldenComponent {
@@ -74,7 +87,7 @@ class GoldenComponent {
 }
 
 @Component(
-  selector: 'test',
+  selector: 'embedded-queries',
   directives: [
     AnotherDirective,
   ],
@@ -95,28 +108,6 @@ class EmbeddedQueries {
   }
 }
 
-@Component(
-  selector: 'test',
-  directives: [
-    AnotherDirective,
-  ],
-  template: r'''
-    <another></another>
-    <template>
-      <another></another>
-    </template>
-    <template>
-      <another></another>
-    </template>
-  ''',
-)
-class EmbeddedQueriesList {
-  @ViewChildren(AnotherDirective)
-  set viewChildren(List<AnotherDirective>? value) {
-    deopt(value);
-  }
-}
-
 @Directive(
   selector: 'another',
 )
@@ -124,7 +115,7 @@ class AnotherDirective {}
 
 // This closely mimics a piece of internal code that previously crashed.
 @Component(
-  selector: 'test',
+  selector: 'nested-ng-for-queries',
   directives: [
     AnotherDirective,
     NgFor,
