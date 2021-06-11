@@ -134,8 +134,6 @@ abstract class BoundValueConverter
       );
 
   o.Expression _createEventHandler(List<o.Statement> statements);
-
-  bool? get preserveWhitespace => _metadata!.template!.preserveWhitespace;
 }
 
 /// Converts values bound by a directive change detector.

@@ -78,10 +78,6 @@ class EmitterVisitorContext {
     return _classes.removeLast();
   }
 
-  o.ClassStmt? get currentClass {
-    return _classes.isNotEmpty ? _classes[_classes.length - 1] : null;
-  }
-
   String toSource() {
     var lines = _lines;
     if (identical(lines[lines.length - 1].parts.length, 0)) {

@@ -85,14 +85,6 @@ class InjectorEmitter implements InjectorVisitor {
       ..statements.addAll(_createMultiBody())
       ..statements.add(refer('orElse').returned.statement)));
 
-  /// Returns the fields needed to cache instances in this injector.
-  @visibleForTesting
-  List<Field> createFields() => _fieldCache;
-
-  /// Returns the methods needed to create instances for this injector.
-  @visibleForTesting
-  List<Method> createMethods() => _methodCache;
-
   /// Returns statements that represent `_multiTokenInvokes`.
   List<Code> _createMultiBody() {
     if (_multiTokenInvokes.isEmpty) {

@@ -76,13 +76,6 @@ class CssSelector {
     return results;
   }
 
-  bool isElementSelector() {
-    return element != null &&
-        classNames.isEmpty &&
-        attrs.isEmpty &&
-        notSelectors.isEmpty;
-  }
-
   void setElement([String? element]) {
     this.element = element;
   }

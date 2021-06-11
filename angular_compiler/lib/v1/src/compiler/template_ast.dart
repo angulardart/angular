@@ -479,13 +479,6 @@ class ProviderAst implements TemplateAst {
   @override
   R visit<R, C, CO extends C>(TemplateAstVisitor<R, C> visitor, CO context) =>
       visitor.visitProvider(this, context);
-
-  /// Returns true if the provider is used by a constructor in a child
-  /// CompileView or queried which requires non local access.
-  ///
-  /// It is a signal to view builder to create a public field inside AppView
-  /// to allow other AppView(s) or change detector access to this provider.
-  bool get hasNonLocalRequests => throw UnimplementedError();
 }
 
 enum ProviderAstType {

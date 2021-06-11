@@ -43,11 +43,3 @@ HandlerType handlerTypeFromExpression(AST handler) {
     return HandlerType.notSimple;
   }
 }
-
-final RegExp _eventNameRegExp = RegExp(r'[^a-zA-Z0-9_]');
-
-/// Sanitizes event name so it can be used to construct a class member
-/// handler method name.
-String sanitizeEventName(String name) {
-  return name.replaceAll(_eventNameRegExp, '_');
-}

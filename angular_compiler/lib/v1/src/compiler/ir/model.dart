@@ -588,22 +588,6 @@ class BoundExpression implements BindingSource {
 
   BoundExpression(this.expression, this.sourceSpan, this._analyzedClass);
 
-  /// Wraps the expression in an `== true` check, in order to support null
-  /// values.
-  ///
-  /// This hack is to allow legacy NgIf behavior on null inputs
-  BoundExpression.falseIfNull(ast.ASTWithSource parsedExpression,
-      SourceSpan sourceSpan, analyzed.AnalyzedClass scope)
-      : this(
-            analyzed.isImmutable(parsedExpression.ast, scope)
-                ? parsedExpression
-                : ast.ASTWithSource.from(
-                    parsedExpression,
-                    ast.Binary('==', parsedExpression.ast,
-                        ast.LiteralPrimitive(true))),
-            sourceSpan,
-            scope);
-
   @override
   bool get isImmutable => analyzed.isImmutable(expression.ast, _analyzedClass);
 

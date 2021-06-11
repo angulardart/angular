@@ -270,8 +270,6 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     }
   }
 
-  bool get publishesTemplateRef => _publishesTemplateRef;
-
   /// Creates the unique provider instances provided by this element.
   ///
   /// Normal providers are added to [providers], while view providers are added

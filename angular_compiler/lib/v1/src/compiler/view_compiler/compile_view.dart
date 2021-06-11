@@ -327,10 +327,6 @@ class AppViewReference {
     return o.ReadClassMemberExpr(_name);
   }
 
-  o.Statement toWriteStmt(o.Expression value) {
-    return o.WriteClassMemberExpr(_name, value).toStmt();
-  }
-
   void allocate(
     CompileViewStorage storage, {
     o.OutputType? outputType,

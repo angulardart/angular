@@ -207,18 +207,6 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
   }
 }
 
-o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
-  if (token.value != null) {
-    return o.literal(token.value);
-  } else if (token.identifierIsInstance) {
-    return o
-        .importExpr(token.identifier!)
-        .instantiate([], type: o.importType(token.identifier, []));
-  } else {
-    return o.importExpr(token.identifier!);
-  }
-}
-
 /// Do not use this function outside of projectedNodes.
 o.Expression createFlatArrayForProjectNodes(
   List<o.Expression> expressions, {
@@ -300,24 +288,6 @@ o.Expression? unwrapDirectiveInstance(o.Expression? directiveInstance) {
     return directiveInstance.receiver;
   }
   return null;
-}
-
-// Return instance of directive for both regular directives and directives
-// with ChangeDetector class.
-o.Expression? unwrapDirective(o.Expression directiveInstance) {
-  var instance = unwrapDirectiveInstance(directiveInstance);
-  if (instance != null) {
-    return instance;
-  } else if (directiveInstance is o.ReadClassMemberExpr) {
-    // Non change detector directive read.
-    return directiveInstance;
-  }
-  return null;
-}
-
-String toTemplateExtension(String moduleUrl) {
-  if (!moduleUrl.endsWith('.dart')) return moduleUrl;
-  return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
 }
 
 List<ir.Binding> mergeHtmlAndDirectiveAttributes(

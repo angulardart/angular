@@ -14,6 +14,3 @@ List<String> jsSplit(String s, RegExp regExp) {
   parts.add(s.substring(lastEnd));
   return parts;
 }
-
-bool isPrimitive(Object? obj) =>
-    obj is num || obj is bool || obj == null || obj is String;

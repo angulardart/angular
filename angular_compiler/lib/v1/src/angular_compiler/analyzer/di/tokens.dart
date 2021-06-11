@@ -14,29 +14,6 @@ import '../types.dart';
 class TokenReader {
   const TokenReader();
 
-  /// Throws an error if [dartType] is a function-type not in [allowed].
-  static void assertNotFunctionType(
-    DartType dartType, {
-    required Element on,
-    required Set<TypeLink> allowed,
-  }) {
-    if (dartType is FunctionType) {
-      final toLink = linkTypeOf(dartType);
-      if (!allowed.contains(toLink)) {
-        final name = toLink.symbol;
-        final error = 'Unsupported token for injection: $name.\n\n'
-            'In previous versions of AngularDart it was valid to inject '
-            'based on a typedef or function type directly. However, in Dart '
-            '2.x+ typedefs and function types are canonicalized, and not '
-            'unique enough, making it easy to misuse.\n\n'
-            'Consider using an OpaqueToken with a description instead:\n'
-            '  typedef $name = Function(...);\n'
-            '  const ${name}Token = OpaqueToken<$name>(\'uniqueName\');';
-        throw BuildError.forElement(on, error);
-      }
-    }
-  }
-
   /// Returns [object] parsed into a [TokenElement].
   ///
   /// Only a [DartType] or `OpaqueToken` are currently supported.
@@ -176,11 +153,6 @@ class TokenReader {
     return _parseType(element.type);
   }
 
-  /// Returns the type parameter [element] as a [TokenElement].
-  TypeTokenElement parseTokenTypeOf(DartType type) {
-    return _parseType(type);
-  }
-
   TypeTokenElement _parseType(DartType type) =>
       TypeTokenElement(linkTypeOf(type));
 }
@@ -210,9 +182,6 @@ class TypeTokenElement implements TokenElement {
 
   @override
   int get hashCode => link.hashCode;
-
-  /// Whether this is a considered the type `dynamic`.
-  bool get isDynamic => link.isDynamic;
 
   @override
   String toString() => 'TypeTokenElement {$link}';
