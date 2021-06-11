@@ -141,24 +141,30 @@
       convertToFastObject(arrayOfObjects[i]);
   }
   var functionCounter = 0;
-  function tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted) {
-    return isIntercepted ? new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, true, name);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null) : new Function("funcs, applyTrampolineIndex, reflectionInfo, name, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "this, funcs, applyTrampolineIndex, reflectionInfo, false, false, name);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, H.closureFromTearOff, null);
+  function instanceTearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted, needsDirectAccess) {
+    if (isIntercepted)
+      return new Function("funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "funcs, applyTrampolineIndex, reflectionInfo, false, true, name, needsDirectAccess);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, H.closureFromTearOff, null);
+    else
+      return new Function("funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "funcs, applyTrampolineIndex, reflectionInfo, false, false, name, needsDirectAccess);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, H.closureFromTearOff, null);
   }
-  function tearOff(funcs, applyTrampolineIndex, reflectionInfo, isStatic, name, isIntercepted) {
+  function staticTearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name) {
     var cache = null;
-    return isStatic ? function() {
+    return function() {
       if (cache === null)
-        cache = H.closureFromTearOff(this, funcs, applyTrampolineIndex, reflectionInfo, true, false, name).prototype;
+        cache = H.closureFromTearOff(funcs, applyTrampolineIndex, reflectionInfo, true, false, name).prototype;
       return cache;
-    } : tearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted);
+    };
   }
   var typesOffset = 0;
-  function installTearOff(container, getterName, isStatic, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex) {
+  function installTearOff(container, getterName, isStatic, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
     var funs = [];
     for (var i = 0; i < funsOrNames.length; i++) {
       var fun = funsOrNames[i];
-      if (typeof fun == "string")
+      if (typeof fun == "string") {
+        var stubName = fun;
         fun = container[fun];
+        fun.$stubName = stubName;
+      }
       fun.$callName = callNames[i];
       funs.push(fun);
     }
@@ -169,17 +175,15 @@
     if (typeof reflectionInfo == "number")
       reflectionInfo += typesOffset;
     var name = funsOrNames[0];
-    fun.$stubName = name;
-    var getterFunction = tearOff(funs, applyIndex || 0, reflectionInfo, isStatic, name, isIntercepted);
+    applyIndex = applyIndex || 0;
+    var getterFunction = isStatic ? staticTearOffGetter(funs, applyIndex, reflectionInfo, name) : instanceTearOffGetter(funs, applyIndex, reflectionInfo, name, isIntercepted, needsDirectAccess);
     container[getterName] = getterFunction;
-    if (isStatic)
-      fun.$tearOff = getterFunction;
   }
   function installStaticTearOff(container, getterName, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex) {
-    return installTearOff(container, getterName, true, false, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex);
+    return installTearOff(container, getterName, true, false, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, false);
   }
-  function installInstanceTearOff(container, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex) {
-    return installTearOff(container, getterName, false, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex);
+  function installInstanceTearOff(container, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
+    return installTearOff(container, getterName, false, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, !!needsDirectAccess);
   }
   function setOrUpdateInterceptorsByTag(newTags) {
     var tags = init.interceptorsByTag;
@@ -210,7 +214,7 @@
   var hunkHelpers = function() {
     var mkInstance = function(isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, applyIndex) {
         return function(container, getterName, name, funType) {
-          return installInstanceTearOff(container, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, [name], funType, applyIndex);
+          return installInstanceTearOff(container, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, [name], funType, applyIndex, false);
         };
       },
       mkStatic = function(requiredParameterCount, optionalParameterDefaultValues, callNames, applyIndex) {
@@ -790,7 +794,7 @@
       closure.$identity = $function;
       return $function;
     },
-    Closure_fromTearOff: function(receiver, functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, propertyName) {
+    Closure_fromTearOff: function(functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, propertyName, needsDirectAccess) {
       var $constructor, t1, trampoline, applyTrampoline, i, stub, stubCallName,
         $function = functions[0],
         callName = $function.$callName,
@@ -811,7 +815,7 @@
       $prototype.constructor = $constructor;
       $constructor.prototype = $prototype;
       if (!isStatic) {
-        trampoline = H.Closure_forwardCallTo(receiver, $function, isIntercepted);
+        trampoline = H.Closure_forwardCallTo($function, isIntercepted, needsDirectAccess);
         trampoline.$reflectionInfo = reflectionInfo;
       } else {
         $prototype.$static_name = propertyName;
@@ -823,7 +827,7 @@
         stub = functions[i];
         stubCallName = stub.$callName;
         if (stubCallName != null) {
-          stub = isStatic ? stub : H.Closure_forwardCallTo(receiver, stub, isIntercepted);
+          stub = isStatic ? stub : H.Closure_forwardCallTo(stub, isIntercepted, needsDirectAccess);
           $prototype[stubCallName] = stub;
         }
         if (i === applyTrampolineIndex) {
@@ -856,9 +860,9 @@
       }
       throw H.wrapException("Error in functionType of tearoff");
     },
-    Closure_cspForwardCall: function(arity, isSuperCall, stubName, $function) {
+    Closure_cspForwardCall: function(arity, needsDirectAccess, stubName, $function) {
       var getSelf = H.BoundClosure_selfOf;
-      switch (isSuperCall ? -1 : arity) {
+      switch (needsDirectAccess ? -1 : arity) {
         case 0:
           return function(n, S) {
             return function() {
@@ -903,17 +907,15 @@
           }($function, getSelf);
       }
     },
-    Closure_forwardCallTo: function(receiver, $function, isIntercepted) {
-      var stubName, arity, lookedUpFunction, t1, t2, selfName, $arguments;
+    Closure_forwardCallTo: function($function, isIntercepted, needsDirectAccess) {
+      var stubName, arity, t1, selfName, t2, $arguments;
       if (isIntercepted)
-        return H.Closure_forwardInterceptedCallTo(receiver, $function);
+        return H.Closure_forwardInterceptedCallTo($function, needsDirectAccess);
       stubName = $function.$stubName;
       arity = $function.length;
-      lookedUpFunction = receiver[stubName];
-      t1 = $function == null ? lookedUpFunction == null : $function === lookedUpFunction;
-      t2 = !t1 || arity >= 27;
-      if (t2)
-        return H.Closure_cspForwardCall(arity, !t1, stubName, $function);
+      t1 = needsDirectAccess || arity >= 27;
+      if (t1)
+        return H.Closure_cspForwardCall(arity, needsDirectAccess, stubName, $function);
       if (arity === 0) {
         t1 = $.Closure_functionCounter;
         if (typeof t1 !== "number")
@@ -934,10 +936,10 @@
       t2 = $.BoundClosure_selfFieldNameCache;
       return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + "." + H.S(stubName) + "(" + $arguments + ");}")();
     },
-    Closure_cspForwardInterceptedCall: function(arity, isSuperCall, $name, $function) {
+    Closure_cspForwardInterceptedCall: function(arity, needsDirectAccess, $name, $function) {
       var getSelf = H.BoundClosure_selfOf,
         getReceiver = H.BoundClosure_receiverOf;
-      switch (isSuperCall ? -1 : arity) {
+      switch (needsDirectAccess ? -1 : arity) {
         case 0:
           throw H.wrapException(new H.RuntimeError("Intercepted function with no arguments."));
         case 1:
@@ -986,8 +988,8 @@
           }($function, getSelf, getReceiver);
       }
     },
-    Closure_forwardInterceptedCallTo: function(receiver, $function) {
-      var receiverField, stubName, arity, lookedUpFunction, t1, t2, $arguments,
+    Closure_forwardInterceptedCallTo: function($function, needsDirectAccess) {
+      var receiverField, stubName, arity, t1, t2, $arguments,
         selfField = $.BoundClosure_selfFieldNameCache;
       if (selfField == null)
         selfField = $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self");
@@ -996,11 +998,9 @@
         receiverField = $.BoundClosure_receiverFieldNameCache = H.BoundClosure_computeFieldNamed("receiver");
       stubName = $function.$stubName;
       arity = $function.length;
-      lookedUpFunction = receiver[stubName];
-      t1 = $function == null ? lookedUpFunction == null : $function === lookedUpFunction;
-      t2 = !t1 || arity >= 28;
-      if (t2)
-        return H.Closure_cspForwardInterceptedCall(arity, !t1, stubName, $function);
+      t1 = needsDirectAccess || arity >= 28;
+      if (t1)
+        return H.Closure_cspForwardInterceptedCall(arity, needsDirectAccess, stubName, $function);
       if (arity === 1) {
         t1 = "return function(){return this." + selfField + "." + H.S(stubName) + "(this." + receiverField + ");";
         t2 = $.Closure_functionCounter;
@@ -1017,8 +1017,8 @@
       $.Closure_functionCounter = t2 + 1;
       return new Function(t1 + t2 + "}")();
     },
-    closureFromTearOff: function(receiver, functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, $name) {
-      return H.Closure_fromTearOff(receiver, functions, applyTrampolineIndex, reflectionInfo, !!isStatic, !!isIntercepted, $name);
+    closureFromTearOff: function(functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, $name, needsDirectAccess) {
+      return H.Closure_fromTearOff(functions, applyTrampolineIndex || 0, reflectionInfo, !!isStatic, !!isIntercepted, $name, !!needsDirectAccess);
     },
     BoundClosure_evalRecipe: function(closure, recipe) {
       return H._Universe_evalInEnvironment(init.typeUniverse, H.instanceType(closure._self), recipe);
@@ -9312,12 +9312,12 @@
     _static_1(G, "run___identityInjector$closure", "_identityInjector", 7);
     _instance_0_u(M.ChangeDetectionHost.prototype, "get$tick", "tick$0", 0);
     var _;
-    _instance(_ = Y.NgZone.prototype, "get$_ng_zone$_scheduleMicrotask", 0, 4, null, ["call$4"], ["_ng_zone$_scheduleMicrotask$4"], 26, 0);
-    _instance(_, "get$_run", 0, 4, null, ["call$1$4", "call$4"], ["_run$1$4", "_run$4"], 27, 0);
-    _instance(_, "get$_runUnary", 0, 5, null, ["call$2$5", "call$5"], ["_runUnary$2$5", "_runUnary$5"], 28, 0);
-    _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 29, 0);
-    _instance(_, "get$_handleUncaughtError", 0, 5, null, ["call$5"], ["_handleUncaughtError$5"], 30, 0);
-    _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 10, 0);
+    _instance(_ = Y.NgZone.prototype, "get$_ng_zone$_scheduleMicrotask", 0, 4, null, ["call$4"], ["_ng_zone$_scheduleMicrotask$4"], 26, 0, 0);
+    _instance(_, "get$_run", 0, 4, null, ["call$1$4", "call$4"], ["_run$1$4", "_run$4"], 27, 0, 0);
+    _instance(_, "get$_runUnary", 0, 5, null, ["call$2$5", "call$5"], ["_runUnary$2$5", "_runUnary$5"], 28, 0, 0);
+    _instance(_, "get$_runBinary", 0, 6, null, ["call$3$6"], ["_runBinary$3$6"], 29, 0, 0);
+    _instance(_, "get$_handleUncaughtError", 0, 5, null, ["call$5"], ["_handleUncaughtError$5"], 30, 0, 0);
+    _instance(_, "get$_createTimer", 0, 5, null, ["call$5"], ["_createTimer$5"], 10, 0, 0);
     _static_1(T, "testability__JSTestabilityProxy__getAngularTestability$closure", "_JSTestabilityProxy__getAngularTestability", 52);
     _static_0(T, "testability__JSTestabilityProxy__getAllAngularTestabilities$closure", "_JSTestabilityProxy__getAllAngularTestabilities", 53);
     _static_1(T, "testability__JSTestabilityProxy__whenAllStable$closure", "_JSTestabilityProxy__whenAllStable", 11);
