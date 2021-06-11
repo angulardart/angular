@@ -86,12 +86,12 @@ for PKG in ${PKGS}; do
         pub run build_runner test --fail-on-severe -- -P ci || EXIT_CODE=$?
         ;;
       dartanalyzer_0)
-        echo 'dart analyze --fatal-infos'
-        dart analyze --fatal-infos || EXIT_CODE=$?
+        echo 'dart analyze --fatal-infos .'
+        dart analyze --fatal-infos . || EXIT_CODE=$?
         ;;
       dartanalyzer_1)
-        echo 'dart analyze .'
-        dart analyze . || EXIT_CODE=$?
+        echo 'dart analyze'
+        dart analyze || EXIT_CODE=$?
         ;;
       *)
         echo -e "\033[31mUnknown TASK '${TASK}' - TERMINATING JOB\033[0m"
