@@ -231,6 +231,10 @@ abstract class Expression {
     return NotNullExpr(this);
   }
 
+  SpreadExpr spread() {
+    return SpreadExpr(this);
+  }
+
   BinaryOperatorExpr equals(Expression rhs) {
     return BinaryOperatorExpr(BinaryOperator.Equals, this, rhs);
   }
@@ -614,6 +618,17 @@ class NotNullExpr extends Expression {
   }
 }
 
+class SpreadExpr extends Expression {
+  final Expression value;
+
+  SpreadExpr(this.value, {OutputType? type}) : super(type);
+
+  @override
+  R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
+    return visitor.visitSpreadExpr(this, context);
+  }
+}
+
 class CastExpr extends Expression {
   final Expression value;
   CastExpr(this.value, OutputType? type) : super(type);
@@ -776,6 +791,7 @@ abstract class ExpressionVisitor<R, C> {
   R visitIfNullExpr(IfNullExpr ast, C context);
   R visitNotExpr(NotExpr ast, C context);
   R visitNotNullExpr(NotNullExpr ast, C context);
+  R visitSpreadExpr(SpreadExpr ast, C context);
   R visitCastExpr(CastExpr ast, C context);
   R visitFunctionExpr(FunctionExpr ast, C context);
   R visitBinaryOperatorExpr(BinaryOperatorExpr ast, C context);
@@ -1165,6 +1181,11 @@ class ExpressionTransformer<C>
   }
 
   @override
+  Expression visitSpreadExpr(SpreadExpr ast, C context) {
+    return SpreadExpr(ast.value.visitExpression(this, context));
+  }
+
+  @override
   Expression visitNotExpr(NotExpr ast, C context) {
     return NotExpr(ast.condition.visitExpression(this, context));
   }
@@ -1407,6 +1428,12 @@ class RecursiveExpressionVisitor<C>
 
   @override
   Expression visitNotNullExpr(NotNullExpr ast, C context) {
+    ast.value.visitExpression(this, context);
+    return ast;
+  }
+
+  @override
+  Expression visitSpreadExpr(SpreadExpr ast, C context) {
     ast.value.visitExpression(this, context);
     return ast;
   }

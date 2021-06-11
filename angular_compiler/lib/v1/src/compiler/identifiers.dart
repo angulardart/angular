@@ -161,11 +161,6 @@ class Queries {
 
   const Queries._();
 
-  static final flattenNodes = CompileIdentifierMetadata(
-    name: 'flattenNodes',
-    moduleUrl: _moduleUrl,
-  );
-
   static final firstOrNull = CompileIdentifierMetadata(
     name: 'firstOrNull',
     moduleUrl: _moduleUrl,

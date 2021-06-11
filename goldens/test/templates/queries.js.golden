@@ -4953,23 +4953,6 @@
     __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin: function __StyleSheetList_Interceptor_ListMixin_ImmutableListMixin() {
     }
   },
-  X = {
-    flattenNodes: function(nodes, $T) {
-      var l, i, items, k, j,
-        result = H._setArrayType([], $T._eval$1("JSArray<0>"));
-      for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
-          return H.ioore(nodes, i);
-        items = nodes[i];
-        for (k = items.length, j = 0; j < k; ++j) {
-          if (j >= items.length)
-            return H.ioore(items, j);
-          result.push(items[j]);
-        }
-      }
-      return result;
-    }
-  },
   Y = {
     ApplicationRef$_: function(_ngZone, _exceptionHandler, _injector) {
       var t1 = new Y.ApplicationRef(H._setArrayType([], type$.JSArray_of_void_Function), H._setArrayType([], type$.JSArray_ComponentRef_void), _exceptionHandler, _injector, _ngZone, H._setArrayType([], type$.JSArray_ChangeDetectorRef));
@@ -5065,7 +5048,7 @@
   },
   Z = {ElementRef: function ElementRef() {
     }};
-  var holders = [A, C, D, E, G, H, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z];
+  var holders = [A, C, D, E, G, H, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, Y, Z];
   hunkHelpers.setFunctionNamesIfNecessary(holders);
   var $ = {};
   H.JS_CONST.prototype = {};
@@ -10812,7 +10795,7 @@
       self.deopt(_el_1);
     },
     detectChangesInternal$0: function() {
-      var t1, t2, _this = this;
+      var t1, _this = this;
       _this.get$ctx();
       _this.get$_NgIf_2_9().set$ngIf(false);
       _this.get$_appEl_2().detectChangesInNestedViews$0();
@@ -10820,8 +10803,9 @@
         t1 = _this.__ViewGoldenComponent0__AnotherDirective_0_5;
         if (t1 == null)
           t1 = H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5"));
-        t2 = type$.AnotherDirective;
-        self.deopt(X.flattenNodes(H._setArrayType([H._setArrayType([t1, _this.get$_AnotherDirective_1_5()], type$.JSArray_AnotherDirective), _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewGoldenComponent0_detectChangesInternal_closure(), t2, type$._ViewGoldenComponent1)], type$.JSArray_List_AnotherDirective), t2));
+        t1 = H._setArrayType([t1, _this.get$_AnotherDirective_1_5()], type$.JSArray_AnotherDirective);
+        C.JSArray_methods.addAll$1(t1, _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewGoldenComponent0_detectChangesInternal_closure(), type$.AnotherDirective, type$._ViewGoldenComponent1));
+        self.deopt(t1);
         _this._viewQuery_AnotherDirective_4_isDirty = false;
       }
       if (_this._viewQuery_q3_5_isDirty) {
@@ -10913,8 +10897,11 @@
       _this.get$ctx();
       if (_this._viewQuery_AnotherDirective_0_isDirty) {
         t1 = _this.__ViewEmbeddedQueries0__AnotherDirective_0_5;
+        t1 = H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1], type$.JSArray_AnotherDirective);
         t2 = type$.AnotherDirective;
-        self.deopt(X.flattenNodes(H._setArrayType([H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1], type$.JSArray_AnotherDirective), _this.get$_appEl_1().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure(), t2, type$._ViewEmbeddedQueries1), _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure0(), t2, type$._ViewEmbeddedQueries2)], type$.JSArray_List_AnotherDirective), t2));
+        C.JSArray_methods.addAll$1(t1, _this.get$_appEl_1().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure(), t2, type$._ViewEmbeddedQueries1));
+        C.JSArray_methods.addAll$1(t1, _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure0(), t2, type$._ViewEmbeddedQueries2));
+        self.deopt(t1);
         _this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     }
@@ -11148,16 +11135,16 @@
         H.throwExpression(H.LateError$fieldAI("_AnotherDirective_2_5"));
     },
     detectChangesInternal$0: function() {
-      var t1, t2, t3, _this = this;
+      var t1, t2, _this = this;
       _this.get$ctx();
       _this.get$_NgIf_0_9().set$ngIf(false);
       _this.get$_appEl_0().detectChangesInNestedViews$0();
       if (_this._viewQuery_AnotherDirective_0_isDirty) {
         t1 = type$.AnotherDirective;
-        t2 = _this.get$_appEl_0().mapNestedViewsWithSingleResult$2$1(new S.ViewDynamicSingleQuery0_detectChangesInternal_closure(), t1, type$._ViewDynamicSingleQuery1);
-        t3 = _this.__ViewDynamicSingleQuery0__AnotherDirective_1_5;
-        t1 = X.flattenNodes(H._setArrayType([t2, H._setArrayType([t3 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t3], type$.JSArray_AnotherDirective)], type$.JSArray_List_AnotherDirective), t1);
-        self.deopt(t1.length !== 0 ? C.JSArray_methods.get$first(t1) : null);
+        t1 = P.List_List$of(_this.get$_appEl_0().mapNestedViewsWithSingleResult$2$1(new S.ViewDynamicSingleQuery0_detectChangesInternal_closure(), t1, type$._ViewDynamicSingleQuery1), true, t1);
+        t2 = _this.__ViewDynamicSingleQuery0__AnotherDirective_1_5;
+        t1.push(t2 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t2);
+        self.deopt(C.JSArray_methods.get$first(t1));
         _this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     },
@@ -11509,7 +11496,6 @@
       JSArray_ChangeDetectorRef: findType("JSArray<ChangeDetectorRef>"),
       JSArray_ComponentRef_void: findType("JSArray<ComponentRef<~>>"),
       JSArray_DynamicView: findType("JSArray<DynamicView>"),
-      JSArray_List_AnotherDirective: findType("JSArray<List<AnotherDirective>>"),
       JSArray_List_Object: findType("JSArray<List<Object>>"),
       JSArray_Node: findType("JSArray<Node>"),
       JSArray_Object: findType("JSArray<Object>"),

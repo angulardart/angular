@@ -418,6 +418,12 @@ abstract class AbstractEmitterVisitor
   }
 
   @override
+  void visitSpreadExpr(o.SpreadExpr ast, EmitterVisitorContext context) {
+    context.print('...');
+    ast.value.visitExpression(this, context);
+  }
+
+  @override
   void visitFunctionExpr(o.FunctionExpr ast, EmitterVisitorContext context);
 
   @override

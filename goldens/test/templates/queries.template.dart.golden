@@ -124,12 +124,13 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._appEl_2.detectChangesInNestedViews();
     if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_4_isDirty) {
-        _ctx.usingTypeFromField = import14.flattenNodes([
-          [this._AnotherDirective_0_5, this._AnotherDirective_1_5],
-          this._appEl_2.mapNestedViewsWithSingleResult((_ViewGoldenComponent1 nestedView) {
+        _ctx.usingTypeFromField = [
+          this._AnotherDirective_0_5,
+          this._AnotherDirective_1_5,
+          ...this._appEl_2.mapNestedViewsWithSingleResult((_ViewGoldenComponent1 nestedView) {
             return nestedView._AnotherDirective_0_5;
           })
-        ]);
+        ];
         this._viewQuery_AnotherDirective_4_isDirty = false;
       }
       if (this._viewQuery_q3_5_isDirty) {
@@ -262,15 +263,15 @@ class ViewEmbeddedQueries0 extends import0.ComponentView<import1.EmbeddedQueries
     final _ctx = this.ctx;
     if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_0_isDirty) {
-        _ctx.viewChildren = import14.flattenNodes([
-          [this._AnotherDirective_0_5],
-          this._appEl_1.mapNestedViewsWithSingleResult((_ViewEmbeddedQueries1 nestedView) {
+        _ctx.viewChildren = [
+          this._AnotherDirective_0_5,
+          ...this._appEl_1.mapNestedViewsWithSingleResult((_ViewEmbeddedQueries1 nestedView) {
             return nestedView._AnotherDirective_0_5;
           }),
-          this._appEl_2.mapNestedViewsWithSingleResult((_ViewEmbeddedQueries2 nestedView) {
+          ...this._appEl_2.mapNestedViewsWithSingleResult((_ViewEmbeddedQueries2 nestedView) {
             return nestedView._AnotherDirective_0_5;
           })
-        ]);
+        ];
         this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     }
@@ -692,12 +693,12 @@ class ViewDynamicSingleQuery0 extends import0.ComponentView<import1.DynamicSingl
     this._appEl_0.detectChangesInNestedViews();
     if ((!import13.debugThrowIfChanged)) {
       if (this._viewQuery_AnotherDirective_0_isDirty) {
-        _ctx.another = import14.firstOrNull(import14.flattenNodes([
-          this._appEl_0.mapNestedViewsWithSingleResult((_ViewDynamicSingleQuery1 nestedView) {
+        _ctx.another = [
+          ...this._appEl_0.mapNestedViewsWithSingleResult((_ViewDynamicSingleQuery1 nestedView) {
             return nestedView._AnotherDirective_0_5;
           }),
-          [this._AnotherDirective_1_5]
-        ]));
+          this._AnotherDirective_1_5
+        ].first;
         this._viewQuery_AnotherDirective_0_isDirty = false;
       }
     }
