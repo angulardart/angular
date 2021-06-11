@@ -1,7 +1,8 @@
-dart:
-- 2.12.0
-- dev
-
 stages:
 - analyze:
-  - dartanalyzer: --fatal-infos
+  - group:
+    - dartanalyzer: --fatal-infos
+    dart: dev
+  - group:
+    - dartanalyzer
+    dart: 2.12.0

@@ -90,8 +90,8 @@ for PKG in ${PKGS}; do
         dart analyze --fatal-infos || EXIT_CODE=$?
         ;;
       dartanalyzer_1)
-        echo 'dart analyze .'
-        dart analyze . || EXIT_CODE=$?
+        echo 'dart analyze'
+        dart analyze || EXIT_CODE=$?
         ;;
       *)
         echo -e "\033[31mUnknown TASK '${TASK}' - TERMINATING JOB\033[0m"
