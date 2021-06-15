@@ -6,6 +6,7 @@ import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart'
     show toTemplateExtension;
+import 'package:angular_compiler/v2/context.dart';
 
 import '../compile_metadata.dart'
     show
@@ -325,6 +326,10 @@ class AppViewReference {
 
   o.ReadClassMemberExpr toReadExpr() {
     return o.ReadClassMemberExpr(_name);
+  }
+
+  o.Statement toWriteStmt(o.Expression value) {
+    return o.WriteClassMemberExpr(_name, value).toStmt();
   }
 
   void allocate(
@@ -1209,16 +1214,32 @@ class CompileView {
       // We don't have to eagerly initialize this object. Add an uninitialized
       // class field and provide a getter to construct the provider on demand.
       final cachedType = providerHasChangeDetector ? changeDetectorType! : type;
-      final internalField = storage.allocate(
-        '_$propName',
-        outputType: cachedType.asNullable(),
-        modifiers: const [o.StmtModifier.Private],
-      );
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
             o.importExpr(changeDetectorClass).instantiate(changeDetectorParams);
       }
+
+      if (CompileContext.current.emitNullSafeCode) {
+        // If null-safety is enabled, use `late` to implement a lazily
+        // initialized field.
+        final field = storage.allocate(
+          propName,
+          // TODO(b/190556639) - Use final.
+          modifiers: const [o.StmtModifier.Late],
+          outputType: type,
+          initializer: resolvedProviderValueExpr,
+        );
+        return storage.buildReadExpr(field);
+      }
+
+      // If null-safety is disabled, manually implement a lazily initialized
+      // field.
+      final internalField = storage.allocate(
+        '_$propName',
+        outputType: cachedType.asNullable(),
+        modifiers: const [o.StmtModifier.Private],
+      );
 
       final getter = CompileMethod()
         ..addStmts([

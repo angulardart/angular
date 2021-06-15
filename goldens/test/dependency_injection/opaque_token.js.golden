@@ -4264,7 +4264,7 @@
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__CustomMulti_0_11 = _.__CustomToken_0_10 = _.__genericMulti_0_9 = _.__untypedMulti_0_8 = _.__genericTyped_0_7 = _.__untypedToken_0_6 = null;
+      _.___ViewGoldenComponentHost0__CustomMulti_0_11 = _.___ViewGoldenComponentHost0__CustomToken_0_10 = _.___ViewGoldenComponentHost0__genericMulti_0_9 = _.___ViewGoldenComponentHost0__untypedMulti_0_8 = _.___ViewGoldenComponentHost0__genericTyped_0_7 = _.___ViewGoldenComponentHost0__untypedToken_0_6 = null;
       _.__HostView_component = $;
       _.__HostView__injector = _.__HostView_componentView = null;
       _._host_view$_data = t0;
@@ -9155,15 +9155,15 @@
   S.ViewGoldenComponent0.prototype = {};
   S._ViewGoldenComponentHost0.prototype = {
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
-      var result, _this = this;
+      var t1, _this = this;
       if (0 === nodeIndex) {
         if (token === C.OpaqueToken_untypedToken) {
-          result = _this.__untypedToken_0_6;
-          return result == null ? _this.__untypedToken_0_6 = "untypedToken: Hello World" : result;
+          t1 = _this.___ViewGoldenComponentHost0__untypedToken_0_6;
+          return t1 == null ? _this.___ViewGoldenComponentHost0__untypedToken_0_6 = "untypedToken: Hello World" : t1;
         }
         if (token === C.OpaqueToken_genericTyped) {
-          result = _this.__genericTyped_0_7;
-          return result == null ? _this.__genericTyped_0_7 = "genericTyped: Hello World" : result;
+          t1 = _this.___ViewGoldenComponentHost0__genericTyped_0_7;
+          return t1 == null ? _this.___ViewGoldenComponentHost0__genericTyped_0_7 = "genericTyped: Hello World" : t1;
         }
       }
       return notFoundResult;

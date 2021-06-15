@@ -20,16 +20,21 @@ import 'package:angular/src/di/errors.dart' as import10;
 final List<Object> styles$GoldenComponent = const [];
 
 class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late import1.A _A_0_6 = import1.A();
+  late import1.B _B_0_7 = import1.B();
+  late import1.C _C_0_8 = import1.C();
+  late import1.A _A_1_6 = import1.A();
+  late import1.B _B_1_7 = import1.B();
+  late import1.C _C_1_8 = import1.C();
+  late import1.A2 _A_5_7 = import1.A2();
+  late import1.B _B_5_8 = import1.B();
+  late import1.C _C_5_9 = import1.C();
+  late import1.D2 _D_5_10 = import1.D2();
+  late import1.A2 _A_6_8 = import1.A2();
   late final ViewChildComponentProvidingA$B$C0 _compView_0;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_0_5;
-  import1.A? __A_0_6;
-  import1.B? __B_0_7;
-  import1.C? __C_0_8;
   late final ViewChildComponentProvidingA$B$C0 _compView_1;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_1_5;
-  import1.A? __A_1_6;
-  import1.B? __B_1_7;
-  import1.C? __C_1_8;
   late final ViewChildComponentWithNgContentProviding$D0 _compView_2;
   late final import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_2_5;
   late final import1.D _D_2_6;
@@ -40,15 +45,10 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   late final ViewChildComponentProvidingA$B$C0 _compView_5;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_5_5;
   late final import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_5_6;
-  import1.A2? __A_5_7;
-  import1.B? __B_5_8;
-  import1.C? __C_5_9;
-  import1.D2? __D_5_10;
   late final ViewChildComponentWithNgContentProviding$D0 _compView_6;
   late final import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_6_5;
   late final import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_6_6;
   late final import1.D2 _D_6_7;
-  import1.A2? __A_6_8;
   late final ViewChildComponentInjecting$D0 _compView_7;
   late final import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static import2.ComponentStyles? _componentStyles;
@@ -56,94 +56,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  import1.A get _A_0_6 {
-    var result = this.__A_0_6;
-    if ((result == null)) {
-      (this.__A_0_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_0_7 {
-    var result = this.__B_0_7;
-    if ((result == null)) {
-      (this.__B_0_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_0_8 {
-    var result = this.__C_0_8;
-    if ((result == null)) {
-      (this.__C_0_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.A get _A_1_6 {
-    var result = this.__A_1_6;
-    if ((result == null)) {
-      (this.__A_1_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_1_7 {
-    var result = this.__B_1_7;
-    if ((result == null)) {
-      (this.__B_1_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_1_8 {
-    var result = this.__C_1_8;
-    if ((result == null)) {
-      (this.__C_1_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.A2 get _A_5_7 {
-    var result = this.__A_5_7;
-    if ((result == null)) {
-      (this.__A_5_7 = (result = import1.A2()));
-    }
-    return result;
-  }
-
-  import1.B get _B_5_8 {
-    var result = this.__B_5_8;
-    if ((result == null)) {
-      (this.__B_5_8 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_5_9 {
-    var result = this.__C_5_9;
-    if ((result == null)) {
-      (this.__C_5_9 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.D2 get _D_5_10 {
-    var result = this.__D_5_10;
-    if ((result == null)) {
-      (this.__D_5_10 = (result = import1.D2()));
-    }
-    return result;
-  }
-
-  import1.A2 get _A_6_8 {
-    var result = this.__A_6_8;
-    if ((result == null)) {
-      (this.__A_6_8 = (result = import1.A2()));
-    }
-    return result;
-  }
-
   @override
   String get debugComponentTypeName {
     return this.ctx.runtimeType.toString();
@@ -376,33 +288,9 @@ ComponentFactory<import1.ChildComponentProvidingA$B$C> createChildComponentProvi
 final List<Object> styles$ChildComponentProvidingA$B$CHost = const [];
 
 class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.ChildComponentProvidingA$B$C> {
-  import1.A? __A_0_6;
-  import1.B? __B_0_7;
-  import1.C? __C_0_8;
-  import1.A get _A_0_6 {
-    var result = this.__A_0_6;
-    if ((result == null)) {
-      (this.__A_0_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_0_7 {
-    var result = this.__B_0_7;
-    if ((result == null)) {
-      (this.__B_0_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_0_8 {
-    var result = this.__C_0_8;
-    if ((result == null)) {
-      (this.__C_0_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
+  late import1.A _A_0_6 = import1.A();
+  late import1.B _B_0_7 = import1.B();
+  late import1.C _C_0_8 = import1.C();
   @override
   void build() {
     this.componentView = ViewChildComponentProvidingA$B$C0(this, 0);
@@ -483,15 +371,7 @@ ComponentFactory<import1.ChildComponentWithNgContentProviding$D> createChildComp
 final List<Object> styles$ChildComponentWithNgContentProviding$DHost = const [];
 
 class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<import1.ChildComponentWithNgContentProviding$D> {
-  import1.D? __D_0_6;
-  import1.D get _D_0_6 {
-    var result = this.__D_0_6;
-    if ((result == null)) {
-      (this.__D_0_6 = (result = import1.D()));
-    }
-    return result;
-  }
-
+  late import1.D _D_0_6 = import1.D();
   @override
   void build() {
     this.componentView = ViewChildComponentWithNgContentProviding$D0(this, 0);

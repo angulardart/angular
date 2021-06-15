@@ -71,60 +71,12 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 final List<Object> styles$GoldenComponentHost = const [];
 
 class _ViewGoldenComponentHost0 extends import8.HostView<import1.GoldenComponent> {
-  Object? __untypedToken_0_6;
-  String? __genericTyped_0_7;
-  List<Object>? __untypedMulti_0_8;
-  List<String>? __genericMulti_0_9;
-  String? __CustomToken_0_10;
-  List<String>? __CustomMulti_0_11;
-  Object get _untypedToken_0_6 {
-    var result = this.__untypedToken_0_6;
-    if ((result == null)) {
-      (this.__untypedToken_0_6 = (result = 'untypedToken: Hello World'));
-    }
-    return result;
-  }
-
-  String get _genericTyped_0_7 {
-    var result = this.__genericTyped_0_7;
-    if ((result == null)) {
-      (this.__genericTyped_0_7 = (result = 'genericTyped: Hello World'));
-    }
-    return result;
-  }
-
-  List<Object> get _untypedMulti_0_8 {
-    var result = this.__untypedMulti_0_8;
-    if ((result == null)) {
-      (this.__untypedMulti_0_8 = (result = ['untypedMulti: A', 'untypedMulti: B']));
-    }
-    return result;
-  }
-
-  List<String> get _genericMulti_0_9 {
-    var result = this.__genericMulti_0_9;
-    if ((result == null)) {
-      (this.__genericMulti_0_9 = (result = ['untypedMulti: A', 'untypedMulti: B']));
-    }
-    return result;
-  }
-
-  String get _CustomToken_0_10 {
-    var result = this.__CustomToken_0_10;
-    if ((result == null)) {
-      (this.__CustomToken_0_10 = (result = 'customToken: Hello World'));
-    }
-    return result;
-  }
-
-  List<String> get _CustomMulti_0_11 {
-    var result = this.__CustomMulti_0_11;
-    if ((result == null)) {
-      (this.__CustomMulti_0_11 = (result = ['customMulti: A', 'customMulti: B']));
-    }
-    return result;
-  }
-
+  late Object _untypedToken_0_6 = 'untypedToken: Hello World';
+  late String _genericTyped_0_7 = 'genericTyped: Hello World';
+  late List<Object> _untypedMulti_0_8 = ['untypedMulti: A', 'untypedMulti: B'];
+  late List<String> _genericMulti_0_9 = ['untypedMulti: A', 'untypedMulti: B'];
+  late String _CustomToken_0_10 = 'customToken: Hello World';
+  late List<String> _CustomMulti_0_11 = ['customMulti: A', 'customMulti: B'];
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);

@@ -292,8 +292,8 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _.__luckyNumber_5_14 = _.__MultiToken_5_10 = _.__DeferredValidator_5_9 = _.__Service_5_8 = _.__ViewGoldenComponent0__NgControlName_5_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_5_6 = _.__ViewGoldenComponent0__MaterialInputComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__luckyNumber_4_15 = _.__MultiToken_4_11 = _.__DeferredValidator_4_10 = _.__Service_4_9 = _.__ViewGoldenComponent0__RequiredValidator_4_8 = _.__ViewGoldenComponent0__NgControlName_4_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_4_6 = _.__ViewGoldenComponent0__MaterialInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__NgControlGroup_3_5 = _.__ViewGoldenComponent0__MaterialIcon_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__luckyNumber_1_15 = _.__MultiToken_1_11 = _.__DeferredValidator_1_10 = _.__Service_1_9 = _.__ViewGoldenComponent0__RequiredValidator_1_8 = _.__ViewGoldenComponent0__NgControlName_1_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_1_6 = _.__ViewGoldenComponent0__MaterialInputComponent_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__NgForm_0_5 = null;
-      _.__luckyNumber_8_14 = _.__MultiToken_8_10 = _.__DeferredValidator_8_9 = _.__Service_8_8 = _.__ViewGoldenComponent0__NgControlName_8_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_8_6 = _.__ViewGoldenComponent0__MaterialInputComponent_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__MultiToken_7_13 = _.__ViewGoldenComponent0__RequiredValidator_7_7 = _.__ViewGoldenComponent0__NgControlName_7_6 = _.__ViewGoldenComponent0__MaterialAutoSuggestInputComponent_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__luckyNumber_6_15 = _.__MultiToken_6_11 = _.__DeferredValidator_6_10 = _.__Service_6_9 = _.__ViewGoldenComponent0__RequiredValidator_6_8 = _.__ViewGoldenComponent0__NgControlName_6_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_6_6 = _.__ViewGoldenComponent0__MaterialInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = null;
+      _.__ViewGoldenComponent0__NgControlGroup_3_5 = _.__ViewGoldenComponent0__MaterialIcon_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__RequiredValidator_1_8 = _.__ViewGoldenComponent0__NgControlName_1_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_1_6 = _.__ViewGoldenComponent0__MaterialInputComponent_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__NgForm_0_5 = _.__ViewGoldenComponent0__luckyNumber_8_14 = _.__ViewGoldenComponent0__MultiToken_8_10 = _.__ViewGoldenComponent0__DeferredValidator_8_9 = _.__ViewGoldenComponent0__Service_8_8 = _.__ViewGoldenComponent0__MultiToken_7_13 = _.__ViewGoldenComponent0__luckyNumber_6_15 = _.__ViewGoldenComponent0__MultiToken_6_11 = _.__ViewGoldenComponent0__DeferredValidator_6_10 = _.__ViewGoldenComponent0__Service_6_9 = _.__ViewGoldenComponent0__luckyNumber_5_14 = _.__ViewGoldenComponent0__MultiToken_5_10 = _.__ViewGoldenComponent0__DeferredValidator_5_9 = _.__ViewGoldenComponent0__Service_5_8 = _.__ViewGoldenComponent0__luckyNumber_4_15 = _.__ViewGoldenComponent0__MultiToken_4_11 = _.__ViewGoldenComponent0__DeferredValidator_4_10 = _.__ViewGoldenComponent0__Service_4_9 = _.__ViewGoldenComponent0__luckyNumber_1_15 = _.__ViewGoldenComponent0__MultiToken_1_11 = _.__ViewGoldenComponent0__DeferredValidator_1_10 = _.__ViewGoldenComponent0__Service_1_9 = null;
+      _.__ViewGoldenComponent0__NgControlName_8_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_8_6 = _.__ViewGoldenComponent0__MaterialInputComponent_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__RequiredValidator_7_7 = _.__ViewGoldenComponent0__NgControlName_7_6 = _.__ViewGoldenComponent0__MaterialAutoSuggestInputComponent_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__RequiredValidator_6_8 = _.__ViewGoldenComponent0__NgControlName_6_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_6_6 = _.__ViewGoldenComponent0__MaterialInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__NgControlName_5_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_5_6 = _.__ViewGoldenComponent0__MaterialInputComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__RequiredValidator_4_8 = _.__ViewGoldenComponent0__NgControlName_4_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_4_6 = _.__ViewGoldenComponent0__MaterialInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = null;
       _.__ComponentView_ctx = $;
       _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
       _._component_view$_data = t0;
@@ -9270,6 +9270,26 @@
   L.ServiceB.prototype = {};
   L.MaterialInputComponent.prototype = {};
   E.ViewGoldenComponent0.prototype = {
+    get$_DeferredValidator_1_10: function() {
+      var t1 = this.__ViewGoldenComponent0__DeferredValidator_1_10;
+      return t1 == null ? this.__ViewGoldenComponent0__DeferredValidator_1_10 = new L.DeferredValidator() : t1;
+    },
+    get$_DeferredValidator_4_10: function() {
+      var t1 = this.__ViewGoldenComponent0__DeferredValidator_4_10;
+      return t1 == null ? this.__ViewGoldenComponent0__DeferredValidator_4_10 = new L.DeferredValidator() : t1;
+    },
+    get$_DeferredValidator_5_9: function() {
+      var t1 = this.__ViewGoldenComponent0__DeferredValidator_5_9;
+      return t1 == null ? this.__ViewGoldenComponent0__DeferredValidator_5_9 = new L.DeferredValidator() : t1;
+    },
+    get$_DeferredValidator_6_10: function() {
+      var t1 = this.__ViewGoldenComponent0__DeferredValidator_6_10;
+      return t1 == null ? this.__ViewGoldenComponent0__DeferredValidator_6_10 = new L.DeferredValidator() : t1;
+    },
+    get$_DeferredValidator_8_9: function() {
+      var t1 = this.__ViewGoldenComponent0__DeferredValidator_8_9;
+      return t1 == null ? this.__ViewGoldenComponent0__DeferredValidator_8_9 = new L.DeferredValidator() : t1;
+    },
     get$_compView_1: function() {
       var t1 = this.__ViewGoldenComponent0__compView_1;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_1")) : t1;
@@ -9321,26 +9341,6 @@
     get$_MaterialInputComponent_8_5: function() {
       var t1 = this.__ViewGoldenComponent0__MaterialInputComponent_8_5;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_MaterialInputComponent_8_5")) : t1;
-    },
-    get$_DeferredValidator_1_10: function() {
-      var result = this.__DeferredValidator_1_10;
-      return result == null ? this.__DeferredValidator_1_10 = new L.DeferredValidator() : result;
-    },
-    get$_DeferredValidator_4_10: function() {
-      var result = this.__DeferredValidator_4_10;
-      return result == null ? this.__DeferredValidator_4_10 = new L.DeferredValidator() : result;
-    },
-    get$_DeferredValidator_5_9: function() {
-      var result = this.__DeferredValidator_5_9;
-      return result == null ? this.__DeferredValidator_5_9 = new L.DeferredValidator() : result;
-    },
-    get$_DeferredValidator_6_10: function() {
-      var result = this.__DeferredValidator_6_10;
-      return result == null ? this.__DeferredValidator_6_10 = new L.DeferredValidator() : result;
-    },
-    get$_DeferredValidator_8_9: function() {
-      var result = this.__DeferredValidator_8_9;
-      return result == null ? this.__DeferredValidator_8_9 = new L.DeferredValidator() : result;
     },
     build$0: function() {
       var t1, _el_1, styles, t2, _el_2, _el_3, _el_4, _el_5, _el_6, t3, _el_7, _el_8, _this = this,
@@ -9538,12 +9538,12 @@
       _this.get$_compView_8().createAndProject$2(_this.get$_MaterialInputComponent_8_5(), H._setArrayType([C.List_empty], t1));
     },
     injectorGetInternal$3: function(token, nodeIndex, notFoundResult) {
-      var result, t1, t2, _this = this;
+      var t1, t2, _this = this;
       if (nodeIndex <= 8) {
         if (1 <= nodeIndex && nodeIndex <= 2) {
           if (token === C.OpaqueToken_luckyNumber && 1 === nodeIndex) {
-            result = _this.__luckyNumber_1_15;
-            return result == null ? _this.__luckyNumber_1_15 = 12 : result;
+            t1 = _this.__ViewGoldenComponent0__luckyNumber_1_15;
+            return t1 == null ? _this.__ViewGoldenComponent0__luckyNumber_1_15 = 12 : t1;
           }
           if (token === C.Type_MaterialInputBase_zFk || token === C.Type_Focusable_cRS || token === C.Type_HasDisabled_ij7 || token === C.Type_ReferenceDirective_SZp)
             return _this.get$_MaterialInputComponent_1_5();
@@ -9556,19 +9556,19 @@
             return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_1_7")) : t1;
           }
           if (token === C.Type_Service_jDT) {
-            result = _this.__Service_1_9;
-            return result == null ? _this.__Service_1_9 = new L.ServiceB() : result;
+            t1 = _this.__ViewGoldenComponent0__Service_1_9;
+            return t1 == null ? _this.__ViewGoldenComponent0__Service_1_9 = new L.ServiceB() : t1;
           }
           if (token === C.Type_DeferredValidator_JO4)
             return _this.get$_DeferredValidator_1_10();
           if (token === C.MultiToken_8aB) {
-            result = _this.__MultiToken_1_11;
-            if (result == null) {
+            t1 = _this.__ViewGoldenComponent0__MultiToken_1_11;
+            if (t1 == null) {
               t1 = _this.get$_DeferredValidator_1_10();
               t2 = _this.__ViewGoldenComponent0__RequiredValidator_1_8;
-              result = _this.__MultiToken_1_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_1_8")) : t2], type$.JSArray_Validator);
+              t1 = _this.__ViewGoldenComponent0__MultiToken_1_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_1_8")) : t2], type$.JSArray_Validator);
             }
-            return result;
+            return t1;
           }
         }
         if (3 <= nodeIndex) {
@@ -9584,23 +9584,23 @@
               return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_4_7")) : t1;
             }
             if (token === C.Type_Service_jDT) {
-              result = _this.__Service_4_9;
-              return result == null ? _this.__Service_4_9 = new L.ServiceB() : result;
+              t1 = _this.__ViewGoldenComponent0__Service_4_9;
+              return t1 == null ? _this.__ViewGoldenComponent0__Service_4_9 = new L.ServiceB() : t1;
             }
             if (token === C.Type_DeferredValidator_JO4)
               return _this.get$_DeferredValidator_4_10();
             if (token === C.MultiToken_8aB) {
-              result = _this.__MultiToken_4_11;
-              if (result == null) {
+              t1 = _this.__ViewGoldenComponent0__MultiToken_4_11;
+              if (t1 == null) {
                 t1 = _this.get$_DeferredValidator_4_10();
                 t2 = _this.__ViewGoldenComponent0__RequiredValidator_4_8;
-                result = _this.__MultiToken_4_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_4_8")) : t2], type$.JSArray_Validator);
+                t1 = _this.__ViewGoldenComponent0__MultiToken_4_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_4_8")) : t2], type$.JSArray_Validator);
               }
-              return result;
+              return t1;
             }
             if (token === C.OpaqueToken_luckyNumber) {
-              result = _this.__luckyNumber_4_15;
-              return result == null ? _this.__luckyNumber_4_15 = 12 : result;
+              t1 = _this.__ViewGoldenComponent0__luckyNumber_4_15;
+              return t1 == null ? _this.__ViewGoldenComponent0__luckyNumber_4_15 = 12 : t1;
             }
           }
           if (5 === nodeIndex) {
@@ -9615,18 +9615,18 @@
               return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_5_7")) : t1;
             }
             if (token === C.Type_Service_jDT) {
-              result = _this.__Service_5_8;
-              return result == null ? _this.__Service_5_8 = new L.ServiceB() : result;
+              t1 = _this.__ViewGoldenComponent0__Service_5_8;
+              return t1 == null ? _this.__ViewGoldenComponent0__Service_5_8 = new L.ServiceB() : t1;
             }
             if (token === C.Type_DeferredValidator_JO4)
               return _this.get$_DeferredValidator_5_9();
             if (token === C.MultiToken_8aB) {
-              result = _this.__MultiToken_5_10;
-              return result == null ? _this.__MultiToken_5_10 = H._setArrayType([_this.get$_DeferredValidator_5_9()], type$.JSArray_Validator) : result;
+              t1 = _this.__ViewGoldenComponent0__MultiToken_5_10;
+              return t1 == null ? _this.__ViewGoldenComponent0__MultiToken_5_10 = H._setArrayType([_this.get$_DeferredValidator_5_9()], type$.JSArray_Validator) : t1;
             }
             if (token === C.OpaqueToken_luckyNumber) {
-              result = _this.__luckyNumber_5_14;
-              return result == null ? _this.__luckyNumber_5_14 = 12 : result;
+              t1 = _this.__ViewGoldenComponent0__luckyNumber_5_14;
+              return t1 == null ? _this.__ViewGoldenComponent0__luckyNumber_5_14 = 12 : t1;
             }
           }
           if (6 === nodeIndex) {
@@ -9641,23 +9641,23 @@
               return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_6_7")) : t1;
             }
             if (token === C.Type_Service_jDT) {
-              result = _this.__Service_6_9;
-              return result == null ? _this.__Service_6_9 = new L.ServiceB() : result;
+              t1 = _this.__ViewGoldenComponent0__Service_6_9;
+              return t1 == null ? _this.__ViewGoldenComponent0__Service_6_9 = new L.ServiceB() : t1;
             }
             if (token === C.Type_DeferredValidator_JO4)
               return _this.get$_DeferredValidator_6_10();
             if (token === C.MultiToken_8aB) {
-              result = _this.__MultiToken_6_11;
-              if (result == null) {
+              t1 = _this.__ViewGoldenComponent0__MultiToken_6_11;
+              if (t1 == null) {
                 t1 = _this.get$_DeferredValidator_6_10();
                 t2 = _this.__ViewGoldenComponent0__RequiredValidator_6_8;
-                result = _this.__MultiToken_6_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_6_8")) : t2], type$.JSArray_Validator);
+                t1 = _this.__ViewGoldenComponent0__MultiToken_6_11 = H._setArrayType([t1, t2 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_6_8")) : t2], type$.JSArray_Validator);
               }
-              return result;
+              return t1;
             }
             if (token === C.OpaqueToken_luckyNumber) {
-              result = _this.__luckyNumber_6_15;
-              return result == null ? _this.__luckyNumber_6_15 = 12 : result;
+              t1 = _this.__ViewGoldenComponent0__luckyNumber_6_15;
+              return t1 == null ? _this.__ViewGoldenComponent0__luckyNumber_6_15 = 12 : t1;
             }
           }
           if (7 === nodeIndex) {
@@ -9668,12 +9668,12 @@
               return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_7_6")) : t1;
             }
             if (token === C.MultiToken_8aB) {
-              result = _this.__MultiToken_7_13;
-              if (result == null) {
+              t1 = _this.__ViewGoldenComponent0__MultiToken_7_13;
+              if (t1 == null) {
                 t1 = _this.__ViewGoldenComponent0__RequiredValidator_7_7;
-                result = _this.__MultiToken_7_13 = H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_7_7")) : t1], type$.JSArray_Validator);
+                t1 = _this.__ViewGoldenComponent0__MultiToken_7_13 = H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_RequiredValidator_7_7")) : t1], type$.JSArray_Validator);
               }
-              return result;
+              return t1;
             }
           }
           if (8 === nodeIndex) {
@@ -9688,18 +9688,18 @@
               return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgControlName_8_7")) : t1;
             }
             if (token === C.Type_Service_jDT) {
-              result = _this.__Service_8_8;
-              return result == null ? _this.__Service_8_8 = new L.ServiceB() : result;
+              t1 = _this.__ViewGoldenComponent0__Service_8_8;
+              return t1 == null ? _this.__ViewGoldenComponent0__Service_8_8 = new L.ServiceB() : t1;
             }
             if (token === C.Type_DeferredValidator_JO4)
               return _this.get$_DeferredValidator_8_9();
             if (token === C.MultiToken_8aB) {
-              result = _this.__MultiToken_8_10;
-              return result == null ? _this.__MultiToken_8_10 = H._setArrayType([_this.get$_DeferredValidator_8_9()], type$.JSArray_Validator) : result;
+              t1 = _this.__ViewGoldenComponent0__MultiToken_8_10;
+              return t1 == null ? _this.__ViewGoldenComponent0__MultiToken_8_10 = H._setArrayType([_this.get$_DeferredValidator_8_9()], type$.JSArray_Validator) : t1;
             }
             if (token === C.OpaqueToken_luckyNumber) {
-              result = _this.__luckyNumber_8_14;
-              return result == null ? _this.__luckyNumber_8_14 = 12 : result;
+              t1 = _this.__ViewGoldenComponent0__luckyNumber_8_14;
+              return t1 == null ? _this.__ViewGoldenComponent0__luckyNumber_8_14 = 12 : t1;
             }
           }
           if (token === C.Type_ControlContainer_kqo) {

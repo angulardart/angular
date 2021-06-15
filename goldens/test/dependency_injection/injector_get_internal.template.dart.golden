@@ -22,16 +22,33 @@ import 'package:angular/src/core/linker/views/host_view.dart' as import12;
 final List<Object> styles$GoldenComponent = const [];
 
 class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late import1.ServiceB _Service_1_9 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_1_10 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_1_11 = [this._DeferredValidator_1_10, this._RequiredValidator_1_8];
+  late int _luckyNumber_1_15 = 12;
+  late import1.ServiceB _Service_4_9 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_4_10 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_4_11 = [this._DeferredValidator_4_10, this._RequiredValidator_4_8];
+  late int _luckyNumber_4_15 = 12;
+  late import1.ServiceB _Service_5_8 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_5_9 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_5_10 = [this._DeferredValidator_5_9];
+  late int _luckyNumber_5_14 = 12;
+  late import1.ServiceB _Service_6_9 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_6_10 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_6_11 = [this._DeferredValidator_6_10, this._RequiredValidator_6_8];
+  late int _luckyNumber_6_15 = 12;
+  late List<import1.Validator> _MultiToken_7_13 = [this._RequiredValidator_7_7];
+  late import1.ServiceB _Service_8_8 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_8_9 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_8_10 = [this._DeferredValidator_8_9];
+  late int _luckyNumber_8_14 = 12;
   late final import1.NgForm _NgForm_0_5;
   late final ViewMaterialInputComponent0 _compView_1;
   late final import1.MaterialInputComponent _MaterialInputComponent_1_5;
   late final import1.MaterialInputValueAccessor _MaterialInputValueAccessor_1_6;
   late final import1.NgControlName _NgControlName_1_7;
   late final import1.RequiredValidator _RequiredValidator_1_8;
-  import1.ServiceB? __Service_1_9;
-  import1.DeferredValidator? __DeferredValidator_1_10;
-  List<import1.Validator>? __MultiToken_1_11;
-  int? __luckyNumber_1_15;
   late final ViewMaterialIcon0 _compView_2;
   late final import1.MaterialIcon _MaterialIcon_2_5;
   late final import1.NgControlGroup _NgControlGroup_3_5;
@@ -40,213 +57,28 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   late final import1.MaterialInputValueAccessor _MaterialInputValueAccessor_4_6;
   late final import1.NgControlName _NgControlName_4_7;
   late final import1.RequiredValidator _RequiredValidator_4_8;
-  import1.ServiceB? __Service_4_9;
-  import1.DeferredValidator? __DeferredValidator_4_10;
-  List<import1.Validator>? __MultiToken_4_11;
-  int? __luckyNumber_4_15;
   late final ViewMaterialInputComponent0 _compView_5;
   late final import1.MaterialInputComponent _MaterialInputComponent_5_5;
   late final import1.MaterialInputValueAccessor _MaterialInputValueAccessor_5_6;
   late final import1.NgControlName _NgControlName_5_7;
-  import1.ServiceB? __Service_5_8;
-  import1.DeferredValidator? __DeferredValidator_5_9;
-  List<import1.Validator>? __MultiToken_5_10;
-  int? __luckyNumber_5_14;
   late final ViewMaterialInputComponent0 _compView_6;
   late final import1.MaterialInputComponent _MaterialInputComponent_6_5;
   late final import1.MaterialInputValueAccessor _MaterialInputValueAccessor_6_6;
   late final import1.NgControlName _NgControlName_6_7;
   late final import1.RequiredValidator _RequiredValidator_6_8;
-  import1.ServiceB? __Service_6_9;
-  import1.DeferredValidator? __DeferredValidator_6_10;
-  List<import1.Validator>? __MultiToken_6_11;
-  int? __luckyNumber_6_15;
   late final ViewMaterialAutoSuggestInputComponent0 _compView_7;
   late final import1.MaterialAutoSuggestInputComponent _MaterialAutoSuggestInputComponent_7_5;
   late final import1.NgControlName _NgControlName_7_6;
   late final import1.RequiredValidator _RequiredValidator_7_7;
-  List<import1.Validator>? __MultiToken_7_13;
   late final ViewMaterialInputComponent0 _compView_8;
   late final import1.MaterialInputComponent _MaterialInputComponent_8_5;
   late final import1.MaterialInputValueAccessor _MaterialInputValueAccessor_8_6;
   late final import1.NgControlName _NgControlName_8_7;
-  import1.ServiceB? __Service_8_8;
-  import1.DeferredValidator? __DeferredValidator_8_9;
-  List<import1.Validator>? __MultiToken_8_10;
-  int? __luckyNumber_8_14;
   static import3.ComponentStyles? _componentStyles;
   ViewGoldenComponent0(import4.View parentView, int parentIndex) : super(parentView, parentIndex, ChangeDetectionStrategy.CheckAlways) {
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('golden'));
   }
-  import1.ServiceB get _Service_1_9 {
-    var result = this.__Service_1_9;
-    if ((result == null)) {
-      (this.__Service_1_9 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_1_10 {
-    var result = this.__DeferredValidator_1_10;
-    if ((result == null)) {
-      (this.__DeferredValidator_1_10 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_1_11 {
-    var result = this.__MultiToken_1_11;
-    if ((result == null)) {
-      (this.__MultiToken_1_11 = (result = [this._DeferredValidator_1_10, this._RequiredValidator_1_8]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_1_15 {
-    var result = this.__luckyNumber_1_15;
-    if ((result == null)) {
-      (this.__luckyNumber_1_15 = (result = 12));
-    }
-    return result;
-  }
-
-  import1.ServiceB get _Service_4_9 {
-    var result = this.__Service_4_9;
-    if ((result == null)) {
-      (this.__Service_4_9 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_4_10 {
-    var result = this.__DeferredValidator_4_10;
-    if ((result == null)) {
-      (this.__DeferredValidator_4_10 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_4_11 {
-    var result = this.__MultiToken_4_11;
-    if ((result == null)) {
-      (this.__MultiToken_4_11 = (result = [this._DeferredValidator_4_10, this._RequiredValidator_4_8]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_4_15 {
-    var result = this.__luckyNumber_4_15;
-    if ((result == null)) {
-      (this.__luckyNumber_4_15 = (result = 12));
-    }
-    return result;
-  }
-
-  import1.ServiceB get _Service_5_8 {
-    var result = this.__Service_5_8;
-    if ((result == null)) {
-      (this.__Service_5_8 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_5_9 {
-    var result = this.__DeferredValidator_5_9;
-    if ((result == null)) {
-      (this.__DeferredValidator_5_9 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_5_10 {
-    var result = this.__MultiToken_5_10;
-    if ((result == null)) {
-      (this.__MultiToken_5_10 = (result = [this._DeferredValidator_5_9]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_5_14 {
-    var result = this.__luckyNumber_5_14;
-    if ((result == null)) {
-      (this.__luckyNumber_5_14 = (result = 12));
-    }
-    return result;
-  }
-
-  import1.ServiceB get _Service_6_9 {
-    var result = this.__Service_6_9;
-    if ((result == null)) {
-      (this.__Service_6_9 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_6_10 {
-    var result = this.__DeferredValidator_6_10;
-    if ((result == null)) {
-      (this.__DeferredValidator_6_10 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_6_11 {
-    var result = this.__MultiToken_6_11;
-    if ((result == null)) {
-      (this.__MultiToken_6_11 = (result = [this._DeferredValidator_6_10, this._RequiredValidator_6_8]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_6_15 {
-    var result = this.__luckyNumber_6_15;
-    if ((result == null)) {
-      (this.__luckyNumber_6_15 = (result = 12));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_7_13 {
-    var result = this.__MultiToken_7_13;
-    if ((result == null)) {
-      (this.__MultiToken_7_13 = (result = [this._RequiredValidator_7_7]));
-    }
-    return result;
-  }
-
-  import1.ServiceB get _Service_8_8 {
-    var result = this.__Service_8_8;
-    if ((result == null)) {
-      (this.__Service_8_8 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_8_9 {
-    var result = this.__DeferredValidator_8_9;
-    if ((result == null)) {
-      (this.__DeferredValidator_8_9 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_8_10 {
-    var result = this.__MultiToken_8_10;
-    if ((result == null)) {
-      (this.__MultiToken_8_10 = (result = [this._DeferredValidator_8_9]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_8_14 {
-    var result = this.__luckyNumber_8_14;
-    if ((result == null)) {
-      (this.__luckyNumber_8_14 = (result = 12));
-    }
-    return result;
-  }
-
   @override
   String get debugComponentTypeName {
     return this.ctx.runtimeType.toString();
@@ -718,42 +550,10 @@ ComponentFactory<import1.MaterialInputComponent> createMaterialInputComponentFac
 final List<Object> styles$MaterialInputComponentHost = const [];
 
 class _ViewMaterialInputComponentHost0 extends import12.HostView<import1.MaterialInputComponent> {
-  import1.ServiceB? __Service_0_6;
-  import1.DeferredValidator? __DeferredValidator_0_7;
-  List<import1.Validator>? __MultiToken_0_8;
-  int? __luckyNumber_0_12;
-  import1.ServiceB get _Service_0_6 {
-    var result = this.__Service_0_6;
-    if ((result == null)) {
-      (this.__Service_0_6 = (result = import1.ServiceB()));
-    }
-    return result;
-  }
-
-  import1.DeferredValidator get _DeferredValidator_0_7 {
-    var result = this.__DeferredValidator_0_7;
-    if ((result == null)) {
-      (this.__DeferredValidator_0_7 = (result = import1.DeferredValidator()));
-    }
-    return result;
-  }
-
-  List<import1.Validator> get _MultiToken_0_8 {
-    var result = this.__MultiToken_0_8;
-    if ((result == null)) {
-      (this.__MultiToken_0_8 = (result = [this._DeferredValidator_0_7]));
-    }
-    return result;
-  }
-
-  int get _luckyNumber_0_12 {
-    var result = this.__luckyNumber_0_12;
-    if ((result == null)) {
-      (this.__luckyNumber_0_12 = (result = 12));
-    }
-    return result;
-  }
-
+  late import1.ServiceB _Service_0_6 = import1.ServiceB();
+  late import1.DeferredValidator _DeferredValidator_0_7 = import1.DeferredValidator();
+  late List<import1.Validator> _MultiToken_0_8 = [this._DeferredValidator_0_7];
+  late int _luckyNumber_0_12 = 12;
   @override
   void build() {
     this.componentView = ViewMaterialInputComponent0(this, 0);
