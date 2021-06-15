@@ -68,7 +68,7 @@ class ComponentInspector {
     if (_applicationRef != null) {
       window.console.error('''
 AngularDart DevTools does not yet support apps with multiple runApp()
-invocations. Please contact dart-framework-eng@ if you encounter this error.
+invocations. Please contact angulardart-eng@ if you encounter this error.
 ''');
       return;
     }
