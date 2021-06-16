@@ -4348,6 +4348,23 @@
     },
     _SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin: function _SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin() {
     },
+    _convertNativeToDart_Value: function(value) {
+      var proto, values, i;
+      if (value == null)
+        return value;
+      if (typeof value == "string" || typeof value == "number" || H._isBool(value))
+        return value;
+      proto = Object.getPrototypeOf(value);
+      if (proto === Object.prototype || proto === null)
+        return P.convertNativeToDart_Dictionary(value);
+      if (Array.isArray(value)) {
+        values = [];
+        for (i = 0; i < value.length; ++i)
+          values.push(P._convertNativeToDart_Value(value[i]));
+        return values;
+      }
+      return value;
+    },
     convertNativeToDart_Dictionary: function(object) {
       var dict, keys, t1, _i, key;
       if (object == null)
@@ -4356,7 +4373,7 @@
       keys = Object.getOwnPropertyNames(object);
       for (t1 = keys.length, _i = 0; _i < keys.length; keys.length === t1 || (0, H.throwConcurrentModificationError)(keys), ++_i) {
         key = keys[_i];
-        dict.$indexSet(0, key, object[key]);
+        dict.$indexSet(0, key, P._convertNativeToDart_Value(object[key]));
       }
       return dict;
     },
