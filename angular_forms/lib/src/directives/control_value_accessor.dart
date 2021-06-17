@@ -11,6 +11,10 @@ abstract class ControlValueAccessor<T> {
   void writeValue(T obj);
 
   /// Set the function to be called when the control receives a change event.
+  ///
+  /// NOTE: This function should only be called by view (i.e. user-initiated)
+  /// changes. Incorrect implementation of [registerOnChange] will cause issues
+  /// such as the control incorrectly being marked as dirty from a model update.
   void registerOnChange(ChangeFunction<T> f);
 
   /// Set the function to be called when the control receives a touch event.
