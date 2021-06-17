@@ -141,49 +141,37 @@
       convertToFastObject(arrayOfObjects[i]);
   }
   var functionCounter = 0;
-  function instanceTearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name, isIntercepted, needsDirectAccess) {
+  function instanceTearOffGetter(isIntercepted, parameters) {
+    var name = parameters.fs[0];
     if (isIntercepted)
-      return new Function("funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(" + "funcs, applyTrampolineIndex, reflectionInfo, false, true, name, needsDirectAccess);" + "return new cache(this, funcs[0], receiver, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, H.closureFromTearOff, null);
+      return new Function("parameters, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(parameters);" + "return new cache(this, receiver);" + "}")(parameters, H.closureFromTearOff, null);
     else
-      return new Function("funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(" + "funcs, applyTrampolineIndex, reflectionInfo, false, false, name, needsDirectAccess);" + "return new cache(this, funcs[0], null, name);" + "}")(funcs, applyTrampolineIndex, reflectionInfo, name, needsDirectAccess, H.closureFromTearOff, null);
+      return new Function("parameters, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(parameters);" + "return new cache(this, null);" + "}")(parameters, H.closureFromTearOff, null);
   }
-  function staticTearOffGetter(funcs, applyTrampolineIndex, reflectionInfo, name) {
+  function staticTearOffGetter(parameters) {
     var cache = null;
     return function() {
       if (cache === null)
-        cache = H.closureFromTearOff(funcs, applyTrampolineIndex, reflectionInfo, true, false, name).prototype;
+        cache = H.closureFromTearOff(parameters).prototype;
       return cache;
     };
   }
   var typesOffset = 0;
-  function installTearOff(container, getterName, isStatic, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
-    var funs = [];
-    for (var i = 0; i < funsOrNames.length; i++) {
-      var fun = funsOrNames[i];
-      if (typeof fun == "string") {
-        var stubName = fun;
-        fun = container[fun];
-        fun.$stubName = stubName;
-      }
-      fun.$callName = callNames[i];
-      funs.push(fun);
-    }
-    var fun = funs[0];
-    fun.$requiredArgCount = requiredParameterCount;
-    fun.$defaultValues = optionalParameterDefaultValues;
-    var reflectionInfo = funType;
-    if (typeof reflectionInfo == "number")
-      reflectionInfo += typesOffset;
-    var name = funsOrNames[0];
-    applyIndex = applyIndex || 0;
-    var getterFunction = isStatic ? staticTearOffGetter(funs, applyIndex, reflectionInfo, name) : instanceTearOffGetter(funs, applyIndex, reflectionInfo, name, isIntercepted, needsDirectAccess);
-    container[getterName] = getterFunction;
+  function tearOffParameters(container, isStatic, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
+    if (typeof funType == "number")
+      funType += typesOffset;
+    return {co: container, iS: isStatic, iI: isIntercepted, rC: requiredParameterCount, dV: optionalParameterDefaultValues, cs: callNames, fs: funsOrNames, fT: funType, aI: applyIndex || 0, nDA: needsDirectAccess};
   }
-  function installStaticTearOff(container, getterName, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex) {
-    return installTearOff(container, getterName, true, false, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, false);
+  function installStaticTearOff(holder, getterName, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex) {
+    var parameters = tearOffParameters(holder, true, false, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, false);
+    var getterFunction = staticTearOffGetter(parameters);
+    holder[getterName] = getterFunction;
   }
-  function installInstanceTearOff(container, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
-    return installTearOff(container, getterName, false, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, !!needsDirectAccess);
+  function installInstanceTearOff(prototype, getterName, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, needsDirectAccess) {
+    isIntercepted = !!isIntercepted;
+    var parameters = tearOffParameters(prototype, false, isIntercepted, requiredParameterCount, optionalParameterDefaultValues, callNames, funsOrNames, funType, applyIndex, !!needsDirectAccess);
+    var getterFunction = instanceTearOffGetter(isIntercepted, parameters);
+    prototype[getterName] = getterFunction;
   }
   function setOrUpdateInterceptorsByTag(newTags) {
     var tags = init.interceptorsByTag;
@@ -376,7 +364,7 @@
     FixedLengthListMixin: function FixedLengthListMixin() {
     },
     Symbol: function Symbol(t0) {
-      this.__internal$_name = t0;
+      this._name = t0;
     },
     unminifyOrTag: function(rawClassName) {
       var preserved = init.mangledGlobalNames[rawClassName];
@@ -794,50 +782,67 @@
       closure.$identity = $function;
       return $function;
     },
-    Closure_fromTearOff: function(functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, propertyName, needsDirectAccess) {
-      var $constructor, t1, trampoline, applyTrampoline, i, stub, stubCallName,
-        $function = functions[0],
-        callName = $function.$callName,
-        $prototype = isStatic ? Object.create(new H.StaticClosure().constructor.prototype) : Object.create(new H.BoundClosure(null, null, null, "").constructor.prototype);
+    Closure_fromTearOff: function(parameters) {
+      var $prototype, $constructor, t2, trampoline, applyTrampoline, i, stub, stub0, stubName, stubCallName,
+        container = parameters.co,
+        isStatic = parameters.iS,
+        isIntercepted = parameters.iI,
+        needsDirectAccess = parameters.nDA,
+        applyTrampolineIndex = parameters.aI,
+        funsOrNames = parameters.fs,
+        callNames = parameters.cs,
+        $name = funsOrNames[0],
+        callName = callNames[0],
+        $function = container[$name],
+        t1 = parameters.fT;
+      t1.toString;
+      $prototype = isStatic ? Object.create(new H.StaticClosure().constructor.prototype) : Object.create(new H.BoundClosure(null, null).constructor.prototype);
       $prototype.$initialize = $prototype.constructor;
       if (isStatic)
         $constructor = function static_tear_off() {
           this.$initialize();
         };
       else {
-        t1 = $.Closure_functionCounter;
-        if (typeof t1 !== "number")
-          return t1.$add();
-        $.Closure_functionCounter = t1 + 1;
-        t1 = new Function("a,b,c,d" + t1, "this.$initialize(a,b,c,d" + t1 + ")");
-        $constructor = t1;
+        t2 = $.Closure_functionCounter;
+        if (typeof t2 !== "number")
+          return t2.$add();
+        $.Closure_functionCounter = t2 + 1;
+        t2 = new Function("a,b" + t2, "this.$initialize(a,b" + t2 + ")");
+        $constructor = t2;
       }
       $prototype.constructor = $constructor;
       $constructor.prototype = $prototype;
-      if (!isStatic) {
-        trampoline = H.Closure_forwardCallTo($function, isIntercepted, needsDirectAccess);
-        trampoline.$reflectionInfo = reflectionInfo;
-      } else {
-        $prototype.$static_name = propertyName;
+      $prototype.$_name = $name;
+      $prototype.$_target = $function;
+      t2 = !isStatic;
+      if (t2)
+        trampoline = H.Closure_forwardCallTo($name, $function, isIntercepted, needsDirectAccess);
+      else {
+        $prototype.$static_name = $name;
         trampoline = $function;
       }
-      $prototype.$signature = H.Closure__computeSignatureFunctionNewRti(reflectionInfo, isStatic, isIntercepted);
+      $prototype.$signature = H.Closure__computeSignatureFunctionNewRti(t1, isStatic, isIntercepted);
       $prototype[callName] = trampoline;
-      for (applyTrampoline = trampoline, i = 1; i < functions.length; ++i) {
-        stub = functions[i];
-        stubCallName = stub.$callName;
+      for (applyTrampoline = trampoline, i = 1; i < funsOrNames.length; ++i) {
+        stub = funsOrNames[i];
+        if (typeof stub == "string") {
+          stub0 = container[stub];
+          stubName = stub;
+          stub = stub0;
+        } else
+          stubName = "";
+        stubCallName = callNames[i];
         if (stubCallName != null) {
-          stub = isStatic ? stub : H.Closure_forwardCallTo(stub, isIntercepted, needsDirectAccess);
+          if (t2)
+            stub = H.Closure_forwardCallTo(stubName, stub, isIntercepted, needsDirectAccess);
           $prototype[stubCallName] = stub;
         }
-        if (i === applyTrampolineIndex) {
-          stub.$reflectionInfo = reflectionInfo;
+        if (i === applyTrampolineIndex)
           applyTrampoline = stub;
-        }
       }
       $prototype["call*"] = applyTrampoline;
-      $prototype.$requiredArgCount = $function.$requiredArgCount;
-      $prototype.$defaultValues = $function.$defaultValues;
+      $prototype.$requiredArgCount = parameters.rC;
+      $prototype.$defaultValues = parameters.dV;
       return $constructor;
     },
     Closure__computeSignatureFunctionNewRti: function(functionType, isStatic, isIntercepted) {
@@ -907,11 +912,10 @@
           }($function, getSelf);
       }
     },
-    Closure_forwardCallTo: function($function, isIntercepted, needsDirectAccess) {
-      var stubName, arity, t1, selfName, t2, $arguments;
+    Closure_forwardCallTo: function(stubName, $function, isIntercepted, needsDirectAccess) {
+      var arity, t1, selfName, t2, $arguments;
       if (isIntercepted)
-        return H.Closure_forwardInterceptedCallTo($function, needsDirectAccess);
-      stubName = $function.$stubName;
+        return H.Closure_forwardInterceptedCallTo(stubName, $function, needsDirectAccess);
       arity = $function.length;
       t1 = needsDirectAccess || arity >= 27;
       if (t1)
@@ -923,8 +927,8 @@
         $.Closure_functionCounter = t1 + 1;
         selfName = "self" + t1;
         t1 = "return function(){var " + selfName + " = this.";
-        t2 = $.BoundClosure_selfFieldNameCache;
-        return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + ";return " + selfName + "." + H.S(stubName) + "();}")();
+        t2 = $.BoundClosure__selfFieldNameCache;
+        return new Function(t1 + (t2 == null ? $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self") : t2) + ";return " + selfName + "." + stubName + "();}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity).join(",");
       t1 = $.Closure_functionCounter;
@@ -933,8 +937,8 @@
       $.Closure_functionCounter = t1 + 1;
       $arguments += t1;
       t1 = "return function(" + $arguments + "){return this.";
-      t2 = $.BoundClosure_selfFieldNameCache;
-      return new Function(t1 + (t2 == null ? $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self") : t2) + "." + H.S(stubName) + "(" + $arguments + ");}")();
+      t2 = $.BoundClosure__selfFieldNameCache;
+      return new Function(t1 + (t2 == null ? $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self") : t2) + "." + stubName + "(" + $arguments + ");}")();
     },
     Closure_cspForwardInterceptedCall: function(arity, needsDirectAccess, $name, $function) {
       var getSelf = H.BoundClosure_selfOf,
@@ -988,21 +992,20 @@
           }($function, getSelf, getReceiver);
       }
     },
-    Closure_forwardInterceptedCallTo: function($function, needsDirectAccess) {
-      var receiverField, stubName, arity, t1, t2, $arguments,
-        selfField = $.BoundClosure_selfFieldNameCache;
+    Closure_forwardInterceptedCallTo: function(stubName, $function, needsDirectAccess) {
+      var receiverField, arity, t1, t2, $arguments,
+        selfField = $.BoundClosure__selfFieldNameCache;
       if (selfField == null)
-        selfField = $.BoundClosure_selfFieldNameCache = H.BoundClosure_computeFieldNamed("self");
-      receiverField = $.BoundClosure_receiverFieldNameCache;
+        selfField = $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self");
+      receiverField = $.BoundClosure__receiverFieldNameCache;
       if (receiverField == null)
-        receiverField = $.BoundClosure_receiverFieldNameCache = H.BoundClosure_computeFieldNamed("receiver");
-      stubName = $function.$stubName;
+        receiverField = $.BoundClosure__receiverFieldNameCache = H.BoundClosure__computeFieldNamed("receiver");
       arity = $function.length;
       t1 = needsDirectAccess || arity >= 28;
       if (t1)
         return H.Closure_cspForwardInterceptedCall(arity, needsDirectAccess, stubName, $function);
       if (arity === 1) {
-        t1 = "return function(){return this." + selfField + "." + H.S(stubName) + "(this." + receiverField + ");";
+        t1 = "return function(){return this." + selfField + "." + stubName + "(this." + receiverField + ");";
         t2 = $.Closure_functionCounter;
         if (typeof t2 !== "number")
           return t2.$add();
@@ -1010,15 +1013,15 @@
         return new Function(t1 + t2 + "}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity - 1).join(",");
-      t1 = "return function(" + $arguments + "){return this." + selfField + "." + H.S(stubName) + "(this." + receiverField + ", " + $arguments + ");";
+      t1 = "return function(" + $arguments + "){return this." + selfField + "." + stubName + "(this." + receiverField + ", " + $arguments + ");";
       t2 = $.Closure_functionCounter;
       if (typeof t2 !== "number")
         return t2.$add();
       $.Closure_functionCounter = t2 + 1;
       return new Function(t1 + t2 + "}")();
     },
-    closureFromTearOff: function(functions, applyTrampolineIndex, reflectionInfo, isStatic, isIntercepted, $name, needsDirectAccess) {
-      return H.Closure_fromTearOff(functions, applyTrampolineIndex || 0, reflectionInfo, !!isStatic, !!isIntercepted, $name, !!needsDirectAccess);
+    closureFromTearOff: function(parameters) {
+      return H.Closure_fromTearOff(parameters);
     },
     BoundClosure_evalRecipe: function(closure, recipe) {
       return H._Universe_evalInEnvironment(init.typeUniverse, H.instanceType(closure._self), recipe);
@@ -1032,9 +1035,9 @@
     BoundClosure_receiverOf: function(closure) {
       return closure._receiver;
     },
-    BoundClosure_computeFieldNamed: function(fieldName) {
+    BoundClosure__computeFieldNamed: function(fieldName) {
       var t1, i, $name,
-        template = new H.BoundClosure("self", "target", "receiver", "name"),
+        template = new H.BoundClosure("self", "receiver"),
         names = J.JSArray_markFixedList(Object.getOwnPropertyNames(template));
       for (t1 = names.length, i = 0; i < t1; ++i) {
         $name = names[i];
@@ -1254,12 +1257,9 @@
     },
     StaticClosure: function StaticClosure() {
     },
-    BoundClosure: function BoundClosure(t0, t1, t2, t3) {
-      var _ = this;
-      _._self = t0;
-      _._target = t1;
-      _._receiver = t2;
-      _._name = t3;
+    BoundClosure: function BoundClosure(t0, t1) {
+      this._self = t0;
+      this._receiver = t1;
     },
     RuntimeError: function RuntimeError(t0) {
       this.message = t0;
@@ -5045,17 +5045,17 @@
       var hash = this._hashCode;
       if (hash != null)
         return hash;
-      hash = 664597 * J.get$hashCode$(this.__internal$_name) & 536870911;
+      hash = 664597 * J.get$hashCode$(this._name) & 536870911;
       this._hashCode = hash;
       return hash;
     },
     toString$0: function(_) {
-      return 'Symbol("' + H.S(this.__internal$_name) + '")';
+      return 'Symbol("' + H.S(this._name) + '")';
     },
     $eq: function(_, other) {
       if (other == null)
         return false;
-      return other instanceof H.Symbol && this.__internal$_name == other.__internal$_name;
+      return other instanceof H.Symbol && this._name == other._name;
     },
     $isSymbol0: 1
   };
@@ -5239,7 +5239,7 @@
         return true;
       if (!(other instanceof H.BoundClosure))
         return false;
-      return _this._self === other._self && _this._target === other._target && _this._receiver === other._receiver;
+      return _this._self === other._self && _this.$_target === other.$_target && _this._receiver === other._receiver;
     },
     get$hashCode: function(_) {
       var receiverHashCode,
@@ -5248,13 +5248,13 @@
         receiverHashCode = H.Primitives_objectHashCode(this._self);
       else
         receiverHashCode = typeof t1 !== "object" ? J.get$hashCode$(t1) : H.Primitives_objectHashCode(t1);
-      return (receiverHashCode ^ H.Primitives_objectHashCode(this._target)) >>> 0;
+      return (receiverHashCode ^ H.Primitives_objectHashCode(this.$_target)) >>> 0;
     },
     toString$0: function(_) {
       var receiver = this._receiver;
       if (receiver == null)
         receiver = this._self;
-      return "Closure '" + H.S(this._name) + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
+      return "Closure '" + this.$_name + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
     }
   };
   H.RuntimeError.prototype = {
@@ -7000,7 +7000,7 @@
       var t1 = this.sb,
         t2 = this._box_0,
         t3 = t1._contents += t2.comma;
-      t3 += key.__internal$_name;
+      t3 += key._name;
       t1._contents = t3;
       t1._contents = t3 + ": ";
       t1._contents += P.Error_safeToString(value);
@@ -7143,7 +7143,7 @@
       _this._namedArguments.forEach$1(0, new P.NoSuchMethodError_toString_closure(_box_0, sb));
       receiverText = P.Error_safeToString(_this._core$_receiver);
       actualParameters = sb.toString$0(0);
-      t1 = "NoSuchMethodError: method not found: '" + _this._memberName.__internal$_name + "'\nReceiver: " + receiverText + "\nArguments: [" + actualParameters + "]";
+      t1 = "NoSuchMethodError: method not found: '" + _this._memberName._name + "'\nReceiver: " + receiverText + "\nArguments: [" + actualParameters + "]";
       return t1;
     }
   };
@@ -9756,8 +9756,8 @@
   (function staticFields() {
     $._JS_INTEROP_INTERCEPTOR_TAG = null;
     $.Closure_functionCounter = 0;
-    $.BoundClosure_selfFieldNameCache = null;
-    $.BoundClosure_receiverFieldNameCache = null;
+    $.BoundClosure__selfFieldNameCache = null;
+    $.BoundClosure__receiverFieldNameCache = null;
     $.getTagFunction = null;
     $.alternateTagFunction = null;
     $.prototypeForTagFunction = null;
