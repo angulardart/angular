@@ -12,7 +12,11 @@ export 'package:angular_compiler/v1/src/compiler/template_compiler.dart'
 export 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart'
     show matchElementDirectives;
 
-Future<AngularArtifacts>? angularArtifactsForKythe(LibraryElement element) {
+typedef UncaughtExceptionHandler = bool Function(
+    Object exception, StackTrace stackTrace);
+
+Future<AngularArtifacts?>? angularArtifactsForKythe(LibraryElement element,
+    {UncaughtExceptionHandler? uncaughtExceptionHandler}) {
   final assetId = _toAssetId(element.identifier);
   if (assetId == null) return null;
   final exceptionHandler = ComponentVisitorExceptionHandler();
@@ -24,8 +28,16 @@ Future<AngularArtifacts>? angularArtifactsForKythe(LibraryElement element) {
         isNullSafe: element.isNonNullableByDefault,
         enableDevTools: false,
       ), () async {
-    return findComponentsAndDirectives(
-        LibraryReader(element), exceptionHandler);
+    try {
+      return findComponentsAndDirectives(
+          LibraryReader(element), exceptionHandler);
+    } catch (e, s) {
+      if (uncaughtExceptionHandler?.call(e, s) ?? false) {
+        return null;
+      } else {
+        rethrow;
+      }
+    }
   });
 }
 
