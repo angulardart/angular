@@ -7,6 +7,8 @@ import 'package:angular_compiler/v1/src/source_gen/template_compiler/find_compon
     show findComponentsAndDirectives;
 import 'package:angular_compiler/v2/context.dart';
 
+export 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
+    show CompileDirectiveMetadata;
 export 'package:angular_compiler/v1/src/compiler/template_compiler.dart'
     show AngularArtifacts, NormalizedComponentWithViewDirectives;
 export 'package:angular_compiler/v1/src/compiler/template_parser/ast_template_parser.dart'
