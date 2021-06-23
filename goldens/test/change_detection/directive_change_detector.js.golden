@@ -3167,28 +3167,29 @@
     },
     _Future__chainCoreFuture: function(source, target) {
       var t1, listeners;
-      for (; t1 = source._state, t1 === 2;)
+      for (; t1 = source._state, (t1 & 4) !== 0;)
         source = source._resultOrListeners;
-      if (t1 >= 4) {
+      if ((t1 & 24) !== 0) {
         listeners = target._removeListeners$0();
-        target._state = source._state;
-        target._resultOrListeners = source._resultOrListeners;
+        target._cloneResult$1(source);
         P._Future__propagateToListeners(target, listeners);
       } else {
         listeners = target._resultOrListeners;
-        target._state = 2;
+        target._state = target._state & 1 | 4;
         target._resultOrListeners = source;
         source._prependListeners$1(listeners);
       }
     },
     _Future__propagateToListeners: function(source, listeners) {
-      var t2, _box_0, hasError, nextListener, nextListener0, t3, sourceResult, t4, t5, zone, oldZone, result, current, _box_1 = {},
+      var t2, _box_0, t3, t4, hasError, nextListener, nextListener0, sourceResult, t5, zone, oldZone, result, current, _box_1 = {},
         t1 = _box_1.source = source;
       for (t2 = type$.Future_dynamic; true;) {
         _box_0 = {};
-        hasError = t1._state === 8;
+        t3 = t1._state;
+        t4 = (t3 & 16) === 0;
+        hasError = !t4;
         if (listeners == null) {
-          if (hasError) {
+          if (hasError && (t3 & 1) === 0) {
             t2 = t1._resultOrListeners;
             t1._zone.handleUncaughtError$2(t2.error, t2.stackTrace);
           }
@@ -3206,7 +3207,6 @@
         sourceResult = t3._resultOrListeners;
         _box_0.listenerHasError = hasError;
         _box_0.listenerValueOrError = sourceResult;
-        t4 = !hasError;
         if (t4) {
           t5 = t1.state;
           t5 = (t5 & 1) !== 0 || (t5 & 15) === 8;
@@ -3248,11 +3248,11 @@
             t3 = false;
           if (t3) {
             result = _box_0.listener.result;
-            if (t1._state >= 4) {
+            if ((t1._state & 24) !== 0) {
               current = result._resultOrListeners;
               result._resultOrListeners = null;
               listeners = result._reverseListeners$1(current);
-              result._state = t1._state;
+              result._state = t1._state & 30 | result._state & 1;
               result._resultOrListeners = t1._resultOrListeners;
               _box_1.source = t1;
               continue;
@@ -3268,10 +3268,10 @@
         t1 = _box_0.listenerHasError;
         t3 = _box_0.listenerValueOrError;
         if (!t1) {
-          result._state = 4;
+          result._state = 8;
           result._resultOrListeners = t3;
         } else {
-          result._state = 8;
+          result._state = result._state & 1 | 16;
           result._resultOrListeners = t3;
         }
         _box_1.source = result;
@@ -5775,7 +5775,7 @@
     _callOnCancel$0: function() {
       if ((this._state & 4) !== 0) {
         var doneFuture = this._doneFuture;
-        if (doneFuture._state === 0)
+        if ((doneFuture._state & 30) === 0)
           doneFuture._asyncComplete$1(null);
       }
       P._runGuarded(this.onCancel);
@@ -5819,7 +5819,7 @@
       var t1, replacement;
       H.checkNotNullable(error, "error", type$.Object);
       t1 = this.future;
-      if (t1._state !== 0)
+      if ((t1._state & 30) !== 0)
         throw H.wrapException(P.StateError$("Future already completed"));
       replacement = $.Zone__current.errorCallback$2(error, stackTrace);
       if (replacement != null) {
@@ -5833,7 +5833,7 @@
   P._AsyncCompleter.prototype = {
     complete$1: function(_, value) {
       var t1 = this.future;
-      if (t1._state !== 0)
+      if ((t1._state & 30) !== 0)
         throw H.wrapException(P.StateError$("Future already completed"));
       t1._asyncComplete$1(value);
     }
@@ -5873,33 +5873,39 @@
     then$1$1: function(f, $R) {
       return this.then$1$2$onError(f, null, $R);
     },
+    _setErrorObject$1: function(error) {
+      this._state = this._state & 1 | 16;
+      this._resultOrListeners = error;
+    },
+    _cloneResult$1: function(source) {
+      this._state = source._state & 30 | this._state & 1;
+      this._resultOrListeners = source._resultOrListeners;
+    },
     _addListener$1: function(listener) {
-      var t2, _this = this,
+      var _this = this,
         t1 = _this._state;
-      if (t1 <= 1) {
+      if (t1 <= 3) {
         listener._nextListener = _this._resultOrListeners;
         _this._resultOrListeners = listener;
       } else {
-        if (t1 === 2) {
+        if ((t1 & 4) !== 0) {
           t1 = _this._resultOrListeners;
-          t2 = t1._state;
-          if (t2 < 4) {
+          if ((t1._state & 24) === 0) {
             t1._addListener$1(listener);
             return;
           }
-          _this._state = t2;
-          _this._resultOrListeners = t1._resultOrListeners;
+          _this._cloneResult$1(t1);
         }
         _this._zone.scheduleMicrotask$1(new P._Future__addListener_closure(_this, listener));
       }
     },
     _prependListeners$1: function(listeners) {
-      var t1, existingListeners, next, cursor, next0, t2, _this = this, _box_0 = {};
+      var t1, existingListeners, next, cursor, next0, _this = this, _box_0 = {};
       _box_0.listeners = listeners;
       if (listeners == null)
         return;
       t1 = _this._state;
-      if (t1 <= 1) {
+      if (t1 <= 3) {
         existingListeners = _this._resultOrListeners;
         _this._resultOrListeners = listeners;
         if (existingListeners != null) {
@@ -5909,15 +5915,13 @@
           cursor._nextListener = existingListeners;
         }
       } else {
-        if (t1 === 2) {
+        if ((t1 & 4) !== 0) {
           t1 = _this._resultOrListeners;
-          t2 = t1._state;
-          if (t2 < 4) {
+          if ((t1._state & 24) === 0) {
             t1._prependListeners$1(listeners);
             return;
           }
-          _this._state = t2;
-          _this._resultOrListeners = t1._resultOrListeners;
+          _this._cloneResult$1(t1);
         }
         _box_0.listeners = _this._reverseListeners$1(listeners);
         _this._zone.scheduleMicrotask$1(new P._Future__prependListeners_closure(_box_0, _this));
@@ -5938,7 +5942,7 @@
     },
     _chainForeignFuture$1: function(source) {
       var e, s, exception, _this = this;
-      _this._state = 1;
+      _this._state ^= 2;
       try {
         source.then$1$2$onError(new P._Future__chainForeignFuture_closure(_this), new P._Future__chainForeignFuture_closure0(_this), type$.Null);
       } catch (exception) {
@@ -5957,7 +5961,7 @@
           _this._chainForeignFuture$1(value);
       else {
         listeners = _this._removeListeners$0();
-        _this._state = 4;
+        _this._state = 8;
         _this._resultOrListeners = value;
         P._Future__propagateToListeners(_this, listeners);
       }
@@ -5965,17 +5969,14 @@
     _completeWithValue$1: function(value) {
       var _this = this,
         listeners = _this._removeListeners$0();
-      _this._state = 4;
+      _this._state = 8;
       _this._resultOrListeners = value;
       P._Future__propagateToListeners(_this, listeners);
     },
     _completeError$2: function(error, stackTrace) {
-      var _this = this,
-        listeners = _this._removeListeners$0(),
-        t1 = P.AsyncError$(error, stackTrace);
-      _this._state = 8;
-      _this._resultOrListeners = t1;
-      P._Future__propagateToListeners(_this, listeners);
+      var listeners = this._removeListeners$0();
+      this._setErrorObject$1(P.AsyncError$(error, stackTrace));
+      P._Future__propagateToListeners(this, listeners);
     },
     _asyncComplete$1: function(value) {
       if (this.$ti._eval$1("Future<1>")._is(value)) {
@@ -5985,14 +5986,14 @@
       this._asyncCompleteWithValue$1(value);
     },
     _asyncCompleteWithValue$1: function(value) {
-      this._state = 1;
+      this._state ^= 2;
       this._zone.scheduleMicrotask$1(new P._Future__asyncCompleteWithValue_closure(this, value));
     },
     _chainFuture$1: function(value) {
       var _this = this;
       if (_this.$ti._is(value)) {
-        if (value._state === 8) {
-          _this._state = 1;
+        if ((value._state & 16) !== 0) {
+          _this._state ^= 2;
           _this._zone.scheduleMicrotask$1(new P._Future__chainFuture_closure(_this, value));
         } else
           P._Future__chainCoreFuture(value, _this);
@@ -6001,7 +6002,7 @@
       _this._chainForeignFuture$1(value);
     },
     _asyncCompleteError$2: function(error, stackTrace) {
-      this._state = 1;
+      this._state ^= 2;
       this._zone.scheduleMicrotask$1(new P._Future__asyncCompleteError_closure(this, error, stackTrace));
     },
     $isFuture: 1
@@ -6026,7 +6027,7 @@
     call$1: function(value) {
       var error, stackTrace, exception,
         t1 = this.$this;
-      t1._state = 0;
+      t1._state ^= 2;
       try {
         t1._completeWithValue$1(t1.$ti._precomputed1._as(value));
       } catch (exception) {
@@ -6095,8 +6096,8 @@
         t2.listenerHasError = true;
         return;
       }
-      if (completeResult instanceof P._Future && completeResult._state >= 4) {
-        if (completeResult._state === 8) {
+      if (completeResult instanceof P._Future && (completeResult._state & 24) !== 0) {
+        if ((completeResult._state & 16) !== 0) {
           t1 = _this._box_0;
           t1.listenerValueOrError = completeResult._resultOrListeners;
           t1.listenerHasError = true;
