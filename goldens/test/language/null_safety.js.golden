@@ -586,6 +586,8 @@
     },
     Closure: function Closure() {
     },
+    Closure0Args: function Closure0Args() {
+    },
     TearOffClosure: function TearOffClosure() {
     },
     StaticClosure: function StaticClosure() {
@@ -2404,6 +2406,7 @@
     $requiredArgCount: 1,
     $defaultValues: null
   };
+  H.Closure0Args.prototype = {"call*": "call$0", $requiredArgCount: 0};
   H.TearOffClosure.prototype = {};
   H.StaticClosure.prototype = {
     toString$0: function(_) {
@@ -2668,10 +2671,11 @@
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
     _inheritMany(P.Error, [H.LateError, H.RuntimeError, H._Error, P.AssertionError, P.NullThrownError, P.ArgumentError, P.UnsupportedError, P.ConcurrentModificationError, P.CyclicInitializationError]);
-    _inheritMany(H.Closure, [H.TearOffClosure, R.funcWithNullableLocal_onCallback, R.funcWithLateFinalLocal_onCallback]);
+    _inheritMany(H.Closure, [H.Closure0Args, H.TearOffClosure]);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(H._TypeError, H._Error);
     _inheritMany(P.ArgumentError, [P.RangeError, P.IndexError]);
+    _inheritMany(H.Closure0Args, [R.funcWithNullableLocal_onCallback, R.funcWithLateFinalLocal_onCallback]);
   })();
   var init = {
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},

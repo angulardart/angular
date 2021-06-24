@@ -1044,7 +1044,7 @@
         if (template[$name] === fieldName)
           return $name;
       }
-      throw H.wrapException(P.ArgumentError$("Field name " + fieldName + " not found."));
+      throw H.wrapException(P.ArgumentError$("Field name " + fieldName + " not found.", null));
     },
     throwCyclicInit: function(staticName) {
       throw H.wrapException(new P.CyclicInitializationError(staticName));
@@ -1252,6 +1252,10 @@
       this._trace = null;
     },
     Closure: function Closure() {
+    },
+    Closure0Args: function Closure0Args() {
+    },
+    Closure2Args: function Closure2Args() {
     },
     TearOffClosure: function TearOffClosure() {
     },
@@ -3268,7 +3272,7 @@
         return zone.registerBinaryCallback$3$1(errorHandler, type$.dynamic, type$.Object, type$.StackTrace);
       if (type$.dynamic_Function_Object._is(errorHandler))
         return zone.registerUnaryCallback$2$1(errorHandler, type$.dynamic, type$.Object);
-      throw H.wrapException(P.ArgumentError$value(errorHandler, "onError", "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a valid result"));
+      throw H.wrapException(P.ArgumentError$value(errorHandler, "onError", string$.Error_));
     },
     _microtaskLoop: function() {
       var entry, next;
@@ -3367,7 +3371,7 @@
         return zone.registerBinaryCallback$3$1(handleError, type$.dynamic, type$.Object, type$.StackTrace);
       if (type$.void_Function_Object._is(handleError))
         return zone.registerUnaryCallback$2$1(handleError, type$.dynamic, type$.Object);
-      throw H.wrapException(P.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace."));
+      throw H.wrapException(P.ArgumentError$("handleError callback must take either an Object (the error), or both an Object (the error) and a StackTrace.", null));
     },
     _nullDataHandler: function(value) {
     },
@@ -4055,8 +4059,8 @@
     AssertionError$: function(message) {
       return new P.AssertionError(message);
     },
-    ArgumentError$: function(message) {
-      return new P.ArgumentError(false, null, null, message);
+    ArgumentError$: function(message, $name) {
+      return new P.ArgumentError(false, null, $name, message);
     },
     ArgumentError$value: function(value, $name, message) {
       return new P.ArgumentError(true, value, $name, message);
@@ -5250,6 +5254,8 @@
     $requiredArgCount: 1,
     $defaultValues: null
   };
+  H.Closure0Args.prototype = {"call*": "call$0", $requiredArgCount: 0};
+  H.Closure2Args.prototype = {"call*": "call$2", $requiredArgCount: 2};
   H.TearOffClosure.prototype = {};
   H.StaticClosure.prototype = {
     toString$0: function(_) {
@@ -5617,7 +5623,7 @@
       return this.__rti$_message;
     }
   };
-  H._TypeError.prototype = {};
+  H._TypeError.prototype = {$isTypeError: 1};
   P._AsyncRun__initializeScheduleImmediate_internalCallback.prototype = {
     call$1: function(_) {
       var t1 = this._box_0,
@@ -5641,16 +5647,12 @@
     call$0: function() {
       this.callback.call$0();
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback.prototype = {
     call$0: function() {
       this.callback.call$0();
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   P._TimerImpl.prototype = {
@@ -5674,8 +5676,6 @@
       t1._tick = 1;
       this.callback.call$0();
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._TimerImpl$periodic_closure.prototype = {
@@ -5692,8 +5692,6 @@
       t1._tick = tick;
       _this.callback.call$1(t1);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   P.AsyncError.prototype = {
@@ -5874,22 +5872,38 @@
       return this.result._zone.runUnary$2$2(this.callback, asyncError.error, type$.bool, type$.Object);
     },
     handleError$1: function(asyncError) {
-      var errorCallback = this.errorCallback,
+      var exception,
+        errorCallback = this.errorCallback,
+        result = null,
         t1 = type$.dynamic,
         t2 = type$.Object,
         t3 = asyncError.error,
         t4 = this.result._zone;
       if (type$.dynamic_Function_Object_StackTrace._is(errorCallback))
-        return t4.runBinary$3$3(errorCallback, t3, asyncError.stackTrace, t1, t2, type$.StackTrace);
+        result = t4.runBinary$3$3(errorCallback, t3, asyncError.stackTrace, t1, t2, type$.StackTrace);
       else
-        return t4.runUnary$2$2(errorCallback, t3, t1, t2);
+        result = t4.runUnary$2$2(errorCallback, t3, t1, t2);
+      try {
+        t1 = result;
+        return t1;
+      } catch (exception) {
+        if (type$.TypeError._is(H.unwrapException(exception))) {
+          if ((this.state & 1) !== 0)
+            throw H.wrapException(P.ArgumentError$("The error handler of Future.then must return a value of the returned future's type", "onError"));
+          throw H.wrapException(P.ArgumentError$("The error handler of Future.catchError must return a value of the future's type", "onError"));
+        } else
+          throw exception;
+      }
     }
   };
   P._Future.prototype = {
     then$1$2$onError: function(f, onError, $R) {
       var result, t1,
         currentZone = $.Zone__current;
-      if (currentZone !== C.C__RootZone) {
+      if (currentZone === C.C__RootZone) {
+        if (onError != null && !type$.dynamic_Function_Object_StackTrace._is(onError) && !type$.dynamic_Function_Object._is(onError))
+          throw H.wrapException(P.ArgumentError$value(onError, "onError", string$.Error_));
+      } else {
         f = currentZone.registerUnaryCallback$2$1(f, $R._eval$1("0/"), this.$ti._precomputed1);
         if (onError != null)
           onError = P._registerErrorHandler(onError, currentZone);
@@ -6040,16 +6054,12 @@
     call$0: function() {
       P._Future__propagateToListeners(this.$this, this.listener);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__prependListeners_closure.prototype = {
     call$0: function() {
       P._Future__propagateToListeners(this.$this, this._box_0.listeners);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__chainForeignFuture_closure.prototype = {
@@ -6071,40 +6081,30 @@
     call$2: function(error, stackTrace) {
       this.$this._completeError$2(error, stackTrace);
     },
-    "call*": "call$2",
-    $requiredArgCount: 2,
     $signature: 24
   };
   P._Future__chainForeignFuture_closure1.prototype = {
     call$0: function() {
       this.$this._completeError$2(this.e, this.s);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__asyncCompleteWithValue_closure.prototype = {
     call$0: function() {
       this.$this._completeWithValue$1(this.value);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__chainFuture_closure.prototype = {
     call$0: function() {
       P._Future__chainCoreFuture(this.value, this.$this);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__asyncCompleteError_closure.prototype = {
     call$0: function() {
       this.$this._completeError$2(this.error, this.stackTrace);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._Future__propagateToListeners_handleWhenCompleteCallback.prototype = {
@@ -6212,8 +6212,6 @@
     call$0: function() {
       this.future._complete$1(this._box_0.count);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._ControllerStream.prototype = {
@@ -6362,8 +6360,6 @@
         t1.lastPendingEvent = null;
       $event.perform$1(this.dispatch);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._StreamImplEvents.prototype = {
@@ -6594,8 +6590,6 @@
     call$0: function() {
       return this.$this.runGuarded$1(this.registered);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._rootHandleError_closure.prototype = {
@@ -6758,8 +6752,6 @@
     call$0: function() {
       return this.$this.runGuarded$1(this.f);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   P._HashMap.prototype = {
@@ -8406,8 +8398,6 @@
       $.appViewUtils._value = new Q.AppViewUtils();
       return t1;
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 22
   };
   G._LazyInjector.prototype = {
@@ -8651,8 +8641,6 @@
         throw exception;
       }
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   M.ChangeDetectionHost_run__closure.prototype = {
@@ -8674,8 +8662,6 @@
       if (typeof console != "undefined")
         window.console.error(t1);
     },
-    "call*": "call$2",
-    $requiredArgCount: 2,
     $signature: 25
   };
   U.ExceptionHandler.prototype = {
@@ -8958,8 +8944,6 @@
         }
       }
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   Y.NgZone__run_closure.prototype = {
@@ -8972,8 +8956,6 @@
         this.$this._onLeave$0();
       }
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: function() {
       return this.R._eval$1("0()");
     }
@@ -9004,8 +8986,6 @@
         this.$this._onLeave$0();
       }
     },
-    "call*": "call$2",
-    $requiredArgCount: 2,
     $signature: function() {
       return this.R._eval$1("@<0>")._bind$1(this.T1)._bind$1(this.T2)._eval$1("1(2,3)");
     }
@@ -9027,16 +9007,12 @@
         this.onDone.call$0();
       }
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   Y.NgZone__checkStable_closure.prototype = {
     call$0: function() {
       this.$this._onTurnDone.add$1(0, null);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   Y._WrappedTimer.prototype = {};
@@ -9124,8 +9100,6 @@
       t1 = H.MappedIterable_MappedIterable(t1, new T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure(), H._instanceType(t1)._eval$1("Iterable.E"), type$.JsTestability);
       return P.List_List$of(t1, true, H._instanceType(t1)._eval$1("Iterable.E"));
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 34
   };
   T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure.prototype = {
@@ -9139,8 +9113,6 @@
       var t1 = this._this._testability$_ngZone;
       return !t1._isRunning && !t1._hasPendingMacrotasks;
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 54
   };
   T.Testability.prototype = {
@@ -9177,8 +9149,6 @@
         t2 = t1._testability$_ngZone._onTurnDone;
       new P._BroadcastStream(t2, H._instanceType(t2)._eval$1("_BroadcastStream<1>")).listen$1(new T.Testability__watchForStability__closure(t1));
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 1
   };
   T.Testability__watchForStability__closure.prototype = {
@@ -9191,16 +9161,12 @@
     call$0: function() {
       return this.$this._runCallbacksIfStable$1(true);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   T.Testability__runCallbacksIfStable_closure.prototype = {
     call$0: function() {
       return this.$this._runCallbacks$1(this.didWork);
     },
-    "call*": "call$0",
-    $requiredArgCount: 0,
     $signature: 0
   };
   T.TestabilityRegistry.prototype = {
@@ -9539,7 +9505,8 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Primitives_functionNoSuchMethod_closure, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure0, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure, P._Future__chainForeignFuture_closure0, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindUnaryCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindUnaryCallback_closure, P._RootZone_bindCallbackGuarded_closure, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, U.minimalApp_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, M.ChangeDetectionHost_run__closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__runUnary_closure, Y.NgZone__runBinary_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability__closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure]);
+    _inheritMany(H.Closure, [H.Closure2Args, H.Closure0Args, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__chainForeignFuture_closure, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P.Stream_length_closure, P._CustomZone_bindUnaryCallback_closure, P._RootZone_bindUnaryCallback_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, U.minimalApp_closure, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, M.ChangeDetectionHost_run__closure, Y.NgZone__runUnary_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T.Testability__watchForStability__closure]);
+    _inheritMany(H.Closure2Args, [H.Primitives_functionNoSuchMethod_closure, H.initHooks_closure0, P._Future__chainForeignFuture_closure0, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__runBinary_closure]);
     _inherit(H.NullError, P.TypeError);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
     _inherit(P.MapBase, P.MapMixin);
@@ -9553,6 +9520,7 @@
     _inherit(H.NativeTypedArrayOfInt, H._NativeTypedArrayOfInt_NativeTypedArray_ListMixin_FixedLengthListMixin);
     _inheritMany(H.NativeTypedArrayOfInt, [H.NativeInt16List, H.NativeInt32List, H.NativeInt8List, H.NativeUint16List, H.NativeUint32List, H.NativeUint8ClampedList, H.NativeUint8List]);
     _inherit(H._TypeError, H._Error);
+    _inheritMany(H.Closure0Args, [P._AsyncRun__scheduleImmediateJsOverride_internalCallback, P._AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, P._TimerImpl_internalCallback, P._TimerImpl$periodic_closure, P._Future__addListener_closure, P._Future__prependListeners_closure, P._Future__chainForeignFuture_closure1, P._Future__asyncCompleteWithValue_closure, P._Future__chainFuture_closure, P._Future__asyncCompleteError_closure, P._Future__propagateToListeners_handleWhenCompleteCallback, P._Future__propagateToListeners_handleValueCallback, P._Future__propagateToListeners_handleError, P.Stream_length_closure0, P._PendingEvents_schedule_closure, P._CustomZone_bindCallback_closure, P._CustomZone_bindCallbackGuarded_closure, P._rootHandleError_closure, P._RootZone_bindCallback_closure, P._RootZone_bindCallbackGuarded_closure, U._createRandomAppId_char, G.appInjector_closure, G.appInjector_closure0, G.appInjector_closure1, G.appInjector_closure2, G.appInjector_closure3, Y.ApplicationRef_bootstrap_closure, Y.ApplicationRef__loadedRootComponent_closure, M.ChangeDetectionHost_run_closure, Y.NgZone__scheduleMicrotask_safeMicrotask, Y.NgZone__run_closure, Y.NgZone__createTimer_onDone, Y.NgZone__createTimer_callback, Y.NgZone__checkStable_closure, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities, T._extension_0_asJsApi_closure, T.Testability__watchForStability_closure, T.Testability__watchForStability___closure, T.Testability__runCallbacksIfStable_closure]);
     _inherit(P._StreamImpl, P.Stream);
     _inherit(P._ControllerStream, P._StreamImpl);
     _inherit(P._BroadcastStream, P._ControllerStream);
@@ -9697,10 +9665,11 @@
     leafTags: null,
     arrayRti: typeof Symbol == "function" && typeof Symbol() == "symbol" ? Symbol("$ti") : "$ti"
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"ChangeDetectorRef":[]},"HostView":{"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewHasInputComponent0":{"ChangeDetectorRef":[]},"ViewHasInputsComponent0":{"ChangeDetectorRef":[]},"ViewHasRenamedInputComponent0":{"ChangeDetectorRef":[]}}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlDocument":"Node","Document":"Node","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JavaScriptObject":{"JsTestability":[]},"JSBool":{"bool":[]},"JSNull":{"Null":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"ChangeDetectorRef":[]},"HostView":{"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewHasInputComponent0":{"ChangeDetectorRef":[]},"ViewHasInputsComponent0":{"ChangeDetectorRef":[]},"ViewHasRenamedInputComponent0":{"ChangeDetectorRef":[]}}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"_RectangleBase":1,"UninitializedLocaleData":1,"ComponentFactory":1,"ComponentView":1}'));
   var string$ = {
-    Cannot: "Cannot fire new event. Controller is already firing an event"
+    Cannot: "Cannot fire new event. Controller is already firing an event",
+    Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
   };
   var type$ = (function rtii() {
     var findType = H.findType;
@@ -9733,6 +9702,7 @@
       StackTrace: findType("StackTrace"),
       String: findType("String"),
       Timer: findType("Timer"),
+      TypeError: findType("TypeError"),
       UncaughtError: findType("UncaughtError"),
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
       _Future_int: findType("_Future<int>"),
