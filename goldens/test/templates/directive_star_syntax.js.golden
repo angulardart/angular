@@ -501,41 +501,40 @@
       return J.noSuchMethod$1$($function, new H.JSInvocationMirror(C.Symbol_call, 0, $arguments, namedArgumentList, 0));
     },
     Primitives_applyFunction: function($function, positionalArguments, namedArguments) {
-      var t1, $arguments, argumentCount, jsStub;
-      if (positionalArguments instanceof Array)
+      var t1, argumentCount, jsStub;
+      if (Array.isArray(positionalArguments))
         t1 = namedArguments == null || namedArguments.get$isEmpty(namedArguments);
       else
         t1 = false;
       if (t1) {
-        $arguments = positionalArguments;
-        argumentCount = $arguments.length;
+        argumentCount = positionalArguments.length;
         if (argumentCount === 0) {
           if (!!$function.call$0)
             return $function.call$0();
         } else if (argumentCount === 1) {
           if (!!$function.call$1)
-            return $function.call$1($arguments[0]);
+            return $function.call$1(positionalArguments[0]);
         } else if (argumentCount === 2) {
           if (!!$function.call$2)
-            return $function.call$2($arguments[0], $arguments[1]);
+            return $function.call$2(positionalArguments[0], positionalArguments[1]);
         } else if (argumentCount === 3) {
           if (!!$function.call$3)
-            return $function.call$3($arguments[0], $arguments[1], $arguments[2]);
+            return $function.call$3(positionalArguments[0], positionalArguments[1], positionalArguments[2]);
         } else if (argumentCount === 4) {
           if (!!$function.call$4)
-            return $function.call$4($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+            return $function.call$4(positionalArguments[0], positionalArguments[1], positionalArguments[2], positionalArguments[3]);
         } else if (argumentCount === 5)
           if (!!$function.call$5)
-            return $function.call$5($arguments[0], $arguments[1], $arguments[2], $arguments[3], $arguments[4]);
+            return $function.call$5(positionalArguments[0], positionalArguments[1], positionalArguments[2], positionalArguments[3], positionalArguments[4]);
         jsStub = $function["call" + "$" + argumentCount];
         if (jsStub != null)
-          return jsStub.apply($function, $arguments);
+          return jsStub.apply($function, positionalArguments);
       }
-      return H.Primitives__genericApplyFunction2($function, positionalArguments, namedArguments);
+      return H.Primitives__generalApplyFunction($function, positionalArguments, namedArguments);
     },
-    Primitives__genericApplyFunction2: function($function, positionalArguments, namedArguments) {
-      var defaultValuesClosure, t1, defaultValues, interceptor, jsFunction, keys, _i, defaultValue, used, t2,
-        $arguments = positionalArguments instanceof Array ? positionalArguments : P.List_List$from(positionalArguments, type$.dynamic),
+    Primitives__generalApplyFunction: function($function, positionalArguments, namedArguments) {
+      var defaultValuesClosure, t1, defaultValues, interceptor, jsFunction, maxArguments, missingDefaults, keys, _i, defaultValue, used, t2,
+        $arguments = Array.isArray(positionalArguments) ? positionalArguments : P.List_List$of(positionalArguments, true, type$.dynamic),
         argumentCount = $arguments.length,
         requiredParameterCount = $function.$requiredArgCount;
       if (argumentCount < requiredParameterCount)
@@ -554,16 +553,24 @@
           return jsFunction.apply($function, $arguments);
         return H.Primitives_functionNoSuchMethod($function, $arguments, namedArguments);
       }
-      if (defaultValues instanceof Array) {
+      if (Array.isArray(defaultValues)) {
         if (namedArguments != null && namedArguments.get$isNotEmpty(namedArguments))
           return H.Primitives_functionNoSuchMethod($function, $arguments, namedArguments);
-        if (argumentCount > requiredParameterCount + defaultValues.length)
+        maxArguments = requiredParameterCount + defaultValues.length;
+        if (argumentCount > maxArguments)
           return H.Primitives_functionNoSuchMethod($function, $arguments, null);
-        C.JSArray_methods.addAll$1($arguments, defaultValues.slice(argumentCount - requiredParameterCount));
+        if (argumentCount < maxArguments) {
+          missingDefaults = defaultValues.slice(argumentCount - requiredParameterCount);
+          if ($arguments === positionalArguments)
+            $arguments = P.List_List$of($arguments, true, type$.dynamic);
+          C.JSArray_methods.addAll$1($arguments, missingDefaults);
+        }
         return jsFunction.apply($function, $arguments);
       } else {
         if (argumentCount > requiredParameterCount)
           return H.Primitives_functionNoSuchMethod($function, $arguments, namedArguments);
+        if ($arguments === positionalArguments)
+          $arguments = P.List_List$of($arguments, true, type$.dynamic);
         keys = Object.keys(defaultValues);
         if (namedArguments == null)
           for (t1 = keys.length, _i = 0; _i < keys.length; keys.length === t1 || (0, H.throwConcurrentModificationError)(keys), ++_i) {
@@ -4068,13 +4075,6 @@
         for (i = 0; i < $length; ++i)
           result[i] = fill;
       return result;
-    },
-    List_List$from: function(elements, $E) {
-      var t1,
-        list = H._setArrayType([], $E._eval$1("JSArray<0>"));
-      for (t1 = J.get$iterator$ax(elements); t1.moveNext$0();)
-        list.push(t1.get$current(t1));
-      return list;
     },
     List_List$of: function(elements, growable, $E) {
       var t1 = P.List_List$_of(elements, $E);
