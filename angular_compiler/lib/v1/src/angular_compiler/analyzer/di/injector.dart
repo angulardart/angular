@@ -19,6 +19,7 @@ import 'tokens.dart';
 class InjectorReader {
   static const _package = 'package:angular';
   static const _runtime = '$_package/src/di/injector.dart';
+  static const _utilities = '$_package/src/utilities.dart';
   static const _$Injector = Reference('Injector', _runtime);
 
   static bool _shouldGenerateInjector(TopLevelVariableElement element) {
@@ -204,10 +205,11 @@ class InjectorReader {
       }
       if (dep.skipSelf) {
         if (dep.optional) {
-          return refer('injectFromAncestryOptional').call([
+          var expression = refer('injectFromAncestryOptional').call([
             _tokenToIdentifier(dep.token),
             literalNull,
           ]);
+          return refer('unsafeCast', _utilities).call([expression]);
         } else {
           return refer('injectFromAncestry').call([
             _tokenToIdentifier(dep.token),
