@@ -144,7 +144,7 @@
   function instanceTearOffGetter(isIntercepted, parameters) {
     var name = parameters.fs[0];
     if (isIntercepted)
-      return new Function("parameters, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(parameters);" + "return new cache(this, receiver);" + "}")(parameters, H.closureFromTearOff, null);
+      return new Function("parameters, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "(receiver) {" + "if (cache === null) cache = createTearOffClass(parameters);" + "return new cache(receiver, this);" + "}")(parameters, H.closureFromTearOff, null);
     else
       return new Function("parameters, createTearOffClass, cache", "return function tearOff_" + name + functionCounter++ + "() {" + "if (cache === null) cache = createTearOffClass(parameters);" + "return new cache(this, null);" + "}")(parameters, H.closureFromTearOff, null);
   }
@@ -892,74 +892,69 @@
       return $constructor;
     },
     Closure__computeSignatureFunctionNewRti: function(functionType, isStatic, isIntercepted) {
-      var typeEvalMethod;
       if (typeof functionType == "number")
-        return function(getType, t) {
-          return function() {
-            return getType(t);
-          };
-        }(H.getTypeFromTypesTable, functionType);
+        return functionType;
       if (typeof functionType == "string") {
         if (isStatic)
           throw H.wrapException("Cannot compute signature for static tearoff.");
-        typeEvalMethod = isIntercepted ? H.BoundClosure_evalRecipeIntercepted : H.BoundClosure_evalRecipe;
         return function(recipe, evalOnReceiver) {
           return function() {
             return evalOnReceiver(this, recipe);
           };
-        }(functionType, typeEvalMethod);
+        }(functionType, H.BoundClosure_evalRecipe);
       }
       throw H.wrapException("Error in functionType of tearoff");
     },
     Closure_cspForwardCall: function(arity, needsDirectAccess, stubName, $function) {
-      var getSelf = H.BoundClosure_selfOf;
+      var getReceiver = H.BoundClosure_receiverOf;
       switch (needsDirectAccess ? -1 : arity) {
         case 0:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function() {
-              return S(this)[n]();
+              return receiverOf(this)[entry]();
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         case 1:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function(a) {
-              return S(this)[n](a);
+              return receiverOf(this)[entry](a);
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         case 2:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function(a, b) {
-              return S(this)[n](a, b);
+              return receiverOf(this)[entry](a, b);
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         case 3:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function(a, b, c) {
-              return S(this)[n](a, b, c);
+              return receiverOf(this)[entry](a, b, c);
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         case 4:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function(a, b, c, d) {
-              return S(this)[n](a, b, c, d);
+              return receiverOf(this)[entry](a, b, c, d);
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         case 5:
-          return function(n, S) {
+          return function(entry, receiverOf) {
             return function(a, b, c, d, e) {
-              return S(this)[n](a, b, c, d, e);
+              return receiverOf(this)[entry](a, b, c, d, e);
             };
-          }(stubName, getSelf);
+          }(stubName, getReceiver);
         default:
-          return function(f, s) {
+          return function(f, receiverOf) {
             return function() {
-              return f.apply(s(this), arguments);
+              return f.apply(receiverOf(this), arguments);
             };
-          }($function, getSelf);
+          }($function, getReceiver);
       }
     },
     Closure_forwardCallTo: function(stubName, $function, isIntercepted, needsDirectAccess) {
-      var arity, t1, selfName, t2, $arguments;
+      var arity, t1, selfName, t2, $arguments,
+        _s8_ = "receiver";
       if (isIntercepted)
         return H.Closure_forwardInterceptedCallTo(stubName, $function, needsDirectAccess);
       arity = $function.length;
@@ -973,8 +968,8 @@
         $.Closure_functionCounter = t1 + 1;
         selfName = "self" + t1;
         t1 = "return function(){var " + selfName + " = this.";
-        t2 = $.BoundClosure__selfFieldNameCache;
-        return new Function(t1 + (t2 == null ? $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self") : t2) + ";return " + selfName + "." + stubName + "();}")();
+        t2 = $.BoundClosure__receiverFieldNameCache;
+        return new Function(t1 + (t2 == null ? $.BoundClosure__receiverFieldNameCache = H.BoundClosure__computeFieldNamed(_s8_) : t2) + ";return " + selfName + "." + stubName + "();}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity).join(",");
       t1 = $.Closure_functionCounter;
@@ -983,66 +978,66 @@
       $.Closure_functionCounter = t1 + 1;
       $arguments += t1;
       t1 = "return function(" + $arguments + "){return this.";
-      t2 = $.BoundClosure__selfFieldNameCache;
-      return new Function(t1 + (t2 == null ? $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self") : t2) + "." + stubName + "(" + $arguments + ");}")();
+      t2 = $.BoundClosure__receiverFieldNameCache;
+      return new Function(t1 + (t2 == null ? $.BoundClosure__receiverFieldNameCache = H.BoundClosure__computeFieldNamed(_s8_) : t2) + "." + stubName + "(" + $arguments + ");}")();
     },
-    Closure_cspForwardInterceptedCall: function(arity, needsDirectAccess, $name, $function) {
-      var getSelf = H.BoundClosure_selfOf,
-        getReceiver = H.BoundClosure_receiverOf;
+    Closure_cspForwardInterceptedCall: function(arity, needsDirectAccess, stubName, $function) {
+      var getReceiver = H.BoundClosure_receiverOf,
+        getInterceptor = H.BoundClosure_interceptorOf;
       switch (needsDirectAccess ? -1 : arity) {
         case 0:
           throw H.wrapException(new H.RuntimeError("Intercepted function with no arguments."));
         case 1:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function() {
-              return s(this)[n](r(this));
+              return interceptorOf(this)[entry](receiverOf(this));
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         case 2:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function(a) {
-              return s(this)[n](r(this), a);
+              return interceptorOf(this)[entry](receiverOf(this), a);
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         case 3:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function(a, b) {
-              return s(this)[n](r(this), a, b);
+              return interceptorOf(this)[entry](receiverOf(this), a, b);
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         case 4:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function(a, b, c) {
-              return s(this)[n](r(this), a, b, c);
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c);
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         case 5:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function(a, b, c, d) {
-              return s(this)[n](r(this), a, b, c, d);
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c, d);
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         case 6:
-          return function(n, s, r) {
+          return function(entry, interceptorOf, receiverOf) {
             return function(a, b, c, d, e) {
-              return s(this)[n](r(this), a, b, c, d, e);
+              return interceptorOf(this)[entry](receiverOf(this), a, b, c, d, e);
             };
-          }($name, getSelf, getReceiver);
+          }(stubName, getInterceptor, getReceiver);
         default:
-          return function(f, s, r, a) {
+          return function(f, interceptorOf, receiverOf) {
             return function() {
-              a = [r(this)];
+              var a = [receiverOf(this)];
               Array.prototype.push.apply(a, arguments);
-              return f.apply(s(this), a);
+              return f.apply(interceptorOf(this), a);
             };
-          }($function, getSelf, getReceiver);
+          }($function, getInterceptor, getReceiver);
       }
     },
     Closure_forwardInterceptedCallTo: function(stubName, $function, needsDirectAccess) {
       var receiverField, arity, t1, t2, $arguments,
-        selfField = $.BoundClosure__selfFieldNameCache;
-      if (selfField == null)
-        selfField = $.BoundClosure__selfFieldNameCache = H.BoundClosure__computeFieldNamed("self");
+        interceptorField = $.BoundClosure__interceptorFieldNameCache;
+      if (interceptorField == null)
+        interceptorField = $.BoundClosure__interceptorFieldNameCache = H.BoundClosure__computeFieldNamed("interceptor");
       receiverField = $.BoundClosure__receiverFieldNameCache;
       if (receiverField == null)
         receiverField = $.BoundClosure__receiverFieldNameCache = H.BoundClosure__computeFieldNamed("receiver");
@@ -1051,7 +1046,7 @@
       if (t1)
         return H.Closure_cspForwardInterceptedCall(arity, needsDirectAccess, stubName, $function);
       if (arity === 1) {
-        t1 = "return function(){return this." + selfField + "." + stubName + "(this." + receiverField + ");";
+        t1 = "return function(){return this." + interceptorField + "." + stubName + "(this." + receiverField + ");";
         t2 = $.Closure_functionCounter;
         if (typeof t2 !== "number")
           return t2.$add();
@@ -1059,7 +1054,7 @@
         return new Function(t1 + t2 + "}")();
       }
       $arguments = "abcdefghijklmnopqrstuvwxyz".split("").splice(0, arity - 1).join(",");
-      t1 = "return function(" + $arguments + "){return this." + selfField + "." + stubName + "(this." + receiverField + ", " + $arguments + ");";
+      t1 = "return function(" + $arguments + "){return this." + interceptorField + "." + stubName + "(this." + receiverField + ", " + $arguments + ");";
       t2 = $.Closure_functionCounter;
       if (typeof t2 !== "number")
         return t2.$add();
@@ -1070,20 +1065,17 @@
       return H.Closure_fromTearOff(parameters);
     },
     BoundClosure_evalRecipe: function(closure, recipe) {
-      return H._Universe_evalInEnvironment(init.typeUniverse, H.instanceType(closure._self), recipe);
-    },
-    BoundClosure_evalRecipeIntercepted: function(closure, recipe) {
       return H._Universe_evalInEnvironment(init.typeUniverse, H.instanceType(closure._receiver), recipe);
-    },
-    BoundClosure_selfOf: function(closure) {
-      return closure._self;
     },
     BoundClosure_receiverOf: function(closure) {
       return closure._receiver;
     },
+    BoundClosure_interceptorOf: function(closure) {
+      return closure._interceptor;
+    },
     BoundClosure__computeFieldNamed: function(fieldName) {
       var t1, i, $name,
-        template = new H.BoundClosure("self", "receiver"),
+        template = new H.BoundClosure("receiver", "interceptor"),
         names = J.JSArray_markFixedList(Object.getOwnPropertyNames(template));
       for (t1 = names.length, i = 0; i < t1; ++i) {
         $name = names[i];
@@ -1337,8 +1329,8 @@
     StaticClosure: function StaticClosure() {
     },
     BoundClosure: function BoundClosure(t0, t1) {
-      this._self = t0;
-      this._receiver = t1;
+      this._receiver = t0;
+      this._interceptor = t1;
     },
     RuntimeError: function RuntimeError(t0) {
       this.message = t0;
@@ -2793,34 +2785,39 @@
       return true;
     },
     _isInterfaceSubtype: function(universe, s, sEnv, t, tEnv) {
-      var sArgs, tArgs, $length, i, t1, t2, rule, supertypeArgs,
+      var rule, recipes, $length, supertypeArgs, i, t1, t2,
         sName = s._primary,
         tName = t._primary;
-      if (sName === tName) {
-        sArgs = s._rest;
-        tArgs = t._rest;
-        $length = sArgs.length;
-        for (i = 0; i < $length; ++i) {
-          t1 = sArgs[i];
-          t2 = tArgs[i];
-          if (!H._isSubtype(universe, t1, sEnv, t2, tEnv))
-            return false;
-        }
-        return true;
-      }
-      if (t === type$.Object)
-        return true;
-      rule = H._Universe_findRule(universe, sName);
-      if (rule == null)
-        return false;
-      supertypeArgs = rule[tName];
-      if (supertypeArgs == null)
-        return false;
-      $length = supertypeArgs.length;
-      tArgs = t._rest;
-      for (i = 0; i < $length; ++i)
-        if (!H._isSubtype(universe, H._Universe_evalInEnvironment(universe, s, supertypeArgs[i]), sEnv, tArgs[i], tEnv))
+      for (; sName !== tName;) {
+        rule = universe.tR[sName];
+        if (rule == null)
           return false;
+        if (typeof rule == "string") {
+          sName = rule;
+          continue;
+        }
+        recipes = rule[tName];
+        if (recipes == null)
+          return false;
+        $length = recipes.length;
+        supertypeArgs = $length > 0 ? new Array($length) : null;
+        for (i = 0; i < $length; ++i)
+          supertypeArgs[i] = H._Universe_evalInEnvironment(universe, s, recipes[i]);
+        return H._areArgumentsSubtypes(universe, supertypeArgs, null, sEnv, t._rest, tEnv);
+      }
+      t1 = s._rest;
+      t2 = t._rest;
+      return H._areArgumentsSubtypes(universe, t1, null, sEnv, t2, tEnv);
+    },
+    _areArgumentsSubtypes: function(universe, sArgs, sVariances, sEnv, tArgs, tEnv) {
+      var i, t1, t2,
+        $length = sArgs != null ? sArgs.length : 0;
+      for (i = 0; i < $length; ++i) {
+        t1 = sArgs[i];
+        t2 = tArgs[i];
+        if (!H._isSubtype(universe, t1, sEnv, t2, tEnv))
+          return false;
+      }
       return true;
     },
     isNullable: function(t) {
@@ -5373,29 +5370,19 @@
   };
   H.BoundClosure.prototype = {
     $eq: function(_, other) {
-      var _this = this;
       if (other == null)
         return false;
-      if (_this === other)
+      if (this === other)
         return true;
       if (!(other instanceof H.BoundClosure))
         return false;
-      return _this._self === other._self && _this.$_target === other.$_target && _this._receiver === other._receiver;
+      return this.$_target === other.$_target && this._receiver === other._receiver;
     },
     get$hashCode: function(_) {
-      var receiverHashCode,
-        t1 = this._receiver;
-      if (t1 == null)
-        receiverHashCode = H.Primitives_objectHashCode(this._self);
-      else
-        receiverHashCode = typeof t1 !== "object" ? J.get$hashCode$(t1) : H.Primitives_objectHashCode(t1);
-      return (receiverHashCode ^ H.Primitives_objectHashCode(this.$_target)) >>> 0;
+      return (H.objectHashCode(this._receiver) ^ H.Primitives_objectHashCode(this.$_target)) >>> 0;
     },
     toString$0: function(_) {
-      var receiver = this._receiver;
-      if (receiver == null)
-        receiver = this._self;
-      return "Closure '" + this.$_name + "' of " + ("Instance of '" + H.Primitives_objectTypeName(receiver) + "'");
+      return "Closure '" + this.$_name + "' of " + ("Instance of '" + H.Primitives_objectTypeName(this._receiver) + "'");
     }
   };
   H.RuntimeError.prototype = {
@@ -10099,8 +10086,8 @@
   (function staticFields() {
     $._JS_INTEROP_INTERCEPTOR_TAG = null;
     $.Closure_functionCounter = 0;
-    $.BoundClosure__selfFieldNameCache = null;
     $.BoundClosure__receiverFieldNameCache = null;
+    $.BoundClosure__interceptorFieldNameCache = null;
     $.getTagFunction = null;
     $.alternateTagFunction = null;
     $.prototypeForTagFunction = null;
