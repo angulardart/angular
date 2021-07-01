@@ -313,7 +313,7 @@ String colorToHex(String value) {
 class FeaturePromoComponent {
   @HostBinding('attr.class')
   @Input()
-  String? positionClass;
+  String positionClass = '';
 }
 
 @Component(
@@ -324,11 +324,7 @@ class FeaturePromoComponent {
     </div>''',
 )
 class NgHostAttribShimTest {
-  String? myposition;
-
-  NgHostAttribShimTest() {
-    myposition = 'position-class';
-  }
+  var myposition = 'position-class';
 }
 
 @Component(
