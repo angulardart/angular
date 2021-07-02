@@ -239,9 +239,9 @@ abstract class ComponentView<T> extends RenderView {
 
   @dart2js.noInline
   @override
-  void updateChildClassNonHtml(Element element, String? newClass) {
+  void updateChildClassNonHtml(Element element, String newClass) {
     if (identical(element, rootElement)) {
-      componentStyles.updateChildClassForHost(element, newClass ?? '');
+      componentStyles.updateChildClassForHost(element, newClass);
       final parent = parentView;
       if (parent is RenderView) {
         parent.addShimE(element);

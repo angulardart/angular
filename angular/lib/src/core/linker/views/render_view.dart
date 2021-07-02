@@ -192,8 +192,8 @@ abstract class RenderView extends View {
 
   /// Similar to [updateChildClass], for an [element] not guaranteed to be HTML.
   @dart2js.noInline
-  void updateChildClassNonHtml(Element element, String? newClass) {
-    componentStyles.updateChildClass(element, newClass ?? '');
+  void updateChildClassNonHtml(Element element, String newClass) {
+    componentStyles.updateChildClass(element, newClass);
   }
 }
 
