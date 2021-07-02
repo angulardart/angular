@@ -1444,20 +1444,20 @@
     _substituteArray: function(universe, rtiArray, typeArguments, depth) {
       var changed, i, rti, substitutedRti,
         $length = rtiArray.length,
-        result = [];
+        result = H._Utils_newArrayOrEmpty($length);
       for (changed = false, i = 0; i < $length; ++i) {
         rti = rtiArray[i];
         substitutedRti = H._substitute(universe, rti, typeArguments, depth);
         if (substitutedRti !== rti)
           changed = true;
-        result.push(substitutedRti);
+        result[i] = substitutedRti;
       }
       return changed ? result : rtiArray;
     },
     _substituteNamed: function(universe, namedArray, typeArguments, depth) {
       var changed, i, t1, t2, rti, substitutedRti,
         $length = namedArray.length,
-        result = [];
+        result = H._Utils_newArrayOrEmpty($length);
       for (changed = false, i = 0; i < $length; i += 3) {
         t1 = namedArray[i];
         t2 = namedArray[i + 1];
@@ -1465,9 +1465,7 @@
         substitutedRti = H._substitute(universe, rti, typeArguments, depth);
         if (substitutedRti !== rti)
           changed = true;
-        result.push(t1);
-        result.push(t2);
-        result.push(substitutedRti);
+        result.splice(i, 3, t1, t2, substitutedRti);
       }
       return changed ? result : namedArray;
     },
@@ -1949,7 +1947,7 @@
       if (kind === 9) {
         $name = H._unminifyOrTag(rti._primary);
         $arguments = rti._rest;
-        return $arguments.length !== 0 ? $name + ("<" + H._rtiArrayToString($arguments, genericContext) + ">") : $name;
+        return $arguments.length > 0 ? $name + ("<" + H._rtiArrayToString($arguments, genericContext) + ">") : $name;
       }
       if (kind === 11)
         return H._functionRtiToString(rti, genericContext, null);
@@ -1986,9 +1984,9 @@
       else if (typeof probe == "number") {
         $length = probe;
         erased = H._Universe__lookupTerminalRti(universe, 5, "#");
-        $arguments = [];
+        $arguments = H._Utils_newArrayOrEmpty($length);
         for (i = 0; i < $length; ++i)
-          $arguments.push(erased);
+          $arguments[i] = erased;
         $interface = H._Universe__lookupInterfaceRti(universe, cls, $arguments);
         t1[cls] = $interface;
         return $interface;
@@ -2191,7 +2189,7 @@
     _Universe__lookupInterfaceRti: function(universe, $name, $arguments) {
       var probe, rti, t1,
         s = $name;
-      if ($arguments.length !== 0)
+      if ($arguments.length > 0)
         s += "<" + H._Universe__canonicalRecipeJoin($arguments) + ">";
       probe = universe.eC.get(s);
       if (probe != null)
@@ -2276,7 +2274,7 @@
       var $length, typeArguments, count, i, bound, substitutedBase, substitutedBounds, rti;
       if (normalize) {
         $length = bounds.length;
-        typeArguments = new Array($length);
+        typeArguments = H._Utils_newArrayOrEmpty($length);
         for (count = 0, i = 0; i < $length; ++i) {
           bound = bounds[i];
           if (bound._kind === 1) {
@@ -2727,7 +2725,7 @@
         if (recipes == null)
           return false;
         $length = recipes.length;
-        supertypeArgs = $length > 0 ? new Array($length) : null;
+        supertypeArgs = $length > 0 ? new Array($length) : init.typeUniverse.sEA;
         for (i = 0; i < $length; ++i)
           supertypeArgs[i] = H._Universe_evalInEnvironment(universe, s, recipes[i]);
         return H._areArgumentsSubtypes(universe, supertypeArgs, null, sEnv, t._rest, tEnv);
@@ -2738,7 +2736,7 @@
     },
     _areArgumentsSubtypes: function(universe, sArgs, sVariances, sEnv, tArgs, tEnv) {
       var i, t1, t2,
-        $length = sArgs != null ? sArgs.length : 0;
+        $length = sArgs.length;
       for (i = 0; i < $length; ++i) {
         t1 = sArgs[i];
         t2 = tArgs[i];
@@ -2788,6 +2786,9 @@
         key = keys[i];
         o[key] = other[key];
       }
+    },
+    _Utils_newArrayOrEmpty: function($length) {
+      return $length > 0 ? new Array($length) : init.typeUniverse.sEA;
     },
     Rti: function Rti(t0, t1) {
       var _ = this;
