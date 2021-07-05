@@ -8835,7 +8835,7 @@
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
       replacement = t4.get$rootElement(t4);
-      hostView.get$component().toString;
+      hostView.get$component();
       component = new D.ComponentRef(hostView, replacement, H._instanceType(hostView)._eval$1("ComponentRef<HostView.T>"));
       existing = t5.querySelector(t1.selector);
       if (existing != null) {
@@ -9921,10 +9921,9 @@
     detectChangesInternal$0: function() {
       var _this = this,
         _ctx = _this.get$ctx(),
-        t1 = _this.get$_NgIf_2_9(),
-        t2 = _ctx.isVisible;
-      t1.set$ngIf(t2);
-      _this.get$_NgIf_5_9().set$ngIf(t2);
+        t1 = _ctx.isVisible;
+      _this.get$_NgIf_2_9().set$ngIf(t1);
+      _this.get$_NgIf_5_9().set$ngIf(t1);
       _this.get$_appEl_0().detectChangesInNestedViews$0();
       _this.get$_appEl_2().detectChangesInNestedViews$0();
       _this.get$_appEl_5().detectChangesInNestedViews$0();

@@ -9134,7 +9134,7 @@
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
       replacement = t4.get$rootElement(t4);
-      hostView.get$component().toString;
+      hostView.get$component();
       component = new D.ComponentRef(hostView, replacement, H._instanceType(hostView)._eval$1("ComponentRef<HostView.T>"));
       existing = t5.querySelector(t1.selector);
       if (existing != null) {

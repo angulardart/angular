@@ -8607,7 +8607,7 @@
       hostView.get$componentView().createAndProject$2(hostView.get$component(), C.List_empty0);
       t4 = hostView.get$componentView();
       replacement = t4.get$rootElement(t4);
-      hostView.get$component().toString;
+      hostView.get$component();
       component = new D.ComponentRef(hostView, replacement, H._instanceType(hostView)._eval$1("ComponentRef<HostView.T>"));
       existing = t5.querySelector(t1.selector);
       if (existing != null) {
@@ -9670,8 +9670,7 @@
       t2 = _ctx.place;
       _this._textBinding_3.updateText$1(t2);
       _this._textBinding_7.updateText$1(t1);
-      t1 = _ctx.name;
-      _this._textBinding_9.updateText$1(t1);
+      _this._textBinding_9.updateText$1(_ctx.name);
       _this._textBinding_11.updateText$1(t2);
     }
   };
@@ -9704,12 +9703,10 @@
         H.throwExpression(H.LateError$fieldAI("_el_0"));
     },
     detectChangesInternal$0: function() {
-      var currVal_0, _this = this,
+      var _this = this,
         _ctx = _this.get$ctx(),
-        t1 = _ctx.title1,
-        t2 = _ctx.title2;
-      t1 += " ";
-      currVal_0 = t1 + t2;
+        t1 = _ctx.title1 + " ",
+        currVal_0 = t1 + _ctx.title2;
       t1 = _this._expr_0;
       if (t1 !== currVal_0) {
         t1 = _this.__ViewPropertyInterpolate0__el_0;
@@ -9752,12 +9749,10 @@
       _this.get$_compView_0().create$1(0, _this.get$_ChildComponent_0_5());
     },
     detectChangesInternal$0: function() {
-      var currVal_0, _this = this,
+      var _this = this,
         _ctx = _this.get$ctx(),
-        t1 = _ctx.a,
-        t2 = _ctx.b;
-      t1 += " ";
-      currVal_0 = t1 + t2;
+        t1 = _ctx.a + " ",
+        currVal_0 = t1 + _ctx.b;
       t1 = _this._expr_0;
       if (t1 !== currVal_0) {
         _this.get$_ChildComponent_0_5();

@@ -8891,7 +8891,7 @@
         H.throwExpression(H.LateError$fieldAI("_NgFor_2_9"));
       t4 = hostView.get$componentView();
       replacement = t4.get$rootElement(t4);
-      hostView.get$component().toString;
+      hostView.get$component();
       component = new D.ComponentRef(hostView, replacement, H._instanceType(hostView)._eval$1("ComponentRef<HostView.T>"));
       existing = t5.querySelector(t1.selector);
       if (existing != null) {
