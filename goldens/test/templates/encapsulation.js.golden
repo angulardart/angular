@@ -4191,6 +4191,16 @@
     RangeError$range: function(invalidValue, minValue, maxValue, $name, message) {
       return new P.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
     },
+    RangeError_checkValidRange: function(start, end, $length) {
+      if (0 > start || start > $length)
+        throw H.wrapException(P.RangeError$range(start, 0, $length, "start", null));
+      if (end != null) {
+        if (start > end || end > $length)
+          throw H.wrapException(P.RangeError$range(end, start, $length, "end", null));
+        return end;
+      }
+      return $length;
+    },
     IndexError$: function(invalidValue, indexable, $name, message, $length) {
       var t1 = $length == null ? J.get$length$asx(indexable) : $length;
       return new P.IndexError(t1, true, invalidValue, $name, "Index out of range");
@@ -5083,16 +5093,8 @@
     $add: function(receiver, other) {
       return receiver + other;
     },
-    substring$2: function(receiver, startIndex, endIndex) {
-      if (endIndex == null)
-        endIndex = receiver.length;
-      if (startIndex < 0)
-        throw H.wrapException(P.RangeError$value(startIndex, null));
-      if (startIndex > endIndex)
-        throw H.wrapException(P.RangeError$value(startIndex, null));
-      if (endIndex > receiver.length)
-        throw H.wrapException(P.RangeError$value(endIndex, null));
-      return receiver.substring(startIndex, endIndex);
+    substring$2: function(receiver, start, end) {
+      return receiver.substring(start, P.RangeError_checkValidRange(start, end, receiver.length));
     },
     toString$0: function(receiver) {
       return receiver;

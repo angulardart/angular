@@ -4328,7 +4328,7 @@
       return new P.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
     },
     RangeError_checkValidRange: function(start, end, $length) {
-      if (start > $length)
+      if (0 > start || start > $length)
         throw H.wrapException(P.RangeError$range(start, 0, $length, "start", null));
       if (end != null) {
         if (start > end || end > $length)
@@ -5303,19 +5303,11 @@
         return false;
       return pattern === receiver.substring(0, otherLength);
     },
-    substring$2: function(receiver, startIndex, endIndex) {
-      if (endIndex == null)
-        endIndex = receiver.length;
-      if (startIndex < 0)
-        throw H.wrapException(P.RangeError$value(startIndex, null));
-      if (startIndex > endIndex)
-        throw H.wrapException(P.RangeError$value(startIndex, null));
-      if (endIndex > receiver.length)
-        throw H.wrapException(P.RangeError$value(endIndex, null));
-      return receiver.substring(startIndex, endIndex);
+    substring$2: function(receiver, start, end) {
+      return receiver.substring(start, P.RangeError_checkValidRange(start, end, receiver.length));
     },
-    substring$1: function($receiver, startIndex) {
-      return this.substring$2($receiver, startIndex, null);
+    substring$1: function($receiver, start) {
+      return this.substring$2($receiver, start, null);
     },
     indexOf$1: function(receiver, pattern) {
       var t1 = receiver.indexOf(pattern, 0);
