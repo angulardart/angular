@@ -15,6 +15,7 @@ import 'view_container_ref.dart' show ViewContainerRef;
 class SlowComponentLoader {
   final ComponentLoader _loader;
 
+  @Deprecated('Use ComponentLoader with an imported ComponentFactory instead.')
   const SlowComponentLoader(this._loader);
 
   /// Creates and loads a new instance of the component defined by [type].

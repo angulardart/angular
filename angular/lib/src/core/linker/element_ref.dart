@@ -15,5 +15,6 @@ class ElementRef {
   //
   // Then it is upcasted to dynamic for the public API to be non-breaking.
   // ignore: prefer_initializing_formals
-  const ElementRef(Object nativeElement) : nativeElement = nativeElement;
+  @Deprecated('Inject or reference dart:html Element or HtmlElement instead')
+  const ElementRef(this.nativeElement);
 }
