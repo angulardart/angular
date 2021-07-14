@@ -396,7 +396,7 @@ class NgTestBed<T> {
       providers: providers ?? _providers,
       stabilizer: stabilizer ?? _createStabilizer,
       rootInjector: rootInjector ?? _rootInjector,
-      component: (component ?? _componentFactory) as ComponentFactory<E>,
+      component: (component ?? _componentFactory) as ComponentFactory<E>?,
     );
   }
 
