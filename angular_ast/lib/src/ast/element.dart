@@ -181,7 +181,10 @@ abstract class ElementAst implements StandaloneTemplateAst {
         ..write(' ');
     }
     if (closeComplement != null) {
-      buffer..write('closeComplement=')..write(closeComplement)..write(' ');
+      buffer
+        ..write('closeComplement=')
+        ..write(closeComplement)
+        ..write(' ');
     }
     return (buffer..write('}')).toString();
   }

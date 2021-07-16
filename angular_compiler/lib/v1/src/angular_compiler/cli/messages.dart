@@ -32,7 +32,9 @@ abstract class Messages {
     Iterable<SourceSpanMessageTuple> tuples, {
     required String reason,
   }) {
-    final buffer = StringBuffer(reason)..writeln()..writeln();
+    final buffer = StringBuffer(reason)
+      ..writeln()
+      ..writeln();
     for (final tuple in tuples) {
       buffer.writeln(tuple.sourceSpan.message(tuple.message));
     }

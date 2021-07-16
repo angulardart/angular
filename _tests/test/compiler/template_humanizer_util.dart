@@ -189,7 +189,9 @@ class _TemplateHumanizer implements TemplateAstVisitor<void, void> {
     if (value is BoundExpression) {
       res.add(_expressionUnparser.unparse(value.expression));
     } else if (value is BoundI18nMessage) {
-      res..add(value.message.text)..add(value.message.metadata.description);
+      res
+        ..add(value.message.text)
+        ..add(value.message.metadata.description);
       if (value.message.metadata.meaning != null) {
         res.add(value.message.metadata.meaning);
       }

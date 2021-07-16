@@ -349,7 +349,7 @@ class _ListCompileQuery extends CompileQuery {
     ProviderSource? boundDirective, {
     required int? nodeIndex,
     required int queryIndex,
-  })   : _nodeIndex = nodeIndex,
+  })  : _nodeIndex = nodeIndex,
         _queryIndex = queryIndex,
         super._base(metadata, queryRoot, boundDirective);
 

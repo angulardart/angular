@@ -5,7 +5,7 @@ dart:
 stages:
 - analyze:
   # Not running with --fatal-infos on dev due to some weird null checks
-  - dartanalyzer
+  - analyze
 - build:
   - command: pub run build_runner build --fail-on-severe
 - unit_test:

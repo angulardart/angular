@@ -5,10 +5,10 @@ dart:
 stages:
 - analyze:
   - group:
-    - dartanalyzer: --fatal-infos
+    - analyze: --fatal-infos
     dart: dev
   - group:
-    - dartanalyzer
+    - analyze
     dart: 2.12.0
 - build:
   - command: pub run build_runner build --fail-on-severe

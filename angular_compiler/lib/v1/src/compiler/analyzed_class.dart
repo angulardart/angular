@@ -33,7 +33,9 @@ class AnalyzedClass {
       {Map<String, DartType?> additionalLocals = const {}})
       : classElement = other.classElement,
         isMockLike = other.isMockLike,
-        locals = {}..addAll(other.locals)..addAll(additionalLocals);
+        locals = {}
+          ..addAll(other.locals)
+          ..addAll(additionalLocals);
 }
 
 /// Returns the [expression] type evaluated within context of [analyzedClass].

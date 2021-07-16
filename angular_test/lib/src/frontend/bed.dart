@@ -226,7 +226,7 @@ class NgTestBed<T> {
     required ComponentFactory<T> component,
     required InjectorFactory rootInjector,
     required bool watchAngularLifecycle,
-  })   : _host = host,
+  })  : _host = host,
         _providers = const [],
         _createStabilizer =
             watchAngularLifecycle ? _defaultStabilizers : _alwaysStable,

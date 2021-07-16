@@ -589,7 +589,9 @@ class _ComponentVisitor
 
     // Merge field and setter inputs, so that a derived field input binding is
     // not overridden by an inherited setter input.
-    _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+    _inputs
+      ..addAll(_fieldInputs)
+      ..addAll(_setterInputs);
     _fieldInputs.clear();
     _setterInputs.clear();
   }

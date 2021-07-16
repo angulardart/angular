@@ -93,9 +93,14 @@ class CssSelector {
     }
 
     for (var attr in attrs) {
-      attributeBuffer..write(' ')..write(attr.name);
+      attributeBuffer
+        ..write(' ')
+        ..write(attr.name);
       if (attr.value != null) {
-        attributeBuffer..write('="')..write(attr.value)..write('"');
+        attributeBuffer
+          ..write('="')
+          ..write(attr.value)
+          ..write('"');
       }
     }
     return (getHtmlTagDefinition(tagName).isVoid)
