@@ -5794,15 +5794,12 @@
     get$length(_) {
       return this.__js_helper$_length;
     },
-    _fetch$1(key) {
-      return this._jsObject[key];
-    },
     forEach$1(_, f) {
-      var t1, i, key,
+      var t1, t2, i, key,
         keys = this._keys;
-      for (t1 = keys.length, i = 0; i < t1; ++i) {
+      for (t1 = keys.length, t2 = this._jsObject, i = 0; i < t1; ++i) {
         key = keys[i];
-        f.call$2(key, this._fetch$1(key));
+        f.call$2(key, t2[key]);
       }
     }
   };
@@ -6047,28 +6044,31 @@
       return bucket[index].hashMapCellValue;
     },
     $indexSet(_, key, value) {
-      var strings, nums, rest, hash, bucket, index, _this = this;
+      var strings, nums, _this = this;
       if (typeof key == "string") {
         strings = _this._strings;
         _this._addHashTableEntry$3(strings == null ? _this._strings = _this._newHashTable$0() : strings, key, value);
       } else if (typeof key == "number" && (key & 0x3ffffff) === key) {
         nums = _this._nums;
         _this._addHashTableEntry$3(nums == null ? _this._nums = _this._newHashTable$0() : nums, key, value);
-      } else {
+      } else
+        _this.internalSet$2(key, value);
+    },
+    internalSet$2(key, value) {
+      var hash, bucket, index, _this = this,
         rest = _this.__js_helper$_rest;
-        if (rest == null)
-          rest = _this.__js_helper$_rest = _this._newHashTable$0();
-        hash = _this.internalComputeHashCode$1(key);
-        bucket = _this._getTableBucket$2(rest, hash);
-        if (bucket == null)
-          _this._setTableEntry$3(rest, hash, [_this._newLinkedCell$2(key, value)]);
-        else {
-          index = _this.internalFindBucketIndex$2(bucket, key);
-          if (index >= 0)
-            bucket[index].hashMapCellValue = value;
-          else
-            bucket.push(_this._newLinkedCell$2(key, value));
-        }
+      if (rest == null)
+        rest = _this.__js_helper$_rest = _this._newHashTable$0();
+      hash = _this.internalComputeHashCode$1(key);
+      bucket = _this._getTableBucket$2(rest, hash);
+      if (bucket == null)
+        _this._setTableEntry$3(rest, hash, [_this._newLinkedCell$2(key, value)]);
+      else {
+        index = _this.internalFindBucketIndex$2(bucket, key);
+        if (index >= 0)
+          bucket[index].hashMapCellValue = value;
+        else
+          bucket.push(_this._newLinkedCell$2(key, value));
       }
     },
     forEach$1(_, action) {
