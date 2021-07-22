@@ -70,13 +70,13 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     if (import12.isDevToolsEnabled) {
       import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.show);
     }
-    this._NgIf_0_9.ngIf = _ctx.show;
+    this._NgIf_0_9.ngIf = _ctx.show /* REF:asset:goldens/test/templates/directive_star_syntax.dart:442:454 */;
     final currVal_0 = _ctx.values;
     if (import13.checkBinding(this._expr_0, currVal_0, 'values', 'asset:goldens/test/templates/directive_star_syntax.dart')) {
       if (import12.isDevToolsEnabled) {
         import12.ComponentInspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_0);
       }
-      this._NgFor_2_9.ngForOf = currVal_0;
+      this._NgFor_2_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/directive_star_syntax.dart:513:571 */;
       this._expr_0 = currVal_0;
     }
     if ((!import13.debugThrowIfChanged)) {
@@ -133,7 +133,7 @@ class _ViewGoldenComponent1 extends import15.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_2.updateText(import18.interpolateString0(_ctx.value));
+    this._textBinding_2.updateText(import18.interpolateString0(_ctx.value)) /* REF:asset:goldens/test/templates/directive_star_syntax.dart:472:481 */;
   }
 }
 
@@ -164,9 +164,9 @@ class _ViewGoldenComponent2 extends import15.EmbeddedView<import1.GoldenComponen
     final local_index = import8.unsafeCast<int>(this.locals['index']);
     final local_v = import8.unsafeCast<int>(this.locals['\$implicit']);
     final local_odd = import8.unsafeCast<bool>(this.locals['odd']);
-    this._textBinding_1.updateTextWithPrimitive(local_index);
-    this._textBinding_3.updateTextWithPrimitive(local_v);
-    this._textBinding_5.updateTextWithPrimitive(local_odd);
+    this._textBinding_1.updateTextWithPrimitive(local_index) /* REF:asset:goldens/test/templates/directive_star_syntax.dart:581:590 */;
+    this._textBinding_3.updateTextWithPrimitive(local_v) /* REF:asset:goldens/test/templates/directive_star_syntax.dart:592:597 */;
+    this._textBinding_5.updateTextWithPrimitive(local_odd) /* REF:asset:goldens/test/templates/directive_star_syntax.dart:599:606 */;
   }
 }
 

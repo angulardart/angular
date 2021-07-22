@@ -65,7 +65,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import12.isDevToolsEnabled) {
         import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
       }
-      this._NgFor_1_9.ngForOf = currVal_0;
+      this._NgFor_1_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/nested_structural_directives.dart:462:488 */;
       this._expr_0 = currVal_0;
     }
     if ((!import11.debugThrowIfChanged)) {
@@ -128,7 +128,7 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
       if (import12.isDevToolsEnabled) {
         import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
       }
-      this._NgFor_1_9.ngForOf = currVal_0;
+      this._NgFor_1_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/nested_structural_directives.dart:502:525 */;
       this._expr_0 = currVal_0;
     }
     if ((!import11.debugThrowIfChanged)) {
@@ -175,11 +175,11 @@ class _ViewGoldenComponent2 extends import14.EmbeddedView<import1.GoldenComponen
     if (import12.isDevToolsEnabled) {
       import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', local_col.isEven);
     }
-    this._NgIf_1_9.ngIf = local_col.isEven;
+    this._NgIf_1_9.ngIf = local_col.isEven /* REF:asset:goldens/test/templates/nested_structural_directives.dart:551:569 */;
     if (import12.isDevToolsEnabled) {
       import12.ComponentInspector.instance.recordInput(this._NgIf_3_9, 'ngIf', local_col.isOdd);
     }
-    this._NgIf_3_9.ngIf = local_col.isOdd;
+    this._NgIf_3_9.ngIf = local_col.isOdd /* REF:asset:goldens/test/templates/nested_structural_directives.dart:647:664 */;
     this._appEl_1.detectChangesInNestedViews();
     this._appEl_3.detectChangesInNestedViews();
   }
@@ -207,7 +207,7 @@ class _ViewGoldenComponent3 extends import14.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final local_col = import7.unsafeCast<int>(import7.unsafeCast<_ViewGoldenComponent2>((this.parentView!)).locals['\$implicit']);
-    this._textBinding_1.updateTextWithPrimitive(local_col);
+    this._textBinding_1.updateTextWithPrimitive(local_col) /* REF:asset:goldens/test/templates/nested_structural_directives.dart:589:596 */;
   }
 }
 
@@ -227,7 +227,7 @@ class _ViewGoldenComponent4 extends import14.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final local_col = import7.unsafeCast<int>(import7.unsafeCast<_ViewGoldenComponent2>((this.parentView!)).locals['\$implicit']);
-    this._textBinding_1.updateTextWithPrimitive(local_col);
+    this._textBinding_1.updateTextWithPrimitive(local_col) /* REF:asset:goldens/test/templates/nested_structural_directives.dart:683:690 */;
   }
 }
 

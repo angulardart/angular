@@ -753,6 +753,7 @@ class _ComponentVisitor
       encapsulation: _encapsulation(template),
       template: templateContent,
       templateUrl: templateUrl,
+      templateOffset: _templateOffsetForAnnotation(annotationInfo),
       styles: coerceStringList(template, 'styles'),
       styleUrls: coerceStringList(template, 'styleUrls'),
       preserveWhitespace: coerceBool(
@@ -761,6 +762,28 @@ class _ComponentVisitor
         defaultTo: false,
       ),
     );
+  }
+
+  int _templateOffsetForAnnotation(AnnotationInformation annotationInfo) {
+    var templateExpression =
+        (annotationInfo.annotation as ElementAnnotationImpl)
+            .annotationAst
+            .arguments
+            ?.arguments
+            .firstWhereOrNull((argument) =>
+                argument is NamedExpression &&
+                argument.name.label.name == 'template') as NamedExpression?;
+    if (templateExpression != null) {
+      if (templateExpression.expression is SingleStringLiteral) {
+        return (templateExpression.expression as SingleStringLiteral)
+            .contentsOffset;
+      }
+      if (templateExpression.expression is AdjacentStrings) {
+        var offset = (templateExpression.expression as AdjacentStrings).offset;
+        return offset;
+      }
+    }
+    return 0;
   }
 
   ViewEncapsulation _encapsulation(DartObject? value) => coerceEnum(

@@ -112,7 +112,19 @@ abstract class AbstractEmitterVisitor
   void visitExpressionStmt(
       o.ExpressionStatement stmt, EmitterVisitorContext context) {
     stmt.expr.visitExpression(this, context);
-    context.println(';');
+
+    var sourceComment = '';
+    var sourceReference = stmt.sourceReference;
+    if (sourceReference != null && sourceReference.sourceUrl != null) {
+      sourceComment = '/* REF:'
+          '${sourceReference.sourceUrl}'
+          ':'
+          '${sourceReference.startOffset}'
+          ':'
+          '${sourceReference.endOffset}'
+          ' */';
+    }
+    context.println('$sourceComment;');
   }
 
   @override

@@ -71,18 +71,18 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_0_5, 'raised', true);
       }
-      this._FancyButtonComponent_0_5.raised = true;
+      this._FancyButtonComponent_0_5.raised = true /* REF:asset:goldens/test/change_detection/boolean_coerced_inputs.dart:487:493 */;
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_1_5, 'raised', true);
       }
-      this._FancyButtonComponent_1_5.raised = true;
+      this._FancyButtonComponent_1_5.raised = true /* REF:asset:goldens/test/change_detection/boolean_coerced_inputs.dart:528:536 */;
     }
     final currVal_2 = _ctx.value;
     if (import9.checkBinding(this._expr_2, currVal_2, 'value', 'asset:goldens/test/change_detection/boolean_coerced_inputs.dart')) {
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._FancyButtonComponent_2_5, 'raised', currVal_2);
       }
-      this._FancyButtonComponent_2_5.raised = currVal_2;
+      this._FancyButtonComponent_2_5.raised = currVal_2 /* REF:asset:goldens/test/change_detection/boolean_coerced_inputs.dart:610:626 */;
       this._expr_2 = currVal_2;
     }
     this._compView_0.detectChanges();

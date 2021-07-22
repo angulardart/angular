@@ -59,7 +59,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'a', currVal_0);
       }
-      this._UsesAfterChanges_0_5.a = currVal_0;
+      this._UsesAfterChanges_0_5.a = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/after_changes.dart:434:441 */;
       changed = true;
       this._expr_0 = currVal_0;
     }
@@ -68,7 +68,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'b', currVal_1);
       }
-      this._UsesAfterChanges_0_5.b = currVal_1;
+      this._UsesAfterChanges_0_5.b = currVal_1 /* REF:asset:goldens/test/lifecycle_hooks/after_changes.dart:442:449 */;
       changed = true;
       this._expr_1 = currVal_1;
     }
@@ -77,7 +77,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._UsesAfterChanges_0_5, 'c', currVal_2);
       }
-      this._UsesAfterChanges_0_5.c = currVal_2;
+      this._UsesAfterChanges_0_5.c = currVal_2 /* REF:asset:goldens/test/lifecycle_hooks/after_changes.dart:450:457 */;
       changed = true;
       this._expr_2 = currVal_2;
     }

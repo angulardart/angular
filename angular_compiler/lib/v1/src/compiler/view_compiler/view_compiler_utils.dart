@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show
         CompileTokenMetadata,
@@ -346,11 +345,10 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
       var value = convertHostAttributeToBinding(
           name,
           ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]!),
-          directiveMeta.analyzedClass);
+          directiveMeta);
       var prevValue = result[name];
       result[name] = prevValue != null
-          ? _mergeAttributeValue(
-              name, prevValue, value, directiveMeta.analyzedClass)
+          ? _mergeAttributeValue(name, prevValue, value, directiveMeta)
           : value;
     }
   }
@@ -381,12 +379,8 @@ void _increment(Map<String, int> mergeCount, String name) {
   mergeCount[name] = (mergeCount[name] as int) + 1;
 }
 
-ir.Binding _mergeAttributeValue(
-  String attrName,
-  ir.Binding attr1,
-  ir.Binding attr2,
-  AnalyzedClass? analyzedClass,
-) {
+ir.Binding _mergeAttributeValue(String attrName, ir.Binding attr1,
+    ir.Binding attr2, CompileDirectiveMetadata? compileDirectiveMetadata) {
   if (attrName != classAttrName && attrName != styleAttrName) {
     return attr2;
   }
@@ -412,7 +406,7 @@ ir.Binding _mergeAttributeValue(
             ast.ASTWithSource.missingSource(ast.Interpolation(
                 ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)])),
             null,
-            analyzedClass));
+            compileDirectiveMetadata));
   }
 }
 

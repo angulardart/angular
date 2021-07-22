@@ -1,4 +1,4 @@
-import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/optimize_ir/merge_events.dart';
 import 'package:angular_compiler/v1/src/compiler/optimize_ir/optimize_lifecycles.dart';
@@ -10,17 +10,17 @@ import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_element.d
 ir.Element convertElement(
   ast.ElementAst elementAst,
   CompileElement compileElement,
-  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata? compileDirectiveMetadata,
 ) {
   var inputs = convertAllToBinding(
     elementAst.inputs,
-    analyzedClass: analyzedClass,
+    compileDirectiveMetadata: compileDirectiveMetadata,
     compileElement: compileElement,
   );
 
   var outputs = convertAllToBinding(
     elementAst.outputs,
-    analyzedClass: analyzedClass,
+    compileDirectiveMetadata: compileDirectiveMetadata,
     compileElement: compileElement,
   );
 
@@ -29,7 +29,7 @@ ir.Element convertElement(
   var directives = convertMatchedDirectives(
     elementAst.directives,
     compileElement,
-    analyzedClass,
+    compileDirectiveMetadata!,
   );
   directives = directives.map(optimizeLifecycles).toList();
 
@@ -40,10 +40,13 @@ ir.Element convertElement(
 ir.Element convertEmbeddedTemplate(
   ast.EmbeddedTemplateAst embeddedTemplate,
   CompileElement compileElement,
-  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata compileDirectiveMetadata,
 ) {
   var directives = convertMatchedDirectives(
-      embeddedTemplate.directives, compileElement, analyzedClass);
+    embeddedTemplate.directives,
+    compileElement,
+    compileDirectiveMetadata,
+  );
   directives = directives.map(optimizeLifecycles).toList();
 
   var embeddedView = ir.EmbeddedView(

@@ -66,7 +66,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._Child_0_5, 'name', currVal_0);
       }
-      this._Child_0_5.name = currVal_0;
+      this._Child_0_5.name = currVal_0 /* REF:asset:goldens/test/change_detection/default.dart:443:456 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.name;
@@ -74,7 +74,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       if (import8.isDevToolsEnabled) {
         import8.ComponentInspector.instance.recordInput(this._ChildWithDoCheck_1_5, 'name', currVal_1);
       }
-      this._ChildWithDoCheck_1_5.name = currVal_1;
+      this._ChildWithDoCheck_1_5.name = currVal_1 /* REF:asset:goldens/test/change_detection/default.dart:491:504 */;
       this._expr_1 = currVal_1;
     }
     if ((!import7.debugThrowIfChanged)) {
@@ -159,7 +159,7 @@ class ViewChild0 extends import0.ComponentView<import1.Child> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name)) /* REF:asset:goldens/test/change_detection/default.dart:648:656 */;
   }
 
   static void _debugClearComponentStyles() {
@@ -231,7 +231,7 @@ class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoChe
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name)) /* REF:asset:goldens/test/change_detection/default.dart:771:779 */;
   }
 
   static void _debugClearComponentStyles() {

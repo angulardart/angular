@@ -287,7 +287,7 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._UntypedComp_0_5, 'input', currVal_0);
       }
-      this._UntypedComp_0_5.input = currVal_0;
+      this._UntypedComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:1531:1548 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -440,7 +440,7 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
       }
-      this._GenericComp_0_5.input = currVal_0;
+      this._GenericComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:1965:1982 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -530,7 +530,7 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
       }
-      this._GenericComp_0_5.input = currVal_0;
+      this._GenericComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:2303:2320 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -684,7 +684,7 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._MappingComp1_0_5, 'key', currVal_0);
       }
-      this._MappingComp1_0_5.key = currVal_0;
+      this._MappingComp1_0_5.key = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:2811:2826 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindValue;
@@ -692,7 +692,7 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._MappingComp1_0_5, 'value', currVal_1);
       }
-      this._MappingComp1_0_5.value = currVal_1;
+      this._MappingComp1_0_5.value = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:2827:2846 */;
       this._expr_1 = currVal_1;
     }
     this._compView_0.detectChanges();
@@ -845,7 +845,7 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._MappingComp2_0_5, 'input', currVal_0);
       }
-      this._MappingComp2_0_5.input = currVal_0;
+      this._MappingComp2_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:3337:3354 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -998,7 +998,7 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
       }
-      this._BoundComp_0_5.input = currVal_0;
+      this._BoundComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:3763:3780 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -1088,7 +1088,7 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
       }
-      this._BoundComp_0_5.input = currVal_0;
+      this._BoundComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:4070:4087 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -1242,7 +1242,7 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._SelfBoundComp_0_5, 'a', currVal_0);
       }
-      this._SelfBoundComp_0_5.a = currVal_0;
+      this._SelfBoundComp_0_5.a = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:4482:4493 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.bindB;
@@ -1250,7 +1250,7 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._SelfBoundComp_0_5, 'b', currVal_1);
       }
-      this._SelfBoundComp_0_5.b = currVal_1;
+      this._SelfBoundComp_0_5.b = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:4494:4505 */;
       this._expr_1 = currVal_1;
     }
     this._compView_0.detectChanges();
@@ -1403,7 +1403,7 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._FunctionTypeComp_0_5, 'input', currVal_0);
       }
-      this._FunctionTypeComp_0_5.input = currVal_0;
+      this._FunctionTypeComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:4987:5004 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -1510,7 +1510,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
       }
-      this._NestedChildComp_0_5.input = currVal_0;
+      this._NestedChildComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:5391:5407 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.input2;
@@ -1518,7 +1518,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedChildComp_1_5, 'input', currVal_1);
       }
-      this._NestedChildComp_1_5.input = currVal_1;
+      this._NestedChildComp_1_5.input = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:5428:5444 */;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreInputs;
@@ -1526,7 +1526,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_2);
       }
-      this._NgFor_2_9.ngForOf = currVal_2;
+      this._NgFor_2_9.ngForOf = currVal_2 /* REF:asset:goldens/test/templates/generic_directives.dart:5465:5497 */;
       this._expr_2 = currVal_2;
     }
     if ((!import9.debugThrowIfChanged)) {
@@ -1591,7 +1591,7 @@ class _ViewNestedParentComp1<T> extends import16.EmbeddedView<import1.NestedPare
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
       }
-      this._NestedChildComp_0_5.input = currVal_0;
+      this._NestedChildComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:5498:5513 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -1726,7 +1726,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'input1', currVal_0);
       }
-      this._NestedParentComp_0_5.input1 = currVal_0;
+      this._NestedParentComp_0_5.input1 = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:5991:6010 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.binding2;
@@ -1734,7 +1734,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'input2', currVal_1);
       }
-      this._NestedParentComp_0_5.input2 = currVal_1;
+      this._NestedParentComp_0_5.input2 = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:6017:6036 */;
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.moreBindings;
@@ -1742,7 +1742,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._NestedParentComp_0_5, 'moreInputs', currVal_2);
       }
-      this._NestedParentComp_0_5.moreInputs = currVal_2;
+      this._NestedParentComp_0_5.moreInputs = currVal_2 /* REF:asset:goldens/test/templates/generic_directives.dart:6043:6070 */;
       this._expr_2 = currVal_2;
     }
     this._compView_0.detectChanges();
@@ -1840,7 +1840,7 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
       }
-      this._GenericComp_0_5.input = currVal_0;
+      this._GenericComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:6434:6448 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.index;
@@ -1848,7 +1848,7 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._GenericComp_1_5, 'input', currVal_1);
       }
-      this._GenericComp_1_5.input = currVal_1;
+      this._GenericComp_1_5.input = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:6467:6482 */;
       this._expr_1 = currVal_1;
     }
     this._compView_0.detectChanges();
@@ -1939,7 +1939,7 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
       if (import10.isDevToolsEnabled) {
         import10.ComponentInspector.instance.recordInput(this._GenericDirective_0_5.instance, 'input', currVal_0);
       }
-      this._GenericDirective_0_5.instance.input = currVal_0;
+      this._GenericDirective_0_5.instance.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:6907:6922 */;
       this._expr_0 = currVal_0;
     }
     this._GenericDirective_0_5.detectHostChanges(this, this._el_0);

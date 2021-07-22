@@ -96,7 +96,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       return;
     }
     _visitText(
-      convertToBinding(ast, _view.component.analyzedClass),
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
       parent,
       ast.ngContentIndex,
     );
@@ -110,12 +110,20 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       }
       return;
     }
-    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
+    _visitText(
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
+      parent,
+      ast.ngContentIndex,
+    );
   }
 
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
+    _visitText(
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
+      parent,
+      ast.ngContentIndex,
+    );
   }
 
   bool _maybeSkipNode(CompileElement parent, int? ngContentIndex) {
@@ -634,7 +642,7 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
   // Write literal attribute values on element.
   view.component.hostAttributes.forEach((name, value) {
     var binding = convertHostAttributeToBinding(
-        name, ASTWithSource.missingSource(value), view.component.analyzedClass);
+        name, ASTWithSource.missingSource(value), view.component);
     var statements = view.createAttributeStatements(
       binding,
       tagName,

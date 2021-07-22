@@ -71,7 +71,9 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
       return;
     }
     bindRenderText(
-        convertToBinding(ast, view.component.analyzedClass), node, view);
+        convertToBinding(ast, compileDirectiveMetadata: view.component),
+        node,
+        view);
   }
 
   @override
@@ -87,9 +89,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitElement(ElementAst ast, _) {
     var element = convertElement(
-        ast,
-        view.nodes[_nodeIndex++] as CompileElement,
-        view.component.analyzedClass);
+        ast, view.nodes[_nodeIndex++] as CompileElement, view.component);
     var compileElement = element.compileElement!;
 
     bindRenderInputs(element.inputs, compileElement);
@@ -118,9 +118,7 @@ class _ViewBinderVisitor implements TemplateAstVisitor<void, void> {
   @override
   void visitEmbeddedTemplate(EmbeddedTemplateAst ast, _) {
     var element = convertEmbeddedTemplate(
-        ast,
-        view.nodes[_nodeIndex++] as CompileElement,
-        view.component.analyzedClass);
+        ast, view.nodes[_nodeIndex++] as CompileElement, view.component);
     var compileElement = element.compileElement!;
     for (var directive in element.matchedDirectives) {
       bindDirectiveInputs(directive.inputs, directive, compileElement);
@@ -198,7 +196,7 @@ void _bindViewHostProperties(
   bindAndWriteToRenderer(
     convertAllToBinding(
       hostProperties,
-      analyzedClass: view.component.analyzedClass,
+      compileDirectiveMetadata: view.component,
       compileElement: compileElement,
     ),
     converter,

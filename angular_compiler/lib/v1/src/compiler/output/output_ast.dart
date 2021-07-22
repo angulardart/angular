@@ -1,3 +1,5 @@
+import 'package:angular_compiler/v1/src/compiler/ir/model.dart';
+
 import '../compile_metadata.dart' show CompileIdentifierMetadata;
 
 /// Supported modifiers for [OutputType].
@@ -813,6 +815,7 @@ var NULL_EXPR = LiteralExpr(null, null);
 enum StmtModifier { Const, Final, Late, Private, Static }
 
 abstract class Statement {
+  SourceReference? sourceReference;
   List<StmtModifier> modifiers;
   Statement([this.modifiers = const []]);
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context);
@@ -1264,7 +1267,12 @@ class ExpressionTransformer<C>
 
   @override
   Statement visitExpressionStmt(ExpressionStatement stmt, C context) {
-    return ExpressionStatement(stmt.expr.visitExpression(this, context));
+    return ExpressionStatement(stmt.expr.visitExpression(this, context))
+      // We visit expression statements after the sourceReference is already
+      // set. Ideally we should visit all statements prior to calling
+      // `bindingToUpdateStatements` which attaches the correct sourceReference
+      // information.
+      ..sourceReference = stmt.sourceReference;
   }
 
   @override

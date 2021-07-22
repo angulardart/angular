@@ -24,32 +24,38 @@ import 'package:angular_compiler/v2/context.dart';
 /// inputs that need the underlying directive for context.
 List<ir.Binding> convertAllToBinding(
   List<ast.TemplateAst> nodes, {
-  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata? compileDirectiveMetadata,
   CompileDirectiveMetadata? directive,
   CompileElement? compileElement,
 }) =>
     ast.templateVisitAll(
       _ToBindingVisitor(),
       nodes,
-      _IrBindingContext(analyzedClass, directive, compileElement),
+      _IrBindingContext(compileDirectiveMetadata, directive, compileElement),
     );
 
 /// Converts a single [ast.TemplateAst] node into an [ir.Binding] instance.
 ir.Binding convertToBinding(
-        ast.TemplateAst node, AnalyzedClass? analyzedClass) =>
+  ast.TemplateAst node, {
+  CompileDirectiveMetadata? directive,
+  CompileDirectiveMetadata? compileDirectiveMetadata,
+  CompileElement? compileElement,
+}) =>
     node.visit(
       _ToBindingVisitor(),
-      _IrBindingContext(analyzedClass, null, null),
+      _IrBindingContext(compileDirectiveMetadata, directive, compileElement),
     );
 
 /// Converts a host attribute to an [ir.Binding] instance.
 ///
 /// Currently host attributes are represented as a map from [name] to [value].
 // TODO(b/130184376): Create a better HostAttribute representation.
-ir.Binding convertHostAttributeToBinding(String name,
-        expression_ast.ASTWithSource value, AnalyzedClass? analyzedClass) =>
+ir.Binding convertHostAttributeToBinding(
+        String name,
+        expression_ast.ASTWithSource value,
+        CompileDirectiveMetadata compileDirectiveMetadata) =>
     ir.Binding(
-        source: ir.BoundExpression(value, null, analyzedClass),
+        source: ir.BoundExpression(value, null, compileDirectiveMetadata),
         target: _attributeName(name));
 
 /// Converts a host listener to an [ir.Binding] instance.
@@ -86,7 +92,10 @@ class _ToBindingVisitor
   ir.Binding visitBoundText(ast.BoundTextAst ast, _IrBindingContext context) =>
       ir.Binding(
           source: ir.BoundExpression(
-              ast.value, ast.sourceSpan, context.analyzedClass),
+            ast.value,
+            ast.sourceSpan,
+            context.compileDirectiveMetadata,
+          ),
           target: ir.TextBinding());
 
   @override
@@ -107,8 +116,7 @@ class _ToBindingVisitor
   ir.Binding visitElementProperty(
           ast.BoundElementPropertyAst ast, _IrBindingContext context) =>
       ir.Binding(
-        source:
-            _boundValueToIr(ast.value, ast.sourceSpan, context.analyzedClass),
+        source: _boundValueToIr(ast.value, ast.sourceSpan, context),
         target: _propertyToIr(ast),
       );
 
@@ -143,8 +151,7 @@ class _ToBindingVisitor
   ir.Binding visitDirectiveProperty(
           ast.BoundDirectivePropertyAst input, _IrBindingContext context) =>
       ir.Binding(
-        source: _boundValueToIr(
-            input.value, input.sourceSpan, context.analyzedClass),
+        source: _boundValueToIr(input.value, input.sourceSpan, context),
         target: ir.InputBinding(
           input.memberName,
           input.templateName,
@@ -177,12 +184,13 @@ class _ToBindingVisitor
   }
 
   ir.BindingSource _boundValueToIr(
-    ast.BoundValue value,
-    SourceSpan sourceSpan,
-    AnalyzedClass? analyzedClass,
-  ) {
+      ast.BoundValue value, SourceSpan sourceSpan, _IrBindingContext context) {
     if (value is ast.BoundExpression) {
-      return ir.BoundExpression(value.expression, sourceSpan, analyzedClass);
+      return ir.BoundExpression(
+        value.expression,
+        sourceSpan,
+        context.compileDirectiveMetadata,
+      );
     } else if (value is ast.BoundI18nMessage) {
       return ir.BoundI18nMessage(value.message);
     }
@@ -246,13 +254,14 @@ class _ToBindingVisitor
 }
 
 class _IrBindingContext {
-  final AnalyzedClass? analyzedClass;
+  final CompileDirectiveMetadata? compileDirectiveMetadata;
 
   /// The target directive for any Input/Output bindings.
   final CompileDirectiveMetadata? directive;
   final CompileElement? compileElement;
 
-  _IrBindingContext(this.analyzedClass, this.directive, this.compileElement);
+  _IrBindingContext(
+      this.compileDirectiveMetadata, this.directive, this.compileElement);
 
   /// Lookup the [ProviderSource] for a [directive] matched on the element in
   /// context.
@@ -327,7 +336,8 @@ expression_ast.ASTWithSource _handlerExpression(
   }
   return rewriteTearOff(
     handlerAst,
-    handler.hostDirective?.analyzedClass ?? context.analyzedClass!,
+    handler.hostDirective?.analyzedClass ??
+        context.compileDirectiveMetadata!.analyzedClass!,
   );
 }
 

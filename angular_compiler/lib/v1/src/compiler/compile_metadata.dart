@@ -412,6 +412,7 @@ class CompileTemplateMetadata {
   final ViewEncapsulation? encapsulation;
   final String? template;
   final String? templateUrl;
+  final int templateOffset;
   final bool? preserveWhitespace;
   final List<String> styles;
   final List<String> styleUrls;
@@ -420,6 +421,7 @@ class CompileTemplateMetadata {
       {this.encapsulation = ViewEncapsulation.Emulated,
       this.template,
       this.templateUrl,
+      this.templateOffset = 0,
       this.preserveWhitespace = false,
       this.styles = const [],
       this.styleUrls = const [],

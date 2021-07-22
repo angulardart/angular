@@ -1,5 +1,4 @@
 import 'package:source_span/source_span.dart';
-import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/expression_parser/ast.dart'
     as ast;
@@ -22,13 +21,13 @@ class DirectiveConverter {
       ir.Directive(
         name: directiveMeta.identifier!.name,
         typeParameters: directiveMeta.originType!.typeParameters,
-        hostProperties: _hostProperties(
-            directiveMeta.hostProperties, directiveMeta.analyzedClass),
+        hostProperties:
+            _hostProperties(directiveMeta.hostProperties, directiveMeta),
         metadata: directiveMeta,
       );
 
-  List<ir.Binding> _hostProperties(
-      Map<String, ast.AST> hostProps, AnalyzedClass? analyzedClass) {
+  List<ir.Binding> _hostProperties(Map<String, ast.AST> hostProps,
+      CompileDirectiveMetadata? compileDirectiveMetadata) {
     // TODO(b/130184376): Create better HostProperties representation in
     //  CompileMetadata.
     final hostProperties = hostProps.entries.map((entry) {
@@ -43,7 +42,8 @@ class DirectiveConverter {
       );
     }).toList();
 
-    return convertAllToBinding(hostProperties, analyzedClass: analyzedClass);
+    return convertAllToBinding(hostProperties,
+        compileDirectiveMetadata: compileDirectiveMetadata);
   }
 
   static const _securityContextElementName = 'div';

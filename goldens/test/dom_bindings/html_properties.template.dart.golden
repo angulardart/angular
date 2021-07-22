@@ -77,31 +77,31 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _ctx = this.ctx;
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
-      this.updateChildClass(this._el_1, 'static');
-      import7.updateClassBinding(this._el_2, 'static', true);
+      this.updateChildClass(this._el_1, 'static') /* REF:asset:goldens/test/dom_bindings/html_properties.dart:549:567 */;
+      import7.updateClassBinding(this._el_2, 'static', true) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:584:605 */;
     }
     final currVal_2 = _ctx.string;
     if (import8.checkBinding(this._expr_2, currVal_2, 'string', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      this.updateChildClass(this._el_3, currVal_2);
+      this.updateChildClass(this._el_3, currVal_2) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:660:676 */;
       this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.boolean;
     if (import8.checkBinding(this._expr_3, currVal_3, 'boolean', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      import7.updateClassBinding(this._el_4, 'dynamic', currVal_3);
+      import7.updateClassBinding(this._el_4, 'dynamic', currVal_3) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:693:718 */;
       this._expr_3 = currVal_3;
     }
     if (firstCheck) {
-      import7.setAttribute(this._el_6, 'role', 'progressbar');
-      import7.updateAttribute(this._el_7, 'disabled', (true ? '' : null));
+      import7.setAttribute(this._el_6, 'role', 'progressbar') /* REF:asset:goldens/test/dom_bindings/html_properties.dart:810:837 */;
+      import7.updateAttribute(this._el_7, 'disabled', (true ? '' : null)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:854:879 */;
     }
     final currVal_6 = _ctx.string;
     if (import8.checkBinding(this._expr_6, currVal_6, 'string', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      import7.updateAttribute(this._el_8, 'role', currVal_6);
+      import7.updateAttribute(this._el_8, 'role', currVal_6) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:937:957 */;
       this._expr_6 = currVal_6;
     }
     final currVal_7 = _ctx.boolean;
     if (import8.checkBinding(this._expr_7, currVal_7, 'boolean', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      import7.updateAttribute(this._el_9, 'disabled', (currVal_7 ? '' : null));
+      import7.updateAttribute(this._el_9, 'disabled', (currVal_7 ? '' : null)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:974:1002 */;
       this._expr_7 = currVal_7;
     }
     this._compView_10.detectChanges();
@@ -203,25 +203,25 @@ class ViewSanitizedComponent0 extends import0.ComponentView<import1.SanitizedCom
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
       if ((_ctx.googleDotCom != null)) {
-        import7.setProperty(this._el_4, 'href', import11.sanitizeUrl(_ctx.googleDotCom));
+        import7.setProperty(this._el_4, 'href', import11.sanitizeUrl(_ctx.googleDotCom)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:1298:1319 */;
       }
     }
     final currVal_1 = _ctx.maybeUnsafe;
     if (import8.checkBinding(this._expr_1, currVal_1, 'maybeUnsafe', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      import7.setProperty(this._el_6, 'href', import11.sanitizeUrl(currVal_1));
+      import7.setProperty(this._el_6, 'href', import11.sanitizeUrl(currVal_1)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:1332:1352 */;
       this._expr_1 = currVal_1;
     }
     if (firstCheck) {
       if ((_ctx.youtubeUrl != null)) {
-        import7.setProperty(this._el_9, 'src', import11.sanitizeResourceUrl(_ctx.youtubeUrl));
+        import7.setProperty(this._el_9, 'src', import11.sanitizeResourceUrl(_ctx.youtubeUrl)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:1488:1506 */;
       }
       if ((_ctx.safeHtml != null)) {
-        import7.setProperty(this._el_10, 'innerHTML', import11.sanitizeHtml(_ctx.safeHtml));
+        import7.setProperty(this._el_10, 'innerHTML', import11.sanitizeHtml(_ctx.safeHtml)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:1566:1588 */;
       }
     }
     final currVal_4 = _ctx.maybeUnsafe;
     if (import8.checkBinding(this._expr_4, currVal_4, 'maybeUnsafe', 'asset:goldens/test/dom_bindings/html_properties.dart')) {
-      import7.setProperty(this._el_11, 'innerHTML', import11.sanitizeHtml(currVal_4));
+      import7.setProperty(this._el_11, 'innerHTML', import11.sanitizeHtml(currVal_4)) /* REF:asset:goldens/test/dom_bindings/html_properties.dart:1605:1630 */;
       this._expr_4 = currVal_4;
     }
   }
