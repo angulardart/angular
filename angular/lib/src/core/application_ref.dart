@@ -100,7 +100,7 @@ class ApplicationRef extends ChangeDetectionHost {
 
   void _loadedRootComponent(ComponentRef<void> component, Element? node) {
     if (isDevToolsEnabled) {
-      ComponentInspector.instance.registerContentRoot(component.location);
+      Inspector.instance.registerContentRoot(component.location);
     }
     _rootComponents.add(component);
     component.onDestroy(() {

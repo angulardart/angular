@@ -81,13 +81,13 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import12.isDevToolsEnabled) {
-        import12.ComponentInspector.instance.recordInput(this._ChildComponent_2_5, 'value', currVal_0);
+        import12.Inspector.instance.recordInput(this._ChildComponent_2_5, 'value', currVal_0);
       }
       this._ChildComponent_2_5.value = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:575:590 */;
       this._expr_0 = currVal_0;
     }
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_3_9, 'ngIf', _ctx.showValue);
+      import12.Inspector.instance.recordInput(this._NgIf_3_9, 'ngIf', _ctx.showValue);
     }
     this._NgIf_3_9.ngIf = _ctx.showValue /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:636:653 */;
     this._appEl_3.detectChangesInNestedViews();
@@ -161,7 +161,7 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import12.isDevToolsEnabled) {
-        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+        import12.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
       }
       this._ChildComponent_0_5.value = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:654:669 */;
       this._expr_0 = currVal_0;
@@ -237,13 +237,13 @@ class ViewUsesAfterView0 extends import0.ComponentView<import1.UsesAfterView> {
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import12.isDevToolsEnabled) {
-        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+        import12.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
       }
       this._ChildComponent_0_5.value = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:1012:1027 */;
       this._expr_0 = currVal_0;
     }
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.showValue);
+      import12.Inspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.showValue);
     }
     this._NgIf_1_9.ngIf = _ctx.showValue /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:1069:1086 */;
     this._appEl_1.detectChangesInNestedViews();
@@ -301,7 +301,7 @@ class _ViewUsesAfterView1 extends import14.EmbeddedView<import1.UsesAfterView> {
     final currVal_0 = _ctx.value;
     if (import11.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import12.isDevToolsEnabled) {
-        import12.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+        import12.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
       }
       this._ChildComponent_0_5.value = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:1087:1102 */;
       this._expr_0 = currVal_0;

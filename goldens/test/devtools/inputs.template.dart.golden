@@ -102,7 +102,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     if (firstCheck) {
       if ((_ctx.immutableValue != null)) {
         if (import9.isDevToolsEnabled) {
-          import9.ComponentInspector.instance.recordInput(this._HasInputComponent_0_5, 'name', _ctx.immutableValue);
+          import9.Inspector.instance.recordInput(this._HasInputComponent_0_5, 'name', _ctx.immutableValue);
         }
         this._HasInputComponent_0_5.name = _ctx.immutableValue /* REF:asset:goldens/test/devtools/inputs.dart:527:550 */;
       }
@@ -110,33 +110,33 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.mutableValue;
     if (import10.checkBinding(this._expr_1, currVal_1, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_1_5, 'name', currVal_1);
+        import9.Inspector.instance.recordInput(this._HasInputComponent_1_5, 'name', currVal_1);
       }
       this._HasInputComponent_1_5.name = currVal_1 /* REF:asset:goldens/test/devtools/inputs.dart:579:600 */;
       this._expr_1 = currVal_1;
     }
     if (firstCheck) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_2_5, 'name', 'literalValue');
+        import9.Inspector.instance.recordInput(this._HasInputComponent_2_5, 'name', 'literalValue');
       }
       this._HasInputComponent_2_5.name = 'literalValue' /* REF:asset:goldens/test/devtools/inputs.dart:629:652 */;
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_3_5, 'name', 'attributeValue');
+        import9.Inspector.instance.recordInput(this._HasInputComponent_3_5, 'name', 'attributeValue');
       }
       this._HasInputComponent_3_5.name = 'attributeValue' /* REF:asset:goldens/test/devtools/inputs.dart:681:702 */;
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputComponent_4_5, 'name', _message_0);
+        import9.Inspector.instance.recordInput(this._HasInputComponent_4_5, 'name', _message_0);
       }
       this._HasInputComponent_4_5.name = _message_0;
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputsComponent_5_5, 'number', 12);
+        import9.Inspector.instance.recordInput(this._HasInputsComponent_5_5, 'number', 12);
       }
       this._HasInputsComponent_5_5.number = 12 /* REF:asset:goldens/test/devtools/inputs.dart:856:869 */;
     }
     final currVal_5 = _ctx.mutableValue;
     if (import10.checkBinding(this._expr_5, currVal_5, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasInputsComponent_5_5, 'name', currVal_5);
+        import9.Inspector.instance.recordInput(this._HasInputsComponent_5_5, 'name', currVal_5);
       }
       this._HasInputsComponent_5_5.name = currVal_5 /* REF:asset:goldens/test/devtools/inputs.dart:834:855 */;
       this._expr_5 = currVal_5;
@@ -144,7 +144,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_7 = _ctx.mutableValue;
     if (import10.checkBinding(this._expr_7, currVal_7, 'mutableValue', 'asset:goldens/test/devtools/inputs.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._HasRenamedInputComponent_6_5, 'templateName', currVal_7);
+        import9.Inspector.instance.recordInput(this._HasRenamedInputComponent_6_5, 'templateName', currVal_7);
       }
       this._HasRenamedInputComponent_6_5.propertyName = currVal_7 /* REF:asset:goldens/test/devtools/inputs.dart:935:964 */;
       this._expr_7 = currVal_7;

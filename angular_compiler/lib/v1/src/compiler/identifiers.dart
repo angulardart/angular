@@ -18,8 +18,8 @@ const _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 class DevTools {
   static const _moduleUrl = '$_angularLib/src/devtools.dart';
 
-  static final componentInspector = CompileIdentifierMetadata(
-    name: 'ComponentInspector.instance',
+  static final inspector = CompileIdentifierMetadata(
+    name: 'Inspector.instance',
     moduleUrl: _moduleUrl,
   );
 

@@ -74,8 +74,8 @@ abstract class ComponentView<T> extends RenderView {
 
   /// Returns a description of [T].
   ///
-  /// This is used by [ComponentInspector] to create a serialized representation
-  /// of the component for developer tools.
+  /// This is used by [Inspector] to create a serialized representation of the
+  /// component for developer tools.
   ///
   /// Note that all derived classes uses the same implementation which calls
   /// [runtimeType] on [ctx]. Despite repeating the same implementation, this
@@ -107,7 +107,7 @@ abstract class ComponentView<T> extends RenderView {
     _data.projectedNodes = projectedNodes;
 
     if (isDevToolsEnabled) {
-      ComponentInspector.instance.registerComponentView(unsafeCast(this));
+      Inspector.instance.registerComponentView(unsafeCast(this));
     }
 
     build();

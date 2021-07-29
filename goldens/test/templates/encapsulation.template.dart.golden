@@ -86,7 +86,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.floatingLabel;
     if (import8.checkBinding(this._expr_0, currVal_0, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._NoEncapsulation_0_5, 'floatingLabel', currVal_0);
+        import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'floatingLabel', currVal_0);
       }
       this._NoEncapsulation_0_5.floatingLabel = currVal_0 /* REF:asset:goldens/test/templates/encapsulation.dart:480:511 */;
       this._expr_0 = currVal_0;
@@ -94,7 +94,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.trailingLabel;
     if (import8.checkBinding(this._expr_1, currVal_1, 'trailingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._NoEncapsulation_0_5, 'trailingGlyphAriaLabel', currVal_1);
+        import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'trailingGlyphAriaLabel', currVal_1);
       }
       this._NoEncapsulation_0_5.trailingGlyphAriaLabel = currVal_1 /* REF:asset:goldens/test/templates/encapsulation.dart:518:558 */;
       this._expr_1 = currVal_1;
@@ -102,7 +102,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_2 = _ctx.disabled;
     if (import8.checkBinding(this._expr_2, currVal_2, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._NoEncapsulation_0_5, 'disabled', currVal_2);
+        import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'disabled', currVal_2);
       }
       this._NoEncapsulation_0_5.disabled = currVal_2 /* REF:asset:goldens/test/templates/encapsulation.dart:565:586 */;
       this._expr_2 = currVal_2;
@@ -110,7 +110,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_4 = _ctx.floatingLabel;
     if (import8.checkBinding(this._expr_4, currVal_4, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'floatingLabel', currVal_4);
+        import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'floatingLabel', currVal_4);
       }
       this._EmulatedEncapsulation_5_5.floatingLabel = currVal_4 /* REF:asset:goldens/test/templates/encapsulation.dart:750:781 */;
       this._expr_4 = currVal_4;
@@ -118,7 +118,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_5 = _ctx.trailingLabel;
     if (import8.checkBinding(this._expr_5, currVal_5, 'trailingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'trailingGlyphAriaLabel', currVal_5);
+        import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'trailingGlyphAriaLabel', currVal_5);
       }
       this._EmulatedEncapsulation_5_5.trailingGlyphAriaLabel = currVal_5 /* REF:asset:goldens/test/templates/encapsulation.dart:788:828 */;
       this._expr_5 = currVal_5;
@@ -126,7 +126,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_6 = _ctx.disabled;
     if (import8.checkBinding(this._expr_6, currVal_6, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'disabled', currVal_6);
+        import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'disabled', currVal_6);
       }
       this._EmulatedEncapsulation_5_5.disabled = currVal_6 /* REF:asset:goldens/test/templates/encapsulation.dart:835:856 */;
       this._expr_6 = currVal_6;

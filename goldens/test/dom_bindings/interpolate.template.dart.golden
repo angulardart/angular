@@ -113,7 +113,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.string;
     if (import7.checkBinding(this._expr_0, currVal_0, 'string', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._SimpleStringInterpolate_0_5, 'value', currVal_0);
+        import8.Inspector.instance.recordInput(this._SimpleStringInterpolate_0_5, 'value', currVal_0);
       }
       this._SimpleStringInterpolate_0_5.value = currVal_0 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:667:683 */;
       this._expr_0 = currVal_0;
@@ -121,7 +121,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.anything;
     if (import7.checkBinding(this._expr_1, currVal_1, 'anything', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._SimpleUnknownInterpolate_1_5, 'value', currVal_1);
+        import8.Inspector.instance.recordInput(this._SimpleUnknownInterpolate_1_5, 'value', currVal_1);
       }
       this._SimpleUnknownInterpolate_1_5.value = currVal_1 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:721:739 */;
       this._expr_1 = currVal_1;
@@ -686,7 +686,7 @@ class ViewInputInterpolate0 extends import0.ComponentView<import1.InputInterpola
     final currVal_0 = import12.interpolateString2('', _ctx.a, ' ', _ctx.b, '');
     if (import7.checkBinding(this._expr_0, currVal_0, '{{a}} {{b}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+        import8.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
       }
       this._ChildComponent_0_5.value = currVal_0 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2509:2528 */;
       this._expr_0 = currVal_0;

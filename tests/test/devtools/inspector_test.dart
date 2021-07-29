@@ -5,7 +5,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/src/devtools.dart';
 import 'package:angular_test/angular_test.dart';
 
-import 'component_inspector_test.template.dart' as ng;
+import 'inspector_test.template.dart' as ng;
 
 void main() {
   debugCheckBindings();
@@ -24,7 +24,7 @@ void main() {
       final testBed = NgTestBed(ng.createTestComponentViewsFactory());
       await testBed.create();
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
 
       var component = components[0];
@@ -55,7 +55,7 @@ void main() {
         final testFixture = await testBed.create();
 
         // Should not return embedded component before it's created.
-        var components = ComponentInspector.instance.getComponents(groupName);
+        var components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         var component = components[0];
@@ -66,7 +66,7 @@ void main() {
         await testFixture.update((component) {
           component.isChildVisible = true;
         });
-        components = ComponentInspector.instance.getComponents(groupName);
+        components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         component = components[0];
@@ -83,7 +83,7 @@ void main() {
         await testFixture.update((component) {
           component.isChildVisible = false;
         });
-        components = ComponentInspector.instance.getComponents(groupName);
+        components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         component = components[0];
@@ -100,7 +100,7 @@ void main() {
         );
 
         // Should return embedded components after they're created.
-        var components = ComponentInspector.instance.getComponents(groupName);
+        var components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         var component = components[0];
@@ -118,7 +118,7 @@ void main() {
         await testFixture.update((component) {
           component.values.insert(2, 3); // [1, 2, 3, 4];
         });
-        components = ComponentInspector.instance.getComponents(groupName);
+        components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         component = components[0];
@@ -136,7 +136,7 @@ void main() {
         await testFixture.update((component) {
           component.values.removeRange(0, 2);
         });
-        components = ComponentInspector.instance.getComponents(groupName);
+        components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         component = components[0];
@@ -156,7 +156,7 @@ void main() {
             NgTestBed(ng.createTestTransplantedEmbeddedViewsFactory());
         await testBed.create();
 
-        final components = ComponentInspector.instance.getComponents(groupName);
+        final components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
 
         var component = components[0];
@@ -184,7 +184,7 @@ void main() {
       final testFixture = await testBed.create();
 
       // Should not return imperatively loaded component before it's created.
-      var components = ComponentInspector.instance.getComponents(groupName);
+      var components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
 
       var component = components[0];
@@ -195,7 +195,7 @@ void main() {
       await testFixture.update((component) {
         component.load();
       });
-      components = ComponentInspector.instance.getComponents(groupName);
+      components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
 
       component = components[0];
@@ -212,7 +212,7 @@ void main() {
       await testFixture.update((component) {
         component.clear();
       });
-      components = ComponentInspector.instance.getComponents(groupName);
+      components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
 
       component = components[0];
@@ -224,7 +224,7 @@ void main() {
       final testBed = NgTestBed(ng.createTestProjectedContentFactory());
       await testBed.create();
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
       var component = components[0];
       expect(component, containsPair('name', 'TestProjectedContent'));
@@ -287,7 +287,7 @@ void main() {
           );
         });
 
-        final components = ComponentInspector.instance.getComponents(groupName);
+        final components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(1));
       });
 
@@ -299,7 +299,7 @@ void main() {
           );
         });
 
-        final components = ComponentInspector.instance.getComponents(groupName);
+        final components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(2));
       });
 
@@ -311,7 +311,7 @@ void main() {
           );
         });
 
-        final components = ComponentInspector.instance.getComponents(groupName);
+        final components = Inspector.instance.getComponents(groupName);
         expect(components, hasLength(3));
       });
     });
@@ -334,7 +334,7 @@ void main() {
           );
       });
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(3));
     });
 
@@ -350,7 +350,7 @@ void main() {
         );
       });
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(1));
     });
 
@@ -375,7 +375,7 @@ void main() {
           );
       });
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       expect(components, hasLength(3));
     });
   });
@@ -383,7 +383,7 @@ void main() {
   group('getComponentInputs', () {
     // Returns the ID of the first child component in the app.
     int firstChildComponentId() {
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       final component = components.first;
       final children = component['children'] as List<Map<String, Object>>;
       final child = children.first;
@@ -394,11 +394,11 @@ void main() {
       final testBed = NgTestBed(ng.createTestUsedInputsFactory());
       await testBed.create();
 
-      final components = ComponentInspector.instance.getComponents(groupName);
+      final components = Inspector.instance.getComponents(groupName);
       final component = components.first;
       final id = component['id'] as int;
 
-      final inputs = ComponentInspector.instance.getComponentInputs(id);
+      final inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, isEmpty);
     });
 
@@ -407,7 +407,7 @@ void main() {
       await testBed.create();
 
       final id = firstChildComponentId();
-      final inputs = ComponentInspector.instance.getComponentInputs(id);
+      final inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, isEmpty);
     });
 
@@ -416,14 +416,14 @@ void main() {
       final testFixture = await testBed.create();
 
       final id = firstChildComponentId();
-      var inputs = ComponentInspector.instance.getComponentInputs(id);
+      var inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, isEmpty);
 
       await testFixture.update((component) {
         component.title = 'Hello!';
       });
 
-      inputs = ComponentInspector.instance.getComponentInputs(id);
+      inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, hasLength(1));
       expect(inputs, containsPair('name', 'Hello!'));
 
@@ -431,7 +431,7 @@ void main() {
         component.numbers = [1, 2, 3];
       });
 
-      inputs = ComponentInspector.instance.getComponentInputs(id);
+      inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, hasLength(2));
       expect(inputs, containsPair('name', 'Hello!'));
       expect(inputs, containsPair('data', [1, 2, 3]));
@@ -446,14 +446,14 @@ void main() {
       );
 
       final id = firstChildComponentId();
-      var inputs = ComponentInspector.instance.getComponentInputs(id);
+      var inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, {'name': 'Hello!'});
 
       await testFixture.update((component) {
         component.title = 'Goodbye.';
       });
 
-      inputs = inputs = ComponentInspector.instance.getComponentInputs(id);
+      inputs = inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, {'name': 'Goodbye.'});
     });
 
@@ -462,7 +462,7 @@ void main() {
       final testFixture = await testBed.create();
 
       final id = firstChildComponentId();
-      final inputs = ComponentInspector.instance.getComponentInputs(id);
+      final inputs = Inspector.instance.getComponentInputs(id);
       expect(inputs, hasLength(2));
       expect(
         inputs,

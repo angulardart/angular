@@ -68,7 +68,7 @@ Injector appInjector(
   });
 
   if (isDevToolsEnabled) {
-    ComponentInspector.instance.inspect(applicationRef);
+    Inspector.instance.inspect(applicationRef);
   }
 
   return injector;

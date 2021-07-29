@@ -66,7 +66,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.a;
     if (import7.checkBinding(this._expr_0, currVal_0, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'a', currVal_0);
+        import8.Inspector.instance.recordInput(this._UsesOnInit_0_5, 'a', currVal_0);
       }
       this._UsesOnInit_0_5.a = currVal_0 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:463:470 */;
       this._expr_0 = currVal_0;
@@ -74,7 +74,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.b;
     if (import7.checkBinding(this._expr_1, currVal_1, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'b', currVal_1);
+        import8.Inspector.instance.recordInput(this._UsesOnInit_0_5, 'b', currVal_1);
       }
       this._UsesOnInit_0_5.b = currVal_1 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:471:478 */;
       this._expr_1 = currVal_1;
@@ -82,7 +82,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_2 = _ctx.c;
     if (import7.checkBinding(this._expr_2, currVal_2, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnInit_0_5, 'c', currVal_2);
+        import8.Inspector.instance.recordInput(this._UsesOnInit_0_5, 'c', currVal_2);
       }
       this._UsesOnInit_0_5.c = currVal_2 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:479:486 */;
       this._expr_2 = currVal_2;
@@ -93,7 +93,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_3 = _ctx.a;
     if (import7.checkBinding(this._expr_3, currVal_3, 'a', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'a', currVal_3);
+        import8.Inspector.instance.recordInput(this._UsesOnDestroy_1_5, 'a', currVal_3);
       }
       this._UsesOnDestroy_1_5.a = currVal_3 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:529:536 */;
       this._expr_3 = currVal_3;
@@ -101,7 +101,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_4 = _ctx.b;
     if (import7.checkBinding(this._expr_4, currVal_4, 'b', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'b', currVal_4);
+        import8.Inspector.instance.recordInput(this._UsesOnDestroy_1_5, 'b', currVal_4);
       }
       this._UsesOnDestroy_1_5.b = currVal_4 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:537:544 */;
       this._expr_4 = currVal_4;
@@ -109,7 +109,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_5 = _ctx.c;
     if (import7.checkBinding(this._expr_5, currVal_5, 'c', 'asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._UsesOnDestroy_1_5, 'c', currVal_5);
+        import8.Inspector.instance.recordInput(this._UsesOnDestroy_1_5, 'c', currVal_5);
       }
       this._UsesOnDestroy_1_5.c = currVal_5 /* REF:asset:goldens/test/lifecycle_hooks/on_init_and_destroy.dart:545:552 */;
       this._expr_5 = currVal_5;

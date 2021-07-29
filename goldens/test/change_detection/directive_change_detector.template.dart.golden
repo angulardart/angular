@@ -56,7 +56,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.value;
     if (import8.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/change_detection/directive_change_detector.dart')) {
       if (import9.isDevToolsEnabled) {
-        import9.ComponentInspector.instance.recordInput(this._NgModelLike_0_5, 'ngModel', currVal_0);
+        import9.Inspector.instance.recordInput(this._NgModelLike_0_5, 'ngModel', currVal_0);
       }
       this._NgModelLike_0_5.model = currVal_0 /* REF:asset:goldens/test/change_detection/directive_change_detector.dart:445:464 */;
       changed = true;

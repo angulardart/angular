@@ -81,7 +81,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.durationList;
     if (import12.checkBinding(this._expr_0, currVal_0, 'durationList', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import13.isDevToolsEnabled) {
-        import13.ComponentInspector.instance.recordInput(this._NgFor_9_9, 'ngForOf', currVal_0);
+        import13.Inspector.instance.recordInput(this._NgFor_9_9, 'ngForOf', currVal_0);
       }
       this._NgFor_9_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/type_inference.dart:448:485 */;
       this._expr_0 = currVal_0;
@@ -92,7 +92,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.nestedLists;
     if (import12.checkBinding(this._expr_1, currVal_1, 'nestedLists', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import13.isDevToolsEnabled) {
-        import13.ComponentInspector.instance.recordInput(this._NgFor_11_9, 'ngForOf', currVal_1);
+        import13.Inspector.instance.recordInput(this._NgFor_11_9, 'ngForOf', currVal_1);
       }
       this._NgFor_11_9.ngForOf = currVal_1 /* REF:asset:goldens/test/templates/type_inference.dart:560:600 */;
       this._expr_1 = currVal_1;
@@ -177,7 +177,7 @@ class _ViewGoldenComponent2 extends import16.EmbeddedView<import1.GoldenComponen
     final currVal_0 = local_durationList;
     if (import12.checkBinding(this._expr_0, currVal_0, 'durationList', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import13.isDevToolsEnabled) {
-        import13.ComponentInspector.instance.recordInput(this._NgFor_0_9, 'ngForOf', currVal_0);
+        import13.Inspector.instance.recordInput(this._NgFor_0_9, 'ngForOf', currVal_0);
       }
       this._NgFor_0_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/type_inference.dart:622:659 */;
       this._expr_0 = currVal_0;

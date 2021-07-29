@@ -118,7 +118,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_2_9, 'ngIf', _ctx.someValue);
+      import12.Inspector.instance.recordInput(this._NgIf_2_9, 'ngIf', _ctx.someValue);
     }
     this._NgIf_2_9.ngIf = _ctx.someValue /* REF:asset:goldens/test/templates/queries.dart:694:711 */;
     this._appEl_2.detectChangesInNestedViews();
@@ -394,7 +394,7 @@ class ViewNestedNgForQueriesList0 extends import0.ComponentView<import1.NestedNg
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.conditionA);
+      import12.Inspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.conditionA);
     }
     this._NgIf_0_9.ngIf = _ctx.conditionA /* REF:asset:goldens/test/templates/queries.dart:2649:2667 */;
     this._appEl_0.detectChangesInNestedViews();
@@ -449,7 +449,7 @@ class _ViewNestedNgForQueriesList1 extends import16.EmbeddedView<import1.NestedN
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.conditionB);
+      import12.Inspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.conditionB);
     }
     this._NgIf_1_9.ngIf = _ctx.conditionB /* REF:asset:goldens/test/templates/queries.dart:2680:2698 */;
     this._appEl_1.detectChangesInNestedViews();
@@ -487,7 +487,7 @@ class _ViewNestedNgForQueriesList2 extends import16.EmbeddedView<import1.NestedN
     if (firstCheck) {
       if ((_ctx.items != null)) {
         if (import12.isDevToolsEnabled) {
-          import12.ComponentInspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', _ctx.items);
+          import12.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', _ctx.items);
         }
         this._NgFor_1_9.ngForOf = _ctx.items /* REF:asset:goldens/test/templates/queries.dart:2713:2739 */;
       }
@@ -579,7 +579,7 @@ class ViewStaticSingleQuery0 extends import0.ComponentView<import1.StaticSingleQ
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.isVisible);
+      import12.Inspector.instance.recordInput(this._NgIf_1_9, 'ngIf', _ctx.isVisible);
     }
     this._NgIf_1_9.ngIf = _ctx.isVisible /* REF:asset:goldens/test/templates/queries.dart:3291:3308 */;
     this._appEl_1.detectChangesInNestedViews();
@@ -687,7 +687,7 @@ class ViewDynamicSingleQuery0 extends import0.ComponentView<import1.DynamicSingl
   void detectChangesInternal() {
     final _ctx = this.ctx;
     if (import12.isDevToolsEnabled) {
-      import12.ComponentInspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.isVisible);
+      import12.Inspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.isVisible);
     }
     this._NgIf_0_9.ngIf = _ctx.isVisible /* REF:asset:goldens/test/templates/queries.dart:3735:3752 */;
     this._appEl_0.detectChangesInNestedViews();

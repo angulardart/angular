@@ -39,6 +39,6 @@ Statement _recordInputStatement(
   Expression name,
   Expression value,
 ) {
-  return importExpr(DevTools.componentInspector)
+  return importExpr(DevTools.inspector)
       .callMethod('recordInput', [component, name, value]).toStmt();
 }

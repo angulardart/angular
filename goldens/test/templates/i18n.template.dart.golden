@@ -61,7 +61,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     bool firstCheck = this.firstCheck;
     if (firstCheck) {
       if (import10.isDevToolsEnabled) {
-        import10.ComponentInspector.instance.recordInput(this._MessageDirective_7_5, 'message', _message_1);
+        import10.Inspector.instance.recordInput(this._MessageDirective_7_5, 'message', _message_1);
       }
       this._MessageDirective_7_5.message = _message_1;
     }
