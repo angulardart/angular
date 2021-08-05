@@ -51,8 +51,8 @@ class Inspector {
   /// were constructed.
   final _nodeToData = Expando<InspectorData>();
 
-  /// Used to retain [ComponentView] instances between requests.
-  final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
+  /// Used to retain instances between requests.
+  final _referenceCounter = ReferenceCounter<Object>();
 
   /// Additional locations in the DOM to search for components.
   final _contentRoots = <Element>[];
@@ -219,7 +219,8 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
 
   /// Returns the root element of the component for [id].
   HtmlElement getComponentElement(int id) {
-    final componentView = _referenceCounter.toObject(id);
+    final componentView =
+        _referenceCounter.toObject(id) as ComponentView<Object>;
     return componentView.rootElement;
   }
 
@@ -246,7 +247,8 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   /// The component is identified using the [id] obtained from [getComponents].
   /// Returns an empty map if no inputs have been set on the component.
   Map<String, Object?> getComponentInputs(int id) {
-    final componentView = _referenceCounter.toObject(id);
+    final componentView =
+        _referenceCounter.toObject(id) as ComponentView<Object>;
     final component = componentView.ctx;
     return _directiveToInputs[component] ?? {};
   }
