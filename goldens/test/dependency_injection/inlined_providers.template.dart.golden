@@ -13,9 +13,10 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/errors.dart' as import10;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/di/errors.dart' as import11;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -101,6 +102,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import7.setAttribute(_el_5, 'directive-providing-a2-d2', '');
     this._ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     this._DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_5, this._DirectiveProviding$A2$D2_5_6);
+    }
     this._compView_5.create(this._ChildComponentProvidingA$B$C_5_5);
     this._compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
     final _el_6 = this._compView_6.rootElement;
@@ -109,6 +113,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
     this._DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     this._D_6_7 = import1.D2();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_6, this._DirectiveProviding$A2$D2_6_6);
+    }
     this._compView_7 = ViewChildComponentInjecting$D0(this, 7);
     final _el_7 = this._compView_7.rootElement;
     this._ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(this._D_6_7);
@@ -224,7 +231,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -234,7 +241,7 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -287,7 +294,7 @@ ComponentFactory<import1.ChildComponentProvidingA$B$C> createChildComponentProvi
 
 final List<Object> styles$ChildComponentProvidingA$B$CHost = const [];
 
-class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.ChildComponentProvidingA$B$C> {
+class _ViewChildComponentProvidingA$B$CHost0 extends import10.HostView<import1.ChildComponentProvidingA$B$C> {
   late import1.A _A_0_6 = import1.A();
   late import1.B _B_0_7 = import1.B();
   late import1.C _C_0_8 = import1.C();
@@ -316,7 +323,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.Ch
   }
 }
 
-import9.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
+import10.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
   return _ViewChildComponentProvidingA$B$CHost0();
 }
 
@@ -370,7 +377,7 @@ ComponentFactory<import1.ChildComponentWithNgContentProviding$D> createChildComp
 
 final List<Object> styles$ChildComponentWithNgContentProviding$DHost = const [];
 
-class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<import1.ChildComponentWithNgContentProviding$D> {
+class _ViewChildComponentWithNgContentProviding$DHost0 extends import10.HostView<import1.ChildComponentWithNgContentProviding$D> {
   late import1.D _D_0_6 = import1.D();
   @override
   void build() {
@@ -389,7 +396,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<
   }
 }
 
-import9.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
+import10.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
   return _ViewChildComponentWithNgContentProviding$DHost0();
 }
 
@@ -442,13 +449,13 @@ ComponentFactory<import1.ChildComponentInjecting$D> createChildComponentInjectin
 
 final List<Object> styles$ChildComponentInjecting$DHost = const [];
 
-class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.ChildComponentInjecting$D> {
+class _ViewChildComponentInjecting$DHost0 extends import10.HostView<import1.ChildComponentInjecting$D> {
   @override
   void build() {
     this.componentView = ViewChildComponentInjecting$D0(this, 0);
     final _el_0 = this.componentView.rootElement;
     this.component = (import5.isDevMode
-        ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
+        ? import11.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex)));
@@ -456,7 +463,7 @@ class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.Child
   }
 }
 
-import9.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
+import10.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
   return _ViewChildComponentInjecting$DHost0();
 }
 
@@ -509,7 +516,7 @@ ComponentFactory<import1.ChildComponentWithVisibilityAll> createChildComponentWi
 
 final List<Object> styles$ChildComponentWithVisibilityAllHost = const [];
 
-class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1.ChildComponentWithVisibilityAll> {
+class _ViewChildComponentWithVisibilityAllHost0 extends import10.HostView<import1.ChildComponentWithVisibilityAll> {
   @override
   void build() {
     this.componentView = ViewChildComponentWithVisibilityAll0(this, 0);
@@ -527,7 +534,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1
   }
 }
 
-import9.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
+import10.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
   return _ViewChildComponentWithVisibilityAllHost0();
 }
 

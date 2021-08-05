@@ -10562,6 +10562,10 @@
   L.ContentQuery.prototype = {};
   L.ContentHasReference.prototype = {};
   S.ViewGoldenComponent0.prototype = {
+    get$_AnotherDirective_0_5() {
+      var t1 = this.__ViewGoldenComponent0__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
     get$_AnotherDirective_1_5() {
       var t1 = this.__ViewGoldenComponent0__AnotherDirective_1_5;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t1;
@@ -10768,10 +10772,7 @@
       _this.get$_NgIf_2_9().set$ngIf(false);
       _this.get$_appEl_2().detectChangesInNestedViews$0();
       if (_this._viewQuery_AnotherDirective_4_isDirty) {
-        t1 = _this.__ViewGoldenComponent0__AnotherDirective_0_5;
-        if (t1 == null)
-          t1 = H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5"));
-        t1 = H._setArrayType([t1, _this.get$_AnotherDirective_1_5()], type$.JSArray_AnotherDirective);
+        t1 = H._setArrayType([_this.get$_AnotherDirective_0_5(), _this.get$_AnotherDirective_1_5()], type$.JSArray_AnotherDirective);
         C.JSArray_methods.addAll$1(t1, _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewGoldenComponent0_detectChangesInternal_closure(), type$.AnotherDirective, type$._ViewGoldenComponent1));
         self.deopt(t1);
         _this._viewQuery_AnotherDirective_4_isDirty = false;
@@ -10831,6 +10832,10 @@
   };
   S._ViewGoldenComponentHost0.prototype = {};
   S.ViewEmbeddedQueries0.prototype = {
+    get$_AnotherDirective_0_5() {
+      var t1 = this.__ViewEmbeddedQueries0__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
     get$_appEl_1() {
       var t1 = this.__ViewEmbeddedQueries0__appEl_1;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
@@ -10864,8 +10869,7 @@
       var t1, t2, _this = this;
       _this.get$ctx();
       if (_this._viewQuery_AnotherDirective_0_isDirty) {
-        t1 = _this.__ViewEmbeddedQueries0__AnotherDirective_0_5;
-        t1 = H._setArrayType([t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1], type$.JSArray_AnotherDirective);
+        t1 = H._setArrayType([_this.get$_AnotherDirective_0_5()], type$.JSArray_AnotherDirective);
         t2 = type$.AnotherDirective;
         C.JSArray_methods.addAll$1(t1, _this.get$_appEl_1().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure(), t2, type$._ViewEmbeddedQueries1));
         C.JSArray_methods.addAll$1(t1, _this.get$_appEl_2().mapNestedViewsWithSingleResult$2$1(new S.ViewEmbeddedQueries0_detectChangesInternal_closure0(), t2, type$._ViewEmbeddedQueries2));
@@ -10876,15 +10880,13 @@
   };
   S.ViewEmbeddedQueries0_detectChangesInternal_closure.prototype = {
     call$1(nestedView) {
-      var t1 = nestedView.___ViewEmbeddedQueries1__AnotherDirective_0_5;
-      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+      return nestedView.get$_AnotherDirective_0_5();
     },
     $signature: 62
   };
   S.ViewEmbeddedQueries0_detectChangesInternal_closure0.prototype = {
     call$1(nestedView) {
-      var t1 = nestedView.___ViewEmbeddedQueries2__AnotherDirective_0_5;
-      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+      return nestedView.get$_AnotherDirective_0_5();
     },
     $signature: 42
   };
@@ -11016,6 +11018,10 @@
     }
   };
   S.ViewStaticSingleQuery0.prototype = {
+    get$_AnotherDirective_0_5() {
+      var t1 = this.__ViewStaticSingleQuery0__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
     get$_appEl_1() {
       var t1 = this.__ViewStaticSingleQuery0__appEl_1;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_appEl_1")) : t1;
@@ -11025,15 +11031,14 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_1_9")) : t1;
     },
     build$0() {
-      var parentRenderNode, _anchor_1, t1, t2, _this = this,
-        _s21_ = "_AnotherDirective_0_5";
+      var parentRenderNode, _anchor_1, t1, t2, _this = this;
       _this.get$ctx();
       parentRenderNode = _this.initViewRoot$0();
       T.appendElement(document, parentRenderNode, "another");
       if (_this.__ViewStaticSingleQuery0__AnotherDirective_0_5 == null)
         _this.__ViewStaticSingleQuery0__AnotherDirective_0_5 = new L.AnotherDirective();
       else
-        H.throwExpression(H.LateError$fieldAI(_s21_));
+        H.throwExpression(H.LateError$fieldAI("_AnotherDirective_0_5"));
       _anchor_1 = T.appendAnchor(parentRenderNode);
       if (_this.__ViewStaticSingleQuery0__appEl_1 == null)
         _this.__ViewStaticSingleQuery0__appEl_1 = new V.ViewContainer(1, _this, _anchor_1);
@@ -11045,8 +11050,7 @@
         _this.__ViewStaticSingleQuery0__NgIf_1_9 = new K.NgIf(new D.TemplateRef(t1, S.queries_template__viewFactory_StaticSingleQuery1$closure()), t2);
       else
         H.throwExpression(H.LateError$fieldAI("_NgIf_1_9"));
-      t1 = _this.__ViewStaticSingleQuery0__AnotherDirective_0_5;
-      self.deopt(t1 == null ? H.throwExpression(H.LateError$fieldNI(_s21_)) : t1);
+      self.deopt(_this.get$_AnotherDirective_0_5());
     },
     detectChangesInternal$0() {
       this.get$ctx();
@@ -11076,6 +11080,10 @@
       var t1 = this.__ViewDynamicSingleQuery0__NgIf_0_9;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_NgIf_0_9")) : t1;
     },
+    get$_AnotherDirective_1_5() {
+      var t1 = this.__ViewDynamicSingleQuery0__AnotherDirective_1_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t1;
+    },
     build$0() {
       var t1, t2, doc, _this = this,
         parentRenderNode = _this.initViewRoot$0(),
@@ -11103,15 +11111,14 @@
         H.throwExpression(H.LateError$fieldAI("_AnotherDirective_2_5"));
     },
     detectChangesInternal$0() {
-      var t1, t2, _this = this;
+      var t1, _this = this;
       _this.get$ctx();
       _this.get$_NgIf_0_9().set$ngIf(false);
       _this.get$_appEl_0().detectChangesInNestedViews$0();
       if (_this._viewQuery_AnotherDirective_0_isDirty) {
         t1 = type$.AnotherDirective;
         t1 = P.List_List$of(_this.get$_appEl_0().mapNestedViewsWithSingleResult$2$1(new S.ViewDynamicSingleQuery0_detectChangesInternal_closure(), t1, type$._ViewDynamicSingleQuery1), true, t1);
-        t2 = _this.__ViewDynamicSingleQuery0__AnotherDirective_1_5;
-        t1.push(t2 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_1_5")) : t2);
+        t1.push(_this.get$_AnotherDirective_1_5());
         self.deopt(C.JSArray_methods.get$first(t1));
         _this._viewQuery_AnotherDirective_0_isDirty = false;
       }
@@ -11122,12 +11129,15 @@
   };
   S.ViewDynamicSingleQuery0_detectChangesInternal_closure.prototype = {
     call$1(nestedView) {
-      var t1 = nestedView.___ViewDynamicSingleQuery1__AnotherDirective_0_5;
-      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+      return nestedView.get$_AnotherDirective_0_5();
     },
     $signature: 43
   };
   S._ViewDynamicSingleQuery1.prototype = {
+    get$_AnotherDirective_0_5() {
+      var t1 = this.___ViewDynamicSingleQuery1__AnotherDirective_0_5;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_AnotherDirective_0_5")) : t1;
+    },
     build$0() {
       var _el_1, _this = this,
         doc = document,

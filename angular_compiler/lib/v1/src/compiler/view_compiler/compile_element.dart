@@ -75,6 +75,12 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
   // this is set so we create a class field member for the template reference.
   var _publishesTemplateRef = false;
 
+  /// References to the directives on this element.
+  ///
+  /// This begins empty and accumulates references to directive instances as
+  /// they're generated. The results can be used after calling [beforeChildren].
+  final _directiveInstances = <o.Expression>[];
+
   CompileElement(
     CompileElement? parent,
     CompileView? view,
@@ -200,6 +206,7 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
     }
 
     _providers.addDirectiveProviders(_resolvedProvidersArray, _directives);
+    view!.registerDirectives(this, _directiveInstances);
 
     directiveInstances = <ProviderSource?>[];
     for (var directive in _directives) {
@@ -399,6 +406,11 @@ class CompileElement extends CompileNode implements ProviderResolverHost {
       resolvedProvider.eager,
       this,
     );
+
+    /// Accumulate directive instances on this element for later use.
+    if (resolvedProvider.providerType == ProviderAstType.Directive) {
+      _directiveInstances.add(providerExpr);
+    }
 
     return ExpressionProviderSource(
       resolvedProvider.token,

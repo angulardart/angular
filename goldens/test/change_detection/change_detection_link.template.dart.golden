@@ -144,6 +144,9 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_OnPushLink2);
     this._NgIf_2_9 = NgIf(this._appEl_2, _TemplateRef_2_8);
+    if (import13.isDevToolsEnabled) {
+      import13.Inspector.instance.registerDirective(_anchor_2, this._NgIf_2_9);
+    }
     this._compView_3 = ViewNestedOnPush0(this, 3);
     final _el_3 = this._compView_3.rootElement;
     parentRenderNode.append(_el_3);
@@ -158,6 +161,9 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     this._appEl_5 = ViewContainer(5, null, this, _anchor_5);
     var _TemplateRef_5_8 = TemplateRef(this._appEl_5, viewFactory_OnPushLink4);
     this._NgIf_5_9 = NgIf(this._appEl_5, _TemplateRef_5_8);
+    if (import13.isDevToolsEnabled) {
+      import13.Inspector.instance.registerDirective(_anchor_5, this._NgIf_5_9);
+    }
     _ctx.container = this._appEl_0;
   }
 

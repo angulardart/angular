@@ -1500,6 +1500,9 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       return viewFactory_NestedParentComp1<T>(parentView, parentIndex);
     });
     this._NgFor_2_9 = import13.NgFor(this._appEl_2, _TemplateRef_2_8);
+    if (import10.isDevToolsEnabled) {
+      import10.Inspector.instance.registerDirective(_anchor_2, this._NgFor_2_9);
+    }
   }
 
   @override
@@ -1929,6 +1932,9 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
     this._el_0 = import14.appendDiv(doc, parentRenderNode);
     import14.setAttribute(this._el_0, 'generic', '');
     this._GenericDirective_0_5 = GenericDirectiveNgCd(import1.GenericDirective());
+    if (import10.isDevToolsEnabled) {
+      import10.Inspector.instance.registerDirective(this._el_0, this._GenericDirective_0_5.instance);
+    }
   }
 
   @override

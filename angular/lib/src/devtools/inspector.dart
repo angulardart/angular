@@ -26,15 +26,15 @@ class Inspector {
     postEvent('angular.initialized', {});
   }
 
-  /// Maps a component instance to its bound inputs.
+  /// Maps a directive instance to its bound inputs.
   ///
-  /// A component's inputs are mapped from template name to last bound value. An
+  /// A directive's inputs are mapped from template name to last bound value. An
   /// input that has not yet been set by the parent view, meaning the bound
   /// expression has never produced a non-null value, will not be present in the
   /// map. Consequently, unused inputs will never appear in the map.
-  final _componentToInputs = Expando<Map<String, Object?>>();
+  final _directiveToInputs = Expando<Map<String, Object?>>();
 
-  /// Maps a [ComponentView.rootElement] to its [ComponentView].
+  /// Maps a DOM node to its associated [InspectorData].
   ///
   /// The [View] model isn't well-suited for traversal, primarily because view
   /// children are stored in generated fields. This means there's no generalized
@@ -42,14 +42,14 @@ class Inspector {
   /// and [View.detectChangesInternal] rely on generated instructions to
   /// recursively traverse the component tree.
   ///
-  /// Rather than relying on more code generation to construct the component
+  /// Rather than relying on more code generation to construct the inspector
   /// tree, this mapping enables its construction via walking the DOM. This is
-  /// also a convenient way to collect components in document order - the order
-  /// in which they appear - as opposed to the order in which they're
-  /// constructed.  This is particularly important for projected content and
-  /// transplanted embedded views whose location in the DOM may not correspond
-  /// to where they were constructed.
-  final _elementToComponentView = Expando<ComponentView<Object>>();
+  /// also a convenient way to collect nodes in document order - the order in
+  /// which they appear - as opposed to the order in which they're constructed.
+  /// This is particularly important for projected content and transplanted
+  /// embedded views whose location in the DOM may not correspond to where they
+  /// were constructed.
+  final _nodeToData = Expando<InspectorData>();
 
   /// Used to retain [ComponentView] instances between requests.
   final _referenceCounter = ReferenceCounter<ComponentView<Object>>();
@@ -179,11 +179,21 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     });
   }
 
+  /// Returns the [InspectorData] associated with [element].
+  InspectorData _data(Node node) {
+    return _nodeToData[node] ??= InspectorData();
+  }
+
   /// Registers a component [view] to be inspected by this service.
   ///
   /// This must be called after [view] has initialized its root element.
   void registerComponentView(ComponentView<Object> view) {
-    _elementToComponentView[view.rootElement] = view;
+    _data(view.rootElement).componentView = view;
+  }
+
+  /// Registers a [directive] on [element] to be inspected by this service.
+  void registerDirective(Node node, Object directive) {
+    _data(node).directives.add(directive);
   }
 
   /// Registers [element] as a location to search for components.
@@ -201,9 +211,9 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     _contentRoots.add(element);
   }
 
-  /// Records the latest [value] assigned to input [name] on [component].
-  void recordInput(Object component, String name, Object? value) {
-    final inputs = _componentToInputs[component] ??= {};
+  /// Records the latest [value] assigned to input [name] on [directive].
+  void recordInput(Object directive, String name, Object? value) {
+    final inputs = _directiveToInputs[directive] ??= {};
     inputs[name] = value;
   }
 
@@ -222,7 +232,7 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   int getComponentIdForNode(Node node, String groupName) {
     Node? current = node;
     while (current != null) {
-      final componentView = _elementToComponentView[current];
+      final componentView = _nodeToData[current]?.componentView;
       if (componentView != null) {
         return _referenceCounter.toId(componentView, groupName);
       }
@@ -238,7 +248,7 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   Map<String, Object?> getComponentInputs(int id) {
     final componentView = _referenceCounter.toObject(id);
     final component = componentView.ctx;
-    return _componentToInputs[component] ?? {};
+    return _directiveToInputs[component] ?? {};
   }
 
   /// Returns a JSON representation of the component tree.
@@ -260,15 +270,15 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   /// The [result] is a recursive structure where each element is a JSON object
   /// describing the component and its children in document order.
   ///
-  /// See [_elementToComponentView] regarding why the component tree is
-  /// collected by traversing the DOM.
+  /// See [_nodeToData] regarding why the component tree is collected by
+  /// traversing the DOM.
   void _collectJson(
     TreeWalker treeWalker,
     String groupName,
     List<Map<String, Object>> result,
   ) {
     final currentNode = treeWalker.currentNode;
-    final componentView = _elementToComponentView[currentNode];
+    final componentView = _nodeToData[currentNode]?.componentView;
     final children = componentView != null ? <Map<String, Object>>[] : result;
     for (var node = treeWalker.firstChild();
         node != null;
@@ -294,4 +304,13 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
       'id': _referenceCounter.toId(view, groupName),
     };
   }
+}
+
+/// Angular data associated with a DOM node.
+class InspectorData {
+  /// The component hosted on this node, if present, otherwise null.
+  ComponentView<Object>? componentView;
+
+  /// The directives applied to this node, if any.
+  final directives = <Object>[];
 }

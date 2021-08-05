@@ -56,12 +56,18 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._appEl_0 = ViewContainer(0, null, this, _anchor_0);
     var _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_GoldenComponent1);
     this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
+    if (import12.isDevToolsEnabled) {
+      import12.Inspector.instance.registerDirective(_anchor_0, this._NgIf_0_9);
+    }
     final doc = import9.document;
     final _el_1 = import10.appendElement<import9.UListElement>(doc, parentRenderNode, 'ul');
     final _anchor_2 = import10.appendAnchor(_el_1);
     this._appEl_2 = ViewContainer(2, 1, this, _anchor_2);
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_GoldenComponent2);
     this._NgFor_2_9 = import4.NgFor(this._appEl_2, _TemplateRef_2_8);
+    if (import12.isDevToolsEnabled) {
+      import12.Inspector.instance.registerDirective(_anchor_2, this._NgFor_2_9);
+    }
   }
 
   @override

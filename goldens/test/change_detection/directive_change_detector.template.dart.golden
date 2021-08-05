@@ -13,8 +13,8 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
-import 'package:angular/src/runtime/check_binding.dart' as import8;
-import 'package:angular/src/devtools.dart' as import9;
+import 'package:angular/src/devtools.dart' as import8;
+import 'package:angular/src/runtime/check_binding.dart' as import9;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/host_view.dart' as import11;
 
@@ -43,6 +43,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final doc = import6.document;
     final _el_0 = import7.appendElement<import6.InputElement>(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_0, this._NgModelLike_0_5);
+    }
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handleEvent_0));
     this.initSubscriptions([subscription_0]);
   }
@@ -54,9 +57,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     bool firstCheck = this.firstCheck;
     changed = false;
     final currVal_0 = _ctx.value;
-    if (import8.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/change_detection/directive_change_detector.dart')) {
-      if (import9.isDevToolsEnabled) {
-        import9.Inspector.instance.recordInput(this._NgModelLike_0_5, 'ngModel', currVal_0);
+    if (import9.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/change_detection/directive_change_detector.dart')) {
+      if (import8.isDevToolsEnabled) {
+        import8.Inspector.instance.recordInput(this._NgModelLike_0_5, 'ngModel', currVal_0);
       }
       this._NgModelLike_0_5.model = currVal_0 /* REF:asset:goldens/test/change_detection/directive_change_detector.dart:445:464 */;
       changed = true;
@@ -65,7 +68,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     if (changed) {
       this._NgModelLike_0_5.ngAfterChanges();
     }
-    if (((!import8.debugThrowIfChanged) && firstCheck)) {
+    if (((!import9.debugThrowIfChanged) && firstCheck)) {
       this._NgModelLike_0_5.ngOnInit();
     }
   }

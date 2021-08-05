@@ -9713,9 +9713,12 @@
       var t1 = this.__ViewGoldenComponent0__HasOutput_0_5;
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_HasOutput_0_5")) : t1;
     },
+    get$_ListensToOutput_0_6() {
+      var t1 = this.__ViewGoldenComponent0__ListensToOutput_0_6;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("_ListensToOutput_0_6")) : t1;
+    },
     build$0() {
-      var t2, _el_0, t3, _this = this,
-        _s20_ = "_ListensToOutput_0_6",
+      var t2, _el_0, _this = this,
         _ctx = _this.get$ctx(),
         parentRenderNode = _this.initViewRoot$0(),
         t1 = new Z.ViewHasOutput0(E._ComponentViewData__ComponentViewData(_this, 0, 3)),
@@ -9742,11 +9745,9 @@
       if (_this.__ViewGoldenComponent0__ListensToOutput_0_6 == null)
         _this.__ViewGoldenComponent0__ListensToOutput_0_6 = new L.ListensToOutput();
       else
-        H.throwExpression(H.LateError$fieldAI(_s20_));
+        H.throwExpression(H.LateError$fieldAI("_ListensToOutput_0_6"));
       _this.get$_compView_0().create$1(0, _this.get$_HasOutput_0_5());
-      t2 = _this.get$_HasOutput_0_5();
-      t3 = _this.__ViewGoldenComponent0__ListensToOutput_0_6;
-      _this.initSubscriptions$1(H._setArrayType([t2.fooEvents.listen$1(_this.eventHandler0$1$1((t3 == null ? H.throwExpression(H.LateError$fieldNI(_s20_)) : t3).get$onCustomEvent(), t1))], type$.JSArray_StreamSubscription_void));
+      _this.initSubscriptions$1(H._setArrayType([_this.get$_HasOutput_0_5().fooEvents.listen$1(_this.eventHandler0$1$1(_this.get$_ListensToOutput_0_6().get$onCustomEvent(), t1))], type$.JSArray_StreamSubscription_void));
       t1 = type$.Event;
       t2 = J.getInterceptor$x(parentRenderNode);
       t2.addEventListener$2(parentRenderNode, "click", _this.eventHandler0$1$1(_ctx.get$onClickNoArguments(), t1));

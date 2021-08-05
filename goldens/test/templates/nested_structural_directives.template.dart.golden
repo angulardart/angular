@@ -16,8 +16,8 @@ import 'package:angular/src/utilities.dart' as import7;
 import 'dart:html' as import8;
 import 'package:angular/src/runtime/dom_helpers.dart' as import9;
 import 'package:angular/src/core/linker/template_ref.dart';
-import 'package:angular/src/runtime/check_binding.dart' as import11;
-import 'package:angular/src/devtools.dart' as import12;
+import 'package:angular/src/devtools.dart' as import11;
+import 'package:angular/src/runtime/check_binding.dart' as import12;
 import 'package:angular/angular.dart';
 import 'package:angular/src/core/linker/views/embedded_view.dart' as import14;
 import 'package:angular/src/core/linker/views/render_view.dart' as import15;
@@ -55,20 +55,23 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent1);
     this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9);
+    }
   }
 
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
     final currVal_0 = _ctx.matrix;
-    if (import11.checkBinding(this._expr_0, currVal_0, 'matrix', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
-      if (import12.isDevToolsEnabled) {
-        import12.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
+    if (import12.checkBinding(this._expr_0, currVal_0, 'matrix', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
+      if (import11.isDevToolsEnabled) {
+        import11.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
       }
       this._NgFor_1_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/nested_structural_directives.dart:462:488 */;
       this._expr_0 = currVal_0;
     }
-    if ((!import11.debugThrowIfChanged)) {
+    if ((!import12.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_1.detectChangesInNestedViews();
@@ -117,6 +120,9 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent2);
     this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9);
+    }
     this.initRootNode(_el_0);
   }
 
@@ -124,14 +130,14 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
   void detectChangesInternal() {
     final local_row = import7.unsafeCast<List<int>>(this.locals['\$implicit']);
     final currVal_0 = local_row;
-    if (import11.checkBinding(this._expr_0, currVal_0, 'row', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
-      if (import12.isDevToolsEnabled) {
-        import12.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
+    if (import12.checkBinding(this._expr_0, currVal_0, 'row', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
+      if (import11.isDevToolsEnabled) {
+        import11.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
       }
       this._NgFor_1_9.ngForOf = currVal_0 /* REF:asset:goldens/test/templates/nested_structural_directives.dart:502:525 */;
       this._expr_0 = currVal_0;
     }
-    if ((!import11.debugThrowIfChanged)) {
+    if ((!import12.debugThrowIfChanged)) {
       this._NgFor_1_9.ngDoCheck();
     }
     this._appEl_1.detectChangesInNestedViews();
@@ -161,23 +167,29 @@ class _ViewGoldenComponent2 extends import14.EmbeddedView<import1.GoldenComponen
     this._appEl_1 = ViewContainer(1, 0, this, _anchor_1);
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent3);
     this._NgIf_1_9 = NgIf(this._appEl_1, _TemplateRef_1_8);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgIf_1_9);
+    }
     final _text_2 = import9.appendText(_el_0, ' ');
     final _anchor_3 = import9.appendAnchor(_el_0);
     this._appEl_3 = ViewContainer(3, 0, this, _anchor_3);
     var _TemplateRef_3_8 = TemplateRef(this._appEl_3, viewFactory_GoldenComponent4);
     this._NgIf_3_9 = NgIf(this._appEl_3, _TemplateRef_3_8);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.registerDirective(_anchor_3, this._NgIf_3_9);
+    }
     this.initRootNode(_el_0);
   }
 
   @override
   void detectChangesInternal() {
     final local_col = import7.unsafeCast<int>(this.locals['\$implicit']);
-    if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.recordInput(this._NgIf_1_9, 'ngIf', local_col.isEven);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.recordInput(this._NgIf_1_9, 'ngIf', local_col.isEven);
     }
     this._NgIf_1_9.ngIf = local_col.isEven /* REF:asset:goldens/test/templates/nested_structural_directives.dart:551:569 */;
-    if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.recordInput(this._NgIf_3_9, 'ngIf', local_col.isOdd);
+    if (import11.isDevToolsEnabled) {
+      import11.Inspector.instance.recordInput(this._NgIf_3_9, 'ngIf', local_col.isOdd);
     }
     this._NgIf_3_9.ngIf = local_col.isOdd /* REF:asset:goldens/test/templates/nested_structural_directives.dart:647:664 */;
     this._appEl_1.detectChangesInNestedViews();

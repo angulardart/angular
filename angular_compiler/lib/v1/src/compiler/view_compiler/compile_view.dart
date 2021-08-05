@@ -1063,6 +1063,25 @@ class CompileView {
         binding, directiveInstance, node, false, handler));
   }
 
+  /// Registers any [directives] on [element] with the Inspector.
+  void registerDirectives(
+    CompileElement element,
+    List<o.Expression> directives,
+  ) {
+    if (directives.isEmpty) {
+      return;
+    }
+    _createMethod.addStmt(
+      o.IfStmt(o.importExpr(DevTools.isDevToolsEnabled), [
+        for (final directive in directives)
+          o.importExpr(DevTools.inspector).callMethod('registerDirective', [
+            element.renderNode.toReadExpr(),
+            directive,
+          ]).toStmt(),
+      ]),
+    );
+  }
+
   void updateQueryAtStartup(CompileQuery query) {
     _createMethod.addStmts(query.createImmediateUpdates());
   }
