@@ -352,7 +352,7 @@ class _LibraryCompileContext implements CompileContext {
 
   @override
   bool get validateMissingDirectives {
-    return hasPolicyExceptionInPackage('VALIDATE_MISSING_DIRECTIVES');
+    return !hasPolicyExceptionInPackage('EXCLUDED_VALIDATE_MISSING_DIRECTIVES');
   }
 }
 
