@@ -44,7 +44,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _el_0 = import7.appendElement<import6.InputElement>(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_0, this._NgModelLike_0_5);
+      import8.Inspector.instance.registerDirective(_el_0, this._NgModelLike_0_5, this._NgModelLike_0_5.runtimeType.toString());
     }
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handleEvent_0));
     this.initSubscriptions([subscription_0]);

@@ -56,7 +56,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent1);
     this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9);
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9, this._NgFor_1_9.runtimeType.toString());
     }
   }
 
@@ -121,7 +121,7 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent2);
     this._NgFor_1_9 = import3.NgFor(this._appEl_1, _TemplateRef_1_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9);
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgFor_1_9, this._NgFor_1_9.runtimeType.toString());
     }
     this.initRootNode(_el_0);
   }
@@ -168,7 +168,7 @@ class _ViewGoldenComponent2 extends import14.EmbeddedView<import1.GoldenComponen
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent3);
     this._NgIf_1_9 = NgIf(this._appEl_1, _TemplateRef_1_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_1, this._NgIf_1_9);
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgIf_1_9, this._NgIf_1_9.runtimeType.toString());
     }
     final _text_2 = import9.appendText(_el_0, ' ');
     final _anchor_3 = import9.appendAnchor(_el_0);
@@ -176,7 +176,7 @@ class _ViewGoldenComponent2 extends import14.EmbeddedView<import1.GoldenComponen
     var _TemplateRef_3_8 = TemplateRef(this._appEl_3, viewFactory_GoldenComponent4);
     this._NgIf_3_9 = NgIf(this._appEl_3, _TemplateRef_3_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_3, this._NgIf_3_9);
+      import11.Inspector.instance.registerDirective(_anchor_3, this._NgIf_3_9, this._NgIf_3_9.runtimeType.toString());
     }
     this.initRootNode(_el_0);
   }

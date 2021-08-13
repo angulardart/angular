@@ -103,7 +103,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     this._DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_5, this._DirectiveProviding$A2$D2_5_6);
+      import8.Inspector.instance.registerDirective(_el_5, this._DirectiveProviding$A2$D2_5_6, this._DirectiveProviding$A2$D2_5_6.runtimeType.toString());
     }
     this._compView_5.create(this._ChildComponentProvidingA$B$C_5_5);
     this._compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
@@ -114,7 +114,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     this._D_6_7 = import1.D2();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_6, this._DirectiveProviding$A2$D2_6_6);
+      import8.Inspector.instance.registerDirective(_el_6, this._DirectiveProviding$A2$D2_6_6, this._DirectiveProviding$A2$D2_6_6.runtimeType.toString());
     }
     this._compView_7 = ViewChildComponentInjecting$D0(this, 7);
     final _el_7 = this._compView_7.rootElement;

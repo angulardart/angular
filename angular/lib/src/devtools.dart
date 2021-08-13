@@ -9,6 +9,7 @@ import 'devtools/inspector.dart';
 import 'utilities.dart';
 
 export 'devtools/inspector.dart';
+export 'devtools/model.dart';
 
 /// Whether developer tools are enabled.
 ///

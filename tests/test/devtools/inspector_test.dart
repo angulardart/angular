@@ -11,14 +11,15 @@ void main() {
   debugCheckBindings();
   enableDevTools();
 
-  /// The use of groups in this test is not representative of how they should be
-  /// used. A user of the component inspector service should dispose one group
-  /// after successfully requesting another, but for the sake of simplicity,
-  /// this test uses the same group for all requests.
+  // The use of groups in this test is not representative of how they should be
+  // used. A user of the component inspector service should dispose one group
+  // after successfully requesting another, but for the sake of simplicity, this
+  // test uses the same group for all requests.
   final groupName = 'test';
 
   tearDown(disposeAnyRunningTest);
 
+  // TODO(b/194920649): remove.
   group('getComponents', () {
     test('component views', () async {
       final testBed = NgTestBed(ng.createTestComponentViewsFactory());
@@ -258,13 +259,6 @@ void main() {
       }
     });
 
-    html.Element createContentRoot({html.Element? parent}) {
-      final root = html.DivElement();
-      (parent ?? html.document.body!).append(root);
-      registerContentRoot(root);
-      return root;
-    }
-
     group('external content root', () {
       late html.Element container;
       late NgTestFixture<TestExternalContentRoots> testFixture;
@@ -380,6 +374,409 @@ void main() {
     });
   });
 
+  /// Returns the root node of the inspected app for testing.
+  InspectorNode rootNode() {
+    return anonymize(Inspector.instance.getNodes(groupName).single);
+  }
+
+  group('getNodes', () {
+    test('component views', () async {
+      final testBed = NgTestBed(ng.createTestComponentViewsFactory());
+      await testBed.create();
+
+      expect(
+        rootNode(),
+        InspectorNode(
+          component: InspectorDirective(name: '$TestComponentViews'),
+          children: [
+            InspectorNode(
+              component: InspectorDirective(name: '$TestComponentViews1'),
+              children: [
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestComponentViews2'),
+                ),
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestComponentViews3'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+
+    group('embedded views', () {
+      test('conditional', () async {
+        final testBed =
+            NgTestBed(ng.createTestConditionalEmbeddedViewsFactory());
+        final testFixture = await testBed.create();
+
+        // Should not return embedded component before it's created.
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(
+              name: '$TestConditionalEmbeddedViews',
+            ),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgIf'),
+                ],
+              ),
+            ],
+          ),
+        );
+
+        // Should return embedded component after it's created.
+        await testFixture.update((component) {
+          component.isChildVisible = true;
+        });
+
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(
+              name: '$TestConditionalEmbeddedViews',
+            ),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgIf'),
+                ],
+              ),
+              // TODO(b/196106275): should be a child of the NgIf node.
+              InspectorNode(
+                component: InspectorDirective(name: '$TestEmbeddedViews1'),
+              ),
+            ],
+          ),
+        );
+
+        // Should not return embedded component after it's destroyed.
+        await testFixture.update((component) {
+          component.isChildVisible = false;
+        });
+
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(
+              name: '$TestConditionalEmbeddedViews',
+            ),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgIf'),
+                ],
+              ),
+            ],
+          ),
+        );
+      });
+
+      test('repeated', () async {
+        final testBed = NgTestBed(ng.createTestRepeatedEmbeddedViewsFactory());
+        final testFixture = await testBed.create(
+          beforeChangeDetection: (component) {
+            component.values = [1, 2, 4];
+          },
+        );
+
+        // Should return embedded components after they're created.
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgFor'),
+                ],
+              ),
+              // TODO(b/196106275): should be children of the NgFor node.
+              for (var i = 0; i < 3; i++)
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
+                ),
+            ],
+          ),
+        );
+
+        await testFixture.update((component) {
+          component.values.insert(2, 3); // [1, 2, 3, 4];
+        });
+
+        // Should reflect additions to embedded views.
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgFor'),
+                ],
+              ),
+              // TODO(b/196106275): should be children of the NgFor node.
+              for (var i = 0; i < 4; i++)
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
+                ),
+            ],
+          ),
+        );
+
+        await testFixture.update((component) {
+          component.values.removeRange(0, 2);
+        });
+
+        // Should reflect removals to embedded components.
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
+            children: [
+              InspectorNode(
+                directives: [
+                  InspectorDirective(name: '$NgFor'),
+                ],
+              ),
+              // TODO(b/196106275): should be children of the NgFor node.
+              for (var i = 0; i < 2; i++)
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
+                ),
+            ],
+          ),
+        );
+      });
+
+      test('transplated', () async {
+        final testBed =
+            NgTestBed(ng.createTestTransplantedEmbeddedViewsFactory());
+        await testBed.create();
+
+        expect(
+          rootNode(),
+          InspectorNode(
+            component: InspectorDirective(
+              name: '$TestTransplantedEmbeddedViews',
+            ),
+            children: [
+              InspectorNode(
+                component: InspectorDirective(name: '$TestEmbeddedViews2'),
+                children: [
+                  InspectorNode(
+                    directives: [
+                      InspectorDirective(name: '$NgTemplateOutlet'),
+                    ],
+                  ),
+                  // TODO(b/196106275): should be a child of NgTemplateOutlet.
+                  InspectorNode(
+                    component: InspectorDirective(name: '$TestEmbeddedViews1'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      });
+    });
+
+    test('host views', () async {
+      final testBed = NgTestBed(ng.createTestHostViewsFactory());
+      final testFixture = await testBed.create();
+
+      // Should not return imperatively loaded component before it's created.
+      expect(
+        rootNode(),
+        InspectorNode(
+          component: InspectorDirective(name: '$TestHostViews'),
+        ),
+      );
+
+      await testFixture.update((component) {
+        component.load();
+      });
+
+      // Should return imperatively loaded component after it's created.
+      expect(
+        rootNode(),
+        InspectorNode(
+          component: InspectorDirective(name: '$TestHostViews'),
+          children: [
+            InspectorNode(
+              component: InspectorDirective(name: '$TestHostViews1'),
+            ),
+          ],
+        ),
+      );
+
+      await testFixture.update((component) {
+        component.clear();
+      });
+
+      // Should not return imperatively loaded component after it's destroyed.
+      expect(
+        rootNode(),
+        InspectorNode(
+          component: InspectorDirective(name: '$TestHostViews'),
+        ),
+      );
+    });
+
+    test('projected content', () async {
+      final testBed = NgTestBed(ng.createTestProjectedContentFactory());
+      await testBed.create();
+
+      expect(
+        rootNode(),
+        InspectorNode(
+          component: InspectorDirective(name: '$TestProjectedContent'),
+          children: [
+            InspectorNode(
+              component: InspectorDirective(name: '$TestProjectedContent1'),
+              children: [
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestProjectedContent3'),
+                ),
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestProjectedContent2'),
+                ),
+                InspectorNode(
+                  component: InspectorDirective(name: '$TestProjectedContent5'),
+                  children: [
+                    InspectorNode(
+                      component: InspectorDirective(
+                        name: '$TestProjectedContent4',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
+    });
+
+    group('external content root', () {
+      late html.Element container;
+      late NgTestFixture<TestExternalContentRoots> testFixture;
+
+      setUp(() async {
+        container = createContentRoot();
+        final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+        testFixture = await testBed.create();
+      });
+
+      tearDown(() {
+        container.remove();
+      });
+
+      test('with no components', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.noComponentTemplateRef!,
+          );
+        });
+
+        final nodes = Inspector.instance.getNodes(groupName);
+        expect(nodes, hasLength(1));
+      });
+
+      test('with one component', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.oneComponentTemplateRef!,
+          );
+        });
+
+        final nodes = Inspector.instance.getNodes(groupName);
+        expect(nodes, hasLength(2));
+      });
+
+      test('with multiple components', () async {
+        await testFixture.update((component) {
+          component.initExternalContent(
+            container,
+            component.multipleComponentTemplateRef!,
+          );
+        });
+
+        final nodes = Inspector.instance.getNodes(groupName);
+        expect(nodes, hasLength(3));
+      });
+    });
+
+    test('multiple external content roots', () async {
+      final containerOne = createContentRoot();
+      final containerTwo = createContentRoot();
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+
+      await testFixture.update((component) {
+        component
+          ..initExternalContent(
+            containerOne,
+            component.oneComponentTemplateRef!,
+          )
+          ..initExternalContent(
+            containerTwo,
+            component.oneComponentTemplateRef!,
+          );
+      });
+
+      final nodes = Inspector.instance.getNodes(groupName);
+      expect(nodes, hasLength(3));
+    });
+
+    test('is coalesced by existing content root', () async {
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+      final container = createContentRoot(parent: testFixture.rootElement);
+
+      await testFixture.update((component) {
+        component.initExternalContent(
+          container,
+          component.oneComponentTemplateRef!,
+        );
+      });
+
+      final nodes = Inspector.instance.getNodes(groupName);
+      expect(nodes, hasLength(1));
+    });
+
+    test('coalesces existing content roots', () async {
+      final testBed = NgTestBed(ng.createTestExternalContentRootsFactory());
+      final testFixture = await testBed.create();
+      final childContainer = html.DivElement();
+      final parentContainer = testFixture.rootElement.parent!
+        ..append(childContainer);
+      registerContentRoot(childContainer);
+      registerContentRoot(parentContainer);
+
+      await testFixture.update((component) {
+        component
+          ..initExternalContent(
+            parentContainer,
+            component.oneComponentTemplateRef!,
+          )
+          ..initExternalContent(
+            childContainer,
+            component.oneComponentTemplateRef!,
+          );
+      });
+
+      final nodes = Inspector.instance.getNodes(groupName);
+      expect(nodes, hasLength(3));
+    });
+  });
+
+  // TODO(b/194920649): remove.
   group('getComponentInputs', () {
     // Returns the ID of the first child component in the app.
     int firstChildComponentId() {
@@ -474,6 +871,139 @@ void main() {
       );
     });
   });
+
+  group('getInputs', () {
+    // Returns the ID of the first child component in the app.
+    int firstChildComponentId() {
+      final nodes = Inspector.instance.getNodes(groupName);
+      return nodes.first.children.first.component!.id;
+    }
+
+    test('no inputs', () async {
+      final testBed = NgTestBed(ng.createTestUsedInputsFactory());
+      await testBed.create();
+
+      final nodes = Inspector.instance.getNodes(groupName);
+      final rootComponentId = nodes.first.component!.id;
+      final inputs = Inspector.instance.getInputs(rootComponentId);
+      expect(inputs, isEmpty);
+    });
+
+    test('omits unused inputs', () async {
+      final testBed = NgTestBed(ng.createTestUnusedInputsFactory());
+      await testBed.create();
+
+      final id = firstChildComponentId();
+      final inputs = Inspector.instance.getInputs(id);
+      expect(inputs, isEmpty);
+    });
+
+    test('omits inputs until set', () async {
+      final testBed = NgTestBed(ng.createTestUsedInputsFactory());
+      final testFixture = await testBed.create();
+
+      final id = firstChildComponentId();
+      var inputs = Inspector.instance.getInputs(id);
+      expect(inputs, isEmpty);
+
+      await testFixture.update((component) {
+        component.title = 'Hello!';
+      });
+
+      inputs = Inspector.instance.getInputs(id);
+      expect(inputs, hasLength(1));
+      expect(inputs, containsPair('name', 'Hello!'));
+
+      await testFixture.update((component) {
+        component.numbers = [1, 2, 3];
+      });
+
+      inputs = Inspector.instance.getInputs(id);
+      expect(inputs, hasLength(2));
+      expect(inputs, containsPair('name', 'Hello!'));
+      expect(inputs, containsPair('data', [1, 2, 3]));
+    });
+
+    test('updates inputs when changed', () async {
+      final testBed = NgTestBed(ng.createTestUsedInputsFactory());
+      final testFixture = await testBed.create(
+        beforeChangeDetection: (component) {
+          component.title = 'Hello!';
+        },
+      );
+
+      final id = firstChildComponentId();
+      var inputs = Inspector.instance.getInputs(id);
+      expect(inputs, {'name': 'Hello!'});
+
+      await testFixture.update((component) {
+        component.title = 'Goodbye.';
+      });
+
+      inputs = inputs = Inspector.instance.getInputs(id);
+      expect(inputs, {'name': 'Goodbye.'});
+    });
+
+    test('records immutable expressions', () async {
+      final testBed = NgTestBed(ng.createTestImmutableInputsFactory());
+      final testFixture = await testBed.create();
+
+      final id = firstChildComponentId();
+      final inputs = Inspector.instance.getInputs(id);
+      expect(inputs, hasLength(2));
+      expect(
+        inputs,
+        containsPair('name', testFixture.assertOnlyInstance.title),
+      );
+      expect(
+        inputs,
+        containsPair('data', testFixture.assertOnlyInstance.numbers),
+      );
+    });
+
+    test('captures directive inputs', () async {
+      final testBed = NgTestBed(ng.createTestConditionalEmbeddedViewsFactory());
+      final testFixture = await testBed.create();
+      final nodes = Inspector.instance.getNodes(groupName);
+      final ngIfId = nodes.first.children.first.directives.first.id;
+
+      var inputs = Inspector.instance.getInputs(ngIfId);
+      expect(inputs, hasLength(1));
+      expect(inputs, containsPair('ngIf', false));
+
+      await testFixture.update((component) {
+        component.isChildVisible = true;
+      });
+
+      inputs = Inspector.instance.getInputs(ngIfId);
+      expect(inputs, hasLength(1));
+      expect(inputs, containsPair('ngIf', true));
+    });
+  });
+}
+
+html.Element createContentRoot({html.Element? parent}) {
+  final root = html.DivElement();
+  (parent ?? html.document.body!).append(root);
+  registerContentRoot(root);
+  return root;
+}
+
+/// Resets all IDs to their default (meaningless) value.
+///
+/// This allows [nodes] to be compared by equality without inadvertantly testing
+/// the implementation details of ID generation.
+InspectorNode anonymize(InspectorNode node) {
+  final component = node.component;
+  return InspectorNode(
+    component:
+        component != null ? InspectorDirective(name: component.name) : null,
+    directives: [
+      for (final directive in node.directives)
+        InspectorDirective(name: directive.name),
+    ],
+    children: [for (final child in node.children) anonymize(child)],
+  );
 }
 
 @Component(

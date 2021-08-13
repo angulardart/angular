@@ -55,7 +55,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _el_7 = import8.appendDiv(doc, parentRenderNode);
     this._MessageDirective_7_5 = import1.MessageDirective();
     if (import10.isDevToolsEnabled) {
-      import10.Inspector.instance.registerDirective(_el_7, this._MessageDirective_7_5);
+      import10.Inspector.instance.registerDirective(_el_7, this._MessageDirective_7_5, this._MessageDirective_7_5.runtimeType.toString());
     }
   }
 

@@ -58,7 +58,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._HasOutput_0_5 = import1.HasOutput();
     this._ListensToOutput_0_6 = import1.ListensToOutput();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_0, this._ListensToOutput_0_6);
+      import8.Inspector.instance.registerDirective(_el_0, this._ListensToOutput_0_6, this._ListensToOutput_0_6.runtimeType.toString());
     }
     this._compView_0.create(this._HasOutput_0_5);
     final subscription_0 = this._HasOutput_0_5.fooEvents.listen(this.eventHandler0(this._ListensToOutput_0_6.onCustomEvent));

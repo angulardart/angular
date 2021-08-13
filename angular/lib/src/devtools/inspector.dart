@@ -9,6 +9,7 @@ import 'package:stream_transform/stream_transform.dart';
 import '../core/application_ref.dart';
 import '../core/linker/views/component_view.dart';
 import '../core/linker/views/view.dart';
+import 'model.dart';
 import 'reference_counter.dart';
 
 /// A service for inspecting an app via the Dart VM Service Protocol.
@@ -34,7 +35,7 @@ class Inspector {
   /// map. Consequently, unused inputs will never appear in the map.
   final _directiveToInputs = Expando<Map<String, Object?>>();
 
-  /// Maps a DOM node to its associated [InspectorData].
+  /// Maps a DOM node to its associated [_InspectorNodeData].
   ///
   /// The [View] model isn't well-suited for traversal, primarily because view
   /// children are stored in generated fields. This means there's no generalized
@@ -49,12 +50,12 @@ class Inspector {
   /// This is particularly important for projected content and transplanted
   /// embedded views whose location in the DOM may not correspond to where they
   /// were constructed.
-  final _nodeToData = Expando<InspectorData>();
+  final _nodeToData = Expando<_InspectorNodeData>();
 
   /// Used to retain instances between requests.
   final _referenceCounter = ReferenceCounter<Object>();
 
-  /// Additional locations in the DOM to search for components.
+  /// Additional locations in the DOM to search for Angular artifacts.
   final _contentRoots = <Element>[];
 
   ApplicationRef? _applicationRef;
@@ -111,7 +112,11 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   /// Registers service protocol extensions for inspecting components.
   void _registerServiceExtensions() {
     _registerObjectGroupServiceExtension('disposeGroup', _disposeGroup);
+    // TODO(b/194920649): remove.
     _registerObjectGroupServiceExtension('getComponents', getComponents);
+    _registerObjectGroupServiceExtension('getNodes', (groupName) {
+      return getNodes(groupName).map((node) => node.toJson()).toList();
+    });
   }
 
   /// Registers a service extension [handler] that manages a group of objects.
@@ -179,9 +184,9 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     });
   }
 
-  /// Returns the [InspectorData] associated with [element].
-  InspectorData _data(Node node) {
-    return _nodeToData[node] ??= InspectorData();
+  /// Returns the [_InspectorNodeData] associated with [node].
+  _InspectorNodeData _data(Node node) {
+    return _nodeToData[node] ??= _InspectorNodeData();
   }
 
   /// Registers a component [view] to be inspected by this service.
@@ -192,8 +197,14 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   }
 
   /// Registers a [directive] on [element] to be inspected by this service.
-  void registerDirective(Node node, Object directive) {
-    _data(node).directives.add(directive);
+  ///
+  /// The compiler generates code to pass `directive.runtimeType.toString()` to
+  /// [name]. Obtaining the [runtimeType] at the callsite where the type of the
+  /// directive is statically known avoids calling [runtimeType] on [Object]
+  /// which prevents elimination of non-local runtime type information. See
+  /// http://go/angulardart/dev/optimizing-dart2js#using-runtimetype.
+  void registerDirective(Node node, Object directive, String name) {
+    _data(node).directives.add(_InspectorDirectiveData(directive, name));
   }
 
   /// Registers [element] as a location to search for components.
@@ -246,17 +257,26 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   ///
   /// The component is identified using the [id] obtained from [getComponents].
   /// Returns an empty map if no inputs have been set on the component.
+  // TODO(b/194920649): remove.
   Map<String, Object?> getComponentInputs(int id) {
-    final componentView =
-        _referenceCounter.toObject(id) as ComponentView<Object>;
-    final component = componentView.ctx;
-    return _directiveToInputs[component] ?? {};
+    return getInputs(id);
+  }
+
+  /// Returns the inputs bound to a directive as a map from name to value.
+  ///
+  /// The directive is identified using the [id] obtained from [getNodes].
+  /// Returns an empty map if no inputs have been set on the directive.
+  Map<String, Object?> getInputs(int id) {
+    final object = _referenceCounter.toObject(id);
+    final directive = object is ComponentView<Object> ? object.ctx : object;
+    return _directiveToInputs[directive] ?? {};
   }
 
   /// Returns a JSON representation of the component tree.
   ///
   /// All components referenced in the JSON representation are kept alive at
   /// least until [groupName] is disposed.
+  // TODO(b/194920649): remove.
   @visibleForTesting
   List<Map<String, Object>> getComponents(String groupName) {
     final json = <Map<String, Object>>[];
@@ -267,6 +287,80 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     return json;
   }
 
+  /// Returns a JSON representation of the component tree.
+  ///
+  /// All directive instances referenced in the JSON representation are kept
+  /// alive at least until [groupName] is disposed.
+  @visibleForTesting
+  List<InspectorNode> getNodes(String groupName) {
+    final result = <InspectorNode>[];
+    for (final element in _contentRoots) {
+      // Structural directives can be anchored on comments.
+      final whatToShow = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT;
+      final treeWalker = TreeWalker(element, whatToShow);
+      _collectNodes(treeWalker, groupName, result);
+    }
+    return result;
+  }
+
+  /// Uses [treeWalker] to populate [result].
+  ///
+  /// See [_nodeToData] regarding why the component tree is collected by
+  /// traversing the DOM.
+  void _collectNodes(
+    TreeWalker treeWalker,
+    String groupName,
+    List<InspectorNode> result,
+  ) {
+    final currentNode = treeWalker.currentNode;
+    final data = _nodeToData[currentNode];
+
+    // If this DOM node has no associated Angular data, we simply append any
+    // children to the results.
+    final children = data != null ? <InspectorNode>[] : result;
+
+    // Collect data from child nodes.
+    for (var node = treeWalker.firstChild();
+        node != null;
+        node = treeWalker.nextSibling()) {
+      _collectNodes(treeWalker, groupName, children);
+    }
+
+    // Collect data from current node, if any.
+    if (data != null) {
+      result.add(_createInspectorNode(data, groupName, children));
+    }
+
+    // Restore current node to continue traversing its siblings since the
+    // recursive call moves the pointer to a descendant of the current node.
+    treeWalker.currentNode = currentNode;
+  }
+
+  /// Converts [data] with [children] to an [InspectorNode].
+  InspectorNode _createInspectorNode(
+    _InspectorNodeData data,
+    String groupName,
+    List<InspectorNode> children,
+  ) {
+    final componentView = data.componentView;
+    return InspectorNode(
+      component: componentView != null
+          ? InspectorDirective(
+              name: componentView.debugComponentTypeName,
+              id: _referenceCounter.toId(componentView, groupName),
+            )
+          : null,
+      directives: [
+        for (final directive in data.directives)
+          InspectorDirective(
+            name: directive.name,
+            id: _referenceCounter.toId(directive.instance, groupName),
+          )
+      ],
+      children: children,
+    );
+  }
+
   /// Uses [treeWalker] to populate [result] with the component tree.
   ///
   /// The [result] is a recursive structure where each element is a JSON object
@@ -274,6 +368,7 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   ///
   /// See [_nodeToData] regarding why the component tree is collected by
   /// traversing the DOM.
+  // TODO(b/194920649): remove.
   void _collectJson(
     TreeWalker treeWalker,
     String groupName,
@@ -308,11 +403,22 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   }
 }
 
-/// Angular data associated with a DOM node.
-class InspectorData {
+/// Angular artifacts associated with a DOM node.
+class _InspectorNodeData {
   /// The component hosted on this node, if present, otherwise null.
   ComponentView<Object>? componentView;
 
   /// The directives applied to this node, if any.
-  final directives = <Object>[];
+  final directives = <_InspectorDirectiveData>[];
+}
+
+/// Data for a directive instance.
+class _InspectorDirectiveData {
+  _InspectorDirectiveData(this.instance, this.name);
+
+  /// The directive instance.
+  final Object instance;
+
+  /// A description of [instance]'s [Type].
+  final String name;
 }

@@ -1077,6 +1077,7 @@ class CompileView {
           o.importExpr(DevTools.inspector).callMethod('registerDirective', [
             element.renderNode.toReadExpr(),
             directive,
+            directive.prop('runtimeType').callMethod('toString', []),
           ]).toStmt(),
       ]),
     );
