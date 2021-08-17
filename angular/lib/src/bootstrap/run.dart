@@ -212,7 +212,9 @@ ComponentRef<T> runAppLegacy<T>(
   List<Object> createInjectorFromProviders = const [],
   void Function()? initReflector,
 }) {
-  assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
+  // TODO: remove `dynamic` after landing cl/390677656.
+  assert(T == dynamic || T == Object || T == componentType,
+      'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
@@ -238,7 +240,9 @@ Future<ComponentRef<T>> runAppLegacyAsync<T>(
   List<Object> createInjectorFromProviders = const [],
   void Function()? initReflector,
 }) {
-  assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
+  // TODO: remove `dynamic` after landing cl/390677656.
+  assert(T == dynamic || T == Object || T == componentType,
+      'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
