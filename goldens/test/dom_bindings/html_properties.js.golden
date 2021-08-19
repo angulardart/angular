@@ -227,17 +227,36 @@
     }
   },
   C = {},
-  D = {_SafeHtml: function _SafeHtml(t0) {
+  D = {
+    _SafeHtml__createHTMLUsingPolicy(html) {
+      var t1;
+      if ($.$get$browserSupportsTrustedTypes()) {
+        t1 = $._trustedTypePolicyName;
+        t1 = (t1 == null ? $._trustedTypePolicyName = "dart_html#safe" : t1).length !== 0;
+      } else
+        t1 = false;
+      if (t1) {
+        t1 = S.trustedTypePolicy();
+        t1 = t1 == null ? null : type$.TrustedHtml._as(t1._nativeTrustedTypePolicy.createHTML(html));
+      } else
+        t1 = null;
+      return t1;
+    },
+    _SafeHtml: function _SafeHtml(t0) {
       this._safeWrappedValue = t0;
-    }, _SafeUrl: function _SafeUrl(t0) {
+    },
+    _SafeUrl: function _SafeUrl(t0) {
       this._safeWrappedValue = t0;
-    }, _TrustedResourceUrl: function _TrustedResourceUrl(t0) {
+    },
+    _TrustedResourceUrl: function _TrustedResourceUrl(t0) {
       this._safeWrappedValue = t0;
-    }, ComponentRef: function ComponentRef(t0, t1, t2) {
+    },
+    ComponentRef: function ComponentRef(t0, t1, t2) {
       this._hostView = t0;
       this._nativeElement = t1;
       this.$ti = t2;
-    }, ComponentFactory: function ComponentFactory(t0, t1) {
+    },
+    ComponentFactory: function ComponentFactory(t0, t1) {
       this.selector = t0;
       this._viewFactory = t1;
     },
@@ -3230,17 +3249,11 @@
       _.youtubeUrl = t3;
     },
     sanitizeHtml0(stringOrSafeOrBypass) {
-      var t1, t2;
+      var t1;
       if (type$.SafeHtml._is(stringOrSafeOrBypass))
         return stringOrSafeOrBypass._safeWrappedValue;
       t1 = F.sanitizeHtml(J.toString$0$(stringOrSafeOrBypass), null);
-      if ($.$get$browserSupportsTrustedTypes()) {
-        t2 = $._trustedTypePolicyName;
-        t2 = (t2 == null ? $._trustedTypePolicyName = "dart_html#safe" : t2).length !== 0;
-      } else
-        t2 = false;
-      if (t2)
-        type$.TrustedHtml._as(S.trustedTypePolicy()._nativeTrustedTypePolicy.createHTML(t1));
+      D._SafeHtml__createHTMLUsingPolicy(t1);
       return t1;
     },
     sanitizeUrl(stringOrSafeOrBypass) {
@@ -4573,18 +4586,12 @@
     }},
   S = {
     trustedTypePolicy() {
-      var callbackMap, t2,
-        t1 = $._trustedTypePolicy;
+      var t1 = $._trustedTypePolicy;
       if (t1 == null) {
         t1 = $._trustedTypePolicyName;
         if (t1 == null)
           t1 = $._trustedTypePolicyName = "dart_html#safe";
-        callbackMap = {};
-        callbackMap.createHTML = P.allowInterop(new S.trustedTypePolicy_closure());
-        callbackMap.createScript = P.allowInterop(new S.trustedTypePolicy_closure0());
-        callbackMap.createScriptURL = P.allowInterop(new S.trustedTypePolicy_closure1());
-        t2 = $.$get$TrustedTypePolicyFactory_trustedTypes();
-        t1 = $._trustedTypePolicy = new S._TrustedTypePolicy(t2.createPolicy.apply(t2, [t1, callbackMap]));
+        t1 = $._trustedTypePolicy = new S.TrustedTypePolicyFactory().register$4(0, t1, new S.trustedTypePolicy_closure(), new S.trustedTypePolicy_closure0(), new S.trustedTypePolicy_closure1());
       }
       return t1;
     },
@@ -4595,6 +4602,8 @@
     trustedTypePolicy_closure1: function trustedTypePolicy_closure1() {
     },
     TrustedTypePolicy: function TrustedTypePolicy() {
+    },
+    TrustedTypePolicyFactory: function TrustedTypePolicyFactory() {
     },
     _TrustedTypePolicy: function _TrustedTypePolicy(t0) {
       this._nativeTrustedTypePolicy = t0;
@@ -9284,6 +9293,22 @@
     $signature: 4
   };
   S.TrustedTypePolicy.prototype = {};
+  S.TrustedTypePolicyFactory.prototype = {
+    register$4(_, policyName, createHtml, createScript, createScriptURL) {
+      var policy, t1, exception, callbackMap = {};
+      callbackMap.createHTML = P.allowInterop(createHtml);
+      callbackMap.createScript = P.allowInterop(createScript);
+      callbackMap.createScriptURL = P.allowInterop(createScriptURL);
+      try {
+        t1 = $.$get$TrustedTypePolicyFactory_trustedTypes();
+        policy = t1.createPolicy.apply(t1, [policyName, callbackMap]);
+        return new S._TrustedTypePolicy(policy);
+      } catch (exception) {
+        H.unwrapException(exception);
+        return null;
+      }
+    }
+  };
   S._TrustedTypePolicy.prototype = {};
   U.minimalApp_closure.prototype = {
     call$1($parent) {
@@ -10153,7 +10178,7 @@
       return t1 == null ? H.throwExpression(H.LateError$fieldNI("_compView_10")) : t1;
     },
     build$0() {
-      var t1, styles, t2, t3, t4, url, _this = this,
+      var t1, styles, t2, t3, url, _this = this,
         _s24_ = "_SanitizedComponent_10_5",
         parentRenderNode = _this.initViewRoot$0(),
         doc = document;
@@ -10213,26 +10238,22 @@
       t1 = _this.get$_compView_10();
       parentRenderNode.appendChild(t1.get$rootElement(t1));
       t1 = F.sanitizeHtml("<div></div>", null);
-      t2 = $.$get$browserSupportsTrustedTypes();
-      if (t2) {
+      D._SafeHtml__createHTMLUsingPolicy(t1);
+      t2 = self.deopt();
+      t3 = type$.String;
+      url = Y.formatResourceUrl("//www.youtube.com/v/%{videoId}?h1=en&fs=1", P.LinkedHashMap_LinkedHashMap$_literal(["videoId", "5"], t3, t3));
+      if ($.$get$browserSupportsTrustedTypes()) {
         t3 = $._trustedTypePolicyName;
         t3 = (t3 == null ? $._trustedTypePolicyName = "dart_html#safe" : t3).length !== 0;
       } else
         t3 = false;
-      if (t3)
-        type$.TrustedHtml._as(S.trustedTypePolicy()._nativeTrustedTypePolicy.createHTML(t1));
-      t3 = self.deopt();
-      t4 = type$.String;
-      url = Y.formatResourceUrl("//www.youtube.com/v/%{videoId}?h1=en&fs=1", P.LinkedHashMap_LinkedHashMap$_literal(["videoId", "5"], t4, t4));
-      if (t2) {
-        t2 = $._trustedTypePolicyName;
-        t2 = (t2 == null ? $._trustedTypePolicyName = "dart_html#safe" : t2).length !== 0;
-      } else
-        t2 = false;
-      if (t2)
-        type$.TrustedScriptUrl._as(S.trustedTypePolicy()._nativeTrustedTypePolicy.createScriptURL(url));
+      if (t3) {
+        t3 = S.trustedTypePolicy();
+        if (t3 != null)
+          type$.TrustedScriptUrl._as(t3._nativeTrustedTypePolicy.createScriptURL(url));
+      }
       if (_this.__ViewGoldenComponent0__SanitizedComponent_10_5 == null)
-        _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new L.SanitizedComponent(new D._SafeUrl("https://google.com"), new D._SafeHtml(t1), t3, new D._TrustedResourceUrl(url));
+        _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new L.SanitizedComponent(new D._SafeUrl("https://google.com"), new D._SafeHtml(t1), t2, new D._TrustedResourceUrl(url));
       else
         H.throwExpression(H.LateError$fieldAI(_s24_));
       t1 = _this.get$_compView_10();
@@ -10442,7 +10463,7 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamTransformerBase, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.SetMixin, P.__SetBase_Object_SetMixin, P._UnmodifiableSetMixin, P.Codec, P._Utf8Encoder, P.Duration, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, D._SafeHtml, D._SafeUrl, D._TrustedResourceUrl, F.SanitizerTable, F.ElementPolicy, F.AttributePolicy, F._CopyBasedSanitizer, S._TrustedTypePolicy, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.SanitizedComponent]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamTransformerBase, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.SetMixin, P.__SetBase_Object_SetMixin, P._UnmodifiableSetMixin, P.Codec, P._Utf8Encoder, P.Duration, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, D._SafeHtml, D._SafeUrl, D._TrustedResourceUrl, F.SanitizerTable, F.ElementPolicy, F.AttributePolicy, F._CopyBasedSanitizer, S.TrustedTypePolicyFactory, S._TrustedTypePolicy, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.SanitizedComponent]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.CssStyleValue, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.TrustedHtml, W.TrustedScriptUrl, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
     _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, Z._ObjectPropertyDescriptor, Z._JSFunction, S.TrustedTypePolicy, U.JsTestability]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
