@@ -1262,6 +1262,24 @@ void main() {
           ]);
         });
 
+        test('should support void elements in nested HTML', () {
+          final ast = parse('''
+            <ng-container @i18n="description">
+              This contains<br>HTML!
+            </ng-container>
+          ''');
+          final humanizedAst = humanizeTplAst(ast);
+          expect(humanizedAst, [
+            [NgContainerAst],
+            [
+              I18nTextAst,
+              r'This contains${voidElement0}HTML!',
+              'description',
+              {'voidElement0': '<br>'},
+            ],
+          ]);
+        });
+
         test('should normalize whitespace in description and meaning', () {
           final ast = parse('''
               <div

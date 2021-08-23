@@ -27,7 +27,8 @@ void main() {
 
     <!-- HTML -->
     <p @i18n="description">
-      This message contains <i>multiple levels of <b>nested</b> HTML</i>.
+      This message<br>
+      contains <i>multiple levels of <b>nested</b> HTML</i>.
     </p>
 
     <!-- Property -->

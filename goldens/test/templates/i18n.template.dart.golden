@@ -50,7 +50,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import8.setAttribute(_el_3, 'alt', _message_1);
     final _text_4 = import8.appendText(parentRenderNode, ' ');
     final _el_5 = import8.appendElement<import7.HtmlElement>(doc, parentRenderNode, 'p');
-    final _html_6 = import9.createTrustedHtml(_message_2('<i>', '<b>', '</b>', '</i>'));
+    final _html_6 = import9.createTrustedHtml(_message_2('<br>', '<i>', '<b>', '</b>', '</i>'));
     _el_5.append(_html_6);
     final _el_7 = import8.appendDiv(doc, parentRenderNode);
     this._MessageDirective_7_5 = import1.MessageDirective();
@@ -70,8 +70,8 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     }
   }
 
-  static String _message_2(String startTag0, String startTag1, String endTag1, String endTag0) {
-    return import2.Intl.message('This message contains ${startTag0}multiple levels of ${startTag1}nested${endTag1} HTML${endTag0}.', desc: 'description', name: 'ViewGoldenComponent0__message_2', args: [startTag0, startTag1, endTag1, endTag0], examples: const {'startTag0': '<i>', 'startTag1': '<b>', 'endTag1': '</b>', 'endTag0': '</i>'});
+  static String _message_2(String voidElement0, String startTag1, String startTag2, String endTag2, String endTag1) {
+    return import2.Intl.message('This message${voidElement0} contains ${startTag1}multiple levels of ${startTag2}nested${endTag2} HTML${endTag1}.', desc: 'description', name: 'ViewGoldenComponent0__message_2', args: [voidElement0, startTag1, startTag2, endTag2, endTag1], examples: const {'voidElement0': '<br>', 'startTag1': '<i>', 'startTag2': '<b>', 'endTag2': '</b>', 'endTag1': '</i>'});
   }
 
   static void _debugClearComponentStyles() {

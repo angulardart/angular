@@ -8546,7 +8546,7 @@
       T.setAttribute(T.appendElement(t5, parentRenderNode, "img"), "alt", $.$get$ViewGoldenComponent0__message_1());
       T.appendText(parentRenderNode, " ");
       _el_5 = T.appendElement(t5, parentRenderNode, "p");
-      t6 = T.Intl__message("This message contains <i>multiple levels of <b>nested</b> HTML</i>.", _null, "ViewGoldenComponent0__message_2", H._setArrayType(["<i>", "<b>", "</b>", "</i>"], type$.JSArray_Object), _null);
+      t6 = T.Intl__message("This message<br> contains <i>multiple levels of <b>nested</b> HTML</i>.", _null, "ViewGoldenComponent0__message_2", H._setArrayType(["<br>", "<i>", "<b>", "</b>", "</i>"], type$.JSArray_Object), _null);
       t7 = t5.body;
       t7.toString;
       _el_5.appendChild(C.BodyElement_methods.createFragment$3$treeSanitizer$validator(t7, t6, C.C__TrustedHtmlTreeSanitizer, _null));
