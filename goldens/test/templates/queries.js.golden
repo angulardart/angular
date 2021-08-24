@@ -4466,9 +4466,7 @@
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
       _._viewQuery_q3_5_isDirty = _._viewQuery_AnotherDirective_4_isDirty = true;
-      _.__ViewGoldenComponent0__ContentHasReference_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__ContentQuery_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__DynamicSingleQuery_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__StaticSingleQuery_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__NestedNgForQueriesList_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__EmbeddedQueries_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__NgIf_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__AnotherDirective_1_5 = _.__ViewGoldenComponent0__AnotherDirective_0_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewGoldenComponent0__ContentHasReference_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__ContentQuery_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__DynamicSingleQuery_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__StaticSingleQuery_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__NestedNgForQueriesList_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__EmbeddedQueries_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__NgIf_2_9 = _.__ViewGoldenComponent0__appEl_2 = _.__ViewGoldenComponent0__AnotherDirective_1_5 = _.__ViewGoldenComponent0__AnotherDirective_0_5 = null;
       _._component_view$_data = t0;
     },
     ViewGoldenComponent0_detectChangesInternal_closure: function ViewGoldenComponent0_detectChangesInternal_closure() {
@@ -4481,16 +4479,13 @@
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._data = t0;
     },
     ViewEmbeddedQueries0: function ViewEmbeddedQueries0(t0) {
       var _ = this;
       _._viewQuery_AnotherDirective_0_isDirty = true;
-      _.__ViewEmbeddedQueries0__appEl_2 = _.__ViewEmbeddedQueries0__appEl_1 = _.__ViewEmbeddedQueries0__AnotherDirective_0_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewEmbeddedQueries0__appEl_2 = _.__ViewEmbeddedQueries0__appEl_1 = _.__ViewEmbeddedQueries0__AnotherDirective_0_5 = null;
       _._component_view$_data = t0;
     },
     ViewEmbeddedQueries0_detectChangesInternal_closure: function ViewEmbeddedQueries0_detectChangesInternal_closure() {
@@ -4499,9 +4494,7 @@
     },
     ViewNestedNgForQueriesList0: function ViewNestedNgForQueriesList0(t0) {
       var _ = this;
-      _.__ViewNestedNgForQueriesList0__NgIf_0_9 = _.__ViewNestedNgForQueriesList0__appEl_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewNestedNgForQueriesList0__NgIf_0_9 = _.__ViewNestedNgForQueriesList0__appEl_0 = null;
       _._component_view$_data = t0;
     },
     _ViewNestedNgForQueriesList1: function _ViewNestedNgForQueriesList1(t0) {
@@ -4518,9 +4511,7 @@
     },
     ViewStaticSingleQuery0: function ViewStaticSingleQuery0(t0) {
       var _ = this;
-      _.__ViewStaticSingleQuery0__NgIf_1_9 = _.__ViewStaticSingleQuery0__appEl_1 = _.__ViewStaticSingleQuery0__AnotherDirective_0_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewStaticSingleQuery0__NgIf_1_9 = _.__ViewStaticSingleQuery0__appEl_1 = _.__ViewStaticSingleQuery0__AnotherDirective_0_5 = null;
       _._component_view$_data = t0;
     },
     _ViewStaticSingleQuery1: function _ViewStaticSingleQuery1(t0) {
@@ -4530,9 +4521,7 @@
     ViewDynamicSingleQuery0: function ViewDynamicSingleQuery0(t0) {
       var _ = this;
       _._viewQuery_AnotherDirective_0_isDirty = true;
-      _.__ViewDynamicSingleQuery0__AnotherDirective_2_5 = _.__ViewDynamicSingleQuery0__AnotherDirective_1_5 = _.__ViewDynamicSingleQuery0__NgIf_0_9 = _.__ViewDynamicSingleQuery0__appEl_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewDynamicSingleQuery0__AnotherDirective_2_5 = _.__ViewDynamicSingleQuery0__AnotherDirective_1_5 = _.__ViewDynamicSingleQuery0__NgIf_0_9 = _.__ViewDynamicSingleQuery0__appEl_0 = null;
       _._component_view$_data = t0;
     },
     ViewDynamicSingleQuery0_detectChangesInternal_closure: function ViewDynamicSingleQuery0_detectChangesInternal_closure() {
@@ -4543,17 +4532,14 @@
     },
     ViewContentQuery0: function ViewContentQuery0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     },
     ViewContentHasReference0: function ViewContentHasReference0(t0, t1, t2) {
       var _ = this;
       _._textBinding_2 = t0;
       _._textBinding_4 = t1;
-      _.__ViewContentHasReference0__NgContentRef_0_5 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewContentHasReference0__NgContentRef_0_5 = null;
       _._component_view$_data = t2;
     }
   },
@@ -9124,7 +9110,7 @@
         H.throwExpression(H.LateError$fieldAI("componentView"));
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent();
       else
         H.throwExpression(H.LateError$fieldAI("component"));
@@ -9875,7 +9861,7 @@
   E.ComponentView.prototype = {
     get$ctx() {
       var t1 = this.__ComponentView_ctx;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$componentStyles() {
       var t1 = this.__ComponentView_componentStyles;
@@ -9902,7 +9888,7 @@
     },
     createAndProject$2(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx === $)
+      if (_this.__ComponentView_ctx == null)
         _this.__ComponentView_ctx = component;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -10060,7 +10046,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

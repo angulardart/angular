@@ -4590,9 +4590,7 @@
       _.__ViewGoldenComponent0__NgIf_44_9 = _.__ViewGoldenComponent0__appEl_44 = _.__ViewGoldenComponent0__NgIf_43_9 = _.__ViewGoldenComponent0__appEl_43 = _.__ViewGoldenComponent0__NgIf_42_9 = _.__ViewGoldenComponent0__appEl_42 = _.__ViewGoldenComponent0__NgIf_41_9 = _.__ViewGoldenComponent0__appEl_41 = _.__ViewGoldenComponent0__NgIf_40_9 = _.__ViewGoldenComponent0__appEl_40 = _.__ViewGoldenComponent0__NgIf_39_9 = _.__ViewGoldenComponent0__appEl_39 = _.__ViewGoldenComponent0__NgIf_38_9 = _.__ViewGoldenComponent0__appEl_38 = _.__ViewGoldenComponent0__NgIf_37_9 = _.__ViewGoldenComponent0__appEl_37 = _.__ViewGoldenComponent0__NgIf_36_9 = _.__ViewGoldenComponent0__appEl_36 = _.__ViewGoldenComponent0__NgIf_35_9 = _.__ViewGoldenComponent0__appEl_35 = _.__ViewGoldenComponent0__NgIf_34_9 = _.__ViewGoldenComponent0__appEl_34 = _.__ViewGoldenComponent0__NgIf_33_9 = _.__ViewGoldenComponent0__appEl_33 = _.__ViewGoldenComponent0__NgIf_32_9 = _.__ViewGoldenComponent0__appEl_32 = _.__ViewGoldenComponent0__NgIf_31_9 = _.__ViewGoldenComponent0__appEl_31 = _.__ViewGoldenComponent0__NgIf_30_9 = _.__ViewGoldenComponent0__appEl_30 = null;
       _.__ViewGoldenComponent0__NgIf_59_9 = _.__ViewGoldenComponent0__appEl_59 = _.__ViewGoldenComponent0__NgIf_58_9 = _.__ViewGoldenComponent0__appEl_58 = _.__ViewGoldenComponent0__NgIf_57_9 = _.__ViewGoldenComponent0__appEl_57 = _.__ViewGoldenComponent0__NgIf_56_9 = _.__ViewGoldenComponent0__appEl_56 = _.__ViewGoldenComponent0__NgIf_55_9 = _.__ViewGoldenComponent0__appEl_55 = _.__ViewGoldenComponent0__NgIf_54_9 = _.__ViewGoldenComponent0__appEl_54 = _.__ViewGoldenComponent0__NgIf_53_9 = _.__ViewGoldenComponent0__appEl_53 = _.__ViewGoldenComponent0__NgIf_52_9 = _.__ViewGoldenComponent0__appEl_52 = _.__ViewGoldenComponent0__NgIf_51_9 = _.__ViewGoldenComponent0__appEl_51 = _.__ViewGoldenComponent0__NgIf_50_9 = _.__ViewGoldenComponent0__appEl_50 = _.__ViewGoldenComponent0__NgIf_49_9 = _.__ViewGoldenComponent0__appEl_49 = _.__ViewGoldenComponent0__NgIf_48_9 = _.__ViewGoldenComponent0__appEl_48 = _.__ViewGoldenComponent0__NgIf_47_9 = _.__ViewGoldenComponent0__appEl_47 = _.__ViewGoldenComponent0__NgIf_46_9 = _.__ViewGoldenComponent0__appEl_46 = _.__ViewGoldenComponent0__NgIf_45_9 = _.__ViewGoldenComponent0__appEl_45 = null;
       _.__ViewGoldenComponent0__NgIf_74_9 = _.__ViewGoldenComponent0__appEl_74 = _.__ViewGoldenComponent0__NgIf_73_9 = _.__ViewGoldenComponent0__appEl_73 = _.__ViewGoldenComponent0__NgIf_72_9 = _.__ViewGoldenComponent0__appEl_72 = _.__ViewGoldenComponent0__NgIf_71_9 = _.__ViewGoldenComponent0__appEl_71 = _.__ViewGoldenComponent0__NgIf_70_9 = _.__ViewGoldenComponent0__appEl_70 = _.__ViewGoldenComponent0__NgIf_69_9 = _.__ViewGoldenComponent0__appEl_69 = _.__ViewGoldenComponent0__NgIf_68_9 = _.__ViewGoldenComponent0__appEl_68 = _.__ViewGoldenComponent0__NgIf_67_9 = _.__ViewGoldenComponent0__appEl_67 = _.__ViewGoldenComponent0__NgIf_66_9 = _.__ViewGoldenComponent0__appEl_66 = _.__ViewGoldenComponent0__NgIf_65_9 = _.__ViewGoldenComponent0__appEl_65 = _.__ViewGoldenComponent0__NgIf_64_9 = _.__ViewGoldenComponent0__appEl_64 = _.__ViewGoldenComponent0__NgIf_63_9 = _.__ViewGoldenComponent0__appEl_63 = _.__ViewGoldenComponent0__NgIf_62_9 = _.__ViewGoldenComponent0__appEl_62 = _.__ViewGoldenComponent0__NgIf_61_9 = _.__ViewGoldenComponent0__appEl_61 = _.__ViewGoldenComponent0__NgIf_60_9 = _.__ViewGoldenComponent0__appEl_60 = null;
-      _.__ViewGoldenComponent0__NgIf_83_9 = _.__ViewGoldenComponent0__appEl_83 = _.__ViewGoldenComponent0__NgIf_82_9 = _.__ViewGoldenComponent0__appEl_82 = _.__ViewGoldenComponent0__NgIf_81_9 = _.__ViewGoldenComponent0__appEl_81 = _.__ViewGoldenComponent0__NgIf_80_9 = _.__ViewGoldenComponent0__appEl_80 = _.__ViewGoldenComponent0__NgIf_79_9 = _.__ViewGoldenComponent0__appEl_79 = _.__ViewGoldenComponent0__NgIf_78_9 = _.__ViewGoldenComponent0__appEl_78 = _.__ViewGoldenComponent0__NgIf_77_9 = _.__ViewGoldenComponent0__appEl_77 = _.__ViewGoldenComponent0__NgIf_76_9 = _.__ViewGoldenComponent0__appEl_76 = _.__ViewGoldenComponent0__NgIf_75_9 = _.__ViewGoldenComponent0__appEl_75 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewGoldenComponent0__NgIf_83_9 = _.__ViewGoldenComponent0__appEl_83 = _.__ViewGoldenComponent0__NgIf_82_9 = _.__ViewGoldenComponent0__appEl_82 = _.__ViewGoldenComponent0__NgIf_81_9 = _.__ViewGoldenComponent0__appEl_81 = _.__ViewGoldenComponent0__NgIf_80_9 = _.__ViewGoldenComponent0__appEl_80 = _.__ViewGoldenComponent0__NgIf_79_9 = _.__ViewGoldenComponent0__appEl_79 = _.__ViewGoldenComponent0__NgIf_78_9 = _.__ViewGoldenComponent0__appEl_78 = _.__ViewGoldenComponent0__NgIf_77_9 = _.__ViewGoldenComponent0__appEl_77 = _.__ViewGoldenComponent0__NgIf_76_9 = _.__ViewGoldenComponent0__appEl_76 = _.__ViewGoldenComponent0__NgIf_75_9 = _.__ViewGoldenComponent0__appEl_75 = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponent1: function _ViewGoldenComponent1(t0) {
@@ -4933,14 +4931,12 @@
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._data = t0;
     },
     ViewChildComponent0: function ViewChildComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     }
   },
@@ -9190,7 +9186,7 @@
         H.throwExpression(H.LateError$fieldAI("componentView"));
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent();
       else
         H.throwExpression(H.LateError$fieldAI("component"));
@@ -9449,7 +9445,7 @@
   E.ComponentView.prototype = {
     get$ctx() {
       var t1 = this.__ComponentView_ctx;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$componentStyles() {
       var t1 = this.__ComponentView_componentStyles;
@@ -9476,7 +9472,7 @@
     },
     createAndProject$2(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx === $)
+      if (_this.__ComponentView_ctx == null)
         _this.__ComponentView_ctx = component;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -9622,7 +9618,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

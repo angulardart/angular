@@ -118,7 +118,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   @override
-  ComponentRef<T> createComponent<T>(
+  ComponentRef<T> createComponent<T extends Object>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
     Injector? injector,
@@ -264,7 +264,7 @@ class ViewContainer extends ComponentLoader implements ViewContainerRef {
   }
 
   @override
-  ComponentRef<T> loadNextTo<T>(
+  ComponentRef<T> loadNextTo<T extends Object>(
     ComponentFactory<T> component, {
     Injector? injector,
   }) =>

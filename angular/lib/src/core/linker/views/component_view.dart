@@ -30,7 +30,7 @@ import 'view.dart';
 /// instantiate the component instance and provide it to this view via [create]
 /// or [createAndProject]. This is necessary to implement certain hierarchical
 /// dependency injection semantics.
-abstract class ComponentView<T> extends RenderView {
+abstract class ComponentView<T extends Object> extends RenderView {
   ComponentView(
     View parentView,
     int parentIndex,
@@ -108,7 +108,7 @@ abstract class ComponentView<T> extends RenderView {
     _data.projectedNodes = projectedNodes;
 
     if (isDevToolsEnabled) {
-      Inspector.instance.registerComponentView(unsafeCast(this));
+      Inspector.instance.registerComponentView(this);
     }
 
     build();

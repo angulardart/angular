@@ -269,29 +269,22 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _.__ViewGoldenComponent0__el_8 = _.__ViewGoldenComponent0__el_3 = _._expr_7 = _._expr_6 = _._expr_5 = _._expr_4 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewGoldenComponent0__EmulatedEncapsulation_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__NoEncapsulation_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewGoldenComponent0__el_8 = _.__ViewGoldenComponent0__el_3 = _._expr_7 = _._expr_6 = _._expr_5 = _._expr_4 = _._expr_3 = _._expr_2 = _._expr_1 = _._expr_0 = _.__ViewGoldenComponent0__EmulatedEncapsulation_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__NoEncapsulation_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._data = t0;
     },
     ViewNoEncapsulation0: function ViewNoEncapsulation0(t0) {
       var _ = this;
-      _.__ViewNoEncapsulation0__el_1 = _.__ViewNoEncapsulation0__el_0 = _._expr_2 = _._expr_1 = _._expr_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewNoEncapsulation0__el_1 = _.__ViewNoEncapsulation0__el_0 = _._expr_2 = _._expr_1 = _._expr_0 = null;
       _._component_view$_data = t0;
     },
     ViewEmulatedEncapsulation0: function ViewEmulatedEncapsulation0(t0) {
       var _ = this;
-      _.__ViewEmulatedEncapsulation0__el_1 = _.__ViewEmulatedEncapsulation0__el_0 = _._expr_2 = _._expr_1 = _._expr_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewEmulatedEncapsulation0__el_1 = _.__ViewEmulatedEncapsulation0__el_0 = _._expr_2 = _._expr_1 = _._expr_0 = null;
       _._component_view$_data = t0;
     }
   },
@@ -8612,7 +8605,7 @@
       t6 = self.deopt();
       t7 = self.deopt();
       t8 = self.deopt();
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent(t4, t6, t7, t8);
       else
         H.throwExpression(H.LateError$fieldAI("component"));
@@ -8841,7 +8834,7 @@
   E.ComponentView.prototype = {
     get$ctx() {
       var t1 = this.__ComponentView_ctx;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$componentStyles() {
       var t1 = this.__ComponentView_componentStyles;
@@ -8855,7 +8848,7 @@
     },
     createAndProject$2(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx === $)
+      if (_this.__ComponentView_ctx == null)
         _this.__ComponentView_ctx = component;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -8918,7 +8911,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

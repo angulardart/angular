@@ -102,7 +102,7 @@ class _HasChildValues extends Matcher {
   }
 }
 
-class TestCase<T> {
+class TestCase<T extends Object> {
   final NgTestBed<T> testBed;
   final Iterable<int> expectValues;
 

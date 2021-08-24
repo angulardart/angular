@@ -281,33 +281,27 @@
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
       _.__ViewGoldenComponent0__NgControlGroup_3_5 = _.__ViewGoldenComponent0__MaterialIcon_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__RequiredValidator_1_8 = _.__ViewGoldenComponent0__NgControlName_1_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_1_6 = _.__ViewGoldenComponent0__MaterialInputComponent_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__NgForm_0_5 = _.__ViewGoldenComponent0__luckyNumber_8_14 = _.__ViewGoldenComponent0__MultiToken_8_10 = _.__ViewGoldenComponent0__DeferredValidator_8_9 = _.__ViewGoldenComponent0__Service_8_8 = _.__ViewGoldenComponent0__MultiToken_7_13 = _.__ViewGoldenComponent0__luckyNumber_6_15 = _.__ViewGoldenComponent0__MultiToken_6_11 = _.__ViewGoldenComponent0__DeferredValidator_6_10 = _.__ViewGoldenComponent0__Service_6_9 = _.__ViewGoldenComponent0__luckyNumber_5_14 = _.__ViewGoldenComponent0__MultiToken_5_10 = _.__ViewGoldenComponent0__DeferredValidator_5_9 = _.__ViewGoldenComponent0__Service_5_8 = _.__ViewGoldenComponent0__luckyNumber_4_15 = _.__ViewGoldenComponent0__MultiToken_4_11 = _.__ViewGoldenComponent0__DeferredValidator_4_10 = _.__ViewGoldenComponent0__Service_4_9 = _.__ViewGoldenComponent0__luckyNumber_1_15 = _.__ViewGoldenComponent0__MultiToken_1_11 = _.__ViewGoldenComponent0__DeferredValidator_1_10 = _.__ViewGoldenComponent0__Service_1_9 = null;
-      _.__ViewGoldenComponent0__NgControlName_8_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_8_6 = _.__ViewGoldenComponent0__MaterialInputComponent_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__RequiredValidator_7_7 = _.__ViewGoldenComponent0__NgControlName_7_6 = _.__ViewGoldenComponent0__MaterialAutoSuggestInputComponent_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__RequiredValidator_6_8 = _.__ViewGoldenComponent0__NgControlName_6_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_6_6 = _.__ViewGoldenComponent0__MaterialInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__NgControlName_5_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_5_6 = _.__ViewGoldenComponent0__MaterialInputComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__RequiredValidator_4_8 = _.__ViewGoldenComponent0__NgControlName_4_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_4_6 = _.__ViewGoldenComponent0__MaterialInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewGoldenComponent0__NgControlName_8_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_8_6 = _.__ViewGoldenComponent0__MaterialInputComponent_8_5 = _.__ViewGoldenComponent0__compView_8 = _.__ViewGoldenComponent0__RequiredValidator_7_7 = _.__ViewGoldenComponent0__NgControlName_7_6 = _.__ViewGoldenComponent0__MaterialAutoSuggestInputComponent_7_5 = _.__ViewGoldenComponent0__compView_7 = _.__ViewGoldenComponent0__RequiredValidator_6_8 = _.__ViewGoldenComponent0__NgControlName_6_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_6_6 = _.__ViewGoldenComponent0__MaterialInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__NgControlName_5_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_5_6 = _.__ViewGoldenComponent0__MaterialInputComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__RequiredValidator_4_8 = _.__ViewGoldenComponent0__NgControlName_4_7 = _.__ViewGoldenComponent0__MaterialInputValueAccessor_4_6 = _.__ViewGoldenComponent0__MaterialInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._data = t0;
     },
     ViewMaterialAutoSuggestInputComponent0: function ViewMaterialAutoSuggestInputComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     },
     ViewMaterialIcon0: function ViewMaterialIcon0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     },
     ViewMaterialInputComponent0: function ViewMaterialInputComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     }
   },
@@ -8504,7 +8498,7 @@
       _el_0 = t4.get$rootElement(t4);
       t4 = new A._ElementInjector(hostView, 0);
       self.deopt(t4.get$get(t4));
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent();
       else
         H.throwExpression(H.LateError$fieldAI("component"));
@@ -8719,7 +8713,7 @@
     },
     createAndProject$2(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx === $)
+      if (_this.__ComponentView_ctx == null)
         _this.__ComponentView_ctx = component;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -8773,7 +8767,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

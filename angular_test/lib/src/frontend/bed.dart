@@ -28,7 +28,7 @@ Future<void> disposeAnyRunningTest() async => activeTest?.dispose();
 /// An alternative method for [NgTestBed.create] that allows a dynamic [type].
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
-Future<NgTestFixture<T>> createDynamicFixture<T>(
+Future<NgTestFixture<T>> createDynamicFixture<T extends Object>(
   NgTestBed<T> bed,
   Type type, {
   FutureOr<void> Function(Injector)? beforeComponentCreated,
@@ -44,7 +44,7 @@ Future<NgTestFixture<T>> createDynamicFixture<T>(
 /// An alternative factory for [NgTestBed] that allows not typing `T`.
 ///
 /// This is for compatibility reasons only and should not be used otherwise.
-NgTestBed<T> createDynamicTestBed<T>({
+NgTestBed<T> createDynamicTestBed<T extends Object>({
   Element? host,
   InjectorFactory? rootInjector,
   bool watchAngularLifecycle = true,
@@ -97,7 +97,7 @@ NgTestBed<T> createDynamicTestBed<T>({
 ///   });
 /// });
 /// ```
-class NgTestBed<T> {
+class NgTestBed<T extends Object> {
   static Element _defaultHost() {
     final host = Element.tag('ng-test-bed');
     document.body!.append(host);

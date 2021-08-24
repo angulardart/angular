@@ -21,7 +21,7 @@ class SlowComponentLoader {
   /// Creates and loads a new instance of the component defined by [type].
   ///
   /// See [ComponentLoader.loadDetached] for a similar example.
-  Future<ComponentRef<T>> load<T>(Type type, Injector injector) {
+  Future<ComponentRef<T>> load<T extends Object>(Type type, Injector injector) {
     // Purposefully don't use async/await to retain timing.
     final factoryFuture = Future.value(typeToFactory(type));
     return factoryFuture.then((component) {
@@ -36,7 +36,7 @@ class SlowComponentLoader {
   /// Creates and loads a new instance of component [type] next to [location].
   ///
   /// See [ComponentLoader.loadNextToLocation] for a similar example.
-  Future<ComponentRef<T>> loadNextToLocation<T>(
+  Future<ComponentRef<T>> loadNextToLocation<T extends Object>(
     Type type,
     ViewContainerRef location, [
     Injector? injector,

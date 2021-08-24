@@ -4415,33 +4415,27 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _._expr_7 = _._expr_5 = _._expr_1 = _.__ViewGoldenComponent0__HasRenamedInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__HasInputsComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__HasInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__HasInputComponent_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__HasInputComponent_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__HasInputComponent_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__HasInputComponent_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _._expr_7 = _._expr_5 = _._expr_1 = _.__ViewGoldenComponent0__HasRenamedInputComponent_6_5 = _.__ViewGoldenComponent0__compView_6 = _.__ViewGoldenComponent0__HasInputsComponent_5_5 = _.__ViewGoldenComponent0__compView_5 = _.__ViewGoldenComponent0__HasInputComponent_4_5 = _.__ViewGoldenComponent0__compView_4 = _.__ViewGoldenComponent0__HasInputComponent_3_5 = _.__ViewGoldenComponent0__compView_3 = _.__ViewGoldenComponent0__HasInputComponent_2_5 = _.__ViewGoldenComponent0__compView_2 = _.__ViewGoldenComponent0__HasInputComponent_1_5 = _.__ViewGoldenComponent0__compView_1 = _.__ViewGoldenComponent0__HasInputComponent_0_5 = _.__ViewGoldenComponent0__compView_0 = null;
       _._component_view$_data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._data = t0;
     },
     ViewHasInputComponent0: function ViewHasInputComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     },
     ViewHasInputsComponent0: function ViewHasInputsComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     },
     ViewHasRenamedInputComponent0: function ViewHasRenamedInputComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._component_view$_data = t0;
     }
   },
@@ -8478,7 +8472,7 @@
       _el_0 = t4.get$rootElement(t4);
       t4 = self.deopt();
       t6 = self.deopt();
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent(t4, t6);
       else
         H.throwExpression(H.LateError$fieldAI("component"));
@@ -8684,7 +8678,7 @@
   E.ComponentView.prototype = {
     get$ctx() {
       var t1 = this.__ComponentView_ctx;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$rootElement(_) {
       var t1 = this.__ComponentView_rootElement;
@@ -8697,7 +8691,7 @@
     },
     createAndProject$2(component, projectedNodes) {
       var t1, _this = this;
-      if (_this.__ComponentView_ctx === $)
+      if (_this.__ComponentView_ctx == null)
         _this.__ComponentView_ctx = component;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -8751,7 +8745,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

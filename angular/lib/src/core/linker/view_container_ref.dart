@@ -64,7 +64,7 @@ abstract class ViewContainerRef implements ComponentLoader {
   ///
   /// Returns the [ComponentRef] of the host view created for the newly
   /// instantiated component.
-  ComponentRef<T> createComponent<T>(
+  ComponentRef<T> createComponent<T extends Object>(
     ComponentFactory<T> componentFactory, [
     int index = -1,
     Injector? injector,

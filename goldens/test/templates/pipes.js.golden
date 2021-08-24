@@ -283,15 +283,12 @@
       _._textBinding_16 = t4;
       _._textBinding_21 = t5;
       _._textBinding_24 = t6;
-      _.__ViewGoldenComponent0__pipe_impureLifecycle_6 = _.__ViewGoldenComponent0__pipe_time_5 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4 = _.__ViewGoldenComponent0__pipe_typed_3_0 = _.__ViewGoldenComponent0__pipe_typed_3 = _.__ViewGoldenComponent0__pipe_merge_2_0 = _.__ViewGoldenComponent0__pipe_merge_2 = _.__ViewGoldenComponent0__pipe_concat_1_0 = _.__ViewGoldenComponent0__pipe_concat_1 = _.__ViewGoldenComponent0__pipe_identity_0_0 = _.__ViewGoldenComponent0__pipe_identity_0 = null;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = _.__ViewGoldenComponent0__pipe_impureLifecycle_6 = _.__ViewGoldenComponent0__pipe_time_5 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4_0 = _.__ViewGoldenComponent0__pipe_pureLifecycle_4 = _.__ViewGoldenComponent0__pipe_typed_3_0 = _.__ViewGoldenComponent0__pipe_typed_3 = _.__ViewGoldenComponent0__pipe_merge_2_0 = _.__ViewGoldenComponent0__pipe_merge_2 = _.__ViewGoldenComponent0__pipe_concat_1_0 = _.__ViewGoldenComponent0__pipe_concat_1 = _.__ViewGoldenComponent0__pipe_identity_0_0 = _.__ViewGoldenComponent0__pipe_identity_0 = null;
       _._data = t7;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = null;
       _._host_view$_data = t0;
     }
   },
@@ -8640,14 +8637,14 @@
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
       t4 = L.GoldenComponent$();
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = t4;
       else
         H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       t4 = hostView.get$componentView();
       t6 = hostView.get$component();
-      if (t4.__ComponentView_ctx === $)
+      if (t4.__ComponentView_ctx == null)
         t4.__ComponentView_ctx = t6;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -8943,7 +8940,7 @@
   E.ComponentView.prototype = {
     get$ctx() {
       var t1 = this.__ComponentView_ctx;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("ctx")) : t1;
     },
     get$rootElement(_) {
       var t1 = this.__ComponentView_rootElement;
@@ -8992,7 +8989,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

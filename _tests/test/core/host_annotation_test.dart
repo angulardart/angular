@@ -10,7 +10,9 @@ void main() {
   tearDown(disposeAnyRunningTest);
 
   /// Returns the root [Element] created by initializing [component].
-  Future<Element> rootElementOf<T>(ComponentFactory<T> component) {
+  Future<Element> rootElementOf<T extends Object>(
+    ComponentFactory<T> component,
+  ) {
     final testBed = NgTestBed(component);
     return testBed.create().then((fixture) => fixture.rootElement);
   }

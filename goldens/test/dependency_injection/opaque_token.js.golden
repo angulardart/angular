@@ -4277,15 +4277,12 @@
     },
     ViewGoldenComponent0: function ViewGoldenComponent0(t0) {
       var _ = this;
-      _.__ComponentView_ctx = $;
-      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = null;
+      _.__ComponentView_rootElement = _.__ComponentView_componentStyles = _.__ComponentView_ctx = null;
       _._data = t0;
     },
     _ViewGoldenComponentHost0: function _ViewGoldenComponentHost0(t0) {
       var _ = this;
-      _.___ViewGoldenComponentHost0__CustomMulti_0_11 = _.___ViewGoldenComponentHost0__CustomToken_0_10 = _.___ViewGoldenComponentHost0__genericMulti_0_9 = _.___ViewGoldenComponentHost0__untypedMulti_0_8 = _.___ViewGoldenComponentHost0__genericTyped_0_7 = _.___ViewGoldenComponentHost0__untypedToken_0_6 = null;
-      _.__HostView_component = $;
-      _.__HostView__injector = _.__HostView_componentView = null;
+      _.__HostView__injector = _.__HostView_componentView = _.__HostView_component = _.___ViewGoldenComponentHost0__CustomMulti_0_11 = _.___ViewGoldenComponentHost0__CustomToken_0_10 = _.___ViewGoldenComponentHost0__genericMulti_0_9 = _.___ViewGoldenComponentHost0__untypedMulti_0_8 = _.___ViewGoldenComponentHost0__genericTyped_0_7 = _.___ViewGoldenComponentHost0__untypedToken_0_6 = null;
       _._host_view$_data = t0;
     },
     _Injector$goldenInjector: function _Injector$goldenInjector(t0) {
@@ -8431,14 +8428,14 @@
       t4 = hostView.get$componentView();
       _el_0 = t4.get$rootElement(t4);
       self.deopt(new A._ElementInjector(hostView, 0));
-      if (hostView.__HostView_component === $)
+      if (hostView.__HostView_component == null)
         hostView.__HostView_component = new L.GoldenComponent();
       else
         H.throwExpression(H.LateError$fieldAI("component"));
       hostView.initRootNode$1(_el_0);
       t4 = hostView.get$componentView();
       t6 = hostView.get$component();
-      if (t4.__ComponentView_ctx === $)
+      if (t4.__ComponentView_ctx == null)
         t4.__ComponentView_ctx = t6;
       else
         H.throwExpression(H.LateError$fieldAI("ctx"));
@@ -8691,7 +8688,7 @@
   G.HostView.prototype = {
     get$component() {
       var t1 = this.__HostView_component;
-      return t1 === $ ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
+      return t1 == null ? H.throwExpression(H.LateError$fieldNI("component")) : t1;
     },
     get$componentView() {
       var t1 = this.__HostView_componentView;

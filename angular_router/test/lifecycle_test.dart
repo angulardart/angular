@@ -374,7 +374,9 @@ void main() {
 const instanceIdsToken = OpaqueToken<Map<String, int>>();
 const lifecycleLogToken = OpaqueToken<List<String>>();
 
-Future<NgTestFixture<T>> setup<T>(ComponentFactory<T> factory) async {
+Future<NgTestFixture<T>> setup<T extends Object>(
+  ComponentFactory<T> factory,
+) async {
   final testBed = NgTestBed(factory).addInjector(fakeRoot);
   return testBed.create();
 }
