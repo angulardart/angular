@@ -227,36 +227,15 @@
     }
   },
   C = {},
-  D = {
-    _SafeHtml__createHTMLUsingPolicy(html) {
-      var t1;
-      if ($.$get$browserSupportsTrustedTypes()) {
-        t1 = $._trustedTypePolicyName;
-        t1 = (t1 == null ? $._trustedTypePolicyName = "dart_html#safe" : t1).length !== 0;
-      } else
-        t1 = false;
-      if (t1) {
-        t1 = S.trustedTypePolicy();
-        t1 = t1 == null ? null : type$.TrustedHtml._as(t1._nativeTrustedTypePolicy.createHTML(html));
-      } else
-        t1 = null;
-      return t1;
-    },
-    _SafeHtml: function _SafeHtml(t0) {
+  D = {SafeUrlImpl: function SafeUrlImpl(t0) {
       this._safeWrappedValue = t0;
-    },
-    _SafeUrl: function _SafeUrl(t0) {
-      this._safeWrappedValue = t0;
-    },
-    _TrustedResourceUrl: function _TrustedResourceUrl(t0) {
-      this._safeWrappedValue = t0;
-    },
-    ComponentRef: function ComponentRef(t0, t1, t2) {
+    }, TrustedResourceUrlImpl: function TrustedResourceUrlImpl(t0) {
+      this._trusted_resource_url_impl$_safeWrappedValue = t0;
+    }, ComponentRef: function ComponentRef(t0, t1, t2) {
       this._hostView = t0;
       this._nativeElement = t1;
       this.$ti = t2;
-    },
-    ComponentFactory: function ComponentFactory(t0, t1) {
+    }, ComponentFactory: function ComponentFactory(t0, t1) {
       this.selector = t0;
       this._viewFactory = t1;
     },
@@ -3246,9 +3225,9 @@
     sanitizeHtml0(stringOrSafeOrBypass) {
       var t1;
       if (type$.SafeHtml._is(stringOrSafeOrBypass))
-        return stringOrSafeOrBypass._safeWrappedValue;
+        return stringOrSafeOrBypass._safe_html_impl$_safeWrappedValue;
       t1 = F.sanitizeHtml(J.toString$0$(stringOrSafeOrBypass), null);
-      D._SafeHtml__createHTMLUsingPolicy(t1);
+      O.SafeHtmlImpl__createHTMLUsingPolicy(t1);
       return t1;
     },
     sanitizeUrl(stringOrSafeOrBypass) {
@@ -3268,7 +3247,7 @@
       }
     },
     sanitizeResourceUrl(stringOrSafeOrBypass) {
-      return stringOrSafeOrBypass._safeWrappedValue;
+      return stringOrSafeOrBypass._trusted_resource_url_impl$_safeWrappedValue;
     }
   },
   M = {ChangeDetectionHost: function ChangeDetectionHost() {
@@ -3304,6 +3283,23 @@
     }
   },
   O = {
+    SafeHtmlImpl__createHTMLUsingPolicy(html) {
+      var t1;
+      if ($.$get$browserSupportsTrustedTypes()) {
+        t1 = $._trustedTypePolicyName;
+        t1 = (t1 == null ? $._trustedTypePolicyName = "dart_html#safe" : t1).length !== 0;
+      } else
+        t1 = false;
+      if (t1) {
+        t1 = S.trustedTypePolicy();
+        t1 = t1 == null ? null : type$.TrustedHtml._as(t1._nativeTrustedTypePolicy.createHTML(html));
+      } else
+        t1 = null;
+      return t1;
+    },
+    SafeHtmlImpl: function SafeHtmlImpl(t0) {
+      this._safe_html_impl$_safeWrappedValue = t0;
+    },
     _UnscopedComponentStyles$(styles, componentUrl) {
       var t1 = new O._UnscopedComponentStyles(componentUrl, styles);
       t1._appendStyles$0();
@@ -5898,7 +5894,7 @@
     call$2(o, tag) {
       return this.getUnknownTag(o, tag);
     },
-    $signature: 17
+    $signature: 16
   };
   H.initHooks_closure1.prototype = {
     call$1(tag) {
@@ -9108,25 +9104,25 @@
   };
   P._SqlResultSetRowList_Interceptor_ListMixin.prototype = {};
   P._SqlResultSetRowList_Interceptor_ListMixin_ImmutableListMixin.prototype = {};
-  D._SafeHtml.prototype = {
+  O.SafeHtmlImpl.prototype = {
     $eq(_, o) {
       if (o == null)
         return false;
-      return o instanceof D._SafeHtml && this._safeWrappedValue === o._safeWrappedValue;
+      return o instanceof O.SafeHtmlImpl && this._safe_html_impl$_safeWrappedValue === o._safe_html_impl$_safeWrappedValue;
     },
     get$hashCode(_) {
-      return C.JSString_methods.get$hashCode(this._safeWrappedValue);
+      return C.JSString_methods.get$hashCode(this._safe_html_impl$_safeWrappedValue);
     },
     toString$0(_) {
-      return this._safeWrappedValue;
+      return this._safe_html_impl$_safeWrappedValue;
     },
     $isSafeHtml: 1
   };
-  D._SafeUrl.prototype = {
+  D.SafeUrlImpl.prototype = {
     $eq(_, o) {
       if (o == null)
         return false;
-      return o instanceof D._SafeUrl && this._safeWrappedValue === o._safeWrappedValue;
+      return o instanceof D.SafeUrlImpl && this._safeWrappedValue === o._safeWrappedValue;
     },
     get$hashCode(_) {
       return C.JSString_methods.get$hashCode(this._safeWrappedValue);
@@ -9136,19 +9132,55 @@
     },
     $isSafeUrl: 1
   };
-  D._TrustedResourceUrl.prototype = {
+  D.TrustedResourceUrlImpl.prototype = {
     $eq(_, o) {
       if (o == null)
         return false;
-      return o instanceof D._TrustedResourceUrl && this._safeWrappedValue === o._safeWrappedValue;
+      return o instanceof D.TrustedResourceUrlImpl && this._trusted_resource_url_impl$_safeWrappedValue === o._trusted_resource_url_impl$_safeWrappedValue;
     },
     get$hashCode(_) {
-      return C.JSString_methods.get$hashCode(this._safeWrappedValue);
+      return C.JSString_methods.get$hashCode(this._trusted_resource_url_impl$_safeWrappedValue);
     },
     toString$0(_) {
-      return this._safeWrappedValue;
+      return this._trusted_resource_url_impl$_safeWrappedValue;
     }
   };
+  S.trustedTypePolicy_closure.prototype = {
+    call$1(s) {
+      return s;
+    },
+    $signature: 4
+  };
+  S.trustedTypePolicy_closure0.prototype = {
+    call$1(s) {
+      return s;
+    },
+    $signature: 4
+  };
+  S.trustedTypePolicy_closure1.prototype = {
+    call$1(s) {
+      return s;
+    },
+    $signature: 4
+  };
+  S.TrustedTypePolicy.prototype = {};
+  S.TrustedTypePolicyFactory.prototype = {
+    register$4(_, policyName, createHtml, createScript, createScriptURL) {
+      var policy, t1, exception, callbackMap = {};
+      callbackMap.createHTML = P.allowInterop(createHtml);
+      callbackMap.createScript = P.allowInterop(createScript);
+      callbackMap.createScriptURL = P.allowInterop(createScriptURL);
+      try {
+        t1 = $.$get$TrustedTypePolicyFactory_trustedTypes();
+        policy = t1.createPolicy.apply(t1, [policyName, callbackMap]);
+        return new S._TrustedTypePolicy(policy);
+      } catch (exception) {
+        H.unwrapException(exception);
+        return null;
+      }
+    }
+  };
+  S._TrustedTypePolicy.prototype = {};
   F.SanitizerTable.prototype = {};
   F.ElementPolicy.prototype = {
     toString$0(_) {
@@ -9267,44 +9299,8 @@
       t1.toString;
       return P._Uri__uriEncode(C.List_KIf, t1, C.C_Utf8Codec, false);
     },
-    $signature: 16
+    $signature: 17
   };
-  S.trustedTypePolicy_closure.prototype = {
-    call$1(s) {
-      return s;
-    },
-    $signature: 4
-  };
-  S.trustedTypePolicy_closure0.prototype = {
-    call$1(s) {
-      return s;
-    },
-    $signature: 4
-  };
-  S.trustedTypePolicy_closure1.prototype = {
-    call$1(s) {
-      return s;
-    },
-    $signature: 4
-  };
-  S.TrustedTypePolicy.prototype = {};
-  S.TrustedTypePolicyFactory.prototype = {
-    register$4(_, policyName, createHtml, createScript, createScriptURL) {
-      var policy, t1, exception, callbackMap = {};
-      callbackMap.createHTML = P.allowInterop(createHtml);
-      callbackMap.createScript = P.allowInterop(createScript);
-      callbackMap.createScriptURL = P.allowInterop(createScriptURL);
-      try {
-        t1 = $.$get$TrustedTypePolicyFactory_trustedTypes();
-        policy = t1.createPolicy.apply(t1, [policyName, callbackMap]);
-        return new S._TrustedTypePolicy(policy);
-      } catch (exception) {
-        H.unwrapException(exception);
-        return null;
-      }
-    }
-  };
-  S._TrustedTypePolicy.prototype = {};
   U.minimalApp_closure.prototype = {
     call$1($parent) {
       var t1 = type$.Object;
@@ -10233,7 +10229,7 @@
       t1 = _this.get$_compView_10();
       parentRenderNode.appendChild(t1.get$rootElement(t1));
       t1 = F.sanitizeHtml("<div></div>", null);
-      D._SafeHtml__createHTMLUsingPolicy(t1);
+      O.SafeHtmlImpl__createHTMLUsingPolicy(t1);
       t2 = self.deopt();
       t3 = type$.String;
       url = Y.formatResourceUrl("//www.youtube.com/v/%{videoId}?h1=en&fs=1", P.LinkedHashMap_LinkedHashMap$_literal(["videoId", "5"], t3, t3));
@@ -10248,7 +10244,7 @@
           type$.TrustedScriptUrl._as(t3._nativeTrustedTypePolicy.createScriptURL(url));
       }
       if (_this.__ViewGoldenComponent0__SanitizedComponent_10_5 == null)
-        _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new L.SanitizedComponent(new D._SafeUrl("https://google.com"), new D._SafeHtml(t1), t2, new D._TrustedResourceUrl(url));
+        _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new L.SanitizedComponent(new D.SafeUrlImpl("https://google.com"), new O.SafeHtmlImpl(t1), t2, new D.TrustedResourceUrlImpl(url));
       else
         H.throwExpression(H.LateError$fieldAI(_s24_));
       t1 = _this.get$_compView_10();
@@ -10458,9 +10454,9 @@
       _inherit = hunkHelpers.inherit,
       _inheritMany = hunkHelpers.inheritMany;
     _inherit(P.Object, null);
-    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamTransformerBase, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.SetMixin, P.__SetBase_Object_SetMixin, P._UnmodifiableSetMixin, P.Codec, P._Utf8Encoder, P.Duration, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, D._SafeHtml, D._SafeUrl, D._TrustedResourceUrl, F.SanitizerTable, F.ElementPolicy, F.AttributePolicy, F._CopyBasedSanitizer, S.TrustedTypePolicyFactory, S._TrustedTypePolicy, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.SanitizedComponent]);
+    _inheritMany(P.Object, [H.JS_CONST, J.Interceptor, J.ArrayIterator, P.Error, P.Iterable, H.ListIterator, P.Iterator, H.FixedLengthListMixin, H.Symbol, P.MapView, H.ConstantMap, H.JSInvocationMirror, H.Closure, H.TypeErrorDecoder, H.NullThrownFromJavaScriptException, H.ExceptionAndStackTrace, H._StackTrace, H._Required, P.MapMixin, H.LinkedHashMapCell, H.LinkedHashMapKeyIterator, H.JSSyntaxRegExp, H._MatchImplementation, H._AllMatchesIterator, H._Cell, H.Rti, H._FunctionParameters, H._Type, P._TimerImpl, P.AsyncError, P.Stream, P._BufferingStreamSubscription, P._BroadcastStreamController, P._Completer, P._FutureListener, P._Future, P._AsyncCallbackEntry, P.StreamTransformerBase, P._DelayedEvent, P._PendingEvents, P._DoneStreamSubscription, P._ZoneFunction, P._RunNullaryZoneFunction, P._RunUnaryZoneFunction, P._RunBinaryZoneFunction, P._RegisterNullaryZoneFunction, P._RegisterUnaryZoneFunction, P._RegisterBinaryZoneFunction, P._ZoneSpecification, P._ZoneDelegate, P._Zone, P._HashMapKeyIterator, P.ListMixin, P._UnmodifiableMapMixin, P.SetMixin, P.__SetBase_Object_SetMixin, P._UnmodifiableSetMixin, P.Codec, P._Utf8Encoder, P.Duration, P.StackOverflowError, P._Exception, P.FormatException, P.Null, P._StringStackTrace, P.StringBuffer, W.CssStyleDeclarationBase, W.ImmutableListMixin, W.FixedSizeListIterator, P._JSRandom, O.SafeHtmlImpl, D.SafeUrlImpl, D.TrustedResourceUrlImpl, S.TrustedTypePolicyFactory, S._TrustedTypePolicy, F.SanitizerTable, F.ElementPolicy, F.AttributePolicy, F._CopyBasedSanitizer, M.Injector, K.TransitionalAppHost, M.ChangeDetectionHost, U.ExceptionHandler, Q.AppViewUtils, D.ComponentRef, D.ComponentFactory, M.ComponentLoader, O.ComponentStyles, D.ViewFragment, A.View, E._ComponentViewData, G._HostViewData, Y.NgZone, Y._WrappedTimer, Y.UncaughtError, L.OpaqueToken, T._JSTestabilityProxy, T.Testability, T.TestabilityRegistry, L.GoldenComponent, L.SanitizedComponent]);
     _inheritMany(J.Interceptor, [J.JSBool, J.JSNull, J.JavaScriptObject, J.JSArray, J.JSNumber, J.JSString, H.NativeTypedData, W.EventTarget, W.AccessibleNodeList, W.Blob, W.CssTransformComponent, W.CssRule, W._CssStyleDeclaration_Interceptor_CssStyleDeclarationBase, W.CssStyleValue, W.DataTransferItemList, W.DomException, W._DomRectList_Interceptor_ListMixin, W.DomRectReadOnly, W._DomStringList_Interceptor_ListMixin, W.DomTokenList, W._FileList_Interceptor_ListMixin, W.Gamepad, W.History, W._HtmlCollection_Interceptor_ListMixin, W.Location, W.MediaList, W._MidiInputMap_Interceptor_MapMixin, W._MidiOutputMap_Interceptor_MapMixin, W.MimeType, W._MimeTypeArray_Interceptor_ListMixin, W._NodeList_Interceptor_ListMixin, W.Plugin, W._PluginArray_Interceptor_ListMixin, W._RtcStatsReport_Interceptor_MapMixin, W.SpeechGrammar, W._SpeechGrammarList_Interceptor_ListMixin, W.SpeechRecognitionResult, W._Storage_Interceptor_MapMixin, W.StyleSheet, W._TextTrackCueList_Interceptor_ListMixin, W.TimeRanges, W.Touch, W._TouchList_Interceptor_ListMixin, W.TrackDefaultList, W.TrustedHtml, W.TrustedScriptUrl, W.Url, W.__CssRuleList_Interceptor_ListMixin, W.__GamepadList_Interceptor_ListMixin, W.__NamedNodeMap_Interceptor_ListMixin, W.__SpeechRecognitionResultList_Interceptor_ListMixin, W.__StyleSheetList_Interceptor_ListMixin, P.Length, P._LengthList_Interceptor_ListMixin, P.Number, P._NumberList_Interceptor_ListMixin, P.PointList, P._StringList_Interceptor_ListMixin, P.Transform, P._TransformList_Interceptor_ListMixin, P.AudioBuffer, P._AudioParamMap_Interceptor_MapMixin, P._SqlResultSetRowList_Interceptor_ListMixin]);
-    _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, Z._ObjectPropertyDescriptor, Z._JSFunction, S.TrustedTypePolicy, U.JsTestability]);
+    _inheritMany(J.JavaScriptObject, [J.PlainJavaScriptObject, J.UnknownJavaScriptObject, J.JavaScriptFunction, S.TrustedTypePolicy, Z._ObjectPropertyDescriptor, Z._JSFunction, U.JsTestability]);
     _inherit(J.JSUnmodifiableArray, J.JSArray);
     _inheritMany(J.JSNumber, [J.JSInt, J.JSNumNotInt]);
     _inheritMany(P.Error, [H.LateError, P.TypeError, H.JsNoSuchMethodError, H.UnknownJsTypeError, H.RuntimeError, H._Error, P.AssertionError, P.NullThrownError, P.ArgumentError, P.NoSuchMethodError, P.UnsupportedError, P.UnimplementedError, P.StateError, P.ConcurrentModificationError, P.CyclicInitializationError]);
@@ -10471,7 +10467,7 @@
     _inherit(P.UnmodifiableMapView, P._UnmodifiableMapView_MapView__UnmodifiableMapMixin);
     _inherit(H.ConstantMapView, P.UnmodifiableMapView);
     _inherit(H.ConstantStringMap, H.ConstantMap);
-    _inheritMany(H.Closure, [H.Closure2Args, H.Closure0Args, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__chainForeignFuture_closure, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P.Stream_length_closure, P._CustomZone_bindUnaryCallback_closure, P._RootZone_bindUnaryCallback_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, Y.formatResourceUrl_closure, S.trustedTypePolicy_closure, S.trustedTypePolicy_closure0, S.trustedTypePolicy_closure1, U.minimalApp_closure, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, M.ChangeDetectionHost_run__closure, Y.NgZone__runUnary_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T.Testability__watchForStability__closure]);
+    _inheritMany(H.Closure, [H.Closure2Args, H.Closure0Args, H.TearOffClosure, H.JsLinkedHashMap_values_closure, H.initHooks_closure, H.initHooks_closure1, P._AsyncRun__initializeScheduleImmediate_internalCallback, P._AsyncRun__initializeScheduleImmediate_closure, P._SyncBroadcastStreamController__sendData_closure, P._Future__chainForeignFuture_closure, P._Future__propagateToListeners_handleWhenCompleteCallback_closure, P.Stream_length_closure, P._CustomZone_bindUnaryCallback_closure, P._RootZone_bindUnaryCallback_closure, P.Duration_toString_sixDigits, P.Duration_toString_twoDigits, S.trustedTypePolicy_closure, S.trustedTypePolicy_closure0, S.trustedTypePolicy_closure1, Y.formatResourceUrl_closure, U.minimalApp_closure, Y.ApplicationRef$__closure, Y.ApplicationRef$__closure0, M.ChangeDetectionHost_run__closure, Y.NgZone__runUnary_closure, T._JSTestabilityProxy__whenAllStable_decrement, T._JSTestabilityProxy__createRegistry_getAngularTestability, T._JSTestabilityProxy__createRegistry_getAllAngularTestabilities_closure, T.Testability__watchForStability__closure]);
     _inheritMany(H.Closure2Args, [H.Primitives_functionNoSuchMethod_closure, H.initHooks_closure0, P._Future__chainForeignFuture_closure0, P._HashMap_addAll_closure, P.HashMap_HashMap$from_closure, P.MapBase_mapToString_closure, P.NoSuchMethodError_toString_closure, W.MidiInputMap_keys_closure, W.MidiOutputMap_keys_closure, W.RtcStatsReport_keys_closure, W.Storage_keys_closure, P.AudioParamMap_keys_closure, M.ChangeDetectionHost_run__closure0, Y.NgZone__runBinary_closure]);
     _inherit(H.NullError, P.TypeError);
     _inheritMany(H.TearOffClosure, [H.StaticClosure, H.BoundClosure]);
@@ -10637,12 +10633,12 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "Null()", "~(String,@)", "~(~())", "String(String)", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "String()", "Null(~())", "~(String,String)", "String(Match)", "@(@,String)", "@(String)", "@(@)", "ApplicationRef()", "AppViewUtils()", "Null(Object,StackTrace)", "Testability()", "Injector()", "~(UncaughtError)", "_Future<@>(@)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(@,@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "HostView<GoldenComponent>()", "bool()", "~(Object?,Object?)", "~(Symbol0,@)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object(Element)", "List<Object?>()", "JsTestability(Testability)"],
+    types: ["~()", "Null()", "~(String,@)", "~(~())", "String(String)", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "String()", "Null(~())", "~(String,String)", "@(@,String)", "String(Match)", "@(String)", "@(@)", "ApplicationRef()", "AppViewUtils()", "Null(Object,StackTrace)", "Testability()", "Injector()", "~(UncaughtError)", "_Future<@>(@)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "~(@,@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "HostView<GoldenComponent>()", "bool()", "~(Object?,Object?)", "~(Symbol0,@)", "~(@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "Object(Element)", "List<Object?>()", "JsTestability(Testability)"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","_ObjectPropertyDescriptor":"JavaScriptObject","_JSFunction":"JavaScriptObject","TrustedTypePolicy":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","ShadowRoot":"Node","DocumentFragment":"Node","XmlDocument":"Document","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JavaScriptObject":{"JsTestability":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"_ConstantMapKeyIterable":{"Iterable":["1"],"Iterable.E":"1"},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"_SetBase":{"SetMixin":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_UnmodifiableSet":{"SetMixin":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"Set":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"Document":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"],"Iterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"],"Iterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"HtmlDocument":{"Node":[]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"],"Iterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"],"Iterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"],"Iterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"],"Iterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"],"Iterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"],"Iterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"],"Iterable":["Touch"]},"_Attr":{"Node":[]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"],"Iterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"],"Iterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"],"Iterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"],"Iterable":["StyleSheet"]},"_AttributeMap":{"MapMixin":["String","String"],"Map":["String","String"]},"_ElementAttributeMap":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"],"Iterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"],"Iterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"],"Iterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"],"Iterable":["Map<@,@>"]},"_SafeHtml":{"SafeHtml":[]},"_SafeUrl":{"SafeUrl":[]},"_LazyInjector":{"Injector":[]},"ComponentView":{"ChangeDetectorRef":[]},"HostView":{"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewSanitizedComponent0":{"ChangeDetectorRef":[]}}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","TrustedTypePolicy":"JavaScriptObject","_ObjectPropertyDescriptor":"JavaScriptObject","_JSFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","ShadowRoot":"Node","DocumentFragment":"Node","XmlDocument":"Document","VttCue":"TextTrackCue","CDataSection":"CharacterData","Text":"CharacterData","HtmlFormControlsCollection":"HtmlCollection","CssCharsetRule":"CssRule","CssStyleSheet":"StyleSheet","NativeFloat32List":"NativeTypedArrayOfDouble","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JavaScriptObject":{"JsTestability":[]},"JSArray":{"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"List":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"JSNumber":{"double":[],"num":[]},"JSInt":{"double":[],"int":[],"num":[]},"JSNumNotInt":{"double":[],"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"_ConstantMapKeyIterable":{"Iterable":["1"],"Iterable.E":"1"},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"_MatchImplementation":{"RegExpMatch":[],"Match":[]},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"List":["double"],"EfficientLengthIterable":["double"],"Iterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"List":["int"],"EfficientLengthIterable":["int"],"Iterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"],"MapMixin.V":"2"},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"_SetBase":{"SetMixin":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"_UnmodifiableSet":{"SetMixin":["1"],"Set":["1"],"EfficientLengthIterable":["1"],"Iterable":["1"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"RegExpMatch":{"Match":[]},"Set":{"EfficientLengthIterable":["1"],"Iterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"Element":{"Node":[]},"HtmlElement":{"Element":[],"Node":[]},"AnchorElement":{"Element":[],"Node":[]},"AreaElement":{"Element":[],"Node":[]},"CharacterData":{"Node":[]},"Document":{"Node":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"List":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"],"Iterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"List":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"]},"FileList":{"ListMixin":["File"],"List":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"],"Iterable":["File"]},"FormElement":{"Element":[],"Node":[]},"HtmlCollection":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"HtmlDocument":{"Node":[]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"MimeTypeArray":{"ListMixin":["MimeType"],"List":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"],"Iterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"List":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"],"Iterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SelectElement":{"Element":[],"Node":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"List":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"],"Iterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"List":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"],"Iterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"List":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"],"Iterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"List":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"],"Iterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"List":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"],"Iterable":["Touch"]},"_Attr":{"Node":[]},"_CssRuleList":{"ListMixin":["CssRule"],"List":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"],"Iterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"List":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"],"Iterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"List":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"Iterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"List":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"],"Iterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"List":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"],"Iterable":["StyleSheet"]},"_AttributeMap":{"MapMixin":["String","String"],"Map":["String","String"]},"_ElementAttributeMap":{"MapMixin":["String","String"],"Map":["String","String"],"MapMixin.V":"String"},"LengthList":{"ListMixin":["Length"],"List":["Length"],"EfficientLengthIterable":["Length"],"Iterable":["Length"]},"NumberList":{"ListMixin":["Number"],"List":["Number"],"EfficientLengthIterable":["Number"],"Iterable":["Number"]},"StringList":{"ListMixin":["String"],"List":["String"],"EfficientLengthIterable":["String"],"Iterable":["String"]},"TransformList":{"ListMixin":["Transform"],"List":["Transform"],"EfficientLengthIterable":["Transform"],"Iterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"],"MapMixin.V":"@"},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"List":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"],"Iterable":["Map<@,@>"]},"SafeHtmlImpl":{"SafeHtml":[]},"SafeUrlImpl":{"SafeUrl":[]},"_LazyInjector":{"Injector":[]},"ComponentView":{"ChangeDetectorRef":[]},"HostView":{"ChangeDetectorRef":[]},"RenderView":{"ChangeDetectorRef":[]},"View":{"ChangeDetectorRef":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"ChangeDetectorRef":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent"],"ChangeDetectorRef":[],"HostView.T":"GoldenComponent"},"ViewSanitizedComponent0":{"ChangeDetectorRef":[]}}'));
   H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"StreamTransformerBase":2,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_SetBase":1,"_UnmodifiableSetMixin":1,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"__SetBase_Object_SetMixin":1,"__UnmodifiableSet__SetBase__UnmodifiableSetMixin":1,"Codec":2,"Converter":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"ComponentFactory":1,"ComponentView":1}'));
   var string$ = {
     Cannot: "Cannot fire new event. Controller is already firing an event",
@@ -11041,6 +11037,12 @@
     _lazyFinal($, "_Uri__needsNoEncoding", "$get$_Uri__needsNoEncoding", function() {
       return P.RegExp_RegExp("^[\\-\\.0-9A-Z_a-z~]*$", true);
     });
+    _lazyFinal($, "browserSupportsTrustedTypes", "$get$browserSupportsTrustedTypes", function() {
+      return P.hasProperty(W.window(), "trustedTypes");
+    });
+    _lazyFinal($, "TrustedTypePolicyFactory_trustedTypes", "$get$TrustedTypePolicyFactory_trustedTypes", function() {
+      return W.window().trustedTypes;
+    });
     _lazyFinal($, "_CopyBasedSanitizer__defaultNamespace", "$get$_CopyBasedSanitizer__defaultNamespace", function() {
       return W.DivElement_DivElement().namespaceURI;
     });
@@ -11067,12 +11069,6 @@
     });
     _lazyFinal($, "_safeUrls", "$get$_safeUrls", function() {
       return P.RegExp_RegExp("^(?:(?:https?|mailto|ftp):|[^:/?#]*(?:[/?#]|$))", false);
-    });
-    _lazyFinal($, "browserSupportsTrustedTypes", "$get$browserSupportsTrustedTypes", function() {
-      return P.hasProperty(W.window(), "trustedTypes");
-    });
-    _lazyFinal($, "TrustedTypePolicyFactory_trustedTypes", "$get$TrustedTypePolicyFactory_trustedTypes", function() {
-      return W.window().trustedTypes;
     });
     _lazyFinal($, "appGlobals", "$get$appGlobals", function() {
       var t2,
