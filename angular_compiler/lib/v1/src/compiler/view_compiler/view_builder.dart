@@ -281,6 +281,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     ElementAst ast,
   ) {
     final componentViewExpr = _view.createComponentNodeAndAppend(
+      _view.component,
       component,
       parent,
       elementRef,
@@ -369,7 +370,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.createElementNs(
           parent, elementRef, nodeIndex, ns, nameParts[1], ast);
     } else {
-      _view.createElement(parent, elementRef, nodeIndex, tagName, ast);
+      _view.createElement(parent, elementRef, tagName, ast);
     }
     var isHtmlElement = detectHtmlElementFromTagName(tagName);
     var mergedBindings = mergeHtmlAndDirectiveAttributes(
@@ -449,6 +450,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.viewIndex + _nestedViewCount,
       compileElement,
       ast.variables,
+      _view.genConfig.enableDataDebugSource,
     );
 
     _beforeChildren(compileElement);

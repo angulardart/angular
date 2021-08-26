@@ -409,6 +409,7 @@ class CompileView {
   final afterContentLifecycleCallbacksMethod = CompileMethod();
   final afterViewLifecycleCallbacksMethod = CompileMethod();
   final destroyMethod = CompileMethod();
+  final bool enableDataDebugSource;
 
   /// Methods generated during view compilation.
   ///
@@ -441,6 +442,7 @@ class CompileView {
     this.viewIndex,
     this.declarationElement,
     this.templateVariables,
+    this.enableDataDebugSource,
   ) {
     nameResolver = ViewNameResolver(this);
     storage = CompileViewStorage();
@@ -751,22 +753,31 @@ class CompileView {
   );
 
   /// Create an html node and appends to parent element.
-  void createElement(CompileElement parent, NodeReference elementRef,
-      int nodeIndex, String tagName, TemplateAst ast) {
+  void createElement(
+    CompileElement parent,
+    NodeReference elementRef,
+    String tagName,
+    TemplateAst ast,
+  ) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
 
     _createElementAndAppend(
       tagName,
       parentRenderNodeExpr,
       elementRef,
+      templateUrl: component.template?.templateUrl,
+      offset: (component.template?.templateOffset ?? 0) +
+          ast.sourceSpan.start.offset,
     );
   }
 
   void _createElementAndAppend(
     String tagName,
     o.Expression parent,
-    NodeReference elementRef,
-  ) {
+    NodeReference elementRef, {
+    String? templateUrl,
+    int? offset,
+  }) {
     // No namespace just call [document.createElement].
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
@@ -810,6 +821,24 @@ class CompileView {
       _createMethod.addStmt(
         elementRef.toWriteStmt(unsafeCast(createRenderNodeExpr)),
       );
+    }
+
+    _addDataDebugSource(elementRef, templateUrl, offset);
+  }
+
+  void _addDataDebugSource(
+    NodeReference elementRef,
+    String? templateUrl,
+    int? offset,
+  ) {
+    if (enableDataDebugSource) {
+      if (templateUrl != null) {
+        _createMethod.addStmt(elementRef.toReadExpr().callMethod(
+            'setAttribute', [
+          o.literal('data-debug-source'),
+          o.literal('$templateUrl:$offset')
+        ]).toStmt());
+      }
     }
   }
 
@@ -949,6 +978,7 @@ class CompileView {
   }
 
   o.Expression createComponentNodeAndAppend(
+    CompileDirectiveMetadata parentComponent,
     CompileDirectiveMetadata component,
     CompileElement parent,
     NodeReference elementRef,
@@ -972,6 +1002,11 @@ class CompileView {
     } else {
       _initializeAndAppendNode(parent, elementRef, root);
     }
+    _addDataDebugSource(
+        elementRef,
+        parentComponent.template?.templateUrl,
+        (parentComponent.template?.templateOffset ?? 0) +
+            ast.sourceSpan.start.offset);
     return componentViewExpr;
   }
 
