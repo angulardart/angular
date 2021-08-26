@@ -872,12 +872,13 @@ class _ParseContext {
             astNode.value,
             _location(astNode),
           );
-    // We assumed this won't produce a recoverable error and return null because
-    // we know the value is a literal.
+    // [boundValue] may be null if it is an invalid i18n literal.
     final boundValue =
-        createBoundValue(astNode.name, parsedValue, astNode.sourceSpan)!;
-    _bindToDirective(
-        boundDirectives, astNode.name, boundValue, astNode.sourceSpan);
+        createBoundValue(astNode.name, parsedValue, astNode.sourceSpan);
+    if (boundValue != null) {
+      _bindToDirective(
+          boundDirectives, astNode.name, boundValue, astNode.sourceSpan);
+    }
   }
 
   bool bindPropertyToDirective(ast.PropertyAst astNode, ng.BoundValue value) =>
