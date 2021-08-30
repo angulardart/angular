@@ -251,7 +251,7 @@
           if (nestedViews != null) {
             $length = nestedViews.length;
             for (n = 0; n < $length; ++n) {
-              if (n >= nestedViews.length)
+              if (!(n < nestedViews.length))
                 return H.ioore(nestedViews, n);
               D.ViewFragment__flattenDomNodes(target, nestedViews[n].get$viewFragment()._nodesOrViewContainers);
             }
@@ -1910,7 +1910,7 @@
           typeParametersText += typeSep;
           t3 = genericContext.length;
           t4 = t3 - 1 - i;
-          if (t4 < 0)
+          if (!(t4 >= 0))
             return H.ioore(genericContext, t4);
           typeParametersText = C.JSString_methods.$add(typeParametersText, genericContext[t4]);
           boundRti = bounds[i];
@@ -2001,7 +2001,7 @@
         t1 = rti._primary;
         t2 = genericContext.length;
         t1 = t2 - 1 - t1;
-        if (t1 < 0 || t1 >= t2)
+        if (!(t1 >= 0 && t1 < t2))
           return H.ioore(genericContext, t1);
         return genericContext[t1];
       }
@@ -4369,7 +4369,7 @@
       if (previousIndex == null)
         return null;
       if (moveOffsets != null && previousIndex < moveOffsets.length) {
-        if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
+        if (previousIndex >>> 0 !== previousIndex || previousIndex >= moveOffsets.length)
           return H.ioore(moveOffsets, previousIndex);
         t1 = moveOffsets[previousIndex];
         t1.toString;
@@ -4496,7 +4496,7 @@
     insertNodesBefore(nodes, $parent, sibling) {
       var l, i;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         $parent.insertBefore(nodes[i], sibling);
       }
@@ -4504,7 +4504,7 @@
     appendNodes(nodes, $parent) {
       var l, i;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         $parent.appendChild(nodes[i]);
       }
@@ -4512,7 +4512,7 @@
     removeNodes(nodes) {
       var l, i, t1, t2;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         t1 = nodes[i];
         t2 = t1.parentNode;
@@ -5039,7 +5039,7 @@
         list = P.List_List$filled(t1, "", false, type$.String);
       for (i = 0; i < receiver.length; ++i) {
         t2 = H.S(receiver[i]);
-        if (i >= t1)
+        if (!(i < t1))
           return H.ioore(list, i);
         list[i] = t2;
       }
@@ -5060,7 +5060,7 @@
       if (0 >= $length)
         return -1;
       for (i = 0; i < $length; ++i) {
-        if (i >= receiver.length)
+        if (!(i < receiver.length))
           return H.ioore(receiver, i);
         if (J.$eq$(receiver[i], element))
           return i;
@@ -5080,7 +5080,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      if (index >= receiver.length || index < 0)
+      if (!(index >= 0 && index < receiver.length))
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver[index];
     },
@@ -5301,7 +5301,7 @@
         return C.List_empty1;
       list = [];
       for (index = 0; index < argumentCount; ++index) {
-        if (index >= t1.length)
+        if (!(index < t1.length))
           return H.ioore(t1, index);
         list.push(t1[index]);
       }
@@ -5321,11 +5321,11 @@
         return C.Map_empty;
       map = new H.JsLinkedHashMap(type$.JsLinkedHashMap_Symbol_dynamic);
       for (i = 0; i < namedArgumentCount; ++i) {
-        if (i >= t1.length)
+        if (!(i < t1.length))
           return H.ioore(t1, i);
         t3 = t1[i];
         t4 = namedArgumentsStartIndex + i;
-        if (t4 < 0 || t4 >= t2.length)
+        if (!(t4 >= 0 && t4 < t2.length))
           return H.ioore(t2, t4);
         map.$indexSet(0, new H.Symbol(t3), t2[t4]);
       }
@@ -7589,7 +7589,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7675,7 +7675,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7712,7 +7712,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7752,7 +7752,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7847,7 +7847,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7898,7 +7898,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7928,7 +7928,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7988,7 +7988,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8013,7 +8013,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8077,7 +8077,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8101,7 +8101,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8131,7 +8131,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8170,7 +8170,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8275,7 +8275,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8299,7 +8299,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8323,7 +8323,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8347,7 +8347,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8679,7 +8679,7 @@
       }
       for (t1 = this._ng_for$_viewContainer, len = t1.get$length(t1), t2 = len - 1, i = 0; i < len; ++i) {
         t3 = t1.nestedViews;
-        if (i >= t3.length)
+        if (!(i < t3.length))
           return H.ioore(t3, i);
         t3 = t3[i]._embedded_view$_data.locals;
         t3.$indexSet(0, "first", i === 0);
@@ -8712,7 +8712,7 @@
         } else {
           adjustedPreviousIndex.toString;
           t2 = t1.nestedViews;
-          if (adjustedPreviousIndex < 0 || adjustedPreviousIndex >= t2.length)
+          if (!(adjustedPreviousIndex >= 0 && adjustedPreviousIndex < t2.length))
             return H.ioore(t2, adjustedPreviousIndex);
           t2 = t2[adjustedPreviousIndex];
           index = currentIndex === -1 ? t1.get$length(t1) : currentIndex;
@@ -8739,7 +8739,7 @@
         t1 = record.currentIndex;
       t1.toString;
       t2 = this.$this._ng_for$_viewContainer.nestedViews;
-      if (t1 >= t2.length)
+      if (!(t1 < t2.length))
         return H.ioore(t2, t1);
       t2[t1]._embedded_view$_data.locals.$indexSet(0, "$implicit", record.item);
     },
@@ -8982,7 +8982,7 @@
                     for (j = 0; j < sizeDeficit; ++j)
                       moveOffsets.push(_null);
                     t2 = moveOffsets.length;
-                    if (i >= t2)
+                    if (!(i < t2))
                       return H.ioore(moveOffsets, i);
                     moveOffsets[i] = 0;
                   }
@@ -8990,7 +8990,7 @@
                 }
                 index = offset + i;
                 if (localCurrentIndex <= index && index < localMovePreviousIndex) {
-                  if (i >= t2)
+                  if (!(i < t2))
                     return H.ioore(moveOffsets, i);
                   moveOffsets[i] = offset + 1;
                 }
@@ -8999,7 +8999,7 @@
               sizeDeficit = previousIndex - moveOffsets.length + 1;
               for (j = 0; j < sizeDeficit; ++j)
                 moveOffsets.push(_null);
-              if (previousIndex !== (previousIndex | 0) || previousIndex >= moveOffsets.length)
+              if (previousIndex >>> 0 !== previousIndex || previousIndex >= moveOffsets.length)
                 return H.ioore(moveOffsets, previousIndex);
               moveOffsets[previousIndex] = localCurrentIndex - localMovePreviousIndex;
             }
@@ -9351,7 +9351,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detectors[i].detectChangesDeprecated$0();
       }
@@ -9361,7 +9361,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detector = detectors[i];
         this._lastGuardedView = detector;
@@ -9502,7 +9502,7 @@
       if (nested == null)
         return;
       for (len = nested.length, i = 0; i < len; ++i) {
-        if (i >= nested.length)
+        if (!(i < nested.length))
           return H.ioore(nested, i);
         nested[i].detectChangesDeprecated$0();
       }
@@ -9513,7 +9513,7 @@
       if (nested == null)
         return;
       for (len = nested.length, i = 0; i < len; ++i) {
-        if (i >= nested.length)
+        if (!(i < nested.length))
           return H.ioore(nested, i);
         nested[i].destroyInternalState$0();
       }
@@ -9549,7 +9549,7 @@
       var t1;
       if (index > 0) {
         t1 = index - 1;
-        if (t1 >= views.length)
+        if (!(t1 < views.length))
           return H.ioore(views, t1);
         t1 = views[t1].get$viewFragment().findLastDomNode$0();
       } else
@@ -9726,7 +9726,7 @@
       onDestroyCallbacks = this._embedded_view$_onDestroyCallbacks;
       if (onDestroyCallbacks != null)
         for ($length = onDestroyCallbacks.length, i = 0; i < $length; ++i) {
-          if (i >= onDestroyCallbacks.length)
+          if (!(i < onDestroyCallbacks.length))
             return H.ioore(onDestroyCallbacks, i);
           onDestroyCallbacks[i].call$0();
         }
@@ -9811,7 +9811,7 @@
       onDestroyCallbacks = this._onDestroyCallbacks;
       if (onDestroyCallbacks != null)
         for ($length = onDestroyCallbacks.length, i = 0; i < $length; ++i) {
-          if (i >= onDestroyCallbacks.length)
+          if (!(i < onDestroyCallbacks.length))
             return H.ioore(onDestroyCallbacks, i);
           onDestroyCallbacks[i].call$0();
         }

@@ -1098,7 +1098,7 @@
           typeParametersText += typeSep;
           t3 = genericContext.length;
           t4 = t3 - 1 - i;
-          if (t4 < 0)
+          if (!(t4 >= 0))
             return H.ioore(genericContext, t4);
           typeParametersText = C.JSString_methods.$add(typeParametersText, genericContext[t4]);
           boundRti = bounds[i];
@@ -1189,7 +1189,7 @@
         t1 = rti._primary;
         t2 = genericContext.length;
         t1 = t2 - 1 - t1;
-        if (t1 < 0 || t1 >= t2)
+        if (!(t1 >= 0 && t1 < t2))
           return H.ioore(genericContext, t1);
         return genericContext[t1];
       }

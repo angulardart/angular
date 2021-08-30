@@ -1874,7 +1874,7 @@
           typeParametersText += typeSep;
           t3 = genericContext.length;
           t4 = t3 - 1 - i;
-          if (t4 < 0)
+          if (!(t4 >= 0))
             return H.ioore(genericContext, t4);
           typeParametersText = C.JSString_methods.$add(typeParametersText, genericContext[t4]);
           boundRti = bounds[i];
@@ -1965,7 +1965,7 @@
         t1 = rti._primary;
         t2 = genericContext.length;
         t1 = t2 - 1 - t1;
-        if (t1 < 0 || t1 >= t2)
+        if (!(t1 >= 0 && t1 < t2))
           return H.ioore(genericContext, t1);
         return genericContext[t1];
       }
@@ -4851,7 +4851,7 @@
         list = P.List_List$filled(t1, "", false, type$.String);
       for (i = 0; i < receiver.length; ++i) {
         t2 = H.S(receiver[i]);
-        if (i >= t1)
+        if (!(i < t1))
           return H.ioore(list, i);
         list[i] = t2;
       }
@@ -4873,7 +4873,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      if (index >= receiver.length || index < 0)
+      if (!(index >= 0 && index < receiver.length))
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver[index];
     },
@@ -5094,7 +5094,7 @@
         return C.List_empty1;
       list = [];
       for (index = 0; index < argumentCount; ++index) {
-        if (index >= t1.length)
+        if (!(index < t1.length))
           return H.ioore(t1, index);
         list.push(t1[index]);
       }
@@ -5114,11 +5114,11 @@
         return C.Map_empty;
       map = new H.JsLinkedHashMap(type$.JsLinkedHashMap_Symbol_dynamic);
       for (i = 0; i < namedArgumentCount; ++i) {
-        if (i >= t1.length)
+        if (!(i < t1.length))
           return H.ioore(t1, i);
         t3 = t1[i];
         t4 = namedArgumentsStartIndex + i;
-        if (t4 < 0 || t4 >= t2.length)
+        if (!(t4 >= 0 && t4 < t2.length))
           return H.ioore(t2, t4);
         map.$indexSet(0, new H.Symbol(t3), t2[t4]);
       }
@@ -7295,7 +7295,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7381,7 +7381,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7418,7 +7418,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7458,7 +7458,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7553,7 +7553,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7604,7 +7604,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7634,7 +7634,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7694,7 +7694,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7719,7 +7719,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7783,7 +7783,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7807,7 +7807,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7837,7 +7837,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7876,7 +7876,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7981,7 +7981,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8005,7 +8005,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8029,7 +8029,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8053,7 +8053,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index >= receiver.length)
+      if (!(index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8520,7 +8520,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detectors[i].detectChangesDeprecated$0();
       }
@@ -8530,7 +8530,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detector = detectors[i];
         this._lastGuardedView = detector;
@@ -8770,7 +8770,7 @@
       nodesToProjectIntoTarget = projectedNodesByContentIndex[index];
       $length = nodesToProjectIntoTarget.length;
       for (t1 = type$.List_Object, i = 0; i < $length; ++i) {
-        if (i >= nodesToProjectIntoTarget.length)
+        if (!(i < nodesToProjectIntoTarget.length))
           return H.ioore(nodesToProjectIntoTarget, i);
         node = nodesToProjectIntoTarget[i];
         if (t1._is(node))

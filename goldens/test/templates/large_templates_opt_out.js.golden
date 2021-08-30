@@ -1912,7 +1912,7 @@
           typeParametersText += typeSep;
           t4 = genericContext.length;
           t5 = t4 - 1 - i;
-          if (t5 < 0)
+          if (!(t5 >= 0))
             return H.ioore(genericContext, t5);
           typeParametersText = C.JSString_methods.$add(typeParametersText, genericContext[t5]);
           boundRti = bounds[i];
@@ -2004,7 +2004,7 @@
         t1 = rti._primary;
         t2 = genericContext.length;
         t1 = t2 - 1 - t1;
-        if (t1 < 0 || t1 >= t2)
+        if (!(t1 >= 0 && t1 < t2))
           return H.ioore(genericContext, t1);
         return genericContext[t1];
       }
@@ -4430,7 +4430,7 @@
     insertNodesBefore(nodes, $parent, sibling) {
       var l, i;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         $parent.insertBefore(nodes[i], sibling);
       }
@@ -4438,7 +4438,7 @@
     appendNodes(nodes, $parent) {
       var l, i;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         $parent.appendChild(nodes[i]);
       }
@@ -4446,7 +4446,7 @@
     removeNodes(nodes) {
       var l, i, t1, t2;
       for (l = nodes.length, i = 0; i < l; ++i) {
-        if (i >= nodes.length)
+        if (!(i < nodes.length))
           return H.ioore(nodes, i);
         t1 = nodes[i];
         t2 = t1.parentNode;
@@ -5563,7 +5563,7 @@
         list = P.List_List$filled(t1, "", false, type$.String);
       for (i = 0; i < receiver.length; ++i) {
         t2 = H.S(receiver[i]);
-        if (i >= t1)
+        if (!(i < t1))
           return H.ioore(list, i);
         list[i] = t2;
       }
@@ -5591,7 +5591,7 @@
       return receiver.length;
     },
     $index(receiver, index) {
-      if (index >= receiver.length || index < 0)
+      if (!(index >= 0 && index < receiver.length))
         throw H.wrapException(H.diagnoseIndexError(receiver, index));
       return receiver[index];
     },
@@ -5818,7 +5818,7 @@
         return C.List_empty;
       list = [];
       for (index = 0; index < argumentCount; ++index) {
-        if (index >= t1.length)
+        if (!(index < t1.length))
           return H.ioore(t1, index);
         list.push(t1[index]);
       }
@@ -5838,11 +5838,11 @@
         return C.Map_empty;
       map = new H.JsLinkedHashMap(type$.JsLinkedHashMap_Symbol_dynamic);
       for (i = 0; i < namedArgumentCount; ++i) {
-        if (i >= t1.length)
+        if (!(i < t1.length))
           return H.ioore(t1, i);
         t3 = t1[i];
         t4 = namedArgumentsStartIndex + i;
-        if (t4 < 0 || t4 >= t2.length)
+        if (!(t4 >= 0 && t4 < t2.length))
           return H.ioore(t2, t4);
         map.$indexSet(0, new H.Symbol(t3), t2[t4]);
       }
@@ -8052,7 +8052,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8137,7 +8137,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8173,7 +8173,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8212,7 +8212,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8306,7 +8306,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8356,7 +8356,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8385,7 +8385,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8444,7 +8444,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8468,7 +8468,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8531,7 +8531,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8554,7 +8554,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8583,7 +8583,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8621,7 +8621,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8725,7 +8725,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8748,7 +8748,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8771,7 +8771,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8794,7 +8794,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (index < 0 || index >= receiver.length)
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -9128,7 +9128,7 @@
         views.splice(t3, 0, view);
         if (t3 > 0) {
           t2 = t3 - 1;
-          if (t2 >= views.length)
+          if (!(t2 < views.length))
             return H.ioore(views, t2);
           refRenderNode = views[t2].get$viewFragment().findLastDomNode$0();
         } else
@@ -9295,7 +9295,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detectors[i].detectChangesDeprecated$0();
       }
@@ -9305,7 +9305,7 @@
         detectors = this._changeDetectors,
         $length = detectors.length;
       for (i = 0; i < $length; ++i) {
-        if (i >= detectors.length)
+        if (!(i < detectors.length))
           return H.ioore(detectors, i);
         detector = detectors[i];
         this._lastGuardedView = detector;
@@ -9440,7 +9440,7 @@
       if (nested == null)
         return;
       for (len = nested.length, i = 0; i < len; ++i) {
-        if (i >= nested.length)
+        if (!(i < nested.length))
           return H.ioore(nested, i);
         nested[i].detectChangesDeprecated$0();
       }
@@ -9451,7 +9451,7 @@
       if (nested == null)
         return;
       for (len = nested.length, i = 0; i < len; ++i) {
-        if (i >= nested.length)
+        if (!(i < nested.length))
           return H.ioore(nested, i);
         nested[i].destroyInternalState$0();
       }
@@ -9648,7 +9648,7 @@
       onDestroyCallbacks = this._embedded_view$_onDestroyCallbacks;
       if (onDestroyCallbacks != null)
         for ($length = onDestroyCallbacks.length, i = 0; i < $length; ++i) {
-          if (i >= onDestroyCallbacks.length)
+          if (!(i < onDestroyCallbacks.length))
             return H.ioore(onDestroyCallbacks, i);
           onDestroyCallbacks[i].call$0();
         }
@@ -9719,7 +9719,7 @@
       onDestroyCallbacks = this._onDestroyCallbacks;
       if (onDestroyCallbacks != null)
         for ($length = onDestroyCallbacks.length, i = 0; i < $length; ++i) {
-          if (i >= onDestroyCallbacks.length)
+          if (!(i < onDestroyCallbacks.length))
             return H.ioore(onDestroyCallbacks, i);
           onDestroyCallbacks[i].call$0();
         }
