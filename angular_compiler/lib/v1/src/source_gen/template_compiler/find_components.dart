@@ -303,16 +303,9 @@ class _ComponentVisitor
           if (isField) {
             _refuseLateFinalInputs(element as FieldElement);
           }
-          // Resolves specified generic type parameters.
-          final setter = _directiveClassElement!.thisType
-              .lookUpInheritedSetter(element.displayName)!;
-          if (setter.parameters.isEmpty) {
-            return CompileContext.current.reportAndRecover(
-              BuildError.forElement(
-                element,
-                '@Input setter has no parameters.',
-              ),
-            );
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
           }
           final propertyType = setter.parameters.first.type;
           final dynamicType = setter.library.typeProvider.dynamicType;
@@ -357,15 +350,19 @@ class _ComponentVisitor
         }
       } else if (annotationInfo.isContentType) {
         if (isSetter && element.isPublic) {
-          final returnType = _fieldOrPropertyType(element);
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
+          }
+          final queryType = setter.parameters.first.type;
           final contentQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
-            _fieldOrPropertyType(element),
+            queryType,
           );
           if (contentQuery.first) {
-            _refuseNonNullableSingleChildQueries(element, returnType!);
+            _refuseNonNullableSingleChildQueries(element, queryType);
           }
           if (element is FieldElement) {
             _refuseLateQueries(element);
@@ -377,15 +374,19 @@ class _ComponentVisitor
         }
       } else if (annotationInfo.isViewType) {
         if (isSetter && element.isPublic) {
-          final returnType = _fieldOrPropertyType(element);
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
+          }
+          final queryType = setter.parameters.first.type;
           final viewQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
-            returnType,
+            queryType,
           );
           if (viewQuery.first) {
-            _refuseNonNullableSingleChildQueries(element, returnType!);
+            _refuseNonNullableSingleChildQueries(element, queryType);
           }
           if (element is FieldElement) {
             _refuseLateQueries(element);
@@ -429,14 +430,24 @@ class _ComponentVisitor
     }
   }
 
-  DartType? _fieldOrPropertyType(Element element) {
-    if (element is PropertyAccessorElement && element.isSetter) {
-      return element.parameters.first.type;
+  /// Attempts to return a valid setter for [element].
+  ///
+  /// May return null if no setter corresponds to [element], or the [element]
+  /// itself is invalid (e.g. a setter without parameters or a body).
+  PropertyAccessorElement? _setterFor(Element element) {
+    // Resolves specified generic type parameters.
+    final setter = _directiveClassElement!.thisType
+        .lookUpInheritedSetter(element.displayName)!;
+    if (setter.parameters.isEmpty) {
+      CompileContext.current.reportAndRecover(
+        BuildError.forElement(
+          element,
+          'Invalid setter, please check build log for syntax errors.',
+        ),
+      );
+      return null;
     }
-    if (element is FieldElement) {
-      return element.type;
-    }
-    return null;
+    return setter;
   }
 
   List<CompileTokenMetadata> _getSelectors(
