@@ -1,6 +1,13 @@
 import 'package:args/args.dart';
 import 'package:meta/meta.dart';
 
+// Force enables the data-debug-source attribute on DOM elements created by
+// AngularDart templates.
+//
+// This is intended to be manually changed for accessibility TGPs. It should
+// remain false otherwise.
+const _forceEnableDataDebugSource = false;
+
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
 const _argDataDebugSource = 'enable-data-debug-source';
 
@@ -177,8 +184,8 @@ class CompilerFlags {
       policyExceptions: _buildPolicyExceptions(policyExceptions),
       policyExceptionInPackages:
           _buildPolicyExceptions(policyExceptionInPackages),
-      enableDataDebugSource:
-          enableDataDebugSource as bool? ?? defaultTo.enableDataDebugSource,
+      enableDataDebugSource: _forceEnableDataDebugSource ||
+          (enableDataDebugSource as bool? ?? defaultTo.enableDataDebugSource),
     );
   }
 
