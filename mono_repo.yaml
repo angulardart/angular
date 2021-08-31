@@ -7,6 +7,7 @@ github:
     pull_request:
       branches:
         - master
+        - google
 
   on_completion:
     - name: "Notify failure"
