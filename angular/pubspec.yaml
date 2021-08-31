@@ -31,6 +31,7 @@ dependencies:
   csslib: ^0.17.0
   path: ^1.8.0
   pedantic: ^1.10.0
+  quiver: ^3.0.0
   source_gen: ^1.0.0
   source_span: ^1.8.0
 
