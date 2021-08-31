@@ -115,7 +115,7 @@ abstract class AbstractEmitterVisitor
 
     var sourceComment = '';
     var sourceReference = stmt.sourceReference;
-    if (sourceReference != null && sourceReference.sourceUrl != null) {
+    if (sourceReference != null) {
       sourceComment = '/* REF:'
           '${sourceReference.sourceUrl}'
           ':'
