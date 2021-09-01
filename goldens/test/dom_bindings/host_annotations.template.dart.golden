@@ -38,11 +38,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import7.updateAttribute(this.rootElement, 'const-add-attr-bool', (import1.GoldenComponent.constAddAttributeBool ? '' : null));
     import7.updateAttribute(this.rootElement, 'final-add-attr-bool', (import1.GoldenComponent.finalAddAttributeBool ? '' : null));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
   }
@@ -58,7 +53,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._HasOutput_0_5 = import1.HasOutput();
     this._ListensToOutput_0_6 = import1.ListensToOutput();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_0, this._ListensToOutput_0_6, this._ListensToOutput_0_6.runtimeType.toString());
+      import8.Inspector.instance.registerDirective(_el_0, this._ListensToOutput_0_6);
     }
     this._compView_0.create(this._HasOutput_0_5);
     final subscription_0 = this._HasOutput_0_5.fooEvents.listen(this.eventHandler0(this._ListensToOutput_0_6.onCustomEvent));
@@ -183,11 +178,6 @@ class ViewHasOutput0 extends import0.ComponentView<import1.HasOutput> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('has-output'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
   }

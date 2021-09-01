@@ -41,11 +41,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import2.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/templates/encapsulation.dart' : null);
   }
@@ -205,11 +200,6 @@ class ViewNoEncapsulation0 extends import0.ComponentView<import1.NoEncapsulation
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import2.document.createElement('no-encapsulation'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/templates/encapsulation.dart' : null);
   }
@@ -300,11 +290,6 @@ class ViewEmulatedEncapsulation0 extends import0.ComponentView<import1.EmulatedE
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import2.document.createElement('emulated-encapsulation'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/templates/encapsulation.dart' : null);
   }

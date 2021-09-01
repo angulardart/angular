@@ -43,11 +43,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import8.unsafeCast(import9.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:goldens/test/templates/type_inference.dart' : null);
   }
@@ -69,7 +64,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_9_8 = TemplateRef(this._appEl_9, viewFactory_GoldenComponent1);
     this._NgFor_9_9 = import4.NgFor(this._appEl_9, _TemplateRef_9_8);
     if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.registerDirective(_anchor_9, this._NgFor_9_9, this._NgFor_9_9.runtimeType.toString());
+      import12.Inspector.instance.registerDirective(_anchor_9, this._NgFor_9_9);
     }
     final _text_10 = import10.appendText(parentRenderNode, ' ');
     final _anchor_11 = import10.appendAnchor(parentRenderNode);
@@ -77,7 +72,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_11_8 = TemplateRef(this._appEl_11, viewFactory_GoldenComponent2);
     this._NgFor_11_9 = import4.NgFor(this._appEl_11, _TemplateRef_11_8);
     if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.registerDirective(_anchor_11, this._NgFor_11_9, this._NgFor_11_9.runtimeType.toString());
+      import12.Inspector.instance.registerDirective(_anchor_11, this._NgFor_11_9);
     }
   }
 
@@ -175,7 +170,7 @@ class _ViewGoldenComponent2 extends import16.EmbeddedView<import1.GoldenComponen
     var _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_GoldenComponent3);
     this._NgFor_0_9 = import4.NgFor(this._appEl_0, _TemplateRef_0_8);
     if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.registerDirective(_anchor_0, this._NgFor_0_9, this._NgFor_0_9.runtimeType.toString());
+      import12.Inspector.instance.registerDirective(_anchor_0, this._NgFor_0_9);
     }
     this.initRootNode(this._appEl_0);
   }

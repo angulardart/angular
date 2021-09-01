@@ -576,31 +576,11 @@ o.ClassStmt createViewClass(CompileView view, ExpressionParser parser) {
   for (final getter in view.getters) {
     NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
   }
-  final viewGetters = [
-    ...view.getters,
-    if (view.viewType == ViewType.component)
-      o.ClassGetter(
-        'debugComponentTypeName',
-        [
-          o.ReturnStatement(
-            o.THIS_EXPR
-                .prop('ctx')
-                .prop('runtimeType')
-                .callMethod('toString', []),
-          ),
-        ],
-        o.STRING_TYPE,
-        [],
-        [
-          o.importExpr(Identifiers.dartCoreOverride),
-        ],
-      ),
-  ];
   final viewClass = o.ClassStmt(
     view.className,
     _createParentClassExpr(view),
     view.storage.fields,
-    viewGetters,
+    view.getters,
     viewConstructor,
     viewMethods.where((method) => method.body.isNotEmpty).toList(),
     typeParameters: view.component.originType!.typeParameters,

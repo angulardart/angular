@@ -28,11 +28,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/directive_change_detector.dart' : null);
   }
@@ -44,7 +39,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _el_0 = import7.appendElement<import6.InputElement>(doc, parentRenderNode, 'input');
     this._NgModelLike_0_5 = import1.NgModelLike();
     if (import8.isDevToolsEnabled) {
-      import8.Inspector.instance.registerDirective(_el_0, this._NgModelLike_0_5, this._NgModelLike_0_5.runtimeType.toString());
+      import8.Inspector.instance.registerDirective(_el_0, this._NgModelLike_0_5);
     }
     final subscription_0 = this._NgModelLike_0_5.modelChange.listen(this.eventHandler1(this._handleEvent_0));
     this.initSubscriptions([subscription_0]);

@@ -231,9 +231,10 @@
       this._hostView = t0;
       this._nativeElement = t1;
       this.$ti = t2;
-    }, ComponentFactory: function ComponentFactory(t0, t1) {
+    }, ComponentFactory: function ComponentFactory(t0, t1, t2) {
       this.selector = t0;
       this._viewFactory = t1;
+      this.$ti = t2;
     }, TemplateRef: function TemplateRef(t0, t1) {
       this._template_ref$_viewContainer = t0;
       this._template_ref$_viewFactory = t1;
@@ -266,12 +267,12 @@
       _._changeDetectorState = 0;
       _._shouldSkipChangeDetection = _._component_view$_destroyed = false;
     },
-    _EmbeddedViewData__EmbeddedViewData(parentView, parentIndex) {
-      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic));
+    _EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, $T) {
+      return new E._EmbeddedViewData(parentView.get$ctx(), parentView.get$componentStyles(), parentView, parentIndex, parentView.get$projectedNodes(), P.LinkedHashMap_LinkedHashMap$_empty(type$.String, type$.dynamic), $T._eval$1("_EmbeddedViewData<0>"));
     },
     EmbeddedView: function EmbeddedView() {
     },
-    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5) {
+    _EmbeddedViewData: function _EmbeddedViewData(t0, t1, t2, t3, t4, t5, t6) {
       var _ = this;
       _.ctx = t0;
       _.componentStyles = t1;
@@ -282,6 +283,7 @@
       _._embedded_view$_onDestroyCallbacks = _.subscriptions = _.viewFragment = null;
       _._embedded_view$_changeDetectorState = 0;
       _._embedded_view$_shouldSkipChangeDetection = _._destroyed = false;
+      _.$ti = t6;
     }
   },
   G = {
@@ -376,12 +378,13 @@
     },
     EfficientLengthIterable: function EfficientLengthIterable() {
     },
-    ListIterator: function ListIterator(t0, t1) {
+    ListIterator: function ListIterator(t0, t1, t2) {
       var _ = this;
       _.__internal$_iterable = t0;
       _.__internal$_length = t1;
       _.__internal$_index = 0;
       _.__internal$_current = null;
+      _.$ti = t2;
     },
     MappedIterable: function MappedIterable(t0, t1, t2) {
       this.__internal$_iterable = t0;
@@ -393,10 +396,12 @@
       this._f = t1;
       this.$ti = t2;
     },
-    MappedIterator: function MappedIterator(t0, t1) {
-      this.__internal$_current = null;
-      this._iterator = t0;
-      this._f = t1;
+    MappedIterator: function MappedIterator(t0, t1, t2) {
+      var _ = this;
+      _.__internal$_current = null;
+      _._iterator = t0;
+      _._f = t1;
+      _.$ti = t2;
     },
     FixedLengthListMixin: function FixedLengthListMixin() {
     },
@@ -1343,11 +1348,12 @@
       this._map = t0;
       this.$ti = t1;
     },
-    LinkedHashMapKeyIterator: function LinkedHashMapKeyIterator(t0, t1) {
+    LinkedHashMapKeyIterator: function LinkedHashMapKeyIterator(t0, t1, t2) {
       var _ = this;
       _._map = t0;
       _._modifications = t1;
       _.__js_helper$_current = _._cell = null;
+      _.$ti = t2;
     },
     initHooks_closure: function initHooks_closure(t0) {
       this.getTag = t0;
@@ -3063,12 +3069,13 @@
     JSUnmodifiableArray: function JSUnmodifiableArray(t0) {
       this.$ti = t0;
     },
-    ArrayIterator: function ArrayIterator(t0, t1) {
+    ArrayIterator: function ArrayIterator(t0, t1, t2) {
       var _ = this;
       _._iterable = t0;
       _._length = t1;
       _._index = 0;
       _._current = null;
+      _.$ti = t2;
     },
     JSNumber: function JSNumber() {
     },
@@ -3090,7 +3097,7 @@
       this.$ti = t0;
     },
     main() {
-      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", Z.large_templates_opt_out_template__viewFactory_GoldenComponentHost0$closure()), type$.legacy_GoldenComponent);
+      G.appInjector(G.run___identityInjector$closure()).$get$1(0, C.Type_ApplicationRef_Aij).bootstrap$1$1(new D.ComponentFactory("golden", Z.large_templates_opt_out_template__viewFactory_GoldenComponentHost0$closure(), type$.ComponentFactory_legacy_GoldenComponent), type$.legacy_GoldenComponent);
     },
     GoldenComponent: function GoldenComponent() {
     },
@@ -3536,13 +3543,13 @@
         t1._async$_runBinary = new P._RunBinaryZoneFunction(t1, runBinary);
       scheduleMicrotask = specification.scheduleMicrotask;
       if (scheduleMicrotask != null)
-        t1._scheduleMicrotask = new P._ZoneFunction(t1, scheduleMicrotask);
+        t1._scheduleMicrotask = new P._ZoneFunction(t1, scheduleMicrotask, type$._ZoneFunction_of_void_Function_4_Zone_and_ZoneDelegate_and_Zone_and_void_Function);
       createTimer = specification.createTimer;
       if (createTimer != null)
-        t1._async$_createTimer = new P._ZoneFunction(t1, createTimer);
+        t1._async$_createTimer = new P._ZoneFunction(t1, createTimer, type$._ZoneFunction_of_Timer_Function_5_Zone_and_ZoneDelegate_and_Zone_and_Duration_and_void_Function);
       handleUncaughtError = specification.handleUncaughtError;
       if (handleUncaughtError != null)
-        t1._async$_handleUncaughtError = new P._ZoneFunction(t1, handleUncaughtError);
+        t1._async$_handleUncaughtError = new P._ZoneFunction(t1, handleUncaughtError, type$._ZoneFunction_of_void_Function_Zone_ZoneDelegate_Zone_Object_StackTrace);
       return t1;
     },
     _AsyncRun__initializeScheduleImmediate_internalCallback: function _AsyncRun__initializeScheduleImmediate_internalCallback(t0) {
@@ -3704,9 +3711,10 @@
     },
     _DelayedEvent: function _DelayedEvent() {
     },
-    _DelayedData: function _DelayedData(t0) {
+    _DelayedData: function _DelayedData(t0, t1) {
       this.value = t0;
       this.next = null;
+      this.$ti = t1;
     },
     _PendingEvents: function _PendingEvents() {
     },
@@ -3714,18 +3722,23 @@
       this.$this = t0;
       this.dispatch = t1;
     },
-    _StreamImplEvents: function _StreamImplEvents() {
-      this.lastPendingEvent = this.firstPendingEvent = null;
-      this._state = 0;
+    _StreamImplEvents: function _StreamImplEvents(t0) {
+      var _ = this;
+      _.lastPendingEvent = _.firstPendingEvent = null;
+      _._state = 0;
+      _.$ti = t0;
     },
-    _DoneStreamSubscription: function _DoneStreamSubscription(t0, t1) {
-      this._zone = t0;
-      this._state = 0;
-      this._onDone = t1;
+    _DoneStreamSubscription: function _DoneStreamSubscription(t0, t1, t2) {
+      var _ = this;
+      _._zone = t0;
+      _._state = 0;
+      _._onDone = t1;
+      _.$ti = t2;
     },
-    _ZoneFunction: function _ZoneFunction(t0, t1) {
+    _ZoneFunction: function _ZoneFunction(t0, t1, t2) {
       this.zone = t0;
       this.$function = t1;
+      this.$ti = t2;
     },
     _RunNullaryZoneFunction: function _RunNullaryZoneFunction(t0, t1) {
       this.zone = t0;
@@ -4022,12 +4035,13 @@
       this._collection$_map = t0;
       this.$ti = t1;
     },
-    _HashMapKeyIterator: function _HashMapKeyIterator(t0, t1) {
+    _HashMapKeyIterator: function _HashMapKeyIterator(t0, t1, t2) {
       var _ = this;
       _._collection$_map = t0;
       _._collection$_keys = t1;
       _._offset = 0;
       _._collection$_current = null;
+      _.$ti = t2;
     },
     HashMap_HashMap$from_closure: function HashMap_HashMap$from_closure(t0, t1, t2) {
       this.result = t0;
@@ -4651,12 +4665,13 @@
     },
     ImmutableListMixin: function ImmutableListMixin() {
     },
-    FixedSizeListIterator: function FixedSizeListIterator(t0, t1) {
+    FixedSizeListIterator: function FixedSizeListIterator(t0, t1, t2) {
       var _ = this;
       _._array = t0;
       _._html$_length = t1;
       _._position = -1;
       _._html$_current = null;
+      _.$ti = t2;
     },
     _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase: function _CssStyleDeclaration_Interceptor_CssStyleDeclarationBase() {
     },
@@ -4833,256 +4848,256 @@
   },
   Z = {
     viewFactory_GoldenComponent1(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent1(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent2(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent2(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent3(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent3(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent3(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent4(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent4(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent4(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent5(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent5(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent5(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent6(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent6(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent6(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent7(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent7(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent7(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent8(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent8(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent8(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent9(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent9(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent9(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent10(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent10(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent10(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent11(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent11(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent11(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent12(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent12(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent12(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent13(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent13(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent13(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent14(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent14(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent14(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent15(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent15(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent15(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent16(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent16(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent16(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent17(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent17(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent17(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent18(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent18(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent18(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent19(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent19(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent19(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent20(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent20(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent20(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent21(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent21(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent21(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent22(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent22(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent22(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent23(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent23(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent23(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent24(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent24(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent24(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent25(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent25(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent25(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent26(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent26(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent26(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent27(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent27(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent27(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent28(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent28(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent28(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent29(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent29(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent29(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent30(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent30(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent30(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent31(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent31(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent31(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent32(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent32(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent32(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent33(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent33(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent33(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent34(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent34(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent34(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent35(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent35(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent35(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent36(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent36(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent36(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent37(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent37(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent37(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent38(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent38(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent38(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent39(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent39(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent39(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent40(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent40(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent40(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent41(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent41(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent41(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent42(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent42(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent42(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent43(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent43(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent43(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent44(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent44(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent44(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent45(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent45(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent45(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent46(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent46(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent46(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent47(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent47(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent47(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent48(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent48(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent48(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent49(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent49(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent49(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent50(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent50(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent50(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent51(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent51(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent51(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent52(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent52(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent52(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent53(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent53(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent53(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent54(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent54(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent54(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent55(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent55(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent55(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent56(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent56(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent56(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent57(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent57(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent57(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent58(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent58(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent58(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent59(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent59(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent59(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent60(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent60(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent60(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent61(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent61(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent61(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent62(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent62(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent62(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent63(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent63(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent63(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent64(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent64(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent64(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent65(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent65(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent65(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent66(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent66(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent66(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent67(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent67(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent67(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent68(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent68(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent68(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent69(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent69(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent69(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent70(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent70(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent70(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent71(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent71(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent71(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent72(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent72(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent72(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent73(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent73(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent73(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent74(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent74(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent74(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent75(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent75(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent75(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent76(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent76(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent76(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent77(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent77(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent77(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent78(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent78(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent78(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent79(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent79(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent79(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent80(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent80(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent80(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent81(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent81(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent81(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent82(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent82(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent82(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent83(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent83(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent83(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponent84(parentView, parentIndex) {
-      return new Z._ViewGoldenComponent84(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex));
+      return new Z._ViewGoldenComponent84(E._EmbeddedViewData__EmbeddedViewData(parentView, parentIndex, type$.legacy_GoldenComponent));
     },
     viewFactory_GoldenComponentHost0() {
       return new Z._ViewGoldenComponentHost0(new G._HostViewData());
@@ -5582,7 +5597,7 @@
       return P.IterableBase_iterableToFullString(receiver, "[", "]");
     },
     get$iterator(receiver) {
-      return new J.ArrayIterator(receiver, receiver.length);
+      return new J.ArrayIterator(receiver, receiver.length, H._arrayInstanceType(receiver)._eval$1("ArrayIterator<1>"));
     },
     get$hashCode(receiver) {
       return H.Primitives_objectHashCode(receiver);
@@ -5734,7 +5749,8 @@
   };
   H.MappedIterable.prototype = {
     get$iterator(_) {
-      return new H.MappedIterator(J.get$iterator$ax(this.__internal$_iterable), this._f);
+      var t1 = H._instanceType(this);
+      return new H.MappedIterator(J.get$iterator$ax(this.__internal$_iterable), this._f, t1._eval$1("@<1>")._bind$1(t1._rest[1])._eval$1("MappedIterator<1,2>"));
     },
     get$length(_) {
       return J.get$length$asx(this.__internal$_iterable);
@@ -6161,7 +6177,7 @@
     },
     get$iterator(_) {
       var t1 = this._map,
-        t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications);
+        t2 = new H.LinkedHashMapKeyIterator(t1, t1._modifications, this.$ti._eval$1("LinkedHashMapKeyIterator<1>"));
       t2._cell = t1._first;
       return t2;
     }
@@ -6422,7 +6438,7 @@
     _subscribe$4(onData, onError, onDone, cancelOnError) {
       var t1, t2, t3, t4, t5, t6, subscription, oldLast, _this = this;
       if ((_this._state & 4) !== 0) {
-        t1 = new P._DoneStreamSubscription($.Zone__current, onDone);
+        t1 = new P._DoneStreamSubscription($.Zone__current, onDone, H._instanceType(_this)._eval$1("_DoneStreamSubscription<1>"));
         t1._schedule$0();
         return t1;
       }
@@ -6934,13 +6950,14 @@
   };
   P._BufferingStreamSubscription.prototype = {
     _add$1(_, data) {
-      var t1 = this._state;
+      var _this = this,
+        t1 = _this._state;
       if ((t1 & 8) !== 0)
         return;
       if (t1 < 32)
-        this._sendData$1(data);
+        _this._sendData$1(data);
       else
-        this._addPending$1(new P._DelayedData(data));
+        _this._addPending$1(new P._DelayedData(data, H._instanceType(_this)._eval$1("_DelayedData<1>")));
     },
     _onPause$0() {
     },
@@ -6950,7 +6967,7 @@
       var t1, _this = this,
         pending = _this._pending;
       if (pending == null)
-        pending = new P._StreamImplEvents();
+        pending = new P._StreamImplEvents(H._instanceType(_this)._eval$1("_StreamImplEvents<1>"));
       _this._pending = pending;
       pending.add$1(0, $event);
       t1 = _this._state;
@@ -7623,7 +7640,7 @@
     },
     get$iterator(_) {
       var t1 = this._collection$_map;
-      return new P._HashMapKeyIterator(t1, t1._computeKeys$0());
+      return new P._HashMapKeyIterator(t1, t1._computeKeys$0(), this.$ti._eval$1("_HashMapKeyIterator<1>"));
     }
   };
   P._HashMapKeyIterator.prototype = {
@@ -7655,7 +7672,7 @@
   };
   P.ListMixin.prototype = {
     get$iterator(receiver) {
-      return new H.ListIterator(receiver, this.get$length(receiver));
+      return new H.ListIterator(receiver, this.get$length(receiver), H.instanceType(receiver)._eval$1("ListIterator<ListMixin.E>"));
     },
     elementAt$1(receiver, index) {
       return this.$index(receiver, index);
@@ -8803,7 +8820,7 @@
   };
   W.ImmutableListMixin.prototype = {
     get$iterator(receiver) {
-      return new W.FixedSizeListIterator(receiver, this.get$length(receiver));
+      return new W.FixedSizeListIterator(receiver, this.get$length(receiver), H.instanceType(receiver)._eval$1("FixedSizeListIterator<ImmutableListMixin.E>"));
     },
     add$1(receiver, value) {
       throw H.wrapException(P.UnsupportedError$("Cannot add to immutable List."));
@@ -12317,8 +12334,8 @@
     leafTags: null,
     arrayRti: Symbol("$ti")
   };
-  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlFormControlsCollection":"HtmlCollection","NativeFloat32List":"NativeTypedArrayOfDouble","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JavaScriptObject":{"JsTestability":[]},"JSArray":{"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"num":[]},"JSInt":{"int":[],"num":[]},"JSNumNotInt":{"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"NotNullableError":{"TypeError":[],"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"]},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"]},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"]},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"]},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"HtmlElement":{"Element":[]},"AnchorElement":{"Element":[]},"AreaElement":{"Element":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"]},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"]},"FileList":{"ListMixin":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"]},"FormElement":{"Element":[]},"HtmlCollection":{"ListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"]},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"]},"MimeTypeArray":{"ListMixin":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"]},"NodeList":{"ListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"PluginArray":{"ListMixin":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"]},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"]},"SelectElement":{"Element":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"]},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"]},"Storage":{"MapMixin":["String","String"],"Map":["String","String"]},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"]},"TextTrackList":{"ListMixin":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"]},"TouchList":{"ListMixin":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"]},"_CssRuleList":{"ListMixin":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"]},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"]},"_NamedNodeMap":{"ListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"]},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"]},"_StyleSheetList":{"ListMixin":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"]},"LengthList":{"ListMixin":["Length"],"EfficientLengthIterable":["Length"]},"NumberList":{"ListMixin":["Number"],"EfficientLengthIterable":["Number"]},"StringList":{"ListMixin":["String"],"EfficientLengthIterable":["String"]},"TransformList":{"ListMixin":["Transform"],"EfficientLengthIterable":["Transform"]},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"]},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"]},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[]},"EmbeddedView":{"RenderView":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"RenderView":[]},"_ViewGoldenComponent1":{"RenderView":[]},"_ViewGoldenComponent2":{"RenderView":[]},"_ViewGoldenComponent3":{"RenderView":[]},"_ViewGoldenComponent4":{"RenderView":[]},"_ViewGoldenComponent5":{"RenderView":[]},"_ViewGoldenComponent6":{"RenderView":[]},"_ViewGoldenComponent7":{"RenderView":[]},"_ViewGoldenComponent8":{"RenderView":[]},"_ViewGoldenComponent9":{"RenderView":[]},"_ViewGoldenComponent10":{"RenderView":[]},"_ViewGoldenComponent11":{"RenderView":[]},"_ViewGoldenComponent12":{"RenderView":[]},"_ViewGoldenComponent13":{"RenderView":[]},"_ViewGoldenComponent14":{"RenderView":[]},"_ViewGoldenComponent15":{"RenderView":[]},"_ViewGoldenComponent16":{"RenderView":[]},"_ViewGoldenComponent17":{"RenderView":[]},"_ViewGoldenComponent18":{"RenderView":[]},"_ViewGoldenComponent19":{"RenderView":[]},"_ViewGoldenComponent20":{"RenderView":[]},"_ViewGoldenComponent21":{"RenderView":[]},"_ViewGoldenComponent22":{"RenderView":[]},"_ViewGoldenComponent23":{"RenderView":[]},"_ViewGoldenComponent24":{"RenderView":[]},"_ViewGoldenComponent25":{"RenderView":[]},"_ViewGoldenComponent26":{"RenderView":[]},"_ViewGoldenComponent27":{"RenderView":[]},"_ViewGoldenComponent28":{"RenderView":[]},"_ViewGoldenComponent29":{"RenderView":[]},"_ViewGoldenComponent30":{"RenderView":[]},"_ViewGoldenComponent31":{"RenderView":[]},"_ViewGoldenComponent32":{"RenderView":[]},"_ViewGoldenComponent33":{"RenderView":[]},"_ViewGoldenComponent34":{"RenderView":[]},"_ViewGoldenComponent35":{"RenderView":[]},"_ViewGoldenComponent36":{"RenderView":[]},"_ViewGoldenComponent37":{"RenderView":[]},"_ViewGoldenComponent38":{"RenderView":[]},"_ViewGoldenComponent39":{"RenderView":[]},"_ViewGoldenComponent40":{"RenderView":[]},"_ViewGoldenComponent41":{"RenderView":[]},"_ViewGoldenComponent42":{"RenderView":[]},"_ViewGoldenComponent43":{"RenderView":[]},"_ViewGoldenComponent44":{"RenderView":[]},"_ViewGoldenComponent45":{"RenderView":[]},"_ViewGoldenComponent46":{"RenderView":[]},"_ViewGoldenComponent47":{"RenderView":[]},"_ViewGoldenComponent48":{"RenderView":[]},"_ViewGoldenComponent49":{"RenderView":[]},"_ViewGoldenComponent50":{"RenderView":[]},"_ViewGoldenComponent51":{"RenderView":[]},"_ViewGoldenComponent52":{"RenderView":[]},"_ViewGoldenComponent53":{"RenderView":[]},"_ViewGoldenComponent54":{"RenderView":[]},"_ViewGoldenComponent55":{"RenderView":[]},"_ViewGoldenComponent56":{"RenderView":[]},"_ViewGoldenComponent57":{"RenderView":[]},"_ViewGoldenComponent58":{"RenderView":[]},"_ViewGoldenComponent59":{"RenderView":[]},"_ViewGoldenComponent60":{"RenderView":[]},"_ViewGoldenComponent61":{"RenderView":[]},"_ViewGoldenComponent62":{"RenderView":[]},"_ViewGoldenComponent63":{"RenderView":[]},"_ViewGoldenComponent64":{"RenderView":[]},"_ViewGoldenComponent65":{"RenderView":[]},"_ViewGoldenComponent66":{"RenderView":[]},"_ViewGoldenComponent67":{"RenderView":[]},"_ViewGoldenComponent68":{"RenderView":[]},"_ViewGoldenComponent69":{"RenderView":[]},"_ViewGoldenComponent70":{"RenderView":[]},"_ViewGoldenComponent71":{"RenderView":[]},"_ViewGoldenComponent72":{"RenderView":[]},"_ViewGoldenComponent73":{"RenderView":[]},"_ViewGoldenComponent74":{"RenderView":[]},"_ViewGoldenComponent75":{"RenderView":[]},"_ViewGoldenComponent76":{"RenderView":[]},"_ViewGoldenComponent77":{"RenderView":[]},"_ViewGoldenComponent78":{"RenderView":[]},"_ViewGoldenComponent79":{"RenderView":[]},"_ViewGoldenComponent80":{"RenderView":[]},"_ViewGoldenComponent81":{"RenderView":[]},"_ViewGoldenComponent82":{"RenderView":[]},"_ViewGoldenComponent83":{"RenderView":[]},"_ViewGoldenComponent84":{"RenderView":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent*"],"HostView.T":"GoldenComponent*"},"ViewChildComponent0":{"RenderView":[]}}'));
-  H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"ArrayIterator":1,"EfficientLengthIterable":1,"ListIterator":1,"MappedIterator":2,"FixedLengthListMixin":1,"ConstantMap":2,"LinkedHashMapKeyIterator":1,"NativeTypedArray":1,"_DelayedEvent":1,"_DelayedData":1,"_PendingEvents":1,"_StreamImplEvents":1,"_DoneStreamSubscription":1,"_ZoneFunction":1,"_HashMapKeyIterator":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ImmutableListMixin":1,"FixedSizeListIterator":1,"ComponentFactory":1,"ComponentView":1,"EmbeddedView":1,"_EmbeddedViewData":1}'));
+  H._Universe_addRules(init.typeUniverse, JSON.parse('{"PlainJavaScriptObject":"JavaScriptObject","UnknownJavaScriptObject":"JavaScriptObject","JavaScriptFunction":"JavaScriptObject","JsTestability":"JavaScriptObject","AElement":"Element","GraphicsElement":"Element","SvgElement":"Element","AudioElement":"HtmlElement","MediaElement":"HtmlElement","HtmlFormControlsCollection":"HtmlCollection","NativeFloat32List":"NativeTypedArrayOfDouble","JSBool":{"bool":[]},"JSNull":{"Null":[]},"JavaScriptObject":{"JsTestability":[]},"JSArray":{"EfficientLengthIterable":["1"]},"JSUnmodifiableArray":{"JSArray":["1"],"EfficientLengthIterable":["1"]},"JSNumber":{"num":[]},"JSInt":{"int":[],"num":[]},"JSNumNotInt":{"num":[]},"JSString":{"String":[]},"LateError":{"Error":[]},"NotNullableError":{"TypeError":[],"Error":[]},"EfficientLengthIterable":{"Iterable":["1"]},"MappedIterable":{"Iterable":["2"],"Iterable.E":"2"},"EfficientLengthMappedIterable":{"MappedIterable":["1","2"],"EfficientLengthIterable":["2"],"Iterable":["2"],"Iterable.E":"2"},"Symbol":{"Symbol0":[]},"ConstantMapView":{"Map":["1","2"]},"ConstantMap":{"Map":["1","2"]},"ConstantStringMap":{"Map":["1","2"]},"NullError":{"TypeError":[],"Error":[]},"JsNoSuchMethodError":{"Error":[]},"UnknownJsTypeError":{"Error":[]},"_StackTrace":{"StackTrace":[]},"RuntimeError":{"Error":[]},"JsLinkedHashMap":{"MapMixin":["1","2"],"Map":["1","2"]},"LinkedHashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"NativeTypedArray":{"JavaScriptIndexingBehavior":["1"]},"NativeTypedArrayOfDouble":{"ListMixin":["double"],"JavaScriptIndexingBehavior":["double"],"EfficientLengthIterable":["double"],"ListMixin.E":"double"},"NativeTypedArrayOfInt":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"]},"NativeInt16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeInt32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeInt8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeUint16List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeUint32List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeUint8ClampedList":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"NativeUint8List":{"ListMixin":["int"],"JavaScriptIndexingBehavior":["int"],"EfficientLengthIterable":["int"],"ListMixin.E":"int"},"_Error":{"Error":[]},"_TypeError":{"TypeError":[],"Error":[]},"AsyncError":{"Error":[]},"_Future":{"Future":["1"]},"_BroadcastStream":{"_ControllerStream":["1"],"_StreamImpl":["1"],"Stream":["1"]},"_BroadcastSubscription":{"_ControllerSubscription":["1"],"_BufferingStreamSubscription":["1"]},"_SyncBroadcastStreamController":{"_BroadcastStreamController":["1"]},"_AsyncCompleter":{"_Completer":["1"]},"_ControllerStream":{"_StreamImpl":["1"],"Stream":["1"]},"_ControllerSubscription":{"_BufferingStreamSubscription":["1"]},"_StreamImpl":{"Stream":["1"]},"_ZoneSpecification":{"ZoneSpecification":[]},"_ZoneDelegate":{"ZoneDelegate":[]},"_Zone":{"Zone":[]},"_CustomZone":{"Zone":[]},"_RootZone":{"Zone":[]},"_HashMap":{"MapMixin":["1","2"],"Map":["1","2"]},"_IdentityHashMap":{"_HashMap":["1","2"],"MapMixin":["1","2"],"Map":["1","2"]},"_HashMapKeyIterable":{"EfficientLengthIterable":["1"],"Iterable":["1"],"Iterable.E":"1"},"MapBase":{"MapMixin":["1","2"],"Map":["1","2"]},"MapMixin":{"Map":["1","2"]},"MapView":{"Map":["1","2"]},"UnmodifiableMapView":{"Map":["1","2"]},"double":{"num":[]},"int":{"num":[]},"List":{"EfficientLengthIterable":["1"]},"AssertionError":{"Error":[]},"TypeError":{"Error":[]},"NullThrownError":{"Error":[]},"ArgumentError":{"Error":[]},"RangeError":{"Error":[]},"IndexError":{"Error":[]},"NoSuchMethodError":{"Error":[]},"UnsupportedError":{"Error":[]},"UnimplementedError":{"Error":[]},"StateError":{"Error":[]},"ConcurrentModificationError":{"Error":[]},"StackOverflowError":{"Error":[]},"CyclicInitializationError":{"Error":[]},"_StringStackTrace":{"StackTrace":[]},"HtmlElement":{"Element":[]},"AnchorElement":{"Element":[]},"AreaElement":{"Element":[]},"DomRectList":{"ListMixin":["Rectangle<num>"],"ImmutableListMixin":["Rectangle<num>"],"JavaScriptIndexingBehavior":["Rectangle<num>"],"EfficientLengthIterable":["Rectangle<num>"],"ImmutableListMixin.E":"Rectangle<num>","ListMixin.E":"Rectangle<num>"},"DomRectReadOnly":{"Rectangle":["num"]},"DomStringList":{"ListMixin":["String"],"ImmutableListMixin":["String"],"JavaScriptIndexingBehavior":["String"],"EfficientLengthIterable":["String"],"ImmutableListMixin.E":"String","ListMixin.E":"String"},"FileList":{"ListMixin":["File"],"ImmutableListMixin":["File"],"JavaScriptIndexingBehavior":["File"],"EfficientLengthIterable":["File"],"ImmutableListMixin.E":"File","ListMixin.E":"File"},"FormElement":{"Element":[]},"HtmlCollection":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"MidiInputMap":{"MapMixin":["String","@"],"Map":["String","@"]},"MidiOutputMap":{"MapMixin":["String","@"],"Map":["String","@"]},"MimeTypeArray":{"ListMixin":["MimeType"],"ImmutableListMixin":["MimeType"],"JavaScriptIndexingBehavior":["MimeType"],"EfficientLengthIterable":["MimeType"],"ImmutableListMixin.E":"MimeType","ListMixin.E":"MimeType"},"NodeList":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"PluginArray":{"ListMixin":["Plugin"],"ImmutableListMixin":["Plugin"],"JavaScriptIndexingBehavior":["Plugin"],"EfficientLengthIterable":["Plugin"],"ImmutableListMixin.E":"Plugin","ListMixin.E":"Plugin"},"RtcStatsReport":{"MapMixin":["String","@"],"Map":["String","@"]},"SelectElement":{"Element":[]},"SourceBufferList":{"ListMixin":["SourceBuffer"],"ImmutableListMixin":["SourceBuffer"],"JavaScriptIndexingBehavior":["SourceBuffer"],"EfficientLengthIterable":["SourceBuffer"],"ImmutableListMixin.E":"SourceBuffer","ListMixin.E":"SourceBuffer"},"SpeechGrammarList":{"ListMixin":["SpeechGrammar"],"ImmutableListMixin":["SpeechGrammar"],"JavaScriptIndexingBehavior":["SpeechGrammar"],"EfficientLengthIterable":["SpeechGrammar"],"ImmutableListMixin.E":"SpeechGrammar","ListMixin.E":"SpeechGrammar"},"Storage":{"MapMixin":["String","String"],"Map":["String","String"]},"TextTrackCueList":{"ListMixin":["TextTrackCue"],"ImmutableListMixin":["TextTrackCue"],"JavaScriptIndexingBehavior":["TextTrackCue"],"EfficientLengthIterable":["TextTrackCue"],"ImmutableListMixin.E":"TextTrackCue","ListMixin.E":"TextTrackCue"},"TextTrackList":{"ListMixin":["TextTrack"],"ImmutableListMixin":["TextTrack"],"JavaScriptIndexingBehavior":["TextTrack"],"EfficientLengthIterable":["TextTrack"],"ImmutableListMixin.E":"TextTrack","ListMixin.E":"TextTrack"},"TouchList":{"ListMixin":["Touch"],"ImmutableListMixin":["Touch"],"JavaScriptIndexingBehavior":["Touch"],"EfficientLengthIterable":["Touch"],"ImmutableListMixin.E":"Touch","ListMixin.E":"Touch"},"_CssRuleList":{"ListMixin":["CssRule"],"ImmutableListMixin":["CssRule"],"JavaScriptIndexingBehavior":["CssRule"],"EfficientLengthIterable":["CssRule"],"ImmutableListMixin.E":"CssRule","ListMixin.E":"CssRule"},"_DomRect":{"Rectangle":["num"]},"_GamepadList":{"ListMixin":["Gamepad?"],"ImmutableListMixin":["Gamepad?"],"JavaScriptIndexingBehavior":["Gamepad?"],"EfficientLengthIterable":["Gamepad?"],"ImmutableListMixin.E":"Gamepad?","ListMixin.E":"Gamepad?"},"_NamedNodeMap":{"ListMixin":["Node"],"ImmutableListMixin":["Node"],"JavaScriptIndexingBehavior":["Node"],"EfficientLengthIterable":["Node"],"ImmutableListMixin.E":"Node","ListMixin.E":"Node"},"_SpeechRecognitionResultList":{"ListMixin":["SpeechRecognitionResult"],"ImmutableListMixin":["SpeechRecognitionResult"],"JavaScriptIndexingBehavior":["SpeechRecognitionResult"],"EfficientLengthIterable":["SpeechRecognitionResult"],"ImmutableListMixin.E":"SpeechRecognitionResult","ListMixin.E":"SpeechRecognitionResult"},"_StyleSheetList":{"ListMixin":["StyleSheet"],"ImmutableListMixin":["StyleSheet"],"JavaScriptIndexingBehavior":["StyleSheet"],"EfficientLengthIterable":["StyleSheet"],"ImmutableListMixin.E":"StyleSheet","ListMixin.E":"StyleSheet"},"LengthList":{"ListMixin":["Length"],"ImmutableListMixin":["Length"],"EfficientLengthIterable":["Length"],"ImmutableListMixin.E":"Length","ListMixin.E":"Length"},"NumberList":{"ListMixin":["Number"],"ImmutableListMixin":["Number"],"EfficientLengthIterable":["Number"],"ImmutableListMixin.E":"Number","ListMixin.E":"Number"},"StringList":{"ListMixin":["String"],"ImmutableListMixin":["String"],"EfficientLengthIterable":["String"],"ImmutableListMixin.E":"String","ListMixin.E":"String"},"TransformList":{"ListMixin":["Transform"],"ImmutableListMixin":["Transform"],"EfficientLengthIterable":["Transform"],"ImmutableListMixin.E":"Transform","ListMixin.E":"Transform"},"AudioParamMap":{"MapMixin":["String","@"],"Map":["String","@"]},"SqlResultSetRowList":{"ListMixin":["Map<@,@>"],"ImmutableListMixin":["Map<@,@>"],"EfficientLengthIterable":["Map<@,@>"],"ImmutableListMixin.E":"Map<@,@>","ListMixin.E":"Map<@,@>"},"_LazyInjector":{"Injector":[]},"ComponentView":{"RenderView":[]},"EmbeddedView":{"RenderView":[]},"_ElementInjector":{"Injector":[]},"HierarchicalInjector":{"Injector":[]},"_EmptyInjector":{"Injector":[]},"_MapInjector":{"Injector":[]},"ViewGoldenComponent0":{"RenderView":[]},"_ViewGoldenComponent1":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent2":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent3":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent4":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent5":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent6":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent7":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent8":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent9":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent10":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent11":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent12":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent13":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent14":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent15":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent16":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent17":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent18":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent19":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent20":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent21":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent22":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent23":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent24":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent25":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent26":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent27":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent28":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent29":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent30":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent31":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent32":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent33":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent34":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent35":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent36":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent37":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent38":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent39":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent40":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent41":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent42":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent43":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent44":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent45":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent46":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent47":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent48":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent49":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent50":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent51":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent52":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent53":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent54":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent55":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent56":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent57":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent58":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent59":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent60":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent61":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent62":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent63":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent64":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent65":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent66":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent67":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent68":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent69":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent70":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent71":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent72":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent73":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent74":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent75":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent76":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent77":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent78":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent79":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent80":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent81":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent82":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent83":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponent84":{"EmbeddedView":["GoldenComponent*"],"RenderView":[]},"_ViewGoldenComponentHost0":{"HostView":["GoldenComponent*"],"HostView.T":"GoldenComponent*"},"ViewChildComponent0":{"RenderView":[]}}'));
+  H._Universe_addErasedTypes(init.typeUniverse, JSON.parse('{"EfficientLengthIterable":1,"FixedLengthListMixin":1,"ConstantMap":2,"NativeTypedArray":1,"_DelayedEvent":1,"_PendingEvents":1,"MapBase":2,"_UnmodifiableMapMixin":2,"MapView":2,"UnmodifiableMapView":2,"_UnmodifiableMapView_MapView__UnmodifiableMapMixin":2,"Iterator":1,"ComponentView":1}'));
   var string$ = {
     Cannot: "Cannot fire new event. Controller is already firing an event",
     Error_: "Error handler must accept one Object or one Object and a StackTrace as arguments, and return a value of the returned future's type"
@@ -12326,6 +12343,7 @@
   var type$ = (function rtii() {
     var findType = H.findType;
     return {
+      ComponentFactory_legacy_GoldenComponent: findType("ComponentFactory<GoldenComponent*>"),
       ConstantMapView_Symbol_dynamic: findType("ConstantMapView<Symbol0,@>"),
       EfficientLengthIterable_dynamic: findType("EfficientLengthIterable<@>"),
       Error: findType("Error"),
@@ -12360,6 +12378,9 @@
       UnknownJavaScriptObject: findType("UnknownJavaScriptObject"),
       _Future_int: findType("_Future<int>"),
       _IdentityHashMap_Object_Object: findType("_IdentityHashMap<Object,Object>"),
+      _ZoneFunction_of_Timer_Function_5_Zone_and_ZoneDelegate_and_Zone_and_Duration_and_void_Function: findType("_ZoneFunction<Timer(Zone,ZoneDelegate,Zone,Duration,~())>"),
+      _ZoneFunction_of_void_Function_4_Zone_and_ZoneDelegate_and_Zone_and_void_Function: findType("_ZoneFunction<~(Zone,ZoneDelegate,Zone,~())>"),
+      _ZoneFunction_of_void_Function_Zone_ZoneDelegate_Zone_Object_StackTrace: findType("_ZoneFunction<~(Zone,ZoneDelegate,Zone,Object,StackTrace)>"),
       bool: findType("bool"),
       double: findType("double"),
       dynamic: findType("@"),
@@ -12536,13 +12557,13 @@
     C._RunBinaryZoneFunction__RootZone__rootRunBinary = new P._RunBinaryZoneFunction(C.C__RootZone, P.async___rootRunBinary$closure());
     C._RunNullaryZoneFunction__RootZone__rootRun = new P._RunNullaryZoneFunction(C.C__RootZone, P.async___rootRun$closure());
     C._RunUnaryZoneFunction__RootZone__rootRunUnary = new P._RunUnaryZoneFunction(C.C__RootZone, P.async___rootRunUnary$closure());
-    C._ZoneFunction_3bB = new P._ZoneFunction(C.C__RootZone, P.async___rootCreatePeriodicTimer$closure());
-    C._ZoneFunction_NMc = new P._ZoneFunction(C.C__RootZone, P.async___rootHandleUncaughtError$closure());
-    C._ZoneFunction__RootZone__rootCreateTimer = new P._ZoneFunction(C.C__RootZone, P.async___rootCreateTimer$closure());
-    C._ZoneFunction__RootZone__rootErrorCallback = new P._ZoneFunction(C.C__RootZone, P.async___rootErrorCallback$closure());
-    C._ZoneFunction__RootZone__rootFork = new P._ZoneFunction(C.C__RootZone, P.async___rootFork$closure());
-    C._ZoneFunction__RootZone__rootPrint = new P._ZoneFunction(C.C__RootZone, P.async___rootPrint$closure());
-    C._ZoneFunction__RootZone__rootScheduleMicrotask = new P._ZoneFunction(C.C__RootZone, P.async___rootScheduleMicrotask$closure());
+    C._ZoneFunction_3bB = new P._ZoneFunction(C.C__RootZone, P.async___rootCreatePeriodicTimer$closure(), H.findType("_ZoneFunction<Timer*(Zone*,ZoneDelegate*,Zone*,Duration*,~(Timer*)*)*>"));
+    C._ZoneFunction_NMc = new P._ZoneFunction(C.C__RootZone, P.async___rootHandleUncaughtError$closure(), H.findType("_ZoneFunction<~(Zone*,ZoneDelegate*,Zone*,Object*,StackTrace*)*>"));
+    C._ZoneFunction__RootZone__rootCreateTimer = new P._ZoneFunction(C.C__RootZone, P.async___rootCreateTimer$closure(), H.findType("_ZoneFunction<Timer*(Zone*,ZoneDelegate*,Zone*,Duration*,~()*)*>"));
+    C._ZoneFunction__RootZone__rootErrorCallback = new P._ZoneFunction(C.C__RootZone, P.async___rootErrorCallback$closure(), H.findType("_ZoneFunction<AsyncError?(Zone*,ZoneDelegate*,Zone*,Object*,StackTrace?)*>"));
+    C._ZoneFunction__RootZone__rootFork = new P._ZoneFunction(C.C__RootZone, P.async___rootFork$closure(), H.findType("_ZoneFunction<Zone*(Zone*,ZoneDelegate*,Zone*,ZoneSpecification?,Map<Object?,Object?>?)*>"));
+    C._ZoneFunction__RootZone__rootPrint = new P._ZoneFunction(C.C__RootZone, P.async___rootPrint$closure(), H.findType("_ZoneFunction<~(Zone*,ZoneDelegate*,Zone*,String*)*>"));
+    C._ZoneFunction__RootZone__rootScheduleMicrotask = new P._ZoneFunction(C.C__RootZone, P.async___rootScheduleMicrotask$closure(), H.findType("_ZoneFunction<~(Zone*,ZoneDelegate*,Zone*,~()*)*>"));
     C._ZoneSpecification_ALf = new P._ZoneSpecification(null, null, null, null, null, null, null, null, null, null, null, null, null);
   })();
   (function staticFields() {

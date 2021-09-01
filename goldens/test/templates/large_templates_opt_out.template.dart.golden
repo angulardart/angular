@@ -200,11 +200,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String /*?*/ get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/large_templates_opt_out.dart' : null);
   }
@@ -217,588 +212,588 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_GoldenComponent1);
     this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_0, this._NgIf_0_9, this._NgIf_0_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_0, this._NgIf_0_9);
     }
     final _anchor_1 = import9.appendAnchor(parentRenderNode);
     this._appEl_1 = ViewContainer(1, null, this, _anchor_1);
     var _TemplateRef_1_8 = TemplateRef(this._appEl_1, viewFactory_GoldenComponent2);
     this._NgIf_1_9 = NgIf(this._appEl_1, _TemplateRef_1_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_1, this._NgIf_1_9, this._NgIf_1_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_1, this._NgIf_1_9);
     }
     final _anchor_2 = import9.appendAnchor(parentRenderNode);
     this._appEl_2 = ViewContainer(2, null, this, _anchor_2);
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_GoldenComponent3);
     this._NgIf_2_9 = NgIf(this._appEl_2, _TemplateRef_2_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_2, this._NgIf_2_9, this._NgIf_2_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_2, this._NgIf_2_9);
     }
     final _anchor_3 = import9.appendAnchor(parentRenderNode);
     this._appEl_3 = ViewContainer(3, null, this, _anchor_3);
     var _TemplateRef_3_8 = TemplateRef(this._appEl_3, viewFactory_GoldenComponent4);
     this._NgIf_3_9 = NgIf(this._appEl_3, _TemplateRef_3_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_3, this._NgIf_3_9, this._NgIf_3_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_3, this._NgIf_3_9);
     }
     final _anchor_4 = import9.appendAnchor(parentRenderNode);
     this._appEl_4 = ViewContainer(4, null, this, _anchor_4);
     var _TemplateRef_4_8 = TemplateRef(this._appEl_4, viewFactory_GoldenComponent5);
     this._NgIf_4_9 = NgIf(this._appEl_4, _TemplateRef_4_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_4, this._NgIf_4_9, this._NgIf_4_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_4, this._NgIf_4_9);
     }
     final _anchor_5 = import9.appendAnchor(parentRenderNode);
     this._appEl_5 = ViewContainer(5, null, this, _anchor_5);
     var _TemplateRef_5_8 = TemplateRef(this._appEl_5, viewFactory_GoldenComponent6);
     this._NgIf_5_9 = NgIf(this._appEl_5, _TemplateRef_5_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_5, this._NgIf_5_9, this._NgIf_5_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_5, this._NgIf_5_9);
     }
     final _anchor_6 = import9.appendAnchor(parentRenderNode);
     this._appEl_6 = ViewContainer(6, null, this, _anchor_6);
     var _TemplateRef_6_8 = TemplateRef(this._appEl_6, viewFactory_GoldenComponent7);
     this._NgIf_6_9 = NgIf(this._appEl_6, _TemplateRef_6_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_6, this._NgIf_6_9, this._NgIf_6_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_6, this._NgIf_6_9);
     }
     final _anchor_7 = import9.appendAnchor(parentRenderNode);
     this._appEl_7 = ViewContainer(7, null, this, _anchor_7);
     var _TemplateRef_7_8 = TemplateRef(this._appEl_7, viewFactory_GoldenComponent8);
     this._NgIf_7_9 = NgIf(this._appEl_7, _TemplateRef_7_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_7, this._NgIf_7_9, this._NgIf_7_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_7, this._NgIf_7_9);
     }
     final _anchor_8 = import9.appendAnchor(parentRenderNode);
     this._appEl_8 = ViewContainer(8, null, this, _anchor_8);
     var _TemplateRef_8_8 = TemplateRef(this._appEl_8, viewFactory_GoldenComponent9);
     this._NgIf_8_9 = NgIf(this._appEl_8, _TemplateRef_8_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_8, this._NgIf_8_9, this._NgIf_8_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_8, this._NgIf_8_9);
     }
     final _anchor_9 = import9.appendAnchor(parentRenderNode);
     this._appEl_9 = ViewContainer(9, null, this, _anchor_9);
     var _TemplateRef_9_8 = TemplateRef(this._appEl_9, viewFactory_GoldenComponent10);
     this._NgIf_9_9 = NgIf(this._appEl_9, _TemplateRef_9_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_9, this._NgIf_9_9, this._NgIf_9_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_9, this._NgIf_9_9);
     }
     final _anchor_10 = import9.appendAnchor(parentRenderNode);
     this._appEl_10 = ViewContainer(10, null, this, _anchor_10);
     var _TemplateRef_10_8 = TemplateRef(this._appEl_10, viewFactory_GoldenComponent11);
     this._NgIf_10_9 = NgIf(this._appEl_10, _TemplateRef_10_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_10, this._NgIf_10_9, this._NgIf_10_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_10, this._NgIf_10_9);
     }
     final _anchor_11 = import9.appendAnchor(parentRenderNode);
     this._appEl_11 = ViewContainer(11, null, this, _anchor_11);
     var _TemplateRef_11_8 = TemplateRef(this._appEl_11, viewFactory_GoldenComponent12);
     this._NgIf_11_9 = NgIf(this._appEl_11, _TemplateRef_11_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_11, this._NgIf_11_9, this._NgIf_11_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_11, this._NgIf_11_9);
     }
     final _anchor_12 = import9.appendAnchor(parentRenderNode);
     this._appEl_12 = ViewContainer(12, null, this, _anchor_12);
     var _TemplateRef_12_8 = TemplateRef(this._appEl_12, viewFactory_GoldenComponent13);
     this._NgIf_12_9 = NgIf(this._appEl_12, _TemplateRef_12_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_12, this._NgIf_12_9, this._NgIf_12_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_12, this._NgIf_12_9);
     }
     final _anchor_13 = import9.appendAnchor(parentRenderNode);
     this._appEl_13 = ViewContainer(13, null, this, _anchor_13);
     var _TemplateRef_13_8 = TemplateRef(this._appEl_13, viewFactory_GoldenComponent14);
     this._NgIf_13_9 = NgIf(this._appEl_13, _TemplateRef_13_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_13, this._NgIf_13_9, this._NgIf_13_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_13, this._NgIf_13_9);
     }
     final _anchor_14 = import9.appendAnchor(parentRenderNode);
     this._appEl_14 = ViewContainer(14, null, this, _anchor_14);
     var _TemplateRef_14_8 = TemplateRef(this._appEl_14, viewFactory_GoldenComponent15);
     this._NgIf_14_9 = NgIf(this._appEl_14, _TemplateRef_14_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_14, this._NgIf_14_9, this._NgIf_14_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_14, this._NgIf_14_9);
     }
     final _anchor_15 = import9.appendAnchor(parentRenderNode);
     this._appEl_15 = ViewContainer(15, null, this, _anchor_15);
     var _TemplateRef_15_8 = TemplateRef(this._appEl_15, viewFactory_GoldenComponent16);
     this._NgIf_15_9 = NgIf(this._appEl_15, _TemplateRef_15_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_15, this._NgIf_15_9, this._NgIf_15_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_15, this._NgIf_15_9);
     }
     final _anchor_16 = import9.appendAnchor(parentRenderNode);
     this._appEl_16 = ViewContainer(16, null, this, _anchor_16);
     var _TemplateRef_16_8 = TemplateRef(this._appEl_16, viewFactory_GoldenComponent17);
     this._NgIf_16_9 = NgIf(this._appEl_16, _TemplateRef_16_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_16, this._NgIf_16_9, this._NgIf_16_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_16, this._NgIf_16_9);
     }
     final _anchor_17 = import9.appendAnchor(parentRenderNode);
     this._appEl_17 = ViewContainer(17, null, this, _anchor_17);
     var _TemplateRef_17_8 = TemplateRef(this._appEl_17, viewFactory_GoldenComponent18);
     this._NgIf_17_9 = NgIf(this._appEl_17, _TemplateRef_17_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_17, this._NgIf_17_9, this._NgIf_17_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_17, this._NgIf_17_9);
     }
     final _anchor_18 = import9.appendAnchor(parentRenderNode);
     this._appEl_18 = ViewContainer(18, null, this, _anchor_18);
     var _TemplateRef_18_8 = TemplateRef(this._appEl_18, viewFactory_GoldenComponent19);
     this._NgIf_18_9 = NgIf(this._appEl_18, _TemplateRef_18_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_18, this._NgIf_18_9, this._NgIf_18_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_18, this._NgIf_18_9);
     }
     final _anchor_19 = import9.appendAnchor(parentRenderNode);
     this._appEl_19 = ViewContainer(19, null, this, _anchor_19);
     var _TemplateRef_19_8 = TemplateRef(this._appEl_19, viewFactory_GoldenComponent20);
     this._NgIf_19_9 = NgIf(this._appEl_19, _TemplateRef_19_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_19, this._NgIf_19_9, this._NgIf_19_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_19, this._NgIf_19_9);
     }
     final _anchor_20 = import9.appendAnchor(parentRenderNode);
     this._appEl_20 = ViewContainer(20, null, this, _anchor_20);
     var _TemplateRef_20_8 = TemplateRef(this._appEl_20, viewFactory_GoldenComponent21);
     this._NgIf_20_9 = NgIf(this._appEl_20, _TemplateRef_20_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_20, this._NgIf_20_9, this._NgIf_20_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_20, this._NgIf_20_9);
     }
     final _anchor_21 = import9.appendAnchor(parentRenderNode);
     this._appEl_21 = ViewContainer(21, null, this, _anchor_21);
     var _TemplateRef_21_8 = TemplateRef(this._appEl_21, viewFactory_GoldenComponent22);
     this._NgIf_21_9 = NgIf(this._appEl_21, _TemplateRef_21_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_21, this._NgIf_21_9, this._NgIf_21_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_21, this._NgIf_21_9);
     }
     final _anchor_22 = import9.appendAnchor(parentRenderNode);
     this._appEl_22 = ViewContainer(22, null, this, _anchor_22);
     var _TemplateRef_22_8 = TemplateRef(this._appEl_22, viewFactory_GoldenComponent23);
     this._NgIf_22_9 = NgIf(this._appEl_22, _TemplateRef_22_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_22, this._NgIf_22_9, this._NgIf_22_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_22, this._NgIf_22_9);
     }
     final _anchor_23 = import9.appendAnchor(parentRenderNode);
     this._appEl_23 = ViewContainer(23, null, this, _anchor_23);
     var _TemplateRef_23_8 = TemplateRef(this._appEl_23, viewFactory_GoldenComponent24);
     this._NgIf_23_9 = NgIf(this._appEl_23, _TemplateRef_23_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_23, this._NgIf_23_9, this._NgIf_23_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_23, this._NgIf_23_9);
     }
     final _anchor_24 = import9.appendAnchor(parentRenderNode);
     this._appEl_24 = ViewContainer(24, null, this, _anchor_24);
     var _TemplateRef_24_8 = TemplateRef(this._appEl_24, viewFactory_GoldenComponent25);
     this._NgIf_24_9 = NgIf(this._appEl_24, _TemplateRef_24_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_24, this._NgIf_24_9, this._NgIf_24_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_24, this._NgIf_24_9);
     }
     final _anchor_25 = import9.appendAnchor(parentRenderNode);
     this._appEl_25 = ViewContainer(25, null, this, _anchor_25);
     var _TemplateRef_25_8 = TemplateRef(this._appEl_25, viewFactory_GoldenComponent26);
     this._NgIf_25_9 = NgIf(this._appEl_25, _TemplateRef_25_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_25, this._NgIf_25_9, this._NgIf_25_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_25, this._NgIf_25_9);
     }
     final _anchor_26 = import9.appendAnchor(parentRenderNode);
     this._appEl_26 = ViewContainer(26, null, this, _anchor_26);
     var _TemplateRef_26_8 = TemplateRef(this._appEl_26, viewFactory_GoldenComponent27);
     this._NgIf_26_9 = NgIf(this._appEl_26, _TemplateRef_26_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_26, this._NgIf_26_9, this._NgIf_26_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_26, this._NgIf_26_9);
     }
     final _anchor_27 = import9.appendAnchor(parentRenderNode);
     this._appEl_27 = ViewContainer(27, null, this, _anchor_27);
     var _TemplateRef_27_8 = TemplateRef(this._appEl_27, viewFactory_GoldenComponent28);
     this._NgIf_27_9 = NgIf(this._appEl_27, _TemplateRef_27_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_27, this._NgIf_27_9, this._NgIf_27_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_27, this._NgIf_27_9);
     }
     final _anchor_28 = import9.appendAnchor(parentRenderNode);
     this._appEl_28 = ViewContainer(28, null, this, _anchor_28);
     var _TemplateRef_28_8 = TemplateRef(this._appEl_28, viewFactory_GoldenComponent29);
     this._NgIf_28_9 = NgIf(this._appEl_28, _TemplateRef_28_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_28, this._NgIf_28_9, this._NgIf_28_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_28, this._NgIf_28_9);
     }
     final _anchor_29 = import9.appendAnchor(parentRenderNode);
     this._appEl_29 = ViewContainer(29, null, this, _anchor_29);
     var _TemplateRef_29_8 = TemplateRef(this._appEl_29, viewFactory_GoldenComponent30);
     this._NgIf_29_9 = NgIf(this._appEl_29, _TemplateRef_29_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_29, this._NgIf_29_9, this._NgIf_29_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_29, this._NgIf_29_9);
     }
     final _anchor_30 = import9.appendAnchor(parentRenderNode);
     this._appEl_30 = ViewContainer(30, null, this, _anchor_30);
     var _TemplateRef_30_8 = TemplateRef(this._appEl_30, viewFactory_GoldenComponent31);
     this._NgIf_30_9 = NgIf(this._appEl_30, _TemplateRef_30_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_30, this._NgIf_30_9, this._NgIf_30_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_30, this._NgIf_30_9);
     }
     final _anchor_31 = import9.appendAnchor(parentRenderNode);
     this._appEl_31 = ViewContainer(31, null, this, _anchor_31);
     var _TemplateRef_31_8 = TemplateRef(this._appEl_31, viewFactory_GoldenComponent32);
     this._NgIf_31_9 = NgIf(this._appEl_31, _TemplateRef_31_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_31, this._NgIf_31_9, this._NgIf_31_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_31, this._NgIf_31_9);
     }
     final _anchor_32 = import9.appendAnchor(parentRenderNode);
     this._appEl_32 = ViewContainer(32, null, this, _anchor_32);
     var _TemplateRef_32_8 = TemplateRef(this._appEl_32, viewFactory_GoldenComponent33);
     this._NgIf_32_9 = NgIf(this._appEl_32, _TemplateRef_32_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_32, this._NgIf_32_9, this._NgIf_32_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_32, this._NgIf_32_9);
     }
     final _anchor_33 = import9.appendAnchor(parentRenderNode);
     this._appEl_33 = ViewContainer(33, null, this, _anchor_33);
     var _TemplateRef_33_8 = TemplateRef(this._appEl_33, viewFactory_GoldenComponent34);
     this._NgIf_33_9 = NgIf(this._appEl_33, _TemplateRef_33_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_33, this._NgIf_33_9, this._NgIf_33_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_33, this._NgIf_33_9);
     }
     final _anchor_34 = import9.appendAnchor(parentRenderNode);
     this._appEl_34 = ViewContainer(34, null, this, _anchor_34);
     var _TemplateRef_34_8 = TemplateRef(this._appEl_34, viewFactory_GoldenComponent35);
     this._NgIf_34_9 = NgIf(this._appEl_34, _TemplateRef_34_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_34, this._NgIf_34_9, this._NgIf_34_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_34, this._NgIf_34_9);
     }
     final _anchor_35 = import9.appendAnchor(parentRenderNode);
     this._appEl_35 = ViewContainer(35, null, this, _anchor_35);
     var _TemplateRef_35_8 = TemplateRef(this._appEl_35, viewFactory_GoldenComponent36);
     this._NgIf_35_9 = NgIf(this._appEl_35, _TemplateRef_35_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_35, this._NgIf_35_9, this._NgIf_35_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_35, this._NgIf_35_9);
     }
     final _anchor_36 = import9.appendAnchor(parentRenderNode);
     this._appEl_36 = ViewContainer(36, null, this, _anchor_36);
     var _TemplateRef_36_8 = TemplateRef(this._appEl_36, viewFactory_GoldenComponent37);
     this._NgIf_36_9 = NgIf(this._appEl_36, _TemplateRef_36_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_36, this._NgIf_36_9, this._NgIf_36_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_36, this._NgIf_36_9);
     }
     final _anchor_37 = import9.appendAnchor(parentRenderNode);
     this._appEl_37 = ViewContainer(37, null, this, _anchor_37);
     var _TemplateRef_37_8 = TemplateRef(this._appEl_37, viewFactory_GoldenComponent38);
     this._NgIf_37_9 = NgIf(this._appEl_37, _TemplateRef_37_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_37, this._NgIf_37_9, this._NgIf_37_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_37, this._NgIf_37_9);
     }
     final _anchor_38 = import9.appendAnchor(parentRenderNode);
     this._appEl_38 = ViewContainer(38, null, this, _anchor_38);
     var _TemplateRef_38_8 = TemplateRef(this._appEl_38, viewFactory_GoldenComponent39);
     this._NgIf_38_9 = NgIf(this._appEl_38, _TemplateRef_38_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_38, this._NgIf_38_9, this._NgIf_38_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_38, this._NgIf_38_9);
     }
     final _anchor_39 = import9.appendAnchor(parentRenderNode);
     this._appEl_39 = ViewContainer(39, null, this, _anchor_39);
     var _TemplateRef_39_8 = TemplateRef(this._appEl_39, viewFactory_GoldenComponent40);
     this._NgIf_39_9 = NgIf(this._appEl_39, _TemplateRef_39_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_39, this._NgIf_39_9, this._NgIf_39_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_39, this._NgIf_39_9);
     }
     final _anchor_40 = import9.appendAnchor(parentRenderNode);
     this._appEl_40 = ViewContainer(40, null, this, _anchor_40);
     var _TemplateRef_40_8 = TemplateRef(this._appEl_40, viewFactory_GoldenComponent41);
     this._NgIf_40_9 = NgIf(this._appEl_40, _TemplateRef_40_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_40, this._NgIf_40_9, this._NgIf_40_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_40, this._NgIf_40_9);
     }
     final _anchor_41 = import9.appendAnchor(parentRenderNode);
     this._appEl_41 = ViewContainer(41, null, this, _anchor_41);
     var _TemplateRef_41_8 = TemplateRef(this._appEl_41, viewFactory_GoldenComponent42);
     this._NgIf_41_9 = NgIf(this._appEl_41, _TemplateRef_41_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_41, this._NgIf_41_9, this._NgIf_41_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_41, this._NgIf_41_9);
     }
     final _anchor_42 = import9.appendAnchor(parentRenderNode);
     this._appEl_42 = ViewContainer(42, null, this, _anchor_42);
     var _TemplateRef_42_8 = TemplateRef(this._appEl_42, viewFactory_GoldenComponent43);
     this._NgIf_42_9 = NgIf(this._appEl_42, _TemplateRef_42_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_42, this._NgIf_42_9, this._NgIf_42_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_42, this._NgIf_42_9);
     }
     final _anchor_43 = import9.appendAnchor(parentRenderNode);
     this._appEl_43 = ViewContainer(43, null, this, _anchor_43);
     var _TemplateRef_43_8 = TemplateRef(this._appEl_43, viewFactory_GoldenComponent44);
     this._NgIf_43_9 = NgIf(this._appEl_43, _TemplateRef_43_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_43, this._NgIf_43_9, this._NgIf_43_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_43, this._NgIf_43_9);
     }
     final _anchor_44 = import9.appendAnchor(parentRenderNode);
     this._appEl_44 = ViewContainer(44, null, this, _anchor_44);
     var _TemplateRef_44_8 = TemplateRef(this._appEl_44, viewFactory_GoldenComponent45);
     this._NgIf_44_9 = NgIf(this._appEl_44, _TemplateRef_44_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_44, this._NgIf_44_9, this._NgIf_44_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_44, this._NgIf_44_9);
     }
     final _anchor_45 = import9.appendAnchor(parentRenderNode);
     this._appEl_45 = ViewContainer(45, null, this, _anchor_45);
     var _TemplateRef_45_8 = TemplateRef(this._appEl_45, viewFactory_GoldenComponent46);
     this._NgIf_45_9 = NgIf(this._appEl_45, _TemplateRef_45_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_45, this._NgIf_45_9, this._NgIf_45_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_45, this._NgIf_45_9);
     }
     final _anchor_46 = import9.appendAnchor(parentRenderNode);
     this._appEl_46 = ViewContainer(46, null, this, _anchor_46);
     var _TemplateRef_46_8 = TemplateRef(this._appEl_46, viewFactory_GoldenComponent47);
     this._NgIf_46_9 = NgIf(this._appEl_46, _TemplateRef_46_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_46, this._NgIf_46_9, this._NgIf_46_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_46, this._NgIf_46_9);
     }
     final _anchor_47 = import9.appendAnchor(parentRenderNode);
     this._appEl_47 = ViewContainer(47, null, this, _anchor_47);
     var _TemplateRef_47_8 = TemplateRef(this._appEl_47, viewFactory_GoldenComponent48);
     this._NgIf_47_9 = NgIf(this._appEl_47, _TemplateRef_47_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_47, this._NgIf_47_9, this._NgIf_47_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_47, this._NgIf_47_9);
     }
     final _anchor_48 = import9.appendAnchor(parentRenderNode);
     this._appEl_48 = ViewContainer(48, null, this, _anchor_48);
     var _TemplateRef_48_8 = TemplateRef(this._appEl_48, viewFactory_GoldenComponent49);
     this._NgIf_48_9 = NgIf(this._appEl_48, _TemplateRef_48_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_48, this._NgIf_48_9, this._NgIf_48_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_48, this._NgIf_48_9);
     }
     final _anchor_49 = import9.appendAnchor(parentRenderNode);
     this._appEl_49 = ViewContainer(49, null, this, _anchor_49);
     var _TemplateRef_49_8 = TemplateRef(this._appEl_49, viewFactory_GoldenComponent50);
     this._NgIf_49_9 = NgIf(this._appEl_49, _TemplateRef_49_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_49, this._NgIf_49_9, this._NgIf_49_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_49, this._NgIf_49_9);
     }
     final _anchor_50 = import9.appendAnchor(parentRenderNode);
     this._appEl_50 = ViewContainer(50, null, this, _anchor_50);
     var _TemplateRef_50_8 = TemplateRef(this._appEl_50, viewFactory_GoldenComponent51);
     this._NgIf_50_9 = NgIf(this._appEl_50, _TemplateRef_50_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_50, this._NgIf_50_9, this._NgIf_50_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_50, this._NgIf_50_9);
     }
     final _anchor_51 = import9.appendAnchor(parentRenderNode);
     this._appEl_51 = ViewContainer(51, null, this, _anchor_51);
     var _TemplateRef_51_8 = TemplateRef(this._appEl_51, viewFactory_GoldenComponent52);
     this._NgIf_51_9 = NgIf(this._appEl_51, _TemplateRef_51_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_51, this._NgIf_51_9, this._NgIf_51_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_51, this._NgIf_51_9);
     }
     final _anchor_52 = import9.appendAnchor(parentRenderNode);
     this._appEl_52 = ViewContainer(52, null, this, _anchor_52);
     var _TemplateRef_52_8 = TemplateRef(this._appEl_52, viewFactory_GoldenComponent53);
     this._NgIf_52_9 = NgIf(this._appEl_52, _TemplateRef_52_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_52, this._NgIf_52_9, this._NgIf_52_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_52, this._NgIf_52_9);
     }
     final _anchor_53 = import9.appendAnchor(parentRenderNode);
     this._appEl_53 = ViewContainer(53, null, this, _anchor_53);
     var _TemplateRef_53_8 = TemplateRef(this._appEl_53, viewFactory_GoldenComponent54);
     this._NgIf_53_9 = NgIf(this._appEl_53, _TemplateRef_53_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_53, this._NgIf_53_9, this._NgIf_53_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_53, this._NgIf_53_9);
     }
     final _anchor_54 = import9.appendAnchor(parentRenderNode);
     this._appEl_54 = ViewContainer(54, null, this, _anchor_54);
     var _TemplateRef_54_8 = TemplateRef(this._appEl_54, viewFactory_GoldenComponent55);
     this._NgIf_54_9 = NgIf(this._appEl_54, _TemplateRef_54_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_54, this._NgIf_54_9, this._NgIf_54_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_54, this._NgIf_54_9);
     }
     final _anchor_55 = import9.appendAnchor(parentRenderNode);
     this._appEl_55 = ViewContainer(55, null, this, _anchor_55);
     var _TemplateRef_55_8 = TemplateRef(this._appEl_55, viewFactory_GoldenComponent56);
     this._NgIf_55_9 = NgIf(this._appEl_55, _TemplateRef_55_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_55, this._NgIf_55_9, this._NgIf_55_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_55, this._NgIf_55_9);
     }
     final _anchor_56 = import9.appendAnchor(parentRenderNode);
     this._appEl_56 = ViewContainer(56, null, this, _anchor_56);
     var _TemplateRef_56_8 = TemplateRef(this._appEl_56, viewFactory_GoldenComponent57);
     this._NgIf_56_9 = NgIf(this._appEl_56, _TemplateRef_56_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_56, this._NgIf_56_9, this._NgIf_56_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_56, this._NgIf_56_9);
     }
     final _anchor_57 = import9.appendAnchor(parentRenderNode);
     this._appEl_57 = ViewContainer(57, null, this, _anchor_57);
     var _TemplateRef_57_8 = TemplateRef(this._appEl_57, viewFactory_GoldenComponent58);
     this._NgIf_57_9 = NgIf(this._appEl_57, _TemplateRef_57_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_57, this._NgIf_57_9, this._NgIf_57_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_57, this._NgIf_57_9);
     }
     final _anchor_58 = import9.appendAnchor(parentRenderNode);
     this._appEl_58 = ViewContainer(58, null, this, _anchor_58);
     var _TemplateRef_58_8 = TemplateRef(this._appEl_58, viewFactory_GoldenComponent59);
     this._NgIf_58_9 = NgIf(this._appEl_58, _TemplateRef_58_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_58, this._NgIf_58_9, this._NgIf_58_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_58, this._NgIf_58_9);
     }
     final _anchor_59 = import9.appendAnchor(parentRenderNode);
     this._appEl_59 = ViewContainer(59, null, this, _anchor_59);
     var _TemplateRef_59_8 = TemplateRef(this._appEl_59, viewFactory_GoldenComponent60);
     this._NgIf_59_9 = NgIf(this._appEl_59, _TemplateRef_59_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_59, this._NgIf_59_9, this._NgIf_59_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_59, this._NgIf_59_9);
     }
     final _anchor_60 = import9.appendAnchor(parentRenderNode);
     this._appEl_60 = ViewContainer(60, null, this, _anchor_60);
     var _TemplateRef_60_8 = TemplateRef(this._appEl_60, viewFactory_GoldenComponent61);
     this._NgIf_60_9 = NgIf(this._appEl_60, _TemplateRef_60_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_60, this._NgIf_60_9, this._NgIf_60_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_60, this._NgIf_60_9);
     }
     final _anchor_61 = import9.appendAnchor(parentRenderNode);
     this._appEl_61 = ViewContainer(61, null, this, _anchor_61);
     var _TemplateRef_61_8 = TemplateRef(this._appEl_61, viewFactory_GoldenComponent62);
     this._NgIf_61_9 = NgIf(this._appEl_61, _TemplateRef_61_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_61, this._NgIf_61_9, this._NgIf_61_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_61, this._NgIf_61_9);
     }
     final _anchor_62 = import9.appendAnchor(parentRenderNode);
     this._appEl_62 = ViewContainer(62, null, this, _anchor_62);
     var _TemplateRef_62_8 = TemplateRef(this._appEl_62, viewFactory_GoldenComponent63);
     this._NgIf_62_9 = NgIf(this._appEl_62, _TemplateRef_62_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_62, this._NgIf_62_9, this._NgIf_62_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_62, this._NgIf_62_9);
     }
     final _anchor_63 = import9.appendAnchor(parentRenderNode);
     this._appEl_63 = ViewContainer(63, null, this, _anchor_63);
     var _TemplateRef_63_8 = TemplateRef(this._appEl_63, viewFactory_GoldenComponent64);
     this._NgIf_63_9 = NgIf(this._appEl_63, _TemplateRef_63_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_63, this._NgIf_63_9, this._NgIf_63_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_63, this._NgIf_63_9);
     }
     final _anchor_64 = import9.appendAnchor(parentRenderNode);
     this._appEl_64 = ViewContainer(64, null, this, _anchor_64);
     var _TemplateRef_64_8 = TemplateRef(this._appEl_64, viewFactory_GoldenComponent65);
     this._NgIf_64_9 = NgIf(this._appEl_64, _TemplateRef_64_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_64, this._NgIf_64_9, this._NgIf_64_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_64, this._NgIf_64_9);
     }
     final _anchor_65 = import9.appendAnchor(parentRenderNode);
     this._appEl_65 = ViewContainer(65, null, this, _anchor_65);
     var _TemplateRef_65_8 = TemplateRef(this._appEl_65, viewFactory_GoldenComponent66);
     this._NgIf_65_9 = NgIf(this._appEl_65, _TemplateRef_65_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_65, this._NgIf_65_9, this._NgIf_65_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_65, this._NgIf_65_9);
     }
     final _anchor_66 = import9.appendAnchor(parentRenderNode);
     this._appEl_66 = ViewContainer(66, null, this, _anchor_66);
     var _TemplateRef_66_8 = TemplateRef(this._appEl_66, viewFactory_GoldenComponent67);
     this._NgIf_66_9 = NgIf(this._appEl_66, _TemplateRef_66_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_66, this._NgIf_66_9, this._NgIf_66_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_66, this._NgIf_66_9);
     }
     final _anchor_67 = import9.appendAnchor(parentRenderNode);
     this._appEl_67 = ViewContainer(67, null, this, _anchor_67);
     var _TemplateRef_67_8 = TemplateRef(this._appEl_67, viewFactory_GoldenComponent68);
     this._NgIf_67_9 = NgIf(this._appEl_67, _TemplateRef_67_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_67, this._NgIf_67_9, this._NgIf_67_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_67, this._NgIf_67_9);
     }
     final _anchor_68 = import9.appendAnchor(parentRenderNode);
     this._appEl_68 = ViewContainer(68, null, this, _anchor_68);
     var _TemplateRef_68_8 = TemplateRef(this._appEl_68, viewFactory_GoldenComponent69);
     this._NgIf_68_9 = NgIf(this._appEl_68, _TemplateRef_68_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_68, this._NgIf_68_9, this._NgIf_68_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_68, this._NgIf_68_9);
     }
     final _anchor_69 = import9.appendAnchor(parentRenderNode);
     this._appEl_69 = ViewContainer(69, null, this, _anchor_69);
     var _TemplateRef_69_8 = TemplateRef(this._appEl_69, viewFactory_GoldenComponent70);
     this._NgIf_69_9 = NgIf(this._appEl_69, _TemplateRef_69_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_69, this._NgIf_69_9, this._NgIf_69_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_69, this._NgIf_69_9);
     }
     final _anchor_70 = import9.appendAnchor(parentRenderNode);
     this._appEl_70 = ViewContainer(70, null, this, _anchor_70);
     var _TemplateRef_70_8 = TemplateRef(this._appEl_70, viewFactory_GoldenComponent71);
     this._NgIf_70_9 = NgIf(this._appEl_70, _TemplateRef_70_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_70, this._NgIf_70_9, this._NgIf_70_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_70, this._NgIf_70_9);
     }
     final _anchor_71 = import9.appendAnchor(parentRenderNode);
     this._appEl_71 = ViewContainer(71, null, this, _anchor_71);
     var _TemplateRef_71_8 = TemplateRef(this._appEl_71, viewFactory_GoldenComponent72);
     this._NgIf_71_9 = NgIf(this._appEl_71, _TemplateRef_71_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_71, this._NgIf_71_9, this._NgIf_71_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_71, this._NgIf_71_9);
     }
     final _anchor_72 = import9.appendAnchor(parentRenderNode);
     this._appEl_72 = ViewContainer(72, null, this, _anchor_72);
     var _TemplateRef_72_8 = TemplateRef(this._appEl_72, viewFactory_GoldenComponent73);
     this._NgIf_72_9 = NgIf(this._appEl_72, _TemplateRef_72_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_72, this._NgIf_72_9, this._NgIf_72_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_72, this._NgIf_72_9);
     }
     final _anchor_73 = import9.appendAnchor(parentRenderNode);
     this._appEl_73 = ViewContainer(73, null, this, _anchor_73);
     var _TemplateRef_73_8 = TemplateRef(this._appEl_73, viewFactory_GoldenComponent74);
     this._NgIf_73_9 = NgIf(this._appEl_73, _TemplateRef_73_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_73, this._NgIf_73_9, this._NgIf_73_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_73, this._NgIf_73_9);
     }
     final _anchor_74 = import9.appendAnchor(parentRenderNode);
     this._appEl_74 = ViewContainer(74, null, this, _anchor_74);
     var _TemplateRef_74_8 = TemplateRef(this._appEl_74, viewFactory_GoldenComponent75);
     this._NgIf_74_9 = NgIf(this._appEl_74, _TemplateRef_74_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_74, this._NgIf_74_9, this._NgIf_74_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_74, this._NgIf_74_9);
     }
     final _anchor_75 = import9.appendAnchor(parentRenderNode);
     this._appEl_75 = ViewContainer(75, null, this, _anchor_75);
     var _TemplateRef_75_8 = TemplateRef(this._appEl_75, viewFactory_GoldenComponent76);
     this._NgIf_75_9 = NgIf(this._appEl_75, _TemplateRef_75_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_75, this._NgIf_75_9, this._NgIf_75_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_75, this._NgIf_75_9);
     }
     final _anchor_76 = import9.appendAnchor(parentRenderNode);
     this._appEl_76 = ViewContainer(76, null, this, _anchor_76);
     var _TemplateRef_76_8 = TemplateRef(this._appEl_76, viewFactory_GoldenComponent77);
     this._NgIf_76_9 = NgIf(this._appEl_76, _TemplateRef_76_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_76, this._NgIf_76_9, this._NgIf_76_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_76, this._NgIf_76_9);
     }
     final _anchor_77 = import9.appendAnchor(parentRenderNode);
     this._appEl_77 = ViewContainer(77, null, this, _anchor_77);
     var _TemplateRef_77_8 = TemplateRef(this._appEl_77, viewFactory_GoldenComponent78);
     this._NgIf_77_9 = NgIf(this._appEl_77, _TemplateRef_77_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_77, this._NgIf_77_9, this._NgIf_77_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_77, this._NgIf_77_9);
     }
     final _anchor_78 = import9.appendAnchor(parentRenderNode);
     this._appEl_78 = ViewContainer(78, null, this, _anchor_78);
     var _TemplateRef_78_8 = TemplateRef(this._appEl_78, viewFactory_GoldenComponent79);
     this._NgIf_78_9 = NgIf(this._appEl_78, _TemplateRef_78_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_78, this._NgIf_78_9, this._NgIf_78_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_78, this._NgIf_78_9);
     }
     final _anchor_79 = import9.appendAnchor(parentRenderNode);
     this._appEl_79 = ViewContainer(79, null, this, _anchor_79);
     var _TemplateRef_79_8 = TemplateRef(this._appEl_79, viewFactory_GoldenComponent80);
     this._NgIf_79_9 = NgIf(this._appEl_79, _TemplateRef_79_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_79, this._NgIf_79_9, this._NgIf_79_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_79, this._NgIf_79_9);
     }
     final _anchor_80 = import9.appendAnchor(parentRenderNode);
     this._appEl_80 = ViewContainer(80, null, this, _anchor_80);
     var _TemplateRef_80_8 = TemplateRef(this._appEl_80, viewFactory_GoldenComponent81);
     this._NgIf_80_9 = NgIf(this._appEl_80, _TemplateRef_80_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_80, this._NgIf_80_9, this._NgIf_80_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_80, this._NgIf_80_9);
     }
     final _anchor_81 = import9.appendAnchor(parentRenderNode);
     this._appEl_81 = ViewContainer(81, null, this, _anchor_81);
     var _TemplateRef_81_8 = TemplateRef(this._appEl_81, viewFactory_GoldenComponent82);
     this._NgIf_81_9 = NgIf(this._appEl_81, _TemplateRef_81_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_81, this._NgIf_81_9, this._NgIf_81_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_81, this._NgIf_81_9);
     }
     final _anchor_82 = import9.appendAnchor(parentRenderNode);
     this._appEl_82 = ViewContainer(82, null, this, _anchor_82);
     var _TemplateRef_82_8 = TemplateRef(this._appEl_82, viewFactory_GoldenComponent83);
     this._NgIf_82_9 = NgIf(this._appEl_82, _TemplateRef_82_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_82, this._NgIf_82_9, this._NgIf_82_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_82, this._NgIf_82_9);
     }
     final _anchor_83 = import9.appendAnchor(parentRenderNode);
     this._appEl_83 = ViewContainer(83, null, this, _anchor_83);
     var _TemplateRef_83_8 = TemplateRef(this._appEl_83, viewFactory_GoldenComponent84);
     this._NgIf_83_9 = NgIf(this._appEl_83, _TemplateRef_83_8);
     if (import11.isDevToolsEnabled) {
-      import11.Inspector.instance.registerDirective(_anchor_83, this._NgIf_83_9, this._NgIf_83_9.runtimeType.toString());
+      import11.Inspector.instance.registerDirective(_anchor_83, this._NgIf_83_9);
     }
   }
 
@@ -3716,11 +3711,6 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
     this.initComponentStyles();
     this.rootElement = import7.unsafeCast(import8.document.createElement('child'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String /*?*/ get _debugComponentUrl {
     return (import7.isDevMode ? 'asset:goldens/test/templates/large_templates_opt_out.dart' : null);
   }

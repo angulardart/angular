@@ -72,19 +72,6 @@ abstract class ComponentView<T extends Object> extends RenderView {
   bool get usesDefaultChangeDetection =>
       _data.changeDetectionMode == ChangeDetectionStrategy.CheckAlways;
 
-  /// Returns a description of [T].
-  ///
-  /// This is used by [Inspector] to create a serialized representation of the
-  /// component for developer tools.
-  ///
-  /// Note that all derived classes uses the same implementation which calls
-  /// [runtimeType] on [ctx]. Despite repeating the same implementation, this
-  /// __must__ be implemented in each derived class where the type of [T] is
-  /// known in order to avoid calling [runtimeType] on [Object] which prevents
-  /// elimination of non-local runtime type information. See
-  /// http://go/angulardart/dev/optimizing-dart2js#using-runtimetype.
-  String get debugComponentTypeName;
-
   // Initialization ------------------------------------------------------------
 
   // TODO(b/129005490): remove as this is always overridden by derived view.

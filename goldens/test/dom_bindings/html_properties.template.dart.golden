@@ -40,11 +40,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import2.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dom_bindings/html_properties.dart' : null);
   }
@@ -168,11 +163,6 @@ class ViewSanitizedComponent0 extends import0.ComponentView<import1.SanitizedCom
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import2.document.createElement('sanitized'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/dom_bindings/html_properties.dart' : null);
   }

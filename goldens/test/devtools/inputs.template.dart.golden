@@ -45,11 +45,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
   }
@@ -218,11 +213,6 @@ class ViewHasInputComponent0 extends import0.ComponentView<import1.HasInputCompo
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('has-input'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
   }
@@ -281,11 +271,6 @@ class ViewHasInputsComponent0 extends import0.ComponentView<import1.HasInputsCom
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('has-inputs'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
   }
@@ -344,11 +329,6 @@ class ViewHasRenamedInputComponent0 extends import0.ComponentView<import1.HasRen
     this.initComponentStyles();
     this.rootElement = import6.unsafeCast(import7.document.createElement('has-renamed-input'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import6.isDevMode ? 'asset:goldens/test/devtools/inputs.dart' : null);
   }

@@ -196,15 +196,9 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     _data(view.rootElement).componentView = view;
   }
 
-  /// Registers a [directive] on [element] to be inspected by this service.
-  ///
-  /// The compiler generates code to pass `directive.runtimeType.toString()` to
-  /// [name]. Obtaining the [runtimeType] at the callsite where the type of the
-  /// directive is statically known avoids calling [runtimeType] on [Object]
-  /// which prevents elimination of non-local runtime type information. See
-  /// http://go/angulardart/dev/optimizing-dart2js#using-runtimetype.
-  void registerDirective(Node node, Object directive, String name) {
-    _data(node).directives.add(_InspectorDirectiveData(directive, name));
+  /// Registers a [directive] on [node] to be inspected by this service.
+  void registerDirective(Node node, Object directive) {
+    _data(node).directives.add(directive);
   }
 
   /// Registers [element] as a location to search for components.
@@ -346,15 +340,15 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     return InspectorNode(
       component: componentView != null
           ? InspectorDirective(
-              name: componentView.debugComponentTypeName,
+              name: componentView.ctx.runtimeType.toString(),
               id: _referenceCounter.toId(componentView, groupName),
             )
           : null,
       directives: [
         for (final directive in data.directives)
           InspectorDirective(
-            name: directive.name,
-            id: _referenceCounter.toId(directive.instance, groupName),
+            name: directive.runtimeType.toString(),
+            id: _referenceCounter.toId(directive, groupName),
           )
       ],
       children: children,
@@ -397,7 +391,7 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   /// Returns a JSON representation of the [view]'s component.
   Map<String, Object> _toJson(ComponentView<Object> view, String groupName) {
     return {
-      'name': view.debugComponentTypeName,
+      'name': view.ctx.runtimeType.toString(),
       'id': _referenceCounter.toId(view, groupName),
     };
   }
@@ -409,16 +403,5 @@ class _InspectorNodeData {
   ComponentView<Object>? componentView;
 
   /// The directives applied to this node, if any.
-  final directives = <_InspectorDirectiveData>[];
-}
-
-/// Data for a directive instance.
-class _InspectorDirectiveData {
-  _InspectorDirectiveData(this.instance, this.name);
-
-  /// The directive instance.
-  final Object instance;
-
-  /// A description of [instance]'s [Type].
-  final String name;
+  final directives = <Object>[];
 }

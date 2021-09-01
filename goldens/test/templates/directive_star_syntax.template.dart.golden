@@ -40,11 +40,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import8.unsafeCast(import9.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import8.isDevMode ? 'asset:goldens/test/templates/directive_star_syntax.dart' : null);
   }
@@ -57,7 +52,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_0_8 = TemplateRef(this._appEl_0, viewFactory_GoldenComponent1);
     this._NgIf_0_9 = NgIf(this._appEl_0, _TemplateRef_0_8);
     if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.registerDirective(_anchor_0, this._NgIf_0_9, this._NgIf_0_9.runtimeType.toString());
+      import12.Inspector.instance.registerDirective(_anchor_0, this._NgIf_0_9);
     }
     final doc = import9.document;
     final _el_1 = import10.appendElement<import9.UListElement>(doc, parentRenderNode, 'ul');
@@ -66,7 +61,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_GoldenComponent2);
     this._NgFor_2_9 = import4.NgFor(this._appEl_2, _TemplateRef_2_8);
     if (import12.isDevToolsEnabled) {
-      import12.Inspector.instance.registerDirective(_anchor_2, this._NgFor_2_9, this._NgFor_2_9.runtimeType.toString());
+      import12.Inspector.instance.registerDirective(_anchor_2, this._NgFor_2_9);
     }
   }
 

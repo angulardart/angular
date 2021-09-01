@@ -34,11 +34,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -123,11 +118,6 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('on-push-link'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -145,7 +135,7 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     var _TemplateRef_2_8 = TemplateRef(this._appEl_2, viewFactory_OnPushLink2);
     this._NgIf_2_9 = NgIf(this._appEl_2, _TemplateRef_2_8);
     if (import13.isDevToolsEnabled) {
-      import13.Inspector.instance.registerDirective(_anchor_2, this._NgIf_2_9, this._NgIf_2_9.runtimeType.toString());
+      import13.Inspector.instance.registerDirective(_anchor_2, this._NgIf_2_9);
     }
     this._compView_3 = ViewNestedOnPush0(this, 3);
     final _el_3 = this._compView_3.rootElement;
@@ -162,7 +152,7 @@ class ViewOnPushLink0 extends import0.ComponentView<import1.OnPushLink> {
     var _TemplateRef_5_8 = TemplateRef(this._appEl_5, viewFactory_OnPushLink4);
     this._NgIf_5_9 = NgIf(this._appEl_5, _TemplateRef_5_8);
     if (import13.isDevToolsEnabled) {
-      import13.Inspector.instance.registerDirective(_anchor_5, this._NgIf_5_9, this._NgIf_5_9.runtimeType.toString());
+      import13.Inspector.instance.registerDirective(_anchor_5, this._NgIf_5_9);
     }
     _ctx.container = this._appEl_0;
   }
@@ -353,11 +343,6 @@ class ViewNestedOnPush0 extends import0.ComponentView<import1.NestedOnPush> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('nested-on-push'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }
@@ -418,11 +403,6 @@ class ViewNestedOnPushLink0 extends import0.ComponentView<import1.NestedOnPushLi
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('nested-on-push-link'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/change_detection_link.dart' : null);
   }

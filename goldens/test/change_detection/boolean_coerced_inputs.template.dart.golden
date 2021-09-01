@@ -33,11 +33,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/boolean_coerced_inputs.dart' : null);
   }
@@ -146,11 +141,6 @@ class ViewFancyButtonComponent0 extends import0.ComponentView<import1.FancyButto
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('fancy-button'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/boolean_coerced_inputs.dart' : null);
   }
