@@ -370,6 +370,9 @@
   },
   H = {JS_CONST: function JS_CONST() {
     },
+    LateError$fieldADI(fieldName) {
+      return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
+    },
     LateError$fieldNI(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
     },
@@ -1359,7 +1362,7 @@
       this.prototypeForTag = t0;
     },
     throwLateFieldADI(fieldName) {
-      return H.throwExpression(new H.LateError("Field '" + fieldName + "' has been assigned during initialization."));
+      return H.throwExpression(H.LateError$fieldADI(fieldName));
     },
     _Cell$named(_name) {
       var t1 = new H._Cell(_name);
@@ -4097,7 +4100,10 @@
       return result;
     },
     List_List$of(elements, growable, $E) {
-      var t1 = P.List_List$_of(elements, $E);
+      var t1;
+      if (growable)
+        return P.List_List$_of(elements, $E);
+      t1 = J.JSArray_markFixedList(P.List_List$_of(elements, $E));
       return t1;
     },
     List_List$_of(elements, $E) {
@@ -4152,6 +4158,11 @@
     },
     RangeError$range(invalidValue, minValue, maxValue, $name, message) {
       return new P.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
+    },
+    RangeError_checkNotNegative(value, $name) {
+      if (value < 0)
+        throw H.wrapException(P.RangeError$range(value, 0, null, $name, null));
+      return value;
     },
     IndexError$(invalidValue, indexable, $name, message, $length) {
       var t1 = $length == null ? J.get$length$asx(indexable) : $length;
@@ -4892,10 +4903,15 @@
       return false;
     },
     addAll$1(receiver, collection) {
+      var t1;
       if (!!receiver.fixed$length)
         H.throwExpression(P.UnsupportedError$("addAll"));
-      this._addAllFromArray$1(receiver, collection);
-      return;
+      if (Array.isArray(collection)) {
+        this._addAllFromArray$1(receiver, collection);
+        return;
+      }
+      for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
+        receiver.push(t1.get$current(t1));
     },
     _addAllFromArray$1(receiver, array) {
       var i,
@@ -5334,10 +5350,23 @@
       return H.MappedIterable_MappedIterable(_this.get$keys(_this), new H.JsLinkedHashMap_values_closure(_this), t1._precomputed1, t1._rest[1]);
     },
     containsKey$1(_, key) {
-      var strings = this._strings;
-      if (strings == null)
+      var strings, t1;
+      if (typeof key == "string") {
+        strings = this._strings;
+        if (strings == null)
+          return false;
+        return this._containsTableEntry$2(strings, key);
+      } else {
+        t1 = this.internalContainsKey$1(key);
+        return t1;
+      }
+    },
+    internalContainsKey$1(key) {
+      var _this = this,
+        rest = _this.__js_helper$_rest;
+      if (rest == null)
         return false;
-      return this._containsTableEntry$2(strings, key);
+      return _this.internalFindBucketIndex$2(_this._getTableBucket$2(rest, _this.internalComputeHashCode$1(key)), key) >= 0;
     },
     $index(_, key) {
       var strings, cell, t1, nums, _this = this, _null = null;
@@ -5536,6 +5565,12 @@
       var t1 = this._value;
       if (t1 === this)
         throw H.wrapException(new H.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
+      return t1;
+    },
+    _readField$0() {
+      var t1 = this._value;
+      if (t1 === this)
+        throw H.wrapException(H.LateError$fieldNI(this.__late_helper$_name));
       return t1;
     },
     set$finalLocalValue(v) {
@@ -7242,6 +7277,17 @@
         ++count;
       return count;
     },
+    elementAt$1(_, index) {
+      var t1, elementIndex, element;
+      P.RangeError_checkNotNegative(index, "index");
+      for (t1 = this.get$iterator(this), elementIndex = 0; t1.moveNext$0();) {
+        element = t1.get$current(t1);
+        if (index === elementIndex)
+          return element;
+        ++elementIndex;
+      }
+      throw H.wrapException(P.IndexError$(index, this, "index", null, elementIndex));
+    },
     toString$0(_) {
       return P.IterableBase_iterableToShortString(this, "(", ")");
     }
@@ -7359,7 +7405,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7445,7 +7491,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7482,7 +7528,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7522,7 +7568,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7617,7 +7663,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7668,7 +7714,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7698,7 +7744,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7758,7 +7804,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7783,7 +7829,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7847,7 +7893,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7871,7 +7917,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7901,7 +7947,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7940,7 +7986,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8045,7 +8091,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8069,7 +8115,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8093,7 +8139,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8117,7 +8163,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8391,10 +8437,7 @@
   };
   G.appInjector_closure0.prototype = {
     call$0() {
-      var t1 = $.appViewUtils._value;
-      if (t1 == $.appViewUtils)
-        H.throwExpression(H.LateError$fieldNI($.appViewUtils.__late_helper$_name));
-      return t1;
+      return $.appViewUtils._readField$0();
     },
     $signature: 19
   };

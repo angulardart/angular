@@ -332,6 +332,9 @@
   },
   H = {JS_CONST: function JS_CONST() {
     },
+    LateError$fieldADI(fieldName) {
+      return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
+    },
     LateError$fieldNI(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
     },
@@ -1350,7 +1353,7 @@
       this.prototypeForTag = t0;
     },
     throwLateFieldADI(fieldName) {
-      return H.throwExpression(new H.LateError("Field '" + fieldName + "' has been assigned during initialization."));
+      return H.throwExpression(H.LateError$fieldADI(fieldName));
     },
     _Cell$named(_name) {
       var t1 = new H._Cell(_name);
@@ -3957,6 +3960,11 @@
       return table;
     },
     LinkedHashMap_LinkedHashMap(hashCode, isValidKey, $K, $V) {
+      if (isValidKey == null) {
+        if (hashCode == null)
+          return new H.JsLinkedHashMap($K._eval$1("@<0>")._bind$1($V)._eval$1("JsLinkedHashMap<1,2>"));
+      } else if (hashCode == null)
+        hashCode = P.collection___defaultHashCode$closure();
       return P._LinkedCustomHashMap$(P.collection___defaultEquals$closure(), hashCode, isValidKey, $K, $V);
     },
     LinkedHashMap_LinkedHashMap$_literal(keyValuePairs, $K, $V) {
@@ -3971,6 +3979,9 @@
     },
     _defaultEquals(a, b) {
       return J.$eq$(a, b);
+    },
+    _defaultHashCode(a) {
+      return J.get$hashCode$(a);
     },
     HashMap_HashMap$from(other, $K, $V) {
       var result = P.HashMap_HashMap($K, $V);
@@ -4205,7 +4216,10 @@
       return result;
     },
     List_List$of(elements, growable, $E) {
-      var t1 = P.List_List$_of(elements, $E);
+      var t1;
+      if (growable)
+        return P.List_List$_of(elements, $E);
+      t1 = J.JSArray_markFixedList(P.List_List$_of(elements, $E));
       return t1;
     },
     List_List$_of(elements, $E) {
@@ -4260,6 +4274,11 @@
     },
     RangeError$range(invalidValue, minValue, maxValue, $name, message) {
       return new P.RangeError(minValue, maxValue, true, invalidValue, $name, "Invalid value");
+    },
+    RangeError_checkNotNegative(value, $name) {
+      if (value < 0)
+        throw H.wrapException(P.RangeError$range(value, 0, null, $name, null));
+      return value;
     },
     IndexError$(invalidValue, indexable, $name, message, $length) {
       var t1 = $length == null ? J.get$length$asx(indexable) : $length;
@@ -5038,10 +5057,15 @@
       return false;
     },
     addAll$1(receiver, collection) {
+      var t1;
       if (!!receiver.fixed$length)
         H.throwExpression(P.UnsupportedError$("addAll"));
-      this._addAllFromArray$1(receiver, collection);
-      return;
+      if (Array.isArray(collection)) {
+        this._addAllFromArray$1(receiver, collection);
+        return;
+      }
+      for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
+        receiver.push(t1.get$current(t1));
     },
     _addAllFromArray$1(receiver, array) {
       var i,
@@ -5532,10 +5556,16 @@
       return H.MappedIterable_MappedIterable(_this.get$keys(_this), new H.JsLinkedHashMap_values_closure(_this), t1._precomputed1, t1._rest[1]);
     },
     containsKey$1(_, key) {
-      var strings = this._strings;
-      if (strings == null)
-        return false;
-      return this._containsTableEntry$2(strings, key);
+      var strings, t1;
+      if (typeof key == "string") {
+        strings = this._strings;
+        if (strings == null)
+          return false;
+        return this._containsTableEntry$2(strings, key);
+      } else {
+        t1 = this.internalContainsKey$1(key);
+        return t1;
+      }
     },
     internalContainsKey$1(key) {
       var _this = this,
@@ -5873,7 +5903,7 @@
       t2 = this.span;
       t1.firstChild ? t1.removeChild(t2) : t1.appendChild(t2);
     },
-    $signature: 16
+    $signature: 45
   };
   P._AsyncRun__scheduleImmediateJsOverride_internalCallback.prototype = {
     call$0() {
@@ -7379,7 +7409,7 @@
       t1._contents += P.Error_safeToString(value);
       t2.comma = ", ";
     },
-    $signature: 45
+    $signature: 44
   };
   P.Duration.prototype = {
     $eq(_, other) {
@@ -7572,6 +7602,17 @@
         ++count;
       return count;
     },
+    elementAt$1(_, index) {
+      var t1, elementIndex, element;
+      P.RangeError_checkNotNegative(index, "index");
+      for (t1 = this.get$iterator(this), elementIndex = 0; t1.moveNext$0();) {
+        element = t1.get$current(t1);
+        if (index === elementIndex)
+          return element;
+        ++elementIndex;
+      }
+      throw H.wrapException(P.IndexError$(index, this, "index", null, elementIndex));
+    },
     toString$0(_) {
       return P.IterableBase_iterableToShortString(this, "(", ")");
     }
@@ -7709,7 +7750,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7795,7 +7836,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7840,7 +7881,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7880,7 +7921,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -7976,7 +8017,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8027,7 +8068,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8057,7 +8098,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8117,7 +8158,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8142,7 +8183,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8206,7 +8247,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8230,7 +8271,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8260,7 +8301,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8300,7 +8341,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8405,7 +8446,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8429,7 +8470,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8453,7 +8494,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8477,7 +8518,7 @@
       throw H.wrapException(P.UnsupportedError$("Cannot resize immutable List."));
     },
     elementAt$1(receiver, index) {
-      if (!(index < receiver.length))
+      if (!(index >= 0 && index < receiver.length))
         return H.ioore(receiver, index);
       return receiver[index];
     },
@@ -8747,7 +8788,7 @@
     call$0() {
       return this.applicationRef._readLocal$0();
     },
-    $signature: 15
+    $signature: 16
   };
   G.appInjector_closure0.prototype = {
     call$0() {
@@ -9854,7 +9895,7 @@
       _instance = hunkHelpers.installInstanceTearOff,
       _instance_1_i = hunkHelpers._instance_1i,
       _instance_1_u = hunkHelpers._instance_1u;
-    _static_1(H, "_js_helper_GeneralConstantMap__constantMapHashCode$closure", "GeneralConstantMap__constantMapHashCode", 44);
+    _static_1(H, "_js_helper_GeneralConstantMap__constantMapHashCode$closure", "GeneralConstantMap__constantMapHashCode", 15);
     _static_1(P, "async__AsyncRun__scheduleImmediateJsOverride$closure", "_AsyncRun__scheduleImmediateJsOverride", 4);
     _static_1(P, "async__AsyncRun__scheduleImmediateWithSetImmediate$closure", "_AsyncRun__scheduleImmediateWithSetImmediate", 4);
     _static_1(P, "async__AsyncRun__scheduleImmediateWithTimer$closure", "_AsyncRun__scheduleImmediateWithTimer", 4);
@@ -9890,6 +9931,7 @@
     _instance_2_u(P._Future.prototype, "get$_completeError", "_completeError$2", 6);
     _instance_0_u(P._DoneStreamSubscription.prototype, "get$_sendDone", "_sendDone$0", 0);
     _static_2(P, "collection___defaultEquals$closure", "_defaultEquals", 58);
+    _static_1(P, "collection___defaultHashCode$closure", "_defaultHashCode", 15);
     _static_0(G, "run___createNgZone$closure", "_createNgZone", 9);
     _static_1(G, "run___identityInjector$closure", "_identityInjector", 8);
     _instance_0_u(M.ChangeDetectionHost.prototype, "get$tick", "tick$0", 0);
@@ -10091,7 +10133,7 @@
     typeUniverse: {eC: new Map(), tR: {}, eT: {}, tPV: {}, sEA: []},
     mangledGlobalNames: {int: "int", double: "double", num: "num", String: "String", bool: "bool", Null: "Null", List: "List"},
     mangledNames: {},
-    types: ["~()", "Null()", "~(String,@)", "bool(KeyboardEvent)", "~(~())", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "~(Object)", "~(@)", "ApplicationRef()", "Null(~())", "~(String,String)", "@(@,String)", "String()", "bool(Object?)", "AppViewUtils()", "@(String)", "Testability()", "Injector()", "~(UncaughtError)", "@(@)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "Null(Object,StackTrace)", "Null(Event)", "_Future<@>(@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "JsTestability(Testability)", "HostView<GoldenComponent>()", "bool(@)", "~(@,@)", "~(Object?,Object?)", "int(Object?)", "~(Symbol0,@)", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "bool(Object?,Object?)", "Object(Element)", "List<Object?>()", "bool()"],
+    types: ["~()", "Null()", "~(String,@)", "bool(KeyboardEvent)", "~(~())", "Null(@)", "~(Object,StackTrace)", "String(int)", "Injector(Injector)", "NgZone()", "~(~)", "Timer(Zone,ZoneDelegate,Zone,Duration,~())", "~(~(bool))", "~(Object)", "~(@)", "int(Object?)", "ApplicationRef()", "~(String,String)", "@(@,String)", "String()", "bool(Object?)", "AppViewUtils()", "@(String)", "Testability()", "Injector()", "~(UncaughtError)", "@(@)", "Null(@,@)", "~(Zone,ZoneDelegate,Zone,~())", "0^(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone,ZoneDelegate,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "~(Zone,ZoneDelegate,Zone,Object,StackTrace)", "Null(Object,StackTrace)", "Null(Event)", "_Future<@>(@)", "~(bool)", "JsTestability?(Element)", "List<JsTestability>()", "JsTestability(Testability)", "HostView<GoldenComponent>()", "bool(@)", "~(@,@)", "~(Object?,Object?)", "~(Symbol0,@)", "Null(~())", "~(Zone?,ZoneDelegate?,Zone,Object,StackTrace)", "0^(Zone?,ZoneDelegate?,Zone,0^())<Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^),1^)<Object?Object?>", "0^(Zone?,ZoneDelegate?,Zone,0^(1^,2^),1^,2^)<Object?Object?Object?>", "0^()(Zone,ZoneDelegate,Zone,0^())<Object?>", "0^(1^)(Zone,ZoneDelegate,Zone,0^(1^))<Object?Object?>", "0^(1^,2^)(Zone,ZoneDelegate,Zone,0^(1^,2^))<Object?Object?Object?>", "AsyncError?(Zone,ZoneDelegate,Zone,Object,StackTrace?)", "~(Zone?,ZoneDelegate?,Zone,~())", "Timer(Zone,ZoneDelegate,Zone,Duration,~(Timer))", "~(Zone,ZoneDelegate,Zone,String)", "Zone(Zone?,ZoneDelegate?,Zone,ZoneSpecification?,Map<Object?,Object?>?)", "bool(Object?,Object?)", "Object(Element)", "List<Object?>()", "bool()"],
     interceptorsByTag: null,
     leafTags: null,
     arrayRti: Symbol("$ti")

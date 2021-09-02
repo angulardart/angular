@@ -379,6 +379,8 @@ void main() {
     return anonymize(Inspector.instance.getNodes(groupName).single);
   }
 
+  InspectorDirective.defaultIdForTesting = -1;
+
   group('getNodes', () {
     test('component views', () async {
       final testBed = NgTestBed(ng.createTestComponentViewsFactory());
@@ -386,22 +388,16 @@ void main() {
 
       expect(
         rootNode(),
-        InspectorNode(
-          component: InspectorDirective(name: '$TestComponentViews'),
-          children: [
-            InspectorNode(
-              component: InspectorDirective(name: '$TestComponentViews1'),
-              children: [
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestComponentViews2'),
-                ),
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestComponentViews3'),
-                ),
-              ],
-            ),
-          ],
-        ),
+        InspectorNode((b) => b
+          ..component.name = '$TestComponentViews'
+          ..children.replace([
+            InspectorNode((b) => b
+              ..component.name = '$TestComponentViews1'
+              ..children.replace([
+                InspectorNode((b) => b.component.name = '$TestComponentViews2'),
+                InspectorNode((b) => b.component.name = '$TestComponentViews3'),
+              ])),
+          ])),
       );
     });
 
@@ -414,18 +410,15 @@ void main() {
         // Should not return embedded component before it's created.
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(
-              name: '$TestConditionalEmbeddedViews',
-            ),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestConditionalEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgIf'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgIf'),
+                ]),
               ),
-            ],
-          ),
+            ])),
         );
 
         // Should return embedded component after it's created.
@@ -435,22 +428,17 @@ void main() {
 
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(
-              name: '$TestConditionalEmbeddedViews',
-            ),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestConditionalEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgIf'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgIf'),
+                ]),
               ),
               // TODO(b/196106275): should be a child of the NgIf node.
-              InspectorNode(
-                component: InspectorDirective(name: '$TestEmbeddedViews1'),
-              ),
-            ],
-          ),
+              InspectorNode((b) => b.component.name = '$TestEmbeddedViews1'),
+            ])),
         );
 
         // Should not return embedded component after it's destroyed.
@@ -460,18 +448,15 @@ void main() {
 
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(
-              name: '$TestConditionalEmbeddedViews',
-            ),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestConditionalEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgIf'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgIf'),
+                ]),
               ),
-            ],
-          ),
+            ])),
         );
       });
 
@@ -486,21 +471,18 @@ void main() {
         // Should return embedded components after they're created.
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestRepeatedEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgFor'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgFor'),
+                ]),
               ),
               // TODO(b/196106275): should be children of the NgFor node.
               for (var i = 0; i < 3; i++)
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
-                ),
-            ],
-          ),
+                InspectorNode((b) => b.component.name = '$TestEmbeddedViews1'),
+            ])),
         );
 
         await testFixture.update((component) {
@@ -510,21 +492,18 @@ void main() {
         // Should reflect additions to embedded views.
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestRepeatedEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgFor'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgFor'),
+                ]),
               ),
               // TODO(b/196106275): should be children of the NgFor node.
               for (var i = 0; i < 4; i++)
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
-                ),
-            ],
-          ),
+                InspectorNode((b) => b.component.name = '$TestEmbeddedViews1'),
+            ])),
         );
 
         await testFixture.update((component) {
@@ -534,21 +513,18 @@ void main() {
         // Should reflect removals to embedded components.
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(name: '$TestRepeatedEmbeddedViews'),
-            children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestRepeatedEmbeddedViews'
+            ..children.replace([
               InspectorNode(
-                directives: [
-                  InspectorDirective(name: '$NgFor'),
-                ],
+                (b) => b.directives.replace([
+                  InspectorDirective((b) => b.name = '$NgFor'),
+                ]),
               ),
               // TODO(b/196106275): should be children of the NgFor node.
               for (var i = 0; i < 2; i++)
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestEmbeddedViews1'),
-                ),
-            ],
-          ),
+                InspectorNode((b) => b.component.name = '$TestEmbeddedViews1'),
+            ])),
         );
       });
 
@@ -559,27 +535,22 @@ void main() {
 
         expect(
           rootNode(),
-          InspectorNode(
-            component: InspectorDirective(
-              name: '$TestTransplantedEmbeddedViews',
-            ),
-            children: [
-              InspectorNode(
-                component: InspectorDirective(name: '$TestEmbeddedViews2'),
-                children: [
+          InspectorNode((b) => b
+            ..component.name = '$TestTransplantedEmbeddedViews'
+            ..children.replace([
+              InspectorNode((b) => b
+                ..component.name = '$TestEmbeddedViews2'
+                ..children.replace([
                   InspectorNode(
-                    directives: [
-                      InspectorDirective(name: '$NgTemplateOutlet'),
-                    ],
+                    (b) => b.directives.replace([
+                      InspectorDirective((b) => b.name = '$NgTemplateOutlet'),
+                    ]),
                   ),
                   // TODO(b/196106275): should be a child of NgTemplateOutlet.
                   InspectorNode(
-                    component: InspectorDirective(name: '$TestEmbeddedViews1'),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                      (b) => b.component.name = '$TestEmbeddedViews1'),
+                ])),
+            ])),
         );
       });
     });
@@ -591,9 +562,7 @@ void main() {
       // Should not return imperatively loaded component before it's created.
       expect(
         rootNode(),
-        InspectorNode(
-          component: InspectorDirective(name: '$TestHostViews'),
-        ),
+        InspectorNode((b) => b.component.name = '$TestHostViews'),
       );
 
       await testFixture.update((component) {
@@ -603,14 +572,11 @@ void main() {
       // Should return imperatively loaded component after it's created.
       expect(
         rootNode(),
-        InspectorNode(
-          component: InspectorDirective(name: '$TestHostViews'),
-          children: [
-            InspectorNode(
-              component: InspectorDirective(name: '$TestHostViews1'),
-            ),
-          ],
-        ),
+        InspectorNode((b) => b
+          ..component.name = '$TestHostViews'
+          ..children.replace([
+            InspectorNode((b) => b.component.name = '$TestHostViews1'),
+          ])),
       );
 
       await testFixture.update((component) {
@@ -620,9 +586,7 @@ void main() {
       // Should not return imperatively loaded component after it's destroyed.
       expect(
         rootNode(),
-        InspectorNode(
-          component: InspectorDirective(name: '$TestHostViews'),
-        ),
+        InspectorNode((b) => b.component.name = '$TestHostViews'),
       );
     });
 
@@ -632,32 +596,24 @@ void main() {
 
       expect(
         rootNode(),
-        InspectorNode(
-          component: InspectorDirective(name: '$TestProjectedContent'),
-          children: [
-            InspectorNode(
-              component: InspectorDirective(name: '$TestProjectedContent1'),
-              children: [
+        InspectorNode((b) => b
+          ..component.name = '$TestProjectedContent'
+          ..children.replace([
+            InspectorNode((b) => b
+              ..component.name = '$TestProjectedContent1'
+              ..children.replace([
                 InspectorNode(
-                  component: InspectorDirective(name: '$TestProjectedContent3'),
-                ),
+                    (b) => b.component.name = '$TestProjectedContent3'),
                 InspectorNode(
-                  component: InspectorDirective(name: '$TestProjectedContent2'),
-                ),
-                InspectorNode(
-                  component: InspectorDirective(name: '$TestProjectedContent5'),
-                  children: [
+                    (b) => b.component.name = '$TestProjectedContent2'),
+                InspectorNode((b) => b
+                  ..component.name = '$TestProjectedContent5'
+                  ..children.replace([
                     InspectorNode(
-                      component: InspectorDirective(
-                        name: '$TestProjectedContent4',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+                        (b) => b.component.name = '$TestProjectedContent4'),
+                  ])),
+              ])),
+          ])),
       );
     });
 
@@ -989,21 +945,16 @@ html.Element createContentRoot({html.Element? parent}) {
   return root;
 }
 
-/// Resets all IDs to their default (meaningless) value.
-///
-/// This allows [nodes] to be compared by equality without inadvertantly testing
-/// the implementation details of ID generation.
+/// Sets all IDs to [InspectorDirective.defaultIdForTesting].
 InspectorNode anonymize(InspectorNode node) {
-  final component = node.component;
-  return InspectorNode(
-    component:
-        component != null ? InspectorDirective(name: component.name) : null,
-    directives: [
-      for (final directive in node.directives)
-        InspectorDirective(name: directive.name),
-    ],
-    children: [for (final child in node.children) anonymize(child)],
-  );
+  final defaultId = InspectorDirective.defaultIdForTesting!;
+  return node.rebuild((b) {
+    if (node.component != null) {
+      b.component.id = defaultId;
+    }
+    b.directives.map((directive) => directive.rebuild((b) => b.id = defaultId));
+    b.children.map(anonymize);
+  });
 }
 
 @Component(

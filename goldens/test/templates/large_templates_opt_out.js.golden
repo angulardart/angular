@@ -350,6 +350,9 @@
   },
   H = {JS_CONST: function JS_CONST() {
     },
+    LateError$fieldADI(fieldName) {
+      return new H.LateError("Field '" + H.S(fieldName) + "' has been assigned during initialization.");
+    },
     LateError$fieldNI(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
     },
@@ -370,7 +373,7 @@
       return new P.StateError("No element");
     },
     LateError: function LateError(t0) {
-      this._message = t0;
+      this.__internal$_message = t0;
     },
     NotNullableError: function NotNullableError(t0, t1) {
       this._name = t0;
@@ -1365,7 +1368,7 @@
       this.prototypeForTag = t0;
     },
     throwLateFieldADI(fieldName) {
-      return H.throwExpression(new H.LateError("Field '" + H.S(fieldName) + "' has been assigned during initialization."));
+      return H.throwExpression(H.LateError$fieldADI(fieldName));
     },
     _Cell$named(_name) {
       var t1 = new H._Cell(_name);
@@ -2835,7 +2838,7 @@
     _Error: function _Error() {
     },
     _TypeError: function _TypeError(t0) {
-      this.__rti$_message = t0;
+      this._message = t0;
     },
     printString(string) {
       if (typeof dartPrint == "function") {
@@ -4080,7 +4083,10 @@
       return result;
     },
     List_List$of(elements, growable, $E) {
-      var t1 = P.List_List$_of(elements, $E);
+      var t1;
+      if (growable)
+        return P.List_List$_of(elements, $E);
+      t1 = J.JSArray_markFixedList(P.List_List$_of(elements, $E));
       return t1;
     },
     List_List$_of(elements, $E) {
@@ -5545,6 +5551,15 @@
         throw H.wrapException(P.RangeError$value(index, null));
       return receiver.splice(index, 1)[0];
     },
+    insert$2(receiver, index, value) {
+      var t1;
+      if (!!receiver.fixed$length)
+        H.throwExpression(P.UnsupportedError$("insert"));
+      t1 = receiver.length;
+      if (index > t1)
+        throw H.wrapException(P.RangeError$value(index, null));
+      receiver.splice(index, 0, value);
+    },
     remove$1(receiver, element) {
       var i;
       if (!!receiver.fixed$length)
@@ -5557,10 +5572,15 @@
       return false;
     },
     addAll$1(receiver, collection) {
+      var t1;
       if (!!receiver.fixed$length)
         H.throwExpression(P.UnsupportedError$("addAll"));
-      this._addAllFromArray$1(receiver, collection);
-      return;
+      if (Array.isArray(collection)) {
+        this._addAllFromArray$1(receiver, collection);
+        return;
+      }
+      for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
+        receiver.push(t1.get$current(t1));
     },
     _addAllFromArray$1(receiver, array) {
       var i,
@@ -5715,7 +5735,7 @@
   };
   H.LateError.prototype = {
     toString$0(_) {
-      var t1 = "LateInitializationError: " + this._message;
+      var t1 = "LateInitializationError: " + this.__internal$_message;
       return t1;
     }
   };
@@ -5980,7 +6000,11 @@
       return this.$_target === other.$_target && this._receiver === other._receiver;
     },
     get$hashCode(_) {
-      return (H.objectHashCode(this._receiver) ^ H.Primitives_objectHashCode(this.$_target)) >>> 0;
+      var receiverHashCode = H.objectHashCode(this._receiver),
+        t1 = H.Primitives_objectHashCode(this.$_target);
+      if (typeof receiverHashCode !== "number")
+        return receiverHashCode.$xor();
+      return (receiverHashCode ^ t1) >>> 0;
     },
     toString$0(_) {
       return "Closure '" + H.S(this.$_name) + "' of " + ("Instance of '" + H.S(H.Primitives_objectTypeName(this._receiver)) + "'");
@@ -6227,6 +6251,12 @@
         throw H.wrapException(new H.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
       return t1;
     },
+    _readField$0() {
+      var t1 = this._value;
+      if (t1 === this)
+        throw H.wrapException(H.LateError$fieldNI(this.__late_helper$_name));
+      return t1;
+    },
     set$finalLocalValue(v) {
       var _this = this;
       if (_this._value !== _this)
@@ -6327,7 +6357,7 @@
   };
   H._Error.prototype = {
     toString$0(_) {
-      return this.__rti$_message;
+      return this._message;
     }
   };
   H._TypeError.prototype = {$isTypeError: 1};
@@ -9079,10 +9109,7 @@
   };
   G.appInjector_closure0.prototype = {
     call$0() {
-      var t1 = $.appViewUtils._value;
-      if (t1 == $.appViewUtils)
-        H.throwExpression(H.LateError$fieldNI($.appViewUtils.__late_helper$_name));
-      return t1;
+      return $.appViewUtils._readField$0();
     },
     $signature: 19
   };
@@ -9137,12 +9164,7 @@
         views = t1.nestedViews;
         if (views == null)
           views = H._setArrayType([], type$.JSArray_DynamicView);
-        if (!!views.fixed$length)
-          H.throwExpression(P.UnsupportedError$("insert"));
-        t2 = views.length;
-        if (t3 > t2)
-          H.throwExpression(P.RangeError$value(t3, null));
-        views.splice(t3, 0, view);
+        C.JSArray_methods.insert$2(views, t3, view);
         if (t3 > 0) {
           t2 = t3 - 1;
           if (!(t2 < views.length))

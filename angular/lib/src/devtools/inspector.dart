@@ -3,6 +3,7 @@ import 'dart:convert' show json;
 import 'dart:developer';
 import 'dart:html';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:meta/meta.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -115,7 +116,7 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     // TODO(b/194920649): remove.
     _registerObjectGroupServiceExtension('getComponents', getComponents);
     _registerObjectGroupServiceExtension('getNodes', (groupName) {
-      return getNodes(groupName).map((node) => node.toJson()).toList();
+      return serializers.serialize(getNodes(groupName));
     });
   }
 
@@ -281,20 +282,20 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     return json;
   }
 
-  /// Returns a JSON representation of the component tree.
+  /// Returns a serializable representation of the component tree.
   ///
-  /// All directive instances referenced in the JSON representation are kept
-  /// alive at least until [groupName] is disposed.
+  /// All directive instances referenced by this representation are kept alive
+  /// at least until [groupName] is disposed.
   @visibleForTesting
-  List<InspectorNode> getNodes(String groupName) {
-    final result = <InspectorNode>[];
-    for (final element in _contentRoots) {
-      // Structural directives can be anchored on comments.
-      final whatToShow = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT;
-      final treeWalker = TreeWalker(element, whatToShow);
-      _collectNodes(treeWalker, groupName, result);
-    }
-    return result;
+  BuiltList<InspectorNode> getNodes(String groupName) {
+    return BuiltList.build((b) {
+      for (final element in _contentRoots) {
+        // Structural directives can be anchored on comments.
+        final whatToShow = NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_COMMENT;
+        final treeWalker = TreeWalker(element, whatToShow);
+        _collectNodes(treeWalker, groupName, b);
+      }
+    });
   }
 
   /// Uses [treeWalker] to populate [result].
@@ -304,25 +305,25 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   void _collectNodes(
     TreeWalker treeWalker,
     String groupName,
-    List<InspectorNode> result,
+    ListBuilder<InspectorNode> result,
   ) {
     final currentNode = treeWalker.currentNode;
     final data = _nodeToData[currentNode];
 
-    // If this DOM node has no associated Angular data, we simply append any
-    // children to the results.
-    final children = data != null ? <InspectorNode>[] : result;
-
-    // Collect data from child nodes.
-    for (var node = treeWalker.firstChild();
-        node != null;
-        node = treeWalker.nextSibling()) {
-      _collectNodes(treeWalker, groupName, children);
+    void collectChildNodes(ListBuilder<InspectorNode> b) {
+      for (var node = treeWalker.firstChild();
+          node != null;
+          node = treeWalker.nextSibling()) {
+        _collectNodes(treeWalker, groupName, b);
+      }
     }
 
-    // Collect data from current node, if any.
     if (data != null) {
-      result.add(_createInspectorNode(data, groupName, children));
+      result.add(_createInspectorNode(data, groupName, collectChildNodes));
+    } else {
+      // If this DOM node has no associated Angular data, we simply append any
+      // children to the current results.
+      collectChildNodes(result);
     }
 
     // Restore current node to continue traversing its siblings since the
@@ -334,25 +335,25 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   InspectorNode _createInspectorNode(
     _InspectorNodeData data,
     String groupName,
-    List<InspectorNode> children,
+    void Function(ListBuilder<InspectorNode>) updateChildren,
   ) {
-    final componentView = data.componentView;
-    return InspectorNode(
-      component: componentView != null
-          ? InspectorDirective(
-              name: componentView.ctx.runtimeType.toString(),
-              id: _referenceCounter.toId(componentView, groupName),
-            )
-          : null,
-      directives: [
-        for (final directive in data.directives)
-          InspectorDirective(
-            name: directive.runtimeType.toString(),
-            id: _referenceCounter.toId(directive, groupName),
-          )
-      ],
-      children: children,
-    );
+    return InspectorNode((b) {
+      final componentView = data.componentView;
+      if (componentView != null) {
+        b.component
+          ..name = componentView.ctx.runtimeType.toString()
+          ..id = _referenceCounter.toId(componentView, groupName);
+      }
+      if (data.directives.isNotEmpty) {
+        b.directives.replace([
+          for (final directive in data.directives)
+            InspectorDirective((b) => b
+              ..name = directive.runtimeType.toString()
+              ..id = _referenceCounter.toId(directive, groupName)),
+        ]);
+      }
+      b.children.update(updateChildren);
+    });
   }
 
   /// Uses [treeWalker] to populate [result] with the component tree.

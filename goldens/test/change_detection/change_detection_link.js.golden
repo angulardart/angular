@@ -366,6 +366,9 @@
   },
   H = {JS_CONST: function JS_CONST() {
     },
+    LateError$fieldADI(fieldName) {
+      return new H.LateError("Field '" + fieldName + "' has been assigned during initialization.");
+    },
     LateError$fieldNI(fieldName) {
       return new H.LateError("Field '" + fieldName + "' has not been initialized.");
     },
@@ -1358,7 +1361,7 @@
       this.prototypeForTag = t0;
     },
     throwLateFieldADI(fieldName) {
-      return H.throwExpression(new H.LateError("Field '" + fieldName + "' has been assigned during initialization."));
+      return H.throwExpression(H.LateError$fieldADI(fieldName));
     },
     _Cell$named(_name) {
       var t1 = new H._Cell(_name);
@@ -4081,7 +4084,10 @@
       return result;
     },
     List_List$of(elements, growable, $E) {
-      var t1 = P.List_List$_of(elements, $E);
+      var t1;
+      if (growable)
+        return P.List_List$_of(elements, $E);
+      t1 = J.JSArray_markFixedList(P.List_List$_of(elements, $E));
       return t1;
     },
     List_List$_of(elements, $E) {
@@ -5001,6 +5007,15 @@
         throw H.wrapException(P.RangeError$value(index, null));
       return receiver.splice(index, 1)[0];
     },
+    insert$2(receiver, index, value) {
+      var t1;
+      if (!!receiver.fixed$length)
+        H.throwExpression(P.UnsupportedError$("insert"));
+      t1 = receiver.length;
+      if (index > t1)
+        throw H.wrapException(P.RangeError$value(index, null));
+      receiver.splice(index, 0, value);
+    },
     remove$1(receiver, element) {
       var i;
       if (!!receiver.fixed$length)
@@ -5013,10 +5028,15 @@
       return false;
     },
     addAll$1(receiver, collection) {
+      var t1;
       if (!!receiver.fixed$length)
         H.throwExpression(P.UnsupportedError$("addAll"));
-      this._addAllFromArray$1(receiver, collection);
-      return;
+      if (Array.isArray(collection)) {
+        this._addAllFromArray$1(receiver, collection);
+        return;
+      }
+      for (t1 = J.get$iterator$ax(collection); t1.moveNext$0();)
+        receiver.push(t1.get$current(t1));
     },
     _addAllFromArray$1(receiver, array) {
       var i,
@@ -5469,10 +5489,23 @@
       return H.MappedIterable_MappedIterable(_this.get$keys(_this), new H.JsLinkedHashMap_values_closure(_this), t1._precomputed1, t1._rest[1]);
     },
     containsKey$1(_, key) {
-      var strings = this._strings;
-      if (strings == null)
+      var strings, t1;
+      if (typeof key == "string") {
+        strings = this._strings;
+        if (strings == null)
+          return false;
+        return this._containsTableEntry$2(strings, key);
+      } else {
+        t1 = this.internalContainsKey$1(key);
+        return t1;
+      }
+    },
+    internalContainsKey$1(key) {
+      var _this = this,
+        rest = _this.__js_helper$_rest;
+      if (rest == null)
         return false;
-      return this._containsTableEntry$2(strings, key);
+      return _this.internalFindBucketIndex$2(_this._getTableBucket$2(rest, _this.internalComputeHashCode$1(key)), key) >= 0;
     },
     $index(_, key) {
       var strings, cell, t1, nums, _this = this, _null = null;
@@ -5671,6 +5704,12 @@
       var t1 = this._value;
       if (t1 === this)
         throw H.wrapException(new H.LateError("Local '" + this.__late_helper$_name + "' has not been initialized."));
+      return t1;
+    },
+    _readField$0() {
+      var t1 = this._value;
+      if (t1 === this)
+        throw H.wrapException(H.LateError$fieldNI(this.__late_helper$_name));
       return t1;
     },
     set$finalLocalValue(v) {
@@ -8677,10 +8716,7 @@
   };
   G.appInjector_closure0.prototype = {
     call$0() {
-      var t1 = $.appViewUtils._value;
-      if (t1 == $.appViewUtils)
-        H.throwExpression(H.LateError$fieldNI($.appViewUtils.__late_helper$_name));
-      return t1;
+      return $.appViewUtils._readField$0();
     },
     $signature: 13
   };
@@ -8733,12 +8769,7 @@
         views = t1.nestedViews;
         if (views == null)
           views = H._setArrayType([], type$.JSArray_DynamicView);
-        if (!!views.fixed$length)
-          H.throwExpression(P.UnsupportedError$("insert"));
-        t2 = views.length;
-        if (t3 > t2)
-          H.throwExpression(P.RangeError$value(t3, null));
-        views.splice(t3, 0, view);
+        C.JSArray_methods.insert$2(views, t3, view);
         if (t3 > 0) {
           t2 = t3 - 1;
           if (!(t2 < views.length))
@@ -9112,7 +9143,7 @@
     findLastDomNode$0() {
       var lastNode, nestedViews,
         nodesOrViewContainers = this._nodesOrViewContainers,
-        t1 = J.getInterceptor$ax(nodesOrViewContainers);
+        t1 = J.getInterceptor$asx(nodesOrViewContainers);
       if (t1.get$isNotEmpty(nodesOrViewContainers)) {
         lastNode = t1.get$last(nodesOrViewContainers);
         if (lastNode instanceof V.ViewContainer) {
