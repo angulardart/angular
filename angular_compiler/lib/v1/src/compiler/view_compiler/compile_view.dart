@@ -1178,7 +1178,9 @@ class CompileView {
 
     type ??= o.DYNAMIC_TYPE;
 
-    var providerHasChangeDetector =
+    // TODO(b/198420237): remove this explicit `bool` type when no longer needed
+    // to work around https://github.com/dart-lang/language/issues/1785
+    bool providerHasChangeDetector = // ignore: omit_local_variable_types
         provider.providerType == ProviderAstType.Directive &&
             directiveMetadata != null &&
             directiveMetadata.requiresDirectiveChangeDetector;
@@ -1187,7 +1189,7 @@ class CompileView {
     o.OutputType? changeDetectorType;
     if (providerHasChangeDetector) {
       changeDetectorClass = CompileIdentifierMetadata(
-          name: directiveMetadata!.identifier!.name + 'NgCd',
+          name: directiveMetadata.identifier!.name + 'NgCd',
           moduleUrl:
               toTemplateExtension(directiveMetadata.identifier!.moduleUrl));
       changeDetectorType = o.importType(

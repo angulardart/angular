@@ -299,9 +299,13 @@ class _ComponentVisitor
           element, annotation, annotationIndex, _exceptionHandler);
       if (annotationInfo.isInputType) {
         if (isSetter && element.isPublic) {
-          final isField = element is FieldElement;
+          // TODO(b/198420237): remove this explicit `bool` type when no longer
+          // needed to work around
+          // https://github.com/dart-lang/language/issues/1785
+          final bool isField = // ignore: omit_local_variable_types
+              element is FieldElement;
           if (isField) {
-            _refuseLateFinalInputs(element as FieldElement);
+            _refuseLateFinalInputs(element);
           }
           final setter = _setterFor(element);
           if (setter == null) {
@@ -666,10 +670,13 @@ class _ComponentVisitor
 
     var changeDetection = _changeDetection(element, annotationValue);
 
-    final isChangeDetectionLink = linkInfo != null;
+    // TODO(b/198420237): remove this explicit `bool` type when no longer needed
+    // to work around https://github.com/dart-lang/language/issues/1785
+    final bool isChangeDetectionLink = // ignore: omit_local_variable_types
+        linkInfo != null;
     if (isChangeDetectionLink &&
         !(isComponent && changeDetection == ChangeDetectionStrategy.OnPush)) {
-      _exceptionHandler.handle(ErrorMessageForAnnotation(linkInfo!,
+      _exceptionHandler.handle(ErrorMessageForAnnotation(linkInfo,
           'Only supported on components that use "OnPush" change detection'));
     }
 
