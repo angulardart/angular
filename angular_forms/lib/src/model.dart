@@ -377,10 +377,10 @@ abstract class AbstractControl<T> {
       bool? emitModelToViewChange,
       String? rawValue});
 
-  /// Callback when control is asked to update it's value.
+  /// Callback when control is asked to update its value.
   ///
   /// Allows controls to calculate their value. For example control groups
-  /// to calculate it's value based on their children.
+  /// to calculate its value based on their children.
   @protected
   void onUpdate();
 
