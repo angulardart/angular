@@ -50,7 +50,7 @@ TypeLink linkTypeOf(DartType type) {
     return TypeLink.$dynamic;
   }
 
-  var typeArguments = type.aliasArguments;
+  var typeArguments = type.alias?.typeArguments;
   if (typeArguments == null) {
     if (type is InterfaceType) {
       typeArguments = type.typeArguments;

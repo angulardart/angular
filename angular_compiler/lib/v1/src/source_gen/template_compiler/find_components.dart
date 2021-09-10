@@ -326,7 +326,7 @@ class _ComponentVisitor
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
-              var typeArguments = resolvedType.aliasArguments;
+              var typeArguments = resolvedType.alias?.typeArguments;
               if (typeArguments == null) {
                 if (resolvedType is InterfaceType) {
                   typeArguments = resolvedType.typeArguments;

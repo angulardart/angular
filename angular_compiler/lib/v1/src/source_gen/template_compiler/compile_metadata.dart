@@ -471,7 +471,7 @@ class CompileTypeMetadataVisitor
     // DartType for `<type> Function(...)` constructs, but the field `element`
     // is missing. This checks is preventing a `null` value is passed to
     // `moduleUrl()`.
-    Element? element = type.aliasElement;
+    Element? element = type.alias?.element;
     if (element == null) {
       if (type is DynamicType) {
         element = type.element;
