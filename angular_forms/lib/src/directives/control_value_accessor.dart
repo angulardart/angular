@@ -17,7 +17,19 @@ abstract class ControlValueAccessor<T> {
   /// such as the control incorrectly being marked as dirty from a model update.
   void registerOnChange(ChangeFunction<T> f);
 
-  /// Set the function to be called when the control receives a touch event.
+  /// Set the function to be called when the control is touched.
+  ///
+  /// A control's touched state is most commonly used to determine whether or
+  /// not to show a validation error (for example, many forms would not want to
+  /// show a required field as having an error before it's been interacted
+  /// with).
+  ///
+  /// Idiomatically, the control is considered touched once it has received a
+  /// blur event. Certain controls, such as a dropdown select, may want to
+  /// consider the control as touched if the user has opened and then closed the
+  /// list of options.
+  ///
+  /// See [TouchHandler] for the default idiomatic implementation.
   void registerOnTouched(TouchFunction f);
 
   /// This function is called when the control status changes to or
