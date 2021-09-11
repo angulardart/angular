@@ -14,6 +14,8 @@ final Serializers serializers = _$serializers;
 /// The data model for a node with Angular artifacts.
 abstract class InspectorNode
     implements Built<InspectorNode, InspectorNodeBuilder> {
+  static Serializer<InspectorNode> get serializer => _$inspectorNodeSerializer;
+
   factory InspectorNode([void Function(InspectorNodeBuilder) updates]) =
       _$InspectorNode;
   InspectorNode._();
@@ -35,6 +37,9 @@ abstract class InspectorNode
 /// The data model for a directive instance.
 abstract class InspectorDirective
     implements Built<InspectorDirective, InspectorDirectiveBuilder> {
+  static Serializer<InspectorDirective> get serializer =>
+      _$inspectorDirectiveSerializer;
+
   factory InspectorDirective(
           [void Function(InspectorDirectiveBuilder) updates]) =
       _$InspectorDirective;

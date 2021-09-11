@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'dart:html';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/serializer.dart';
 import 'package:meta/meta.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -116,7 +117,10 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
     // TODO(b/194920649): remove.
     _registerObjectGroupServiceExtension('getComponents', getComponents);
     _registerObjectGroupServiceExtension('getNodes', (groupName) {
-      return serializers.serialize(getNodes(groupName));
+      return serializers.serialize(
+        getNodes(groupName),
+        specifiedType: const FullType(BuiltList, [FullType(InspectorNode)]),
+      );
     });
   }
 
