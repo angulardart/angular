@@ -6,7 +6,134 @@ part of 'model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializers _$serializers = (new Serializers().toBuilder()).build();
+Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(InspectorDirective.serializer)
+      ..add(InspectorNode.serializer)
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(InspectorDirective)]),
+          () => new ListBuilder<InspectorDirective>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(InspectorNode)]),
+          () => new ListBuilder<InspectorNode>()))
+    .build();
+Serializer<InspectorNode> _$inspectorNodeSerializer =
+    new _$InspectorNodeSerializer();
+Serializer<InspectorDirective> _$inspectorDirectiveSerializer =
+    new _$InspectorDirectiveSerializer();
+
+class _$InspectorNodeSerializer implements StructuredSerializer<InspectorNode> {
+  @override
+  final Iterable<Type> types = const [InspectorNode, _$InspectorNode];
+  @override
+  final String wireName = 'InspectorNode';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, InspectorNode object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'directives',
+      serializers.serialize(object.directives,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(InspectorDirective)])),
+      'children',
+      serializers.serialize(object.children,
+          specifiedType:
+              const FullType(BuiltList, const [const FullType(InspectorNode)])),
+    ];
+    Object? value;
+    value = object.component;
+    if (value != null) {
+      result
+        ..add('component')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(InspectorDirective)));
+    }
+    return result;
+  }
+
+  @override
+  InspectorNode deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new InspectorNodeBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'component':
+          result.component.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(InspectorDirective))!
+              as InspectorDirective);
+          break;
+        case 'directives':
+          result.directives.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InspectorDirective)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'children':
+          result.children.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InspectorNode)]))!
+              as BuiltList<Object?>);
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$InspectorDirectiveSerializer
+    implements StructuredSerializer<InspectorDirective> {
+  @override
+  final Iterable<Type> types = const [InspectorDirective, _$InspectorDirective];
+  @override
+  final String wireName = 'InspectorDirective';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, InspectorDirective object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  InspectorDirective deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new InspectorDirectiveBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
 
 class _$InspectorNode extends InspectorNode {
   @override
