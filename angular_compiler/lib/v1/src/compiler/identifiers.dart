@@ -18,8 +18,8 @@ const _debugInjectorModuleUrl = '$_angularLib/src/di/errors.dart';
 class DevTools {
   static const _moduleUrl = '$_angularLib/src/devtools.dart';
 
-  static final componentInspector = CompileIdentifierMetadata(
-    name: 'ComponentInspector.instance',
+  static final inspector = CompileIdentifierMetadata(
+    name: 'Inspector.instance',
     moduleUrl: _moduleUrl,
   );
 
@@ -160,11 +160,6 @@ class Queries {
   static const _moduleUrl = '$_angularLib/src/runtime/queries.dart';
 
   const Queries._();
-
-  static final flattenNodes = CompileIdentifierMetadata(
-    name: 'flattenNodes',
-    moduleUrl: _moduleUrl,
-  );
 
   static final firstOrNull = CompileIdentifierMetadata(
     name: 'firstOrNull',

@@ -220,6 +220,25 @@ void main() {
       expect(itemIt.moveNext(), false);
     });
   });
+
+  group('query for view child in multiple embedded views', () {
+    late NgTestFixture<TestSingleDynamicResult> testFixture;
+    setUp(() async {
+      final testBed = NgTestBed(ng.createTestSingleDynamicResultFactory());
+      testFixture = await testBed.create();
+    });
+
+    test('is null', () {
+      expect(testFixture.assertOnlyInstance.div, isNull);
+    });
+
+    test('is the first result', () async {
+      await testFixture.update((component) {
+        component.showEmbeddedViews = true;
+      });
+      expect(testFixture.assertOnlyInstance.div?.text, 'First');
+    });
+  });
 }
 
 @Directive(
@@ -807,4 +826,19 @@ class LabeledElementViewChildrenComponent {
 
   @ViewChildren('divLabel')
   List<HtmlElement>? elementRefs;
+}
+
+@Component(
+  selector: 'test',
+  directives: [NgIf],
+  template: '''
+    <div *ngIf="showEmbeddedViews" #label>First</div>
+    <div *ngIf="showEmbeddedViews" #label>Second</div>
+  ''',
+)
+class TestSingleDynamicResult {
+  var showEmbeddedViews = false;
+
+  @ViewChild('label')
+  HtmlElement? div;
 }

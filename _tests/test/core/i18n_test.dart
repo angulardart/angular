@@ -27,6 +27,8 @@ void main() {
     final testBed = NgTestBed(ng.createTestI18nNodeWithHtmlFactory());
     final testFixture = await testBed.create();
     expect(testFixture.text, 'A message with emphasis!');
+    final lineBreaks = testFixture.rootElement.querySelectorAll('br');
+    expect(lineBreaks, hasLength(1));
     final strongElement = testFixture.rootElement.querySelector('strong')!;
     expect(strongElement.text, 'emphasis!');
   });
@@ -123,7 +125,8 @@ class TestI18nAttribute {}
   selector: 'test',
   template: '''
     <p @i18n="description">
-      A message with <strong>emphasis!</strong>
+      A message<br>
+      with <strong>emphasis!</strong>
     </p>
   ''',
 )

@@ -78,10 +78,6 @@ class EmitterVisitorContext {
     return _classes.removeLast();
   }
 
-  o.ClassStmt? get currentClass {
-    return _classes.isNotEmpty ? _classes[_classes.length - 1] : null;
-  }
-
   String toSource() {
     var lines = _lines;
     if (identical(lines[lines.length - 1].parts.length, 0)) {
@@ -116,7 +112,19 @@ abstract class AbstractEmitterVisitor
   void visitExpressionStmt(
       o.ExpressionStatement stmt, EmitterVisitorContext context) {
     stmt.expr.visitExpression(this, context);
-    context.println(';');
+
+    var sourceComment = '';
+    var sourceReference = stmt.sourceReference;
+    if (sourceReference != null) {
+      sourceComment = '/* REF:'
+          '${sourceReference.sourceUrl}'
+          ':'
+          '${sourceReference.startOffset}'
+          ':'
+          '${sourceReference.endOffset}'
+          ' */';
+    }
+    context.println('$sourceComment;');
   }
 
   @override
@@ -415,6 +423,12 @@ abstract class AbstractEmitterVisitor
     context.print('(');
     ast.value.visitExpression(this, context);
     context.print(emitNullSafeSyntax ? '!)' : '/*!*/)');
+  }
+
+  @override
+  void visitSpreadExpr(o.SpreadExpr ast, EmitterVisitorContext context) {
+    context.print('...');
+    ast.value.visitExpression(this, context);
   }
 
   @override

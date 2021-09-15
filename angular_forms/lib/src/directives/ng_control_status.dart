@@ -12,6 +12,10 @@ import 'ng_control.dart' show NgControl;
     'used or not.')
 class NgControlStatus {
   final NgControl _cd;
+  @Deprecated(
+      'Use listeners or variable binding on the control itself instead. '
+      'This adds overhead for every form control whether the class is '
+      'used or not.')
   NgControlStatus(@Self() this._cd);
 
   @HostBinding('class.ng-untouched')

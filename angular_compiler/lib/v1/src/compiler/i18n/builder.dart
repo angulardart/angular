@@ -78,22 +78,19 @@ class I18nBuilder extends TemplateAstVisitor<void, StringBuffer> {
 
   @override
   void visitElement(ElementAst astNode, [_]) {
-    if (astNode.isVoidElement) {
-      CompileContext.current.reportAndRecover(BuildError.forSourceSpan(
-        astNode.sourceSpan,
-        "Void elements aren't permitted in internationalized messages",
-      ));
-      return;
-    }
     // Visit unpermitted AST nodes to report errors.
     visitAll(astNode.annotations);
     visitAll(astNode.events);
     visitAll(astNode.properties);
     visitAll(astNode.references);
     final tagIndex = _tagCount++;
-    _addArgument('startTag$tagIndex', _start(astNode));
-    visitAll(astNode.childNodes);
-    _addArgument('endTag$tagIndex', _end(astNode));
+    if (astNode.isVoidElement) {
+      _addArgument('voidElement$tagIndex', _start(astNode));
+    } else {
+      _addArgument('startTag$tagIndex', _start(astNode));
+      visitAll(astNode.childNodes);
+      _addArgument('endTag$tagIndex', _end(astNode));
+    }
   }
 
   @override

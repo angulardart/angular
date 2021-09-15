@@ -76,13 +76,6 @@ class CssSelector {
     return results;
   }
 
-  bool isElementSelector() {
-    return element != null &&
-        classNames.isEmpty &&
-        attrs.isEmpty &&
-        notSelectors.isEmpty;
-  }
-
   void setElement([String? element]) {
     this.element = element;
   }
@@ -100,9 +93,14 @@ class CssSelector {
     }
 
     for (var attr in attrs) {
-      attributeBuffer..write(' ')..write(attr.name);
+      attributeBuffer
+        ..write(' ')
+        ..write(attr.name);
       if (attr.value != null) {
-        attributeBuffer..write('="')..write(attr.value)..write('"');
+        attributeBuffer
+          ..write('="')
+          ..write(attr.value)
+          ..write('"');
       }
     }
     return (getHtmlTagDefinition(tagName).isVoid)

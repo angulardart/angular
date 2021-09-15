@@ -2,6 +2,7 @@ import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/identifiers.dart'
     show DomHelpers, Identifiers, SafeHtmlAdapters;
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
+import 'package:angular_compiler/v1/src/compiler/ir/model.dart';
 import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/compiler/security.dart';
 import 'package:angular_compiler/v1/src/compiler/view_compiler/compile_view.dart'
@@ -25,6 +26,10 @@ List<o.Statement> bindingToUpdateStatements(
   var visitor = _UpdateStatementsVisitor(
       appViewInstance, renderNode, binding.source, isHtmlElement, currValExpr);
   var updateStatement = binding.target.accept(visitor, renderValue);
+  if (binding.source is BoundExpression) {
+    updateStatement.sourceReference =
+        (binding.source as BoundExpression).sourceReference;
+  }
   var devToolsStatement =
       devToolsBindingStatement(binding, appViewInstance, currValExpr);
   return [

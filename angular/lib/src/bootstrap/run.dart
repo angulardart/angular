@@ -68,7 +68,7 @@ Injector appInjector(
   });
 
   if (isDevToolsEnabled) {
-    ComponentInspector.instance.inspect(applicationRef);
+    Inspector.instance.inspect(applicationRef);
   }
 
   return injector;
@@ -166,7 +166,7 @@ Injector _identityInjector(Injector parent) => parent;
 /// Returns a [ComponentRef] with the created root component instance within the
 /// context of a new [ApplicationRef], with change detection and other framework
 /// internals setup.
-ComponentRef<T> runApp<T>(
+ComponentRef<T> runApp<T extends Object>(
   ComponentFactory<T> componentFactory, {
   InjectorFactory createInjector = _identityInjector,
 }) {
@@ -183,7 +183,7 @@ ComponentRef<T> runApp<T>(
 /// component.
 ///
 /// See [runApp] for additional details.
-Future<ComponentRef<T>> runAppAsync<T>(
+Future<ComponentRef<T>> runAppAsync<T extends Object>(
   ComponentFactory<T> componentFactory, {
   required Future<void> Function(Injector) beforeComponentCreated,
   InjectorFactory createInjector = _identityInjector,
@@ -207,12 +207,12 @@ Future<ComponentRef<T>> runAppAsync<T>(
 /// ... if neither your app nor your dependencies requires these APIs, it is
 /// recommended to switch to [runApp] instead, which has significant code-size
 /// and startup time benefits.
-ComponentRef<T> runAppLegacy<T>(
+ComponentRef<T> runAppLegacy<T extends Object>(
   Type componentType, {
   List<Object> createInjectorFromProviders = const [],
   void Function()? initReflector,
 }) {
-  assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
+  assert(T == Object || T == componentType, 'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
@@ -232,13 +232,13 @@ ComponentRef<T> runAppLegacy<T>(
 /// Starts a new AngularDart application with [componentType] as the root.
 ///
 /// This is the [runAppLegacy] variant of the [runAppAsync] function.
-Future<ComponentRef<T>> runAppLegacyAsync<T>(
+Future<ComponentRef<T>> runAppLegacyAsync<T extends Object>(
   Type componentType, {
   required Future<void> Function(Injector) beforeComponentCreated,
   List<Object> createInjectorFromProviders = const [],
   void Function()? initReflector,
 }) {
-  assert(T == dynamic || T == componentType, 'Expected $componentType == $T');
+  assert(T == Object || T == componentType, 'Expected $componentType == $T');
   if (initReflector != null) {
     initReflector();
   }
@@ -260,7 +260,7 @@ Future<ComponentRef<T>> runAppLegacyAsync<T>(
 ///
 /// See [runAppLegacy] for the new name of this method.
 @Deprecated('Renamed "runAppLegacy". See "runApp" for the preferred API.')
-Future<ComponentRef<T>> bootstrapStatic<T>(
+Future<ComponentRef<T>> bootstrapStatic<T extends Object>(
   Type componentType, [
   List<Object> providers = const [],
   void Function()? initReflector,

@@ -6,6 +6,7 @@ import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/view_type.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart'
     show toTemplateExtension;
+import 'package:angular_compiler/v2/context.dart';
 
 import '../compile_metadata.dart'
     show
@@ -408,6 +409,7 @@ class CompileView {
   final afterContentLifecycleCallbacksMethod = CompileMethod();
   final afterViewLifecycleCallbacksMethod = CompileMethod();
   final destroyMethod = CompileMethod();
+  final bool enableDataDebugSource;
 
   /// Methods generated during view compilation.
   ///
@@ -440,6 +442,7 @@ class CompileView {
     this.viewIndex,
     this.declarationElement,
     this.templateVariables,
+    this.enableDataDebugSource,
   ) {
     nameResolver = ViewNameResolver(this);
     storage = CompileViewStorage();
@@ -750,22 +753,31 @@ class CompileView {
   );
 
   /// Create an html node and appends to parent element.
-  void createElement(CompileElement parent, NodeReference elementRef,
-      int nodeIndex, String tagName, TemplateAst ast) {
+  void createElement(
+    CompileElement parent,
+    NodeReference elementRef,
+    String tagName,
+    TemplateAst ast,
+  ) {
     var parentRenderNodeExpr = _getParentRenderNode(parent);
 
     _createElementAndAppend(
       tagName,
       parentRenderNodeExpr,
       elementRef,
+      templateUrl: component.template?.templateUrl,
+      offset: (component.template?.templateOffset ?? 0) +
+          ast.sourceSpan.start.offset,
     );
   }
 
   void _createElementAndAppend(
     String tagName,
     o.Expression parent,
-    NodeReference elementRef,
-  ) {
+    NodeReference elementRef, {
+    String? templateUrl,
+    int? offset,
+  }) {
     // No namespace just call [document.createElement].
     if (docVarName == null) {
       _createMethod.addStmt(_createLocalDocumentVar());
@@ -809,6 +821,24 @@ class CompileView {
       _createMethod.addStmt(
         elementRef.toWriteStmt(unsafeCast(createRenderNodeExpr)),
       );
+    }
+
+    _addDataDebugSource(elementRef, templateUrl, offset);
+  }
+
+  void _addDataDebugSource(
+    NodeReference elementRef,
+    String? templateUrl,
+    int? offset,
+  ) {
+    if (enableDataDebugSource) {
+      if (templateUrl != null) {
+        _createMethod.addStmt(elementRef.toReadExpr().callMethod(
+            'setAttribute', [
+          o.literal('data-debug-source'),
+          o.literal('$templateUrl:$offset')
+        ]).toStmt());
+      }
     }
   }
 
@@ -948,6 +978,7 @@ class CompileView {
   }
 
   o.Expression createComponentNodeAndAppend(
+    CompileDirectiveMetadata parentComponent,
     CompileDirectiveMetadata component,
     CompileElement parent,
     NodeReference elementRef,
@@ -971,6 +1002,11 @@ class CompileView {
     } else {
       _initializeAndAppendNode(parent, elementRef, root);
     }
+    _addDataDebugSource(
+        elementRef,
+        parentComponent.template?.templateUrl,
+        (parentComponent.template?.templateOffset ?? 0) +
+            ast.sourceSpan.start.offset);
     return componentViewExpr;
   }
 
@@ -1062,6 +1098,25 @@ class CompileView {
         binding, directiveInstance, node, false, handler));
   }
 
+  /// Registers any [directives] on [element] with the Inspector.
+  void registerDirectives(
+    CompileElement element,
+    List<o.Expression> directives,
+  ) {
+    if (directives.isEmpty) {
+      return;
+    }
+    _createMethod.addStmt(
+      o.IfStmt(o.importExpr(DevTools.isDevToolsEnabled), [
+        for (final directive in directives)
+          o.importExpr(DevTools.inspector).callMethod('registerDirective', [
+            element.renderNode.toReadExpr(),
+            directive,
+          ]).toStmt(),
+      ]),
+    );
+  }
+
   void updateQueryAtStartup(CompileQuery query) {
     _createMethod.addStmts(query.createImmediateUpdates());
   }
@@ -1123,7 +1178,9 @@ class CompileView {
 
     type ??= o.DYNAMIC_TYPE;
 
-    var providerHasChangeDetector =
+    // TODO(b/198420237): remove this explicit `bool` type when no longer needed
+    // to work around https://github.com/dart-lang/language/issues/1785
+    bool providerHasChangeDetector = // ignore: omit_local_variable_types
         provider.providerType == ProviderAstType.Directive &&
             directiveMetadata != null &&
             directiveMetadata.requiresDirectiveChangeDetector;
@@ -1132,7 +1189,7 @@ class CompileView {
     o.OutputType? changeDetectorType;
     if (providerHasChangeDetector) {
       changeDetectorClass = CompileIdentifierMetadata(
-          name: directiveMetadata!.identifier!.name + 'NgCd',
+          name: directiveMetadata.identifier!.name + 'NgCd',
           moduleUrl:
               toTemplateExtension(directiveMetadata.identifier!.moduleUrl));
       changeDetectorType = o.importType(
@@ -1213,16 +1270,32 @@ class CompileView {
       // We don't have to eagerly initialize this object. Add an uninitialized
       // class field and provide a getter to construct the provider on demand.
       final cachedType = providerHasChangeDetector ? changeDetectorType! : type;
-      final internalField = storage.allocate(
-        '_$propName',
-        outputType: cachedType.asNullable(),
-        modifiers: const [o.StmtModifier.Private],
-      );
 
       if (providerHasChangeDetector) {
         resolvedProviderValueExpr =
             o.importExpr(changeDetectorClass).instantiate(changeDetectorParams);
       }
+
+      if (CompileContext.current.emitNullSafeCode) {
+        // If null-safety is enabled, use `late` to implement a lazily
+        // initialized field.
+        final field = storage.allocate(
+          propName,
+          // TODO(b/190556639) - Use final.
+          modifiers: const [o.StmtModifier.Late],
+          outputType: type,
+          initializer: resolvedProviderValueExpr,
+        );
+        return storage.buildReadExpr(field);
+      }
+
+      // If null-safety is disabled, manually implement a lazily initialized
+      // field.
+      final internalField = storage.allocate(
+        '_$propName',
+        outputType: cachedType.asNullable(),
+        modifiers: const [o.StmtModifier.Private],
+      );
 
       final getter = CompileMethod()
         ..addStmts([

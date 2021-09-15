@@ -1,3 +1,5 @@
+import 'package:angular_compiler/v1/src/compiler/ir/model.dart';
+
 import '../compile_metadata.dart' show CompileIdentifierMetadata;
 
 /// Supported modifiers for [OutputType].
@@ -229,6 +231,10 @@ abstract class Expression {
 
   NotNullExpr notNull() {
     return NotNullExpr(this);
+  }
+
+  SpreadExpr spread() {
+    return SpreadExpr(this);
   }
 
   BinaryOperatorExpr equals(Expression rhs) {
@@ -614,6 +620,17 @@ class NotNullExpr extends Expression {
   }
 }
 
+class SpreadExpr extends Expression {
+  final Expression value;
+
+  SpreadExpr(this.value, {OutputType? type}) : super(type);
+
+  @override
+  R visitExpression<R, C>(ExpressionVisitor<R, C> visitor, C context) {
+    return visitor.visitSpreadExpr(this, context);
+  }
+}
+
 class CastExpr extends Expression {
   final Expression value;
   CastExpr(this.value, OutputType? type) : super(type);
@@ -776,6 +793,7 @@ abstract class ExpressionVisitor<R, C> {
   R visitIfNullExpr(IfNullExpr ast, C context);
   R visitNotExpr(NotExpr ast, C context);
   R visitNotNullExpr(NotNullExpr ast, C context);
+  R visitSpreadExpr(SpreadExpr ast, C context);
   R visitCastExpr(CastExpr ast, C context);
   R visitFunctionExpr(FunctionExpr ast, C context);
   R visitBinaryOperatorExpr(BinaryOperatorExpr ast, C context);
@@ -797,6 +815,7 @@ var NULL_EXPR = LiteralExpr(null, null);
 enum StmtModifier { Const, Final, Late, Private, Static }
 
 abstract class Statement {
+  SourceReference? sourceReference;
   List<StmtModifier> modifiers;
   Statement([this.modifiers = const []]);
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context);
@@ -1165,6 +1184,11 @@ class ExpressionTransformer<C>
   }
 
   @override
+  Expression visitSpreadExpr(SpreadExpr ast, C context) {
+    return SpreadExpr(ast.value.visitExpression(this, context));
+  }
+
+  @override
   Expression visitNotExpr(NotExpr ast, C context) {
     return NotExpr(ast.condition.visitExpression(this, context));
   }
@@ -1243,7 +1267,12 @@ class ExpressionTransformer<C>
 
   @override
   Statement visitExpressionStmt(ExpressionStatement stmt, C context) {
-    return ExpressionStatement(stmt.expr.visitExpression(this, context));
+    return ExpressionStatement(stmt.expr.visitExpression(this, context))
+      // We visit expression statements after the sourceReference is already
+      // set. Ideally we should visit all statements prior to calling
+      // `bindingToUpdateStatements` which attaches the correct sourceReference
+      // information.
+      ..sourceReference = stmt.sourceReference;
   }
 
   @override
@@ -1407,6 +1436,12 @@ class RecursiveExpressionVisitor<C>
 
   @override
   Expression visitNotNullExpr(NotNullExpr ast, C context) {
+    ast.value.visitExpression(this, context);
+    return ast;
+  }
+
+  @override
+  Expression visitSpreadExpr(SpreadExpr ast, C context) {
     ast.value.visitExpression(this, context);
     return ast;
   }

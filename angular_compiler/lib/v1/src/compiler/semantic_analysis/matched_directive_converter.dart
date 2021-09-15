@@ -1,6 +1,7 @@
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart' as core;
+import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart';
 import 'package:angular_compiler/v1/src/compiler/ir/model.dart' as ir;
 import 'package:angular_compiler/v1/src/compiler/optimize_ir/merge_events.dart';
 import 'package:angular_compiler/v1/src/compiler/semantic_analysis/binding_converter.dart';
@@ -19,7 +20,7 @@ import 'package:angular_compiler/v1/src/compiler/view_compiler/ir/provider_sourc
 List<ir.MatchedDirective> convertMatchedDirectives(
   Iterable<ast.DirectiveAst> directives,
   CompileElement compileElement,
-  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata compileDirectiveMetadata,
 ) {
   final matchedDirectives = <ir.MatchedDirective>[];
   var index = -1;
@@ -27,7 +28,7 @@ List<ir.MatchedDirective> convertMatchedDirectives(
     index++;
     var providerSource = compileElement.directiveInstances[index];
     matchedDirectives.add(convertMatchedDirective(
-        directive, providerSource, compileElement, analyzedClass));
+        directive, providerSource, compileElement, compileDirectiveMetadata));
   }
   return matchedDirectives;
 }
@@ -47,19 +48,19 @@ ir.MatchedDirective convertMatchedDirective(
   ast.DirectiveAst directive,
   ProviderSource? providerSource,
   CompileElement compileElement,
-  AnalyzedClass? analyzedClass,
+  CompileDirectiveMetadata compileDirectiveMetadata,
 ) {
   var inputs = convertAllToBinding(
     directive.inputs,
     directive: directive.directive,
-    analyzedClass: analyzedClass,
+    compileDirectiveMetadata: compileDirectiveMetadata,
     compileElement: compileElement,
   );
 
   var outputs = convertAllToBinding(
     directive.outputs,
     directive: directive.directive,
-    analyzedClass: analyzedClass,
+    compileDirectiveMetadata: compileDirectiveMetadata,
     compileElement: compileElement,
   );
   outputs = mergeEvents(outputs);

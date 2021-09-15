@@ -26,7 +26,7 @@ void main() {
 
 /// Loads [ComponentFactory] and expects its text to have [fontStyle].
 Future<void> expectTextFontStyle(
-  ComponentFactory<void> componentFactory,
+  ComponentFactory<Object> componentFactory,
   String fontStyle,
 ) async {
   final testBed = NgTestBed(componentFactory);

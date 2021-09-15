@@ -48,6 +48,7 @@ class ViewCompiler {
       0,
       CompileElement.root(),
       [],
+      _genConfig.enableDataDebugSource,
     );
     view.compileView = compileView;
     _buildView(view);

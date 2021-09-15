@@ -48,11 +48,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -113,17 +108,17 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.string;
     if (import7.checkBinding(this._expr_0, currVal_0, 'string', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._SimpleStringInterpolate_0_5, 'value', currVal_0);
+        import8.Inspector.instance.recordInput(this._SimpleStringInterpolate_0_5, 'value', currVal_0);
       }
-      this._SimpleStringInterpolate_0_5.value = currVal_0;
+      this._SimpleStringInterpolate_0_5.value = currVal_0 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:667:683 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = _ctx.anything;
     if (import7.checkBinding(this._expr_1, currVal_1, 'anything', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._SimpleUnknownInterpolate_1_5, 'value', currVal_1);
+        import8.Inspector.instance.recordInput(this._SimpleUnknownInterpolate_1_5, 'value', currVal_1);
       }
-      this._SimpleUnknownInterpolate_1_5.value = currVal_1;
+      this._SimpleUnknownInterpolate_1_5.value = currVal_1 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:721:739 */;
       this._expr_1 = currVal_1;
     }
     this._compView_0.detectChanges();
@@ -200,11 +195,6 @@ class ViewSimpleStringInterpolate0 extends import0.ComponentView<import1.SimpleS
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('simple-string'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -218,7 +208,7 @@ class ViewSimpleStringInterpolate0 extends import0.ComponentView<import1.SimpleS
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import12.interpolateString0(_ctx.value));
+    this._textBinding_0.updateText(import12.interpolateString0(_ctx.value)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1233:1242 */;
   }
 
   static void _debugClearComponentStyles() {
@@ -271,11 +261,6 @@ class ViewSimpleUnknownInterpolate0 extends import0.ComponentView<import1.Simple
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('simple-unknown'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -289,7 +274,7 @@ class ViewSimpleUnknownInterpolate0 extends import0.ComponentView<import1.Simple
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import12.interpolate0(_ctx.value));
+    this._textBinding_0.updateText(import12.interpolate0(_ctx.value)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1365:1374 */;
   }
 
   static void _debugClearComponentStyles() {
@@ -341,11 +326,6 @@ class ViewKnownFinalValuesInterpolate0 extends import0.ComponentView<import1.Kno
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('known-finals'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -418,11 +398,6 @@ class ViewAdjacentInterpolate0 extends import0.ComponentView<import1.AdjacentInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('adjacency'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -449,11 +424,11 @@ class ViewAdjacentInterpolate0 extends import0.ComponentView<import1.AdjacentInt
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.greeting));
-    this._textBinding_3.updateText(import12.interpolateString0(_ctx.place));
-    this._textBinding_7.updateText(import12.interpolateString0(_ctx.greeting));
-    this._textBinding_9.updateText(import12.interpolateString0(_ctx.name));
-    this._textBinding_11.updateText(import12.interpolateString0(_ctx.place));
+    this._textBinding_1.updateText(import12.interpolateString0(_ctx.greeting)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1815:1827 */;
+    this._textBinding_3.updateText(import12.interpolateString0(_ctx.place)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1828:1837 */;
+    this._textBinding_7.updateText(import12.interpolateString0(_ctx.greeting)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1856:1868 */;
+    this._textBinding_9.updateText(import12.interpolateString0(_ctx.name)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1891:1899 */;
+    this._textBinding_11.updateText(import12.interpolateString0(_ctx.place)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:1907:1916 */;
   }
 
   static void _debugClearComponentStyles() {
@@ -505,11 +480,6 @@ class ViewLiteralsInterpolate0 extends import0.ComponentView<import1.LiteralsInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('literals'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -583,11 +553,6 @@ class ViewPropertyInterpolate0 extends import0.ComponentView<import1.PropertyInt
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('property'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -604,7 +569,7 @@ class ViewPropertyInterpolate0 extends import0.ComponentView<import1.PropertyInt
     final _ctx = this.ctx;
     final currVal_0 = import12.interpolateString2('', _ctx.title1, ' ', _ctx.title2, '');
     if (import7.checkBinding(this._expr_0, currVal_0, '{{title1}} {{title2}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import13.setProperty(this._el_0, 'title', currVal_0);
+      import13.setProperty(this._el_0, 'title', currVal_0) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2275:2304 */;
       this._expr_0 = currVal_0;
     }
   }
@@ -661,11 +626,6 @@ class ViewInputInterpolate0 extends import0.ComponentView<import1.InputInterpola
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('inputs'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -686,9 +646,9 @@ class ViewInputInterpolate0 extends import0.ComponentView<import1.InputInterpola
     final currVal_0 = import12.interpolateString2('', _ctx.a, ' ', _ctx.b, '');
     if (import7.checkBinding(this._expr_0, currVal_0, '{{a}} {{b}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
+        import8.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
       }
-      this._ChildComponent_0_5.value = currVal_0;
+      this._ChildComponent_0_5.value = currVal_0 /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2509:2528 */;
       this._expr_0 = currVal_0;
     }
     this._compView_0.detectChanges();
@@ -748,11 +708,6 @@ class ViewChildComponent0 extends import0.ComponentView<import1.ChildComponent> 
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -835,11 +790,6 @@ class ViewMaximumInterpolateLimit0 extends import0.ComponentView<import1.Maximum
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('max-interpolate-limit'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -899,34 +849,34 @@ class ViewMaximumInterpolateLimit0 extends import0.ComponentView<import1.Maximum
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import12.interpolateString0(_ctx.stringA));
-    this._textBinding_3.updateText(import12.interpolateString0(_ctx.stringB));
-    this._textBinding_5.updateText(import12.interpolateString0(_ctx.stringC));
-    this._textBinding_7.updateText(import12.interpolateString0(_ctx.stringD));
-    this._textBinding_9.updateText(import12.interpolateString0(_ctx.stringE));
-    this._textBinding_11.updateText(import12.interpolateString0(_ctx.stringF));
-    this._textBinding_13.updateText(import12.interpolateString0(_ctx.stringG));
-    this._textBinding_15.updateText(import12.interpolateString0(_ctx.stringH));
-    this._textBinding_17.updateText(import12.interpolateString0(_ctx.stringI));
-    this._textBinding_19.updateText(import12.interpolateString0(_ctx.stringJ));
-    this._textBinding_22.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringA)));
-    this._textBinding_24.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringB)));
-    this._textBinding_26.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringC)));
-    this._textBinding_28.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringD)));
-    this._textBinding_30.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringE)));
-    this._textBinding_32.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringF)));
-    this._textBinding_34.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringG)));
-    this._textBinding_36.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringH)));
-    this._textBinding_38.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringI)));
-    this._textBinding_40.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringJ)));
+    this._textBinding_1.updateText(import12.interpolateString0(_ctx.stringA)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2835:2846 */;
+    this._textBinding_3.updateText(import12.interpolateString0(_ctx.stringB)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2853:2864 */;
+    this._textBinding_5.updateText(import12.interpolateString0(_ctx.stringC)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2871:2882 */;
+    this._textBinding_7.updateText(import12.interpolateString0(_ctx.stringD)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2889:2900 */;
+    this._textBinding_9.updateText(import12.interpolateString0(_ctx.stringE)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2907:2918 */;
+    this._textBinding_11.updateText(import12.interpolateString0(_ctx.stringF)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2925:2936 */;
+    this._textBinding_13.updateText(import12.interpolateString0(_ctx.stringG)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2943:2954 */;
+    this._textBinding_15.updateText(import12.interpolateString0(_ctx.stringH)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2961:2972 */;
+    this._textBinding_17.updateText(import12.interpolateString0(_ctx.stringI)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2979:2990 */;
+    this._textBinding_19.updateText(import12.interpolateString0(_ctx.stringJ)) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:2997:3008 */;
+    this._textBinding_22.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringA))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3038:3055 */;
+    this._textBinding_24.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringB))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3062:3079 */;
+    this._textBinding_26.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringC))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3086:3103 */;
+    this._textBinding_28.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringD))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3110:3127 */;
+    this._textBinding_30.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringE))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3134:3151 */;
+    this._textBinding_32.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringF))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3158:3175 */;
+    this._textBinding_34.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringG))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3182:3199 */;
+    this._textBinding_36.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringH))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3206:3223 */;
+    this._textBinding_38.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringI))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3230:3247 */;
+    this._textBinding_40.updateText(import12.interpolate0(import1.MaximumInterpolateLimit.hide(_ctx.stringJ))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3254:3271 */;
     final currVal_0 = import12.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, ',', _ctx.stringE, ',', _ctx.stringF, ',', _ctx.stringG, ',', _ctx.stringH, ',', _ctx.stringI, '']);
     if (import7.checkBinding(this._expr_0, currVal_0, '{{stringA}},{{stringB}},{{stringC}},{{stringD}},{{stringE}},{{stringF}},{{stringG}},{{stringH}},{{stringI}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import13.setProperty(this._el_43, 'title', currVal_0);
+      import13.setProperty(this._el_43, 'title', currVal_0) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3395:3510 */;
       this._expr_0 = currVal_0;
     }
     final currVal_1 = import12.interpolateN(['', _ctx.stringA, ',', _ctx.stringB, ',', _ctx.stringC, ',', _ctx.stringD, '']);
     if (import7.checkBinding(this._expr_1, currVal_1, '{{stringA}},{{stringB}},{{stringC}},{{stringD}}', 'asset:goldens/test/dom_bindings/interpolate.dart')) {
-      import13.setProperty(this._el_45, 'title', currVal_1);
+      import13.setProperty(this._el_45, 'title', currVal_1) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:3533:3588 */;
       this._expr_1 = currVal_1;
     }
   }
@@ -983,11 +933,6 @@ class ViewNullCheckedInterpolate0 extends import0.ComponentView<import1.NullChec
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('null-checked'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/interpolate.dart' : null);
   }
@@ -1005,9 +950,9 @@ class ViewNullCheckedInterpolate0 extends import0.ComponentView<import1.NullChec
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_0.updateText(import12.interpolate0((_ctx.maybeNull ?? '')));
-    this._textBinding_2.updateText(import12.interpolateString0(_ctx.maybeNull?.toUpperCase()));
-    this._textBinding_4.updateTextWithPrimitive(_ctx.maybeNull?.hashCode);
+    this._textBinding_0.updateText(import12.interpolate0((_ctx.maybeNull ?? ''))) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:4071:4090 */;
+    this._textBinding_2.updateText(import12.interpolateString0(_ctx.maybeNull?.toUpperCase())) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:4095:4123 */;
+    this._textBinding_4.updateTextWithPrimitive(_ctx.maybeNull?.hashCode) /* REF:asset:goldens/test/dom_bindings/interpolate.dart:4128:4151 */;
   }
 
   static void _debugClearComponentStyles() {

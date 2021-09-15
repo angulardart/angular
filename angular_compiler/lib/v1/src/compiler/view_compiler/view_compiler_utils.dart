@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
 import 'package:angular_compiler/v1/src/compiler/compile_metadata.dart'
     show
         CompileTokenMetadata,
@@ -207,18 +206,6 @@ o.Expression createDiTokenExpression(CompileTokenMetadata token) {
   }
 }
 
-o.Expression createDebugInfoTokenExpression(CompileTokenMetadata token) {
-  if (token.value != null) {
-    return o.literal(token.value);
-  } else if (token.identifierIsInstance) {
-    return o
-        .importExpr(token.identifier!)
-        .instantiate([], type: o.importType(token.identifier, []));
-  } else {
-    return o.importExpr(token.identifier!);
-  }
-}
-
 /// Do not use this function outside of projectedNodes.
 o.Expression createFlatArrayForProjectNodes(
   List<o.Expression> expressions, {
@@ -302,24 +289,6 @@ o.Expression? unwrapDirectiveInstance(o.Expression? directiveInstance) {
   return null;
 }
 
-// Return instance of directive for both regular directives and directives
-// with ChangeDetector class.
-o.Expression? unwrapDirective(o.Expression directiveInstance) {
-  var instance = unwrapDirectiveInstance(directiveInstance);
-  if (instance != null) {
-    return instance;
-  } else if (directiveInstance is o.ReadClassMemberExpr) {
-    // Non change detector directive read.
-    return directiveInstance;
-  }
-  return null;
-}
-
-String toTemplateExtension(String moduleUrl) {
-  if (!moduleUrl.endsWith('.dart')) return moduleUrl;
-  return moduleUrl.substring(0, moduleUrl.length - 5) + '.template.dart';
-}
-
 List<ir.Binding> mergeHtmlAndDirectiveAttributes(
     ElementAst elementAst, List<CompileDirectiveMetadata> directives) {
   var attrs = elementAst.attrs;
@@ -376,11 +345,10 @@ List<ir.Binding> _mergeHtmlAndDirectiveAttrs(
       var value = convertHostAttributeToBinding(
           name,
           ast.ASTWithSource.missingSource(directiveMeta.hostAttributes[name]!),
-          directiveMeta.analyzedClass);
+          directiveMeta);
       var prevValue = result[name];
       result[name] = prevValue != null
-          ? _mergeAttributeValue(
-              name, prevValue, value, directiveMeta.analyzedClass)
+          ? _mergeAttributeValue(name, prevValue, value, directiveMeta)
           : value;
     }
   }
@@ -411,12 +379,8 @@ void _increment(Map<String, int> mergeCount, String name) {
   mergeCount[name] = (mergeCount[name] as int) + 1;
 }
 
-ir.Binding _mergeAttributeValue(
-  String attrName,
-  ir.Binding attr1,
-  ir.Binding attr2,
-  AnalyzedClass? analyzedClass,
-) {
+ir.Binding _mergeAttributeValue(String attrName, ir.Binding attr1,
+    ir.Binding attr2, CompileDirectiveMetadata? compileDirectiveMetadata) {
   if (attrName != classAttrName && attrName != styleAttrName) {
     return attr2;
   }
@@ -442,7 +406,7 @@ ir.Binding _mergeAttributeValue(
             ast.ASTWithSource.missingSource(ast.Interpolation(
                 ['', ' ', ''], [_asAst(attrValue1), _asAst(attrValue2)])),
             null,
-            analyzedClass));
+            compileDirectiveMetadata));
   }
 }
 

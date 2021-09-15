@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:source_span/source_span.dart';
 
 import 'messages/messages.dart';
@@ -14,7 +13,6 @@ class SourceSpanMessageTuple {
 
 /// Defines common messages to use during compilation.
 abstract class Messages {
-  @visibleForOverriding
   const Messages.base();
 
   /// Possible reasons that static analysis/the compiler failed.
@@ -32,7 +30,9 @@ abstract class Messages {
     Iterable<SourceSpanMessageTuple> tuples, {
     required String reason,
   }) {
-    final buffer = StringBuffer(reason)..writeln()..writeln();
+    final buffer = StringBuffer(reason)
+      ..writeln()
+      ..writeln();
     for (final tuple in tuples) {
       buffer.writeln(tuple.sourceSpan.message(tuple.message));
     }

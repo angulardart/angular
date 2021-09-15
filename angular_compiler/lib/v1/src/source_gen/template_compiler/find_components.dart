@@ -299,20 +299,17 @@ class _ComponentVisitor
           element, annotation, annotationIndex, _exceptionHandler);
       if (annotationInfo.isInputType) {
         if (isSetter && element.isPublic) {
-          final isField = element is FieldElement;
+          // TODO(b/198420237): remove this explicit `bool` type when no longer
+          // needed to work around
+          // https://github.com/dart-lang/language/issues/1785
+          final bool isField = // ignore: omit_local_variable_types
+              element is FieldElement;
           if (isField) {
-            _refuseLateFinalInputs(element as FieldElement);
+            _refuseLateFinalInputs(element);
           }
-          // Resolves specified generic type parameters.
-          final setter = _directiveClassElement!.thisType
-              .lookUpInheritedSetter(element.displayName)!;
-          if (setter.parameters.isEmpty) {
-            return CompileContext.current.reportAndRecover(
-              BuildError.forElement(
-                element,
-                '@Input setter has no parameters.',
-              ),
-            );
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
           }
           final propertyType = setter.parameters.first.type;
           final dynamicType = setter.library.typeProvider.dynamicType;
@@ -329,7 +326,7 @@ class _ComponentVisitor
             } else {
               // Convert any generic type parameters from the input's type to
               // our internal output AST.
-              var typeArguments = resolvedType.aliasArguments;
+              var typeArguments = resolvedType.alias?.typeArguments;
               if (typeArguments == null) {
                 if (resolvedType is InterfaceType) {
                   typeArguments = resolvedType.typeArguments;
@@ -357,15 +354,19 @@ class _ComponentVisitor
         }
       } else if (annotationInfo.isContentType) {
         if (isSetter && element.isPublic) {
-          final returnType = _fieldOrPropertyType(element);
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
+          }
+          final queryType = setter.parameters.first.type;
           final contentQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
-            _fieldOrPropertyType(element),
+            queryType,
           );
           if (contentQuery.first) {
-            _refuseNonNullableSingleChildQueries(element, returnType!);
+            _refuseNonNullableSingleChildQueries(element, queryType);
           }
           if (element is FieldElement) {
             _refuseLateQueries(element);
@@ -377,15 +378,19 @@ class _ComponentVisitor
         }
       } else if (annotationInfo.isViewType) {
         if (isSetter && element.isPublic) {
-          final returnType = _fieldOrPropertyType(element);
+          final setter = _setterFor(element);
+          if (setter == null) {
+            return;
+          }
+          final queryType = setter.parameters.first.type;
           final viewQuery = _getQuery(
             annotationInfo,
             // Avoid emitting the '=' part of the setter.
             element.displayName,
-            returnType,
+            queryType,
           );
           if (viewQuery.first) {
-            _refuseNonNullableSingleChildQueries(element, returnType!);
+            _refuseNonNullableSingleChildQueries(element, queryType);
           }
           if (element is FieldElement) {
             _refuseLateQueries(element);
@@ -429,14 +434,24 @@ class _ComponentVisitor
     }
   }
 
-  DartType? _fieldOrPropertyType(Element element) {
-    if (element is PropertyAccessorElement && element.isSetter) {
-      return element.parameters.first.type;
+  /// Attempts to return a valid setter for [element].
+  ///
+  /// May return null if no setter corresponds to [element], or the [element]
+  /// itself is invalid (e.g. a setter without parameters or a body).
+  PropertyAccessorElement? _setterFor(Element element) {
+    // Resolves specified generic type parameters.
+    final setter = _directiveClassElement!.thisType
+        .lookUpInheritedSetter(element.displayName)!;
+    if (setter.parameters.isEmpty) {
+      CompileContext.current.reportAndRecover(
+        BuildError.forElement(
+          element,
+          'Invalid setter, please check build log for syntax errors.',
+        ),
+      );
+      return null;
     }
-    if (element is FieldElement) {
-      return element.type;
-    }
-    return null;
+    return setter;
   }
 
   List<CompileTokenMetadata> _getSelectors(
@@ -589,7 +604,9 @@ class _ComponentVisitor
 
     // Merge field and setter inputs, so that a derived field input binding is
     // not overridden by an inherited setter input.
-    _inputs..addAll(_fieldInputs)..addAll(_setterInputs);
+    _inputs
+      ..addAll(_fieldInputs)
+      ..addAll(_setterInputs);
     _fieldInputs.clear();
     _setterInputs.clear();
   }
@@ -653,10 +670,13 @@ class _ComponentVisitor
 
     var changeDetection = _changeDetection(element, annotationValue);
 
-    final isChangeDetectionLink = linkInfo != null;
+    // TODO(b/198420237): remove this explicit `bool` type when no longer needed
+    // to work around https://github.com/dart-lang/language/issues/1785
+    final bool isChangeDetectionLink = // ignore: omit_local_variable_types
+        linkInfo != null;
     if (isChangeDetectionLink &&
         !(isComponent && changeDetection == ChangeDetectionStrategy.OnPush)) {
-      _exceptionHandler.handle(ErrorMessageForAnnotation(linkInfo!,
+      _exceptionHandler.handle(ErrorMessageForAnnotation(linkInfo,
           'Only supported on components that use "OnPush" change detection'));
     }
 
@@ -751,6 +771,7 @@ class _ComponentVisitor
       encapsulation: _encapsulation(template),
       template: templateContent,
       templateUrl: templateUrl,
+      templateOffset: _templateOffsetForAnnotation(annotationInfo),
       styles: coerceStringList(template, 'styles'),
       styleUrls: coerceStringList(template, 'styleUrls'),
       preserveWhitespace: coerceBool(
@@ -759,6 +780,28 @@ class _ComponentVisitor
         defaultTo: false,
       ),
     );
+  }
+
+  int _templateOffsetForAnnotation(AnnotationInformation annotationInfo) {
+    var templateExpression =
+        (annotationInfo.annotation as ElementAnnotationImpl)
+            .annotationAst
+            .arguments
+            ?.arguments
+            .firstWhereOrNull((argument) =>
+                argument is NamedExpression &&
+                argument.name.label.name == 'template') as NamedExpression?;
+    if (templateExpression != null) {
+      if (templateExpression.expression is SingleStringLiteral) {
+        return (templateExpression.expression as SingleStringLiteral)
+            .contentsOffset;
+      }
+      if (templateExpression.expression is AdjacentStrings) {
+        var offset = (templateExpression.expression as AdjacentStrings).offset;
+        return offset;
+      }
+    }
+    return 0;
   }
 
   ViewEncapsulation _encapsulation(DartObject? value) => coerceEnum(

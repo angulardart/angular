@@ -54,27 +54,6 @@ List<String> coerceStringList(
       : defaultTo;
 }
 
-/// Reads and returns [field] on value as a map of string -> string.
-///
-/// Unlike `DartObject#getField`, this also traverses `super` if available.
-///
-/// If the value is missing or not a map, returns [defaultTo].
-Map<String, String> coerceStringMap(
-  DartObject value,
-  String field, {
-  Map<String, String> defaultTo = const {},
-}) {
-  final map = getField(value, field)?.toMapValue();
-  if (map == null) {
-    return defaultTo;
-  }
-  final result = <String, String>{};
-  map.forEach((key, value) {
-    result[key!.toStringValue()!] = value!.toStringValue()!;
-  });
-  return result;
-}
-
 /// Reads and returns [field] on value as an enum from [values].
 ///
 /// Unlike `DartObject#getField`, this also traverses `super` if available.

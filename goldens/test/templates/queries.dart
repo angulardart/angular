@@ -20,6 +20,12 @@ void main() {
   selector: 'golden',
   directives: [
     AnotherDirective,
+    EmbeddedQueries,
+    NestedNgForQueriesList,
+    StaticSingleQuery,
+    DynamicSingleQuery,
+    ContentQuery,
+    ContentHasReference,
     NgIf,
   ],
   template: r'''
@@ -27,38 +33,61 @@ void main() {
     <another #q1></another>
     <another #q2></another>
     <another #q3 *ngIf="someValue"></another>
+
+    <embedded-queries></embedded-queries>
+    <nested-ng-for-queries></nested-ng-for-queries>
+    <static-single-query></static-single-query>
+    <dynamic-single-query></dynamic-single-query>
+    <content-query></content-query>
+    <content-has-reference></content-has-reference>
   ''',
 )
 class GoldenComponent {
   bool someValue = false;
 
   @ContentChildren(AnotherDirective)
-  List<AnotherDirective>? contentChildrenFromField;
+  set contentChildrenFromField(List<AnotherDirective>? value) {
+    deopt(value);
+  }
 
   @ContentChild(AnotherDirective)
-  AnotherDirective? contentChildFromField;
+  set contentChildFromField(AnotherDirective? value) {
+    deopt(value);
+  }
 
   @ViewChildren('q2', read: AnotherDirective)
-  List<AnotherDirective>? viewChildrenFromField;
+  set viewChildrenFromField(List<AnotherDirective>? value) {
+    deopt(value);
+  }
 
   @ViewChild('q2', read: AnotherDirective)
-  AnotherDirective? viewChildFromField;
+  set viewChildFromField(AnotherDirective? value) {
+    deopt(value);
+  }
 
   @ViewChild('q2', read: ElementRef)
-  ElementRef? readDIFromElementRef;
+  set readDIFromElementRef(ElementRef? value) {
+    deopt(value);
+  }
 
   @ViewChild('q2', read: Element)
-  Element? readDIFromElement;
+  set readDIFromElement(Element? value) {
+    deopt(value);
+  }
 
   @ViewChildren(AnotherDirective)
-  List<AnotherDirective>? usingTypeFromField;
+  set usingTypeFromField(List<AnotherDirective>? value) {
+    deopt(value);
+  }
 
   @ViewChild('q3', read: AnotherDirective)
-  AnotherDirective? nestedViewChild;
+  set nestedViewChild(AnotherDirective? value) {
+    deopt(value);
+  }
 }
 
 @Component(
-  selector: 'test',
+  selector: 'embedded-queries',
   directives: [
     AnotherDirective,
   ],
@@ -74,27 +103,9 @@ class GoldenComponent {
 )
 class EmbeddedQueries {
   @ViewChildren(AnotherDirective)
-  List<AnotherDirective>? viewChildren;
-}
-
-@Component(
-  selector: 'test',
-  directives: [
-    AnotherDirective,
-  ],
-  template: r'''
-    <another></another>
-    <template>
-      <another></another>
-    </template>
-    <template>
-      <another></another>
-    </template>
-  ''',
-)
-class EmbeddedQueriesList {
-  @ViewChildren(AnotherDirective)
-  List<AnotherDirective>? viewChildren;
+  set viewChildren(List<AnotherDirective>? value) {
+    deopt(value);
+  }
 }
 
 @Directive(
@@ -104,7 +115,7 @@ class AnotherDirective {}
 
 // This closely mimics a piece of internal code that previously crashed.
 @Component(
-  selector: 'test',
+  selector: 'nested-ng-for-queries',
   directives: [
     AnotherDirective,
     NgFor,
@@ -126,7 +137,9 @@ class NestedNgForQueriesList {
   var conditionB = true;
 
   @ViewChildren('taggedItem', read: AnotherDirective)
-  List<AnotherDirective>? taggedItems;
+  set taggedItems(List<AnotherDirective>? value) {
+    deopt(value);
+  }
 }
 
 // Demonstrates an optimization used to treat a single value query as static
@@ -143,7 +156,9 @@ class StaticSingleQuery {
   var isVisible = false;
 
   @ViewChild(AnotherDirective)
-  AnotherDirective? another;
+  set another(AnotherDirective? value) {
+    deopt(value);
+  }
 }
 
 // Demonstrates an optimization used to prune unnecessary values from a dynamic
@@ -164,7 +179,9 @@ class DynamicSingleQuery {
   var isVisible = false;
 
   @ViewChild(AnotherDirective)
-  AnotherDirective? another;
+  set another(AnotherDirective? value) {
+    deopt(value);
+  }
 }
 
 // Queries whether <ng-content> has matched element.
@@ -179,10 +196,14 @@ class DynamicSingleQuery {
 )
 class ContentQuery {
   @ViewChild('header')
-  Element? header;
+  set header(Element? value) {
+    deopt(value);
+  }
 
   @ContentChild(Element)
-  Element? contentHeader;
+  set contentHeader(Element? value) {
+    deopt(value);
+  }
 }
 
 // Put reference on <ng-content>.

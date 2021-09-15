@@ -51,17 +51,3 @@ Future<ClassElement?> resolveClass(
       ? library.getType(name)
       : library.definingCompilationUnit.types.first;
 }
-
-/// Resolve [source] code as-if it is implemented with an AngularDart import.
-///
-/// Returns first top-level constant field in the file, or by [name] if given.
-Future<TopLevelVariableElement> resolveField(
-  String source, [
-  String? name,
-]) async {
-  final library = await resolveLibrary(source);
-  return name == null
-      ? library.definingCompilationUnit.topLevelVariables.first
-      : library.definingCompilationUnit.topLevelVariables
-          .firstWhere((e) => e.name == name);
-}

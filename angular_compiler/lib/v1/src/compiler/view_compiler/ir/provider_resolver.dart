@@ -336,7 +336,7 @@ class DynamicProviderSource extends ProviderSource {
     this._resolver,
     this._source, {
     required bool isOptional,
-  })   : _isOptional = isOptional,
+  })  : _isOptional = isOptional,
         super(token);
 
   @override

@@ -14,7 +14,9 @@ void main() {
 
     // Add object to multiple groups.
     final id = referenceCounter.toId(object, 'group-1');
-    referenceCounter..toId(object, 'group-2')..toId(object, 'group-3');
+    referenceCounter
+      ..toId(object, 'group-2')
+      ..toId(object, 'group-3');
 
     // Dispose all groups.
     referenceCounter.dispose();

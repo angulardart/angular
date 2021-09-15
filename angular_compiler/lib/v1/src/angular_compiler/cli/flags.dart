@@ -1,7 +1,15 @@
 import 'package:args/args.dart';
 import 'package:meta/meta.dart';
 
+// Force enables the data-debug-source attribute on DOM elements created by
+// AngularDart templates.
+//
+// This is intended to be manually changed for accessibility TGPs. It should
+// remain false otherwise.
+const _forceEnableDataDebugSource = false;
+
 const _argLegacyStyle = 'use_legacy_style_encapsulation';
+const _argDataDebugSource = 'enable-data-debug-source';
 
 // Experimental flags (not published).
 const _argEnableDevTools = 'enable_devtools';
@@ -28,6 +36,10 @@ class CompilerFlags {
           'cause shadow host selectors to prevent a series of selectors '
           'from being properly scoped to their component',
     )
+    ..addFlag(_argDataDebugSource,
+        defaultsTo: false,
+        help: 'Adds the `data-debug-source` attribute to dom elements '
+            'created from AngularDart templates.')
     ..addFlag(
       _argEnableDevTools,
       defaultsTo: false,
@@ -70,6 +82,10 @@ class CompilerFlags {
   /// * polyfill-unscoped-rule
   final bool useLegacyStyleEncapsulation;
 
+  /// Whether to add the `data-debug-source` attribute to dom elements created
+  /// from AngularDart templates.
+  final bool enableDataDebugSource;
+
   /// Whether to operate as if `preserveWhitespace: false` is always set.
   @experimental
   final bool forceMinifyWhitespace;
@@ -102,6 +118,7 @@ class CompilerFlags {
     this.exportUserCodeFromTemplate = false,
     this.policyExceptionInPackages = const {},
     this.policyExceptions = const {},
+    this.enableDataDebugSource = false,
   });
 
   /// Creates flags by parsing command-line arguments.
@@ -131,6 +148,7 @@ class CompilerFlags {
       final knownArgs = const {
         _argEnableDevTools,
         _argLegacyStyle,
+        _argDataDebugSource,
         _argForceMinifyWhitespace,
         _argNoEmitComponentFactories,
         _argNoEmitInjectableFactories,
@@ -148,6 +166,7 @@ class CompilerFlags {
 
     final enableDevTools = options[_argEnableDevTools];
     final useLegacyStyle = options[_argLegacyStyle];
+    final enableDataDebugSource = options[_argDataDebugSource];
     final forceMinifyWhitespace = options[_argForceMinifyWhitespace];
     final noEmitComponentFactories = options[_argNoEmitComponentFactories];
     final noEmitInjectableFactories = options[_argNoEmitInjectableFactories];
@@ -165,6 +184,8 @@ class CompilerFlags {
       policyExceptions: _buildPolicyExceptions(policyExceptions),
       policyExceptionInPackages:
           _buildPolicyExceptions(policyExceptionInPackages),
+      enableDataDebugSource: _forceEnableDataDebugSource ||
+          (enableDataDebugSource as bool? ?? defaultTo.enableDataDebugSource),
     );
   }
 

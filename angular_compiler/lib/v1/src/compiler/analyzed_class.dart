@@ -7,7 +7,7 @@ import 'expression_parser/ast.dart' as ast;
 /// A wrapper around [ClassElement] which exposes the functionality
 /// needed for the view compiler to find types for expressions.
 class AnalyzedClass {
-  final ClassElement _classElement;
+  final ClassElement classElement;
   final Map<String, DartType?> locals;
 
   /// Whether this class has mock-like behavior.
@@ -21,19 +21,21 @@ class AnalyzedClass {
   final bool isMockLike;
 
   // The type provider associated with this class.
-  TypeProvider get _typeProvider => _classElement.library.typeProvider;
+  TypeProvider get _typeProvider => classElement.library.typeProvider;
 
   AnalyzedClass(
-    this._classElement, {
+    this.classElement, {
     this.isMockLike = false,
     this.locals = const {},
   });
 
   AnalyzedClass.from(AnalyzedClass other,
       {Map<String, DartType?> additionalLocals = const {}})
-      : _classElement = other._classElement,
+      : classElement = other.classElement,
         isMockLike = other.isMockLike,
-        locals = {}..addAll(other.locals)..addAll(additionalLocals);
+        locals = {}
+          ..addAll(other.locals)
+          ..addAll(additionalLocals);
 }
 
 /// Returns the [expression] type evaluated within context of [analyzedClass].
@@ -41,7 +43,7 @@ class AnalyzedClass {
 /// Returns dynamic if [expression] can't be resolved.
 DartType getExpressionType(ast.AST expression, AnalyzedClass analyzedClass) {
   final typeResolver =
-      _TypeResolver(analyzedClass._classElement, analyzedClass.locals);
+      _TypeResolver(analyzedClass.classElement, analyzedClass.locals);
   return expression.visit(typeResolver);
 }
 
@@ -112,12 +114,12 @@ String typeToCode(DartType type) {
 
 PropertyInducingElement? _getField(AnalyzedClass clazz, String name) {
   var getter =
-      clazz._classElement.lookUpGetter(name, clazz._classElement.library);
+      clazz.classElement.lookUpGetter(name, clazz.classElement.library);
   return getter?.variable;
 }
 
 MethodElement? _getMethod(AnalyzedClass clazz, String name) {
-  var element = clazz._classElement;
+  var element = clazz.classElement;
   return element.lookUpMethod(name, element.library);
 }
 
@@ -163,13 +165,13 @@ bool isImmutable(ast.AST expression, AnalyzedClass? analyzedClass) {
 }
 
 bool isStaticGetterOrMethod(String name, AnalyzedClass analyzedClass) {
-  final member = analyzedClass._classElement.getGetter(name) ??
-      analyzedClass._classElement.getMethod(name);
+  final member = analyzedClass.classElement.getGetter(name) ??
+      analyzedClass.classElement.getMethod(name);
   return member != null && member.isStatic;
 }
 
 bool isStaticSetter(String name, AnalyzedClass analyzedClass) {
-  final setter = analyzedClass._classElement.getSetter(name);
+  final setter = analyzedClass.classElement.getSetter(name);
   return setter != null && setter.isStatic;
 }
 
@@ -186,7 +188,7 @@ ast.ASTWithSource rewriteTearOff(
 
   if (unwrappedExpression is ast.PropertyRead) {
     // Find the method, either on "this." or "super.".
-    final method = analyzedClass._classElement.thisType.lookUpInheritedMethod(
+    final method = analyzedClass.classElement.thisType.lookUpInheritedMethod(
       unwrappedExpression.name,
     );
 
@@ -352,7 +354,7 @@ class _TypeResolver extends ast.AstVisitor<DartType, dynamic> {
   DartType visitStaticRead(ast.StaticRead ast, _) =>
       ast.id.analyzedClass == null
           ? _dynamicType
-          : ast.id.analyzedClass!._classElement.thisType;
+          : ast.id.analyzedClass!.classElement.thisType;
 
   @override
   DartType visitVariableRead(ast.VariableRead ast, _) => _dynamicType;

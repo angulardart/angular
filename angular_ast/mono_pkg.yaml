@@ -1,10 +1,11 @@
 dart:
-- 2.12.0
+#- 2.12.0
 - dev
 
 stages:
 - analyze:
-  - dartanalyzer: .
+  # Not running with --fatal-infos on dev due to some weird null checks
+  - analyze
 - build:
   - command: pub run build_runner build --fail-on-severe
 - unit_test:

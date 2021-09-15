@@ -13,10 +13,11 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
-import 'package:angular/src/core/linker/app_view_utils.dart' as import8;
-import 'package:angular/src/runtime/check_binding.dart' as import9;
+import 'package:angular/src/devtools.dart' as import8;
+import 'package:angular/src/core/linker/app_view_utils.dart' as import9;
+import 'package:angular/src/runtime/check_binding.dart' as import10;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import11;
+import 'package:angular/src/core/linker/views/host_view.dart' as import12;
 
 final List<Object> styles$GoldenComponent = const [];
 
@@ -37,11 +38,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import7.updateAttribute(this.rootElement, 'const-add-attr-bool', (import1.GoldenComponent.constAddAttributeBool ? '' : null));
     import7.updateAttribute(this.rootElement, 'final-add-attr-bool', (import1.GoldenComponent.finalAddAttributeBool ? '' : null));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
   }
@@ -56,6 +52,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import7.setAttribute(_el_0, 'listens-to-output', '');
     this._HasOutput_0_5 = import1.HasOutput();
     this._ListensToOutput_0_6 = import1.ListensToOutput();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_0, this._ListensToOutput_0_6);
+    }
     this._compView_0.create(this._HasOutput_0_5);
     final subscription_0 = this._HasOutput_0_5.fooEvents.listen(this.eventHandler0(this._ListensToOutput_0_6.onCustomEvent));
     this.initSubscriptions([subscription_0]);
@@ -63,7 +62,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     parentRenderNode.addEventListener('dblclick', this.eventHandler1(_ctx.onDblClickInferArgument));
     parentRenderNode.addEventListener('mousedown', this.eventHandler1(_ctx.onMouseDownManualArgument));
     parentRenderNode.addEventListener('mouseup', this.eventHandler1(this._handleEvent_0));
-    import8.appViewUtils.eventManager.addEventListener(parentRenderNode, 'keydown.space', this.eventHandler0(_ctx.onSpecialKeyHandler));
+    import9.appViewUtils.eventManager.addEventListener(parentRenderNode, 'keydown.space', this.eventHandler0(_ctx.onSpecialKeyHandler));
   }
 
   @override
@@ -92,32 +91,32 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       }
     }
     final currVal_0 = import1.GoldenComponent.getterAddAttributeBool;
-    if (import9.checkBinding(this._expr_0, currVal_0, null, null)) {
+    if (import10.checkBinding(this._expr_0, currVal_0, null, null)) {
       import7.updateAttribute(this.rootElement, 'getter-add-attr-bool', (currVal_0 ? '' : null));
       this._expr_0 = currVal_0;
     }
     final currVal_1 = import1.GoldenComponent.getterAddAttributeString;
-    if (import9.checkBinding(this._expr_1, currVal_1, null, null)) {
+    if (import10.checkBinding(this._expr_1, currVal_1, null, null)) {
       import7.updateAttribute(this.rootElement, 'getter-add-attr-string', currVal_1);
       this._expr_1 = currVal_1;
     }
     final currVal_2 = _ctx.multiBindTitle;
-    if (import9.checkBinding(this._expr_2, currVal_2, null, null)) {
+    if (import10.checkBinding(this._expr_2, currVal_2, null, null)) {
       import7.setProperty(this.rootElement, 'title', currVal_2);
       this._expr_2 = currVal_2;
     }
     final currVal_3 = _ctx.multiBindTitle;
-    if (import9.checkBinding(this._expr_3, currVal_3, null, null)) {
+    if (import10.checkBinding(this._expr_3, currVal_3, null, null)) {
       import7.updateAttribute(this.rootElement, 'aria-title', currVal_3);
       this._expr_3 = currVal_3;
     }
     final currVal_4 = _ctx.multiBindDisabled;
-    if (import9.checkBinding(this._expr_4, currVal_4, null, null)) {
+    if (import10.checkBinding(this._expr_4, currVal_4, null, null)) {
       import7.updateAttribute(this.rootElement, 'aria-disabled', (currVal_4 ? '' : null));
       this._expr_4 = currVal_4;
     }
     final currVal_5 = _ctx.multiBindDisabled;
-    if (import9.checkBinding(this._expr_5, currVal_5, null, null)) {
+    if (import10.checkBinding(this._expr_5, currVal_5, null, null)) {
       import7.updateClassBindingNonHtml(this.rootElement, 'is-disabled', currVal_5);
       this._expr_5 = currVal_5;
     }
@@ -150,7 +149,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import11.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import12.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -167,7 +166,7 @@ class _ViewGoldenComponentHost0 extends import11.HostView<import1.GoldenComponen
   }
 }
 
-import11.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import12.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -179,11 +178,6 @@ class ViewHasOutput0 extends import0.ComponentView<import1.HasOutput> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('has-output'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dom_bindings/host_annotations.dart' : null);
   }
@@ -220,7 +214,7 @@ ComponentFactory<import1.HasOutput> createHasOutputFactory() {
 
 final List<Object> styles$HasOutputHost = const [];
 
-class _ViewHasOutputHost0 extends import11.HostView<import1.HasOutput> {
+class _ViewHasOutputHost0 extends import12.HostView<import1.HasOutput> {
   @override
   void build() {
     this.componentView = ViewHasOutput0(this, 0);
@@ -230,7 +224,7 @@ class _ViewHasOutputHost0 extends import11.HostView<import1.HasOutput> {
   }
 }
 
-import11.HostView<import1.HasOutput> viewFactory_HasOutputHost0() {
+import12.HostView<import1.HasOutput> viewFactory_HasOutputHost0() {
   return _ViewHasOutputHost0();
 }
 

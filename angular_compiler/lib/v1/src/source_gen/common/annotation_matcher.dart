@@ -20,10 +20,6 @@ AnnotationMatcher safeMatcher(
       }
     };
 
-/// Creates a matcher from [typeChecker] that warns if an error is thrown.
-AnnotationMatcher safeMatcherType(TypeChecker typeChecker) =>
-    safeMatcher((annotation) => matchAnnotation(typeChecker, annotation));
-
 /// Checks if an [ElementAnnotation] node implements [Component].
 bool isComponent(ElementAnnotation annotation) =>
     matchAnnotation($Component, annotation);

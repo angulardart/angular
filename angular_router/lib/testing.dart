@@ -1,4 +1,5 @@
-import 'package:angular/angular.dart' show ClassProvider, Module;
+import 'package:angular/angular.dart'
+    show ClassProvider, ExistingProvider, Module;
 
 import 'src/location.dart';
 import 'src/location/testing/mock_location_strategy.dart';
@@ -27,7 +28,8 @@ export 'src/route_definition.dart'
 /// class TestComponent {}
 /// ```
 const routerProvidersTest = [
-  ClassProvider(LocationStrategy, useClass: MockLocationStrategy),
+  ClassProvider(MockLocationStrategy),
+  ExistingProvider(LocationStrategy, MockLocationStrategy),
   ClassProvider(Location),
   ClassProvider(Router, useClass: RouterImpl),
 ];

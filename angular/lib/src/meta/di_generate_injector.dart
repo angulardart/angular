@@ -1,3 +1,5 @@
+import 'package:meta/meta_meta.dart';
+
 import 'di_modules.dart';
 
 /// Annotates a method to generate an [Injector] factory at compile-time.
@@ -16,6 +18,7 @@ import 'di_modules.dart';
 /// // The generated factory is your method's name, suffixed with `$Injector`.
 /// final InjectorFactory example = example$Injector;
 /// ```
+@Target({TargetKind.topLevelVariable})
 class GenerateInjector {
   // Used internally via analysis only.
   // ignore: unused_field

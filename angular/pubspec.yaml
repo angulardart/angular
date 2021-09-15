@@ -5,7 +5,7 @@ description: >-
   Separate, but similar to the JavaScript framework with a similar name.
 repository: https://github.com/dart-lang/angular
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   # Runtime (or runtime *and* the compiler).
@@ -18,7 +18,7 @@ dependencies:
   stream_transform: ^2.0.0
 
   # Compiler. Eventually we want to move these to angular_compiler.
-  analyzer: ^1.0.0
+  analyzer: ^2.0.0
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 1.0.1
@@ -31,6 +31,7 @@ dependencies:
   csslib: ^0.17.0
   path: ^1.8.0
   pedantic: ^1.10.0
+  quiver: ^3.0.0
   source_gen: ^1.0.0
   source_span: ^1.8.0
 

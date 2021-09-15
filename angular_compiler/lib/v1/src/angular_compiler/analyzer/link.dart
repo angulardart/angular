@@ -50,7 +50,7 @@ TypeLink linkTypeOf(DartType type) {
     return TypeLink.$dynamic;
   }
 
-  var typeArguments = type.aliasArguments;
+  var typeArguments = type.alias?.typeArguments;
   if (typeArguments == null) {
     if (type is InterfaceType) {
       typeArguments = type.typeArguments;
@@ -140,11 +140,6 @@ class TypeLink {
     }
     return output;
   }
-
-  /// Returns as the older [Url] format, omitting any [generics].
-  ///
-  /// This should be used for migration purposes off [Url] only.
-  Uri toUrlWithoutGenerics() => Uri.parse('$import#$symbol');
 
   /// Returns as a [TypeLink] without generic type arguments.
   TypeLink withoutGenerics() => TypeLink(

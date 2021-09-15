@@ -57,7 +57,9 @@ class Url {
         }), '&');
     }
     if (fragment.isNotEmpty) {
-      buffer..write('#')..write(fragment);
+      buffer
+        ..write('#')
+        ..write(fragment);
     }
     return buffer.toString();
   }

@@ -65,7 +65,9 @@ class ApplicationRef extends ChangeDetectionHost {
   /// Angular mounts the specified application component onto DOM elements
   /// identified by the component's selector and kicks off automatic change
   /// detection to finish initializing the component.
-  ComponentRef<T> bootstrap<T>(ComponentFactory<T> componentFactory) {
+  ComponentRef<T> bootstrap<T extends Object>(
+    ComponentFactory<T> componentFactory,
+  ) {
     return unsafeCast(run(() {
       final component = componentFactory.create(_injector);
       final existing = querySelector(componentFactory.selector);
@@ -100,7 +102,7 @@ class ApplicationRef extends ChangeDetectionHost {
 
   void _loadedRootComponent(ComponentRef<void> component, Element? node) {
     if (isDevToolsEnabled) {
-      ComponentInspector.instance.registerContentRoot(component.location);
+      Inspector.instance.registerContentRoot(component.location);
     }
     _rootComponents.add(component);
     component.onDestroy(() {

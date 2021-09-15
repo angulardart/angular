@@ -137,7 +137,7 @@ void main() {
     });
 
     group('validateMissingDirectives', () {
-      test('should be false by default', () {
+      test('should be true by default', () {
         final context = CompileContext(
           AssetId('foo', 'lib/bar.dart'),
           enableDevTools: false,
@@ -145,22 +145,22 @@ void main() {
           policyExceptions: {},
           policyExceptionsInPackages: {},
         );
-        expect(context.validateMissingDirectives, isFalse);
+        expect(context.validateMissingDirectives, isTrue);
       });
 
-      test('should be true if in an allow-listed directory/tree', () {
+      test('should be false if in an disallow-listed directory/tree', () {
         final context = CompileContext(
           AssetId('foo.sub', 'lib/bar.dart'),
           enableDevTools: false,
           isNullSafe: false,
           policyExceptions: {},
           policyExceptionsInPackages: {
-            'VALIDATE_MISSING_DIRECTIVES': {
+            'EXCLUDED_VALIDATE_MISSING_DIRECTIVES': {
               'foo/sub',
             },
           },
         );
-        expect(context.validateMissingDirectives, isTrue);
+        expect(context.validateMissingDirectives, isFalse);
       });
     });
   });

@@ -34,7 +34,7 @@ import 'view.dart';
 ///   appropriate times.
 ///
 /// The type parameter [T] is the type of the hosted [component].
-abstract class HostView<T> extends View implements DynamicView {
+abstract class HostView<T extends Object> extends View implements DynamicView {
   /// The hosted component instance.
   ///
   /// To be instantiated in [build] by the generated implementation.
@@ -81,7 +81,7 @@ abstract class HostView<T> extends View implements DynamicView {
     _injector = injector;
     build(); // This initializes `component` and `componentView`.
     componentView.createAndProject(component, projectedNodes);
-    return ComponentRef(this, componentView.rootElement, component!);
+    return ComponentRef(this, componentView.rootElement, component);
   }
 
   /// Called by [build] once all root nodes are created.

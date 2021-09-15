@@ -1,7 +1,5 @@
 import 'dart:html';
 
-import 'package:meta/meta.dart';
-
 /// Provides a hook for receiving unhandled errors/exceptions.
 ///
 /// The default implementation of `ExceptionHandler` when used in AngularDart
@@ -52,7 +50,6 @@ class ExceptionHandler {
     return buffer.toString();
   }
 
-  @visibleForOverriding
   const ExceptionHandler();
 
   /// Handles an error or [exception] caught at runtime.

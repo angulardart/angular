@@ -13,23 +13,29 @@ import 'package:angular/src/core/change_detection/change_detection.dart';
 import 'package:angular/src/utilities.dart' as import5;
 import 'dart:html' as import6;
 import 'package:angular/src/runtime/dom_helpers.dart' as import7;
+import 'package:angular/src/devtools.dart' as import8;
 import 'package:angular/angular.dart';
-import 'package:angular/src/core/linker/views/host_view.dart' as import9;
-import 'package:angular/src/di/errors.dart' as import10;
+import 'package:angular/src/core/linker/views/host_view.dart' as import10;
+import 'package:angular/src/di/errors.dart' as import11;
 
 final List<Object> styles$GoldenComponent = const [];
 
 class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent> {
+  late import1.A _A_0_6 = import1.A();
+  late import1.B _B_0_7 = import1.B();
+  late import1.C _C_0_8 = import1.C();
+  late import1.A _A_1_6 = import1.A();
+  late import1.B _B_1_7 = import1.B();
+  late import1.C _C_1_8 = import1.C();
+  late import1.A2 _A_5_7 = import1.A2();
+  late import1.B _B_5_8 = import1.B();
+  late import1.C _C_5_9 = import1.C();
+  late import1.D2 _D_5_10 = import1.D2();
+  late import1.A2 _A_6_8 = import1.A2();
   late final ViewChildComponentProvidingA$B$C0 _compView_0;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_0_5;
-  import1.A? __A_0_6;
-  import1.B? __B_0_7;
-  import1.C? __C_0_8;
   late final ViewChildComponentProvidingA$B$C0 _compView_1;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_1_5;
-  import1.A? __A_1_6;
-  import1.B? __B_1_7;
-  import1.C? __C_1_8;
   late final ViewChildComponentWithNgContentProviding$D0 _compView_2;
   late final import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_2_5;
   late final import1.D _D_2_6;
@@ -40,15 +46,10 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   late final ViewChildComponentProvidingA$B$C0 _compView_5;
   late final import1.ChildComponentProvidingA$B$C _ChildComponentProvidingA$B$C_5_5;
   late final import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_5_6;
-  import1.A2? __A_5_7;
-  import1.B? __B_5_8;
-  import1.C? __C_5_9;
-  import1.D2? __D_5_10;
   late final ViewChildComponentWithNgContentProviding$D0 _compView_6;
   late final import1.ChildComponentWithNgContentProviding$D _ChildComponentWithNgContentProviding$D_6_5;
   late final import1.DirectiveProviding$A2$D2 _DirectiveProviding$A2$D2_6_6;
   late final import1.D2 _D_6_7;
-  import1.A2? __A_6_8;
   late final ViewChildComponentInjecting$D0 _compView_7;
   late final import1.ChildComponentInjecting$D _ChildComponentInjecting$D_7_5;
   static import2.ComponentStyles? _componentStyles;
@@ -56,99 +57,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  import1.A get _A_0_6 {
-    var result = this.__A_0_6;
-    if ((result == null)) {
-      (this.__A_0_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_0_7 {
-    var result = this.__B_0_7;
-    if ((result == null)) {
-      (this.__B_0_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_0_8 {
-    var result = this.__C_0_8;
-    if ((result == null)) {
-      (this.__C_0_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.A get _A_1_6 {
-    var result = this.__A_1_6;
-    if ((result == null)) {
-      (this.__A_1_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_1_7 {
-    var result = this.__B_1_7;
-    if ((result == null)) {
-      (this.__B_1_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_1_8 {
-    var result = this.__C_1_8;
-    if ((result == null)) {
-      (this.__C_1_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.A2 get _A_5_7 {
-    var result = this.__A_5_7;
-    if ((result == null)) {
-      (this.__A_5_7 = (result = import1.A2()));
-    }
-    return result;
-  }
-
-  import1.B get _B_5_8 {
-    var result = this.__B_5_8;
-    if ((result == null)) {
-      (this.__B_5_8 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_5_9 {
-    var result = this.__C_5_9;
-    if ((result == null)) {
-      (this.__C_5_9 = (result = import1.C()));
-    }
-    return result;
-  }
-
-  import1.D2 get _D_5_10 {
-    var result = this.__D_5_10;
-    if ((result == null)) {
-      (this.__D_5_10 = (result = import1.D2()));
-    }
-    return result;
-  }
-
-  import1.A2 get _A_6_8 {
-    var result = this.__A_6_8;
-    if ((result == null)) {
-      (this.__A_6_8 = (result = import1.A2()));
-    }
-    return result;
-  }
-
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -189,6 +97,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     import7.setAttribute(_el_5, 'directive-providing-a2-d2', '');
     this._ChildComponentProvidingA$B$C_5_5 = import1.ChildComponentProvidingA$B$C();
     this._DirectiveProviding$A2$D2_5_6 = import1.DirectiveProviding$A2$D2();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_5, this._DirectiveProviding$A2$D2_5_6);
+    }
     this._compView_5.create(this._ChildComponentProvidingA$B$C_5_5);
     this._compView_6 = ViewChildComponentWithNgContentProviding$D0(this, 6);
     final _el_6 = this._compView_6.rootElement;
@@ -197,6 +108,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this._ChildComponentWithNgContentProviding$D_6_5 = import1.ChildComponentWithNgContentProviding$D();
     this._DirectiveProviding$A2$D2_6_6 = import1.DirectiveProviding$A2$D2();
     this._D_6_7 = import1.D2();
+    if (import8.isDevToolsEnabled) {
+      import8.Inspector.instance.registerDirective(_el_6, this._DirectiveProviding$A2$D2_6_6);
+    }
     this._compView_7 = ViewChildComponentInjecting$D0(this, 7);
     final _el_7 = this._compView_7.rootElement;
     this._ChildComponentInjecting$D_7_5 = import1.ChildComponentInjecting$D(this._D_6_7);
@@ -312,7 +226,7 @@ ComponentFactory<import1.GoldenComponent> createGoldenComponentFactory() {
 
 final List<Object> styles$GoldenComponentHost = const [];
 
-class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent> {
+class _ViewGoldenComponentHost0 extends import10.HostView<import1.GoldenComponent> {
   @override
   void build() {
     this.componentView = ViewGoldenComponent0(this, 0);
@@ -322,7 +236,7 @@ class _ViewGoldenComponentHost0 extends import9.HostView<import1.GoldenComponent
   }
 }
 
-import9.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
+import10.HostView<import1.GoldenComponent> viewFactory_GoldenComponentHost0() {
   return _ViewGoldenComponentHost0();
 }
 
@@ -334,11 +248,6 @@ class ViewChildComponentProvidingA$B$C0 extends import0.ComponentView<import1.Ch
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-providing-a-b-c'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -375,34 +284,10 @@ ComponentFactory<import1.ChildComponentProvidingA$B$C> createChildComponentProvi
 
 final List<Object> styles$ChildComponentProvidingA$B$CHost = const [];
 
-class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.ChildComponentProvidingA$B$C> {
-  import1.A? __A_0_6;
-  import1.B? __B_0_7;
-  import1.C? __C_0_8;
-  import1.A get _A_0_6 {
-    var result = this.__A_0_6;
-    if ((result == null)) {
-      (this.__A_0_6 = (result = import1.A()));
-    }
-    return result;
-  }
-
-  import1.B get _B_0_7 {
-    var result = this.__B_0_7;
-    if ((result == null)) {
-      (this.__B_0_7 = (result = import1.B()));
-    }
-    return result;
-  }
-
-  import1.C get _C_0_8 {
-    var result = this.__C_0_8;
-    if ((result == null)) {
-      (this.__C_0_8 = (result = import1.C()));
-    }
-    return result;
-  }
-
+class _ViewChildComponentProvidingA$B$CHost0 extends import10.HostView<import1.ChildComponentProvidingA$B$C> {
+  late import1.A _A_0_6 = import1.A();
+  late import1.B _B_0_7 = import1.B();
+  late import1.C _C_0_8 = import1.C();
   @override
   void build() {
     this.componentView = ViewChildComponentProvidingA$B$C0(this, 0);
@@ -428,7 +313,7 @@ class _ViewChildComponentProvidingA$B$CHost0 extends import9.HostView<import1.Ch
   }
 }
 
-import9.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
+import10.HostView<import1.ChildComponentProvidingA$B$C> viewFactory_ChildComponentProvidingA$B$CHost0() {
   return _ViewChildComponentProvidingA$B$CHost0();
 }
 
@@ -440,11 +325,6 @@ class ViewChildComponentWithNgContentProviding$D0 extends import0.ComponentView<
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-with-ngcontent-providing-d'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -482,16 +362,8 @@ ComponentFactory<import1.ChildComponentWithNgContentProviding$D> createChildComp
 
 final List<Object> styles$ChildComponentWithNgContentProviding$DHost = const [];
 
-class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<import1.ChildComponentWithNgContentProviding$D> {
-  import1.D? __D_0_6;
-  import1.D get _D_0_6 {
-    var result = this.__D_0_6;
-    if ((result == null)) {
-      (this.__D_0_6 = (result = import1.D()));
-    }
-    return result;
-  }
-
+class _ViewChildComponentWithNgContentProviding$DHost0 extends import10.HostView<import1.ChildComponentWithNgContentProviding$D> {
+  late import1.D _D_0_6 = import1.D();
   @override
   void build() {
     this.componentView = ViewChildComponentWithNgContentProviding$D0(this, 0);
@@ -509,7 +381,7 @@ class _ViewChildComponentWithNgContentProviding$DHost0 extends import9.HostView<
   }
 }
 
-import9.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
+import10.HostView<import1.ChildComponentWithNgContentProviding$D> viewFactory_ChildComponentWithNgContentProviding$DHost0() {
   return _ViewChildComponentWithNgContentProviding$DHost0();
 }
 
@@ -521,11 +393,6 @@ class ViewChildComponentInjecting$D0 extends import0.ComponentView<import1.Child
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-injecting-d'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -562,13 +429,13 @@ ComponentFactory<import1.ChildComponentInjecting$D> createChildComponentInjectin
 
 final List<Object> styles$ChildComponentInjecting$DHost = const [];
 
-class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.ChildComponentInjecting$D> {
+class _ViewChildComponentInjecting$DHost0 extends import10.HostView<import1.ChildComponentInjecting$D> {
   @override
   void build() {
     this.componentView = ViewChildComponentInjecting$D0(this, 0);
     final _el_0 = this.componentView.rootElement;
     this.component = (import5.isDevMode
-        ? import10.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
+        ? import11.debugInjectorWrap(import1.ChildComponentInjecting$D, () {
             return import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex));
           })
         : import1.ChildComponentInjecting$D(this.injectorGet(import1.D, this.parentIndex)));
@@ -576,7 +443,7 @@ class _ViewChildComponentInjecting$DHost0 extends import9.HostView<import1.Child
   }
 }
 
-import9.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
+import10.HostView<import1.ChildComponentInjecting$D> viewFactory_ChildComponentInjecting$DHost0() {
   return _ViewChildComponentInjecting$DHost0();
 }
 
@@ -588,11 +455,6 @@ class ViewChildComponentWithVisibilityAll0 extends import0.ComponentView<import1
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-component-with-visibility-all'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/dependency_injection/inlined_providers.dart' : null);
   }
@@ -629,7 +491,7 @@ ComponentFactory<import1.ChildComponentWithVisibilityAll> createChildComponentWi
 
 final List<Object> styles$ChildComponentWithVisibilityAllHost = const [];
 
-class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1.ChildComponentWithVisibilityAll> {
+class _ViewChildComponentWithVisibilityAllHost0 extends import10.HostView<import1.ChildComponentWithVisibilityAll> {
   @override
   void build() {
     this.componentView = ViewChildComponentWithVisibilityAll0(this, 0);
@@ -647,7 +509,7 @@ class _ViewChildComponentWithVisibilityAllHost0 extends import9.HostView<import1
   }
 }
 
-import9.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
+import10.HostView<import1.ChildComponentWithVisibilityAll> viewFactory_ChildComponentWithVisibilityAllHost0() {
   return _ViewChildComponentWithVisibilityAllHost0();
 }
 

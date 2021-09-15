@@ -34,11 +34,6 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('golden'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
   }
@@ -66,9 +61,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_0 = _ctx.name;
     if (import7.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._Child_0_5, 'name', currVal_0);
+        import8.Inspector.instance.recordInput(this._Child_0_5, 'name', currVal_0);
       }
-      this._Child_0_5.name = currVal_0;
+      this._Child_0_5.name = currVal_0 /* REF:asset:goldens/test/change_detection/on_push.dart:443:456 */;
       changed = true;
       this._expr_0 = currVal_0;
     }
@@ -79,9 +74,9 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final currVal_1 = _ctx.name;
     if (import7.checkBinding(this._expr_1, currVal_1, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
       if (import8.isDevToolsEnabled) {
-        import8.ComponentInspector.instance.recordInput(this._ChildWithDoCheck_1_5, 'name', currVal_1);
+        import8.Inspector.instance.recordInput(this._ChildWithDoCheck_1_5, 'name', currVal_1);
       }
-      this._ChildWithDoCheck_1_5.name = currVal_1;
+      this._ChildWithDoCheck_1_5.name = currVal_1 /* REF:asset:goldens/test/change_detection/on_push.dart:491:504 */;
       changed = true;
       this._expr_1 = currVal_1;
     }
@@ -151,11 +146,6 @@ class ViewChild0 extends import0.ComponentView<import1.Child> {
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
   }
@@ -170,7 +160,7 @@ class ViewChild0 extends import0.ComponentView<import1.Child> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name)) /* REF:asset:goldens/test/change_detection/on_push.dart:692:700 */;
   }
 
   static void _debugClearComponentStyles() {
@@ -232,11 +222,6 @@ class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoChe
     this.initComponentStyles();
     this.rootElement = import5.unsafeCast(import6.document.createElement('child-with-do-check'));
   }
-  @override
-  String get debugComponentTypeName {
-    return this.ctx.runtimeType.toString();
-  }
-
   static String? get _debugComponentUrl {
     return (import5.isDevMode ? 'asset:goldens/test/change_detection/on_push.dart' : null);
   }
@@ -251,7 +236,7 @@ class ViewChildWithDoCheck0 extends import0.ComponentView<import1.ChildWithDoChe
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name));
+    this._textBinding_1.updateText(import13.interpolateString0(_ctx.name)) /* REF:asset:goldens/test/change_detection/on_push.dart:866:874 */;
   }
 
   static void _debugClearComponentStyles() {

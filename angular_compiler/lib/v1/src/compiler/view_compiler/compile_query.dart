@@ -36,6 +36,11 @@ class _NestedQueryValues {
   /// Elements should be either a [_QueryValue] or [_NestedQueryValues].
   final valuesOrTemplates = <Object>[];
 
+  /// Whether there are query results immediately available to this view.
+  ///
+  /// These are results *not* in nested embedded views.
+  bool get hasStaticValues => valuesOrTemplates.any((v) => v is _QueryValue);
+
   /// Whether there are nested embedded views in this instance.
   bool get hasNestedViews =>
       valuesOrTemplates.any((v) => v is _NestedQueryValues);
@@ -147,16 +152,6 @@ abstract class CompileQuery {
     }
   }
 
-  /// Whether the query for [values] requires use of `flattenNodes`.
-  ///
-  /// This is true when [values] yields multiple results, at least one of which
-  /// requires use of `mapNestedViews`. When [values] yields a single result
-  /// which is exactly one call to `mapNestedViews`, the result can be returned
-  /// directly without flattening.
-  bool _shouldFlattenNodes(_NestedQueryValues values) {
-    return values.valuesOrTemplates.length > 1 && _shouldMapNestedViews(values);
-  }
-
   /// Adds an expression [result] that originates from an [origin] view.
   ///
   /// The result of a given query is the sum of all invocations to this method.
@@ -207,17 +202,15 @@ abstract class CompileQuery {
     // results, or a nested list of static results and `mapNestedViews` calls:
     //
     //  * [staticResult, staticResult]
-    //  * [[staticResult, staticResult], mapNestedViews]
+    //  * [staticResult, staticResult, ...mapNestedViews]
     //
-    var results = <o.Expression>[];
-    // Static results must be accumulated before we can determine whether they
-    // need to be nested in a list.
-    var subsequentStaticResults = <o.Expression>[];
+    final results = <o.Expression>[];
     final valuesWithChangeDetectorRefs = <_QueryValue>[];
+    final valuesOrTemplates = values.valuesOrTemplates;
 
-    for (final value in values.valuesOrTemplates) {
+    for (final value in valuesOrTemplates) {
       if (value is _QueryValue) {
-        subsequentStaticResults.add(value.value);
+        results.add(value.value);
         if (value.hasChangeDetectorRef) {
           valuesWithChangeDetectorRefs.add(value);
         }
@@ -225,30 +218,17 @@ abstract class CompileQuery {
         // results after the first static value.
         if (_isSingle) break;
       } else if (value is _NestedQueryValues) {
-        // Append any preceding static results.
-        if (subsequentStaticResults.isNotEmpty) {
-          results.add(o.literalArr(subsequentStaticResults));
-          subsequentStaticResults = [];
+        var mappedResult = _mapNestedViews(value);
+        // If there are other values to query, we want to spread these results
+        // into the final list. Otherwise, we want to return these results as-is
+        // which are already a list.
+        if (valuesOrTemplates.length > 1) {
+          mappedResult = mappedResult.spread();
         }
-        // Append the nested results.
-        results.add(_mapNestedViews(value));
+        results.add(mappedResult);
       } else {
         throw StateError('Unexpected type: $value');
       }
-    }
-
-    // Append any remaining static results.
-    if (subsequentStaticResults.isNotEmpty) {
-      if (results.isEmpty) {
-        // All of the results are static and can be returned as a flat list.
-        results = subsequentStaticResults;
-      } else {
-        results.add(o.literalArr(subsequentStaticResults));
-      }
-    }
-
-    if (_shouldFlattenNodes(values)) {
-      results = [_flattenNodes(o.literalArr(results))];
     }
 
     return _QueryResults(results, valuesWithChangeDetectorRefs);
@@ -369,7 +349,7 @@ class _ListCompileQuery extends CompileQuery {
     ProviderSource? boundDirective, {
     required int? nodeIndex,
     required int queryIndex,
-  })   : _nodeIndex = nodeIndex,
+  })  : _nodeIndex = nodeIndex,
         _queryIndex = queryIndex,
         super._base(metadata, queryRoot, boundDirective);
 
@@ -494,26 +474,24 @@ class _ListCompileQuery extends CompileQuery {
       _isSingle ? values.first : o.literalArr(values);
 
   // Returns the equivalent of `{list}.isNotEmpty ? {list}.first : null`.
-  static o.Expression _firstIfNotEmpty(o.Expression list) {
-    // Optimization: .isNotEmpty will *always* == true.
-    if (list is o.LiteralArrayExpr && list.entries.isNotEmpty) {
-      return list.prop('first');
-    }
-    // Base case: Check .isNotEmpty before calling .first.
-    //
-    // Note that the list expression could itself be a `.mapNestedValues`, so
-    // we use an external utility function to guarantee that we don't create
-    // this expression twice.
-    return _firstOrNull(list);
+  o.Expression _firstIfNotEmpty(o.Expression list) {
+    // If the list contains a static result, it's guaranteed to contain an
+    // element so we can safely call `List.first` (which throws on an empty
+    // list). Otherwise, if all the results are from nested views, we call
+    // `firstOrNull()` to handle a potentially empty list.
+    return _values.hasStaticValues ? list.prop('first') : _firstOrNull(list);
   }
 
-  // A single call to "mapNestedViews" or "flattenNodes" is the result.
+  // A single call to "mapNestedViews" or a list literal is the result.
   //
   // * If this is for @{Content|View}Child, return the first value if not empty.
   // * Else, just return the {expression} itself (already a List).
   o.Expression _createUpdatesNested(List<o.Expression> values) {
-    final first = values.first;
-    return _isSingle ? _firstIfNotEmpty(first) : first;
+    // We know there are nested views, so if the length is 1, then it must be a
+    // `mapNestedViews` expression which returns a list. Otherwise, we wrap the
+    // results in a list literal.
+    final value = values.length != 1 ? o.literalArr(values) : values.first;
+    return _isSingle ? _firstIfNotEmpty(value) : value;
   }
 }
 
@@ -552,12 +530,7 @@ List<o.Statement> _createAddQueryChangeDetectorRefs(
   ];
 }
 
-final _flattenNodesFn = o.importExpr(Queries.flattenNodes);
 final _firstOrNullFn = o.importExpr(Queries.firstOrNull);
-
-/// Flattens a `List<List<?>>` into a `List<?>`.
-o.Expression _flattenNodes(o.Expression nodeExpressions) =>
-    _flattenNodesFn.callFn([nodeExpressions]);
 
 /// Returns `listExpression.isNotEmpty ? listExpression.first : null`.
 o.Expression _firstOrNull(o.Expression listExpression) =>

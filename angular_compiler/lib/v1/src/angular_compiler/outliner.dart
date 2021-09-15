@@ -41,7 +41,7 @@ class TemplateOutliner implements Builder {
   TemplateOutliner({
     required String extension,
     required this.exportUserCodeFromTemplate,
-  })   : _extension = extension,
+  })  : _extension = extension,
         buildExtensions = {
           '.dart': [extension],
         };
@@ -183,7 +183,9 @@ class $changeDetectorName$typeParameters extends _ng.DirectiveChangeDetector {
         output.writeln('external _ng.Injector $injector(_ng.Injector parent);');
       }
     }
-    output..writeln()..writeln('external void initReflector();');
+    output
+      ..writeln()
+      ..writeln('external void initReflector();');
     await buildStep.writeAsString(
       buildStep.inputId.changeExtension(_extension),
       output.toString(),

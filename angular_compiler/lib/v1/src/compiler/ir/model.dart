@@ -580,29 +580,38 @@ class StringLiteral extends BoundLiteral {
       visitor.visitStringLiteral(this, context);
 }
 
+class SourceReference {
+  /// The start offset within the [sourceUrl].
+  final int startOffset;
+
+  /// The end offset within the [sourceUrl].
+  final int endOffset;
+  final Uri sourceUrl;
+
+  SourceReference._(this.startOffset, this.endOffset, this.sourceUrl);
+
+  /// Returns a [SourceReference] accounting for the templateOffset.
+  factory SourceReference(SourceSpan sourceSpan,
+      CompileDirectiveMetadata? compileDirectiveMetadata) {
+    var templateOffset =
+        compileDirectiveMetadata?.template?.templateOffset ?? 0;
+    return SourceReference._(sourceSpan.start.offset + templateOffset,
+        sourceSpan.end.offset + templateOffset, sourceSpan.sourceUrl!);
+  }
+}
+
 /// A [BindingSource] which represents a general-purpose expression.
 class BoundExpression implements BindingSource {
   final ast.ASTWithSource expression;
   final SourceSpan? sourceSpan;
+  final CompileDirectiveMetadata? compileDirectiveMetadata;
   final analyzed.AnalyzedClass? _analyzedClass;
 
-  BoundExpression(this.expression, this.sourceSpan, this._analyzedClass);
-
-  /// Wraps the expression in an `== true` check, in order to support null
-  /// values.
-  ///
-  /// This hack is to allow legacy NgIf behavior on null inputs
-  BoundExpression.falseIfNull(ast.ASTWithSource parsedExpression,
-      SourceSpan sourceSpan, analyzed.AnalyzedClass scope)
-      : this(
-            analyzed.isImmutable(parsedExpression.ast, scope)
-                ? parsedExpression
-                : ast.ASTWithSource.from(
-                    parsedExpression,
-                    ast.Binary('==', parsedExpression.ast,
-                        ast.LiteralPrimitive(true))),
-            sourceSpan,
-            scope);
+  BoundExpression(
+    this.expression,
+    this.sourceSpan,
+    this.compileDirectiveMetadata,
+  ) : _analyzedClass = compileDirectiveMetadata?.analyzedClass;
 
   @override
   bool get isImmutable => analyzed.isImmutable(expression.ast, _analyzedClass);
@@ -630,11 +639,17 @@ class BoundExpression implements BindingSource {
           [CO? context]) =>
       visitor.visitBoundExpression(this, context);
 
+  SourceReference? get sourceReference =>
+      sourceSpan != null && sourceSpan?.sourceUrl != null
+          ? SourceReference(sourceSpan!, compileDirectiveMetadata)
+          : null;
+
   BoundExpression withNewExpression(ast.AST expression) => BoundExpression(
-      ast.ASTWithSource(
-          expression, this.expression.source, this.expression.location),
-      sourceSpan,
-      _analyzedClass);
+        ast.ASTWithSource(
+            expression, this.expression.source, this.expression.location),
+        sourceSpan,
+        compileDirectiveMetadata,
+      );
 }
 
 abstract class EventHandler implements BindingSource {

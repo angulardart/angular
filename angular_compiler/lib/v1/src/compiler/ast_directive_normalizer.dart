@@ -163,6 +163,7 @@ class AstDirectiveNormalizer {
       encapsulation: encapsulation,
       template: template,
       templateUrl: templateAbsUrl,
+      templateOffset: templateMeta.templateOffset,
       styles: templateMeta.styles,
       styleUrls: allExternalStyles,
       ngContentSelectors: ngContentSelectors,

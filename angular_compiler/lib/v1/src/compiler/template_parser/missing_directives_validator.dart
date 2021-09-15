@@ -8,6 +8,12 @@ import 'package:angular_compiler/v1/src/compiler/template_parser/recursive_templ
 import 'package:angular_compiler/v1/src/compiler/view_compiler/view_compiler_utils.dart';
 import 'package:angular_compiler/v2/context.dart';
 
+const String optedOutValidator = 'If your project uses selector css styling '
+    'heavily, or the templates contain external custom elements not supported by '
+    'ACX, then this feature might not be a good fit for your project. To prevent '
+    'compilation errors, please add your project to the disallow list in '
+    'go/opted-out-missing-directive-validator';
+
 /// A validator to catch missing elements, direcitves, attributes, and outputs.
 ///
 /// Issue a warning when @skipSchemaValidationFor annotation not found and
@@ -41,7 +47,8 @@ class MissingDirectiveValidator
         BuildError.forSourceSpan(
           ast.sourceSpan,
           'A selector in @skipSchemaValidationFor="'
-          '${ast.skipSchemaValidationForSelector}" does not match this element',
+          '${ast.skipSchemaValidationForSelector}" does not match this '
+          'element.\n$optedOutValidator',
         ),
       );
     }
@@ -59,7 +66,7 @@ class MissingDirectiveValidator
           "Can't find '<$elementName>'. Please check that the spelling "
           'is correct, and that the intended component is included in the '
           "host component's list of directives. "
-          'See more details go/skipschemavalidationfor',
+          'See more details go/skipschemavalidationfor.\n$optedOutValidator',
         ),
       );
     }
@@ -159,7 +166,7 @@ class MissingDirectiveValidator
           'bound directive or a native property. Please check that the '
           'spelling is correct, or that the intended directive is included '
           "in the host component's list of directives. "
-          'See more details go/skipschemavalidationfor',
+          'See more details go/skipschemavalidationfor.\n$optedOutValidator',
         ),
       );
     }
@@ -216,7 +223,8 @@ class MissingDirectiveValidator
           'of any bound directive or a native event. Please check '
           'that the spelling is correct, and that the intended '
           "directive is included in the host component's list of "
-          'directives. See more details go/skipschemavalidationfor',
+          'directives. See more details go/skipschemavalidationfor.\n'
+          '$optedOutValidator',
         ),
       );
     }

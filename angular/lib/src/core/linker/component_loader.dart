@@ -58,7 +58,7 @@ class ComponentLoader {
   /// [UnsupportedError].
   ///
   /// See also [loadNextToLocation].
-  ComponentRef<T> loadNextTo<T>(
+  ComponentRef<T> loadNextTo<T extends Object>(
     ComponentFactory<T> component, {
     Injector? injector,
   }) =>
@@ -96,7 +96,7 @@ class ComponentLoader {
   /// May optionally define the parent [injector], otherwise defaults to the
   /// DI hierarchy that is present where in the view container [location].
   @mustCallSuper
-  ComponentRef<T> loadNextToLocation<T>(
+  ComponentRef<T> loadNextToLocation<T extends Object>(
     ComponentFactory<T> component,
     ViewContainerRef location, {
     Injector? injector,

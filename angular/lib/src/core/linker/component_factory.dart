@@ -123,7 +123,7 @@ class ComponentRef<C> {
 /// ```
 ///
 /// It is *not* valid to implement, extend, mix-in, or construct this type.
-class ComponentFactory<T> {
+class ComponentFactory<T extends Object> {
   /// User-defined `selector` in `@Component(selector: '...')`.
   final String selector;
 

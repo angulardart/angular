@@ -96,7 +96,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       return;
     }
     _visitText(
-      convertToBinding(ast, _view.component.analyzedClass),
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
       parent,
       ast.ngContentIndex,
     );
@@ -110,12 +110,20 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       }
       return;
     }
-    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
+    _visitText(
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
+      parent,
+      ast.ngContentIndex,
+    );
   }
 
   @override
   void visitI18nText(I18nTextAst ast, CompileElement parent) {
-    _visitText(convertToBinding(ast, null), parent, ast.ngContentIndex);
+    _visitText(
+      convertToBinding(ast, compileDirectiveMetadata: _view.component),
+      parent,
+      ast.ngContentIndex,
+    );
   }
 
   bool _maybeSkipNode(CompileElement parent, int? ngContentIndex) {
@@ -273,6 +281,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
     ElementAst ast,
   ) {
     final componentViewExpr = _view.createComponentNodeAndAppend(
+      _view.component,
       component,
       parent,
       elementRef,
@@ -361,7 +370,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.createElementNs(
           parent, elementRef, nodeIndex, ns, nameParts[1], ast);
     } else {
-      _view.createElement(parent, elementRef, nodeIndex, tagName, ast);
+      _view.createElement(parent, elementRef, tagName, ast);
     }
     var isHtmlElement = detectHtmlElementFromTagName(tagName);
     var mergedBindings = mergeHtmlAndDirectiveAttributes(
@@ -441,6 +450,7 @@ class ViewBuilderVisitor implements TemplateAstVisitor<void, CompileElement> {
       _view.viewIndex + _nestedViewCount,
       compileElement,
       ast.variables,
+      _view.genConfig.enableDataDebugSource,
     );
 
     _beforeChildren(compileElement);
@@ -566,31 +576,11 @@ o.ClassStmt createViewClass(CompileView view, ExpressionParser parser) {
   for (final getter in view.getters) {
     NodeReferenceStorageVisitor.visitScopedStatements(getter.body);
   }
-  final viewGetters = [
-    ...view.getters,
-    if (view.viewType == ViewType.component)
-      o.ClassGetter(
-        'debugComponentTypeName',
-        [
-          o.ReturnStatement(
-            o.THIS_EXPR
-                .prop('ctx')
-                .prop('runtimeType')
-                .callMethod('toString', []),
-          ),
-        ],
-        o.STRING_TYPE,
-        [],
-        [
-          o.importExpr(Identifiers.dartCoreOverride),
-        ],
-      ),
-  ];
   final viewClass = o.ClassStmt(
     view.className,
     _createParentClassExpr(view),
     view.storage.fields,
-    viewGetters,
+    view.getters,
     viewConstructor,
     viewMethods.where((method) => method.body.isNotEmpty).toList(),
     typeParameters: view.component.originType!.typeParameters,
@@ -634,7 +624,7 @@ o.Constructor _createComponentViewConstructor(CompileView view) {
   // Write literal attribute values on element.
   view.component.hostAttributes.forEach((name, value) {
     var binding = convertHostAttributeToBinding(
-        name, ASTWithSource.missingSource(value), view.component.analyzedClass);
+        name, ASTWithSource.missingSource(value), view.component);
     var statements = view.createAttributeStatements(
       binding,
       tagName,

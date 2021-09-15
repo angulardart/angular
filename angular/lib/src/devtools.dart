@@ -5,10 +5,11 @@ import 'dart:html' as html;
 
 import 'package:js/js.dart';
 
-import 'devtools/component_inspector.dart';
+import 'devtools/inspector.dart';
 import 'utilities.dart';
 
-export 'devtools/component_inspector.dart';
+export 'devtools/inspector.dart';
+export 'devtools/model.dart';
 
 /// Whether developer tools are enabled.
 ///
@@ -23,10 +24,10 @@ void enableDevTools() {
   if (isDevMode) {
     _isDevToolsEnabled = true;
     _getComponentElement = allowInterop(
-      ComponentInspector.instance.getComponentElement,
+      Inspector.instance.getComponentElement,
     );
     _getComponentIdForNode = allowInterop(
-      ComponentInspector.instance.getComponentIdForNode,
+      Inspector.instance.getComponentIdForNode,
     );
   }
 }
@@ -37,7 +38,7 @@ void enableDevTools() {
 /// the app's root component.
 void registerContentRoot(html.Element element) {
   if (isDevToolsEnabled) {
-    ComponentInspector.instance.registerContentRoot(element);
+    Inspector.instance.registerContentRoot(element);
   }
 }
 

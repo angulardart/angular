@@ -6,7 +6,7 @@ import 'package:source_gen/src/utils.dart';
 
 /// Returns the import URL for [type].
 String getTypeImport(DartType type) {
-  var aliasElement = type.aliasElement;
+  var aliasElement = type.alias?.element;
   if (aliasElement != null) {
     return normalizeUrl(aliasElement.library.source.uri).toString();
   }
@@ -21,7 +21,7 @@ String getTypeImport(DartType type) {
 
 /// Forwards and backwards-compatible method of getting the "name" of [type].
 String? getTypeName(DartType type) {
-  var aliasElement = type.aliasElement;
+  var aliasElement = type.alias?.element;
   if (aliasElement != null) {
     return aliasElement.name;
   }

@@ -12,7 +12,9 @@ void main() {
     log = Log();
   });
 
-  Future<NgTestFixture<T>> createFixture<T>(ComponentFactory<T> factory) async {
+  Future<NgTestFixture<T>> createFixture<T extends Object>(
+    ComponentFactory<T> factory,
+  ) async {
     final testBed = NgTestBed(factory,
         rootInjector: (parent) => Injector.map({Log: log}, parent));
     return await testBed.create();

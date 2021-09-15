@@ -25,7 +25,7 @@ NgZone _createNgZone() => NgZone();
 /// If [beforeChangeDetection] is specified, allows interacting with instance of
 /// component created _before_ the initial change detection occurs; for example
 /// setting up properties or state.
-Future<ComponentRef<E>> bootstrapForTest<E>(
+Future<ComponentRef<E>> bootstrapForTest<E extends Object>(
   ComponentFactory<E> componentFactory,
   Element hostElement,
   InjectorFactory userInjector, {
@@ -79,7 +79,7 @@ Future<ComponentRef<E>> bootstrapForTest<E>(
   });
 }
 
-Future<ComponentRef<E>> _runAndLoadComponent<E>(
+Future<ComponentRef<E>> _runAndLoadComponent<E extends Object>(
   ApplicationRef appRef,
   ComponentFactory<E> componentFactory,
   Element hostElement,

@@ -6,31 +6,6 @@ import 'package:angular_compiler/v2/context.dart';
 
 import 'resolve.dart';
 
-/// Executes the [run] function, and expects no warnings or errors logged.
-///
-/// ```dart
-/// test('should compile fine', () {
-///   compilesNormally(() {
-///     runSomeCodeThatMightLogErrors();
-///   });
-/// });
-/// ```
-///
-/// Returns the result of the provided function.
-Future<T> runsNormally<T>(Future<T> Function() run) {
-  return runsExpecting(run, errors: isEmpty, warnings: isEmpty);
-}
-
-/// Executes the [run] function with the result of analyzing [source].
-///
-/// Similar to [runNormally] as it verifies no warnings or errors.
-Future<void> compilesNormally(
-  String source,
-  Future<void> Function(LibraryElement?) run,
-) {
-  return resolveLibrary(source).then((lib) => runsNormally(() => run(lib)));
-}
-
 Future<T> _recordLogs<T>(
   Future<T> Function() run,
   void Function(List<LogRecord>) onLog,

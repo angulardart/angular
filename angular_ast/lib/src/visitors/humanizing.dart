@@ -31,7 +31,10 @@ class HumanizingTemplateAstVisitor
   @override
   String visitCloseElement(CloseElementAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
-    context..write('</')..write(astNode.name)..write('>');
+    context
+      ..write('</')
+      ..write(astNode.name)
+      ..write('>');
     return context.toString();
   }
 
@@ -65,7 +68,9 @@ class HumanizingTemplateAstVisitor
   @override
   String visitElement(ElementAst astNode, [StringBuffer? context]) {
     context ??= StringBuffer();
-    context..write('<')..write(astNode.name);
+    context
+      ..write('<')
+      ..write(astNode.name);
     if (astNode.annotations.isNotEmpty) {
       context
         ..write(' ')
