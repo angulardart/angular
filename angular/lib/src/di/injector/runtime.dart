@@ -1,7 +1,7 @@
-import 'package:meta/meta.dart';
 import 'package:angular/src/meta.dart';
 import 'package:angular/src/reflector.dart' as reflector;
 import 'package:angular/src/utilities.dart';
+import 'package:meta/meta.dart';
 
 import '../errors.dart' as errors;
 import '../injector.dart';
@@ -54,7 +54,7 @@ abstract class ReflectiveInjector implements Injector {
   /// argument information for factory functions at runtime are not supported
   /// since they would defeat the tree-shaking improvements of "runApp".
   ///
-  /// See https://github.com/dart-lang/angular/issues/1426 for details.
+  /// See https://github.com/angulardart/angular/issues/1426 for details.
   ///
   /// Any other type of [Provider] will throw during creation in development
   /// mode and may fail unexpectedly in production mode. This is to allow eased
@@ -327,13 +327,13 @@ Never _throwUnsupportedProvider(Provider<void> provider) {
     'Specifically, any providers that require looking up factory functions or '
     'argument information for factory functions at runtime are not supported '
     'since they would defeat the tree-shaking improvements of "runApp".\n\n'
-    'See https://github.com/dart-lang/angular/issues/1426 for details',
+    'See https://github.com/angulardart/angular/issues/1426 for details',
   );
 }
 
 // When assertions enabled, verify that providers do not need initReflector.
 //
-// See https://github.com/dart-lang/angular/issues/1426.
+// See https://github.com/angulardart/angular/issues/1426.
 void _assertStaticProviders(Iterable<Provider<void>> providers) {
   for (final provider in providers) {
     // ValueProvider or Provider(useValue: ...) is fine.

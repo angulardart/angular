@@ -429,8 +429,8 @@
     change is in preperation for when a host view reference may not implement
     `EmbeddedViewRef`.
 
-[#1694]: https://github.com/dart-lang/angular/issues/1694
-[#1669]: https://github.com/dart-lang/angular/issues/1669
+[#1694]: https://github.com/angulardart/angular/issues/1694
+[#1669]: https://github.com/angulardart/angular/issues/1669
 
 ### Deprecations
 
@@ -557,9 +557,9 @@
 *   The `@deferred` annotation now also defers the annotated component's
     defining library, rather than just its generated template's library.
 
-[#1653]: https://github.com/dart-lang/angular/issues/1653
-[#1665]: https://github.com/dart-lang/angular/issues/1665
-[#1666]: https://github.com/dart-lang/angular/issues/1666
+[#1653]: https://github.com/angulardart/angular/issues/1653
+[#1665]: https://github.com/angulardart/angular/issues/1665
+[#1666]: https://github.com/angulardart/angular/issues/1666
 
 ## 5.1.0
 
@@ -670,7 +670,7 @@
     with static text and HTML. See the [example][i18n_example] for more details.
 
 [intl]: https://pub.dev/packages/intl
-[i18n_example]: https://github.com/dart-lang/angular/blob/master/examples/i18n
+[i18n_example]: https://github.com/angulardart/angular/blob/master/examples/i18n
 
 ### Bug fixes
 
@@ -775,20 +775,20 @@
 *   Error ranges for invalid code sometimes listed the error offset as if it
     were a column on line 1. Now shows correct line and column number.
 
-[#434]: https://github.com/dart-lang/angular/issues/434
-[#880]: https://github.com/dart-lang/angular/issues/880
-[#930]: https://github.com/dart-lang/angular/issues/930
-[#1500]: https://github.com/dart-lang/angular/issues/1500
-[#1502]: https://github.com/dart-lang/angular/issues/1502
-[#1538]: https://github.com/dart-lang/angular/issues/1538
-[#1539]: https://github.com/dart-lang/angular/issues/1539
-[#1540]: https://github.com/dart-lang/angular/issues/1540
-[#1558]: https://github.com/dart-lang/angular/issues/1558
-[#1570]: https://github.com/dart-lang/angular/issues/1570
-[#1591]: https://github.com/dart-lang/angular/issues/1591
-[#1598]: https://github.com/dart-lang/angular/issues/1598
-[#1625]: https://github.com/dart-lang/angular/issues/1625
-[#1633]: https://github.com/dart-lang/angular/issues/1633
+[#434]: https://github.com/angulardart/angular/issues/434
+[#880]: https://github.com/angulardart/angular/issues/880
+[#930]: https://github.com/angulardart/angular/issues/930
+[#1500]: https://github.com/angulardart/angular/issues/1500
+[#1502]: https://github.com/angulardart/angular/issues/1502
+[#1538]: https://github.com/angulardart/angular/issues/1538
+[#1539]: https://github.com/angulardart/angular/issues/1539
+[#1540]: https://github.com/angulardart/angular/issues/1540
+[#1558]: https://github.com/angulardart/angular/issues/1558
+[#1570]: https://github.com/angulardart/angular/issues/1570
+[#1591]: https://github.com/angulardart/angular/issues/1591
+[#1598]: https://github.com/angulardart/angular/issues/1598
+[#1625]: https://github.com/angulardart/angular/issues/1625
+[#1633]: https://github.com/angulardart/angular/issues/1633
 
 ### Other improvements
 
@@ -1212,7 +1212,7 @@ everyone).
 *   Support for the suffix `.if` for attribute bindings, both in a template and
     in a `@HostBinding()`. Accepts an expression of type `bool`, and adds an
     attribute if `true`, and removes it if `false` and closes
-    https://github.com/dart-lang/angular/issues/1058:
+    https://github.com/angulardart/angular/issues/1058:
 
     ```html
     <!-- These are identical -->
@@ -1332,7 +1332,7 @@ everyone).
 *   Private types can't be used in template collection literals bound to an
     input. This is a consequence of fixing a cast warning that is soon to be an
     error caused by the code generated for change detecting collection literals
-    in templates. See https://github.com/dart-lang/angular/issues/844 for more
+    in templates. See https://github.com/angulardart/angular/issues/844 for more
     information.
 
 *   `SafeInnerHtmlDirective` is no longer injectable.
@@ -1784,16 +1784,16 @@ then immediately start working on `5.0.0-alpha`, which uses the new Dart SDK.
 *   The `bootstrap` function now always throws a runtime exception, and both it
     and `bootstrapStatic` are accessible via `angular.dart` instead of
     `platform/browser.dart` and `platform/browser_static.dart`
-    [#357](https://github.com/dart-lang/angular/issues/357).
+    [#357](https://github.com/angulardart/angular/issues/357).
 
 *   Returning `false` from an event handler will no longer cancel the event. See
-    [#387](https://github.com/dart-lang/angular2/issues/387) for details.
+    [#387](https://github.com/angulardart/angular/issues/387) for details.
 
 *   Removed `Query` and `ViewQuery`. Please use `ContentChild`/`ContentChildren`
     and `ViewChild`/`ViewChildren` in their place instead.
 
 *   Removed the `use_analyzer` flag for the transformer. This is always `true`.
-    [#404](https://github.com/dart-lang/angular/issues/404).
+    [#404](https://github.com/angulardart/angular/issues/404).
 
 *   Removed all other unused or unsupported flags from the transformer. There is
     now a single `CompilerFlags` class that is universally supported for all
@@ -1878,7 +1878,7 @@ class AdBannerComponent implements AfterViewInit {
     field or method-level annotations (`@Input`, `@Output`,
     `@ViewChild|Children`, `@ContentChild|Children`) are now inherited through
     super types (`extends`, `implements`, `with`)
-    [#231](https://github.com/dart-lang/angular/issues/231):
+    [#231](https://github.com/angulardart/angular/issues/231):
 
 ```dart
 class BaseComponent {
@@ -1916,7 +1916,7 @@ class FancyButton {
 *   Added `exports: [ ... ]` to `@Component`, which allows the limited use of
     top-level fields and static methods/fields in a template without making an
     alias getter in your class. Implements
-    [#374](https://github.com/dart-lang/angular/issues/374).
+    [#374](https://github.com/angulardart/angular/issues/374).
 
 ```dart
 import 'dart:math' show max;
@@ -1938,7 +1938,7 @@ class Comp {}
 
 *   Added `@deferred` as the first "compile-time" directive (it has no specific
     runtime code nor is it listed in a `directives: [ ... ]` list. Implements
-    [#406](https://github.com/dart-lang/angular/issues/406).
+    [#406](https://github.com/angulardart/angular/issues/406).
 
 ```dart
 import 'package:angular2/angular2.dart';
@@ -1965,21 +1965,21 @@ class MyComp {}
     merged into `master`.
 
 *   We no longer emit `ng_*.json` files as part of the compile process
-    [#276](https://github.com/dart-lang/angular/issues/276).
+    [#276](https://github.com/angulardart/angular/issues/276).
 
 *   Attribute selectors (`<ng-content select="custom-action[group='1']">`) is
-    now supported [#237](https://github.com/dart-lang/angular/issues/237).
+    now supported [#237](https://github.com/angulardart/angular/issues/237).
 
 *   Lifecycle interfaces no longer need to be "re-implemented" on classes in
     order for the compiler to pick them up - we now respect the dependency chain
-    [#19](https://github.com/dart-lang/angular/issues/19).
+    [#19](https://github.com/angulardart/angular/issues/19).
 
 *   `Provider(useValue: ...)` now accepts "complex const data structures", with
     the caveat that your data structure must not be invoking a private
-    constructor [#10](https://github.com/dart-lang/angular/issues/10).
+    constructor [#10](https://github.com/angulardart/angular/issues/10).
 
 [CopyBara]: https://github.com/google/copybara
-[github-sync]: https://github.com/dart-lang/angular/tree/github-sync
+[github-sync]: https://github.com/angulardart/angular/tree/github-sync
 
 ### Deprecations
 
@@ -1991,7 +1991,7 @@ class MyComp {}
     incompatibility with common CSS tooling. `::ng-deep` is a drop-in
     replacement, intended to provide the same functionality as `/deep/` and
     `>>>`, without the need to use deprecated or unsupported CSS syntax
-    [#454](https://github.com/dart-lang/angular/issues/454).
+    [#454](https://github.com/angulardart/angular/issues/454).
 
 [deep-removal]: https://www.chromestatus.com/features/4964279606312960
 [static-profile]: https://drafts.csswg.org/css-scoping/#deep-combinator
@@ -2006,7 +2006,7 @@ class MyComp {}
 *   Fixed a long-standing bug on `ngSwitch` behavior in Dartium.
 
 *   Fixed a bug in `@deferred` when nested views has DI bindings. Fixes
-    [#578](https://github.com/dart-lang/angular/issues/578).
+    [#578](https://github.com/angulardart/angular/issues/578).
 
 *   The transformer now fails if any unsupported arguments are passed in.
 
@@ -2034,13 +2034,13 @@ class MyComp {}
     may be called more than once.
 
 *   `*ngIf` now properly checks that inputs do not change during change
-    detection [#453](https://github.com/dart-lang/angular/issues/453).
+    detection [#453](https://github.com/angulardart/angular/issues/453).
 
 *   Properly typed `TrackByFn` as an `int` not a `num`
-    [#431](https://github.com/dart-lang/angular/issues/431).
+    [#431](https://github.com/angulardart/angular/issues/431).
 
 *   Import aliases are supported by the compiler
-    [#245](https://github.com/dart-lang/angular/issues/245).
+    [#245](https://github.com/angulardart/angular/issues/245).
 
 ### Performance
 
@@ -2089,7 +2089,7 @@ transformers:
 https://goo.gl/68VhMa for details.
 
 **WARNING**: Using `use_analyser: true` doesn't yet work with most third-party
-packages [due to a bug](https://github.com/dart-lang/angular2/issues/390).
+packages [due to a bug](https://github.com/angulardart/angular/issues/390).
 
 ### Deprecations
 
@@ -2485,7 +2485,7 @@ provide(Foo, useValue: null)
 ### Known issues
 
 *   Some types of **dependency injection** don't work.
-    (https://github.com/dart-lang/angular2/issues/10)
+    (https://github.com/angulardart/angular/issues/10)
 
 ### Bug fixes and other changes
 

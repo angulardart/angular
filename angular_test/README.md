@@ -10,7 +10,7 @@ Documentation and examples:
 [pub_angular_test]: https://pub.dev/packages/angular_test
 [pub_test]: https://pub.dev/packages/test
 [build_runner]: https://pub.dev/packages/build_runner
-[test_folder]: https://github.com/dart-lang/angular/tree/master/_tests/test
+[test_folder]: https://github.com/angulardart/angular/tree/master/_tests/test
 [webdev_angular]: https://pub.dev/packages/angular
 
 Additional resources:

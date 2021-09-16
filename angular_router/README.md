@@ -10,5 +10,5 @@ perform application tasks.
 
 [pub_angular_router]: https://pub.dev/packages/angular_router
 [Gitter chat room]: https://gitter.im/dart-lang/angular
-[source code]: https://github.com/dart-lang/angular/tree/master/angular_router
-[AngularDart]: https://github.com/dart-lang/angular
+[source code]: https://github.com/angulardart/angular/tree/master/angular_router
+[AngularDart]: https://github.com/angulardart/angular

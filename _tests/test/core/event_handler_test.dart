@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:html';
 
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:test/test.dart';
 
 import 'event_handler_test.template.dart' as ng;
 
@@ -125,7 +125,7 @@ void main() {
     await fixture.update((_) {
       fixture.rootElement.querySelector('button')!.click();
     });
-  }, skip: 'https://github.com/dart-lang/angular/issues/1670');
+  }, skip: 'https://github.com/angulardart/angular/issues/1670');
 
   test('should support top-level methods invoked for events', () async {
     final testBed = NgTestBed<TestTopLevelMethodsDirect>(
@@ -169,7 +169,7 @@ void main() {
     await fixture.update((_) {
       fixture.rootElement.querySelector('button')!.click();
     });
-  }, skip: 'https://github.com/dart-lang/angular/issues/1670');
+  }, skip: 'https://github.com/angulardart/angular/issues/1670');
 
   test('should support chained method invoked for events', () async {
     final testBed = NgTestBed<TestChainedMethodsDirect>(

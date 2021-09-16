@@ -60,7 +60,7 @@ Future<ComponentRef<E>> bootstrapForTest<E extends Object>(
       // https://github.com/dart-lang/sdk/issues/32284
       await ngZone.onTurnDone.first;
       // Required to prevent onTurnDone to become re-entrant, as described in
-      // the bug https://github.com/dart-lang/angular/issues/631. Without this
+      // the bug https://github.com/angulardart/angular/issues/631. Without this
       // the .first.then((_) => ...) eventually calls stabilization, which
       // in turn triggers another zone entry/exit, which is illegal.
       //

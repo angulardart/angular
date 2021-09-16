@@ -1,7 +1,7 @@
 import '../messages.dart';
 
 /// URL of the AngularDart GitHub repository.
-const _github = 'https://github.com/dart-lang/angular';
+const _github = 'https://github.com/angulardart/angular';
 
 /// Concrete implementation of [Messages] for external users.
 class $Messages extends Messages {

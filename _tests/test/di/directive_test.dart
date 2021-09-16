@@ -1,6 +1,6 @@
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:test/test.dart';
 
 import 'directive_test.template.dart' as ng;
 
@@ -954,7 +954,7 @@ final InjectorFactory generatedInjector = ng.generatedInjector$Injector;
 )
 class ComponentInjector {
   // Lack of types on these fields (i.e. List<void> or List<Null>) is due to
-  // https://github.com/dart-lang/angular/issues/1436
+  // https://github.com/angulardart/angular/issues/1436
   final Object aListOfVoid;
   final Object aListOfNull;
 

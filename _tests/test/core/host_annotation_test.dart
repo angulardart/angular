@@ -1,8 +1,8 @@
 import 'dart:html';
 
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:test/test.dart';
 
 import 'host_annotation_test.template.dart' as ng;
 
@@ -40,7 +40,7 @@ void main() {
       // This test verifies that nothing is inherited. A user can always use an
       // instance getter or field and everything would work exactly as intended.
       //
-      // https://github.com/dart-lang/angular/issues/1272
+      // https://github.com/angulardart/angular/issues/1272
       final element = await rootElementOf(
         ng.createHostBindingStaticTitleNotInheritedFactory(),
       );

@@ -121,7 +121,7 @@
 
 *   Remove `optionals` param from `ControlGroup` constructor. This has been
     replaced by `disabled` state for all `Controls`. See
-    https://github.com/dart-lang/angular/issues/1037 for more details.
+    https://github.com/angulardart/angular/issues/1037 for more details.
 
 *   `AbstractControl.find` now only accepts a String. To supply a list, use
     `AbstractControl.findPath` instead. Also, for `find` or `findPath`,

@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular/src/common/pipes/invalid_pipe_argument_exception.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Stream', () {
@@ -51,7 +51,7 @@ void main() {
       });
       test('should not dispose of existing subscription when Streams are equal',
           () async {
-        // See https://github.com/dart-lang/angular2/issues/260
+        // See https://github.com/angulardart/angular/issues/260
         var _ctrl = StreamController.broadcast();
         expect(pipe.transform(_ctrl.stream), isNull);
         _ctrl.add(message);

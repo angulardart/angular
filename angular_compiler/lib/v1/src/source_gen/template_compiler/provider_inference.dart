@@ -38,7 +38,7 @@ DartType? inferProviderType(DartObject provider, DartObject token) {
             'MultiToken, and cannot extend another class that in turn extends '
             'OpaqueToken or MultiToken.\n\n'
             'We may loosten these restrictions in the future. See: '
-            'https://github.com/dart-lang/angular/issues/899');
+            'https://github.com/angulardart/angular/issues/899');
       }
       return supertype.typeArguments.first;
     }

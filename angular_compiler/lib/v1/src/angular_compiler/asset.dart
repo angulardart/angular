@@ -26,7 +26,7 @@ abstract class NgAssetReader {
   Uri _normalize(String url) => Uri.parse(assetToPackageUrl(Uri.parse(url))
       .toString()
       // Normalization for Windows URLs.
-      // See https://github.com/dart-lang/angular/issues/723.
+      // See https://github.com/angulardart/angular/issues/723.
       .replaceAll('..%5C', '')
       // Other normalization.
       .replaceAll('%7C', r'/'));

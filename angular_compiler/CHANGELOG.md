@@ -183,7 +183,7 @@
     extension.
 
 *   `ReflectorEmitter` now supports `MultiToken` and generic-typed tokens, with
-    some known limitations. See https://github.com/dart-lang/angular/issues/782.
+    some known limitations. See https://github.com/angulardart/angular/issues/782.
 
 *   Fix a bug in the _outliner_ that did not the correct output extension.
 

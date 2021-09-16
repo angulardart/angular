@@ -1,5 +1,5 @@
 name: angular_test
-repository: https://github.com/dart-lang/angular
+repository: https://github.com/angulardart/angular
 description: Testing runner and library for AngularDart
 version: 3.0.0
 

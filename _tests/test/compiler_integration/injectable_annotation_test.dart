@@ -1,8 +1,8 @@
 // @dart=2.9
 
-import 'package:test/test.dart';
 import 'package:_tests/compiler.dart';
 import 'package:angular_compiler/v2/context.dart';
+import 'package:test/test.dart';
 
 void main() {
   CompileContext.overrideForTesting();
@@ -32,7 +32,7 @@ void main() {
   });
 
   test('should not warn about @Injectable for classes not injected', () async {
-    // See https://github.com/dart-lang/angular/issues/906.
+    // See https://github.com/angulardart/angular/issues/906.
     await compilesNormally("""
       import '$ngImport';
 

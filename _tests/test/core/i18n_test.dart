@@ -1,8 +1,8 @@
 import 'dart:html';
 
-import 'package:test/test.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_test/angular_test.dart';
+import 'package:test/test.dart';
 
 import 'i18n_test.template.dart' as ng;
 
@@ -107,7 +107,7 @@ void main() {
   });
 }
 
-const issuesLink = 'https://github.com/dart-lang/angular/issues';
+const issuesLink = 'https://github.com/angulardart/angular/issues';
 
 @Component(
   selector: 'test',

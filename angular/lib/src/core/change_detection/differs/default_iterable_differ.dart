@@ -24,7 +24,7 @@ import 'package:angular/src/utilities.dart';
 ///
 /// **NOTE**: It is not safe to simply _assume_ that the second parameter is
 /// of your custom type (neither [TrackByFn] nor `NgFor` allow that) at this
-/// time: https://github.com/dart-lang/angular/issues/1020. You must use an `as`
+/// time: https://github.com/angulardart/angular/issues/1020. You must use an `as`
 /// cast or `is` check. See the example above.
 typedef TrackByFn = Object? Function(int index, dynamic item);
 

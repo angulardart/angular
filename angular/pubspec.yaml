@@ -3,7 +3,7 @@ version: 6.0.1
 description: >-
   Fast and productive web framework by Google.
   Separate, but similar to the JavaScript framework with a similar name.
-repository: https://github.com/dart-lang/angular
+repository: https://github.com/angulardart/angular
 environment:
   sdk: ">=2.12.0 <3.0.0"
 

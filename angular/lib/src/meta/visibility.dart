@@ -94,7 +94,7 @@ enum Visibility {
   ///
   /// **NOTE**: We intend to allow other forms of dependency injection (such as
   /// `FactoryProvider` to also access "local" components and directives, but
-  /// this does not yet work: https://github.com/dart-lang/angular/issues/716.
+  /// this does not yet work: https://github.com/angulardart/angular/issues/716.
   local,
 
   /// The directive can be injected anywhere in the sub tree.

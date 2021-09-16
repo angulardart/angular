@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:angular_ast/angular_ast.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('whitespace-only nodes', () {
@@ -100,7 +100,7 @@ void main() {
     );
   });
 
-  // https://github.com/dart-lang/angular/issues/804#issuecomment-363217553
+  // https://github.com/angulardart/angular/issues/804#issuecomment-363217553
   test('should retain whitespace for inline text formatting', () {
     expect(
       _parseAndMinifiy(r'''

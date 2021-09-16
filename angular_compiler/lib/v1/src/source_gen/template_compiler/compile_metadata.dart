@@ -6,7 +6,6 @@ import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/constant/value.dart';
 import 'package:analyzer/src/dart/element/element.dart';
 import 'package:analyzer/src/generated/utilities_dart.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
@@ -16,6 +15,7 @@ import 'package:angular_compiler/v1/src/compiler/output/output_ast.dart' as o;
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/v2/analyzer.dart';
 import 'package:angular_compiler/v2/context.dart';
+import 'package:source_gen/source_gen.dart';
 
 import 'component_visitor_exceptions.dart';
 import 'dart_object_utils.dart' as dart_objects;
@@ -245,7 +245,7 @@ class CompileTypeMetadataVisitor
   /// error) that there is invalid configuration. We don't need this for every
   /// piece of metadata.
   ///
-  /// See https://github.com/dart-lang/angular/issues/906 for details.
+  /// See https://github.com/angulardart/angular/issues/906 for details.
   CompileTypeMetadata _getCompileTypeMetadata(
     ClassElement element, {
     bool enforceClassCanBeCreated = false,

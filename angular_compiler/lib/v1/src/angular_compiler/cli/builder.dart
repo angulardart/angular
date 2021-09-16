@@ -1,7 +1,7 @@
+import 'package:angular_compiler/v2/context.dart';
 import 'package:build/build.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular_compiler/v2/context.dart';
 
 import 'flags.dart';
 
@@ -67,7 +67,7 @@ class Compiler implements Generator {
 /// in order to indicate "a .template.dart of the same will exist by the time
 /// it is necessary to compile".
 ///
-/// See: https://github.com/dart-lang/angular/issues/864.
+/// See: https://github.com/angulardart/angular/issues/864.
 class Placeholder implements Builder {
   const Placeholder();
 

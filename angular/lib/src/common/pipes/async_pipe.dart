@@ -140,7 +140,7 @@ class AsyncPipe implements OnDestroy {
 
   // StreamController.stream getter always returns new Stream instance,
   // operator== check is also needed. See
-  // https://github.com/dart-lang/angular2/issues/260
+  // https://github.com/angulardart/angular/issues/260
   static bool _maybeStreamIdentical(a, b) {
     if (!identical(a, b)) {
       return a is Stream<Object?> && b is Stream<Object?> && a == b;

@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/nullability_suffix.dart';
 import 'package:analyzer/dart/element/type.dart';
-import 'package:source_gen/source_gen.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
+import 'package:source_gen/source_gen.dart';
 
 import '../compile_metadata.dart';
 import 'output_ast.dart' as o;
@@ -51,7 +51,7 @@ o.OutputType? fromDartType(DartType? dartType, {bool resolveBounds = true}) {
       if (typeArgument is TypeParameterType && resolveBounds) {
         // Temporary hack to avoid a stack overflow for <T extends List<T>>.
         //
-        // See https://github.com/dart-lang/angular/issues/1397.
+        // See https://github.com/angulardart/angular/issues/1397.
         typeArguments.add(o.DYNAMIC_TYPE);
       } else {
         typeArguments.add(fromDartType(typeArgument, resolveBounds: false)!);

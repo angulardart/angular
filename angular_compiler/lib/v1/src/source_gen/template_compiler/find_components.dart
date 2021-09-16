@@ -4,10 +4,6 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:analyzer/dart/element/visitor.dart';
 import 'package:analyzer/src/dart/element/element.dart';
-import 'package:build/build.dart';
-import 'package:collection/collection.dart' show IterableExtension;
-import 'package:path/path.dart' as p;
-import 'package:source_gen/source_gen.dart';
 import 'package:angular/src/meta.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/src/compiler/analyzed_class.dart';
@@ -23,6 +19,10 @@ import 'package:angular_compiler/v1/src/source_gen/common/annotation_matcher.dar
 import 'package:angular_compiler/v1/src/source_gen/common/url_resolver.dart';
 import 'package:angular_compiler/v2/analyzer.dart';
 import 'package:angular_compiler/v2/context.dart';
+import 'package:build/build.dart';
+import 'package:collection/collection.dart' show IterableExtension;
+import 'package:path/path.dart' as p;
+import 'package:source_gen/source_gen.dart';
 
 import 'annotation_information.dart';
 import 'compile_metadata.dart';
@@ -539,7 +539,7 @@ class _ComponentVisitor
         element is FieldElement && element.isStatic) {
       if (element.enclosingElement != _directiveClassElement) {
         // We do not want to inherit static members.
-        // https://github.com/dart-lang/angular/issues/1272
+        // https://github.com/angulardart/angular/issues/1272
         return;
       }
       var classId = CompileIdentifierMetadata(

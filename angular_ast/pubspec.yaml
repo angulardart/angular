@@ -1,5 +1,5 @@
 name: angular_ast
-repository: https://github.com/dart-lang/angular
+repository: https://github.com/angulardart/angular
 description: Parser and utilities for AngularDart templates
 version: 1.0.1
 

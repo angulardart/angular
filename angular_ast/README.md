@@ -4,7 +4,7 @@
 
 Parser and utilities for [AngularDart][gh_angular_dart] templates.
 
-[gh_angular_dart]: https://github.com/dart-lang/angular
+[gh_angular_dart]: https://github.com/angulardart/angular
 
 <!-- Badges will go here -->
 

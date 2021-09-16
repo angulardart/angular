@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:angular_compiler/v2/context.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular_compiler/v2/context.dart';
 
 import '../common.dart';
 import '../link.dart';
@@ -83,7 +83,7 @@ class ProviderReader {
     // Base case: const Provider(Foo) with no fields set.
     if (token is TypeTokenElement) {
       // Ensure this isn't a FactoryProvider with a null function:
-      // https://github.com/dart-lang/angular/issues/1500
+      // https://github.com/angulardart/angular/issues/1500
       if (!$Provider.isExactlyType(o.type!)) {
         throw NullFactoryException(o);
       }

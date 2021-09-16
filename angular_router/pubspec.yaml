@@ -1,5 +1,5 @@
 name: angular_router
-repository: https://github.com/dart-lang/angular
+repository: https://github.com/angulardart/angular
 description: Router for AngularDart.
 version: 2.0.1-dev
 

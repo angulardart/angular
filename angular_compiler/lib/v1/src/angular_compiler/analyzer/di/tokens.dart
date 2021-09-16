@@ -1,9 +1,9 @@
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
+import 'package:angular_compiler/v2/context.dart';
 import 'package:meta/meta.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:angular_compiler/v2/context.dart';
 
 import '../link.dart';
 import '../types.dart';
@@ -118,7 +118,7 @@ class TokenReader {
         '    const ${clazz.name}();\n'
         '  }\n\n'
         'We may loosten these restrictions in the future. See: '
-        'https://github.com/dart-lang/angular/issues/899',
+        'https://github.com/angulardart/angular/issues/899',
       );
     }
     if (!$OpaqueToken.isExactlyType(clazz.supertype!) &&
@@ -130,7 +130,7 @@ class TokenReader {
         'MultiToken, and cannot extend another class that in turn extends '
         'OpaqueToken or MultiToken.\n\n'
         'We may loosten these restrictions in the future. See: '
-        'https://github.com/dart-lang/angular/issues/899',
+        'https://github.com/angulardart/angular/issues/899',
       );
     }
     return linkTypeOf(type);

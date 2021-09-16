@@ -187,7 +187,7 @@ plugin.
 ## 0.4.0-alpha+1
 
 *   New code location! angular_ast is now part of the angular mono-repo on
-    https://github.com/dart-lang/angular.
+    https://github.com/angulardart/angular.
 
 ### Bug fix
 

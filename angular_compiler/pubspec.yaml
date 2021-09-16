@@ -1,5 +1,5 @@
 name: angular_compiler
-repository: https://github.com/dart-lang/angular
+repository: https://github.com/angulardart/angular
 description: Compiler for AngularDart.
 version: 1.0.1
 
