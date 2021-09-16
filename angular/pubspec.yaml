@@ -5,7 +5,7 @@ description: >-
   Separate, but similar to the JavaScript framework with a similar name.
 repository: https://github.com/angulardart/angular
 environment:
-  sdk: ^2.14.0
+  sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
   # Runtime (or runtime *and* the compiler).

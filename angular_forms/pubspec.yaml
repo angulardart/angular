@@ -4,7 +4,7 @@ description: Forms framework for AngularDart.
 version: 3.0.0
 
 environment:
-  sdk: ^2.14.0
+  sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
   angular: ^6.0.0
