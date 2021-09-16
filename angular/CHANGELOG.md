@@ -1,3 +1,8 @@
+## 7.0.0
+
+- Support null safety
+- Require Dart ^2.14.0
+
 ## 6.0.1
 
 *   Update `package:analyzer` dependency to `^0.40.0`.

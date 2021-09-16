@@ -1,3 +1,8 @@
+## 2.0.0
+
+- Support null safety
+- Require Dart ^2.14.0
+
 ## 1.0.1
 
 *   Removed invalid link from the OnPush compatibility warning.
