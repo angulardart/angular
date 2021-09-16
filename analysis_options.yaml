@@ -43,3 +43,4 @@ linter:
     - prefer_initializing_formals
     - prefer_void_to_null
     - unnecessary_statements
+    - sort_pub_dependencies

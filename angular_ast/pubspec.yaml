@@ -1,7 +1,7 @@
 name: angular_ast
 repository: https://github.com/angulardart/angular
 description: Parser and utilities for AngularDart templates
-version: 1.0.1
+version: 2.0.0
 
 environment:
   sdk: ^2.14.0
@@ -10,9 +10,9 @@ dependencies:
   analyzer: ^2.0.0
   charcode: ^1.1.0
   collection: ^1.14.5
-  string_scanner: ^1.0.1
   meta: ^1.1.4
   source_span: ^1.4.0
+  string_scanner: ^1.0.1
 
 dev_dependencies:
   build_runner: ^2.0.0
