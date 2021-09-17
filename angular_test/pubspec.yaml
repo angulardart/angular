@@ -7,7 +7,7 @@ environment:
   sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
-  angular: ^6.0.0
+  angular: ^7.0.0
   collection: ^1.15.0
   meta: ^1.3.0
   pedantic: ^1.10.0

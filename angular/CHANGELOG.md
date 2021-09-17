@@ -1,3 +1,8 @@
+## 7.0.1
+
+- Support the latest version of `package:angular_compiler`.
+- Migrate the `build` library to null safety.
+
 ## 7.0.0
 
 - Support null safety

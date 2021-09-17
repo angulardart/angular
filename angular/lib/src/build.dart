@@ -1,5 +1,3 @@
-// @dart=2.9
-
 /// Configuration for using `package:build`-compatible build systems.
 ///
 /// See:
@@ -11,11 +9,11 @@
 /// details, and `build.yaml` for how these builders are configured by default.
 library angular.builder;
 
-import 'package:build/build.dart';
 import 'package:angular_compiler/v1/angular_compiler.dart';
 import 'package:angular_compiler/v1/cli.dart';
 import 'package:angular_compiler/v1/src/compiler/stylesheet_compiler/builder.dart';
 import 'package:angular_compiler/v1/src/source_gen/template_compiler/generator.dart';
+import 'package:build/build.dart';
 
 /// An option to generate a lighter-weight output for complex build systems.
 ///
@@ -105,7 +103,7 @@ PostProcessBuilder componentSourceCleanup(BuilderOptions options) {
   return FileDeletingBuilder.withExcludes(
     const ['.html', '.css'],
     List<String>.from(
-      options.config['exclude'] as List ?? const [],
+      options.config['exclude'] as List? ?? const [],
     ),
     isEnabled: options.config['enabled'] == true,
   );

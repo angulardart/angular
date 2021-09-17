@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Support the latest release of `pkg:angular`.
+
 ## 2.0.0
 
 - Support null safety

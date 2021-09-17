@@ -1,5 +1,5 @@
 name: angular
-version: 7.0.0
+version: 7.0.1
 description: >-
   Fast and productive web framework by Google.
   Separate, but similar to the JavaScript framework with a similar name.
@@ -24,7 +24,7 @@ dependencies:
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 2.0.0
-  angular_compiler: 2.0.0
+  angular_compiler: 2.0.1
   ##########################################################################
 
   build: ^2.0.0
