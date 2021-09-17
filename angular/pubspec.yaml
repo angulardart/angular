@@ -1,5 +1,5 @@
 name: angular
-version: 6.0.1
+version: 7.0.0
 description: >-
   Fast and productive web framework by Google.
   Separate, but similar to the JavaScript framework with a similar name.
@@ -21,7 +21,7 @@ dependencies:
   analyzer: ^2.0.0
 
   # It is extremely important these two dependencies stay pinned to current.
-  angular_ast: 1.0.1
+  angular_ast: 2.0.0
   angular_compiler: 1.0.1
   ##########################################################################
 
@@ -37,8 +37,6 @@ dependencies:
 
 # === vvv REMOVE WHEN PUBLISHING vvv ===
 dependency_overrides:
-  angular_ast:
-      path: ../angular_ast
   angular_compiler:
       path: ../angular_compiler
 # === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
