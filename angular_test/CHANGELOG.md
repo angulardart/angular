@@ -1,3 +1,8 @@
+## 4.0.0
+
+- Support null safety
+- Require Dart ^2.14.0
+
 ## 3.0.0
 
 ### New Features
