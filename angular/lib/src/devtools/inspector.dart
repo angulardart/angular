@@ -107,13 +107,13 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   /// Frees all object references held by a group.
   ///
   /// The objects may be kept alive by references from another group.
-  void _disposeGroup(String groupName) {
+  void disposeGroup(String groupName) {
     _referenceCounter.disposeGroup(groupName);
   }
 
   /// Registers service protocol extensions for inspecting components.
   void _registerServiceExtensions() {
-    _registerObjectGroupServiceExtension('disposeGroup', _disposeGroup);
+    _registerObjectGroupServiceExtension('disposeGroup', disposeGroup);
     // TODO(b/194920649): remove.
     _registerObjectGroupServiceExtension('getComponents', getComponents);
     _registerObjectGroupServiceExtension('getNodes', (groupName) {
@@ -290,7 +290,6 @@ invocations. Please contact angulardart-eng@ if you encounter this error.
   ///
   /// All directive instances referenced by this representation are kept alive
   /// at least until [groupName] is disposed.
-  @visibleForTesting
   BuiltList<InspectorNode> getNodes(String groupName) {
     return BuiltList.build((b) {
       for (final element in _contentRoots) {
