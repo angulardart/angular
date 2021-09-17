@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   # Runtime (or runtime *and* the compiler).
+  built_collection: ^5.0.0
+  built_value: ^8.0.0
   collection: ^1.15.0
   intl: ^0.17.0
   js: ^0.6.3
@@ -22,11 +24,11 @@ dependencies:
 
   # It is extremely important these two dependencies stay pinned to current.
   angular_ast: 2.0.0
-  angular_compiler: 1.0.1
+  angular_compiler: 2.0.0
   ##########################################################################
 
   build: ^2.0.0
-  build_config: '>=0.2.6 <2.0.0' # Runtime dependency with no import
+  build_config: ^1.0.0
   code_builder: ^4.0.0
   csslib: ^0.17.0
   path: ^1.8.0
