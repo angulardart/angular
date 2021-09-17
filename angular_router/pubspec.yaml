@@ -1,20 +1,20 @@
 name: angular_router
 repository: https://github.com/angulardart/angular
 description: Router for AngularDart.
-version: 2.0.1-dev
+version: 3.0.0
 
 environment:
   sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
-  angular: ^6.0.0
+  angular: ^7.0.0
   collection: ^1.15.0
   js: ^0.6.3
   meta: ^1.3.0
 
 dev_dependencies:
   async: ^2.5.0
-  angular_test: ^3.0.0
+  angular_test: ^4.0.0
   build_runner: ^2.0.0
   build_test: ^2.0.0
   build_web_compilers: ^3.0.0

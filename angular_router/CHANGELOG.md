@@ -1,4 +1,7 @@
-## 2.0.1-dev
+## 3.0.0
+
+- Support null safety
+- Require Dart ^2.14.0
 
 ## 2.0.0
 
