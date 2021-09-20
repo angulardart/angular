@@ -8428,7 +8428,6 @@
         $parent = t1;
         J._replaceChild$2$x($parent, otherNode, receiver);
       } catch (exception) {
-        A.unwrapException(exception);
       }
       return receiver;
     },
@@ -9296,7 +9295,6 @@
         policy = t1.createPolicy.apply(t1, [policyName, callbackMap]);
         return new A._TrustedTypePolicy(policy);
       } catch (exception) {
-        A.unwrapException(exception);
         return null;
       }
     }

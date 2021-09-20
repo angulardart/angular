@@ -7773,7 +7773,6 @@
         $parent = t1;
         J._replaceChild$2$x($parent, otherNode, receiver);
       } catch (exception) {
-        A.unwrapException(exception);
       }
       return receiver;
     },
