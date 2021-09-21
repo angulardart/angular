@@ -76,7 +76,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   void detectChangesInternal() {
     final _ctx = this.ctx;
     bool firstCheck = this.firstCheck;
-    final currVal_0 = _ctx.value;
+    final currVal_0 = _ctx.value /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:575:590 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._ChildComponent_2_5, 'value', currVal_0);
@@ -156,7 +156,7 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.value;
+    final currVal_0 = _ctx.value /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:654:669 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
@@ -230,7 +230,7 @@ class ViewUsesAfterView0 extends import0.ComponentView<import1.UsesAfterView> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.value;
+    final currVal_0 = _ctx.value /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:1012:1027 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);
@@ -294,7 +294,7 @@ class _ViewUsesAfterView1 extends import14.EmbeddedView<import1.UsesAfterView> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.value;
+    final currVal_0 = _ctx.value /* REF:asset:goldens/test/lifecycle_hooks/after_queries.dart:1087:1102 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/lifecycle_hooks/after_queries.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._ChildComponent_0_5, 'value', currVal_0);

@@ -78,7 +78,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.floatingLabel;
+    final currVal_0 = _ctx.floatingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:480:511 */;
     if (import8.checkBinding(this._expr_0, currVal_0, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'floatingLabel', currVal_0);
@@ -86,7 +86,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._NoEncapsulation_0_5.floatingLabel = currVal_0 /* REF:asset:goldens/test/templates/encapsulation.dart:480:511 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.trailingLabel;
+    final currVal_1 = _ctx.trailingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:518:558 */;
     if (import8.checkBinding(this._expr_1, currVal_1, 'trailingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'trailingGlyphAriaLabel', currVal_1);
@@ -94,7 +94,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._NoEncapsulation_0_5.trailingGlyphAriaLabel = currVal_1 /* REF:asset:goldens/test/templates/encapsulation.dart:518:558 */;
       this._expr_1 = currVal_1;
     }
-    final currVal_2 = _ctx.disabled;
+    final currVal_2 = _ctx.disabled /* REF:asset:goldens/test/templates/encapsulation.dart:565:586 */;
     if (import8.checkBinding(this._expr_2, currVal_2, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._NoEncapsulation_0_5, 'disabled', currVal_2);
@@ -102,7 +102,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._NoEncapsulation_0_5.disabled = currVal_2 /* REF:asset:goldens/test/templates/encapsulation.dart:565:586 */;
       this._expr_2 = currVal_2;
     }
-    final currVal_4 = _ctx.floatingLabel;
+    final currVal_4 = _ctx.floatingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:750:781 */;
     if (import8.checkBinding(this._expr_4, currVal_4, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'floatingLabel', currVal_4);
@@ -110,7 +110,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._EmulatedEncapsulation_5_5.floatingLabel = currVal_4 /* REF:asset:goldens/test/templates/encapsulation.dart:750:781 */;
       this._expr_4 = currVal_4;
     }
-    final currVal_5 = _ctx.trailingLabel;
+    final currVal_5 = _ctx.trailingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:788:828 */;
     if (import8.checkBinding(this._expr_5, currVal_5, 'trailingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'trailingGlyphAriaLabel', currVal_5);
@@ -118,7 +118,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._EmulatedEncapsulation_5_5.trailingGlyphAriaLabel = currVal_5 /* REF:asset:goldens/test/templates/encapsulation.dart:788:828 */;
       this._expr_5 = currVal_5;
     }
-    final currVal_6 = _ctx.disabled;
+    final currVal_6 = _ctx.disabled /* REF:asset:goldens/test/templates/encapsulation.dart:835:856 */;
     if (import8.checkBinding(this._expr_6, currVal_6, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       if (import9.isDevToolsEnabled) {
         import9.Inspector.instance.recordInput(this._EmulatedEncapsulation_5_5, 'disabled', currVal_6);
@@ -126,12 +126,12 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._EmulatedEncapsulation_5_5.disabled = currVal_6 /* REF:asset:goldens/test/templates/encapsulation.dart:835:856 */;
       this._expr_6 = currVal_6;
     }
-    final currVal_3 = import10.interpolateString1('highlight ', _ctx.addClass, '');
+    final currVal_3 = import10.interpolateString1('highlight ', _ctx.addClass, '') /* REF:asset:goldens/test/templates/encapsulation.dart:634:664 */;
     if (import8.checkBinding(this._expr_3, currVal_3, 'highlight {{addClass}}', 'asset:goldens/test/templates/encapsulation.dart')) {
       this.updateChildClass(this._el_3, currVal_3) /* REF:asset:goldens/test/templates/encapsulation.dart:634:664 */;
       this._expr_3 = currVal_3;
     }
-    final currVal_7 = import10.interpolateString1('highlight ', _ctx.addClass, '');
+    final currVal_7 = import10.interpolateString1('highlight ', _ctx.addClass, '') /* REF:asset:goldens/test/templates/encapsulation.dart:904:934 */;
     if (import8.checkBinding(this._expr_7, currVal_7, 'highlight {{addClass}}', 'asset:goldens/test/templates/encapsulation.dart')) {
       this.updateChildClass(this._el_8, currVal_7) /* REF:asset:goldens/test/templates/encapsulation.dart:904:934 */;
       this._expr_7 = currVal_7;
@@ -219,17 +219,17 @@ class ViewNoEncapsulation0 extends import0.ComponentView<import1.NoEncapsulation
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.floatingLabel;
+    final currVal_0 = _ctx.floatingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:1252:1289 */;
     if (import8.checkBinding(this._expr_0, currVal_0, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateClassBinding(this._el_0, 'floated-label', currVal_0) /* REF:asset:goldens/test/templates/encapsulation.dart:1252:1289 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.trailingGlyphAriaLabel;
+    final currVal_1 = _ctx.trailingGlyphAriaLabel /* REF:asset:goldens/test/templates/encapsulation.dart:1337:1379 */;
     if (import8.checkBinding(this._expr_1, currVal_1, 'trailingGlyphAriaLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateAttribute(this._el_1, 'aria-label', currVal_1) /* REF:asset:goldens/test/templates/encapsulation.dart:1337:1379 */;
       this._expr_1 = currVal_1;
     }
-    final currVal_2 = _ctx.disabled;
+    final currVal_2 = _ctx.disabled /* REF:asset:goldens/test/templates/encapsulation.dart:1392:1421 */;
     if (import8.checkBinding(this._expr_2, currVal_2, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateAttribute(this._el_1, 'disabled', (currVal_2 ? '' : null)) /* REF:asset:goldens/test/templates/encapsulation.dart:1392:1421 */;
       this._expr_2 = currVal_2;
@@ -311,17 +311,17 @@ class ViewEmulatedEncapsulation0 extends import0.ComponentView<import1.EmulatedE
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.floatingLabel;
+    final currVal_0 = _ctx.floatingLabel /* REF:asset:goldens/test/templates/encapsulation.dart:2142:2179 */;
     if (import8.checkBinding(this._expr_0, currVal_0, 'floatingLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateClassBinding(this._el_0, 'floated-label', currVal_0) /* REF:asset:goldens/test/templates/encapsulation.dart:2142:2179 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.trailingGlyphAriaLabel;
+    final currVal_1 = _ctx.trailingGlyphAriaLabel /* REF:asset:goldens/test/templates/encapsulation.dart:2226:2268 */;
     if (import8.checkBinding(this._expr_1, currVal_1, 'trailingGlyphAriaLabel', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateAttribute(this._el_1, 'aria-label', currVal_1) /* REF:asset:goldens/test/templates/encapsulation.dart:2226:2268 */;
       this._expr_1 = currVal_1;
     }
-    final currVal_2 = _ctx.disabled;
+    final currVal_2 = _ctx.disabled /* REF:asset:goldens/test/templates/encapsulation.dart:2280:2309 */;
     if (import8.checkBinding(this._expr_2, currVal_2, 'disabled', 'asset:goldens/test/templates/encapsulation.dart')) {
       import7.updateAttribute(this._el_1, 'disabled', (currVal_2 ? '' : null)) /* REF:asset:goldens/test/templates/encapsulation.dart:2280:2309 */;
       this._expr_2 = currVal_2;

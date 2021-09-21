@@ -205,6 +205,9 @@ void _checkBinding(
     isHtmlElement,
     updatedExpr,
   );
+  // TODO(grouma) - This is clunky. Return a better abstraction to make this
+  // less brittle.
+  var sourceReference = updateStmts.last.sourceReference;
 
   if (calcChanged) {
     updateStmts.add(DetectChangesVars.changed.set(o.literal(true)).toStmt());
@@ -227,6 +230,7 @@ void _checkBinding(
     constantMethod,
     fieldType: binding.target.type,
     isHostComponent: isHostComponent,
+    sourceReference: sourceReference,
   );
 }
 
@@ -312,6 +316,7 @@ void _bind(
   CompileMethod literalMethod, {
   o.OutputType? fieldType,
   bool isHostComponent = false,
+  ir.SourceReference? sourceReference,
 }) {
   if (isImmutable) {
     // If the expression is immutable, it will never change, so we can run it
@@ -333,7 +338,8 @@ void _bind(
   );
   method
     ..addStmt(
-      currValExpr.set(checkExpression).toDeclStmt(null, [o.StmtModifier.Final]),
+      currValExpr.set(checkExpression).toDeclStmt(null, [o.StmtModifier.Final])
+        ..sourceReference = sourceReference,
     )
     ..addStmt(
       o.IfStmt(

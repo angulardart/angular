@@ -58,7 +58,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.matrix;
+    final currVal_0 = _ctx.matrix /* REF:asset:goldens/test/templates/nested_structural_directives.dart:462:488 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'matrix', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);
@@ -124,7 +124,7 @@ class _ViewGoldenComponent1 extends import14.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final local_row = import7.unsafeCast<List<int>>(this.locals['\$implicit']);
-    final currVal_0 = local_row;
+    final currVal_0 = local_row /* REF:asset:goldens/test/templates/nested_structural_directives.dart:502:525 */;
     if (import12.checkBinding(this._expr_0, currVal_0, 'row', 'asset:goldens/test/templates/nested_structural_directives.dart')) {
       if (import11.isDevToolsEnabled) {
         import11.Inspector.instance.recordInput(this._NgFor_1_9, 'ngForOf', currVal_0);

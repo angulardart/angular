@@ -79,7 +79,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.durationList;
+    final currVal_0 = _ctx.durationList /* REF:asset:goldens/test/templates/type_inference.dart:448:485 */;
     if (import13.checkBinding(this._expr_0, currVal_0, 'durationList', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import12.isDevToolsEnabled) {
         import12.Inspector.instance.recordInput(this._NgFor_9_9, 'ngForOf', currVal_0);
@@ -90,7 +90,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     if ((!import13.debugThrowIfChanged)) {
       this._NgFor_9_9.ngDoCheck();
     }
-    final currVal_1 = _ctx.nestedLists;
+    final currVal_1 = _ctx.nestedLists /* REF:asset:goldens/test/templates/type_inference.dart:560:600 */;
     if (import13.checkBinding(this._expr_1, currVal_1, 'nestedLists', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import12.isDevToolsEnabled) {
         import12.Inspector.instance.recordInput(this._NgFor_11_9, 'ngForOf', currVal_1);
@@ -178,7 +178,7 @@ class _ViewGoldenComponent2 extends import16.EmbeddedView<import1.GoldenComponen
   @override
   void detectChangesInternal() {
     final local_durationList = import8.unsafeCast<List<Duration>>(this.locals['\$implicit']);
-    final currVal_0 = local_durationList;
+    final currVal_0 = local_durationList /* REF:asset:goldens/test/templates/type_inference.dart:622:659 */;
     if (import13.checkBinding(this._expr_0, currVal_0, 'durationList', 'asset:goldens/test/templates/type_inference.dart')) {
       if (import12.isDevToolsEnabled) {
         import12.Inspector.instance.recordInput(this._NgFor_0_9, 'ngForOf', currVal_0);

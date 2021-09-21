@@ -598,6 +598,18 @@ class SourceReference {
     return SourceReference._(sourceSpan.start.offset + templateOffset,
         sourceSpan.end.offset + templateOffset, sourceSpan.sourceUrl!);
   }
+
+  String get sourceComment {
+    var sourceComment = '';
+    sourceComment = '/* REF:'
+        '$sourceUrl'
+        ':'
+        '$startOffset'
+        ':'
+        '$endOffset'
+        ' */';
+    return sourceComment;
+  }
 }
 
 /// A [BindingSource] which represents a general-purpose expression.

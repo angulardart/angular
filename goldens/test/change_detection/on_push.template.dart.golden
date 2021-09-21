@@ -58,7 +58,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
     final _ctx = this.ctx;
     bool changed = false;
     changed = false;
-    final currVal_0 = _ctx.name;
+    final currVal_0 = _ctx.name /* REF:asset:goldens/test/change_detection/on_push.dart:443:456 */;
     if (import7.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
       if (import8.isDevToolsEnabled) {
         import8.Inspector.instance.recordInput(this._Child_0_5, 'name', currVal_0);
@@ -71,7 +71,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       this._compView_0.markAsCheckOnce();
     }
     changed = false;
-    final currVal_1 = _ctx.name;
+    final currVal_1 = _ctx.name /* REF:asset:goldens/test/change_detection/on_push.dart:491:504 */;
     if (import7.checkBinding(this._expr_1, currVal_1, 'name', 'asset:goldens/test/change_detection/on_push.dart')) {
       if (import8.isDevToolsEnabled) {
         import8.Inspector.instance.recordInput(this._ChildWithDoCheck_1_5, 'name', currVal_1);

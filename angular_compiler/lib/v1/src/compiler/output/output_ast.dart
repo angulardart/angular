@@ -816,6 +816,11 @@ enum StmtModifier { Const, Final, Late, Private, Static }
 
 abstract class Statement {
   SourceReference? sourceReference;
+
+  /// Returns the source comment for [sourceReference].
+  ///
+  /// Will be an empty string if [sourceReference] is null.
+  String get sourceComment => sourceReference?.sourceComment ?? '';
   List<StmtModifier> modifiers;
   Statement([this.modifiers = const []]);
   R visitStatement<R, C>(StatementVisitor<R, C> visitor, C context);

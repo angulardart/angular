@@ -72,7 +72,7 @@ class ViewGoldenComponent0 extends import0.ComponentView<import1.GoldenComponent
       import12.Inspector.instance.recordInput(this._NgIf_0_9, 'ngIf', _ctx.show);
     }
     this._NgIf_0_9.ngIf = _ctx.show /* REF:asset:goldens/test/templates/directive_star_syntax.dart:442:454 */;
-    final currVal_0 = _ctx.values;
+    final currVal_0 = _ctx.values /* REF:asset:goldens/test/templates/directive_star_syntax.dart:513:571 */;
     if (import13.checkBinding(this._expr_0, currVal_0, 'values', 'asset:goldens/test/templates/directive_star_syntax.dart')) {
       if (import12.isDevToolsEnabled) {
         import12.Inspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_0);

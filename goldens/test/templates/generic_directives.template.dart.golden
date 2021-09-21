@@ -267,7 +267,7 @@ class ViewUsesUntypedComp0 extends import0.ComponentView<import1.UsesUntypedComp
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:1531:1548 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._UntypedComp_0_5, 'input', currVal_0);
@@ -410,7 +410,7 @@ class ViewUsesGenericComp0 extends import0.ComponentView<import1.UsesGenericComp
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:1965:1982 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
@@ -495,7 +495,7 @@ class ViewUsesGenericCompGeneric0<E> extends import0.ComponentView<import1.UsesG
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:2303:2320 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
@@ -639,7 +639,7 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.bindKey;
+    final currVal_0 = _ctx.bindKey /* REF:asset:goldens/test/templates/generic_directives.dart:2811:2826 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'bindKey', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._MappingComp1_0_5, 'key', currVal_0);
@@ -647,7 +647,7 @@ class ViewUsesMappingComp10 extends import0.ComponentView<import1.UsesMappingCom
       this._MappingComp1_0_5.key = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:2811:2826 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.bindValue;
+    final currVal_1 = _ctx.bindValue /* REF:asset:goldens/test/templates/generic_directives.dart:2827:2846 */;
     if (import9.checkBinding(this._expr_1, currVal_1, 'bindValue', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._MappingComp1_0_5, 'value', currVal_1);
@@ -790,7 +790,7 @@ class ViewUsesMappingComp20 extends import0.ComponentView<import1.UsesMappingCom
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:3337:3354 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._MappingComp2_0_5, 'input', currVal_0);
@@ -933,7 +933,7 @@ class ViewUsesBoundCompWithBounds0 extends import0.ComponentView<import1.UsesBou
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:3763:3780 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
@@ -1018,7 +1018,7 @@ class ViewUsesBoundComp0 extends import0.ComponentView<import1.UsesBoundComp> {
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:4070:4087 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._BoundComp_0_5, 'input', currVal_0);
@@ -1162,7 +1162,7 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.bindA;
+    final currVal_0 = _ctx.bindA /* REF:asset:goldens/test/templates/generic_directives.dart:4482:4493 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'bindA', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._SelfBoundComp_0_5, 'a', currVal_0);
@@ -1170,7 +1170,7 @@ class ViewUsesSelfBoundComp0 extends import0.ComponentView<import1.UsesSelfBound
       this._SelfBoundComp_0_5.a = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:4482:4493 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.bindB;
+    final currVal_1 = _ctx.bindB /* REF:asset:goldens/test/templates/generic_directives.dart:4494:4505 */;
     if (import9.checkBinding(this._expr_1, currVal_1, 'bindB', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._SelfBoundComp_0_5, 'b', currVal_1);
@@ -1313,7 +1313,7 @@ class ViewUsesFunctionTypeComp0 extends import0.ComponentView<import1.UsesFuncti
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding;
+    final currVal_0 = _ctx.binding /* REF:asset:goldens/test/templates/generic_directives.dart:4987:5004 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._FunctionTypeComp_0_5, 'input', currVal_0);
@@ -1418,7 +1418,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.input1;
+    final currVal_0 = _ctx.input1 /* REF:asset:goldens/test/templates/generic_directives.dart:5391:5407 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'input1', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
@@ -1426,7 +1426,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       this._NestedChildComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:5391:5407 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.input2;
+    final currVal_1 = _ctx.input2 /* REF:asset:goldens/test/templates/generic_directives.dart:5428:5444 */;
     if (import9.checkBinding(this._expr_1, currVal_1, 'input2', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedChildComp_1_5, 'input', currVal_1);
@@ -1434,7 +1434,7 @@ class ViewNestedParentComp0<T> extends import0.ComponentView<import1.NestedParen
       this._NestedChildComp_1_5.input = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:5428:5444 */;
       this._expr_1 = currVal_1;
     }
-    final currVal_2 = _ctx.moreInputs;
+    final currVal_2 = _ctx.moreInputs /* REF:asset:goldens/test/templates/generic_directives.dart:5465:5497 */;
     if (import9.checkBinding(this._expr_2, currVal_2, 'moreInputs', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NgFor_2_9, 'ngForOf', currVal_2);
@@ -1499,7 +1499,7 @@ class _ViewNestedParentComp1<T> extends import16.EmbeddedView<import1.NestedPare
   @override
   void detectChangesInternal() {
     final local_input = import5.unsafeCast<T>(this.locals['\$implicit']);
-    final currVal_0 = local_input;
+    final currVal_0 = local_input /* REF:asset:goldens/test/templates/generic_directives.dart:5498:5513 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'input', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedChildComp_0_5, 'input', currVal_0);
@@ -1624,7 +1624,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.binding1;
+    final currVal_0 = _ctx.binding1 /* REF:asset:goldens/test/templates/generic_directives.dart:5991:6010 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'binding1', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedParentComp_0_5, 'input1', currVal_0);
@@ -1632,7 +1632,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
       this._NestedParentComp_0_5.input1 = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:5991:6010 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.binding2;
+    final currVal_1 = _ctx.binding2 /* REF:asset:goldens/test/templates/generic_directives.dart:6017:6036 */;
     if (import9.checkBinding(this._expr_1, currVal_1, 'binding2', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedParentComp_0_5, 'input2', currVal_1);
@@ -1640,7 +1640,7 @@ class ViewUsesNestedParentComp0 extends import0.ComponentView<import1.UsesNested
       this._NestedParentComp_0_5.input2 = currVal_1 /* REF:asset:goldens/test/templates/generic_directives.dart:6017:6036 */;
       this._expr_1 = currVal_1;
     }
-    final currVal_2 = _ctx.moreBindings;
+    final currVal_2 = _ctx.moreBindings /* REF:asset:goldens/test/templates/generic_directives.dart:6043:6070 */;
     if (import9.checkBinding(this._expr_2, currVal_2, 'moreBindings', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._NestedParentComp_0_5, 'moreInputs', currVal_2);
@@ -1733,7 +1733,7 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.name;
+    final currVal_0 = _ctx.name /* REF:asset:goldens/test/templates/generic_directives.dart:6434:6448 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'name', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._GenericComp_0_5, 'input', currVal_0);
@@ -1741,7 +1741,7 @@ class ViewUsesMultipleTypesComp0 extends import0.ComponentView<import1.UsesMulti
       this._GenericComp_0_5.input = currVal_0 /* REF:asset:goldens/test/templates/generic_directives.dart:6434:6448 */;
       this._expr_0 = currVal_0;
     }
-    final currVal_1 = _ctx.index;
+    final currVal_1 = _ctx.index /* REF:asset:goldens/test/templates/generic_directives.dart:6467:6482 */;
     if (import9.checkBinding(this._expr_1, currVal_1, 'index', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._GenericComp_1_5, 'input', currVal_1);
@@ -1830,7 +1830,7 @@ class ViewUsesGenericChangeDetector0 extends import0.ComponentView<import1.UsesG
   @override
   void detectChangesInternal() {
     final _ctx = this.ctx;
-    final currVal_0 = _ctx.value;
+    final currVal_0 = _ctx.value /* REF:asset:goldens/test/templates/generic_directives.dart:6907:6922 */;
     if (import9.checkBinding(this._expr_0, currVal_0, 'value', 'asset:goldens/test/templates/generic_directives.dart')) {
       if (import10.isDevToolsEnabled) {
         import10.Inspector.instance.recordInput(this._GenericDirective_0_5.instance, 'input', currVal_0);

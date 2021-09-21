@@ -160,14 +160,17 @@ class _DartEmitterVisitor extends AbstractEmitterVisitor
       context.print(' ');
     }
     var value = stmt.value;
+    // Declarations may implicitly originate from user defined template
+    // expressions. Include the source comment when possible.
     if (value == null) {
       // No initializer.
-      context.println('${stmt.name};');
+      context.println('${stmt.name}${stmt.sourceComment};');
     } else {
       context.print('${stmt.name} = ');
       value.visitExpression(this, context);
-      context.println(';');
+      context.println('${stmt.sourceComment};');
     }
+
     // A variable declaration can't be nested in any const contexts so it's safe
     // to set this to false rather than whatever the previous value was.
     _inConstContext = false;
