@@ -4290,14 +4290,30 @@
         t1 = null;
       return t1;
     },
-    SafeHtmlImpl: function SafeHtmlImpl(t0) {
+    SafeHtmlImpl: function SafeHtmlImpl(t0, t1) {
       this._safe_html_impl$_safeWrappedValue = t0;
+      this._safe_html_impl$_trustedValue = t1;
     },
     SafeUrlImpl: function SafeUrlImpl(t0) {
       this._safeWrappedValue = t0;
     },
-    TrustedResourceUrlImpl: function TrustedResourceUrlImpl(t0) {
+    TrustedResourceUrlImpl__createScriptUrlUsingPolicy(url) {
+      var t1;
+      if ($.$get$browserSupportsTrustedTypes()) {
+        t1 = $._trustedTypePolicyName;
+        t1 = (t1 == null ? $._trustedTypePolicyName = "dart_html#safe" : t1).length !== 0;
+      } else
+        t1 = false;
+      if (t1) {
+        t1 = A.trustedTypePolicy();
+        t1 = t1 == null ? null : type$.TrustedScriptUrl._as(t1._nativeTrustedTypePolicy.createScriptURL(url));
+      } else
+        t1 = null;
+      return t1;
+    },
+    TrustedResourceUrlImpl: function TrustedResourceUrlImpl(t0, t1) {
       this._trusted_resource_url_impl$_safeWrappedValue = t0;
+      this._trustedValue = t1;
     },
     trustedTypePolicy() {
       var t1 = $._trustedTypePolicy;
@@ -4857,31 +4873,34 @@
       return $parent.appendChild(t1);
     },
     sanitizeHtml0(stringOrSafeOrBypass) {
-      var t1;
+      var result, t1;
       if (type$.SafeHtml._is(stringOrSafeOrBypass))
-        return stringOrSafeOrBypass._safe_html_impl$_safeWrappedValue;
-      t1 = A.sanitizeHtml(J.toString$0$(stringOrSafeOrBypass), null);
-      A.SafeHtmlImpl__createHTMLUsingPolicy(t1);
-      return t1;
+        result = stringOrSafeOrBypass;
+      else {
+        t1 = A.sanitizeHtml(J.toString$0$(stringOrSafeOrBypass), null);
+        result = new A.SafeHtmlImpl(t1, A.SafeHtmlImpl__createHTMLUsingPolicy(t1));
+      }
+      t1 = result._safe_html_impl$_trustedValue;
+      return t1 == null ? result._safe_html_impl$_safeWrappedValue : t1;
     },
     sanitizeUrl(stringOrSafeOrBypass) {
-      var unsafeString, t1, filteredDataUrl,
+      var result, unsafeString, t1, filteredDataUrl,
         _s18_ = "about:invalid#Safe";
       if (type$.SafeUrl._is(stringOrSafeOrBypass))
-        return stringOrSafeOrBypass._safeWrappedValue;
-      unsafeString = J.toString$0$(stringOrSafeOrBypass);
-      if (B.JSString_methods.startsWith$1(unsafeString, "data:")) {
-        t1 = $.$get$_CRLF();
-        filteredDataUrl = A.stringReplaceAllUnchecked(unsafeString, t1, "");
-        t1 = $.$get$_safeDataUrls()._nativeRegExp;
-        return t1.test(filteredDataUrl) ? filteredDataUrl : _s18_;
-      } else {
-        t1 = $.$get$_safeUrls()._nativeRegExp;
-        return t1.test(unsafeString) ? unsafeString : _s18_;
+        result = stringOrSafeOrBypass;
+      else {
+        unsafeString = J.toString$0$(stringOrSafeOrBypass);
+        if (B.JSString_methods.startsWith$1(unsafeString, "data:")) {
+          t1 = $.$get$_CRLF();
+          filteredDataUrl = A.stringReplaceAllUnchecked(unsafeString, t1, "");
+          t1 = $.$get$_safeDataUrls()._nativeRegExp;
+          result = new A.SafeUrlImpl(t1.test(filteredDataUrl) ? filteredDataUrl : _s18_);
+        } else {
+          t1 = $.$get$_safeUrls()._nativeRegExp;
+          result = new A.SafeUrlImpl(t1.test(unsafeString) ? unsafeString : _s18_);
+        }
       }
-    },
-    sanitizeResourceUrl(stringOrSafeOrBypass) {
-      return stringOrSafeOrBypass._trusted_resource_url_impl$_safeWrappedValue;
+      return result._safeWrappedValue;
     }
   },
   J = {
@@ -10246,7 +10265,7 @@
   A.SanitizedComponent.prototype = {};
   A.ViewGoldenComponent0.prototype = {
     build$0() {
-      var t1, styles, t2, t3, url, _this = this,
+      var t1, styles, t2, t3, t4, url, _this = this,
         _s11_ = "rootElement",
         _s12_ = "_compView_10",
         _s24_ = "_SanitizedComponent_10_5",
@@ -10291,22 +10310,13 @@
       _this.__ViewGoldenComponent0__compView_10 = t1;
       parentRenderNode.appendChild(A._lateReadCheck(A._lateReadCheck(t1, _s12_).__ComponentView_rootElement, _s11_));
       t1 = A.sanitizeHtml("<div></div>", null);
-      A.SafeHtmlImpl__createHTMLUsingPolicy(t1);
-      t2 = self.deopt();
-      t3 = type$.String;
-      url = A.formatResourceUrl("//www.youtube.com/v/%{videoId}?h1=en&fs=1", A.LinkedHashMap_LinkedHashMap$_literal(["videoId", "5"], t3, t3));
-      if ($.$get$browserSupportsTrustedTypes()) {
-        t3 = $._trustedTypePolicyName;
-        t3 = (t3 == null ? $._trustedTypePolicyName = "dart_html#safe" : t3).length !== 0;
-      } else
-        t3 = false;
-      if (t3) {
-        t3 = A.trustedTypePolicy();
-        if (t3 != null)
-          type$.TrustedScriptUrl._as(t3._nativeTrustedTypePolicy.createScriptURL(url));
-      }
+      t2 = A.SafeHtmlImpl__createHTMLUsingPolicy(t1);
+      t3 = self.deopt();
+      t4 = type$.String;
+      url = A.formatResourceUrl("//www.youtube.com/v/%{videoId}?h1=en&fs=1", A.LinkedHashMap_LinkedHashMap$_literal(["videoId", "5"], t4, t4));
+      t4 = A.TrustedResourceUrlImpl__createScriptUrlUsingPolicy(url);
       A._lateWriteOnceCheck(_this.__ViewGoldenComponent0__SanitizedComponent_10_5, _s24_);
-      _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new A.SanitizedComponent(new A.SafeUrlImpl("https://google.com"), new A.SafeHtmlImpl(t1), t2, new A.TrustedResourceUrlImpl(url));
+      _this.__ViewGoldenComponent0__SanitizedComponent_10_5 = new A.SanitizedComponent(new A.SafeUrlImpl("https://google.com"), new A.SafeHtmlImpl(t1, t2), t3, new A.TrustedResourceUrlImpl(url, t4));
       A._lateReadCheck(_this.__ViewGoldenComponent0__compView_10, _s12_).create$1(0, A._lateReadCheck(_this.__ViewGoldenComponent0__SanitizedComponent_10_5, _s24_));
     },
     detectChangesInternal$0() {
@@ -10379,7 +10389,7 @@
       _this.__ViewSanitizedComponent0__el_11 = t1;
     },
     detectChangesInternal$0() {
-      var t1, currVal_1, _this = this,
+      var t1, currVal_1, result, t2, _this = this,
         _ctx = A._lateReadCheck(_this.__ComponentView_ctx, "ctx"),
         firstCheck = _this._component_view$_data._changeDetectorState === 0;
       if (firstCheck) {
@@ -10394,7 +10404,11 @@
       }
       if (firstCheck) {
         t1 = A._lateReadCheck(_this.__ViewSanitizedComponent0__el_9, "_el_9");
-        t1.src = A.sanitizeResourceUrl(_ctx.youtubeUrl);
+        result = _ctx.youtubeUrl;
+        t2 = result._trustedValue;
+        if (t2 == null)
+          t2 = result._trusted_resource_url_impl$_safeWrappedValue;
+        t1.src = t2;
         t1 = A._lateReadCheck(_this.__ViewSanitizedComponent0__el_10, "_el_10");
         t1.innerHTML = A.sanitizeHtml0(_ctx.safeHtml);
       }
