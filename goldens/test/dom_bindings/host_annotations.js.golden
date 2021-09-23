@@ -8793,7 +8793,7 @@
   };
   A.appInjector_closure0.prototype = {
     call$0() {
-      return $.appViewUtils._readField$0();
+      return $.__appViewUtils._readField$0();
     },
     $signature: 15
   };
@@ -8815,7 +8815,7 @@
         t2 = this.userInjector;
       this.applicationRef.set$finalLocalValue(A.ApplicationRef$_(t1, t2.$get$1(0, B.Type_ExceptionHandler_qBE), t2));
       t2.$get$1(0, B.C_OpaqueToken);
-      $.appViewUtils._value = new A.AppViewUtils(new A.EventManager(t1));
+      $.__appViewUtils._value = new A.AppViewUtils(new A.EventManager(t1));
       return t2;
     },
     $signature: 23
@@ -9229,7 +9229,7 @@
   A.RenderView_eventHandler0_closure.prototype = {
     call$1($event) {
       this.$this.markForCheck$0();
-      A._lateReadCheck($.appViewUtils._readField$0().eventManager.zone.__NgZone__innerZone, "_innerZone").runGuarded$1(this.handler);
+      A._lateReadCheck($.__appViewUtils._readField$0().eventManager.zone.__NgZone__innerZone, "_innerZone").runGuarded$1(this.handler);
     },
     $signature() {
       return this.E._eval$1("~(0)");
@@ -9238,7 +9238,7 @@
   A.RenderView_eventHandler1_closure.prototype = {
     call$1($event) {
       this.$this.markForCheck$0();
-      A._lateReadCheck($.appViewUtils._readField$0().eventManager.zone.__NgZone__innerZone, "_innerZone").runGuarded$1(new A.RenderView_eventHandler1__closure(this.handler, $event));
+      A._lateReadCheck($.__appViewUtils._readField$0().eventManager.zone.__NgZone__innerZone, "_innerZone").runGuarded$1(new A.RenderView_eventHandler1__closure(this.handler, $event));
     },
     $signature() {
       return this.E._eval$1("~(0)");
@@ -9762,7 +9762,7 @@
       t2.addEventListener$2(parentRenderNode, "dblclick", _this.eventHandler1$2$1(_ctx.get$onDblClickInferArgument(), t1, t1));
       t2.addEventListener$2(parentRenderNode, "mousedown", _this.eventHandler1$2$1(_ctx.get$onMouseDownManualArgument(), t1, t1));
       t2.addEventListener$2(parentRenderNode, "mouseup", _this.eventHandler1$2$1(_this.get$_handleEvent_0(), t1, t1));
-      $.appViewUtils._readField$0().eventManager.addEventListener$3(0, parentRenderNode, "keydown.space", _this.eventHandler0$1$1(_ctx.get$onSpecialKeyHandler(), type$.Object));
+      $.__appViewUtils._readField$0().eventManager.addEventListener$3(0, parentRenderNode, "keydown.space", _this.eventHandler0$1$1(_ctx.get$onSpecialKeyHandler(), type$.Object));
     },
     detectChangesInternal$0() {
       A._lateReadCheck(this.__ViewGoldenComponent0__compView_0, "_compView_0").detectChangesDeprecated$0();
@@ -10356,7 +10356,7 @@
     $._RootZone__rootDelegate = null;
     $._toStringVisiting = A._setArrayType([], type$.JSArray_Object);
     $.ChangeDetectionHost__current = null;
-    $.appViewUtils = A._Cell$named("appViewUtils");
+    $.__appViewUtils = A._Cell$named("appViewUtils");
     $._KeyEventsHandler__cache = A.LinkedHashMap_LinkedHashMap$_empty(type$.String, A.findType("_ParsedEvent?"));
     $.ViewGoldenComponent0__componentStyles = null;
     $.ViewHasOutput0__componentStyles = null;

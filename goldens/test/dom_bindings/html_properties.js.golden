@@ -9460,7 +9460,7 @@
   };
   A.appInjector_closure0.prototype = {
     call$0() {
-      return $.appViewUtils._readField$0();
+      return $.__appViewUtils._readField$0();
     },
     $signature: 20
   };
@@ -9481,7 +9481,7 @@
       var t1 = this.userInjector;
       this.applicationRef.set$finalLocalValue(A.ApplicationRef$_(this.ngZone, t1.$get$1(0, B.Type_ExceptionHandler_qBE), t1));
       t1.$get$1(0, B.C_OpaqueToken);
-      $.appViewUtils._value = new A.AppViewUtils();
+      $.__appViewUtils._value = new A.AppViewUtils();
       return t1;
     },
     $signature: 23
@@ -11001,7 +11001,7 @@
     $._trustedTypePolicyName = null;
     $._trustedTypePolicy = null;
     $.ChangeDetectionHost__current = null;
-    $.appViewUtils = A._Cell$named("appViewUtils");
+    $.__appViewUtils = A._Cell$named("appViewUtils");
     $.ViewGoldenComponent0__componentStyles = null;
     $.ViewSanitizedComponent0__componentStyles = null;
   })();
