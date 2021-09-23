@@ -1,3 +1,7 @@
+## 7.0.1-dev
+
+- Allow a slightly wider version range on `angular_compiler`.
+
 ## 7.0.0
 
 - Support null safety
