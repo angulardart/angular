@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Allow a slightly wider version range in `pkg:angular`.
+
 ## 2.0.0
 
 - Support null safety
