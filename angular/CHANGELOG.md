@@ -1,6 +1,7 @@
-## 7.0.1-dev
+## 7.0.1
 
 - Allow a slightly wider version range on `angular_compiler`.
+- Add back `README.md`.
 
 ## 7.0.0
 
