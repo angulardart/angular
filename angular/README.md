@@ -1,5 +1,4 @@
 [![Pub Package](https://img.shields.io/pub/v/angular.svg)](https://pub.dev/packages/angular)
-[![Build Status](https://travis-ci.org/dart-lang/angular.svg?branch=master)](https://travis-ci.org/dart-lang/angular)
 [![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)][Gitter chat room]
 
 **AngularDart** powers some of Google's most critical
