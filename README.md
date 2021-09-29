@@ -1,5 +1,5 @@
 [![Dart CI](https://github.com/angulardart/angular/actions/workflows/dart.yml/badge.svg?branch=master)](https://github.com/angulardart/angular/actions/workflows/dart.yml)
-[![Gitter](https://img.shields.io/gitter/room/dart-lang/angular.svg)][Gitter chat room]
+[![Gitter](https://badges.gitter.im/angulardart/community.svg)][Gitter chat room]
 
 The _AngularDart_ packages power some of Google's most critical applications.
 It's built on [Dart] and is used by [Google Ads], [Google AdSense],
@@ -44,4 +44,4 @@ Included for completeness._
 
 Join the [Gitter chat room] to ask questions.
 
-[Gitter chat room]: https://gitter.im/dart-lang/angular
+[Gitter chat room]: https://gitter.im/angulardart/community

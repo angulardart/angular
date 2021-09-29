@@ -16,6 +16,6 @@ For questions consider using Stack Overflow instead:
 https://stackoverflow.com/questions/tagged/angular-dart
 
 Also consider our Gitter channel for light-weight/quick discussions:
-https://gitter.im/dart-lang/angular
+https://gitter.im/angulardart/community
 
 -----

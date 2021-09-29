@@ -17,7 +17,7 @@ Additional resources:
 
 *   Community/support: [Gitter chat room]
 
-[Gitter chat room]: https://gitter.im/dart-lang/angular
+[Gitter chat room]: https://gitter.im/angulardart/community
 
 ## Overview
 
