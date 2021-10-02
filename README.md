@@ -1,19 +1,4 @@
-[![Dart CI](https://github.com/angulardart/angular/actions/workflows/dart.yml/badge.svg?branch=master)](https://github.com/angulardart/angular/actions/workflows/dart.yml)
-[![Gitter](https://badges.gitter.im/angulardart/community.svg)][Gitter chat room]
-
-The _AngularDart_ packages power some of Google's most critical applications.
-It's built on [Dart] and is used by [Google Ads], [Google AdSense],
-[Google Fiber], [Google Play Console] and many more projects.
-
-[Google Play Console]: https://play.google.com/console
-[Google AdSense]: https://www.google.com/adsense
-[Google Ads]: https://ads.google.com/
-[Google Fiber]: https://fiber.google.com/
-[Dart]: https://dart.dev/
-
-**IMPORTANT:** read the
-[announcement](https://groups.google.com/a/dartlang.org/g/announce/c/Kz84KNBcf3U)
-about how we plan to update and maintain these packages going forward!
+See https://github.com/angulardart for current updates on this project.
 
 ## Packages
 

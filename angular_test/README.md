@@ -1,7 +1,7 @@
-[![Pub package](https://img.shields.io/pub/v/angular_test.svg)][pub_angular_test]
-
 Testing infrastructure for [AngularDart][webdev_angular], used with the
 [`build_runner` package][build_runner].
+
+See https://github.com/angulardart for current updates on this project.
 
 Documentation and examples:
 
