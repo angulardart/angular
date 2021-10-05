@@ -1,3 +1,7 @@
+## 4.0.1
+
+- Update `README.md`
+
 ## 4.0.0
 
 - Support null safety

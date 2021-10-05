@@ -1,7 +1,7 @@
 name: angular_router
 repository: https://github.com/angulardart/angular
 description: Router for AngularDart.
-version: 3.0.0
+version: 3.0.1
 
 environment:
   sdk: '>=2.14.0 <3.0.0'
@@ -21,15 +21,3 @@ dev_dependencies:
   mockito: ^5.0.0
   pedantic: ^1.10.0
   test: ^1.16.0
-
-# === vvv REMOVE WHEN PUBLISHING vvv ===
-dependency_overrides:
-  angular:
-    path: ../angular
-  angular_ast:
-    path: ../angular_ast
-  angular_compiler:
-    path: ../angular_compiler
-  angular_test:
-    path: ../angular_test
-# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===

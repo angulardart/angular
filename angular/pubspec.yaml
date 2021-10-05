@@ -1,5 +1,5 @@
 name: angular
-version: 7.0.2-dev
+version: 7.0.2
 description: >-
   Fast and productive web framework by Google.
   Separate, but similar to the JavaScript framework with a similar name.
@@ -37,9 +37,3 @@ dependencies:
   quiver: ^3.0.0
   source_gen: ^1.0.0
   source_span: ^1.8.0
-
-# === vvv REMOVE WHEN PUBLISHING vvv ===
-dependency_overrides:
-  angular_compiler:
-      path: ../angular_compiler
-# === ^^^ REMOVE WHEN PUBLISHING ^^^ ===
