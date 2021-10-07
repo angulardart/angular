@@ -1,6 +1,7 @@
 ## 7.0.2
 
 - Update `README.md`.
+- Support latest `package:angular_ast`.
 
 ## 7.0.1
 
